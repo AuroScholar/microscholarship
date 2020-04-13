@@ -1,0 +1,25 @@
+<resources>
+
+    <!--App-->
+    <string name="app_name">AuroScholr</string>
+    <string name="internet_check">Oops, No internet found.Please check your connection or try again.</string>
+    <string name="default_error">Unable to connect. Please try after sometime.</string>
+    <string name="no_data_found">No data available</string>
+
+    <!--Crop image string -->
+    <string name="crop_image_activity_title"></string>
+    <string name="crop_image_menu_rotate_left">Rotate counter clockwise</string>
+    <string name="crop_image_menu_rotate_right">Rotate</string>
+    <string name="crop_image_menu_crop">Crop</string>
+    <string name="crop_image_menu_flip">Flip</string>
+    <string name="crop_image_menu_flip_horizontally">Flip horizontally</string>
+    <string name="crop_image_menu_flip_vertically">Flip vertically</string>
+    <string name="pick_image_intent_chooser_title">Select source</string>
+    <string name="crop_image_activity_no_permissions">Cancelling, required permissions are not granted</string>
+    <string name="upload_file">Upload File</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

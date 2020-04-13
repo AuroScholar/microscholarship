@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "88018063414",
+    "firebase_url": "https://auroscholrlib.firebaseio.com",
+    "project_id": "auroscholrlib",
+    "storage_bucket": "auroscholrlib.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88018063414:android:e3f821afc0a35626534897",
+        "android_client_info": {
+          "package_name": "com.auro.scholr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "88018063414-gadl6aqpir9br1br1vlhad9h75s2rmas.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBToecLgSDYc6QhaxTAGyuxZY2752AvGrQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "88018063414-gadl6aqpir9br1br1vlhad9h75s2rmas.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

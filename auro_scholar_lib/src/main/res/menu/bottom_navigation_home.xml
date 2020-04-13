@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <item
+        android:id="@+id/action_cards"
+        android:enabled="true"
+        android:icon="@drawable/home_icon_color"
+        android:title="Home"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_rewards"
+        android:enabled="true"
+        android:title="Edge"
+        android:icon="@drawable/more_icon"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_home"
+        android:enabled="false"
+        android:title=""
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_location"
+        android:enabled="true"
+        android:icon="@drawable/more_icon"
+        android:title="Scholarship"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_more"
+        android:enabled="true"
+        android:icon="@drawable/more_icon"
+        android:title="Me"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -1,0 +1,80 @@
+ext {
+
+    MIN_SDK_VERSION = 23
+    COMPILE_SDK_VERSION = 28
+    TARGET_SDK_VERSION = 28
+
+    //Version
+    def loggingInterceptor = '3.12.1'
+    def retrofit = '2.5.0'
+    def dagger  = '2.12'
+    def googleVersion = '16.0.0'
+    def gson = '2.8.0'
+    def phoneNum = '8.10.12'
+
+
+
+    supportDependencies = [
+            appCompat_v7     :        'androidx.appcompat:appcompat:1.1.0',
+            constraint       :        'androidx.constraintlayout:constraintlayout:2.0.0-alpha2',
+            support_design   :        'com.google.android.material:material:1.1.0-alpha10',
+            exifInterface    :        'androidx.exifinterface:exifinterface:1.0.0',
+            android_x        :        'androidx.legacy:legacy-support-v4:1.0.0'
+
+    ]
+
+
+
+
+    networkDependencies = [
+            gson             :         "com.squareup.retrofit2:converter-gson:${retrofit}",
+            rxjavaAdapter    :         "com.squareup.retrofit2:adapter-rxjava2:${retrofit}",
+            interceptor      :         "com.squareup.okhttp3:logging-interceptor:${loggingInterceptor}",
+    ]
+
+    rxDependencies = [
+            rx_android       :         'io.reactivex.rxjava2:rxandroid:2.1.1',
+    ]
+
+    googleDependencies = [
+            gson             :         "com.google.code.gson:gson:${gson}",
+            dagger           :         "com.google.dagger:dagger:${dagger}",
+            daggerCompiler   :         "com.google.dagger:dagger-compiler:${dagger}",
+            phoneNum         :         "com.googlecode.libphonenumber:libphonenumber:${phoneNum}",
+            map              :         "com.google.android.gms:play-services-maps:${googleVersion}",
+            location         :         "com.google.android.gms:play-services-location:${googleVersion}",
+            places           :         "com.google.android.gms:play-services-places:${googleVersion}",
+            phoneSms         :         "com.google.android.gms:play-services-auth-api-phone:${googleVersion}",
+    ]
+
+    DatabaseDependencies = [
+            roomCompiler     :         'androidx.room:room-compiler:2.0.0',
+            roomRuntime      :         'androidx.room:room-runtime:2.0.0',
+            lifecyleRuntime  :         'androidx.lifecycle:lifecycle-runtime:2.0.0',
+            lifecyleExtension:         'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    ]
+
+
+    FirebaseDependencies = [
+            msging               :     'com.google.firebase:firebase-messaging:18.0.0',
+            dynamicLink          :     'com.google.firebase:firebase-dynamic-links:16.1.8',
+            firebaseCrash        :     'com.google.firebase:firebase-crash:16.2.1',
+            core                 :     'com.google.firebase:firebase-core:16.0.8',
+            perfomance           :     'com.google.firebase:firebase-perf:16.2.5',
+            analytics            :     'com.google.firebase:firebase-analytics:16.0.8',
+
+    ]
+
+
+
+    otherDependencies = [
+            glide            :         'com.github.bumptech.glide:glide:4.8.0',
+            glideCompiler    :         'com.github.bumptech.glide:compiler:4.8.0',
+            shimmer          :         'com.facebook.shimmer:shimmer:0.4.0',
+    ]
+
+    TestingDependencies = [
+            junit            :         'junit:junit:4.12',
+            espressoIntents  :         'androidx.test.espresso:espresso-intents:3.1.0',
+    ]
+}

@@ -1,0 +1,27 @@
+[{"clubId":1,"clubTittle":"The Majlis","numPlayers":"2","numHoles":"18",
+  "priceList": [{"time": "08:05","price": "AED 880","offers": "0"},
+    {"time": "08:05-Shotgun Start","price": "AED 880","offers": "3"},
+    {"time": "08:05","price": "AED 880","offers": "3"},
+    {"time": "08:05","price": "AED 880","offers": "0"}]
+},
+  {"clubId":1,"clubTittle":"The Faldo","numPlayers":"2","numHoles":"18",
+    "priceList": [{"time": "08:05","price": "AED 880","offers": "0"},
+      {"time": "08:05-Shotgun Start","price": "AED 880","offers": "3"},
+      {"time": "08:05","price": "AED 880","offers": "3"},
+      {"time": "08:05","price": "AED 880","offers": "0"}]
+  },
+  {"clubId":1,"clubTittle":"The Majlis","numPlayers":"2","numHoles":"18",
+    "priceList": [{"time": "08:05","price": "AED 880","offers": "0"},
+      {"time": "08:05-Shotgun Start","price": "AED 880","offers": "3"},
+      {"time": "08:05","price": "AED 880","offers": "3"},
+      {"time": "08:05","price": "AED 880","offers": "0"},
+      {"time": "08:05","price": "AED 880","offers": "0"},
+      {"time": "08:05","price": "AED 880","offers": "0"},
+      {"time": "08:05","price": "AED 880","offers": "0"}]
+  },
+  {"clubId":1,"clubTittle":"The Majlis","numPlayers":"2","numHoles":"18",
+    "priceList": [{"time": "08:05","price": "AED 880","offers": "0"},
+      {"time": "08:05-Shotgun Start","price": "AED 880","offers": "3"},
+      {"time": "08:05","price": "AED 880","offers": "3"},
+      {"time": "08:05","price": "AED 880","offers": "0"}]
+  }]

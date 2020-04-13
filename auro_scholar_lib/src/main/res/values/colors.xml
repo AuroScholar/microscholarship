@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00A1DB</color>
+    <color name="colorPrimaryDark">#00A1DB</color>
+    <color name="colorAccent">#00A1DB</color>
+
+    <color name="black_transparent">#80000000</color>
+
+    <color name="background">#f4f4f4</color>
+
+    <color name="backgroun_transparent">#f2000000</color>
+    <color name="color_black_trns">#918F8F</color>
+    <color name="black">#000000</color>
+
+    <color name="white">#ffffff</color>
+    <color name="offWhite">#F7F7F7</color>
+    <color name="snow">#fbfbfb</color>
+
+    <color name="color_blue">#FC2253E6</color>
+
+
+    <color name="color_red">#e24358</color>
+    <color name="colorCherry">#e24358</color>
+    <color name="dark_brown">#8a2915</color>
+    <color name="light_brown">#8d6136</color>
+
+    <color name="txtDarkGrey">#8b8888</color>
+    <color name="text_color_106">#EBEBEB</color>
+    <color name="black_opacity_5">#0D000000</color>
+    <color name="text_color_107">#AFAFAF</color>
+    <color name="text_color_103">#333333</color>
+
+
+    <color name="color_grey">#595959</color>
+    <color name="color_grey_100">#D3D0D0</color>
+    <color name="color_dim_grey">#6a6a6a</color>
+    <color name="color_light_grey">#d5d5d5</color>
+    <color name="light_grey">#ffd4d4d5</color>
+    <color name="light_grey_color">#F8F8F8</color>
+    <color name="colorGretTheme">#d6d3d3</color>
+    <color name="colorGrayLight">#eaeaea</color>
+    <color name="background_color">#F0F0F0</color>
+    <color name="taupe_gray">#908e8e</color>
+    <color name="taupe_gray2">#8d8d8d</color>
+    <color name="color_300">#808080</color>
+    <color name="color_202">#404040</color>
+    <color name="grey_color">#7e7c7f</color>
+    <color name="colorGrayText">#7e7c7f</color>
+    <color name="ash_grey">#FFb1b1b1</color>
+    <color name="davy_grey">#FF575757</color>
+    <color name="cusine_bg">#EEEEEE</color>
+    <color name="taupe">#FF3C3C3C</color>
+
+
+    <color name="color_sky_blue">#00A1DB</color>
+    <color name="color_rich_electric_blue">#03a3df</color>
+    <color name="color_medium_turque">#42BAE7</color>
+    <color name="rich_electric_blue">#ff03a3df</color>
+    <color name="maya_blue">#F4FCFF</color>
+    <color name="light_sky_blue">#EAF9FF</color>
+
+    <color name="toolbar_pink">#f0c3bd</color>
+    <color name="textpink_color">#cea59a</color>
+    <color name="text_color">#d2968a</color>
+    <color name="colorTeaRose">#edc4bc</color>
+    <color name="color_fde1dc">#fde1dc</color>
+    <color name="color_light_tea_rose">#FBF3F2</color>
+    <color name="ruddy_pink">#FFD2968A</color>
+
+    <color name="colorSkin1">#8D5524</color>
+    <color name="colorSkin2">#C68642</color>
+    <color name="colorSkin3">#E0AC69</color>
+    <color name="colorSkin4">#FFDBAC</color>
+
+    <color name="terra_cotta_color">#FFE06A63</color>
+
+    <color name="ufo_green">#4bd964</color>
+    <color name="dollar_bill">#96c154</color>
+
+    <color name="dim_grey">#FF656565</color>
+    <color name="gray_bg">#FFEFEFEF</color>
+
+    <color name="seprartion_color">#FAFAFA</color>
+    <color name="dark_magenta">#054B74</color>
+    <color name="auro_grey_color">#A17174</color>
+    <color name="balance_green_color">#82AD12</color>
+    <color name="blue_color">#0DADFF</color>
+    <color name="off_white">#F9F9F9</color>
+    <color name="orange">#789F10</color>
+
+
+</resources>

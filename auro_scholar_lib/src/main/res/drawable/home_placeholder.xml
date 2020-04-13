@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+
+        <shape android:shape="oval">
+
+            <stroke android:color="@color/white"
+                android:width="5dp"/>
+            <size
+                android:width="60dp"
+                android:height="60dp"/>
+        </shape>
+
+    </item>
+
+    <item>
+
+        <shape android:shape="oval"
+            android:innerRadius="40dp">
+
+            <solid android:color="@color/color_sky_blue"/>
+
+            <stroke android:color="@color/color_sky_blue"
+                android:width="5dp"/>
+            <size
+                android:width="45dp"
+                android:height="45dp"/>
+        </shape>
+
+    </item>
+
+    <item android:drawable="@drawable/camera_icon"
+        android:left="14dp"
+        android:right="14dp"
+        android:bottom="17dp"
+        android:top="16dp"/>
+
+</layer-list>

@@ -1,0 +1,97 @@
+apply plugin: 'com.android.library'
+apply from: "dependencies.gradle"
+
+
+android {
+    compileSdkVersion COMPILE_SDK_VERSION
+    defaultConfig {
+
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
+        versionCode 1
+        versionName "0.0.1"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField 'int', 'DEFAULT_ANIMATION_DURATION', '750'
+    }
+    /* buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }*/
+    buildTypes {
+        debug {
+
+            buildConfigField "String", "BASE_URL", "\"http://182.72.208.175:8080/\""
+
+        }
+
+        release {
+
+            buildConfigField "String", "BASE_URL", "\"http://192.168.2.65:8080/\""
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // DEVELOPMENT Dependencies
+    implementation supportDependencies.values()
+
+    // NETWORK Dependencies
+    implementation networkDependencies.values()
+
+    // GOOGLE Dependencies
+    implementation googleDependencies.values()
+    implementation googleDependencies.dagger
+
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    annotationProcessor googleDependencies.daggerCompiler
+
+    //Rx Dependencies
+    implementation rxDependencies.rx_android
+
+    // DATABASE
+    implementation DatabaseDependencies.roomRuntime
+    annotationProcessor DatabaseDependencies.roomCompiler
+    implementation DatabaseDependencies.lifecyleRuntime
+    implementation DatabaseDependencies.lifecyleExtension
+
+    // FIREBASE
+    implementation FirebaseDependencies.values()
+
+    // OTHERS
+//    implementation(CrashLyticsDependencies.values()) {
+//        transitive = true
+//    }
+
+    /* implementation 'me.philio:pinentryview:1.0.6'*/
+
+
+    // OTHER Dependencies
+    implementation otherDependencies.glide
+    annotationProcessor otherDependencies.glideCompiler
+    implementation otherDependencies.shimmer
+
+
+    // TESTING Dependency
+    implementation TestingDependencies.values()
+
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
+}
+apply plugin: 'com.google.gms.google-services'
