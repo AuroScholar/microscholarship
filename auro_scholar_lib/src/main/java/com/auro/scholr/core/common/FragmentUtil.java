@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-
 import com.auro.scholr.R;
 
 import static com.auro.scholr.core.common.AppConstant.FragmentTransition.DOWN_TO_TOP;
@@ -22,7 +21,7 @@ public class FragmentUtil {
 
     private FragmentUtil(){}
 
-    public synchronized static void replaceFragment(Context context, Fragment fragment, int frameLayoutId, boolean removeStack,int animConstant) {
+    public synchronized static void replaceFragment(Context context, Fragment fragment, int frameLayoutId, boolean removeStack, int animConstant) {
 
         try {
             FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
@@ -35,7 +34,7 @@ public class FragmentUtil {
                     break;
 
                 case RIGHT_TO_LEFT:
-                    transaction.setCustomAnimations(R.anim.frag_enter_right,R.anim.frag_exit_left);
+                    transaction.setCustomAnimations(R.anim.frag_enter_right, R.anim.frag_exit_left);
                     break;
 
                 case NEITHER_LEFT_NOR_RIGHT:
@@ -85,7 +84,7 @@ public class FragmentUtil {
                 break;
 
             case RIGHT_TO_LEFT:
-                transaction.setCustomAnimations(R.anim.frag_enter_right,R.anim.frag_exit_left);
+                transaction.setCustomAnimations(R.anim.frag_enter_right, R.anim.frag_exit_left);
                 break;
 
             case NEITHER_LEFT_NOR_RIGHT:
@@ -118,7 +117,7 @@ public class FragmentUtil {
                     break;
 
                 case RIGHT_TO_LEFT:
-                    transaction.setCustomAnimations(R.anim.frag_enter_right,R.anim.frag_exit_left);
+                    transaction.setCustomAnimations(R.anim.frag_enter_right, R.anim.frag_exit_left);
                     break;
 
                 case NEITHER_LEFT_NOR_RIGHT:
@@ -161,7 +160,7 @@ public class FragmentUtil {
                 break;
 
             case RIGHT_TO_LEFT:
-                ftTransaction.setCustomAnimations(R.anim.frag_enter_right,R.anim.frag_exit_left);
+                ftTransaction.setCustomAnimations(R.anim.frag_enter_right, R.anim.frag_exit_left);
                 break;
 
             case NEITHER_LEFT_NOR_RIGHT:

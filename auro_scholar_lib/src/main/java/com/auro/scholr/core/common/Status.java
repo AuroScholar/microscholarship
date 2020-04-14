@@ -19,7 +19,8 @@ public enum Status {
     NO_INTERNET,
     DEFAULT_MSG,
     KYC_BUTTON_CLICK,
-    KYC_RESULT_PATH
+    KYC_RESULT_PATH,
+    DASHBOARD_API
 
 
 

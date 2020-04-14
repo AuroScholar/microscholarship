@@ -8,7 +8,7 @@ import retrofit2.Response;
 public interface HomeRepo {
 
     interface DashboardRemoteData {
-        Single<Response<JsonObject>> getStoreOnlineData(String modifiedTime);
+        Single<Response<JsonObject>> getDashboardData(String mobileno);
     }
 
 

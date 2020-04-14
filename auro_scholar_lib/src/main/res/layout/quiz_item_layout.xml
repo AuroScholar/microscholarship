@@ -8,16 +8,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
+
         <LinearLayout
-            android:layout_marginTop="@dimen/_20sdp"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/_20sdp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/location_icon"
                 android:elevation="@dimen/_5sdp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/_8sdp"
@@ -25,26 +26,30 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/location_icon">
+                    android:layout_height="@dimen/_150sdp"
+                    android:background="@drawable/quiz_item_bg"
+                    android:paddingBottom="@dimen/_5sdp">
 
                     <LinearLayout
+                        android:id="@+id/parentlayout_one"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingTop="@dimen/_12sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/parentlayout_two"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Wining price:"
+                            android:text="@string/wining_price"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_9sdp" />
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/quiz_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Rs.50"
@@ -55,42 +60,49 @@
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Scholarship"
+                            android:text="@string/scholarship"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_9sdp" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:id="@+id/parentlayout_two"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_65sdp"
                         android:orientation="vertical"
-                        android:paddingStart="@dimen/_10sdp"
                         android:paddingTop="@dimen/_10sdp"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/parentlayout_one"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/quiz_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Quiz 01"
+                            android:text="@string/quiz"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_17sdp"
                             android:textStyle="bold" />
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/quiz_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Measurement"
+                            android:ellipsize="marquee"
+                            android:singleLine="true"
+                            android:text="@string/measurement"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold" />
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/total_no_points"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_16sdp"
-                            android:text="Total No. of Points:3/10"
+                            android:text="@string/total_no_of_points"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_9sdp" />
 
@@ -111,7 +123,7 @@
                                 android:paddingTop="@dimen/_9sdp"
                                 android:paddingEnd="@dimen/_25sdp"
                                 android:paddingBottom="@dimen/_9sdp"
-                                android:text="Start Quiz"
+                                android:text="@string/start_quiz"
                                 android:textColor="@color/white"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -129,18 +141,58 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/retake_quiz"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginEnd="@dimen/_5sdp"
-                            android:layout_marginBottom="@dimen/_10sdp"
-                            android:text="Retake Quiz to improve your points"
+                            android:text="@string/retake_quiz_to_improve_your_points"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_9sdp" />
+                            android:textSize="@dimen/_9sdp"
+                            android:visibility="visible" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/lock_layout"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_height="@dimen/_150sdp"
+                    android:background="@color/tansparent_quiz_layout_color">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/tv_complete_quiz"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:text="Complete the previous quiz to unlock"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            android:visibility="visible" />
+
+                        <ImageView
+                            android:id="@+id/lock_imageview"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/ic_lock" />
                     </LinearLayout>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.cardview.widget.CardView>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

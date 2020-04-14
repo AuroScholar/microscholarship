@@ -9,7 +9,7 @@
 
         <variable
             name="scholarshipModel"
-            type="com.auro.scholr.home.presentation.viewmodel.ScholarShipModel" />
+            type="com.auro.scholr.home.presentation.viewmodel.ScholarShipViewModel" />
 
 
     </data>

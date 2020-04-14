@@ -56,8 +56,8 @@ public class HomeModule {
 
     @Provides
     @Singleton
-    HomeRemoteUseCase provideHomeRemoteUseCase() {
-        return new HomeRemoteUseCase();
+    HomeRemoteUseCase provideHomeRemoteUseCase(HomeRepo.DashboardRemoteData dashboardRemoteData) {
+        return new HomeRemoteUseCase(dashboardRemoteData);
     }
 
 
@@ -82,6 +82,7 @@ public class HomeModule {
     ViewModelFactory provideKYCViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
     }
+
 
     @Provides
     @Singleton

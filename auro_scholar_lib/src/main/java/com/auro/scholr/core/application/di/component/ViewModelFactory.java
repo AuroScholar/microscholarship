@@ -11,7 +11,7 @@ import com.auro.scholr.home.presentation.viewmodel.CardViewModel;
 import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
-import com.auro.scholr.home.presentation.viewmodel.ScholarShipModel;
+import com.auro.scholr.home.presentation.viewmodel.ScholarShipViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
@@ -55,9 +55,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
             return (T) new KYCViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
-        }else if (modelClass.isAssignableFrom(ScholarShipModel.class)) {
+        }else if (modelClass.isAssignableFrom(ScholarShipViewModel.class)) {
 
-            return (T) new ScholarShipModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+            return (T) new ScholarShipViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
         }
 

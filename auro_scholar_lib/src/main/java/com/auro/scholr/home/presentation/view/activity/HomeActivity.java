@@ -5,19 +5,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +23,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
+import com.auro.scholr.core.application.base_component.BaseActivity;
+import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
@@ -45,21 +41,14 @@ import com.auro.scholr.home.presentation.view.fragment.ScholarShipFragment;
 import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
-import com.auro.scholr.util.ImageUtil;
 import com.auro.scholr.util.LocationUtil;
-import com.auro.scholr.util.cropper.CropImage;
-import com.auro.scholr.util.cropper.CropImageView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import com.auro.scholr.core.application.base_component.BaseActivity;
-import com.auro.scholr.core.application.di.component.ViewModelFactory;
-
-import com.auro.scholr.home.presentation.view.fragment.CardFragment;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.cropper.CropImage;
 import com.auro.scholr.util.permission.LocationHandler;
 import com.auro.scholr.util.permission.PermissionListener;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.PermissionsCallback;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -117,8 +106,11 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, H
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
+                WindowManager.LayoutParams.FLAG_SECURE);
         init();
         setListener();
+
 
     }
 
@@ -197,55 +189,50 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, H
 
         Fragment topFragment = getSupportFragmentManager().findFragmentById(R.id.home_container);
 
-        if(menuItem.getItemId()== R.id.action_cards){
 
+        if (menuItem.getItemId() == R.id.action_cards) {
             openHomeFragment(new KYCFragment());
-            Toast.makeText(this,"Action Card",Toast.LENGTH_LONG).show();
-            //setText("Home Screen under development");
-            selectNavigationMenu(0);
         }
 
-      /*  switch (menuItem.getItemId())
-        {
-        *//*    case R.id.action_cards:
-
+       /* switch (menuItem.getItemId()) {
+            case R.id.action_cards: {
                 openHomeFragment(new KYCFragment());
-                Toast.makeText(this,"Action Card",Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Action Card", Toast.LENGTH_LONG).show();
                 //setText("Home Screen under development");
                 selectNavigationMenu(0);
                 break;
-
-            case R.id.action_rewards:
+            }
+            case R.id.action_rewards: {
                 //openHomeFragment(new RewardsFragment());
-                Toast.makeText(this,"Action Reward",Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Action Reward", Toast.LENGTH_LONG).show();
                 setText("Edge Screen under development");
                 selectNavigationMenu(1);
                 break;
+            }
 
-
-            case R.id.action_home:
+            case R.id.action_home: {
                 selectNavigationMenu(2);
-                Toast.makeText(this,"Action Home",Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Action Home", Toast.LENGTH_LONG).show();
 
                 break;
-
-            case R.id.action_location:
+            }
+            case R.id.action_location: {
                 binding.naviagtionContent.errorMesssage.setVisibility(View.GONE);
 
                 openHomeFragment(new QuizHomeFragment());
                 selectNavigationMenu(3);
 
                 break;
-
-            case R.id.action_more:
-                openHomeFragment(new CardFragment());
+            }
+            case R.id.action_more: {
+                openHomeFragment(new ScholarShipFragment());
                 selectNavigationMenu(4);
-                 *//**//*Toast.makeText(this,"Action More",Toast.LENGTH_LONG).show();
-                setText("Me Screen under development");*//**//*
+                 *//*Toast.makeText(this,"Action More",Toast.LENGTH_LONG).show();
+                setText("Me Screen under development");*//*
 
                 // openHomeFragment(new MoreFragment());
                 break;
-*//*
+            }
 
 
         }*/
@@ -263,7 +250,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, H
 
     public void openHomeFragment(Fragment fragment) {
         FragmentUtil.replaceFragment(mContext, fragment, R.id.home_container, false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
-
+        // AuroScholar.openQuizFragment(this, "7503600686", R.id.home_container);
     }
 
 
@@ -533,8 +520,8 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, H
                 try {
                     Uri resultUri = result.getUri();
                     sendCallBack(Status.KYC_RESULT_PATH, "" + resultUri.getPath());
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), resultUri);
-                   // binding.naviagtionContent.cropImageView.setImageBitmap(ImageUtil.contrast(bitmap, 50f));
+                    // Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), resultUri);
+                    // binding.naviagtionContent.cropImageView.setImageBitmap(ImageUtil.contrast(bitmap, 50f));
                 } catch (Exception e) {
 
                 }

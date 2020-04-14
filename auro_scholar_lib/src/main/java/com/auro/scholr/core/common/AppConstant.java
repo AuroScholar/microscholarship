@@ -18,7 +18,11 @@ public interface AppConstant {
     String DEVICE_ID = "DEVICE_ID";
     String AUTH_TOKEN = "AUTH_TOKEN";
     String MODIFIED_TIME = "MODIFIED_TIME";
+    String MOBILE_NUMBER = "MOBILE_NUMBER";
     int KYC_BUTTON_CLICK = 001;
+    String TRUE = "true";
+    String DASHBOARD_RES_MODEL = "DASHBOARD_RES_MODEL";
+    String PHONE_NUMBER = "Phonenumber";
 
 
     String COMING_FROM = "navigation_control";

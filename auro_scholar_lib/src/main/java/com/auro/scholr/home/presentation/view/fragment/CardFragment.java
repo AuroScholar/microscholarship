@@ -32,16 +32,14 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
+import com.auro.scholr.core.application.base_component.BaseFragment;
+import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.core.util.uiwidget.others.HideBottomNavigation;
 import com.auro.scholr.databinding.CardFragmentLayoutBinding;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.viewmodel.CardViewModel;
-
-import com.auro.scholr.core.application.base_component.BaseFragment;
-
-import com.auro.scholr.core.application.di.component.ViewModelFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -259,7 +257,7 @@ public class CardFragment extends BaseFragment {
     public class PQChromeClient extends WebChromeClient {
 
         // For Android 5.0+
-        public boolean onShowFileChooser(WebView view, ValueCallback<Uri[]> filePath, WebChromeClient.FileChooserParams fileChooserParams) {
+        public boolean onShowFileChooser(WebView view, ValueCallback<Uri[]> filePath, FileChooserParams fileChooserParams) {
             // Double check that we don't have any existing callbacks
             if (mUploadMessage != null) {
                 mUploadMessage.onReceiveValue(null);

@@ -87,6 +87,6 @@
     <color name="blue_color">#0DADFF</color>
     <color name="off_white">#F9F9F9</color>
     <color name="orange">#789F10</color>
-
-
+    <color name="tansparent_quiz_layout_color">#A60A4242</color>
+    <color name="shimmer_color">#b1b1b1</color>
 </resources>

@@ -1,18 +1,17 @@
 package com.auro.scholr.home.domain.usecase;
 
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
-import com.auro.scholr.home.data.model.QuizDasboardDatamodel;
+import com.auro.scholr.home.data.model.QuizResModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeUseCase {
 
 
-    public ArrayList<QuizDasboardDatamodel> makeDummyQuizList() {
-        ArrayList<QuizDasboardDatamodel> productModelList = new ArrayList<>();
+    public ArrayList<QuizResModel> makeDummyQuizList() {
+        ArrayList<QuizResModel> productModelList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            productModelList.add(new QuizDasboardDatamodel());
+            productModelList.add(new QuizResModel());
         }
 
         return productModelList;

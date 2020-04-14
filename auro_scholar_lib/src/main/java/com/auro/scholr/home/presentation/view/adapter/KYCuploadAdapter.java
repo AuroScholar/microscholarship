@@ -4,18 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.auro.scholr.R;
-import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.QuizDocUploadLayoutBinding;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
-import com.auro.scholr.home.data.model.QuizDasboardDatamodel;
 import com.auro.scholr.util.AppUtil;
 
 import java.util.ArrayList;
