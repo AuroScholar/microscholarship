@@ -161,7 +161,7 @@ public class CardFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
-        ((AuroApp) getActivity().getApplication()).getAppComponent().doInjection(this);
+        AuroApp.getAppComponent().doInjection(this);
         cardViewModel = ViewModelProviders.of(this, viewModelFactory).get(CardViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setCardViewModel(cardViewModel);

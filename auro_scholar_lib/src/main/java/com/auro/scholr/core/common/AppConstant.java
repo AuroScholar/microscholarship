@@ -22,6 +22,7 @@ public interface AppConstant {
     int KYC_BUTTON_CLICK = 001;
     String TRUE = "true";
     String DASHBOARD_RES_MODEL = "DASHBOARD_RES_MODEL";
+    String AURO_DATA_MODEL = "AURO_DATA_MODEL";
     String PHONE_NUMBER = "Phonenumber";
 
 
@@ -65,29 +66,22 @@ public interface AppConstant {
 
         String DD_MM_YY = "dd-MM-yy";  // 01-11-2019
         String DD_MM_YYYY = "dd-MM-yyyy";
-        String DD_MMM_YYYY = "dd-MMM-yyyy";
         String YYYY_MM_DD = "yyyy-MM-dd";
-        String DD_MM_YYYY_HH_MM_SS = "dd-MM-yyyy HH:mm:ss";
-        String YYYY_MM_DD_HH_MM_AA = "yyyy-MM-dd hh:mm aa";
-        String yyyy_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
         String DD_MMM = "dd-MMM";
-        String EE_MMM_d_yyyy = "EEE, MMM d, yyyy";
-        String MMM = "MMM";
-        String DD = "dd";
-        String EEE = "EEE";
         String DD_MMMM_YYYY = "dd MMMM yyyy"; // 02 August 2019
         String dd_MMM_yyyy = "dd MMM, yyyy"; // 02 August 2019
     }
 
     interface PermissionCode {
         int LOCATION_PERMISSION_CODE = 783;
-        int SEARCH_COUNTRY_REQUEST = 200;
         int STORAGE_PERMISSION_CODE = 784;
-        int CAMERA_VIDEO_PERMISSION_CODE = 785;
         int READ_CONTACT_PERMISSION_CODE = 786;
-        int REQUEST_CHECK_SETTINGS_GPS = 0x1;
-        int REQUEST_ID_MULTIPLE_PERMISSIONS = 0x2;
-        int REQUEST_ACTION_SETTINGS_GPS = 777;
+
+    }
+
+    interface ScreenType {
+        String QUIZ_DASHBOARD = "QUIZ_DASHBOARD";
+        String QUIZ_DASHBOARD_WEB = "QUIZ_DASHBOARD_WEB";
 
     }
 

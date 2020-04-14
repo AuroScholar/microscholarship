@@ -28,6 +28,7 @@ import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
+import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.ViewUtil;
 
 import java.util.List;
@@ -67,12 +68,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
-        ((AuroApp) getActivity().getApplication()).getAppComponent().doInjection(this);
+        AuroApp.getAppComponent().doInjection(this);
         quizViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setQuizViewModel(quizViewModel);
         HomeActivity.setListingActiveFragment(HomeActivity.CARD_FRAGMENT);
-
 
         return binding.getRoot();
     }
@@ -88,7 +88,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void init() {
-        hideBottomNavigation = (HideBottomNavigation) mActivity;
+       // hideBottomNavigation = (HideBottomNavigation) mActivity;
 
         if (getArguments() != null) {
             mobileNumber = getArguments().getString(AppConstant.MOBILE_NUMBER);
@@ -132,7 +132,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
-        hideBottomNavigation.onOpen();
+      //  hideBottomNavigation.onOpen();
     }
 
 

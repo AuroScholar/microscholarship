@@ -65,11 +65,10 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
-        ((AuroApp) getActivity().getApplication()).getAppComponent().doInjection(this);
+        AuroApp.getAppComponent().doInjection(this);
         kycViewModel = ViewModelProviders.of(this, viewModelFactory).get(KYCViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setKycViewModel(kycViewModel);
-        ((HomeActivity) getActivity()).setCommonCallBackListener(this);
         HomeActivity.setListingActiveFragment(HomeActivity.CARD_FRAGMENT);
         setAdapter();
         return binding.getRoot();
@@ -90,7 +89,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner {
 
     @Override
     protected void init() {
-        hideBottomNavigation = (HideBottomNavigation) mActivity;
+
         getUserPref();
     }
 
@@ -124,7 +123,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner {
     @Override
     public void onResume() {
         super.onResume();
-        hideBottomNavigation.onOpen();
     }
 
 

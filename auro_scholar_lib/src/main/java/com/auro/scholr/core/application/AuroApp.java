@@ -1,5 +1,7 @@
 package com.auro.scholr.core.application;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
@@ -14,37 +16,33 @@ import com.auro.scholr.core.application.di.module.UtilsModule;
  * Created by AAK on 09-Mar-2019.
  */
 
-public class AuroApp extends Application {
+public class AuroApp  {
 
-    AppComponent appComponent;
-    public static AuroApp context;
+    public static  AppComponent appComponent;
+    public static Context context;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        context = this;
-        appComponent = DaggerAppComponent
-                .builder()
-                .appModule(new AppModule(this))
-                .utilsModule(new UtilsModule())
-                .build();
 
-        appComponent.injectAppContext(this);
-    }
 
-    public AppComponent getAppComponent() {
+    public static AppComponent getAppComponent() {
 
         return appComponent;
     }
 
-    public static AuroApp getAppContext() {
+    public static Context getAppContext() {
 
         return context;
     }
 
-    @Override
-    protected void attachBaseContext(Context context) {
-        super.attachBaseContext(context);
-    }
+   public static void intialiseSdk(Activity context)
+   {
+       AuroApp.context=context;
+       appComponent = DaggerAppComponent
+               .builder()
+               .appModule(new AppModule(context))
+               .utilsModule(new UtilsModule())
+               .build();
+
+       appComponent.injectAppContext(context);
+   }
 
 }

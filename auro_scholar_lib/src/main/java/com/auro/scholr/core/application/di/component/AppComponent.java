@@ -1,5 +1,8 @@
 package com.auro.scholr.core.application.di.component;
 
+import android.app.Activity;
+import android.app.Application;
+
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.di.module.AppModule;
 import com.auro.scholr.core.application.di.module.HomeModule;
@@ -19,7 +22,7 @@ import dagger.Component;
 @Singleton
 public interface AppComponent {
 
-    void injectAppContext(AuroApp reciprociApp);
+    void injectAppContext(Activity reciprociApp);
 
 
     void doInjection(HomeActivity homeActivity);
