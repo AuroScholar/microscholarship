@@ -1,6 +1,5 @@
 package com.auro.scholr.home.presentation.view.activity;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -8,28 +7,22 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
-import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.FragmentUtil;
-import com.auro.scholr.core.common.MessgeNotifyStatus;
 import com.auro.scholr.core.common.OnItemClickListener;
 import com.auro.scholr.core.common.Status;
-import com.auro.scholr.core.util.uiwidget.others.HideBottomNavigation;
 import com.auro.scholr.databinding.ActivityDashboardBinding;
 import com.auro.scholr.home.data.datasource.remote.HomeRemoteApi;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
@@ -38,16 +31,11 @@ import com.auro.scholr.home.presentation.view.fragment.ScholarShipFragment;
 import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
-import com.auro.scholr.util.AuroScholar;
-import com.auro.scholr.util.LocationUtil;
 import com.auro.scholr.util.cropper.CropImage;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.auro.scholr.core.application.base_component.BaseActivity;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 
-import com.auro.scholr.util.ViewUtil;
-import com.auro.scholr.util.permission.LocationHandler;
 import com.auro.scholr.util.permission.PermissionListener;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.PermissionsCallback;
@@ -55,7 +43,7 @@ import com.auro.scholr.util.permission.PermissionsCallback;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-public class HomeActivity extends BaseActivity implements OnItemClickListener,   View.OnClickListener, PermissionListener {
+public class HomeActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener, PermissionListener {
 
     @Inject
     HomeRemoteApi remoteApi;
@@ -69,7 +57,10 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener,  
     private HomeViewModel viewModel;
     private static int LISTING_ACTIVE_FRAGMENT = 0;
     int backPress = 0;
-    public static final int CARD_FRAGMENT = 1;
+    public static final int QUIZ_DASHBOARD_FRAGMENT = 1;
+    public static final int QUIZ_DASHBOARD_WEB_FRAGMENT = 2;
+    public static final int KYC_FRAGMENT = 3;
+    public static final int DEMOGRAPHIC_FRAGMENT = 44;
     private String TAG = HomeActivity.class.getSimpleName();
     String memberType;
     CommonCallBackListner commonCallBackListner;
@@ -154,7 +145,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener,  
     }
 
 
-     private void setText(String text) {
+    private void setText(String text) {
         popBackStack();
         binding.naviagtionContent.errorMesssage.setVisibility(View.VISIBLE);
         binding.naviagtionContent.errorMesssage.setText(text);
@@ -165,8 +156,6 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener,  
     public void openFragment(Fragment fragment) {
         FragmentUtil.replaceFragment(mContext, fragment, R.id.home_container, false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
     }
-
-
 
 
     @Override
@@ -186,12 +175,17 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener,  
 
         switch (LISTING_ACTIVE_FRAGMENT) {
 
-            case CARD_FRAGMENT:
-             popBackStack();
+            case QUIZ_DASHBOARD_WEB_FRAGMENT:
+            case QUIZ_DASHBOARD_FRAGMENT:
+                dismissApplication();
+
+            case DEMOGRAPHIC_FRAGMENT:
+            case KYC_FRAGMENT:
+                popBackStack();
                 break;
 
             default:
-               popBackStack();
+                popBackStack();
                 break;
         }
     }
@@ -204,7 +198,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener,  
 
 
     private void dismissApplication() {
-            finishAffinity();
+        finish();
     }
 
 
@@ -229,10 +223,6 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener,  
     public void onClick(View view) {
 
     }
-
-
-
-
 
 
     public interface PermissionResults {
@@ -260,7 +250,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener,  
                     public void onGranted(boolean newPermissionsGranted) {
                         super.onGranted(newPermissionsGranted);
                         AppLogger.d(TAG, "GPS ON PERMISSIONS");
-                        getCurrentLocation();
+
                     }
 
                     @Override
@@ -277,14 +267,6 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener,  
 
     }
 
-    public void getCurrentLocation() {
-        LocationHandler locationHandlerUpdate = new LocationHandler();
-        locationHandlerUpdate.setUpGoogleClient(HomeActivity.this);
-        if (LocationUtil.isGPSEnabled(this)) {
-            sendPermissionCllback(true, 77);
-        }
-
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -296,7 +278,6 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener,  
 
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 AppLogger.d(TAG, " Location PERMISSION_GRANTED");
-                getCurrentLocation();
 
             } else {
                 sendPermissionCllback(false, AppConstant.PermissionCode.LOCATION_PERMISSION_CODE);
@@ -316,7 +297,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener,  
         } else if (requestCode == REQUEST_CHECK_SETTINGS_GPS) {
             switch (resultCode) {
                 case Activity.RESULT_OK:
-                    getCurrentLocation();
+
                     break;
                 case Activity.RESULT_CANCELED:
                     sendPermissionCllback(false, AppConstant.PermissionCode.LOCATION_PERMISSION_CODE);
@@ -364,7 +345,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener,  
     }
 
 
-    public  void openQuizFragment(String mobileNumber) {
+    public void openQuizFragment(String mobileNumber) {
         QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
         Bundle bundle = new Bundle();
         bundle.putString(AppConstant.MOBILE_NUMBER, mobileNumber);
@@ -373,7 +354,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener,  
     }
 
 
-    public  void openScholarShipFragment(AuroScholarDataModel auroScholarDataModel) {
+    public void openScholarShipFragment(AuroScholarDataModel auroScholarDataModel) {
         ScholarShipFragment scholarShipFragment = new ScholarShipFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(AppConstant.AURO_DATA_MODEL, auroScholarDataModel);

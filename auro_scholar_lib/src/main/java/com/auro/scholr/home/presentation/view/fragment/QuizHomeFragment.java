@@ -28,7 +28,6 @@ import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
-import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.ViewUtil;
 
 import java.util.List;
@@ -37,7 +36,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
-import static com.auro.scholr.core.common.Status.LOADING;
 
 
 public class QuizHomeFragment extends BaseFragment implements View.OnClickListener {
@@ -72,7 +70,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         quizViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setQuizViewModel(quizViewModel);
-        HomeActivity.setListingActiveFragment(HomeActivity.CARD_FRAGMENT);
+        HomeActivity.setListingActiveFragment(HomeActivity.QUIZ_DASHBOARD_FRAGMENT);
 
         return binding.getRoot();
     }

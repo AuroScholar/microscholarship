@@ -92,6 +92,7 @@ public class HomeModule {
     }
 
 
+
     @Provides
     @Singleton
     @Named("HomeActivity")
@@ -99,5 +100,11 @@ public class HomeModule {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
     }
 
+    @Provides
+    @Singleton
+    @Named("DemographicFragment")
+    ViewModelFactory provideDemographicFragmentViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
 
 }

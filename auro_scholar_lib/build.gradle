@@ -88,8 +88,7 @@ dependencies {
     implementation otherDependencies.shimmer
 
 
-    // TESTING Dependency
-    implementation TestingDependencies.values()
+
 
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
 

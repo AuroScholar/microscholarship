@@ -69,7 +69,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner {
         kycViewModel = ViewModelProviders.of(this, viewModelFactory).get(KYCViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setKycViewModel(kycViewModel);
-        HomeActivity.setListingActiveFragment(HomeActivity.CARD_FRAGMENT);
+        HomeActivity.setListingActiveFragment(HomeActivity.KYC_FRAGMENT);
         setAdapter();
         return binding.getRoot();
     }
