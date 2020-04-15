@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModel;
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.MessgeNotifyStatus;
+import com.auro.scholr.core.common.NetworkUtil;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
+import com.auro.scholr.core.network.NetworkUseCase;
 import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
@@ -53,6 +55,7 @@ public class QuizViewModel extends ViewModel {
             }
 
         });
+
         getCompositeDisposable().add(disposable);
 
     }

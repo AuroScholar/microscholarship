@@ -18,9 +18,44 @@
         android:background="@color/white">
 
         <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_quiz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shimmer_duration="800">
+
+            <include
+                layout="@layout/quiz_home_shimmer_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/errorConstraint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/webView" />
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+
+                android:id="@+id/errorLayout"
+                layout="@layout/error_layout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </RelativeLayout>

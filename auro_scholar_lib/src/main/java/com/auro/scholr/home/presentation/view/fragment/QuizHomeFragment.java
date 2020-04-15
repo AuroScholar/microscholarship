@@ -201,6 +201,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             binding.shimmerViewQuiz.stopShimmer();
             binding.errorLayout.errorIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.nointernet_ico));
             binding.errorLayout.textError.setText(getString(R.string.internet_check));
+            binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    quizViewModel.getDashBoardData(mobileNumber);
+                }
+            });
         }
 
     }

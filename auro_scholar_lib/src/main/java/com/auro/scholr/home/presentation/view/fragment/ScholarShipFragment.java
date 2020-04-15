@@ -29,9 +29,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.auro.scholr.R;
+import com.auro.scholr.core.application.AuroApp;
+import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.common.NetworkUtil;
+import com.auro.scholr.databinding.CardFragmentLayoutBinding;
+import com.auro.scholr.home.data.model.AuroScholarDataModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,10 +48,7 @@ import java.util.Date;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Created by dharmaraj on 28/4/17.
- * <p>
- * <p>
- * Home framgment
+ * Created by varun
  */
 
 public class ScholarShipFragment extends Fragment {
@@ -53,71 +56,24 @@ public class ScholarShipFragment extends Fragment {
 
     private static final int INPUT_FILE_REQUEST_CODE = 1;
     protected Disposable subscriptionList;
-    private WebView webView;
     private WebSettings webSettings;
     private ValueCallback<Uri[]> mUploadMessage;
     private String mCameraPhotoPath = null;
     private long size = 0;
-
-   // private LinearLayout llTopBar;
-  //  private ProgressBar pbPageLoading;
-   // private AppCompatImageView ivHome;
-   // TextView tvTitle;
-    private View view;
-
-    public static ScholarShipFragment newInstance() {
-        return new ScholarShipFragment();
-    }
+    CardFragmentLayoutBinding binding;
+    AuroScholarDataModel auroScholarDataModel;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         setHasOptionsMenu(true);
-        if (view == null) {
-            view = inflater.inflate(R.layout.card_fragment_layout, container, false);
+        if (binding == null) {
+            binding = DataBindingUtil.inflate(inflater, R.layout.card_fragment_layout, container, false);
 
 
-            webView = (WebView) view.findViewById(R.id.webView);
-            webSettings = webView.getSettings();
-            webSettings.setAppCacheEnabled(true);
-            webSettings.setCacheMode(webSettings.LOAD_CACHE_ELSE_NETWORK);
-            webSettings.setJavaScriptEnabled(true);
-            webSettings.setLoadWithOverviewMode(true);
-            webSettings.setDomStorageEnabled(true);
-            webView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
-
-            webSettings.setAllowFileAccess(true);
-            //      webSettings.setUserAgentString("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36");
-
-            webView.setWebViewClient(new PQClient());
-            webView.setWebChromeClient(new PQChromeClient());
-            //if SDK version is greater of 19 then activate hardware acceleration otherwise activate software acceleration
-            if (Build.VERSION.SDK_INT >= 19) {
-                webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-            } else if (Build.VERSION.SDK_INT >= 11 && Build.VERSION.SDK_INT < 19) {
-                webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-            }
-
-            //ivHome = view.findViewById(R.id.ivHome);
-            //  tvTitle = view.findViewById(R.id.tvTitle);
-
-         /*   ivHome.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    loadWebData();
-                }
-            });
-*/
-           // loadWebData();
-
-            //llTopBar = view.findViewById(R.id.llTopBar);
-            // llTopBar.setVisibility(View.VISIBLE);
-            //  pbPageLoading = view.findViewById(R.id.pbPageLoading);
-
-            getUserCommunityProfileData();
         }
-        return view;
+        return binding.getRoot();
     }
 
 
@@ -125,10 +81,39 @@ public class ScholarShipFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (getArguments() != null) {
+            auroScholarDataModel = getArguments().getParcelable(AppConstant.AURO_DATA_MODEL);
+        }
+
+        webSettings = binding.webView.getSettings();
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setCacheMode(webSettings.LOAD_CACHE_ELSE_NETWORK);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setDomStorageEnabled(true);
+        binding.webView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
+
+        webSettings.setAllowFileAccess(true);
+        //      webSettings.setUserAgentString("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36");
+
+        binding.webView.setWebViewClient(new PQClient());
+        binding.webView.setWebChromeClient(new PQChromeClient());
+        //if SDK version is greater of 19 then activate hardware acceleration otherwise activate software acceleration
+        if (Build.VERSION.SDK_INT >= 19) {
+            binding.webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else if (Build.VERSION.SDK_INT >= 11 && Build.VERSION.SDK_INT < 19) {
+            binding.webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+
+        webviewInit();
+
     }
 
-    public void getUserCommunityProfileData() {
-        loadWebData();
+    public void webviewInit() {
+
+
+        checkInternet();
+
      /*  // if (ProfileManager.isUserLoggedIn()) {
             subscriptionList = ApiClient.get()
                     .getUserCommunityProfile(ProfileManager.getUserProfile().user_id)
@@ -153,7 +138,8 @@ public class ScholarShipFragment extends Fragment {
     }
 
     public void loadWebData() {
-        webView.loadUrl(" http://auroscholar.com/api/scholarlogin.php?mobile_no=9759841719&student_class=6&scholr_id=577159&regitration_source=auro-google");
+
+        binding.webView.loadUrl("http://auroscholar.com/api/scholarlogin.php?mobile_no="+auroScholarDataModel.getMobileNumber()+"&student_class="+auroScholarDataModel.getStudentClass()+"&scholr_id="+auroScholarDataModel.getScholarID()+"&regitration_source="+auroScholarDataModel.getRegistrationSource());
 
        /* if (userCommunityProfile != null && userCommunityProfile.getProfile() != null) {
             if (userCommunityProfile.getProfile().phone != null && userCommunityProfile.getProfile().grade != null) {
@@ -330,7 +316,7 @@ public class ScholarShipFragment extends Fragment {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
-           // pbPageLoading.setProgress(newProgress);
+            // pbPageLoading.setProgress(newProgress);
         }
 
         // For Android 5.0+
@@ -436,11 +422,11 @@ public class ScholarShipFragment extends Fragment {
 
             // If url contains mailto link then open Mail Intent
             if (url.contains("http://auroscholar.com/dashboard.php")) {
-             //   tvTitle.setVisibility(View.VISIBLE);
-            //    ivHome.setVisibility(View.GONE);
+                //   tvTitle.setVisibility(View.VISIBLE);
+                //    ivHome.setVisibility(View.GONE);
             } else {
                 //tvTitle.setVisibility(View.GONE);
-              //  ivHome.setVisibility(View.VISIBLE);
+                //  ivHome.setVisibility(View.VISIBLE);
             }
             return false;
         }
@@ -464,6 +450,7 @@ public class ScholarShipFragment extends Fragment {
 
             try {
                 // Close progressDialog
+                handleProgress(1);
                 if (progressDialog.isShowing()) {
                     progressDialog.dismiss();
                     progressDialog = null;
@@ -479,6 +466,7 @@ public class ScholarShipFragment extends Fragment {
         super.onDestroy();
         if (subscriptionList != null && !subscriptionList.isDisposed()) {
             subscriptionList.dispose();
+
         }
     }
 
@@ -501,5 +489,47 @@ public class ScholarShipFragment extends Fragment {
         }
     }
 
+
+    private void handleProgress(int value) {
+        if (value == 0) {
+            binding.errorConstraint.setVisibility(View.GONE);
+            binding.shimmerViewQuiz.setVisibility(View.VISIBLE);
+            binding.shimmerViewQuiz.startShimmer();
+        } else if (value == 1) {
+            binding.errorConstraint.setVisibility(View.GONE);
+            binding.shimmerViewQuiz.setVisibility(View.GONE);
+            binding.webView.setVisibility(View.VISIBLE);
+            binding.shimmerViewQuiz.stopShimmer();
+        } else {
+            binding.errorConstraint.setVisibility(View.VISIBLE);
+            binding.webView.setVisibility(View.GONE);
+            binding.shimmerViewQuiz.setVisibility(View.GONE);
+            binding.shimmerViewQuiz.stopShimmer();
+            binding.errorLayout.errorIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.nointernet_ico));
+            binding.errorLayout.textError.setText(getString(R.string.internet_check));
+            binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    webviewInit();
+                }
+            });
+        }
+
+    }
+
+    private void checkInternet() {
+        NetworkUtil.hasInternetConnection().subscribe(hasInternet -> {
+
+            if (hasInternet) {
+                handleProgress(0);
+                loadWebData();
+
+            } else {
+                handleProgress(2);
+            }
+
+        });
+
+    }
 
 }

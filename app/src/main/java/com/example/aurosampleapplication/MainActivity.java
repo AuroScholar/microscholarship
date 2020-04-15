@@ -17,6 +17,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         AuroScholarDataModel auroScholarDataModel=new AuroScholarDataModel();
         auroScholarDataModel.setMobileNumber("7503600686");
+        auroScholarDataModel.setStudentClass("6");
+        auroScholarDataModel.setScholarID("577159");
+        auroScholarDataModel.setRegistrationSource("auro-google");
+        //6&scholr_id=577159&regitration_source=auro-google")
         auroScholarDataModel.setScreenType(AppConstant.ScreenType.QUIZ_DASHBOARD);
         AuroScholar.openAuroScholarActivity(auroScholarDataModel,this);
     }
