@@ -20,6 +20,7 @@ public enum Status {
     DEFAULT_MSG,
     KYC_BUTTON_CLICK,
     KYC_RESULT_PATH,
+    FACE_DETECTION_CALLBACK,
     DASHBOARD_API
 
 

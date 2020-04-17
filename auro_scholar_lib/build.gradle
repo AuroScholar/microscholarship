@@ -60,6 +60,8 @@ dependencies {
 
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     annotationProcessor googleDependencies.daggerCompiler
 
     //Rx Dependencies
@@ -88,9 +90,10 @@ dependencies {
     implementation otherDependencies.shimmer
 
 
-
+    implementation 'com.google.android.gms:play-services-vision:15.0.2'
 
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
 
 }
 apply plugin: 'com.google.gms.google-services'

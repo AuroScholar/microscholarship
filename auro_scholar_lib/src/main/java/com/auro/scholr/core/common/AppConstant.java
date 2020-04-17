@@ -26,6 +26,8 @@ public interface AppConstant {
     String PHONE_NUMBER = "Phonenumber";
 
 
+
+
     String COMING_FROM = "navigation_control";
 
     int TERMS_CONDITION_TEXT = 109;
@@ -75,7 +77,8 @@ public interface AppConstant {
     interface PermissionCode {
         int LOCATION_PERMISSION_CODE = 783;
         int STORAGE_PERMISSION_CODE = 784;
-        int READ_CONTACT_PERMISSION_CODE = 786;
+        int READ_CONTACT_PERMISSION_CODE = 785;
+        int CAMERA_PERMISSIONS_CODE=786;
 
     }
 

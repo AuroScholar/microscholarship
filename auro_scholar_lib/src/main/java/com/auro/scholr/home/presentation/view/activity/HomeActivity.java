@@ -2,16 +2,13 @@ package com.auro.scholr.home.presentation.view.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -22,28 +19,20 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.core.common.OnItemClickListener;
-import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.ActivityDashboardBinding;
 import com.auro.scholr.home.data.datasource.remote.HomeRemoteApi;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
 import com.auro.scholr.home.presentation.view.fragment.ScholarShipFragment;
 import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
-import com.auro.scholr.util.AppLogger;
-import com.auro.scholr.util.AppUtil;
-import com.auro.scholr.util.cropper.CropImage;
 
 import com.auro.scholr.core.application.base_component.BaseActivity;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 
-import com.auro.scholr.util.permission.PermissionListener;
-import com.auro.scholr.util.permission.PermissionUtil;
-import com.auro.scholr.util.permission.PermissionsCallback;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
-public class HomeActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener, PermissionListener {
+public class HomeActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener {
 
     @Inject
     HomeRemoteApi remoteApi;
@@ -64,15 +53,10 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
     private String TAG = HomeActivity.class.getSimpleName();
     String memberType;
     CommonCallBackListner commonCallBackListner;
-
+    public static int screenHeight=0;
+    public static int screenWidth=0;
 
     AuroScholarDataModel auroScholarDataModel;
-
-
-    /*Permission Handling*/
-    PermissionResults permissionResults;
-    private PermissionUtil mPermissionUtil = new PermissionUtil();
-    private final static int REQUEST_CHECK_SETTINGS_GPS = 0x1;
 
 
     public static int getListingActiveFragment() {
@@ -112,6 +96,11 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
         if (getIntent() != null && getIntent().getParcelableExtra(AppConstant.AURO_DATA_MODEL) != null) {
             auroScholarDataModel = (AuroScholarDataModel) getIntent().getParcelableExtra(AppConstant.AURO_DATA_MODEL);
         }
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        screenHeight = displayMetrics.heightPixels;
+        screenWidth = displayMetrics.widthPixels;
+
 
         setHomeFragmentTab();
     }
@@ -222,126 +211,6 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
     @Override
     public void onClick(View view) {
 
-    }
-
-
-    public interface PermissionResults {
-        void onPermissionReceived(boolean result, int permissionType);
-
-    }
-
-    public void setResultListener(PermissionResults listener) {
-        this.permissionResults = listener;
-    }
-
-
-    @Override
-    public void permissionCallback(int requestCode) {
-
-    }
-
-    public void askPermission(int status) {
-
-        switch (status) {
-
-            case AppConstant.PermissionCode.LOCATION_PERMISSION_CODE:
-                mPermissionUtil.checkLocationPermissions(this, new PermissionsCallback() {
-                    @Override
-                    public void onGranted(boolean newPermissionsGranted) {
-                        super.onGranted(newPermissionsGranted);
-                        AppLogger.d(TAG, "GPS ON PERMISSIONS");
-
-                    }
-
-                    @Override
-                    public void onDenied() {
-                        super.onDenied();
-                        if (permissionResults != null) {
-                            //  permissionResults.onPermissionReceived(false, AppConstant.PermissionCode.LOCATION_PERMISSION_CODE);
-                        }
-                    }
-                }, true, AppConstant.PermissionCode.LOCATION_PERMISSION_CODE);
-                break;
-        }
-
-
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        AppLogger.d("PermissionUtils", "Request Code" + requestCode);
-
-        /*  for locations persmission*/
-        if (requestCode == AppConstant.PermissionCode.LOCATION_PERMISSION_CODE) {
-
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                AppLogger.d(TAG, " Location PERMISSION_GRANTED");
-
-            } else {
-                sendPermissionCllback(false, AppConstant.PermissionCode.LOCATION_PERMISSION_CODE);
-                mPermissionUtil.onRequestPermissionsResult(this, requestCode, permissions, grantResults, this);
-            }
-
-        }
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == AppConstant.PermissionCode.LOCATION_PERMISSION_CODE) {
-            AppLogger.d(TAG, "RESULT_CODE_GPS_SETTING");
-            askPermission(AppConstant.PermissionCode.LOCATION_PERMISSION_CODE);
-        } else if (requestCode == REQUEST_CHECK_SETTINGS_GPS) {
-            switch (resultCode) {
-                case Activity.RESULT_OK:
-
-                    break;
-                case Activity.RESULT_CANCELED:
-                    sendPermissionCllback(false, AppConstant.PermissionCode.LOCATION_PERMISSION_CODE);
-                    break;
-                default:
-                    // do nothing here
-                    break;
-
-            }
-
-        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                try {
-                    Uri resultUri = result.getUri();
-                    sendCallBack(Status.KYC_RESULT_PATH, "" + resultUri.getPath());
-                    // Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), resultUri);
-                    // binding.naviagtionContent.cropImageView.setImageBitmap(ImageUtil.contrast(bitmap, 50f));
-                } catch (Exception e) {
-
-                }
-
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-            }
-        }
-
-    }
-
-
-    private void sendPermissionCllback(boolean result, int code) {
-        if (permissionResults != null) {
-            permissionResults.onPermissionReceived(result, code);
-        }
-    }
-
-    public void setCommonCallBackListener(CommonCallBackListner listener) {
-        this.commonCallBackListner = listener;
-    }
-
-    private void sendCallBack(Status status, Object o) {
-        if (commonCallBackListner != null) {
-            commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(-1, status, o));
-        }
     }
 
 

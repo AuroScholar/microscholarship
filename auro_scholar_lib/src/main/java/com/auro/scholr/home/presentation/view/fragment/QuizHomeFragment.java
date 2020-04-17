@@ -235,6 +235,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+       // openFragment(new CameraFragment());
         openKYCFragment(dashboardResModel);
     }
 }

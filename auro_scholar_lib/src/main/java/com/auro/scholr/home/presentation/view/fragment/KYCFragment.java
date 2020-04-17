@@ -96,12 +96,12 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner {
 
     @Override
     protected void setToolbar() {
-
+        /*Do code here*/
     }
 
     @Override
     protected void setListener() {
-
+        /*Do code here*/
     }
 
 
