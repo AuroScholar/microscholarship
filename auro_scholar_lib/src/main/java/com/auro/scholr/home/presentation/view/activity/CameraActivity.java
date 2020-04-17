@@ -56,9 +56,18 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class CameraActivity extends BaseActivity implements View.OnClickListener {
     String TAG = "AppCompatActivity";
@@ -256,15 +265,46 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onPictureTaken(byte[] bytes) {
                 try {
-                    // convert byte array into bitmap
-                    Bitmap loadedImage = null;
-                    loadedImage = BitmapFactory.decodeByteArray(bytes, 0,
-                            bytes.length);
-                    String path = saveToInternalStorage(loadedImage) + "/profile.jpg";
-                    Intent intent = new Intent();
-                    intent.putExtra(AppConstant.PROFILE_IMAGE_PATH, path);
-                    setResult(Activity.RESULT_OK, intent);
-                    finish();
+
+
+                    Single<String> single = Single.create(new SingleOnSubscribe<String>() {
+                        @Override
+                        public void subscribe(SingleEmitter<String> emitter) throws Exception {
+                            try {
+                                // convert byte array into bitmap
+                                Bitmap loadedImage = null;
+                                loadedImage = BitmapFactory.decodeByteArray(bytes, 0,
+                                        bytes.length);
+                                String path = saveToInternalStorage(loadedImage) + "/profile.jpg";
+                                emitter.onSuccess(path);
+                            } catch (Exception e) {
+                                emitter.onError(e);
+                            }
+                        }
+                    });
+
+
+                    new CompositeDisposable().add(single
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    new Consumer<String>() {
+                                        @Override
+                                        public void accept(String path) throws Exception {
+                                            Intent intent = new Intent();
+                                            intent.putExtra(AppConstant.PROFILE_IMAGE_PATH, path);
+                                            setResult(Activity.RESULT_OK, intent);
+                                            finish();
+                                        }
+                                    },
+                                    new Consumer<Throwable>() {
+                                        @Override
+                                        public void accept(Throwable throwable) throws Exception {
+                                        }
+                                    }
+                            ));
+
+
                     //loadImageFromStorage(saveToInternalStorage(loadedImage));
 
 
