@@ -63,18 +63,6 @@ public enum AppPref {
     }
 
 
-    public void clearPref() {
-
-        if (sharedPreferences != null) {
-            PrefModel clearPrefModel = AppPref.INSTANCE.getModelInstance();
-            clearPrefModel.setLogin(false);
-            clearPrefModel.setUserCountry("");
-            clearPrefModel.setCountryNameCode("");
-            AppPref.INSTANCE.setPref(clearPrefModel);
-
-        }
-    }
-
     public void setStringPref(String key, String value) {
         sharedPreferenceEditor = AuroApp.getAppContext().getSharedPreferences(PreferenceName, Context.MODE_PRIVATE).edit();
         sharedPreferenceEditor.putString(key, value).apply();

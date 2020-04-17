@@ -19,7 +19,11 @@
         android:required="true" />
 
     <application>
-        <activity android:name=".util.permission.PermissionsActivity"></activity>
+        <activity
+            android:name=".home.presentation.view.activity.CameraActivity"
+            android:label="@string/title_activity_camera"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".util.permission.PermissionsActivity" />
         <activity android:name=".home.presentation.view.activity.HomeActivity" />
 
         <uses-library

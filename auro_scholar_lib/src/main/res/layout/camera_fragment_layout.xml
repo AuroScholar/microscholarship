@@ -25,9 +25,9 @@
 
             <com.auro.scholr.util.camera.CameraOverlay
                 android:id="@+id/faceOverlay"
-                android:visibility="invisible"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:visibility="invisible" />
 
 
         </com.auro.scholr.util.camera.CameraSurfacePreview>
@@ -48,50 +48,66 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/capture_button_secondary_container"
             android:layout_width="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/background_camera_bottom_bar"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:alpha="1"
-            android:layout_height="wrap_content">
-        <RelativeLayout
-            android:id="@+id/capture_button"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/circle_white"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:padding="@dimen/_2sdp"
+            android:background="@color/background_camera_bottom_bar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            tools:alpha="1">
 
-            <ImageButton
-                android:id="@+id/stillshot"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+
+            <RelativeLayout
+                android:id="@+id/capture_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@drawable/circle_white"
+                android:padding="@dimen/_2sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/stillshot"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/cam_circle_selector"
+                    android:padding="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/cam_action_stillshot" />
+
+            </RelativeLayout>
+
+            <ProgressBar
+                android:id="@+id/loading_spinner"
+                android:layout_width="@dimen/_85sdp"
+                android:layout_height="@dimen/_85sdp"
                 android:layout_gravity="center"
-                android:background="@drawable/cam_circle_selector"
-                android:padding="10dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/cam_action_stillshot" />
-
-        </RelativeLayout>
+                android:elevation="@dimen/_2sdp"
+                android:indeterminateDrawable="@drawable/circular_progress"
+                android:innerRadiusRatio="3"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Flash Toggle -->
         <RelativeLayout
-            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/flash_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_10sdp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_toLeftOf="@+id/switch_orientation_container"
             android:background="@drawable/circle_white"
-            android:padding="@dimen/_2sdp">
+            android:padding="@dimen/_2sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
                 android:id="@+id/flash_toggle"
@@ -100,16 +116,13 @@
                 android:background="@drawable/cam_circle_selector"
                 android:padding="@dimen/_5sdp"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_flash_off_black"
-              />
+                android:src="@drawable/ic_flash_off_black" />
 
         </RelativeLayout>
 
 
         <!-- Switch Orientation Button -->
         <RelativeLayout
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/switch_orientation_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -118,26 +131,27 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
-            android:padding="@dimen/_2sdp">
+            android:padding="@dimen/_2sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/circle_white"
-            android:padding="@dimen/_2sdp">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle_white"
+                android:padding="@dimen/_2sdp">
 
-            <ImageButton
-                android:id="@+id/switch_orientation"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/cam_grey_circle_selector"
-                android:padding="@dimen/_5sdp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_switch_camera_black"
-                />
+                <ImageButton
+                    android:id="@+id/switch_orientation"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/cam_grey_circle_selector"
+                    android:padding="@dimen/_5sdp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_switch_camera_black" />
 
-        </RelativeLayout>
+            </RelativeLayout>
         </RelativeLayout>
 
 

@@ -19,13 +19,12 @@ public interface AppConstant {
     String AUTH_TOKEN = "AUTH_TOKEN";
     String MODIFIED_TIME = "MODIFIED_TIME";
     String MOBILE_NUMBER = "MOBILE_NUMBER";
-    int KYC_BUTTON_CLICK = 001;
     String TRUE = "true";
+    String PROFILE_IMAGE_PATH = "PROFILE_IMAGE_PATH";
     String DASHBOARD_RES_MODEL = "DASHBOARD_RES_MODEL";
     String AURO_DATA_MODEL = "AURO_DATA_MODEL";
     String PHONE_NUMBER = "Phonenumber";
-
-
+    int CAMERA_REQUEST_CODE = 007;
 
 
     String COMING_FROM = "navigation_control";
@@ -74,11 +73,11 @@ public interface AppConstant {
         String dd_MMM_yyyy = "dd MMM, yyyy"; // 02 August 2019
     }
 
-    interface PermissionCode {
-        int LOCATION_PERMISSION_CODE = 783;
-        int STORAGE_PERMISSION_CODE = 784;
-        int READ_CONTACT_PERMISSION_CODE = 785;
-        int CAMERA_PERMISSIONS_CODE=786;
+    interface documentType {
+        int ID_PROOF_BACK_SIDE = 783;
+        int ID_PROOF_FRONT_SIDE = 784;
+        int SCHOOL_ID_CARD = 785;
+        int UPLOAD_YOUR_PHOTO = 786;
 
     }
 

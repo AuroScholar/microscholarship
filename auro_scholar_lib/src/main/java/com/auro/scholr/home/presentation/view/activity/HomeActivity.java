@@ -2,6 +2,7 @@ package com.auro.scholr.home.presentation.view.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -28,6 +30,7 @@ import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
 
 import com.auro.scholr.core.application.base_component.BaseActivity;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.util.AppLogger;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -179,6 +182,14 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+        AppLogger.e("chhonker","Activity requestCode="+requestCode);
+    }
 
     private void popBackStack() {
         backPress = 0;

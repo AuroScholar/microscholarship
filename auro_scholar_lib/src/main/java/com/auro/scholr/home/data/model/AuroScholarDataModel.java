@@ -1,5 +1,6 @@
 package com.auro.scholr.home.data.model;
 
+import android.app.Activity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,10 +11,9 @@ public class AuroScholarDataModel implements Parcelable {
     String studentClass;
     String scholarID;
     String registrationSource;
+    Activity activity;
+    int fragmentContainerUiId;
 
-    public AuroScholarDataModel() {
-
-    }
 
     protected AuroScholarDataModel(Parcel in) {
         mobileNumber = in.readString();
@@ -21,6 +21,7 @@ public class AuroScholarDataModel implements Parcelable {
         studentClass = in.readString();
         scholarID = in.readString();
         registrationSource = in.readString();
+        fragmentContainerUiId = in.readInt();
     }
 
     @Override
@@ -30,6 +31,7 @@ public class AuroScholarDataModel implements Parcelable {
         dest.writeString(studentClass);
         dest.writeString(scholarID);
         dest.writeString(registrationSource);
+        dest.writeInt(fragmentContainerUiId);
     }
 
     @Override
@@ -48,6 +50,28 @@ public class AuroScholarDataModel implements Parcelable {
             return new AuroScholarDataModel[size];
         }
     };
+
+    public int getFragmentContainerUiId() {
+        return fragmentContainerUiId;
+    }
+
+    public void setFragmentContainerUiId(int fragmentContainerUiId) {
+        this.fragmentContainerUiId = fragmentContainerUiId;
+    }
+
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+    public AuroScholarDataModel() {
+
+    }
+
 
     public String getMobileNumber() {
         return mobileNumber;

@@ -213,66 +213,7 @@ public class ViewUtil {
     }
 
 
-    public static void setUserPrefData(boolean loginStatus) {
-        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        prefModel.setLogin(loginStatus);
-        AppPref.INSTANCE.setPref(prefModel);
-    }
 
-    public static void setWelcomePrefData(boolean tourStatus) {
-        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        prefModel.setTour(tourStatus);
-        AppPref.INSTANCE.setPref(prefModel);
-    }
-
-    public static void showAlertMessageInCasePermissionNotGranted(String title, String pName, final Context context) {
-        try {
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(R.string.app_name);
-            builder.setMessage("To take " + title + ", allow Viya access to " + pName + ". Tap Settings>Permissions, and turn " + pName + " on.").setCancelable(false);
-            builder.setNegativeButton("Not Now", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-
-            builder.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent();
-                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    Uri uri = Uri.fromParts("package", context.getPackageName(), null);
-                    intent.setData(uri);
-                    ((AppCompatActivity) context).startActivityForResult(intent, 777);
-                }
-            });
-
-            AlertDialog alert = builder.create();
-            alert.show();
-            Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-            nbutton.setTextColor(context.getResources().getColor(R.color.colorPrimary));
-            Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
-            pbutton.setTextColor(context.getResources().getColor(R.color.colorPrimary));
-        } catch (Exception e) {
-            AppLogger.d("ViewUtil", e.toString());
-        }
-    }
-
-    public static String makeTextStringDiffSize(String start, String end) {
-
-        int textSize1 = AuroApp.getAppContext().getResources().getDimensionPixelSize(R.dimen._16sdp);
-        int textSize2 = AuroApp.getAppContext().getResources().getDimensionPixelSize(R.dimen._12sdp);
-
-        SpannableString span1 = new SpannableString(start);
-        span1.setSpan(new AbsoluteSizeSpan(textSize1), 0, start.length(), SPAN_INCLUSIVE_INCLUSIVE);
-
-        SpannableString span2 = new SpannableString(end);
-        span2.setSpan(new AbsoluteSizeSpan(textSize2), 0, end.length(), SPAN_INCLUSIVE_INCLUSIVE);
-
-// let's put both spans together with a separator and all
-        CharSequence finalText = TextUtils.concat(span1, " ", span2);
-        return finalText.toString();
-    }
 
     public static void setLightStatusBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -284,24 +225,6 @@ public class ViewUtil {
     }
 
 
-    public static void loadGalleryImage(ImageView imageView, int resource) {
 
-        Glide.with(imageView.getContext())
-                .load(resource)
-                .apply(RequestOptions.bitmapTransform(new RoundedCorners(20))
-                        .dontAnimate()
-                        .priority(Priority.IMMEDIATE)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                )
-                .into(imageView);
-
-    }
-
-    public static int getDisplayMatrics(Activity activity) {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int density = (int) activity.getResources().getDisplayMetrics().density;
-        return displayMetrics.widthPixels / density;
-    }
 
 }

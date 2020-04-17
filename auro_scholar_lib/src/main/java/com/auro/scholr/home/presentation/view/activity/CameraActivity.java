@@ -1,36 +1,26 @@
-package com.auro.scholr.home.presentation.view.fragment;
+package com.auro.scholr.home.presentation.view.activity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-
-import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
-import com.auro.scholr.core.application.base_component.BaseFragment;
+import com.auro.scholr.core.application.base_component.BaseActivity;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
-import com.auro.scholr.core.common.CommonCallBackListner;
-import com.auro.scholr.core.common.CommonDataModel;
-import com.auro.scholr.core.common.Status;
+import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.common.OnItemClickListener;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.CameraFragmentLayoutBinding;
-import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.home.presentation.view.fragment.CameraFragment;
 import com.auro.scholr.util.AppLogger;
-import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.camera.CameraOverlay;
 import com.auro.scholr.util.camera.FaceOverlayGraphics;
 import com.auro.scholr.util.permission.PermissionHandler;
@@ -43,27 +33,35 @@ import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.FaceDetector;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
+
+import android.os.Handler;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+
+import com.auro.scholr.R;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-
-public class CameraFragment extends BaseFragment implements CommonCallBackListner, View.OnClickListener {
-
-    @Inject
-    @Named("CameraFragment")
-    ViewModelFactory viewModelFactory;
-    String TAG = "CameraFragment";
+public class CameraActivity extends BaseActivity implements View.OnClickListener {
+    String TAG = "AppCompatActivity";
     CameraSource mCameraSource;
     private static final int RC_HANDLE_GMS = 9001;
     private static final int RC_HANDLE_CAMERA_PERM = 2;
@@ -74,24 +72,26 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
     CameraFragmentLayoutBinding binding;
     public static boolean status;
 
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
+                WindowManager.LayoutParams.FLAG_SECURE);
+        init();
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
+    protected void init() {
+        binding = DataBindingUtil.setContentView(this, getLayout());
         binding.setLifecycleOwner(this);
         HomeActivity.setListingActiveFragment(HomeActivity.DEMOGRAPHIC_FRAGMENT);
         if (hasFrontCamera()) {
             cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
         }
-
+        setListener();
+        askPermission();
         checkValueEverySecond();
-        return binding.getRoot();
     }
 
     private void checkValueEverySecond() {
@@ -110,19 +110,13 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
 
     }
 
-    @Override
-    protected void init() {
-        setListener();
-        askPermission();
-
-    }
 
     private void askPermission() {
         String rationale = "Please provide location permission so that you can ...";
         Permissions.Options options = new Permissions.Options()
                 .setRationaleDialogTitle("Info")
                 .setSettingsDialogTitle("Warning");
-        Permissions.check(getActivity(), PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
+        Permissions.check(this, PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
             @Override
             public void onGranted() {
                 createCameraSource(cameraID);
@@ -138,14 +132,14 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
 
     private void createCameraSource(int cameraID) {
 
-        Context context = getActivity().getApplicationContext();
+        Context context = this.getApplicationContext();
         FaceDetector detector = new FaceDetector.Builder(context)
                 .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
                 .build();
 
 
         detector.setProcessor(
-                new MultiProcessor.Builder<>(new CameraFragment.GraphicFaceTrackerFactory())
+                new MultiProcessor.Builder<>(new CameraActivity.GraphicFaceTrackerFactory())
                         .build());
 
         if (!detector.isOperational()) {
@@ -165,10 +159,10 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
 
     private void startCameraSource() {
         int code = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(
-                getActivity().getApplicationContext());
+                this.getApplicationContext());
         if (code != ConnectionResult.SUCCESS) {
             Dialog dlg =
-                    GoogleApiAvailability.getInstance().getErrorDialog(getActivity(), code, RC_HANDLE_GMS);
+                    GoogleApiAvailability.getInstance().getErrorDialog(this, code, RC_HANDLE_GMS);
             dlg.show();
         }
 
@@ -199,6 +193,7 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
     private void changeCamera() {
         if (cameraID == Camera.CameraInfo.CAMERA_FACING_BACK) {
             cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
+            binding.flashToggle.setImageDrawable(this.getDrawable(R.drawable.ic_flash_off_black));
         } else {
             cameraID = Camera.CameraInfo.CAMERA_FACING_BACK;
         }
@@ -211,7 +206,7 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
     private class GraphicFaceTrackerFactory implements MultiProcessor.Factory<Face> {
         @Override
         public Tracker<Face> create(Face face) {
-            return new CameraFragment.GraphicFaceTracker(binding.faceOverlay);
+            return new CameraActivity.GraphicFaceTracker(binding.faceOverlay);
         }
     }
 
@@ -255,6 +250,8 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
     }
 
     private void clickPicture() {
+
+        binding.loadingSpinner.setVisibility(View.VISIBLE);
         mCameraSource.takePicture(null, new CameraSource.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] bytes) {
@@ -263,8 +260,12 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
                     Bitmap loadedImage = null;
                     loadedImage = BitmapFactory.decodeByteArray(bytes, 0,
                             bytes.length);
-                    setUserPrefData(saveToInternalStorage(loadedImage)+"/profile.jpg");
-                    loadImageFromStorage(saveToInternalStorage(loadedImage));
+                    String path = saveToInternalStorage(loadedImage) + "/profile.jpg";
+                    Intent intent = new Intent();
+                    intent.putExtra(AppConstant.PROFILE_IMAGE_PATH, path);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                    //loadImageFromStorage(saveToInternalStorage(loadedImage));
 
 
                 } catch (Exception e) {
@@ -305,7 +306,7 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
 
             File f = new File(path, "profile.jpg");
             Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-            getActivity().getSupportFragmentManager().popBackStack();
+            this.getSupportFragmentManager().popBackStack();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -325,9 +326,9 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
 
 
     private void flashIsAvailable() {
-        boolean hasFlash = getActivity().getPackageManager()
+        boolean hasFlash = this.getPackageManager()
                 .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-        if (hasFlash) {
+        if (hasFlash && cameraID == 0) {
             changeFlashStatus();
         }
     }
@@ -345,11 +346,11 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
                         params = camera.getParameters();
                         if (!isFlash) {
                             params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-                            binding.flashToggle.setImageDrawable(getActivity().getDrawable(R.drawable.ic_flash_on_black));
+                            binding.flashToggle.setImageDrawable(this.getDrawable(R.drawable.ic_flash_on_black));
                             isFlash = true;
                         } else {
                             params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-                            binding.flashToggle.setImageDrawable(getActivity().getDrawable(R.drawable.ic_flash_off_black));
+                            binding.flashToggle.setImageDrawable(this.getDrawable(R.drawable.ic_flash_off_black));
                             isFlash = false;
                         }
                         camera.setParameters(params);
@@ -364,10 +365,10 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
         }
     }
 
-
     @Override
-    protected void setToolbar() {
-        /*Do work here*/
+    protected void onDestroy() {
+        super.onDestroy();
+        releaseCamera();
     }
 
     @Override
@@ -377,50 +378,14 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
         binding.flashToggle.setOnClickListener(this);
     }
 
-
     @Override
     protected int getLayout() {
         return R.layout.camera_fragment_layout;
     }
-
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        init();
-        setToolbar();
-        setListener();
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-
-    @Override
-    public void commonEventListner(CommonDataModel commonDataModel) {
-        if (commonDataModel.getClickType() == Status.FACE_DETECTION_CALLBACK) {
-
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        releaseCamera();
-    }
-
 
     private void releaseCamera() {
         binding.faceOverlay.clear();
         mCameraSource.release();
     }
 
-    public static void setUserPrefData(String path) {
-        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        prefModel.setUserKYCProfilePhotoPath(path);
-        AppPref.INSTANCE.setPref(prefModel);
-    }
 }
