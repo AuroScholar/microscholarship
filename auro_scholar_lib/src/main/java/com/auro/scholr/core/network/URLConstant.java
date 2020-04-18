@@ -11,4 +11,7 @@ public interface URLConstant {
     String DASHBOARD_API = BASE_URL + "dashboard.php";
 
 
+    String UPLOAD_IMAGE_URL = BASE_URL + "kyc.php";
+
+
 }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,31 +23,36 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.FragmentUtil;
-import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.core.util.uiwidget.others.HideBottomNavigation;
 import com.auro.scholr.databinding.KycFragmentLayoutBinding;
+import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.adapter.KYCuploadAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.cropper.CropImage;
 import com.auro.scholr.util.cropper.CropImageView;
 
 import java.io.File;
-import java.net.URI;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import static android.app.Activity.RESULT_OK;
+import static com.auro.scholr.core.common.Status.KYC_BUTTON_CLICK;
+import static com.auro.scholr.core.common.Status.UPLOAD_PROFILE_IMAGE;
 
 
-public class KYCFragment extends BaseFragment implements CommonCallBackListner {
+public class KYCFragment extends BaseFragment implements CommonCallBackListner, View.OnClickListener {
 
     @Inject
     @Named("KYCFragment")
@@ -61,9 +65,11 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner {
 
     private Activity mActivity;
     private HideBottomNavigation hideBottomNavigation;
-    private CommonDataModel commonDataModel;
+
     private int pos;
+    private DashboardResModel dashboardResModel;
     ArrayList<KYCDocumentDatamodel> kycDocumentDatamodelArrayList;
+    private boolean uploadBtnStatus;
 
 
     @Override
@@ -81,15 +87,14 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner {
         binding.setLifecycleOwner(this);
         binding.setKycViewModel(kycViewModel);
         HomeActivity.setListingActiveFragment(HomeActivity.KYC_FRAGMENT);
-        setAdapter();
         return binding.getRoot();
     }
 
     public void setAdapter() {
-        this.kycDocumentDatamodelArrayList = kycViewModel.homeUseCase.makeDummyDocumentList();
+        this.kycDocumentDatamodelArrayList = kycViewModel.homeUseCase.makeDummyDocumentList(dashboardResModel);
         binding.documentUploadRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.documentUploadRecyclerview.setHasFixedSize(true);
-        kyCuploadAdapter = new KYCuploadAdapter(getActivity(), kycViewModel.homeUseCase.makeDummyDocumentList(), this);
+        kyCuploadAdapter = new KYCuploadAdapter(getActivity(), kycViewModel.homeUseCase.makeDummyDocumentList(dashboardResModel), this);
         binding.documentUploadRecyclerview.setAdapter(kyCuploadAdapter);
     }
 
@@ -100,7 +105,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner {
 
     @Override
     protected void init() {
-
+        if (getArguments() != null) {
+            dashboardResModel = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
+        }
         getUserPref();
     }
 
@@ -113,6 +120,13 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner {
     @Override
     protected void setListener() {
         /*Do code here*/
+        binding.btUploadAll.setOnClickListener(this);
+        if (kycViewModel != null && kycViewModel.serviceLiveData().hasObservers()) {
+            kycViewModel.serviceLiveData().removeObservers(this);
+
+        } else {
+            observeServiceResponse();
+        }
     }
 
 
@@ -128,6 +142,12 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner {
         init();
         setToolbar();
         setListener();
+        setAdapter();
+        if (kycViewModel.homeUseCase.checkUploadButtonStatus(kycDocumentDatamodelArrayList)) {
+            binding.btUploadAll.setVisibility(View.VISIBLE);
+        } else {
+            binding.btUploadAll.setVisibility(View.INVISIBLE);
+        }
     }
 
 
@@ -148,15 +168,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner {
 
         switch (commonDataModel.getClickType()) {
             case KYC_BUTTON_CLICK:
-                pos = commonDataModel.getSource();
-                KYCDocumentDatamodel kycDocumentDatamodel = (KYCDocumentDatamodel) commonDataModel.getObject();
-                if (kycDocumentDatamodel.getDocumentId() == AppConstant.documentType.UPLOAD_YOUR_PHOTO) {
-                    openActivity();
-                } else {
-                    CropImage.activity()
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .start(getActivity());
-                }
+                onUploadDocClick(commonDataModel);
 
                 break;
             case KYC_RESULT_PATH:
@@ -222,8 +234,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner {
             } else if (kycDocumentDatamodelArrayList.get(pos).getDocumentId() == AppConstant.documentType.UPLOAD_YOUR_PHOTO) {
                 kycDocumentDatamodelArrayList.get(pos).setDocumentFileName("profile.jpg");
             }
-
-            kycDocumentDatamodelArrayList.get(pos).setDocumentURi(new URI(path));
+            kycDocumentDatamodelArrayList.get(pos).setDocumentURi(Uri.parse(path));
             kycDocumentDatamodelArrayList.get(pos).setButtonText(getString(R.string.upload_file));
             kyCuploadAdapter.updateList(kycDocumentDatamodelArrayList);
         } catch (Exception e) {
@@ -231,5 +242,109 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner {
         }
     }
 
+    private void observeServiceResponse() {
+
+        kycViewModel.serviceLiveData().observeForever(responseApi -> {
+
+            switch (responseApi.status) {
+
+                case LOADING:
+                    progressBarHandling(0);
+                    break;
+
+                case SUCCESS:
+                    progressBarHandling(1);
+                    if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
+                        if (uploadBtnStatus && pos <= 3) {
+                            binding.btUploadAll.setVisibility(View.INVISIBLE);
+                            pos = pos + 1;
+                            onUploadDocClick(AppUtil.getCommonClickModel(pos, KYC_BUTTON_CLICK, kycDocumentDatamodelArrayList.get(pos)));
+                        } else {
+                            uploadBtnStatus = false;
+                        }
+                    }
+
+                    break;
+
+                case NO_INTERNET:
+
+
+                    break;
+
+                case AUTH_FAIL:
+
+                    break;
+
+                case FAIL_400:
+
+                    break;
+
+
+                default:
+                    //ViewUtil.showSnackBar(binding.getRoot(), responseApi.data.toString());
+                    break;
+            }
+
+        });
+    }
+
+    private void progressBarHandling(int status) {
+        if (status == 0) {
+            kyCuploadAdapter.updateProgressValue(true);
+            kycDocumentDatamodelArrayList.get(pos).setProgress(true);
+            kycDocumentDatamodelArrayList.get(pos).setButtonText("");
+        } else {
+            kycDocumentDatamodelArrayList.get(pos).setDocumentstatus(true);
+            kyCuploadAdapter.updateProgressValue(false);
+            kycDocumentDatamodelArrayList.get(pos).setProgress(false);
+            kycDocumentDatamodelArrayList.get(pos).setBackgroundStatus(false);
+            kycDocumentDatamodelArrayList.get(pos).setButtonText("Sucessfully");
+        }
+        kyCuploadAdapter.updateList(kycDocumentDatamodelArrayList);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (kycViewModel.homeUseCase.checkUploadButtonDoc(kycDocumentDatamodelArrayList)) {
+            uploadBtnStatus = true;
+            binding.btUploadAll.setEnabled(false);
+            uploadAllDoc();
+
+        } else {
+            ViewUtil.showSnackBar(binding.getRoot(), "Please select the all four document first");
+        }
+
+    }
+
+    private void uploadAllDoc() {
+        pos = 0;
+        onUploadDocClick(AppUtil.getCommonClickModel(pos, KYC_BUTTON_CLICK, kycDocumentDatamodelArrayList.get(pos)));
+    }
+
+    private void onUploadDocClick(CommonDataModel commonDataModel) {
+        pos = commonDataModel.getSource();
+        KYCDocumentDatamodel kycDocumentDatamodel = (KYCDocumentDatamodel) commonDataModel.getObject();
+        if (kycDocumentDatamodel.getButtonText().equalsIgnoreCase(getString(R.string.upload_file))) {
+            try {
+
+                File file = new File(kycDocumentDatamodel.getDocumentURi().getPath());
+                long length = file.length();
+                length = length / 1024;
+                InputStream is = AuroApp.getAppContext().getApplicationContext().getContentResolver().openInputStream(Uri.fromFile(file));
+                kycViewModel.uploadProfileImage(kycViewModel.getBytes(is), kycDocumentDatamodel.getDocumentURi());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            if (kycDocumentDatamodel.getDocumentId() == AppConstant.documentType.UPLOAD_YOUR_PHOTO) {
+                openActivity();
+            } else {
+                CropImage.activity()
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(getActivity());
+            }
+        }
+    }
 
 }

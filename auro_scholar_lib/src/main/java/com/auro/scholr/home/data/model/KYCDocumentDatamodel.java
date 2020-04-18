@@ -1,12 +1,30 @@
 package com.auro.scholr.home.data.model;
 
+import android.net.Uri;
+
 import java.net.URI;
 
 public class KYCDocumentDatamodel {
 
+
+    int documentId;
+    Uri documentURi;
+    boolean documentstatus;
+    boolean progress;
+    boolean backgroundStatus;
+    String buttonText;
     String documentName;
-    boolean  progress;
     String documentFileName;
+
+
+
+    public boolean isBackgroundStatus() {
+        return backgroundStatus;
+    }
+
+    public void setBackgroundStatus(boolean backgroundStatus) {
+        this.backgroundStatus = backgroundStatus;
+    }
 
     public String getButtonText() {
         return buttonText;
@@ -16,10 +34,6 @@ public class KYCDocumentDatamodel {
         this.buttonText = buttonText;
     }
 
-    URI documentURi;
-    int documentId;
-    boolean documentstatus;
-    String buttonText;
 
     public String getDocumentName() {
         return documentName;
@@ -45,11 +59,11 @@ public class KYCDocumentDatamodel {
         this.documentFileName = documentFileName;
     }
 
-    public URI getDocumentURi() {
+    public Uri getDocumentURi() {
         return documentURi;
     }
 
-    public void setDocumentURi(URI documentURi) {
+    public void setDocumentURi(Uri documentURi) {
         this.documentURi = documentURi;
     }
 

@@ -9,6 +9,7 @@ public interface HomeRepo {
 
     interface DashboardRemoteData {
         Single<Response<JsonObject>> getDashboardData(String mobileno);
+        Single<Response<JsonObject>> uploadProfileImage(byte[] imageBytes);
     }
 
 

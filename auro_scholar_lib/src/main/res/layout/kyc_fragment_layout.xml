@@ -105,128 +105,32 @@
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/document_upload_recyclerview"
                                 android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_15sdp"
                                 android:layout_marginTop="@dimen/_15sdp"
                                 android:layout_marginEnd="@dimen/_15sdp"
-                                app:layout_constraintTop_toTopOf="parent"
 
-                                android:layout_height="wrap_content"/>
-
-                         <!--   <com.auro.scholr.core.util.uiwidget.RPTextView
-                                android:id="@+id/tv_id_proof_front"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginTop="@dimen/_15sdp"
-                                android:text="ID Proof Font Side"
-                                android:visibility="visible"
-                                android:textColor="@color/dark_magenta"
-                                android:textSize="@dimen/_15sdp"
-                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                            <include
-                                android:id="@+id/upload_image_one"
-                                layout="@layout/quiz_doc_upload_layout"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:visibility="visible"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:layout_marginEnd="@dimen/_10sdp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tv_id_proof_front" />
 
-                            <com.auro.scholr.core.util.uiwidget.RPTextView
-                                android:id="@+id/tv_id_proof_back"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginTop="@dimen/_15sdp"
-                                android:text="ID Proof Back Side"
-                                android:textColor="@color/dark_magenta"
-                                android:textSize="@dimen/_15sdp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/upload_image_one" />
-
-                            <include
-                                android:id="@+id/upload_image_two"
-                                layout="@layout/quiz_doc_upload_layout"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:layout_marginEnd="@dimen/_10sdp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tv_id_proof_back" />
-
-
-                            <com.auro.scholr.core.util.uiwidget.RPTextView
-                                android:id="@+id/tv_school_id_card"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginTop="@dimen/_15sdp"
-                                android:text="School ID Card"
-                                android:textColor="@color/dark_magenta"
-                                android:textSize="@dimen/_15sdp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/upload_image_two" />
-
-
-                            <include
-                                android:id="@+id/upload_image_three"
-                                layout="@layout/quiz_doc_upload_layout"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:layout_marginEnd="@dimen/_10sdp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tv_school_id_card" />
-
-                            <com.auro.scholr.core.util.uiwidget.RPTextView
-                                android:id="@+id/tv_upload_photo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginTop="@dimen/_15sdp"
-                                android:text="Upload Your Photo"
-                                android:textColor="@color/dark_magenta"
-                                android:textSize="@dimen/_15sdp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/upload_image_three" />
-
-                            <include
-                                android:id="@+id/upload_image_four"
-                                layout="@layout/quiz_doc_upload_layout"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:layout_marginEnd="@dimen/_10sdp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintBottom_toTopOf="@+id/bt_upload_all"
-                                app:layout_constraintTop_toBottomOf="@+id/tv_upload_photo" />
--->
                             <com.auro.scholr.core.util.uiwidget.RPTextView
                                 android:id="@+id/bt_upload_all"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Upload All"
-                                android:textAlignment="center"
                                 android:layout_marginTop="@dimen/_15sdp"
+                                android:layout_marginBottom="@dimen/_15sdp"
                                 android:background="@drawable/button_bg_orange"
                                 android:paddingStart="@dimen/_15sdp"
-                                android:layout_marginBottom="@dimen/_15sdp"
                                 android:paddingTop="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_15sdp"
                                 android:paddingBottom="@dimen/_10sdp"
+                                android:text="Upload All"
+                                android:textAlignment="center"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_15sdp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/document_upload_recyclerview" />
 
 

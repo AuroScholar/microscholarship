@@ -13,21 +13,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_18sdp"
-            android:text="ID Proof Font Side"
+            android:text="@string/id_proof_front_side"
             android:textColor="@color/dark_magenta"
             android:textSize="@dimen/_15sdp"
             android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_60sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/doc_upload_bg">
 
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:elevation="@dimen/_2sdp"
+                android:indeterminateDrawable="@drawable/circular_progress_white"
+                android:innerRadiusRatio="3"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <Button
-                android:id="@+id/choose_profile"
+                android:id="@+id/choose_file"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -36,7 +52,7 @@
                 android:background="#0DADFF"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:text="Choose File"
+                android:text="@string/choose_file"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sdp"
@@ -49,11 +65,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:text="No File Chosen"
+                android:text="@string/no_file_chosen"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/choose_profile"
+                app:layout_constraintStart_toEndOf="@+id/choose_file"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <com.auro.scholr.core.util.uiwidget.RPTextView
+                android:id="@+id/tv_Sucessfully_uploaded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:text="Sucessfully Uploaded"
+                android:textColor="@color/blue_color"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RelativeLayout
+                android:id="@+id/transprent_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/tansparent_quiz_layout_color"
+                android:visibility="gone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

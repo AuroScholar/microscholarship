@@ -3,9 +3,9 @@ package com.auro.scholr.home.domain.usecase;
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.QuizResModel;
-import com.auro.scholr.util.AppLogger;
 
 import java.util.ArrayList;
 
@@ -22,31 +22,32 @@ public class HomeUseCase {
     }
 
 
-    public ArrayList<KYCDocumentDatamodel> makeDummyDocumentList() {
+    public ArrayList<KYCDocumentDatamodel> makeDummyDocumentList(DashboardResModel dashboardResModel) {
         ArrayList<KYCDocumentDatamodel> kycDocumentList = new ArrayList<>();
         KYCDocumentDatamodel kyc_one = new KYCDocumentDatamodel();
         kyc_one.setDocumentId(AppConstant.documentType.ID_PROOF_FRONT_SIDE);
         kyc_one.setDocumentName(AuroApp.getAppContext().getString(R.string.id_proof_front_side));
-        kyc_one.setDocumentFileName("No File chosen");
-        kyc_one.setButtonText("choose File");
+        kyc_one.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
+        kyc_one.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
+        // kyc_one.setDocumentstatus(true);
 
         KYCDocumentDatamodel kyc_two = new KYCDocumentDatamodel();
         kyc_two.setDocumentId(AppConstant.documentType.ID_PROOF_BACK_SIDE);
-        kyc_two.setDocumentName("ID Proof Back Side");
-        kyc_two.setDocumentFileName("No File chosen");
-        kyc_two.setButtonText("choose File");
+        kyc_two.setDocumentName(AuroApp.getAppContext().getString(R.string.id_proof_back_side));
+        kyc_two.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
+        kyc_two.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
 
         KYCDocumentDatamodel kyc_three = new KYCDocumentDatamodel();
         kyc_three.setDocumentId(AppConstant.documentType.SCHOOL_ID_CARD);
-        kyc_three.setDocumentName("School ID Card");
-        kyc_three.setDocumentFileName("No File chosen");
-        kyc_three.setButtonText("choose File");
+        kyc_three.setDocumentName(AuroApp.getAppContext().getString(R.string.school_id_card));
+        kyc_three.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
+        kyc_three.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
 
         KYCDocumentDatamodel kyc_four = new KYCDocumentDatamodel();
         kyc_four.setDocumentId(AppConstant.documentType.UPLOAD_YOUR_PHOTO);
-        kyc_four.setDocumentName("Upload Your Photo");
-        kyc_four.setDocumentFileName("No File chosen");
-        kyc_four.setButtonText("choose File");
+        kyc_four.setDocumentName(AuroApp.getAppContext().getString(R.string.upload_profile_pic));
+        kyc_four.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
+        kyc_four.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
 
         kycDocumentList.add(kyc_one);
         kycDocumentList.add(kyc_two);
@@ -54,6 +55,26 @@ public class HomeUseCase {
         kycDocumentList.add(kyc_four);
 
         return kycDocumentList;
+
+    }
+
+    public boolean checkUploadButtonStatus(ArrayList<KYCDocumentDatamodel> list) {
+        if (list.get(0).isDocumentstatus() || list.get(1).isDocumentstatus() ||
+                list.get(2).isDocumentstatus() || list.get(3).isDocumentstatus()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean checkUploadButtonDoc(ArrayList<KYCDocumentDatamodel> list) {
+        String noFileChosen = AuroApp.getAppContext().getString(R.string.no_file_chosen);
+        if (!list.get(0).getDocumentFileName().equalsIgnoreCase(noFileChosen) && !list.get(1).getDocumentFileName().equalsIgnoreCase(noFileChosen) &&
+                !list.get(2).getDocumentFileName().equalsIgnoreCase(noFileChosen) && !list.get(3).getDocumentFileName().equalsIgnoreCase(noFileChosen)) {
+            return true;
+        } else {
+            return false;
+        }
 
     }
 

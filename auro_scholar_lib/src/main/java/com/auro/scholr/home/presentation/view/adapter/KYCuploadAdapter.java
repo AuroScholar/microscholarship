@@ -1,6 +1,7 @@
 package com.auro.scholr.home.presentation.view.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.auro.scholr.R;
+import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.QuizDocUploadLayoutBinding;
@@ -24,6 +26,7 @@ public class KYCuploadAdapter extends RecyclerView.Adapter<KYCuploadAdapter.View
     Context mContext;
     QuizDocUploadLayoutBinding binding;
     CommonCallBackListner commonCallBackListner;
+    boolean progressStatus;
 
     public KYCuploadAdapter(Context context, ArrayList<KYCDocumentDatamodel> values, CommonCallBackListner commonCallBackListner) {
         this.commonCallBackListner = commonCallBackListner;
@@ -34,6 +37,10 @@ public class KYCuploadAdapter extends RecyclerView.Adapter<KYCuploadAdapter.View
     public void updateList(ArrayList<KYCDocumentDatamodel> values) {
         mValues = values;
         notifyDataSetChanged();
+    }
+
+    public void updateProgressValue(boolean progressStatus) {
+        this.progressStatus = progressStatus;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -47,9 +54,28 @@ public class KYCuploadAdapter extends RecyclerView.Adapter<KYCuploadAdapter.View
         public void setData(KYCDocumentDatamodel kycDocumentDatamodel, int position) {
             this.binding.tvIdHead.setText(kycDocumentDatamodel.getDocumentName());
             binding.tvNoFileChoosen.setText(kycDocumentDatamodel.getDocumentFileName());
-            binding.chooseProfile.setText(kycDocumentDatamodel.getButtonText());
+            binding.chooseFile.setText(kycDocumentDatamodel.getButtonText());
 
-            binding.chooseProfile.setOnClickListener(new View.OnClickListener() {
+            if (kycDocumentDatamodel.isDocumentstatus()) {
+                binding.progressBar.setVisibility(View.GONE);
+                binding.chooseFile.setVisibility(View.GONE);
+                binding.tvNoFileChoosen.setVisibility(View.GONE);
+                binding.tvSucessfullyUploaded.setVisibility(View.VISIBLE);
+                binding.chooseFile.setBackgroundColor(AuroApp.getAppContext().getColor(R.color.rich_electric_blue));
+            } else {
+                if (progressStatus && kycDocumentDatamodel.isProgress()) {
+                    binding.progressBar.setVisibility(View.VISIBLE);
+                }
+                if (progressStatus && !kycDocumentDatamodel.isProgress()) {
+                    binding.chooseFile.setEnabled(false);
+                    binding.chooseFile.setBackgroundColor(AuroApp.getAppContext().getColor(R.color.grey_color));
+                } else {
+                    binding.chooseFile.setEnabled(true);
+                    binding.chooseFile.setBackgroundColor(AuroApp.getAppContext().getColor(R.color.blue_color));
+                }
+            }
+
+            binding.chooseFile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (commonCallBackListner != null) {
@@ -78,9 +104,7 @@ public class KYCuploadAdapter extends RecyclerView.Adapter<KYCuploadAdapter.View
 
     @Override
     public int getItemCount() {
-
         return mValues.size();
     }
-
 
 }

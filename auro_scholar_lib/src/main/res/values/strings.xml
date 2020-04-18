@@ -41,6 +41,11 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="choose_file">Choose File</string>
+    <string name="no_file_chosen">No File chosen</string>
+    <string name="id_proof_back_side">ID Proof Back Side</string>
+    <string name="school_id_card">School ID Card</string>
+    <string name="upload_profile_pic">Upload Your Photo</string>
 
 
 </resources>
