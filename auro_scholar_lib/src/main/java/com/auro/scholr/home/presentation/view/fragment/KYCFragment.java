@@ -3,6 +3,8 @@ package com.auro.scholr.home.presentation.view.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,11 +37,14 @@ import com.auro.scholr.home.presentation.view.adapter.KYCuploadAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.ImageUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.cropper.CropImage;
 import com.auro.scholr.util.cropper.CropImageView;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -209,6 +214,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 try {
                     String path = data.getStringExtra(AppConstant.PROFILE_IMAGE_PATH);
                     updateKYCList(path);
+                    // loadImageFromStorage(path);
                 } catch (Exception e) {
 
                 }
@@ -219,6 +225,16 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             }
         }
 
+    }
+
+    private void loadImageFromStorage(String path) {
+        try {
+            File f = new File(path);
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            binding.resultImage.setImageBitmap(b);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateKYCList(String path) {
@@ -267,21 +283,13 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                     break;
 
                 case NO_INTERNET:
-
-
-                    break;
-
                 case AUTH_FAIL:
-
-                    break;
-
                 case FAIL_400:
-
+                    showError((String) responseApi.data);
                     break;
-
 
                 default:
-                    //ViewUtil.showSnackBar(binding.getRoot(), responseApi.data.toString());
+                    showError((String) responseApi.data);
                     break;
             }
 
@@ -303,13 +311,16 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         kyCuploadAdapter.updateList(kycDocumentDatamodelArrayList);
     }
 
+    private void showError(String message) {
+        ViewUtil.showSnackBar(binding.getRoot(), message);
+    }
+
     @Override
     public void onClick(View v) {
         if (kycViewModel.homeUseCase.checkUploadButtonDoc(kycDocumentDatamodelArrayList)) {
             uploadBtnStatus = true;
             binding.btUploadAll.setEnabled(false);
             uploadAllDoc();
-
         } else {
             ViewUtil.showSnackBar(binding.getRoot(), "Please select the all four document first");
         }
@@ -328,6 +339,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             try {
 
                 File file = new File(kycDocumentDatamodel.getDocumentURi().getPath());
+                //file= ImageUtil.compressFile(file);
                 long length = file.length();
                 length = length / 1024;
                 InputStream is = AuroApp.getAppContext().getApplicationContext().getContentResolver().openInputStream(Uri.fromFile(file));

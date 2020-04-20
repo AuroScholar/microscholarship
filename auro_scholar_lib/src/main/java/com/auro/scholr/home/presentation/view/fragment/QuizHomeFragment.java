@@ -24,12 +24,18 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.util.uiwidget.others.HideBottomNavigation;
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.home.data.model.KYCResItemModel;
+import com.auro.scholr.home.data.model.KYCResListModel;
+import com.auro.scholr.home.data.model.KYCResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.util.ViewUtil;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -86,7 +92,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void init() {
-       // hideBottomNavigation = (HideBottomNavigation) mActivity;
+        // hideBottomNavigation = (HideBottomNavigation) mActivity;
 
         if (getArguments() != null) {
             mobileNumber = getArguments().getString(AppConstant.MOBILE_NUMBER);
@@ -124,13 +130,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         init();
         setToolbar();
         setListener();
+        //checkJson();
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-      //  hideBottomNavigation.onOpen();
     }
 
 
@@ -142,12 +148,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
                 case LOADING:
                     //For ProgressBar
-                    handleProgress(0);
+                    handleProgress(0,"");
                     break;
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
-                        handleProgress(1);
+                        handleProgress(1,"");
                         dashboardResModel = (DashboardResModel) responseApi.data;
                         setDataOnUi(dashboardResModel);
                     }
@@ -156,32 +162,32 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
                 case NO_INTERNET:
 //On fail
-                    handleProgress(2);
+                    handleProgress(2,(String)responseApi.data);
                     break;
 
                 case AUTH_FAIL:
 
 // When Authrization is fail
-                    handleProgress(1);
+                    handleProgress(1,(String)responseApi.data);
                     break;
 
                 case FAIL_400:
                     //When 400 error occur
-                    handleProgress(1);
+                    handleProgress(1,(String)responseApi.data);
                     break;
 
 
                 default:
                     Log.d(TAG, "observeServiceResponse: default");
-                    ViewUtil.showSnackBar(binding.getRoot(), responseApi.data.toString());
-                    handleProgress(1);
+                   // ViewUtil.showSnackBar(binding.getRoot(), responseApi.data.toString());
+                    handleProgress(1,(String)responseApi.data);
                     break;
             }
 
         });
     }
 
-    private void handleProgress(int value) {
+    private void handleProgress(int value,String message) {
         if (value == 0) {
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.GONE);
@@ -198,7 +204,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             binding.shimmerViewQuiz.setVisibility(View.GONE);
             binding.shimmerViewQuiz.stopShimmer();
             binding.errorLayout.errorIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.nointernet_ico));
-            binding.errorLayout.textError.setText(getString(R.string.internet_check));
+            binding.errorLayout.textError.setText(message);
             binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -235,7 +241,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-       // openFragment(new CameraFragment());
+        // openFragment(new CameraFragment());
         openKYCFragment(dashboardResModel);
+    }
+
+    private void checkJson() {
+        String response = "{\"kyc_list\":[{\"id_name\":\"id_proof_front\",\"status\":\"success\",\"error\":false,\"message\":\"ID Proof File uploaded successfully\",\"url\":\"http://auroscholar.com/upload/1587289220_id_proof_280191.png\"},{\"id_name\":\"id_proof_back\",\"status\":\"success\",\"error\":false,\"message\":\"ID Proof File uploaded successfully\",\"url\":\"http://auroscholar.com/upload/1587289220_id_proof_280191.png\"},{\"id_name\":\"school_id_card\",\"status\":\"success\",\"error\":false,\"message\":\"ID Proof File uploaded successfully\",\"url\":\"http://auroscholar.com/upload/1587289220_id_proof_280191.png\"},{\"id_name\":\"student_photo\",\"status\":\"success\",\"error\":false,\"message\":\"ID Proof File uploaded successfully\",\"url\":\"http://auroscholar.com/upload/1587289220_id_proof_280191.png\"}]}";
+        KYCResListModel list = new Gson().fromJson(response, KYCResListModel.class);
+        //  KYCResModel tt = list.get(0);
     }
 }

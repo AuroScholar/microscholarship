@@ -75,7 +75,7 @@ public class KYCViewModel extends ViewModel {
     }
     private void callUploadImageApi(byte[] bytes, Uri imageUri) {
 
-        compositeDisposable.add(homeRemoteUseCase.uploadProfileImage(bytes).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).doOnSubscribe(new Consumer<Disposable>() {
+        getCompositeDisposable().add(homeRemoteUseCase.uploadProfileImage(bytes).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).doOnSubscribe(new Consumer<Disposable>() {
             @Override
             public void accept(Disposable __) throws Exception {
                 serviceLiveData.setValue(ResponseApi.loading(null));

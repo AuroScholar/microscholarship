@@ -33,37 +33,6 @@ import java.io.FileOutputStream;
 public class ImageUtil {
 
 
-    @BindingAdapter({"imageUrl"})
-    public static void loadImage(ImageView view, int resource) {
-
-        Glide.with(view.getContext())
-                .load(resource)
-                .apply(RequestOptions.placeholderOf(R.drawable.more_icon)
-                        .error(R.drawable.more_icon)
-                        .dontAnimate()
-                        .priority(Priority.IMMEDIATE)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                )
-                .into(view);
-    }
-
-    @BindingAdapter({"imageUrl"})
-    public static void loadImage(ImageView view, Object imageUrl) {
-        if (imageUrl != null) {
-            Glide.with(view.getContext()).load((imageUrl instanceof Uri) ? (Uri) (imageUrl) : imageUrl.toString())
-                    .apply(RequestOptions.placeholderOf(R.drawable.more_icon)
-                            .error(R.drawable.more_icon)
-                            .centerCrop()
-                            .dontAnimate()
-                            .priority(Priority.IMMEDIATE)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL))
-                    .into(view);
-
-        }
-
-
-    }
-
     public static void loadImageFromGlide(ImageView view, String imageUrl, int width, int height, Drawable placeholder, boolean thumbNailStatus) {
 
         Glide.with(view.getContext())
@@ -134,7 +103,7 @@ public class ImageUtil {
             inputStream.close();
 
             // here i override the original image file
-            File folder = new File(Environment.getExternalStorageDirectory() + "/LmExchange");
+            File folder = new File(Environment.getExternalStorageDirectory() + "/auroImageDir");
             boolean success = true;
             if (!folder.exists()) {
                 success = folder.mkdir();

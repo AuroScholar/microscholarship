@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.auro.scholr.core.application.AuroApp;
@@ -40,6 +41,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -57,6 +59,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -275,7 +278,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
                                 Bitmap loadedImage = null;
                                 loadedImage = BitmapFactory.decodeByteArray(bytes, 0,
                                         bytes.length);
-                                String path = saveToInternalStorage(loadedImage) + "/profile.jpg";
+                                //  String path = saveToInternalStorage(loadedImage) + "/profile.jpg";
+                                String path = saveToInternalStorage(loadedImage);
                                 emitter.onSuccess(path);
                             } catch (Exception e) {
                                 emitter.onError(e);
@@ -316,28 +320,48 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    private String saveToInternalStorage(Bitmap bitmapImage) {
-        ContextWrapper cw = new ContextWrapper(AuroApp.getAppContext().getApplicationContext());
-        // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("auroImageDir", Context.MODE_PRIVATE);
-        // Create imageDir
-        File mypath = new File(directory, "profile.jpg");
+    private String SaveImage(Bitmap finalBitmap) {
 
-        FileOutputStream fos = null;
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/auroca_images");
+        if (!myDir.exists()) {
+            myDir.mkdirs();
+        }
+        Random generator = new Random();
+        int n = 10000;
+        n = generator.nextInt(n);
+        String fname = "auro_profile" + ".jpg";
+        File file = new File(myDir, fname);
+        if (file.exists()) {
+            file.delete();
+        }
         try {
-            fos = new FileOutputStream(mypath);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            boolean f = file.createNewFile();
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+            return file.getAbsolutePath();
+
+
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
-        return directory.getAbsolutePath();
+        return "";
+    }
+
+    private String saveToInternalStorage(Bitmap bitmapImage) {
+        try {
+            Uri uri = Uri.fromFile(File.createTempFile("profile", ".jpg", getCacheDir()));
+            File mypath = new File(uri.getPath());
+            FileOutputStream fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 70, fos);
+            fos.close();
+            return mypath.getAbsolutePath();
+        } catch (Exception e) {
+        }
+        return "";
     }
 
 

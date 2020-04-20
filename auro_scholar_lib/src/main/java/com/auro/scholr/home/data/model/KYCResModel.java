@@ -1,90 +1,54 @@
 package com.auro.scholr.home.data.model;
 
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class KYCResModel implements Parcelable {
+public class KYCResModel {
 
-    @SerializedName("status")
+    @SerializedName("id_proof")
     @Expose
-    private String status;
-    @SerializedName("error")
+    private KYCResItemModel idProof;
+    @SerializedName("id_proof_back")
     @Expose
-    private Boolean error;
-    @SerializedName("message")
+    private KYCResItemModel idProofBack;
+    @SerializedName("school_id_card")
     @Expose
-    private String message;
-    @SerializedName("url")
+    private KYCResItemModel schoolIdCard;
+    @SerializedName("student_photo")
     @Expose
-    private String url;
+    private KYCResItemModel studentPhoto;
 
-    protected KYCResModel(Parcel in) {
-        status = in.readString();
-        byte tmpError = in.readByte();
-        error = tmpError == 0 ? null : tmpError == 1;
-        message = in.readString();
-        url = in.readString();
+    public KYCResItemModel getIdProof() {
+        return idProof;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(status);
-        dest.writeByte((byte) (error == null ? 0 : error ? 1 : 2));
-        dest.writeString(message);
-        dest.writeString(url);
+    public void setIdProof(KYCResItemModel idProof) {
+        this.idProof = idProof;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public KYCResItemModel getIdProofBack() {
+        return idProofBack;
     }
 
-    public static final Creator<KYCResModel> CREATOR = new Creator<KYCResModel>() {
-        @Override
-        public KYCResModel createFromParcel(Parcel in) {
-            return new KYCResModel(in);
-        }
-
-        @Override
-        public KYCResModel[] newArray(int size) {
-            return new KYCResModel[size];
-        }
-    };
-
-    public String getStatus() {
-        return status;
+    public void setIdProofBack(KYCResItemModel idProofBack) {
+        this.idProofBack = idProofBack;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public KYCResItemModel getSchoolIdCard() {
+        return schoolIdCard;
     }
 
-    public Boolean getError() {
-        return error;
+    public void setSchoolIdCard(KYCResItemModel schoolIdCard) {
+        this.schoolIdCard = schoolIdCard;
     }
 
-    public void setError(Boolean error) {
-        this.error = error;
+    public KYCResItemModel getStudentPhoto() {
+        return studentPhoto;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public void setStudentPhoto(KYCResItemModel studentPhoto) {
+        this.studentPhoto = studentPhoto;
     }
 
 }

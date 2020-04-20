@@ -7,11 +7,18 @@ import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.network.NetworkUseCase;
 import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.home.data.model.KYCResItemModel;
+import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.data.model.KYCResModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
 import com.auro.scholr.util.AppUtil;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
@@ -105,8 +112,9 @@ public class HomeRemoteUseCase extends NetworkUseCase {
 
         }else if(status == Status.UPLOAD_PROFILE_IMAGE)
         {
-            KYCResModel kycResModel = gson.fromJson(response.body(), KYCResModel.class);
-            return ResponseApi.success(kycResModel, status);
+            Type listType = new TypeToken<List<KYCResItemModel>>(){}.getType();
+            List<KYCResModel> list = gson.fromJson(response.body(), listType);
+            return ResponseApi.success(list, status);
         }
         return ResponseApi.fail(null, status);
     }
