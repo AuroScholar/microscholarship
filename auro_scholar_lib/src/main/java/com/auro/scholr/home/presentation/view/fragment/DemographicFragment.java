@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -17,12 +19,12 @@ import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
-import com.auro.scholr.core.database.AppPref;
-import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.DemographicFragmentLayoutBinding;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
-import com.auro.scholr.home.presentation.view.adapter.KYCuploadAdapter;
-import com.auro.scholr.home.presentation.viewmodel.CardViewModel;
+import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,10 +38,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
 
 
     DemographicFragmentLayoutBinding binding;
-    CardViewModel kycViewModel;
-    KYCuploadAdapter kyCuploadAdapter;
-
-    private CommonDataModel commonDataModel;
+    DemographicViewModel demographicViewModel;
     private int pos;
 
 
@@ -53,25 +52,46 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
-        kycViewModel = ViewModelProviders.of(this, viewModelFactory).get(CardViewModel.class);
+        demographicViewModel = ViewModelProviders.of(this, viewModelFactory).get(DemographicViewModel.class);
         binding.setLifecycleOwner(this);
-        binding.setCardViewModel(kycViewModel);
         HomeActivity.setListingActiveFragment(HomeActivity.DEMOGRAPHIC_FRAGMENT);
         return binding.getRoot();
     }
 
 
 
-    private void getUserPref() {
-        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-    }
 
     @Override
     protected void init() {
+        // Spinner Drop down Gender
+        List<String> genderLines = Arrays.asList(getResources().getStringArray(R.array.genderlist));
+        spinnermethodcall(genderLines,binding.SpinnerGender);
 
-        getUserPref();
+        // Spinner Drop down schooltype
+        List<String> schooltypeLines = Arrays.asList(getResources().getStringArray(R.array.schooltypelist));
+        spinnermethodcall(schooltypeLines,binding.SpinnerSchoolType);
+
+        // Spinner Drop down boardlist
+        List<String> boardLines = Arrays.asList(getResources().getStringArray(R.array.boardlist));
+        spinnermethodcall(boardLines,binding.SpinnerBoard);
+
+        // Spinner Drop down language
+        List<String> languageLines = Arrays.asList(getResources().getStringArray(R.array.languagelist));
+        spinnermethodcall(languageLines,binding.SpinnerLanguageMedium);
+
+
+
     }
+    public void spinnermethodcall(List<String> languageLines, AppCompatSpinner sppiner){
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, languageLines);
 
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        sppiner.setAdapter(dataAdapter);
+    }
 
     @Override
     protected void setToolbar() {

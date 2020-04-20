@@ -31,13 +31,14 @@ import com.auro.scholr.core.util.uiwidget.others.HideBottomNavigation;
 import com.auro.scholr.databinding.KycFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+import com.auro.scholr.home.data.model.KYCResItemModel;
+import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.adapter.KYCuploadAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
-import com.auro.scholr.util.ImageUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.cropper.CropImage;
 import com.auro.scholr.util.cropper.CropImageView;
@@ -96,10 +97,10 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     }
 
     public void setAdapter() {
-        this.kycDocumentDatamodelArrayList = kycViewModel.homeUseCase.makeDummyDocumentList(dashboardResModel);
+        this.kycDocumentDatamodelArrayList = kycViewModel.homeUseCase.makeAdapterDocumentList(dashboardResModel);
         binding.documentUploadRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.documentUploadRecyclerview.setHasFixedSize(true);
-        kyCuploadAdapter = new KYCuploadAdapter(getActivity(), kycViewModel.homeUseCase.makeDummyDocumentList(dashboardResModel), this);
+        kyCuploadAdapter = new KYCuploadAdapter(getActivity(), kycViewModel.homeUseCase.makeAdapterDocumentList(dashboardResModel), this);
         binding.documentUploadRecyclerview.setAdapter(kyCuploadAdapter);
     }
 
@@ -259,7 +260,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     }
 
     private void observeServiceResponse() {
-
         kycViewModel.serviceLiveData().observeForever(responseApi -> {
 
             switch (responseApi.status) {
@@ -269,8 +269,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                     break;
 
                 case SUCCESS:
-                    progressBarHandling(1);
                     if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
+                        updateListonResponse((KYCResListModel) responseApi.data);
                         if (uploadBtnStatus && pos <= 3) {
                             binding.btUploadAll.setVisibility(View.INVISIBLE);
                             pos = pos + 1;
@@ -302,13 +302,57 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             kycDocumentDatamodelArrayList.get(pos).setProgress(true);
             kycDocumentDatamodelArrayList.get(pos).setButtonText("");
         } else {
-            kycDocumentDatamodelArrayList.get(pos).setDocumentstatus(true);
             kyCuploadAdapter.updateProgressValue(false);
             kycDocumentDatamodelArrayList.get(pos).setProgress(false);
             kycDocumentDatamodelArrayList.get(pos).setBackgroundStatus(false);
             kycDocumentDatamodelArrayList.get(pos).setButtonText("Sucessfully");
         }
         kyCuploadAdapter.updateList(kycDocumentDatamodelArrayList);
+    }
+
+    private void updateListonResponse(KYCResListModel kycResListModel) {
+        for (KYCResItemModel resItemModel : kycResListModel.getList()) {
+            if (resItemModel.getId_name().equalsIgnoreCase(kycDocumentDatamodelArrayList.get(0).getId_name())) {
+                if (!resItemModel.getError() && resItemModel.getUrl() != null && !resItemModel.getUrl().isEmpty()) {
+                    setDataOnResponse(resItemModel, 0, true);
+                } else {
+                    setDataOnResponse(resItemModel, 0, false);
+                }
+
+            } else if (resItemModel.getId_name().equalsIgnoreCase(kycDocumentDatamodelArrayList.get(1).getId_name())) {
+                if (!resItemModel.getError() && resItemModel.getUrl() != null && !resItemModel.getUrl().isEmpty()) {
+                    setDataOnResponse(resItemModel, 1, true);
+                } else {
+                    setDataOnResponse(resItemModel, 1, false);
+                }
+            } else if (resItemModel.getId_name().equalsIgnoreCase(kycDocumentDatamodelArrayList.get(2).getId_name())) {
+                if (!resItemModel.getError() && resItemModel.getUrl() != null && !resItemModel.getUrl().isEmpty()) {
+                    setDataOnResponse(resItemModel, 2, true);
+                } else {
+                    setDataOnResponse(resItemModel, 2, false);
+                }
+            } else if (resItemModel.getId_name().equalsIgnoreCase(kycDocumentDatamodelArrayList.get(3).getId_name())) {
+                if (!resItemModel.getError() && resItemModel.getUrl() != null && !resItemModel.getUrl().isEmpty()) {
+                    setDataOnResponse(resItemModel, 3, true);
+                } else {
+                    setDataOnResponse(resItemModel, 3, false);
+                }
+            }
+        }
+
+    }
+
+    private void setDataOnResponse(KYCResItemModel resItemModel, int pos, boolean b) {
+        if (b) {
+            kycDocumentDatamodelArrayList.get(pos).setDocumentstatus(true);
+            kycDocumentDatamodelArrayList.get(pos).setDocumentUrl(resItemModel.getUrl());
+        } else {
+            kycDocumentDatamodelArrayList.get(pos).setDocumentstatus(false);
+            kycDocumentDatamodelArrayList.get(pos).setDocumentUrl("");
+        }
+
+        progressBarHandling(1);
+
     }
 
     private void showError(String message) {
@@ -344,7 +388,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 length = length / 1024;
                 InputStream is = AuroApp.getAppContext().getApplicationContext().getContentResolver().openInputStream(Uri.fromFile(file));
                 kycViewModel.uploadProfileImage(kycViewModel.getBytes(is), kycDocumentDatamodel.getDocumentURi());
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -358,5 +401,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             }
         }
     }
+
+
 
 }

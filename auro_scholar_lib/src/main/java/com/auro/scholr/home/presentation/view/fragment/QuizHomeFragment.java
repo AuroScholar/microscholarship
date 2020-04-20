@@ -148,12 +148,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
                 case LOADING:
                     //For ProgressBar
-                    handleProgress(0,"");
+                    handleProgress(0, "");
                     break;
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
-                        handleProgress(1,"");
+                        handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
                         setDataOnUi(dashboardResModel);
                     }
@@ -162,32 +162,32 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
                 case NO_INTERNET:
 //On fail
-                    handleProgress(2,(String)responseApi.data);
+                    handleProgress(2, (String) responseApi.data);
                     break;
 
                 case AUTH_FAIL:
 
 // When Authrization is fail
-                    handleProgress(1,(String)responseApi.data);
+                    handleProgress(1, (String) responseApi.data);
                     break;
 
                 case FAIL_400:
                     //When 400 error occur
-                    handleProgress(1,(String)responseApi.data);
+                    handleProgress(1, (String) responseApi.data);
                     break;
 
 
                 default:
                     Log.d(TAG, "observeServiceResponse: default");
-                   // ViewUtil.showSnackBar(binding.getRoot(), responseApi.data.toString());
-                    handleProgress(1,(String)responseApi.data);
+                    // ViewUtil.showSnackBar(binding.getRoot(), responseApi.data.toString());
+                    handleProgress(1, (String) responseApi.data);
                     break;
             }
 
         });
     }
 
-    private void handleProgress(int value,String message) {
+    private void handleProgress(int value, String message) {
         if (value == 0) {
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.GONE);
@@ -241,13 +241,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        // openFragment(new CameraFragment());
-        openKYCFragment(dashboardResModel);
+        //openFragment(new DemographicFragment());
+          openKYCFragment(dashboardResModel);
     }
 
     private void checkJson() {
         String response = "{\"kyc_list\":[{\"id_name\":\"id_proof_front\",\"status\":\"success\",\"error\":false,\"message\":\"ID Proof File uploaded successfully\",\"url\":\"http://auroscholar.com/upload/1587289220_id_proof_280191.png\"},{\"id_name\":\"id_proof_back\",\"status\":\"success\",\"error\":false,\"message\":\"ID Proof File uploaded successfully\",\"url\":\"http://auroscholar.com/upload/1587289220_id_proof_280191.png\"},{\"id_name\":\"school_id_card\",\"status\":\"success\",\"error\":false,\"message\":\"ID Proof File uploaded successfully\",\"url\":\"http://auroscholar.com/upload/1587289220_id_proof_280191.png\"},{\"id_name\":\"student_photo\",\"status\":\"success\",\"error\":false,\"message\":\"ID Proof File uploaded successfully\",\"url\":\"http://auroscholar.com/upload/1587289220_id_proof_280191.png\"}]}";
-        KYCResListModel list = new Gson().fromJson(response, KYCResListModel.class);
+
         //  KYCResModel tt = list.get(0);
     }
 }

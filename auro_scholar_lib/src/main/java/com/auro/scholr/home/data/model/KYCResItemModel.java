@@ -21,6 +21,9 @@ public class KYCResItemModel implements Parcelable {
     @SerializedName("url")
     @Expose
     private String url;
+    @SerializedName("id_name")
+    @Expose
+    private String id_name;
 
     protected KYCResItemModel(Parcel in) {
         status = in.readString();
@@ -28,6 +31,7 @@ public class KYCResItemModel implements Parcelable {
         error = tmpError == 0 ? null : tmpError == 1;
         message = in.readString();
         url = in.readString();
+        id_name = in.readString();
     }
 
     @Override
@@ -36,6 +40,7 @@ public class KYCResItemModel implements Parcelable {
         dest.writeByte((byte) (error == null ? 0 : error ? 1 : 2));
         dest.writeString(message);
         dest.writeString(url);
+        dest.writeString(id_name);
     }
 
     @Override
@@ -54,6 +59,14 @@ public class KYCResItemModel implements Parcelable {
             return new KYCResItemModel[size];
         }
     };
+
+    public String getId_name() {
+        return id_name;
+    }
+
+    public void setId_name(String id_name) {
+        this.id_name = id_name;
+    }
 
     public String getStatus() {
         return status;

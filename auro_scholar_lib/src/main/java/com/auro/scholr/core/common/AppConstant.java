@@ -79,6 +79,10 @@ public interface AppConstant {
         int SCHOOL_ID_CARD = 785;
         int UPLOAD_YOUR_PHOTO = 786;
 
+        String ID_PROOF = "id_proof";
+        String ID_PROOF_BACK = "id_proof_back";
+        String SCHOOL_ID = "school_id_card";
+        String STUDENT_PHOTO = "student_photo";
     }
 
     interface ScreenType {

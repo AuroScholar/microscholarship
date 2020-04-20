@@ -39,7 +39,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
     }
 
 
-    public Single<ResponseApi> uploadProfileImage(byte[] imageBytes){
+    public Single<ResponseApi> uploadProfileImage(byte[] imageBytes) {
 
         return dashboardRemoteData.uploadProfileImage(imageBytes).map(new Function<Response<JsonObject>, ResponseApi>() {
             @Override
@@ -56,7 +56,6 @@ public class HomeRemoteUseCase extends NetworkUseCase {
             }
         });
     }
-
 
 
     public Single<ResponseApi> getDashboardData(String mobileNo) {
@@ -110,10 +109,8 @@ public class HomeRemoteUseCase extends NetworkUseCase {
             DashboardResModel dashboardResModel = gson.fromJson(response.body(), DashboardResModel.class);
             return ResponseApi.success(dashboardResModel, status);
 
-        }else if(status == Status.UPLOAD_PROFILE_IMAGE)
-        {
-            Type listType = new TypeToken<List<KYCResItemModel>>(){}.getType();
-            List<KYCResModel> list = gson.fromJson(response.body(), listType);
+        } else if (status == Status.UPLOAD_PROFILE_IMAGE) {
+            KYCResListModel list = new Gson().fromJson(response.body(), KYCResListModel.class);
             return ResponseApi.success(list, status);
         }
         return ResponseApi.fail(null, status);
@@ -123,6 +120,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
     public ResponseApi response401(Status status) {
         return ResponseApi.authFail(401, status);
     }
+
     @Override
     public ResponseApi responseFail400(Response<JsonObject> response, Status status) {
         try {

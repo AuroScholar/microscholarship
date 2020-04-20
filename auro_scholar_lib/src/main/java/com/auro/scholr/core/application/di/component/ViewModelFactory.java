@@ -8,6 +8,7 @@ import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
 import com.auro.scholr.home.presentation.viewmodel.CardViewModel;
+import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
 import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
@@ -58,6 +59,10 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }else if (modelClass.isAssignableFrom(ScholarShipViewModel.class)) {
 
             return (T) new ScholarShipViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+
+        }else if (modelClass.isAssignableFrom(DemographicViewModel.class)) {
+
+            return (T) new DemographicViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
         }
 

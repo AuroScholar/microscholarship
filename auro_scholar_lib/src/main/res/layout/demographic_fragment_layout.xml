@@ -3,33 +3,228 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="cardViewModel"
-            type="com.auro.scholr.home.presentation.viewmodel.CardViewModel" />
-
-
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <include
+            android:id="@+id/cambridge_heading"
+            layout="@layout/quiz_header_layout" />
+
+
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+            android:id="@+id/demograph_head"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Auro Scholar Demographics Details"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textColor="@color/backgroun_transparent"
+            android:textSize="@dimen/_16sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/cambridge_heading" />
 
 
-        </LinearLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/_290sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:elevation="@dimen/_5sdp"
+            app:cardCornerRadius="@dimen/_15sdp"
+            app:layout_constraintTop_toBottomOf="@+id/demograph_head"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+           >
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--Gender-->
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/tvGender"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Gender"
+                    android:textColor="@color/backgroun_transparent"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/SpinnerGender"
+                    app:layout_constraintEnd_toStartOf="@+id/SpinnerGender"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/SpinnerGender" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/SpinnerGender"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/sppiner_boader"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tvGender"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_drop_down_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/SpinnerGender"
+                    app:layout_constraintEnd_toEndOf="@+id/SpinnerGender"
+                    app:layout_constraintHorizontal_bias="0.97"
+                    app:layout_constraintStart_toStartOf="@+id/SpinnerGender"
+                    app:layout_constraintTop_toTopOf="@+id/SpinnerGender" />
+
+                <!--SchoolType-->
+
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/tvSchoolType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="School Type"
+                    android:textColor="@color/backgroun_transparent"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/SpinnerSchoolType"
+                    app:layout_constraintEnd_toStartOf="@+id/SpinnerSchoolType"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/SpinnerSchoolType" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/SpinnerSchoolType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/sppiner_boader"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tvSchoolType"
+                    app:layout_constraintTop_toBottomOf="@+id/SpinnerGender" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_drop_down_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/SpinnerSchoolType"
+                    app:layout_constraintEnd_toEndOf="@+id/SpinnerSchoolType"
+                    app:layout_constraintHorizontal_bias="0.97"
+                    app:layout_constraintStart_toStartOf="@+id/SpinnerSchoolType"
+                    app:layout_constraintTop_toTopOf="@+id/SpinnerSchoolType" />
+
+
+                <!--Board-->
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/tvBoard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Board"
+                    android:textColor="@color/backgroun_transparent"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/SpinnerBoard"
+                    app:layout_constraintEnd_toStartOf="@+id/SpinnerBoard"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/SpinnerBoard" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/SpinnerBoard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="16dp"
+
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/sppiner_boader"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tvBoard"
+                    app:layout_constraintTop_toBottomOf="@+id/SpinnerSchoolType" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_drop_down_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/SpinnerBoard"
+                    app:layout_constraintEnd_toEndOf="@+id/SpinnerBoard"
+                    app:layout_constraintHorizontal_bias="0.97"
+                    app:layout_constraintStart_toStartOf="@+id/SpinnerBoard"
+                    app:layout_constraintTop_toTopOf="@+id/SpinnerBoard" />
+
+                <!--Language Medium-->
+
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/tvLanguageMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Language medium"
+                    android:textColor="@color/backgroun_transparent"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/SpinnerLanguageMedium"
+                    app:layout_constraintEnd_toStartOf="@+id/SpinnerLanguageMedium"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/SpinnerLanguageMedium" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/SpinnerLanguageMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/sppiner_boader"
+                    android:popupBackground="#ced4da"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tvLanguageMedium"
+                    app:layout_constraintTop_toBottomOf="@+id/SpinnerBoard" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_drop_down_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/SpinnerLanguageMedium"
+                    app:layout_constraintEnd_toEndOf="@+id/SpinnerLanguageMedium"
+                    app:layout_constraintHorizontal_bias="0.97"
+                    app:layout_constraintStart_toStartOf="@+id/SpinnerLanguageMedium"
+                    app:layout_constraintTop_toTopOf="@+id/SpinnerLanguageMedium" />
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_corner_blue_button"
+
+                    android:text="Submit"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/SpinnerLanguageMedium" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </layout>

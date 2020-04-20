@@ -13,6 +13,10 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField 'int', 'DEFAULT_ANIMATION_DURATION', '750'
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+
     }
     /* buildTypes {
         release {

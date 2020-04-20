@@ -15,8 +15,24 @@ public class KYCDocumentDatamodel {
     String buttonText;
     String documentName;
     String documentFileName;
+    String id_name;
+    String documentUrl;
 
+    public String getDocumentUrl() {
+        return documentUrl;
+    }
 
+    public void setDocumentUrl(String documentUrl) {
+        this.documentUrl = documentUrl;
+    }
+
+    public String getId_name() {
+        return id_name;
+    }
+
+    public void setId_name(String id_name) {
+        this.id_name = id_name;
+    }
 
     public boolean isBackgroundStatus() {
         return backgroundStatus;

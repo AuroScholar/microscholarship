@@ -47,5 +47,32 @@
     <string name="school_id_card">School ID Card</string>
     <string name="upload_profile_pic">Upload Your Photo</string>
 
+    <string-array name="genderlist">
+        <item>Please Select Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
 
+    <string-array name="boardlist">
+        <item>Please Select Board</item>
+        <item>CBSE</item>
+        <item>CESC</item>
+        <item>ICSE</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="schooltypelist">
+        <item>Please Select Gender</item>
+        <item>Private School</item>
+        <item>Goverment School</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="languagelist">
+        <item>Please Select Language Medium</item>
+        <item>Hindi</item>
+        <item>English</item>
+        <item>Other</item>
+    </string-array>
 </resources>
