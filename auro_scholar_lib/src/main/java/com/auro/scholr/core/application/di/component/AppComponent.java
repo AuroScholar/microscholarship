@@ -9,6 +9,7 @@ import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.fragment.DemographicFragment;
 import com.auro.scholr.home.presentation.view.fragment.KYCFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
+import com.auro.scholr.home.presentation.view.fragment.QuizTestFragment;
 import com.auro.scholr.home.presentation.view.fragment.ScholarShipFragment;
 
 import javax.inject.Singleton;
@@ -32,5 +33,7 @@ public interface AppComponent {
     void doInjection(KYCFragment kycFragment);
 
     void doInjection(DemographicFragment kycFragment);
+
+    void doInjection(QuizTestFragment quizTestFragment);
 
 }

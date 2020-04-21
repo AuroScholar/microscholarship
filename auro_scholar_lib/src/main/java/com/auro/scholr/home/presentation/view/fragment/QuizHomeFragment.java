@@ -221,6 +221,14 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         setAdapter(dashboardResModel.getQuiz());
     }
 
+    public void openQuizTestFragment(DashboardResModel dashboardResModel) {
+        Bundle bundle = new Bundle();
+        QuizTestFragment quizTestFragment = new QuizTestFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        quizTestFragment.setArguments(bundle);
+        openFragment(quizTestFragment);
+    }
+
     public void openKYCFragment(DashboardResModel dashboardResModel) {
         Bundle bundle = new Bundle();
         KYCFragment kycFragment = new KYCFragment();
@@ -241,13 +249,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        //openFragment(new DemographicFragment());
-          openKYCFragment(dashboardResModel);
+        // openFragment(new ScholarShipFragment());
+        //openKYCFragment(dashboardResModel);
+        openQuizTestFragment(dashboardResModel);
     }
 
-    private void checkJson() {
-        String response = "{\"kyc_list\":[{\"id_name\":\"id_proof_front\",\"status\":\"success\",\"error\":false,\"message\":\"ID Proof File uploaded successfully\",\"url\":\"http://auroscholar.com/upload/1587289220_id_proof_280191.png\"},{\"id_name\":\"id_proof_back\",\"status\":\"success\",\"error\":false,\"message\":\"ID Proof File uploaded successfully\",\"url\":\"http://auroscholar.com/upload/1587289220_id_proof_280191.png\"},{\"id_name\":\"school_id_card\",\"status\":\"success\",\"error\":false,\"message\":\"ID Proof File uploaded successfully\",\"url\":\"http://auroscholar.com/upload/1587289220_id_proof_280191.png\"},{\"id_name\":\"student_photo\",\"status\":\"success\",\"error\":false,\"message\":\"ID Proof File uploaded successfully\",\"url\":\"http://auroscholar.com/upload/1587289220_id_proof_280191.png\"}]}";
-
-        //  KYCResModel tt = list.get(0);
-    }
 }

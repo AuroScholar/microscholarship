@@ -17,6 +17,15 @@ public class KYCDocumentDatamodel {
     String documentFileName;
     String id_name;
     String documentUrl;
+    byte[] imageBytes;
+
+    public byte[] getImageBytes() {
+        return imageBytes;
+    }
+
+    public void setImageBytes(byte[] imageBytes) {
+        this.imageBytes = imageBytes;
+    }
 
     public String getDocumentUrl() {
         return documentUrl;

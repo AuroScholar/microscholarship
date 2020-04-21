@@ -139,8 +139,8 @@ public class ScholarShipFragment extends Fragment {
     }
 
     public void loadWebData() {
-
-        binding.webView.loadUrl("http://auroscholar.com/api/scholarlogin.php?mobile_no="+auroScholarDataModel.getMobileNumber()+"&student_class="+auroScholarDataModel.getStudentClass()+"&scholr_id="+auroScholarDataModel.getScholarID()+"&regitration_source="+auroScholarDataModel.getRegistrationSource());
+        binding. webView.loadUrl("https://assessment.eklavvya.com/exam/StartExam?StudentID=1461078&ExamAssignmentID=3139319");
+      //  binding.webView.loadUrl("http://auroscholar.com/api/scholarlogin.php?mobile_no="+auroScholarDataModel.getMobileNumber()+"&student_class="+auroScholarDataModel.getStudentClass()+"&scholr_id="+auroScholarDataModel.getScholarID()+"&regitration_source="+auroScholarDataModel.getRegistrationSource());
 
        /* if (userCommunityProfile != null && userCommunityProfile.getProfile() != null) {
             if (userCommunityProfile.getProfile().phone != null && userCommunityProfile.getProfile().grade != null) {
@@ -434,7 +434,9 @@ public class ScholarShipFragment extends Fragment {
 
         //Show loader on url load
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-
+            if (!view.getUrl().equalsIgnoreCase("https://assessment.eklavvya.com/Exam/CandidateExam")) {
+                Log.e("chhonker", url);
+            }
             // Then show progress  Dialog
             // in standard case YourActivity.this
             if (progressDialog == null) {
@@ -446,6 +448,9 @@ public class ScholarShipFragment extends Fragment {
 
         // Called when all page resources loaded
         public void onPageFinished(WebView view, String url) {
+
+            view.loadUrl("javascript:window.android.onUrlChange(window.location.href);");
+
 //            webView.loadUrl("javascript:(function(){ " +
 //                                    "document.getElementById('android-app').style.display='none';})()");
 

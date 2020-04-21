@@ -73,7 +73,7 @@ public interface AppConstant {
         String dd_MMM_yyyy = "dd MMM, yyyy"; // 02 August 2019
     }
 
-    interface documentType {
+    interface DocumentType {
         int ID_PROOF_BACK_SIDE = 783;
         int ID_PROOF_FRONT_SIDE = 784;
         int SCHOOL_ID_CARD = 785;
@@ -85,11 +85,26 @@ public interface AppConstant {
         String STUDENT_PHOTO = "student_photo";
     }
 
+
+    interface DemographicType {
+        String GENDER = "gender";
+        String SCHOOL_TYPE = "school_type";
+        String BOARD_TYPE = "board_type";
+        String LANGUAGE = "language";
+    }
+
     interface ScreenType {
         String QUIZ_DASHBOARD = "QUIZ_DASHBOARD";
         String QUIZ_DASHBOARD_WEB = "QUIZ_DASHBOARD_WEB";
 
     }
 
+    interface SpinnerType {
+        String PLEASE_SELECT_GENDER = "Please Select Gender";
+        String PLEASE_SELECT_LANGUAGE_MEDIUM = "Please Select Language Medium";
+        String PLEASE_SELECT_BOARD = "Please Select Board";
+        String PLEASE_SELECT_SCHOOL = "Please Select School";
+
+    }
 
 }

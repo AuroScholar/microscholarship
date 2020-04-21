@@ -1,5 +1,11 @@
 package com.auro.scholr.util;
 
+import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 public enum ConversionUtil {
     INSTANCE;
 
@@ -28,6 +34,16 @@ public enum ConversionUtil {
             }
         } catch (Exception e) {
             return val;
+        }
+    }
+
+
+    public MultipartBody.Part makeMultipartRequest(KYCDocumentDatamodel kycDocumentDatamodel) {
+        if (kycDocumentDatamodel.getImageBytes() != null) {
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), kycDocumentDatamodel.getImageBytes());
+            return MultipartBody.Part.createFormData(kycDocumentDatamodel.getId_name(), "image.jpg", requestFile);
+        } else {
+            return null;
         }
     }
 

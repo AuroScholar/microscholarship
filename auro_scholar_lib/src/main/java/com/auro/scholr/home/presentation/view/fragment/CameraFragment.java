@@ -118,7 +118,7 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
     }
 
     private void askPermission() {
-        String rationale = "Please provide location permission so that you can ...";
+        String rationale = "Please provide camera permission so that you can ...";
         Permissions.Options options = new Permissions.Options()
                 .setRationaleDialogTitle("Info")
                 .setSettingsDialogTitle("Warning");

@@ -1,14 +1,18 @@
 package com.auro.scholr.home.data.datasource.remote;
 
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.home.data.model.AssignmentReqModel;
+import com.auro.scholr.home.data.model.DemographicResModel;
+import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.repository.HomeRepo;
+import com.auro.scholr.util.ConversionUtil;
 import com.google.gson.JsonObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Single;
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Response;
@@ -24,22 +28,36 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
 
     @Override
     public Single<Response<JsonObject>> getDashboardData(String mobileno) {
-        Map<String,String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put(AppConstant.PHONE_NUMBER, mobileno);
         return homeRemoteApi.getDashboardData(params);
     }
 
     @Override
-    public Single<Response<JsonObject>> uploadProfileImage(byte[] imageBytes) {
-        Map<String,String> params = new HashMap<String, String>();
-        params.put(AppConstant.PHONE_NUMBER, "7503600686");
-        params.put("id_proof","image/jpeg");
-
+    public Single<Response<JsonObject>> uploadProfileImage(List<KYCDocumentDatamodel> list) {
         RequestBody phonenumber = RequestBody.create(okhttp3.MultipartBody.FORM, "7503600686");
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageBytes);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("id_proof", "image.jpg", requestFile);
 
+        MultipartBody.Part id_proof_front = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(0));
+        MultipartBody.Part id_proof_back = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(1));
+        MultipartBody.Part school_id_card = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(2));
+        MultipartBody.Part student_photo = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(3));
 
-        return homeRemoteApi.uploadImage(phonenumber,body);
+        return homeRemoteApi.uploadImage(phonenumber, id_proof_front, id_proof_back, school_id_card, student_photo);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> postDemographicData(DemographicResModel demographicResModel) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.PHONE_NUMBER, demographicResModel.getPhonenumber());
+        params.put(AppConstant.DemographicType.GENDER, demographicResModel.getGender());
+        params.put(AppConstant.DemographicType.BOARD_TYPE, demographicResModel.getBoard_type());
+        params.put(AppConstant.DemographicType.SCHOOL_TYPE, demographicResModel.getSchool_type());
+        params.put(AppConstant.DemographicType.LANGUAGE, demographicResModel.getLanguage());
+        return homeRemoteApi.postDemographicData(params);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> getAssignmentId(AssignmentReqModel assignmentReqModel) {
+        return homeRemoteApi.getAssignmentId(assignmentReqModel);
     }
 }

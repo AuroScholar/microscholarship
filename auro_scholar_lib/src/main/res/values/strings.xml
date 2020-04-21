@@ -46,6 +46,8 @@
     <string name="id_proof_back_side">ID Proof Back Side</string>
     <string name="school_id_card">School ID Card</string>
     <string name="upload_profile_pic">Upload Your Photo</string>
+    <string name="upload">Upload</string>
+    <string name="submit">Submit</string>
 
     <string-array name="genderlist">
         <item>Please Select Gender</item>
@@ -63,7 +65,7 @@
     </string-array>
 
     <string-array name="schooltypelist">
-        <item>Please Select Gender</item>
+        <item>Please Select School</item>
         <item>Private School</item>
         <item>Goverment School</item>
         <item>Other</item>

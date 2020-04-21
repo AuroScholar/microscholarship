@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
-import com.auro.scholr.core.common.MessgeNotifyStatus;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
+import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
@@ -21,7 +21,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class DemographicViewModel extends ViewModel {
+public class QuizTestViewModel extends ViewModel {
     CompositeDisposable compositeDisposable;
     public MutableLiveData<ResponseApi> serviceLiveData = new MutableLiveData<>();
 
@@ -31,32 +31,18 @@ public class DemographicViewModel extends ViewModel {
     private HomeRemoteUseCase homeRemoteUseCase;
 
 
-    public DemographicViewModel(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+    public QuizTestViewModel(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
         this.homeRemoteUseCase = homeRemoteUseCase;
         this.homeUseCase = homeUseCase;
         this.homeDbUseCase = homeDbUseCase;
     }
 
 
-    private CompositeDisposable getCompositeDisposable() {
-        if (compositeDisposable == null) {
-            compositeDisposable = new CompositeDisposable();
-        }
-        return compositeDisposable;
-    }
-
-    public LiveData<ResponseApi> serviceLiveData() {
-
-        return serviceLiveData;
-
-    }
-
-
-    public void getDemographicData(DemographicResModel demographicResModel) {
+    public void getAssignExamData(AssignmentReqModel assignmentReqModel) {
 
         Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
             if (hasInternet) {
-                demographicApi(demographicResModel);
+                getAssignmentId(assignmentReqModel);
             } else {
                 // please check your internet
                 serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
@@ -69,9 +55,9 @@ public class DemographicViewModel extends ViewModel {
     }
 
 
-    private void demographicApi(DemographicResModel demographicResModel) {
+    private void getAssignmentId(AssignmentReqModel assignmentReqModel) {
         getCompositeDisposable()
-                .add(homeRemoteUseCase.postDemographicData(demographicResModel)
+                .add(homeRemoteUseCase.getAssignmentId(assignmentReqModel)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSubscribe(new Consumer<Disposable>() {
@@ -94,6 +80,20 @@ public class DemographicViewModel extends ViewModel {
                                         defaultError();
                                     }
                                 }));
+
+    }
+
+
+    private CompositeDisposable getCompositeDisposable() {
+        if (compositeDisposable == null) {
+            compositeDisposable = new CompositeDisposable();
+        }
+        return compositeDisposable;
+    }
+
+    public LiveData<ResponseApi> serviceLiveData() {
+
+        return serviceLiveData;
 
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
@@ -17,11 +18,15 @@ import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.databinding.DemographicFragmentLayoutBinding;
+import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
+import com.auro.scholr.util.TextUtil;
+import com.auro.scholr.util.ViewUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,8 +34,10 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
 
-public class DemographicFragment extends BaseFragment implements CommonCallBackListner {
+
+public class DemographicFragment extends BaseFragment implements CommonCallBackListner, View.OnClickListener {
 
     @Inject
     @Named("DemographicFragment")
@@ -40,7 +47,12 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     DemographicFragmentLayoutBinding binding;
     DemographicViewModel demographicViewModel;
     private int pos;
+    List<String> genderLines;
+    List<String> schooltypeLines;
+    List<String> boardLines;
+    List<String> languageLines;
 
+    DemographicResModel demographicResModel = new DemographicResModel();
 
     @Override
     public void onAttach(Context context) {
@@ -59,30 +71,39 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     }
 
 
-
-
     @Override
     protected void init() {
         // Spinner Drop down Gender
-        List<String> genderLines = Arrays.asList(getResources().getStringArray(R.array.genderlist));
-        spinnermethodcall(genderLines,binding.SpinnerGender);
+        genderLines = Arrays.asList(getResources().getStringArray(R.array.genderlist));
+        spinnermethodcall(genderLines, binding.SpinnerGender);
 
         // Spinner Drop down schooltype
-        List<String> schooltypeLines = Arrays.asList(getResources().getStringArray(R.array.schooltypelist));
-        spinnermethodcall(schooltypeLines,binding.SpinnerSchoolType);
+        schooltypeLines = Arrays.asList(getResources().getStringArray(R.array.schooltypelist));
+        spinnermethodcall(schooltypeLines, binding.SpinnerSchoolType);
 
         // Spinner Drop down boardlist
-        List<String> boardLines = Arrays.asList(getResources().getStringArray(R.array.boardlist));
-        spinnermethodcall(boardLines,binding.SpinnerBoard);
+        boardLines = Arrays.asList(getResources().getStringArray(R.array.boardlist));
+        spinnermethodcall(boardLines, binding.SpinnerBoard);
 
         // Spinner Drop down language
-        List<String> languageLines = Arrays.asList(getResources().getStringArray(R.array.languagelist));
-        spinnermethodcall(languageLines,binding.SpinnerLanguageMedium);
+        languageLines = Arrays.asList(getResources().getStringArray(R.array.languagelist));
+        spinnermethodcall(languageLines, binding.SpinnerLanguageMedium);
 
+        if (getArguments() != null) {
+            String mobileNumber = getArguments().getString(AppConstant.MOBILE_NUMBER);
 
+        }
+        demographicResModel.setPhonenumber("7503600686");
+        if (demographicViewModel != null && demographicViewModel.serviceLiveData().hasObservers()) {
+            demographicViewModel.serviceLiveData().removeObservers(this);
+
+        } else {
+            observeServiceResponse();
+        }
 
     }
-    public void spinnermethodcall(List<String> languageLines, AppCompatSpinner sppiner){
+
+    public void spinnermethodcall(List<String> languageLines, AppCompatSpinner spinner) {
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, languageLines);
 
@@ -90,7 +111,8 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
-        sppiner.setAdapter(dataAdapter);
+        spinner.setAdapter(dataAdapter);
+
     }
 
     @Override
@@ -100,6 +122,55 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
 
     @Override
     protected void setListener() {
+        binding.submitbutton.setOnClickListener(this);
+
+        binding.SpinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                demographicResModel.setGender(binding.SpinnerGender.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        binding.SpinnerSchoolType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                demographicResModel.setSchool_type(binding.SpinnerSchoolType.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        binding.SpinnerLanguageMedium.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                demographicResModel.setLanguage(binding.SpinnerLanguageMedium.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        binding.SpinnerBoard.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                demographicResModel.setBoard_type(binding.SpinnerBoard.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
 
     }
 
@@ -127,6 +198,74 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
 
     @Override
     public void commonEventListner(CommonDataModel commonDataModel) {
+
+    }
+
+
+    private void observeServiceResponse() {
+
+        demographicViewModel.serviceLiveData().observeForever(responseApi -> {
+
+            switch (responseApi.status) {
+
+                case LOADING:
+                    //For ProgressBar
+                    handleProgress(0, "");
+                    break;
+
+                case SUCCESS:
+                    if (responseApi.apiTypeStatus == DEMOGRAPHIC_API) {
+                        handleProgress(1, "");
+                        DemographicResModel demographicResModel = (DemographicResModel) responseApi.data;
+                    }
+
+                    break;
+
+                case NO_INTERNET:
+//On fail
+                    handleProgress(2, (String) responseApi.data);
+                    break;
+
+                case AUTH_FAIL:
+                case FAIL_400:
+                default:
+                    handleProgress(1, (String) responseApi.data);
+                    showSnackbarError(getString(R.string.default_error));
+                    break;
+            }
+
+        });
+    }
+
+
+    private void handleProgress(int value, String message) {
+        if (value == 0) {
+
+            binding.submitbutton.setText("");
+            binding.submitbutton.setEnabled(false);
+            binding.progressBar.setVisibility(View.VISIBLE);
+
+        } else if (value == 1) {
+
+            binding.submitbutton.setText(getActivity().getString(R.string.submit));
+            binding.submitbutton.setEnabled(true);
+            binding.progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    private void showSnackbarError(String message) {
+        ViewUtil.showSnackBar(binding.getRoot(), message);
+    }
+
+    @Override
+    public void onClick(View v) {
+        String validation = demographicViewModel.homeUseCase.validateDemographic(demographicResModel);
+        if (TextUtil.isEmpty(validation)) {
+            demographicViewModel.getDemographicData(demographicResModel);
+        } else {
+            showSnackbarError(validation);
+        }
+
 
     }
 }

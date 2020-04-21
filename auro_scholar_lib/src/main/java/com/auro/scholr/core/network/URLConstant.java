@@ -10,8 +10,11 @@ public interface URLConstant {
 
     String DASHBOARD_API = BASE_URL + "dashboard.php";
 
+    String DEMOGRAPHIC_API = BASE_URL + "demographics.php";
+
 
     String UPLOAD_IMAGE_URL = BASE_URL + "kyc.php";
+    String GET_ASSIGNMENT_ID = "http://splashwebapi.eklavvya.in/SplashService.svc/AssignExamToStudent";
 
 
 }

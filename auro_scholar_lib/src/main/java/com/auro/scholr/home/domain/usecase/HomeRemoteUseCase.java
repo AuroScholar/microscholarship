@@ -6,7 +6,11 @@ import com.auro.scholr.core.common.NetworkUtil;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.network.NetworkUseCase;
+import com.auro.scholr.home.data.model.AssignmentReqModel;
+import com.auro.scholr.home.data.model.AssignmentResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.home.data.model.DemographicResModel;
+import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.data.model.KYCResModel;
@@ -28,7 +32,9 @@ import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_200;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_400;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_401;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_FAIL;
+import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
+import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
 
 public class HomeRemoteUseCase extends NetworkUseCase {
     HomeRepo.DashboardRemoteData dashboardRemoteData;
@@ -39,9 +45,9 @@ public class HomeRemoteUseCase extends NetworkUseCase {
     }
 
 
-    public Single<ResponseApi> uploadProfileImage(byte[] imageBytes) {
+    public Single<ResponseApi> uploadProfileImage(List<KYCDocumentDatamodel> list) {
 
-        return dashboardRemoteData.uploadProfileImage(imageBytes).map(new Function<Response<JsonObject>, ResponseApi>() {
+        return dashboardRemoteData.uploadProfileImage(list).map(new Function<Response<JsonObject>, ResponseApi>() {
             @Override
             public ResponseApi apply(Response<JsonObject> response) throws Exception {
 
@@ -67,6 +73,43 @@ public class HomeRemoteUseCase extends NetworkUseCase {
                 if (response != null) {
 
                     return handleResponse(response, DASHBOARD_API);
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
+
+    public Single<ResponseApi> postDemographicData(DemographicResModel demographicResModel) {
+
+        return dashboardRemoteData.postDemographicData(demographicResModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+
+                    return handleResponse(response, DEMOGRAPHIC_API);
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
+    public Single<ResponseApi> getAssignmentId(AssignmentReqModel demographicResModel) {
+
+        return dashboardRemoteData.getAssignmentId(demographicResModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+
+                    return handleResponse(response, ASSIGNMENT_STUDENT_DATA_API);
 
                 } else {
 
@@ -105,14 +148,20 @@ public class HomeRemoteUseCase extends NetworkUseCase {
     @Override
     public ResponseApi response200(Response<JsonObject> response, Status status) {
         if (status == DASHBOARD_API) {
-
             DashboardResModel dashboardResModel = gson.fromJson(response.body(), DashboardResModel.class);
             return ResponseApi.success(dashboardResModel, status);
-
         } else if (status == Status.UPLOAD_PROFILE_IMAGE) {
             KYCResListModel list = new Gson().fromJson(response.body(), KYCResListModel.class);
             return ResponseApi.success(list, status);
+        } else if (status == DEMOGRAPHIC_API) {
+            DemographicResModel demographicResModel = new Gson().fromJson(response.body(), DemographicResModel.class);
+            return ResponseApi.success(demographicResModel, status);
+        }else if (status == ASSIGNMENT_STUDENT_DATA_API) {
+            AssignmentResModel assignmentResModel = new Gson().fromJson(response.body(), AssignmentResModel.class);
+            return ResponseApi.success(assignmentResModel, status);
         }
+
+
         return ResponseApi.fail(null, status);
     }
 
