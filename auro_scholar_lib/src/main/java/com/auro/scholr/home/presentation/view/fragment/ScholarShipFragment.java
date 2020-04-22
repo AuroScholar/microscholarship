@@ -56,7 +56,6 @@ public class ScholarShipFragment extends Fragment {
     public static final String TAG = "ScholarShipFragment";
 
     private static final int INPUT_FILE_REQUEST_CODE = 1;
-    protected Disposable subscriptionList;
     private WebSettings webSettings;
     private ValueCallback<Uri[]> mUploadMessage;
     private String mCameraPhotoPath = null;
@@ -92,10 +91,12 @@ public class ScholarShipFragment extends Fragment {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setDomStorageEnabled(true);
+        webSettings.setPluginState(WebSettings.PluginState.ON);
+        webSettings.setMediaPlaybackRequiresUserGesture(false);
         binding.webView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
 
         webSettings.setAllowFileAccess(true);
-        //      webSettings.setUserAgentString("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36");
+        webSettings.setUserAgentString("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36");
 
         binding.webView.setWebViewClient(new PQClient());
         binding.webView.setWebChromeClient(new PQChromeClient());
@@ -111,48 +112,11 @@ public class ScholarShipFragment extends Fragment {
     }
 
     public void webviewInit() {
-
-
         checkInternet();
-
-     /*  // if (ProfileManager.isUserLoggedIn()) {
-            subscriptionList = ApiClient.get()
-                    .getUserCommunityProfile(ProfileManager.getUserProfile().user_id)
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(userCommunityProfileData -> {
-                        userCommunityProfile = userCommunityProfileData;
-                        String jsonData = new Gson().toJson(userCommunityProfile);
-                        PrefManager.getInstance().setCommunityProfile(jsonData);
-                        setUserCommunityProfileData();
-                        loadWebData();
-
-                    }, throwable -> {
-                        LogUtils.e(throwable);
-                    });
-      } else {
-         //   PrefManager.getInstance().setShowQuiz(true);
-           // startActivity(AuroScholrWelcomeActivity.Companion.makeIntent());
-
-        }*/
-
     }
 
     public void loadWebData() {
-        binding. webView.loadUrl("https://assessment.eklavvya.com/exam/StartExam?StudentID=1461078&ExamAssignmentID=3139319");
-      //  binding.webView.loadUrl("http://auroscholar.com/api/scholarlogin.php?mobile_no="+auroScholarDataModel.getMobileNumber()+"&student_class="+auroScholarDataModel.getStudentClass()+"&scholr_id="+auroScholarDataModel.getScholarID()+"&regitration_source="+auroScholarDataModel.getRegistrationSource());
-
-       /* if (userCommunityProfile != null && userCommunityProfile.getProfile() != null) {
-            if (userCommunityProfile.getProfile().phone != null && userCommunityProfile.getProfile().grade != null) {
-                webView.loadUrl("http://auroscholar.com/api/scholarlogin.php?mobile_no=" + userCommunityProfile.getProfile().phone + "&student_class=" + userCommunityProfile.getProfile().grade + "&scholr_id=" + userCommunityProfile.getProfile().user_id + "&regitration_source=" + userCommunityProfile.getDeviceSourceAuroScholr());
-            } else if (userCommunityProfile.getProfile().phone == null) {
-                Toast.makeText(getActivity(), "Please enter mobile number for auto-login", Toast.LENGTH_SHORT).show();
-                webView.loadUrl("http://auroscholar.com/start_quiz.php?");
-            } else if (userCommunityProfile.getProfile().grade == null) {
-                Toast.makeText(getActivity(), "Please enter grade for auto-login", Toast.LENGTH_SHORT).show();
-                webView.loadUrl("http://auroscholar.com/start_quiz.php?");
-            }
-        }*/
+        binding. webView.loadUrl("https://assessment.eklavvya.com/exam/StartExam?StudentID=2175083&ExamAssignmentID=3160329");
     }
 
     @Override
@@ -259,9 +223,9 @@ public class ScholarShipFragment extends Fragment {
             mUploadMessage.onReceiveValue(new Uri[]{});
             mUploadMessage = null;
         }
-//        else {
-//            webView.evaluateJavascript("grantedPermission();", null);
-//        }
+      else {
+            binding.webView.evaluateJavascript("grantedPermission();", null);
+        }
     }
 
     private File createImageFile() throws IOException {
@@ -327,46 +291,6 @@ public class ScholarShipFragment extends Fragment {
                 mUploadMessage.onReceiveValue(null);
             }
             mUploadMessage = filePath;
-//            Log.e("FileCooserParams => ", filePath.toString());
-//
-//            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//                // Create the File where the photo should go
-//                File photoFile = null;
-//                try {
-//                    photoFile = createImageFile();
-//                    takePictureIntent.putExtra("PhotoPath", mCameraPhotoPath);
-//                } catch (IOException ex) {
-//                    // Error occurred while creating the File
-//                    Log.e("error", "Unable to create Image File", ex);
-//                }
-//
-//                // Continue only if the File was successfully created
-//                if (photoFile != null) {
-//                    mCameraPhotoPath = "file:" + photoFile.getAbsolutePath();
-//                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-//                } else {
-//                    takePictureIntent = null;
-//                }
-//            }
-//
-//            Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//            contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
-//            contentSelectionIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-//            contentSelectionIntent.setType("image/*");
-//
-//            Intent[] intentArray;
-//            if (takePictureIntent != null) {
-//                intentArray = new Intent[]{takePictureIntent};
-//            } else {
-//                intentArray = new Intent[2];
-//            }
-//
-//            Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
-//            chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
-//            chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser");
-//            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
-//            startActivityForResult(Intent.createChooser(chooserIntent, "Select images"), 1);
 
             int writePermission = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
             int readPermission = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -470,10 +394,7 @@ public class ScholarShipFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (subscriptionList != null && !subscriptionList.isDisposed()) {
-            subscriptionList.dispose();
 
-        }
     }
 
     public class WebAppInterface {
@@ -511,7 +432,6 @@ public class ScholarShipFragment extends Fragment {
             binding.webView.setVisibility(View.GONE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
             binding.shimmerViewQuiz.stopShimmer();
-            binding.errorLayout.errorIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.nointernet_ico));
             binding.errorLayout.textError.setText(getString(R.string.internet_check));
             binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -525,15 +445,12 @@ public class ScholarShipFragment extends Fragment {
 
     private void checkInternet() {
         NetworkUtil.hasInternetConnection().subscribe(hasInternet -> {
-
             if (hasInternet) {
                 handleProgress(0);
                 loadWebData();
-
             } else {
                 handleProgress(2);
             }
-
         });
 
     }

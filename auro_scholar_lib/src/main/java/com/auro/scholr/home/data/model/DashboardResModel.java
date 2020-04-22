@@ -87,7 +87,6 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private String month;
 
-
     @SerializedName("idfront")
     @Expose
     private String idfront;
@@ -103,6 +102,10 @@ public class DashboardResModel implements Parcelable {
     @SerializedName("quiz")
     @Expose
     private List<QuizResModel> quiz = null;
+
+    @SerializedName("modify")
+    @Expose
+    private boolean modify;
 
     protected DashboardResModel(Parcel in) {
         status = in.readString();
@@ -132,6 +135,8 @@ public class DashboardResModel implements Parcelable {
         idback = in.readString();
         photo = in.readString();
         schoolid = in.readString();
+        quiz = in.createTypedArrayList(QuizResModel.CREATOR);
+        modify = in.readByte() != 0;
     }
 
     @Override
@@ -164,6 +169,8 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(idback);
         dest.writeString(photo);
         dest.writeString(schoolid);
+        dest.writeTypedList(quiz);
+        dest.writeByte((byte) (modify ? 1 : 0));
     }
 
     @Override
@@ -375,4 +382,11 @@ public class DashboardResModel implements Parcelable {
         this.quiz = quiz;
     }
 
+    public boolean isModify() {
+        return modify;
+    }
+
+    public void setModify(boolean modify) {
+        this.modify = modify;
+    }
 }

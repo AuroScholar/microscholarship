@@ -12,12 +12,21 @@ public class KYCDocumentDatamodel {
     boolean documentstatus;
     boolean progress;
     boolean backgroundStatus;
+    boolean modify;
     String buttonText;
     String documentName;
     String documentFileName;
     String id_name;
     String documentUrl;
     byte[] imageBytes;
+
+    public boolean isModify() {
+        return modify;
+    }
+
+    public void setModify(boolean modify) {
+        this.modify = modify;
+    }
 
     public byte[] getImageBytes() {
         return imageBytes;

@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.common.CommonCallBackListner;
+import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.QuizItemLayoutBinding;
 import com.auro.scholr.home.data.model.QuizResModel;
+import com.auro.scholr.util.AppUtil;
 
 import java.util.List;
 
@@ -23,9 +26,11 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
 
     List<QuizResModel> mValues;
     Context mContext;
+    CommonCallBackListner commonCallBackListner;
 
-    public QuizItemAdapter(Context context, List<QuizResModel> values) {
+    public QuizItemAdapter(Context context, List<QuizResModel> values, CommonCallBackListner commonCallBackListner) {
 
+        this.commonCallBackListner = commonCallBackListner;
         mValues = values;
         mContext = context;
     }
@@ -60,17 +65,22 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
                 binding.lockLayout.setVisibility(View.GONE);
             } else {
                 binding.lockLayout.setVisibility(View.VISIBLE);
+                binding.lockLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /*Nothing to do*/
+                    }
+                });
             }
 
-            startAnimationQuizButton(binding);
+            startAnimationQuizButton(binding, quizResModel, position);
 
 
         }
 
     }
 
-    private void startAnimationQuizButton(QuizItemLayoutBinding binding)
-    {
+    private void startAnimationQuizButton(QuizItemLayoutBinding binding, QuizResModel quizResModel, int position) {
         //Animation on button
         Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.fadein);
 
@@ -96,9 +106,15 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
             }
 
         });
-
-
         binding.quizButton.startAnimation(anim);
+        binding.quizButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (commonCallBackListner != null) {
+                    commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, quizResModel));
+                }
+            }
+        });
     }
 
 

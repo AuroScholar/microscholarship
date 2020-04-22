@@ -3,9 +3,11 @@ package com.auro.scholr.home.domain.usecase;
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+import com.auro.scholr.home.data.model.ObjStudentExamInfo;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.util.TextUtil;
 
@@ -19,9 +21,9 @@ public class HomeUseCase {
         for (int i = 0; i < 4; i++) {
             productModelList.add(new QuizResModel());
         }
-
         return productModelList;
     }
+
 
 
     public ArrayList<KYCDocumentDatamodel> makeAdapterDocumentList(DashboardResModel dashboardResModel) {
@@ -31,9 +33,10 @@ public class HomeUseCase {
         kyc_one.setDocumentName(AuroApp.getAppContext().getString(R.string.id_proof_front_side));
         kyc_one.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
         kyc_one.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
+        kyc_one.setModify(dashboardResModel.isModify());
         kyc_one.setId_name(AppConstant.DocumentType.ID_PROOF);
         if (!TextUtil.isEmpty(dashboardResModel.getIdfront())) {
-            //kyc_one.setDocumentstatus(true);
+            kyc_one.setDocumentstatus(true);
             kyc_one.setDocumentUrl(dashboardResModel.getIdfront());
         }
 
@@ -43,9 +46,10 @@ public class HomeUseCase {
         kyc_two.setDocumentName(AuroApp.getAppContext().getString(R.string.id_proof_back_side));
         kyc_two.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
         kyc_two.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
+        kyc_two.setModify(dashboardResModel.isModify());
         kyc_two.setId_name(AppConstant.DocumentType.ID_PROOF_BACK);
         if (!TextUtil.isEmpty(dashboardResModel.getIdback())) {
-            //   kyc_two.setDocumentstatus(true);
+            kyc_two.setDocumentstatus(true);
             kyc_two.setDocumentUrl(dashboardResModel.getIdback());
         }
 
@@ -54,9 +58,10 @@ public class HomeUseCase {
         kyc_three.setDocumentName(AuroApp.getAppContext().getString(R.string.school_id_card));
         kyc_three.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
         kyc_three.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
+        kyc_three.setModify(dashboardResModel.isModify());
         kyc_three.setId_name(AppConstant.DocumentType.SCHOOL_ID);
         if (!TextUtil.isEmpty(dashboardResModel.getSchoolid())) {
-            //   kyc_three.setDocumentstatus(true);
+            kyc_three.setDocumentstatus(true);
             kyc_three.setDocumentUrl(dashboardResModel.getSchoolid());
         }
 
@@ -65,9 +70,10 @@ public class HomeUseCase {
         kyc_four.setDocumentName(AuroApp.getAppContext().getString(R.string.upload_profile_pic));
         kyc_four.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
         kyc_four.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
+        kyc_four.setModify(dashboardResModel.isModify());
         kyc_four.setId_name(AppConstant.DocumentType.STUDENT_PHOTO);
         if (!TextUtil.isEmpty(dashboardResModel.getPhoto())) {
-            //   kyc_four.setDocumentstatus(true);
+            kyc_four.setDocumentstatus(true);
             kyc_four.setDocumentUrl(dashboardResModel.getPhoto());
         }
 
@@ -98,6 +104,25 @@ public class HomeUseCase {
             return true;
         }
 
+    }
+
+
+    private String getTestCode(QuizResModel quizResModel) {
+        String code = "Test" + quizResModel.getNumber() + (quizResModel.getAttempt() + 1);
+        return code;
+    }
+
+    public AssignmentReqModel getAssignmentRequestModel(DashboardResModel dashboardResModel, QuizResModel quizResModel) {
+        AssignmentReqModel assignmentReqModel = new AssignmentReqModel();
+        ObjStudentExamInfo objStudentExamInfo = new ObjStudentExamInfo();
+        objStudentExamInfo.setExamLanguage("E");
+        objStudentExamInfo.setGrade(dashboardResModel.getStudentclass());
+        objStudentExamInfo.setMonth(dashboardResModel.getMonth());
+        objStudentExamInfo.setStudentID(dashboardResModel.getStudent_id());
+        objStudentExamInfo.setSubjectName(dashboardResModel.getSubjectName());
+        objStudentExamInfo.setExamName(getTestCode(quizResModel));
+        assignmentReqModel.setObjStudentExamInfo(objStudentExamInfo);
+        return assignmentReqModel;
     }
 
 

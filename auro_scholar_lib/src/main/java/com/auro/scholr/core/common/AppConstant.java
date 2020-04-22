@@ -22,6 +22,7 @@ public interface AppConstant {
     String TRUE = "true";
     String PROFILE_IMAGE_PATH = "PROFILE_IMAGE_PATH";
     String DASHBOARD_RES_MODEL = "DASHBOARD_RES_MODEL";
+    String QUIZ_RES_MODEL = "QUIZ_TEST_MODEL";
     String AURO_DATA_MODEL = "AURO_DATA_MODEL";
     String PHONE_NUMBER = "Phonenumber";
     int CAMERA_REQUEST_CODE = 007;

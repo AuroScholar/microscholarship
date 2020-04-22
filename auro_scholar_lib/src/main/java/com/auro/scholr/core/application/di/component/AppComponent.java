@@ -8,6 +8,7 @@ import com.auro.scholr.core.application.di.module.UtilsModule;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.fragment.DemographicFragment;
 import com.auro.scholr.home.presentation.view.fragment.KYCFragment;
+import com.auro.scholr.home.presentation.view.fragment.KYCViewFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizTestFragment;
 import com.auro.scholr.home.presentation.view.fragment.ScholarShipFragment;
@@ -25,6 +26,8 @@ public interface AppComponent {
 
 
     void doInjection(HomeActivity homeActivity);
+
+    void doInjection(KYCViewFragment kycViewFragment);
 
     void doInjection(ScholarShipFragment scholarShipFragment);
 

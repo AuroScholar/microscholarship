@@ -99,7 +99,7 @@ public class DemographicViewModel extends ViewModel {
 
 
     private void defaultError() {
-        serviceLiveData.setValue(new ResponseApi(Status.FAIL, AuroApp.getAppContext().getResources().getString(R.string.default_error), null));
+        serviceLiveData.setValue(new ResponseApi(Status.FAIL, "", null));
     }
 
 }

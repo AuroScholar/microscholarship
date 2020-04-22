@@ -77,7 +77,6 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
-        AuroApp.intialiseSdk(this);
         init();
         setListener();
 

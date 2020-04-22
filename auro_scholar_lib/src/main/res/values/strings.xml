@@ -48,6 +48,7 @@
     <string name="upload_profile_pic">Upload Your Photo</string>
     <string name="upload">Upload</string>
     <string name="submit">Submit</string>
+    <string name="modify">Modify</string>
 
     <string-array name="genderlist">
         <item>Please Select Gender</item>

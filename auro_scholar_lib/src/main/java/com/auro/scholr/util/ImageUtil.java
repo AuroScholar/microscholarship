@@ -168,8 +168,8 @@ public class ImageUtil {
     public static void loadNormalImage(ImageView view,String imgUrl)
     {
         Glide.with(view.getContext()).load(imgUrl)
-                .apply(RequestOptions.placeholderOf(R.drawable.more_icon)
-                        .error(R.drawable.more_icon)
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_image_placeholder)
+                        .error(R.drawable.ic_image_placeholder)
                         .centerCrop()
                         .dontAnimate()
                         .priority(Priority.IMMEDIATE)

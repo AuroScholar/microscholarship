@@ -38,17 +38,21 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.core.common.NetworkUtil;
 import com.auro.scholr.databinding.CardFragmentLayoutBinding;
+import com.auro.scholr.databinding.QuizTestLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AssignmentResModel;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.ObjStudentExamInfo;
+import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
+import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
@@ -78,12 +82,25 @@ public class QuizTestFragment extends BaseFragment {
     @Named("QuizTestFragment")
     ViewModelFactory viewModelFactory;
 
-
-    CardFragmentLayoutBinding binding;
-    private WebView webView;
+    private static final int INPUT_FILE_REQUEST_CODE = 1;
     private WebSettings webSettings;
+    private ValueCallback<Uri[]> mUploadMessage;
+    private String mCameraPhotoPath = null;
+    private long size = 0;
+    QuizTestLayoutBinding binding;
+    private WebView webView;
     DashboardResModel dashboardResModel;
     QuizTestViewModel quizTestViewModel;
+    QuizResModel quizResModel;
+
+    // Storage Permissions variables
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
+
 
     @Nullable
     @Override
@@ -91,7 +108,7 @@ public class QuizTestFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         setHasOptionsMenu(true);
         if (binding == null) {
-            binding = DataBindingUtil.inflate(inflater, R.layout.card_fragment_layout, container, false);
+            binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
             AuroApp.getAppComponent().doInjection(this);
             quizTestViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizTestViewModel.class);
             binding.setLifecycleOwner(this);
@@ -103,13 +120,10 @@ public class QuizTestFragment extends BaseFragment {
     @Override
     protected void init() {
 
-        if (quizTestViewModel != null && quizTestViewModel.serviceLiveData().hasObservers()) {
-            quizTestViewModel.serviceLiveData().removeObservers(this);
-
-        } else {
-            observeServiceResponse();
+        setListener();
+        if (dashboardResModel != null && quizResModel != null) {
+            quizTestViewModel.getAssignExamData(quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel));
         }
-        askPermission();
     }
 
 
@@ -120,47 +134,45 @@ public class QuizTestFragment extends BaseFragment {
             switch (responseApi.status) {
 
                 case LOADING:
-
+                    handleProgress(0, "");
                     break;
-
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == ASSIGNMENT_STUDENT_DATA_API) {
                         AssignmentResModel assignmentResModel = (AssignmentResModel) responseApi.data;
                         String webUrl = "https://assessment.eklavvya.com/exam/StartExam?StudentID=" + dashboardResModel.getStudent_id() + "&ExamAssignmentID=" + assignmentResModel.getAssignExamToStudentResult();
                         loadWeb(webUrl);
                     }
-
                     break;
-
                 case NO_INTERNET:
-//On fail
+                    handleProgress(2, getActivity().getString(R.string.internet_check));
                     break;
-
                 case AUTH_FAIL:
                 case FAIL_400:
                 default:
-
+                    handleProgress(2, getActivity().getString(R.string.default_error));
                     break;
             }
-
         });
     }
 
     @Override
     protected void setToolbar() {
-
+        /*Do cod ehere*/
     }
 
     @Override
     protected void setListener() {
-
+        if (quizTestViewModel != null && quizTestViewModel.serviceLiveData().hasObservers()) {
+            quizTestViewModel.serviceLiveData().removeObservers(this);
+        } else {
+            observeServiceResponse();
+        }
     }
 
     @Override
     protected int getLayout() {
-        return 0;
+        return R.layout.quiz_test_layout;
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -168,43 +180,30 @@ public class QuizTestFragment extends BaseFragment {
 
         if (getArguments() != null) {
             dashboardResModel = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
+            quizResModel = getArguments().getParcelable(AppConstant.QUIZ_RES_MODEL);
         }
-
         init();
-
-
     }
 
-    private void askPermission() {
-        String rationale = "For taking the quiz camera permission is must.";
-        Permissions.Options options = new Permissions.Options()
-                .setRationaleDialogTitle("Info")
-                .setSettingsDialogTitle("Warning");
-        Permissions.check(getActivity(), PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
-            @Override
-            public void onGranted() {
-                if (dashboardResModel != null) {
-                    AssignmentReqModel assignmentReqModel = new AssignmentReqModel();
-                    ObjStudentExamInfo objStudentExamInfo = new ObjStudentExamInfo();
-                    objStudentExamInfo.setExamLanguage("E");
-                    objStudentExamInfo.setGrade(dashboardResModel.getStudentclass());
-                    objStudentExamInfo.setMonth(dashboardResModel.getMonth());
-                    objStudentExamInfo.setStudentID(dashboardResModel.getStudent_id());
-                    objStudentExamInfo.setSubjectName(dashboardResModel.getSubjectName());
-                    objStudentExamInfo.setExamName("Test11");
-                    assignmentReqModel.setObjStudentExamInfo(objStudentExamInfo);
-                    quizTestViewModel.getAssignExamData(assignmentReqModel);
 
-                }
+    public void openDemographicFragment() {
+        Bundle bundle = new Bundle();
+        DemographicFragment demographicFragment = new DemographicFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        demographicFragment.setArguments(bundle);
+        openFragment(demographicFragment);
+    }
 
-            }
+    private void openFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager().popBackStack();
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(AuroApp.getFragmentContainerUiId(), fragment, KYCViewFragment.class
+                        .getSimpleName())
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
 
-            @Override
-            public void onDenied(Context context, ArrayList<String> deniedPermissions) {
-                // permission denied, block the feature.
-                getActivity().getSupportFragmentManager().popBackStack();
-            }
-        });
     }
 
     @Override
@@ -220,13 +219,13 @@ public class QuizTestFragment extends BaseFragment {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setDomStorageEnabled(true);
-        ;
-
+        webSettings = binding.webView.getSettings();
+        webSettings.setPluginState(WebSettings.PluginState.ON);
+        webSettings.setMediaPlaybackRequiresUserGesture(false);
         webSettings.setAllowFileAccess(true);
         webSettings.setUserAgentString("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36");
-
         webView.setWebViewClient(new PQClient());
-        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebChromeClient(new PQChromeClient());
         //if SDK version is greater of 19 then activate hardware acceleration otherwise activate software acceleration
         if (Build.VERSION.SDK_INT >= 19) {
             webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
@@ -234,31 +233,21 @@ public class QuizTestFragment extends BaseFragment {
             webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
 
-        // webView.loadUrl("https://en.imgbb.com/");
         webView.loadUrl(webUrl);
 
     }
 
     public class PQClient extends WebViewClient {
-        ProgressDialog progressDialog;
-
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
             // If url contains mailto link then open Mail Intent
             if (url.contains("mailto:")) {
-
                 // Could be cleverer and use a regex
                 //Open links in new browser
                 view.getContext().startActivity(
                         new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-
-                // Here we can open new activity
-
                 return true;
-
             } else {
-
-                // Stay within this webview and load url
+                //Stay within this webview and load url
                 view.loadUrl(url);
                 return true;
             }
@@ -266,35 +255,148 @@ public class QuizTestFragment extends BaseFragment {
 
         //Show loader on url load
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            if (view.getUrl().equalsIgnoreCase("http://auroscholar.com/index.php")) {
-                Log.e("chhonker", url);
-                getActivity().getSupportFragmentManager().popBackStack();
-            }
+            Log.e("chhonker", url);
 
-            // Then show progress  Dialog
-            // in standard case YourActivity.this
-            if (progressDialog == null) {
-                progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Loading...");
-                progressDialog.hide();
+            if (view.getUrl().equalsIgnoreCase("http://auroscholar.com/index.php") ||
+                    view.getUrl().equalsIgnoreCase("http://auroscholar.com/demographics.php")
+            || view.getUrl().equalsIgnoreCase("http://auroscholar.com/dashboard.php")) {
+
+               //openDemographicFragment();
             }
         }
 
         // Called when all page resources loaded
         public void onPageFinished(WebView view, String url) {
+            handleProgress(1, "");
             webView.loadUrl("javascript:(function(){ " +
                     "document.getElementById('android-app').style.display='none';})()");
-
-            try {
-                // Close progressDialog
-                if (progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                    progressDialog = null;
-                }
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
         }
     }
 
+    public class PQChromeClient extends WebChromeClient {
+        @Override
+        public void onPermissionRequest(final PermissionRequest request) {
+            String[] requestedResources = request.getResources();
+            ArrayList<String> permissions = new ArrayList<>();
+            ArrayList<String> grantedPermissions = new ArrayList<String>();
+            for (int i = 0; i < requestedResources.length; i++) {
+                if (requestedResources[i].equals(PermissionRequest.RESOURCE_AUDIO_CAPTURE)) {
+                    permissions.add(Manifest.permission.RECORD_AUDIO);
+                } else if (requestedResources[i].equals(PermissionRequest.RESOURCE_VIDEO_CAPTURE)) {
+                    permissions.add(Manifest.permission.CAMERA);
+                }
+            }
+            for (int i = 0; i < permissions.size(); i++) {
+                if (ContextCompat.checkSelfPermission(getActivity(), permissions.get(i)) != PackageManager.PERMISSION_GRANTED) {
+                    continue;
+                }
+                if (permissions.get(i).equals(Manifest.permission.RECORD_AUDIO)) {
+                    grantedPermissions.add(PermissionRequest.RESOURCE_AUDIO_CAPTURE);
+                } else if (permissions.get(i).equals(Manifest.permission.CAMERA)) {
+                    grantedPermissions.add(PermissionRequest.RESOURCE_VIDEO_CAPTURE);
+                }
+            }
+
+            if (grantedPermissions.isEmpty()) {
+                request.deny();
+            } else {
+                String[] grantedPermissionsArray = new String[grantedPermissions.size()];
+                grantedPermissionsArray = grantedPermissions.toArray(grantedPermissionsArray);
+                request.grant(grantedPermissionsArray);
+            }
+        }
+
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+            // pbPageLoading.setProgress(newProgress);
+        }
+
+        // For Android 5.0+
+        public boolean onShowFileChooser(WebView view, ValueCallback<Uri[]> filePath, FileChooserParams fileChooserParams) {
+            // Double check that we don't have any existing callbacks
+            if (mUploadMessage != null) {
+                mUploadMessage.onReceiveValue(null);
+            }
+            mUploadMessage = filePath;
+
+            int writePermission = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            int readPermission = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
+            int cameraPermission = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
+            if (!(writePermission != PackageManager.PERMISSION_GRANTED || readPermission != PackageManager.PERMISSION_GRANTED || cameraPermission != PackageManager.PERMISSION_GRANTED)) {
+                try {
+                    Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT, null);
+                    galleryintent.setType("image/*");
+
+                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+                        Log.e("error", "Unable to create Image File", ex);
+                    }
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                        mCameraPhotoPath = "file:" + photoFile.getAbsolutePath();
+                        cameraIntent.putExtra(
+                                MediaStore.EXTRA_OUTPUT,
+                                Uri.fromFile(photoFile)
+                        );
+                    }
+                    Intent chooser = new Intent(Intent.ACTION_CHOOSER);
+                    chooser.putExtra(Intent.EXTRA_INTENT, galleryintent);
+                    chooser.putExtra(Intent.EXTRA_TITLE, "Select from:");
+
+                    Intent[] intentArray = {cameraIntent};
+                    chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
+                    // startActivityForResult(chooser, REQUEST_PIC);
+                    startActivityForResult(chooser, INPUT_FILE_REQUEST_CODE);
+                } catch (Exception e) {
+                    // TODO: when open file chooser failed
+                }
+            }
+            return true;
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File imageFile = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        return imageFile;
+    }
+
+    private void handleProgress(int status, String msg) {
+        if (status == 0) {
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.webView.setVisibility(View.GONE);
+            binding.errorConstraint.setVisibility(View.GONE);
+        } else if (status == 1) {
+            binding.progressBar.setVisibility(View.GONE);
+            binding.webView.setVisibility(View.VISIBLE);
+            binding.errorConstraint.setVisibility(View.GONE);
+        } else if (status == 2) {
+            binding.progressBar.setVisibility(View.GONE);
+            binding.webView.setVisibility(View.GONE);
+            binding.errorConstraint.setVisibility(View.VISIBLE);
+            binding.errorLayout.textError.setText(msg);
+            binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (dashboardResModel != null && quizResModel != null) {
+                        quizTestViewModel.getAssignExamData(quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel));
+                    }
+                }
+            });
+        }
+    }
 }

@@ -21,10 +21,14 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.databinding.DemographicFragmentLayoutBinding;
+import com.auro.scholr.home.data.model.AuroScholarDataModel;
+import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
+import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 
@@ -51,6 +55,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     List<String> schooltypeLines;
     List<String> boardLines;
     List<String> languageLines;
+    DashboardResModel dashboardResModel;
 
     DemographicResModel demographicResModel = new DemographicResModel();
 
@@ -93,7 +98,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
             String mobileNumber = getArguments().getString(AppConstant.MOBILE_NUMBER);
 
         }
-        demographicResModel.setPhonenumber("7503600686");
+        demographicResModel.setPhonenumber(dashboardResModel.getPhonenumber());
         if (demographicViewModel != null && demographicViewModel.serviceLiveData().hasObservers()) {
             demographicViewModel.serviceLiveData().removeObservers(this);
 
@@ -184,6 +189,10 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (getArguments() != null) {
+            dashboardResModel = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
+
+        }
         init();
         setToolbar();
         setListener();
@@ -216,7 +225,9 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == DEMOGRAPHIC_API) {
                         handleProgress(1, "");
-                        DemographicResModel demographicResModel = (DemographicResModel) responseApi.data;
+                        getActivity().getSupportFragmentManager().popBackStack();
+                      //  DemographicResModel demographicResModel = (DemographicResModel) responseApi.data;
+                      //  AuroScholar.openAuroDashboardFragment(AuroApp.getAuroScholarModel());
                     }
 
                     break;

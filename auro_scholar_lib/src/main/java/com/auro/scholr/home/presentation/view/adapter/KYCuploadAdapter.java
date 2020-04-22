@@ -56,7 +56,7 @@ public class KYCuploadAdapter extends RecyclerView.Adapter<KYCuploadAdapter.View
             binding.tvNoFileChoosen.setText(kycDocumentDatamodel.getDocumentFileName());
             binding.chooseFile.setText(kycDocumentDatamodel.getButtonText());
 
-            if (kycDocumentDatamodel.isDocumentstatus()) {
+            if (!kycDocumentDatamodel.isModify() && kycDocumentDatamodel.isDocumentstatus()) {
                 binding.progressBar.setVisibility(View.GONE);
                 binding.chooseFile.setVisibility(View.GONE);
                 binding.tvNoFileChoosen.setVisibility(View.GONE);

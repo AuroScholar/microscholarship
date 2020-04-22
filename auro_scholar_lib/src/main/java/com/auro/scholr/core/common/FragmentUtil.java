@@ -53,7 +53,7 @@ public class FragmentUtil {
             }
 
 
-           /* if (removeStack) {
+            if (removeStack) {
                 fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 transaction.replace(frameLayoutId, fragment);
 
@@ -62,7 +62,7 @@ public class FragmentUtil {
 
                 transaction.addToBackStack(null);
             }
-*/
+
             transaction.replace(frameLayoutId, fragment);
             transaction.addToBackStack(fragment.getClass().getName());
             transaction.commit();

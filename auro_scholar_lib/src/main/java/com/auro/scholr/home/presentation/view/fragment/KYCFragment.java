@@ -339,9 +339,11 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     private void setDataOnResponse(KYCResItemModel resItemModel, int pos, boolean b) {
         if (b) {
+            kycDocumentDatamodelArrayList.get(pos).setModify(false);
             kycDocumentDatamodelArrayList.get(pos).setDocumentstatus(true);
             kycDocumentDatamodelArrayList.get(pos).setDocumentUrl(resItemModel.getUrl());
         } else {
+            kycDocumentDatamodelArrayList.get(pos).setModify(true);
             kycDocumentDatamodelArrayList.get(pos).setDocumentstatus(false);
             kycDocumentDatamodelArrayList.get(pos).setDocumentUrl("");
         }

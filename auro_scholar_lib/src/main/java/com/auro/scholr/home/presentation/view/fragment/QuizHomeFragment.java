@@ -21,21 +21,23 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.common.CommonCallBackListner;
+import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.util.uiwidget.others.HideBottomNavigation;
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
-import com.auro.scholr.home.data.model.KYCResItemModel;
-import com.auro.scholr.home.data.model.KYCResListModel;
-import com.auro.scholr.home.data.model.KYCResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
+import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.ViewUtil;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
+import com.auro.scholr.util.permission.PermissionHandler;
+import com.auro.scholr.util.permission.PermissionUtil;
+import com.auro.scholr.util.permission.Permissions;
 
-import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,28 +46,21 @@ import javax.inject.Named;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 
 
-public class QuizHomeFragment extends BaseFragment implements View.OnClickListener {
+public class QuizHomeFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner {
 
     @Inject
     @Named("QuizHomeFragment")
     ViewModelFactory viewModelFactory;
-
-
     QuizHomeLayoutBinding binding;
     QuizViewModel quizViewModel;
-    String mobileNumber;
-
-    private Activity mActivity;
-    private HideBottomNavigation hideBottomNavigation;
     QuizItemAdapter quizItemAdapter;
     private static final String TAG = "CardFragment";
     DashboardResModel dashboardResModel;
-
+    QuizResModel quizResModel;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = getActivity();
     }
 
 
@@ -77,14 +72,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.setLifecycleOwner(this);
         binding.setQuizViewModel(quizViewModel);
         HomeActivity.setListingActiveFragment(HomeActivity.QUIZ_DASHBOARD_FRAGMENT);
-
         return binding.getRoot();
     }
 
     private void setAdapter(List<QuizResModel> resModelList) {
         binding.quizTypeList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.quizTypeList.setHasFixedSize(true);
-        quizItemAdapter = new QuizItemAdapter(this.getContext(), resModelList);
+        quizItemAdapter = new QuizItemAdapter(this.getContext(), resModelList, this);
         binding.quizTypeList.setAdapter(quizItemAdapter);
 
     }
@@ -92,10 +86,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void init() {
-        // hideBottomNavigation = (HideBottomNavigation) mActivity;
-
         if (getArguments() != null) {
-            mobileNumber = getArguments().getString(AppConstant.MOBILE_NUMBER);
+            // mobileNumber = getArguments().getString(AppConstant.MOBILE_NUMBER);
         }
         if (quizViewModel != null && quizViewModel.serviceLiveData().hasObservers()) {
             quizViewModel.serviceLiveData().removeObservers(this);
@@ -103,13 +95,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else {
             observeServiceResponse();
         }
-        quizViewModel.getDashBoardData(mobileNumber);
+        quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel().getMobileNumber());
     }
 
 
     @Override
     protected void setToolbar() {
-
+        /*Do code here*/
     }
 
     @Override
@@ -203,12 +195,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             binding.mainParentLayout.setVisibility(View.GONE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
             binding.shimmerViewQuiz.stopShimmer();
-            binding.errorLayout.errorIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.nointernet_ico));
             binding.errorLayout.textError.setText(message);
             binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    quizViewModel.getDashBoardData(mobileNumber);
+                    quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel().getMobileNumber());
                 }
             });
         }
@@ -225,6 +216,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         Bundle bundle = new Bundle();
         QuizTestFragment quizTestFragment = new QuizTestFragment();
         bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        bundle.putParcelable(AppConstant.QUIZ_RES_MODEL, quizResModel);
         quizTestFragment.setArguments(bundle);
         openFragment(quizTestFragment);
     }
@@ -237,21 +229,61 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         openFragment(kycFragment);
     }
 
+    public void openKYCViewFragment(DashboardResModel dashboardResModel) {
+        Bundle bundle = new Bundle();
+        KYCViewFragment kycViewFragment = new KYCViewFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        kycViewFragment.setArguments(bundle);
+        openFragment(kycViewFragment);
+    }
+
     private void openFragment(Fragment fragment) {
         ((AppCompatActivity) (this.getContext())).getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(R.id.home_container, fragment, QuizHomeFragment.class
+                .replace(AuroApp.getFragmentContainerUiId(), fragment, QuizHomeFragment.class
                         .getSimpleName())
                 .addToBackStack(null)
-                .commit();
+                .commitAllowingStateLoss();
+
+
     }
 
     @Override
     public void onClick(View v) {
-        // openFragment(new ScholarShipFragment());
-        //openKYCFragment(dashboardResModel);
-        openQuizTestFragment(dashboardResModel);
+        //   openKYCFragment(dashboardResModel);
+        openKYCViewFragment(dashboardResModel);
+    }
+
+    private void askPermission() {
+        String rationale = "For taking the quiz camera permission is must.";
+        Permissions.Options options = new Permissions.Options()
+                .setRationaleDialogTitle("Info")
+                .setSettingsDialogTitle("Warning");
+        Permissions.check(getActivity(), PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
+            @Override
+            public void onGranted() {
+                openQuizTestFragment(dashboardResModel);
+                //  openFragment(new ScholarShipFragment());
+            }
+
+            @Override
+            public void onDenied(Context context, ArrayList<String> deniedPermissions) {
+                // permission denied, block the feature.
+                ViewUtil.showSnackBar(binding.getRoot(), rationale);
+            }
+        });
+    }
+
+
+    @Override
+    public void commonEventListner(CommonDataModel commonDataModel) {
+
+        if (commonDataModel.getClickType() == Status.START_QUIZ_BUTON) {
+            quizResModel = (QuizResModel) commonDataModel.getObject();
+            askPermission();
+        }
+
     }
 
 }
