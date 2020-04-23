@@ -99,6 +99,17 @@ public class QuizTestFragment extends BaseFragment {
     }
 
     @Override
+    public void onDestroy() {
+
+        if (webView != null)
+        {
+            webView.destroy();
+        }
+        super.onDestroy();
+
+    }
+
+    @Override
     protected void init() {
 
         setListener();
