@@ -10,6 +10,10 @@ public class AuroScholarDataModel implements Parcelable {
     Activity activity;
     int fragmentContainerUiId;
 
+    public AuroScholarDataModel() {
+
+    }
+
 
     protected AuroScholarDataModel(Parcel in) {
         mobileNumber = in.readString();
