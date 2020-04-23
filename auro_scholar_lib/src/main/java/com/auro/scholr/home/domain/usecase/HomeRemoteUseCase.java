@@ -45,9 +45,9 @@ public class HomeRemoteUseCase extends NetworkUseCase {
     }
 
 
-    public Single<ResponseApi> uploadProfileImage(List<KYCDocumentDatamodel> list) {
+    public Single<ResponseApi> uploadProfileImage(List<KYCDocumentDatamodel> list, String phonenumber) {
 
-        return dashboardRemoteData.uploadProfileImage(list).map(new Function<Response<JsonObject>, ResponseApi>() {
+        return dashboardRemoteData.uploadProfileImage(list,phonenumber).map(new Function<Response<JsonObject>, ResponseApi>() {
             @Override
             public ResponseApi apply(Response<JsonObject> response) throws Exception {
 

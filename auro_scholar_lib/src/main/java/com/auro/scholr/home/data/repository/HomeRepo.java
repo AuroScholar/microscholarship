@@ -15,7 +15,7 @@ public interface HomeRepo {
     interface DashboardRemoteData {
         Single<Response<JsonObject>> getDashboardData(String mobileno);
 
-        Single<Response<JsonObject>> uploadProfileImage(List<KYCDocumentDatamodel> list);
+        Single<Response<JsonObject>> uploadProfileImage(List<KYCDocumentDatamodel> list,String phonenumber);
 
         Single<Response<JsonObject>> postDemographicData(DemographicResModel demographicResModel);
 

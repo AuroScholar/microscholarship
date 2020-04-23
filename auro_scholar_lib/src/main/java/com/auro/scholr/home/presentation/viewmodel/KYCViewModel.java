@@ -48,12 +48,12 @@ public class KYCViewModel extends ViewModel {
     }
 
 
-    public void uploadProfileImage(List<KYCDocumentDatamodel> list) {
+    public void uploadProfileImage(List<KYCDocumentDatamodel> list, String phonenumber) {
 
         Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
             if(hasInternet) {
 
-                callUploadImageApi(list);
+                callUploadImageApi(list,phonenumber);
 
             } else {
 
@@ -73,9 +73,9 @@ public class KYCViewModel extends ViewModel {
         }
         return compositeDisposable;
     }
-    private void callUploadImageApi(List<KYCDocumentDatamodel> list) {
+    private void callUploadImageApi(List<KYCDocumentDatamodel> list, String phonenumber) {
 
-        getCompositeDisposable().add(homeRemoteUseCase.uploadProfileImage(list).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).doOnSubscribe(new Consumer<Disposable>() {
+        getCompositeDisposable().add(homeRemoteUseCase.uploadProfileImage(list,phonenumber).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).doOnSubscribe(new Consumer<Disposable>() {
             @Override
             public void accept(Disposable __) throws Exception {
                 serviceLiveData.setValue(ResponseApi.loading(null));
