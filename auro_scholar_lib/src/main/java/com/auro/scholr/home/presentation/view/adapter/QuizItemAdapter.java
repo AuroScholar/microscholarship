@@ -54,6 +54,7 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
             binding.quizAmount.setText(AuroApp.getAppContext().getString(R.string.rs) + " " + quizResModel.getScholarshipamount());
             binding.quizNum.setText(AuroApp.getAppContext().getString(R.string.quiz) + " " + "0" + quizResModel.getNumber());
             binding.quizName.setText(quizResModel.getName());
+
             if (quizResModel.getScorepoints() == 0) {
                 binding.retakeQuiz.setVisibility(View.INVISIBLE);
                 binding.totalNoPoints.setText(AuroApp.getAppContext().getString(R.string.total_no_of_points) + " -/" + quizResModel.getTotalpoints());
@@ -74,6 +75,11 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
             }
 
             startAnimationQuizButton(binding, quizResModel, position);
+            if (quizResModel.getAttempt() == 3 && quizResModel.getStatus().equalsIgnoreCase(AppConstant.FALSE)) {
+                binding.quizAttemptLayout.setVisibility(View.VISIBLE);
+                binding.lockLayout.setVisibility(View.GONE);
+                binding.quizMainLayout.setVisibility(View.GONE);
+            }
 
 
         }

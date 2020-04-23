@@ -45,7 +45,7 @@ public class DashboardResModel implements Parcelable {
 
     @SerializedName("walletbalance")
     @Expose
-    private Integer walletbalance;
+    private String walletbalance;
 
     @SerializedName("currency")
     @Expose
@@ -116,11 +116,7 @@ public class DashboardResModel implements Parcelable {
         student_name = in.readString();
         email_id = in.readString();
         studentclass = in.readString();
-        if (in.readByte() == 0) {
-            walletbalance = null;
-        } else {
-            walletbalance = in.readInt();
-        }
+        walletbalance = in.readString();
         currency = in.readString();
         registrationdate = in.readString();
         regitration_source = in.readString();
@@ -149,12 +145,7 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(student_name);
         dest.writeString(email_id);
         dest.writeString(studentclass);
-        if (walletbalance == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(walletbalance);
-        }
+        dest.writeString(walletbalance);
         dest.writeString(currency);
         dest.writeString(registrationdate);
         dest.writeString(regitration_source);
@@ -326,11 +317,11 @@ public class DashboardResModel implements Parcelable {
         this.phonenumber = phonenumber;
     }
 
-    public Integer getWalletbalance() {
+    public String getWalletbalance() {
         return walletbalance;
     }
 
-    public void setWalletbalance(Integer walletbalance) {
+    public void setWalletbalance(String walletbalance) {
         this.walletbalance = walletbalance;
     }
 

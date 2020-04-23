@@ -39,6 +39,7 @@ import com.auro.scholr.home.presentation.view.adapter.KYCViewDocAdapter;
 import com.auro.scholr.home.presentation.view.adapter.KYCuploadAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.cropper.CropImage;
 import com.auro.scholr.util.cropper.CropImageView;
@@ -107,9 +108,20 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         if (getArguments() != null) {
             dashboardResModel = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
         }
+
         binding.btUploadAll.setText(R.string.modify);
+        setDataOnUi();
     }
 
+    private void setDataOnUi() {
+        if (dashboardResModel != null) {
+            if (!TextUtil.isEmpty(dashboardResModel.getWalletbalance())) {
+                binding.walletBalText.setText(getString(R.string.rs)+" "+dashboardResModel.getWalletbalance());
+            }
+        }
+        binding.cambridgeHeading.cambridgeHeading.setTextColor(getResources().getColor(R.color.white));
+
+    }
 
     @Override
     protected void setToolbar() {

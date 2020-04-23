@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/_2sdp"
-            android:text="Question bank powered by Cambridge"
+            android:text="@string/question_bank_powered_by_cambridge"
             android:textColor="@color/auro_grey_color"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="parent"

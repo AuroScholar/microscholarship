@@ -7,9 +7,10 @@ import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
-import com.auro.scholr.home.data.model.ObjStudentExamInfo;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.util.TextUtil;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,6 @@ public class HomeUseCase {
         }
         return productModelList;
     }
-
 
 
     public ArrayList<KYCDocumentDatamodel> makeAdapterDocumentList(DashboardResModel dashboardResModel) {
@@ -107,21 +107,12 @@ public class HomeUseCase {
     }
 
 
-    private String getTestCode(QuizResModel quizResModel) {
-        String code = "Test" + quizResModel.getNumber() + (quizResModel.getAttempt() + 1);
-        return code;
-    }
-
     public AssignmentReqModel getAssignmentRequestModel(DashboardResModel dashboardResModel, QuizResModel quizResModel) {
         AssignmentReqModel assignmentReqModel = new AssignmentReqModel();
-        ObjStudentExamInfo objStudentExamInfo = new ObjStudentExamInfo();
-        objStudentExamInfo.setExamLanguage("E");
-        objStudentExamInfo.setGrade(dashboardResModel.getStudentclass());
-        objStudentExamInfo.setMonth(dashboardResModel.getMonth());
-        objStudentExamInfo.setStudentID(dashboardResModel.getStudent_id());
-        objStudentExamInfo.setSubjectName(dashboardResModel.getSubjectName());
-        objStudentExamInfo.setExamName(getTestCode(quizResModel));
-        assignmentReqModel.setObjStudentExamInfo(objStudentExamInfo);
+        assignmentReqModel.setExam_name(String.valueOf(quizResModel.getNumber()));
+        assignmentReqModel.setQuiz_attempt(String.valueOf((quizResModel.getAttempt() + 1)));
+        assignmentReqModel.setExamlang("E");
+        assignmentReqModel.setRegistration_id(dashboardResModel.getAuroid());
         return assignmentReqModel;
     }
 
@@ -143,5 +134,13 @@ public class HomeUseCase {
         }
     }
 
+    public boolean checkKycStatus(DashboardResModel dashboardResModel) {
+        if (dashboardResModel != null && !TextUtil.isEmpty(dashboardResModel.getPhoto()) && !TextUtil.isEmpty(dashboardResModel.getSchoolid()) &&
+                !TextUtil.isEmpty(dashboardResModel.getIdback()) && !TextUtil.isEmpty(dashboardResModel.getIdfront())) {
+            return true;
+        }
+
+        return false;
+    }
 
 }

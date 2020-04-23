@@ -1,10 +1,6 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.ClipData;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -38,24 +33,12 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
-import com.auro.scholr.core.common.FragmentUtil;
-import com.auro.scholr.core.common.NetworkUtil;
-import com.auro.scholr.databinding.CardFragmentLayoutBinding;
+import com.auro.scholr.core.network.URLConstant;
 import com.auro.scholr.databinding.QuizTestLayoutBinding;
-import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AssignmentResModel;
-import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
-import com.auro.scholr.home.data.model.DemographicResModel;
-import com.auro.scholr.home.data.model.ObjStudentExamInfo;
 import com.auro.scholr.home.data.model.QuizResModel;
-import com.auro.scholr.home.presentation.view.activity.HomeActivity;
-import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
-import com.auro.scholr.util.AuroScholar;
-import com.auro.scholr.util.permission.PermissionHandler;
-import com.auro.scholr.util.permission.PermissionUtil;
-import com.auro.scholr.util.permission.Permissions;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,10 +49,7 @@ import java.util.Date;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import io.reactivex.disposables.Disposable;
-
 import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
-import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
 
 /**
  * Created by varun
@@ -92,6 +72,7 @@ public class QuizTestFragment extends BaseFragment {
     DashboardResModel dashboardResModel;
     QuizTestViewModel quizTestViewModel;
     QuizResModel quizResModel;
+    AssignmentResModel assignmentResModel;
 
     // Storage Permissions variables
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -138,9 +119,13 @@ public class QuizTestFragment extends BaseFragment {
                     break;
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == ASSIGNMENT_STUDENT_DATA_API) {
-                        AssignmentResModel assignmentResModel = (AssignmentResModel) responseApi.data;
-                        String webUrl = "https://assessment.eklavvya.com/exam/StartExam?StudentID=" + dashboardResModel.getStudent_id() + "&ExamAssignmentID=" + assignmentResModel.getAssignExamToStudentResult();
-                        loadWeb(webUrl);
+                        assignmentResModel = (AssignmentResModel) responseApi.data;
+                        if (!assignmentResModel.isError()) {
+                            String webUrl = URLConstant.TEST_URL + "StudentID=" + assignmentResModel.getStudentID() + "&ExamAssignmentID=" + assignmentResModel.getExamAssignmentID();
+                            loadWeb(webUrl);
+                        } else {
+                            handleProgress(2, getActivity().getString(R.string.default_error));
+                        }
                     }
                     break;
                 case NO_INTERNET:
@@ -185,6 +170,9 @@ public class QuizTestFragment extends BaseFragment {
         init();
     }
 
+    public void openQuizHomeFragment() {
+        getActivity().getSupportFragmentManager().popBackStack();
+    }
 
     public void openDemographicFragment() {
         Bundle bundle = new Bundle();
@@ -255,13 +243,16 @@ public class QuizTestFragment extends BaseFragment {
 
         //Show loader on url load
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            Log.e("chhonker", url);
-
             if (view.getUrl().equalsIgnoreCase("http://auroscholar.com/index.php") ||
                     view.getUrl().equalsIgnoreCase("http://auroscholar.com/demographics.php")
-            || view.getUrl().equalsIgnoreCase("http://auroscholar.com/dashboard.php")) {
+                    || view.getUrl().equalsIgnoreCase("http://auroscholar.com/dashboard.php")) {
 
-               //openDemographicFragment();
+                if (assignmentResModel.getExam_name().equalsIgnoreCase("1") && assignmentResModel.getQuiz_attempt().equalsIgnoreCase("1")) {
+                    openDemographicFragment();
+                } else {
+                    openQuizHomeFragment();
+                }
+
             }
         }
 

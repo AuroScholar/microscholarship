@@ -58,6 +58,11 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
 
     @Override
     public Single<Response<JsonObject>> getAssignmentId(AssignmentReqModel assignmentReqModel) {
-        return homeRemoteApi.getAssignmentId(assignmentReqModel);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.AssignmentApiParams.REGISTRATION_ID, assignmentReqModel.getRegistration_id());
+        params.put(AppConstant.AssignmentApiParams.EXAM_NAME, assignmentReqModel.getExam_name());
+        params.put(AppConstant.AssignmentApiParams.QUIZ_ATTEMPT, assignmentReqModel.getQuiz_attempt());
+        params.put(AppConstant.AssignmentApiParams.EXAMLANG, assignmentReqModel.getExamlang());
+        return homeRemoteApi.getAssignmentId(params);
     }
 }

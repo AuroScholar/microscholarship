@@ -20,6 +20,7 @@ public interface AppConstant {
     String MODIFIED_TIME = "MODIFIED_TIME";
     String MOBILE_NUMBER = "MOBILE_NUMBER";
     String TRUE = "true";
+    String FALSE = "false";
     String PROFILE_IMAGE_PATH = "PROFILE_IMAGE_PATH";
     String DASHBOARD_RES_MODEL = "DASHBOARD_RES_MODEL";
     String QUIZ_RES_MODEL = "QUIZ_TEST_MODEL";
@@ -105,7 +106,14 @@ public interface AppConstant {
         String PLEASE_SELECT_LANGUAGE_MEDIUM = "Please Select Language Medium";
         String PLEASE_SELECT_BOARD = "Please Select Board";
         String PLEASE_SELECT_SCHOOL = "Please Select School";
+    }
 
+
+    interface AssignmentApiParams {
+        String REGISTRATION_ID = "registration_id";
+        String EXAM_NAME = "exam_name";
+        String QUIZ_ATTEMPT = "quiz_attempt";
+        String EXAMLANG = "examlang";
     }
 
 }

@@ -38,6 +38,7 @@ import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.adapter.KYCuploadAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.cropper.CropImage;
 import com.auro.scholr.util.cropper.CropImageView;
@@ -102,16 +103,22 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     }
 
 
-    private void getUserPref() {
-        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-    }
-
     @Override
     protected void init() {
         if (getArguments() != null) {
             dashboardResModel = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
         }
-        getUserPref();
+        setDataOnUi();
+    }
+
+    private void setDataOnUi() {
+        if (dashboardResModel != null) {
+            if (!TextUtil.isEmpty(dashboardResModel.getWalletbalance())) {
+                binding.walletBalText.setText(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
+            }
+        }
+
+        binding.cambridgeHeading.cambridgeHeading.setTextColor(getResources().getColor(R.color.white));
     }
 
 
@@ -363,7 +370,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             uploadBtnStatus = true;
             uploadAllDocApi();
         } else {
-            ViewUtil.showSnackBar(binding.getRoot(), "Please select the all four document first");
+            ViewUtil.showSnackBar(binding.getRoot(), getString(R.string.document_all_four_error_msg));
         }
 
     }

@@ -251,8 +251,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        //   openKYCFragment(dashboardResModel);
-        openKYCViewFragment(dashboardResModel);
+        if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+            openKYCViewFragment(dashboardResModel);
+        } else {
+            openKYCFragment(dashboardResModel);
+        }
     }
 
     private void askPermission() {

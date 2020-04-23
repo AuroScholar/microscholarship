@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber("7503600687");
+        auroScholarDataModel.setMobileNumber("7503600686");
         auroScholarDataModel.setStudentClass("6");
         auroScholarDataModel.setScholarID("577159");
         auroScholarDataModel.setRegistrationSource("auro-google");

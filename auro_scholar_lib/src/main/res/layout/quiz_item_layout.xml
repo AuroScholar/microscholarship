@@ -24,11 +24,51 @@
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardUseCompatPadding="true">
 
+
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/quiz_attempt_layout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_150sdp"
                     android:background="@drawable/quiz_item_bg"
-                    android:paddingBottom="@dimen/_5sdp">
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:visibility="gone">
+
+
+                    <com.auro.scholr.core.util.uiwidget.RPTextView
+                        android:id="@+id/text_thankyou"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:text="@string/thank_you"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_18sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.auro.scholr.core.util.uiwidget.RPTextView
+                        android:id="@+id/text_newquiz"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:text="@string/new_quiz_will_be_available_next_month"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sdp"
+                        android:alpha = ".5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_thankyou" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/quiz_main_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_150sdp"
+                    android:background="@drawable/quiz_item_bg"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:id="@+id/parentlayout_one"
@@ -157,9 +197,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/lock_layout"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="@dimen/_150sdp"
-                    android:background="@color/tansparent_quiz_layout_color">
+                    android:background="@color/tansparent_quiz_layout_color"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="wrap_content"

@@ -38,6 +38,7 @@ public interface HomeRemoteApi {
                                              @Part MultipartBody.Part student_photo);
 
     @POST(URLConstant.GET_ASSIGNMENT_ID)
-    Single<Response<JsonObject>> getAssignmentId(@Body AssignmentReqModel assignmentReqModel);
+    @FormUrlEncoded
+    Single<Response<JsonObject>> getAssignmentId(@FieldMap  Map<String, String> params);
 
 }

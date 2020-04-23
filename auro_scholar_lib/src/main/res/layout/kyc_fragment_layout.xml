@@ -65,6 +65,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_5sdp"
+                            android:autoLink="phone"
                             android:text="To upload documents please visit www.auroscholar.com. if you have face any issues please call us at +919667480783"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_10sdp"
