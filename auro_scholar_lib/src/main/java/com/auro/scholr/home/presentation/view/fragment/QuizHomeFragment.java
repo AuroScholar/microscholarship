@@ -147,7 +147,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
-                        setDataOnUi(dashboardResModel);
+                        if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
+                            handleProgress(2, dashboardResModel.getMessage());
+                        } else {
+                            setDataOnUi(dashboardResModel);
+                        }
+
                     }
 
                     break;
@@ -160,19 +165,19 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 case AUTH_FAIL:
 
 // When Authrization is fail
-                    handleProgress(1, (String) responseApi.data);
+                    handleProgress(2, (String) responseApi.data);
                     break;
 
                 case FAIL_400:
                     //When 400 error occur
-                    handleProgress(1, (String) responseApi.data);
+                    handleProgress(2, (String) responseApi.data);
                     break;
 
 
                 default:
                     Log.d(TAG, "observeServiceResponse: default");
                     // ViewUtil.showSnackBar(binding.getRoot(), responseApi.data.toString());
-                    handleProgress(1, (String) responseApi.data);
+                    handleProgress(2, (String) responseApi.data);
                     break;
             }
 

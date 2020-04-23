@@ -143,4 +143,14 @@ public class HomeUseCase {
         return false;
     }
 
+    public boolean checkDemographicStatus(DashboardResModel dashboardResModel) {
+        if (dashboardResModel != null && !TextUtil.isEmpty(dashboardResModel.getGender()) && !TextUtil.isEmpty(dashboardResModel.getSchool_type()) &&
+                !TextUtil.isEmpty(dashboardResModel.getBoard_type()) && !TextUtil.isEmpty(dashboardResModel.getLanguage())) {
+            return true;
+        }
+
+        return false;
+    }
+
+
 }

@@ -107,6 +107,11 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private boolean modify;
 
+    @SerializedName("Message")
+    @Expose
+    private String message;
+
+
     protected DashboardResModel(Parcel in) {
         status = in.readString();
         phonenumber = in.readString();
@@ -133,6 +138,7 @@ public class DashboardResModel implements Parcelable {
         schoolid = in.readString();
         quiz = in.createTypedArrayList(QuizResModel.CREATOR);
         modify = in.readByte() != 0;
+        message = in.readString();
     }
 
     @Override
@@ -162,6 +168,7 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(schoolid);
         dest.writeTypedList(quiz);
         dest.writeByte((byte) (modify ? 1 : 0));
+        dest.writeString(message);
     }
 
     @Override
@@ -379,5 +386,13 @@ public class DashboardResModel implements Parcelable {
 
     public void setModify(boolean modify) {
         this.modify = modify;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

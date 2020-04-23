@@ -39,6 +39,7 @@ import com.auro.scholr.home.data.model.AssignmentResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
+import com.auro.scholr.util.AppLogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -254,11 +255,12 @@ public class QuizTestFragment extends BaseFragment {
 
         //Show loader on url load
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            AppLogger.e("chhonker",url);
             if (view.getUrl().equalsIgnoreCase("http://auroscholar.com/index.php") ||
                     view.getUrl().equalsIgnoreCase("http://auroscholar.com/demographics.php")
                     || view.getUrl().equalsIgnoreCase("http://auroscholar.com/dashboard.php")) {
 
-                if (assignmentResModel.getExam_name().equalsIgnoreCase("1") && assignmentResModel.getQuiz_attempt().equalsIgnoreCase("1")) {
+                if (!quizTestViewModel.homeUseCase.checkDemographicStatus(dashboardResModel)) {
                     openDemographicFragment();
                 } else {
                     openQuizHomeFragment();

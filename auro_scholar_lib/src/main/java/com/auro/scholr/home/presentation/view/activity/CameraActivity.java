@@ -106,8 +106,14 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
         }
         setListener();
-        askPermission();
+
         checkValueEverySecond();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        askPermission();
     }
 
     private void checkValueEverySecond() {
@@ -163,6 +169,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             AppLogger.e(TAG, "Face detector dependencies are not yet available.");
         }
 
+
         mCameraSource = new CameraSource.Builder(context, detector)
                 .setFacing(cameraID)
                 .setAutoFocusEnabled(true)
@@ -172,6 +179,20 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         startCameraSource();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopCamera();
+    }
+
+    private void stopCamera() {
+        if (mCameraSource != null) {
+            mCameraSource.stop();
+            mCameraSource.release();
+            mCameraSource = null;
+
+        }
+    }
 
     private void startCameraSource() {
         int code = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(
@@ -479,8 +500,10 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void releaseCamera() {
-        binding.faceOverlay.clear();
-        mCameraSource.release();
+        if (binding.faceOverlay != null) {
+            binding.faceOverlay.clear();
+        }
+        stopCamera();
     }
 
 }

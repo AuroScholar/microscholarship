@@ -27,6 +27,7 @@ public interface AppConstant {
     String AURO_DATA_MODEL = "AURO_DATA_MODEL";
     String PHONE_NUMBER = "Phonenumber";
     int CAMERA_REQUEST_CODE = 007;
+    String FAILED = "failed";
 
 
     String COMING_FROM = "navigation_control";
