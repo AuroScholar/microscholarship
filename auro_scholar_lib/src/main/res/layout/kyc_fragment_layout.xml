@@ -134,6 +134,30 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/document_upload_recyclerview" />
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/bt_modify_all"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:layout_marginBottom="@dimen/_15sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:background="@drawable/button_bg_orange"
+                                android:paddingStart="@dimen/_15sdp"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:gravity="center_horizontal"
+                                android:paddingEnd="@dimen/_15sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+                                android:text="@string/modify"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_15sdp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/document_upload_recyclerview" />
                             <ProgressBar
                                 android:id="@+id/progressBar"
                                 android:layout_width="wrap_content"
