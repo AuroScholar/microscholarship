@@ -48,6 +48,7 @@ public class KYCViewDocAdapter extends RecyclerView.Adapter<KYCViewDocAdapter.Vi
         public void setData(KYCDocumentDatamodel kycDocumentDatamodel, int position) {
             binding.docImageLayout.setVisibility(View.VISIBLE);
             binding.uploadImageLayout.setVisibility(View.GONE);
+            binding.tvIdHead.setText(kycDocumentDatamodel.getDocumentName());
             ImageUtil.loadNormalImage(binding.docImage, kycDocumentDatamodel.getDocumentUrl());
         }
 

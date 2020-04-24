@@ -13,6 +13,7 @@ import com.auro.scholr.util.TextUtil;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeUseCase {
 
@@ -153,4 +154,17 @@ public class HomeUseCase {
     }
 
 
+    public int getQuizWonCount(List<QuizResModel> list) {
+        int count = 0;
+        for (QuizResModel resModel : list) {
+            if (resModel.getScorepoints() > 7) {
+                count = count + 1;
+            }
+        }
+        for (int i = 0; i < count; i++) {
+            list.get(i).setWonStatus(true);
+        }
+
+        return count;
+    }
 }

@@ -1,6 +1,5 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,14 +23,13 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
-import com.auro.scholr.core.util.uiwidget.others.HideBottomNavigation;
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
+import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
-import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
@@ -57,6 +55,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     private static final String TAG = "CardFragment";
     DashboardResModel dashboardResModel;
     QuizResModel quizResModel;
+    QuizWonAdapter quizWonAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -75,11 +74,18 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         return binding.getRoot();
     }
 
-    private void setAdapter(List<QuizResModel> resModelList) {
+    private void setQuizListAdapter(List<QuizResModel> resModelList) {
         binding.quizTypeList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.quizTypeList.setHasFixedSize(true);
         quizItemAdapter = new QuizItemAdapter(this.getContext(), resModelList, this);
         binding.quizTypeList.setAdapter(quizItemAdapter);
+
+    }
+
+    private void setQuizWonListAdapter(List<QuizResModel> resModelList) {
+        binding.quizwonTypeList.setHasFixedSize(true);
+        quizWonAdapter = new QuizWonAdapter(this.getContext(), resModelList, quizViewModel.homeUseCase.getQuizWonCount(resModelList));
+        binding.quizwonTypeList.setAdapter(quizWonAdapter);
 
     }
 
@@ -107,6 +113,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     protected void setListener() {
         binding.walletBalText.setOnClickListener(this);
+        binding.privacyPolicy.setOnClickListener(this);
     }
 
 
@@ -119,9 +126,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        init();
+
         setToolbar();
-        setListener();
+
         //checkJson();
     }
 
@@ -129,6 +136,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
+        init();
+        setListener();
     }
 
 
@@ -214,7 +223,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void setDataOnUi(DashboardResModel dashboardResModel) {
         quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
-        setAdapter(dashboardResModel.getQuiz());
+        setQuizListAdapter(dashboardResModel.getQuiz());
+        setQuizWonListAdapter(dashboardResModel.getQuiz());
     }
 
     public void openQuizTestFragment(DashboardResModel dashboardResModel) {
@@ -256,15 +266,20 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
-            openKYCViewFragment(dashboardResModel);
-        } else {
-            openKYCFragment(dashboardResModel);
+        if (v.getId() == R.id.wallet_bal_text) {
+            if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+                openKYCViewFragment(dashboardResModel);
+            } else {
+                openKYCFragment(dashboardResModel);
+            }
+        } else if (v.getId() == R.id.privacy_policy) {
+            openFragment(new PrivacyPolicyFragment());
         }
+
     }
 
     private void askPermission() {
-        String rationale = "For taking the quiz camera permission is must.";
+        String rationale = getString(R.string.permission_error_msg);
         Permissions.Options options = new Permissions.Options()
                 .setRationaleDialogTitle("Info")
                 .setSettingsDialogTitle("Warning");
@@ -272,7 +287,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onGranted() {
                 openQuizTestFragment(dashboardResModel);
-                //  openFragment(new ScholarShipFragment());
             }
 
             @Override

@@ -74,19 +74,26 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
                 });
             }
 
-            startAnimationQuizButton(binding, quizResModel, position);
+            startAnimationQuizButton(binding);
             if (quizResModel.getAttempt() == 3 && quizResModel.getStatus().equalsIgnoreCase(AppConstant.FALSE)) {
                 binding.quizAttemptLayout.setVisibility(View.VISIBLE);
                 binding.lockLayout.setVisibility(View.GONE);
                 binding.quizMainLayout.setVisibility(View.GONE);
             }
-
+            binding.quizButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (commonCallBackListner != null) {
+                        commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, quizResModel));
+                    }
+                }
+            });
 
         }
 
     }
 
-    private void startAnimationQuizButton(QuizItemLayoutBinding binding, QuizResModel quizResModel, int position) {
+    private void startAnimationQuizButton(QuizItemLayoutBinding binding) {
         //Animation on button
         Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.fadein);
 
@@ -94,9 +101,7 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
 
             @Override
             public void onAnimationEnd(Animation arg0) {
-                Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.fadein);
-                anim.setAnimationListener(this);
-                binding.quizButton.startAnimation(anim);
+                startAnimationFadeOutButton(binding);
             }
 
             @Override
@@ -113,14 +118,36 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
 
         });
         binding.quizButton.startAnimation(anim);
-        binding.quizButton.setOnClickListener(new View.OnClickListener() {
+
+    }
+
+
+
+    private void startAnimationFadeOutButton(QuizItemLayoutBinding binding) {
+        //Animation on button
+        Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.fadeout);
+
+        anim.setAnimationListener(new Animation.AnimationListener() {
+
             @Override
-            public void onClick(View v) {
-                if (commonCallBackListner != null) {
-                    commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, quizResModel));
-                }
+            public void onAnimationEnd(Animation arg0) {
+                startAnimationQuizButton(binding);
             }
+
+            @Override
+            public void onAnimationRepeat(Animation arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onAnimationStart(Animation arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
         });
+        binding.quizButton.startAnimation(anim);
     }
 
 

@@ -13,13 +13,14 @@
     </data>
 
     <LinearLayout
+        android:background="@color/off_white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="@color/off_white">
 
 
             <include
@@ -34,6 +35,7 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:clipToPadding="false"
                 android:paddingBottom="@dimen/_150sdp"
+                android:background="@android:color/transparent"
                 app:layout_constraintTop_toBottomOf="@+id/cambridge_heading">
 
                 <RelativeLayout
@@ -134,14 +136,33 @@
                             android:id="@+id/quiz_type_list"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
                             android:layout_marginTop="@dimen/_10sdp" />
 
 
-                        <TextView
-                            android:layout_width="match_parent"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/quizwon_type_list"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@drawable/blue_strip" />
+                            android:orientation="horizontal"
+                            android:layout_gravity="center_horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+                        <TextView
+                            android:id="@+id/privacy_policy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/blue_strip"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="@dimen/_8sdp"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:text="@string/privacy_policy"
+                            android:textAlignment="center"
+                            android:textColor="@color/blue_color" />
                     </LinearLayout>
 
 

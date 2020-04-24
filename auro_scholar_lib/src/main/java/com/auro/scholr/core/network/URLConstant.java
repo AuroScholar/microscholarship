@@ -16,6 +16,7 @@ public interface URLConstant {
     String UPLOAD_IMAGE_URL = BASE_URL + "kyc.php";
     String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction.php ";
     String TEST_URL = "https://assessment.eklavvya.com/exam/StartExam?";
+    String PRIVACY_POLICY = "http://auroscholar.com/privacy_policy.php";
 
 
 }
