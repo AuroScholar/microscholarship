@@ -1,42 +1,91 @@
 package com.example.aurosampleapplication;
 
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.auro.scholr.core.common.AppConstant;
+
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AuroScholar;
+import com.example.aurosampleapplication.databinding.ActivityMainBinding;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.internal.ViewUtils;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+     ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        // setContentView(R.layout.activity_dashboard);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding.btSdk.setOnClickListener(this);
+        binding.enterNumber.setText("8178307851");
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_sdk:
+
+                String mobileNumber = binding.enterNumber.getText().toString().trim();
+                if (mobileNumber != null && !mobileNumber.isEmpty()) {
+                    //binding.homeContainer.setVisibility(View.VISIBLE);
+                    //  binding.enterNumber.setVisibility(View.GONE);
+                    // binding.btSdk.setVisibility(View.GONE);
+                    openSdk(mobileNumber);
+                    hideKeyboard(this);
+                } else {
+                    Toast.makeText(this, "Please enter the number", Toast.LENGTH_LONG);
+                }
+                break;
+        }
+    }
+
+    public static void hideKeyboard(Context context) {
+        if (context == null) {
+            return;
+        }
+        View view = ((AppCompatActivity) context).getCurrentFocus();
+        if (view != null) {
+            ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).
+                    hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    private void openSdk(String mobileNumber) {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber("7503600686");
-      //  auroScholarDataModel.setMobileNumber("8178307855");
+        auroScholarDataModel.setMobileNumber(mobileNumber);
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         AuroScholar.openAuroDashboardFragment(auroScholarDataModel);
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        AppLogger.e("chhonker","Activity requestCode="+requestCode);
+        //must param to get the acitivity
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 }

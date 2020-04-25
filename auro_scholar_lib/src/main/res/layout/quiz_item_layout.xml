@@ -42,7 +42,7 @@
                         android:text="@string/thank_you"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_18sdp"
-                        android:textStyle="bold"
+                        app:Font="Poppins-SemiBold.ttf"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -55,6 +55,7 @@
                         android:text="@string/new_quiz_will_be_available_next_month"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12sdp"
+                        app:Font="Poppins-Regular.ttf"
                         android:alpha = ".5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_thankyou" />
@@ -65,7 +66,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/quiz_main_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_150sdp"
+                    android:layout_height="wrap_content"
+                    android:foreground="@color/tansparent_quiz_layout_color"
                     android:background="@drawable/quiz_item_bg"
                     android:paddingBottom="@dimen/_5sdp"
                     android:visibility="visible">
@@ -85,14 +87,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/wining_price"
+                            app:Font="Poppins-Regular.ttf"
+                            android:alpha = ".5"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_9sdp" />
+                            android:textSize="@dimen/_11sdp" />
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/quiz_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Rs.50"
+                            app:Font="Poppins-Bold.ttf"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_30sdp"
                             android:textStyle="bold" />
@@ -101,8 +106,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/scholarship"
+                            app:Font="Poppins-Regular.ttf"
+                            android:alpha = ".5"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_9sdp" />
+                            android:textSize="@dimen/_11sdp" />
 
                     </LinearLayout>
 
@@ -124,6 +131,7 @@
                             android:text="@string/quiz"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_17sdp"
+                            app:Font="Poppins-SemiBold.ttf"
                             android:textStyle="bold" />
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
@@ -131,26 +139,29 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="marquee"
-                            android:singleLine="true"
-                            android:text="@string/measurement"
+                            android:text="Linear qquations and inequations"
+                            app:Font="Poppins-Regular.ttf"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
+                            android:maxLines="2"
                             android:textStyle="bold" />
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/total_no_points"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_16sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:text="@string/total_no_of_points"
+                            app:Font="Poppins-Regular.ttf"
+                            android:alpha = ".5"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_9sdp" />
+                            android:textSize="@dimen/_11sdp" />
 
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10sdp">
+                            android:layout_marginTop="@dimen/_1sdp">
 
                             <com.auro.scholr.core.util.uiwidget.RPTextView
                                 android:id="@+id/quiz_button"
@@ -164,6 +175,7 @@
                                 android:paddingEnd="@dimen/_25sdp"
                                 android:paddingBottom="@dimen/_9sdp"
                                 android:text="@string/start_quiz"
+                                app:Font="Poppins-Regular.ttf"
                                 android:textColor="@color/white"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -188,7 +200,8 @@
                             android:layout_marginEnd="@dimen/_5sdp"
                             android:text="@string/retake_quiz_to_improve_your_points"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_9sdp"
+                            android:textSize="@dimen/_10sdp"
+                            app:Font="Poppins-Regular.ttf"
                             android:visibility="visible" />
                     </LinearLayout>
 
@@ -217,7 +230,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginEnd="@dimen/_5sdp"
-                            android:text="Complete the previous quiz to unlock"
+                            android:text="@string/complete_the_previous_quiz_to_unlock"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
                             android:visibility="visible" />

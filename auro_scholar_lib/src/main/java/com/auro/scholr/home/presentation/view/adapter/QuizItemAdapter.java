@@ -63,15 +63,17 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
                 binding.totalNoPoints.setText(AuroApp.getAppContext().getString(R.string.total_no_of_points) + quizResModel.getScorepoints() + "/" + quizResModel.getTotalpoints());
             }
             if (quizResModel.getStatus().equalsIgnoreCase(AppConstant.TRUE)) {
-                binding.lockLayout.setVisibility(View.GONE);
-            } else {
-                binding.lockLayout.setVisibility(View.VISIBLE);
-                binding.lockLayout.setOnClickListener(new View.OnClickListener() {
+                binding.quizMainLayout.setForeground(null);
+                binding.quizButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*Nothing to do*/
+                        if (commonCallBackListner != null) {
+                            commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, quizResModel));
+                        }
                     }
                 });
+            } else {
+                binding.quizMainLayout.setForeground(mContext.getDrawable(R.drawable.transparentbg));
             }
 
             startAnimationQuizButton(binding);
@@ -80,14 +82,7 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
                 binding.lockLayout.setVisibility(View.GONE);
                 binding.quizMainLayout.setVisibility(View.GONE);
             }
-            binding.quizButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (commonCallBackListner != null) {
-                        commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, quizResModel));
-                    }
-                }
-            });
+
 
         }
 
@@ -120,7 +115,6 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
         binding.quizButton.startAnimation(anim);
 
     }
-
 
 
     private void startAnimationFadeOutButton(QuizItemLayoutBinding binding) {

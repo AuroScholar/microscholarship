@@ -17,6 +17,7 @@
             android:textColor="@color/dark_magenta"
             android:textSize="@dimen/_15sdp"
             android:visibility="visible"
+            app:Font="Poppins-Regular.ttf"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:text="@string/no_file_chosen"
+                app:Font="Poppins-Regular.ttf"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/choose_file"
                 app:layout_constraintTop_toTopOf="parent" />

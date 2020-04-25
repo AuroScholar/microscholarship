@@ -13,9 +13,9 @@
     </data>
 
     <LinearLayout
-        android:background="@color/off_white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/off_white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -33,9 +33,9 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@android:color/transparent"
                 android:clipToPadding="false"
                 android:paddingBottom="@dimen/_150sdp"
-                android:background="@android:color/transparent"
                 app:layout_constraintTop_toBottomOf="@+id/cambridge_heading">
 
                 <RelativeLayout
@@ -91,6 +91,7 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_20sdp"
                                 android:textStyle="normal"
+                                app:Font="Poppins-Bold.ttf"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -100,15 +101,15 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginStart="@dimen/_2sdp"
-                                android:layout_marginTop="@dimen/_5sdp"
                                 android:text="@string/score_msg"
                                 android:textColor="@color/auro_grey_color"
                                 android:textSize="@dimen/_10sdp"
+                                app:Font="Poppins-Regular.ttf"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/get_scholarship_text" />
 
 
-                            <TextView
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
                                 android:id="@+id/wallet_bal_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -119,38 +120,49 @@
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_15sdp"
-                                android:textStyle="bold"
+                                app:Font="Poppins-SemiBold.ttf"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 bind:ignore="RtlCompat" />
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/ic_rupee_transfer"
+                            <RelativeLayout
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:background="@drawable/transparent_circle"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_10sdp"
+                                    android:layout_height="@dimen/_10sdp"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/ic_cart"
+                                    android:visibility="visible" />
+
+                            </RelativeLayout>
+
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/quiz_type_list"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
-                            android:layout_marginTop="@dimen/_10sdp" />
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@android:color/transparent" />
 
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/quizwon_type_list"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:orientation="horizontal"
-                            android:layout_gravity="center_horizontal"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
-                        <TextView
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/privacy_policy"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -162,7 +174,8 @@
                             android:paddingBottom="@dimen/_8sdp"
                             android:text="@string/privacy_policy"
                             android:textAlignment="center"
-                            android:textColor="@color/blue_color" />
+                            android:textColor="@color/blue_color"
+                            app:Font="Poppins-Regular.ttf" />
                     </LinearLayout>
 
 

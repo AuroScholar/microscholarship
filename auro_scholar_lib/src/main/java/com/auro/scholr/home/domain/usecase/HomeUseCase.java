@@ -1,5 +1,11 @@
 package com.auro.scholr.home.domain.usecase;
 
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+
+import androidx.core.content.ContextCompat;
+
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
@@ -167,4 +173,5 @@ public class HomeUseCase {
 
         return count;
     }
+
 }

@@ -2,14 +2,19 @@ package com.auro.scholr.home.presentation.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -225,6 +230,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
         setQuizListAdapter(dashboardResModel.getQuiz());
         setQuizWonListAdapter(dashboardResModel.getQuiz());
+        getSpannableString();
     }
 
     public void openQuizTestFragment(DashboardResModel dashboardResModel) {
@@ -307,5 +313,28 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         }
 
     }
+
+    public void getSpannableString() {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+
+        SpannableStringBuilder span1 = new SpannableStringBuilder("Score 8/10 and get");
+        ForegroundColorSpan color1 = new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.auro_grey_color));
+        span1.setSpan(color1, 0, span1.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        builder.append(span1);
+
+        SpannableStringBuilder span2 = new SpannableStringBuilder(" "+getString(R.string.rs) + "50");
+        ForegroundColorSpan color2 = new ForegroundColorSpan(getResources().getColor(R.color.color_red));
+        span2.setSpan(color2, 0, span2.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        span2.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, span2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.append(span2);
+
+        SpannableStringBuilder span3 = new SpannableStringBuilder(" for each quiz");
+        ForegroundColorSpan color3 = new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.auro_grey_color));
+        span3.setSpan(color3, 0, span3.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        builder.append(span3);
+
+        binding.scoreText.setText(builder, TextView.BufferType.SPANNABLE);
+    }
+
 
 }

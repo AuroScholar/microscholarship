@@ -47,9 +47,11 @@ public class QuizWonAdapter extends RecyclerView.Adapter<QuizWonAdapter.ViewHold
         }
 
         public void setData(QuizResModel resModel, int position) {
+            binding.youWon.setText(mContext.getString(R.string.you_win)+" "+mContext.getString(R.string.rs)+"50");
             if (resModel.isWonStatus()) {
                 binding.strip.setBackgroundColor(mContext.getResources().getColor(R.color.blue_color));
                 binding.circle.setBackground(mContext.getResources().getDrawable(R.drawable.blue_circle));
+                binding.youWon.setTextColor(mContext.getResources().getColor(R.color.blue_color));
             } else {
                 binding.strip.setBackgroundColor(mContext.getResources().getColor(R.color.ash_grey));
                 binding.circle.setBackground(mContext.getResources().getDrawable(R.drawable.grey_circle));
