@@ -1,5 +1,11 @@
 package com.auro.scholr.home.domain.usecase;
 
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+
+import androidx.core.content.ContextCompat;
+
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
@@ -13,6 +19,7 @@ import com.auro.scholr.util.TextUtil;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeUseCase {
 
@@ -141,6 +148,30 @@ public class HomeUseCase {
         }
 
         return false;
+    }
+
+    public boolean checkDemographicStatus(DashboardResModel dashboardResModel) {
+        if (dashboardResModel != null && !TextUtil.isEmpty(dashboardResModel.getGender()) && !TextUtil.isEmpty(dashboardResModel.getSchool_type()) &&
+                !TextUtil.isEmpty(dashboardResModel.getBoard_type()) && !TextUtil.isEmpty(dashboardResModel.getLanguage())) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public int getQuizWonCount(List<QuizResModel> list) {
+        int count = 0;
+        for (QuizResModel resModel : list) {
+            if (resModel.getScorepoints() > 7) {
+                count = count + 1;
+            }
+        }
+        for (int i = 0; i < count; i++) {
+            list.get(i).setWonStatus(true);
+        }
+
+        return count;
     }
 
 }

@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
@@ -40,6 +42,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
+import androidx.exifinterface.media.ExifInterface;
 
 import android.os.Environment;
 import android.os.Handler;
@@ -50,6 +53,7 @@ import android.view.WindowManager;
 
 import com.auro.scholr.R;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -102,8 +106,14 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
         }
         setListener();
-        askPermission();
+
         checkValueEverySecond();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        askPermission();
     }
 
     private void checkValueEverySecond() {
@@ -159,6 +169,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             AppLogger.e(TAG, "Face detector dependencies are not yet available.");
         }
 
+
         mCameraSource = new CameraSource.Builder(context, detector)
                 .setFacing(cameraID)
                 .setAutoFocusEnabled(true)
@@ -168,6 +179,20 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         startCameraSource();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopCamera();
+    }
+
+    private void stopCamera() {
+        if (mCameraSource != null) {
+            mCameraSource.stop();
+            mCameraSource.release();
+            mCameraSource = null;
+
+        }
+    }
 
     private void startCameraSource() {
         int code = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(
@@ -269,17 +294,35 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             public void onPictureTaken(byte[] bytes) {
                 try {
 
+                    ExifInterface exifInterface = new ExifInterface(new ByteArrayInputStream(bytes));
+                    int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                    int rotationDegrees = 0;
+                    switch (orientation) {
+                        case ExifInterface.ORIENTATION_ROTATE_90:
+                            rotationDegrees = 90;
+                            break;
+                        case ExifInterface.ORIENTATION_ROTATE_180:
+                            rotationDegrees = 180;
+                            break;
+                        case ExifInterface.ORIENTATION_ROTATE_270:
+                            rotationDegrees = 270;
+                            break;
+                    }
 
+
+                    int finalRotationDegrees = rotationDegrees;
                     Single<String> single = Single.create(new SingleOnSubscribe<String>() {
                         @Override
                         public void subscribe(SingleEmitter<String> emitter) throws Exception {
                             try {
                                 // convert byte array into bitmap
                                 Bitmap loadedImage = null;
-                                loadedImage = BitmapFactory.decodeByteArray(bytes, 0,
+                                Bitmap loadedImageNew = BitmapFactory.decodeByteArray(bytes, 0,
                                         bytes.length);
+                                loadedImage = rotateBitmap(loadedImageNew, finalRotationDegrees);
                                 //  String path = saveToInternalStorage(loadedImage) + "/profile.jpg";
                                 String path = saveToInternalStorage(loadedImage);
+
                                 emitter.onSuccess(path);
                             } catch (Exception e) {
                                 emitter.onError(e);
@@ -318,6 +361,15 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
+    }
+
+    public static Bitmap rotateBitmap(Bitmap bitmap, int degree) {
+        if (degree == 0 || bitmap == null) {
+            return bitmap;
+        }
+        final Matrix matrix = new Matrix();
+        matrix.setRotate(degree, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
     private String SaveImage(Bitmap finalBitmap) {
@@ -448,8 +500,10 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void releaseCamera() {
-        binding.faceOverlay.clear();
-        mCameraSource.release();
+        if (binding.faceOverlay != null) {
+            binding.faceOverlay.clear();
+        }
+        stopCamera();
     }
 
 }

@@ -109,7 +109,8 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             dashboardResModel = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
         }
 
-        binding.btUploadAll.setText(R.string.modify);
+        binding.btUploadAll.setVisibility(View.GONE);
+        binding.btModifyAll.setVisibility(View.VISIBLE);
         setDataOnUi();
     }
 
@@ -131,7 +132,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
     @Override
     protected void setListener() {
         /*Do code here*/
-        binding.btUploadAll.setOnClickListener(this);
+        binding.btModifyAll.setOnClickListener(this);
         if (kycViewModel != null && kycViewModel.serviceLiveData().hasObservers()) {
             kycViewModel.serviceLiveData().removeObservers(this);
         }

@@ -52,10 +52,10 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_2sdp"
-                            android:text="Your Wallet"
+                            android:text="@string/your_wallet"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_20sdp"
-                            android:textStyle="normal"
+                            app:Font="Poppins-Regular.ttf"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,9 +66,10 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:autoLink="phone"
-                            android:text="To upload documents please visit www.auroscholar.com. if you have face any issues please call us at +919667480783"
+                            android:text="@string/upload_doc_text_msg"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_10sdp"
+                            app:Font="Poppins-Regular.ttf"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/get_scholarship_text" />
 
@@ -83,6 +84,7 @@
                             android:textColor="@color/white"
                             android:textSize="@dimen/_30sdp"
                             android:textStyle="bold"
+                            app:Font="Poppins-Bold.ttf"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/warn_msg" />
 
@@ -130,6 +132,32 @@
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_15sdp"
+                                app:Font="Poppins-Regular.ttf"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/document_upload_recyclerview" />
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/bt_modify_all"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:layout_marginBottom="@dimen/_15sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:background="@drawable/button_bg_orange"
+                                android:paddingStart="@dimen/_15sdp"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:gravity="center_horizontal"
+                                android:paddingEnd="@dimen/_15sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+                                android:text="@string/modify"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_15sdp"
+                                app:Font="Poppins-Regular.ttf"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"

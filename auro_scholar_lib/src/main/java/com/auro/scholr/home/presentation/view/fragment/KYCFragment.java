@@ -391,7 +391,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
 
     private void uploadAllDocApi() {
-        kycViewModel.uploadProfileImage(kycDocumentDatamodelArrayList);
+        kycViewModel.uploadProfileImage(kycDocumentDatamodelArrayList,dashboardResModel.getPhonenumber());
 
     }
 

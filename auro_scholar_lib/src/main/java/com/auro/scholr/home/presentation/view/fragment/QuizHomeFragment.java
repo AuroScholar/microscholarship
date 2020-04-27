@@ -1,16 +1,20 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -24,14 +28,13 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
-import com.auro.scholr.core.util.uiwidget.others.HideBottomNavigation;
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
+import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
-import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
@@ -57,6 +60,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     private static final String TAG = "CardFragment";
     DashboardResModel dashboardResModel;
     QuizResModel quizResModel;
+    QuizWonAdapter quizWonAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -75,11 +79,18 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         return binding.getRoot();
     }
 
-    private void setAdapter(List<QuizResModel> resModelList) {
+    private void setQuizListAdapter(List<QuizResModel> resModelList) {
         binding.quizTypeList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.quizTypeList.setHasFixedSize(true);
         quizItemAdapter = new QuizItemAdapter(this.getContext(), resModelList, this);
         binding.quizTypeList.setAdapter(quizItemAdapter);
+
+    }
+
+    private void setQuizWonListAdapter(List<QuizResModel> resModelList) {
+        binding.quizwonTypeList.setHasFixedSize(true);
+        quizWonAdapter = new QuizWonAdapter(this.getContext(), resModelList, quizViewModel.homeUseCase.getQuizWonCount(resModelList));
+        binding.quizwonTypeList.setAdapter(quizWonAdapter);
 
     }
 
@@ -107,6 +118,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     protected void setListener() {
         binding.walletBalText.setOnClickListener(this);
+        binding.privacyPolicy.setOnClickListener(this);
     }
 
 
@@ -119,9 +131,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        init();
+
         setToolbar();
-        setListener();
+
         //checkJson();
     }
 
@@ -129,6 +141,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
+        init();
+        setListener();
     }
 
 
@@ -147,7 +161,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
-                        setDataOnUi(dashboardResModel);
+                        if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
+                            handleProgress(2, dashboardResModel.getMessage());
+                        } else {
+                            setDataOnUi(dashboardResModel);
+                        }
+
                     }
 
                     break;
@@ -160,19 +179,19 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 case AUTH_FAIL:
 
 // When Authrization is fail
-                    handleProgress(1, (String) responseApi.data);
+                    handleProgress(2, (String) responseApi.data);
                     break;
 
                 case FAIL_400:
                     //When 400 error occur
-                    handleProgress(1, (String) responseApi.data);
+                    handleProgress(2, (String) responseApi.data);
                     break;
 
 
                 default:
                     Log.d(TAG, "observeServiceResponse: default");
                     // ViewUtil.showSnackBar(binding.getRoot(), responseApi.data.toString());
-                    handleProgress(1, (String) responseApi.data);
+                    handleProgress(2, (String) responseApi.data);
                     break;
             }
 
@@ -209,7 +228,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void setDataOnUi(DashboardResModel dashboardResModel) {
         quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
-        setAdapter(dashboardResModel.getQuiz());
+        setQuizListAdapter(dashboardResModel.getQuiz());
+        setQuizWonListAdapter(dashboardResModel.getQuiz());
+        getSpannableString();
     }
 
     public void openQuizTestFragment(DashboardResModel dashboardResModel) {
@@ -251,15 +272,20 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
-            openKYCViewFragment(dashboardResModel);
-        } else {
-            openKYCFragment(dashboardResModel);
+        if (v.getId() == R.id.wallet_bal_text) {
+            if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+                openKYCViewFragment(dashboardResModel);
+            } else {
+                openKYCFragment(dashboardResModel);
+            }
+        } else if (v.getId() == R.id.privacy_policy) {
+            openFragment(new PrivacyPolicyFragment());
         }
+
     }
 
     private void askPermission() {
-        String rationale = "For taking the quiz camera permission is must.";
+        String rationale = getString(R.string.permission_error_msg);
         Permissions.Options options = new Permissions.Options()
                 .setRationaleDialogTitle("Info")
                 .setSettingsDialogTitle("Warning");
@@ -267,7 +293,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onGranted() {
                 openQuizTestFragment(dashboardResModel);
-                //  openFragment(new ScholarShipFragment());
             }
 
             @Override
@@ -288,5 +313,28 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         }
 
     }
+
+    public void getSpannableString() {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+
+        SpannableStringBuilder span1 = new SpannableStringBuilder("Score 8/10 and get");
+        ForegroundColorSpan color1 = new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.auro_grey_color));
+        span1.setSpan(color1, 0, span1.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        builder.append(span1);
+
+        SpannableStringBuilder span2 = new SpannableStringBuilder(" "+getString(R.string.rs) + "50");
+        ForegroundColorSpan color2 = new ForegroundColorSpan(getResources().getColor(R.color.color_red));
+        span2.setSpan(color2, 0, span2.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        span2.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, span2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.append(span2);
+
+        SpannableStringBuilder span3 = new SpannableStringBuilder(" for each quiz");
+        ForegroundColorSpan color3 = new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.auro_grey_color));
+        span3.setSpan(color3, 0, span3.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        builder.append(span3);
+
+        binding.scoreText.setText(builder, TextView.BufferType.SPANNABLE);
+    }
+
 
 }

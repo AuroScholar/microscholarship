@@ -33,6 +33,9 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.common.NetworkUtil;
+import com.auro.scholr.core.common.ResponseApi;
+import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.network.URLConstant;
 import com.auro.scholr.databinding.QuizTestLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentResModel;
@@ -50,18 +53,16 @@ import java.util.Date;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import io.reactivex.disposables.Disposable;
+
 import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
 
 /**
  * Created by varun
  */
 
-public class QuizTestFragment extends BaseFragment {
-    public static final String TAG = "QuizTestFragment";
-
-    @Inject
-    @Named("QuizTestFragment")
-    ViewModelFactory viewModelFactory;
+public class PrivacyPolicyFragment extends BaseFragment {
+    public static final String TAG = "PrivacyPolicyFragment";
 
     private static final int INPUT_FILE_REQUEST_CODE = 1;
     private WebSettings webSettings;
@@ -70,10 +71,6 @@ public class QuizTestFragment extends BaseFragment {
     private long size = 0;
     QuizTestLayoutBinding binding;
     private WebView webView;
-    DashboardResModel dashboardResModel;
-    QuizTestViewModel quizTestViewModel;
-    QuizResModel quizResModel;
-    AssignmentResModel assignmentResModel;
 
     // Storage Permissions variables
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -91,8 +88,6 @@ public class QuizTestFragment extends BaseFragment {
         setHasOptionsMenu(true);
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
-            AuroApp.getAppComponent().doInjection(this);
-            quizTestViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizTestViewModel.class);
             binding.setLifecycleOwner(this);
         }
 
@@ -102,8 +97,7 @@ public class QuizTestFragment extends BaseFragment {
     @Override
     public void onDestroy() {
 
-        if (webView != null)
-        {
+        if (webView != null) {
             webView.destroy();
         }
         super.onDestroy();
@@ -113,43 +107,7 @@ public class QuizTestFragment extends BaseFragment {
     @Override
     protected void init() {
 
-        setListener();
-        if (dashboardResModel != null && quizResModel != null) {
-            quizTestViewModel.getAssignExamData(quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel));
-        }
-    }
-
-
-    private void observeServiceResponse() {
-
-        quizTestViewModel.serviceLiveData().observeForever(responseApi -> {
-
-            switch (responseApi.status) {
-
-                case LOADING:
-                    handleProgress(0, "");
-                    break;
-                case SUCCESS:
-                    if (responseApi.apiTypeStatus == ASSIGNMENT_STUDENT_DATA_API) {
-                        assignmentResModel = (AssignmentResModel) responseApi.data;
-                        if (!assignmentResModel.isError()) {
-                            String webUrl = URLConstant.TEST_URL + "StudentID=" + assignmentResModel.getStudentID() + "&ExamAssignmentID=" + assignmentResModel.getExamAssignmentID();
-                            loadWeb(webUrl);
-                        } else {
-                            handleProgress(2, getActivity().getString(R.string.default_error));
-                        }
-                    }
-                    break;
-                case NO_INTERNET:
-                    handleProgress(2, getActivity().getString(R.string.internet_check));
-                    break;
-                case AUTH_FAIL:
-                case FAIL_400:
-                default:
-                    handleProgress(2, getActivity().getString(R.string.default_error));
-                    break;
-            }
-        });
+        checkInternet();
     }
 
     @Override
@@ -159,11 +117,7 @@ public class QuizTestFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-        if (quizTestViewModel != null && quizTestViewModel.serviceLiveData().hasObservers()) {
-            quizTestViewModel.serviceLiveData().removeObservers(this);
-        } else {
-            observeServiceResponse();
-        }
+
     }
 
     @Override
@@ -174,37 +128,21 @@ public class QuizTestFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        if (getArguments() != null) {
-            dashboardResModel = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
-            quizResModel = getArguments().getParcelable(AppConstant.QUIZ_RES_MODEL);
-        }
         init();
     }
 
-    public void openQuizHomeFragment() {
-        getActivity().getSupportFragmentManager().popBackStack();
+    public void checkInternet() {
+        Disposable disposable = NetworkUtil.hasInternetConnection().subscribe(hasInternet -> {
+            if (hasInternet) {
+                handleProgress(0, "");
+                loadWeb(URLConstant.PRIVACY_POLICY);
+            } else {
+                handleProgress(2, getString(R.string.internet_check));
+            }
+
+        });
     }
 
-    public void openDemographicFragment() {
-        Bundle bundle = new Bundle();
-        DemographicFragment demographicFragment = new DemographicFragment();
-        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
-        demographicFragment.setArguments(bundle);
-        openFragment(demographicFragment);
-    }
-
-    private void openFragment(Fragment fragment) {
-        getActivity().getSupportFragmentManager().popBackStack();
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .setReorderingAllowed(true)
-                .replace(AuroApp.getFragmentContainerUiId(), fragment, KYCViewFragment.class
-                        .getSimpleName())
-                .addToBackStack(null)
-                .commitAllowingStateLoss();
-
-    }
 
     @Override
     public void onResume() {
@@ -255,18 +193,14 @@ public class QuizTestFragment extends BaseFragment {
 
         //Show loader on url load
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            AppLogger.e("chhonker",url);
-            if (view.getUrl().equalsIgnoreCase("http://auroscholar.com/index.php") ||
-                    view.getUrl().equalsIgnoreCase("http://auroscholar.com/demographics.php")
+            AppLogger.e(TAG, url);
+            if (view.getUrl().equalsIgnoreCase("http://auroscholar.com/index.php")
                     || view.getUrl().equalsIgnoreCase("http://auroscholar.com/dashboard.php")) {
-
-                if (!quizTestViewModel.homeUseCase.checkDemographicStatus(dashboardResModel)) {
-                    openDemographicFragment();
-                } else {
-                    openQuizHomeFragment();
-                }
-
+                getActivity().getSupportFragmentManager().popBackStack();
             }
+            handleProgress(0, "");
+
+
         }
 
         // Called when all page resources loaded
@@ -396,9 +330,7 @@ public class QuizTestFragment extends BaseFragment {
             binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (dashboardResModel != null && quizResModel != null) {
-                        quizTestViewModel.getAssignExamData(quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel));
-                    }
+                    checkInternet();
                 }
             });
         }

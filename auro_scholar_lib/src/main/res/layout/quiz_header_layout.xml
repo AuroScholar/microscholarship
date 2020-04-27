@@ -72,8 +72,9 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/_2sdp"
             android:text="@string/question_bank_powered_by_cambridge"
-            android:textColor="@color/auro_grey_color"
+            android:textColor="@color/auro_dark_blue"
             android:textSize="@dimen/_12sdp"
+            app:Font="Poppins-Regular.ttf"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header_layout" />

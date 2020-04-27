@@ -35,7 +35,6 @@ public class KYCViewModel extends ViewModel {
     CompositeDisposable compositeDisposable;
     public MutableLiveData<ResponseApi> serviceLiveData = new MutableLiveData<>();
 
-    private MutableLiveData<MessgeNotifyStatus> notifyLiveData = new MutableLiveData<>();
 
     public MutableLiveData<String> mobileNumber = new MutableLiveData<>();
     public HomeUseCase homeUseCase;
@@ -49,17 +48,16 @@ public class KYCViewModel extends ViewModel {
     }
 
 
-    public void uploadProfileImage(List<KYCDocumentDatamodel> list) {
+    public void uploadProfileImage(List<KYCDocumentDatamodel> list, String phonenumber) {
 
         Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
             if(hasInternet) {
 
-                callUploadImageApi(list);
+                callUploadImageApi(list,phonenumber);
 
             } else {
 
-                // please check your internet
-                notifyLiveData.setValue(new MessgeNotifyStatus(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check)));
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
             }
 
         });
@@ -75,9 +73,9 @@ public class KYCViewModel extends ViewModel {
         }
         return compositeDisposable;
     }
-    private void callUploadImageApi(List<KYCDocumentDatamodel> list) {
+    private void callUploadImageApi(List<KYCDocumentDatamodel> list, String phonenumber) {
 
-        getCompositeDisposable().add(homeRemoteUseCase.uploadProfileImage(list).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).doOnSubscribe(new Consumer<Disposable>() {
+        getCompositeDisposable().add(homeRemoteUseCase.uploadProfileImage(list,phonenumber).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).doOnSubscribe(new Consumer<Disposable>() {
             @Override
             public void accept(Disposable __) throws Exception {
                 serviceLiveData.setValue(ResponseApi.loading(null));
@@ -98,7 +96,7 @@ public class KYCViewModel extends ViewModel {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
 
-                                serviceLiveData.setValue(ResponseApi.fail(AuroApp.getAppContext().getResources().getString(R.string.default_error), UPLOAD_PROFILE_IMAGE));
+                                serviceLiveData.setValue(new ResponseApi(Status.FAIL, AuroApp.getAppContext().getResources().getString(R.string.default_error), null));
                             }
                         }));
 

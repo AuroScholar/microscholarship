@@ -202,7 +202,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
 
 
     public void setHomeFragmentTab() {
-        switch (auroScholarDataModel.getScreenType()) {
+        /*switch (auroScholarDataModel.getScreenType()) {
             case AppConstant.ScreenType.QUIZ_DASHBOARD:
                 openQuizFragment(auroScholarDataModel.getMobileNumber());
                 break;
@@ -213,7 +213,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
 //Default code here
                 finish();
                 break;
-        }
+        }*/
 
     }
 

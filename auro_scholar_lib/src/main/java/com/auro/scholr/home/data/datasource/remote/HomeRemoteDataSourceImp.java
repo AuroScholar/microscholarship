@@ -34,9 +34,8 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
     }
 
     @Override
-    public Single<Response<JsonObject>> uploadProfileImage(List<KYCDocumentDatamodel> list) {
-        RequestBody phonenumber = RequestBody.create(okhttp3.MultipartBody.FORM, "7503600686");
-
+    public Single<Response<JsonObject>> uploadProfileImage(List<KYCDocumentDatamodel> list,String phone) {
+        RequestBody phonenumber = RequestBody.create(okhttp3.MultipartBody.FORM, phone);
         MultipartBody.Part id_proof_front = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(0));
         MultipartBody.Part id_proof_back = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(1));
         MultipartBody.Part school_id_card = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(2));
