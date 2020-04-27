@@ -14,15 +14,11 @@
             android:id="@+id/header_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
             android:elevation="@dimen/_5sdp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_8sdp"
             app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout

@@ -6,7 +6,7 @@
 
             <stroke
                 android:width="5dp"
-                android:color="@color/ash_grey" />
+                android:color="@color/light_grey" />
             <size
                 android:width="60dp"
                 android:height="60dp" />
@@ -20,11 +20,11 @@
             android:innerRadius="40dp"
             android:shape="oval">
 
-            <solid android:color="@color/ash_grey" />
+            <solid android:color="@color/light_grey" />
 
             <stroke
                 android:width="5dp"
-                android:color="@color/ash_grey" />
+                android:color="@color/light_grey" />
             <size
                 android:width="45dp"
                 android:height="45dp" />
