@@ -15,7 +15,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/blue_color">
+        android:background="@color/blue_color"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar_header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -70,7 +78,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:autoLink="phone"
+                            android:autoLink="phone|web|email"
                             android:text="@string/upload_doc_text_msg"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_10sdp"
@@ -123,7 +131,7 @@
 
                             <com.auro.scholr.core.util.uiwidget.RPTextView
                                 android:id="@+id/bt_upload_all"
-                                android:layout_width="@dimen/_100sdp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_15sdp"
                                 android:layout_marginBottom="@dimen/_15sdp"

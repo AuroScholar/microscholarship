@@ -31,13 +31,22 @@
                 android:layout_height="wrap_content"
                 android:background="@color/color_red"
                 android:padding="10dp"
-                android:text="Start Sdk"
+                android:text="@string/start_sdk"
                 android:textColor="@color/white"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/enter_number" />
 
-
+            <TextView
+                android:id="@+id/bt_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/color_red"
+                android:padding="10dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/start_sdk"
+                android:textColor="@color/white"
+                 />
         </LinearLayout>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout

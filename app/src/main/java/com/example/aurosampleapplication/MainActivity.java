@@ -3,32 +3,26 @@ package com.example.aurosampleapplication;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
-import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AuroScholar;
 import com.example.aurosampleapplication.databinding.ActivityMainBinding;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.internal.ViewUtils;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-     ActivityMainBinding binding;
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // setContentView(R.layout.activity_dashboard);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.btSdk.setOnClickListener(this);
+        binding.btOpen.setOnClickListener(this);
         binding.enterNumber.setText("8178307851");
 
     }
@@ -56,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(this, "Please enter the number", Toast.LENGTH_LONG);
                 }
                 break;
+            case R.id.bt_open:
+                openFragment(new SampleFragment());
+                break;
+
         }
     }
 
@@ -86,6 +85,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void openFragment(Fragment fragment) {
+        ((AppCompatActivity) (this)).getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.home_container, fragment, SampleFragment.class
+                        .getSimpleName())
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
+
+
     }
 
 }
