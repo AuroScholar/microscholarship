@@ -1,7 +1,6 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -35,7 +34,6 @@ import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
-import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
@@ -85,7 +83,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null && TextUtil.isEmpty(prefModel.getUserLanguage())) {
-            ViewUtil.setLanguage(AppConstant.ENGLISH);
+            ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
         }
         return binding.getRoot();
     }
@@ -163,10 +161,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.getScholarshipText.setText(resources.getText(R.string.get_scholarship));
         binding.headerParent.cambridgeHeading.setText(resources.getString(R.string.question_bank_powered_by_cambridge));
         String lang = ViewUtil.getLanguage();
-        if (lang.equalsIgnoreCase(AppConstant.ENGLISH )|| TextUtil.isEmpty(lang)) {
-            setLangOnUi("Hindi");
+        if (lang.equalsIgnoreCase(AppConstant.LANGUAGE_EN)|| TextUtil.isEmpty(lang)) {
+            setLangOnUi(AppConstant.HINDI);
         } else {
-            setLangOnUi("English");
+            setLangOnUi(AppConstant.ENGLISH);
         }
 
     }
@@ -180,7 +178,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onDestroy() {
         super.onDestroy();
-        setLanguage(AppConstant.ENGLISH);
+        setLanguage(AppConstant.LANGUAGE_EN);
     }
 
     private void setLanguage(String language) {
@@ -326,10 +324,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else if (v.getId() == R.id.lang_eng) {
             String text = binding.toolbarLayout.langEng.getText().toString();
             if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase("Hindi")) {
-                ViewUtil.setLanguage(AppConstant.HINDI);
+                ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
                 //  resources = ViewUtil.getCustomResource(getActivity());
             } else {
-                ViewUtil.setLanguage(AppConstant.ENGLISH);
+                ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
                 // resources = ViewUtil.getCustomResource(getActivity());
             }
             onResume();

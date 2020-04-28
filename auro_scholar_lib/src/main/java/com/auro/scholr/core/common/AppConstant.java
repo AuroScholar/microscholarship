@@ -28,8 +28,10 @@ public interface AppConstant {
     String PHONE_NUMBER = "Phonenumber";
     int CAMERA_REQUEST_CODE = 007;
     String FAILED = "failed";
-    String ENGLISH = "en";
-    String HINDI = "hi";
+    String LANGUAGE_EN = "en";
+    String LANGUAGE_HI = "hi";
+    String ENGLISH="English";
+    String HINDI="Hindi";
 
 
     String COMING_FROM = "navigation_control";

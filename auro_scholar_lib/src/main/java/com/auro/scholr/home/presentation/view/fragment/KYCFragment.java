@@ -1,6 +1,5 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -31,14 +30,12 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
-import com.auro.scholr.core.util.uiwidget.others.HideBottomNavigation;
 import com.auro.scholr.databinding.KycFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
-import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.adapter.KYCuploadAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.util.AppLogger;
@@ -117,9 +114,18 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 binding.walletBalText.setText(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
             }
         }
-
-
         binding.cambridgeHeading.cambridgeHeading.setTextColor(getResources().getColor(R.color.white));
+
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
+            setLanguageText(AppConstant.HINDI);
+        } else {
+            setLanguageText(AppConstant.ENGLISH);
+        }
+    }
+
+    private void setLanguageText(String text) {
+        binding.toolbarLayout.langEng.setText(text);
     }
 
 
@@ -377,17 +383,28 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             }
         } else if (v.getId() == R.id.lang_eng) {
             String text = binding.toolbarLayout.langEng.getText().toString();
-            if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase("Hindi")) {
-                ViewUtil.setLanguage(AppConstant.HINDI);
-                // resources = ViewUtil.getCustomResource(getActivity());
+            if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase(AppConstant.HINDI)) {
+                ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
+                resources = ViewUtil.getCustomResource(getActivity());
+                setLanguageText(AppConstant.ENGLISH);
             } else {
-                ViewUtil.setLanguage(AppConstant.ENGLISH);
-                // resources = ViewUtil.getCustomResource(getActivity());
+                ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
+                resources = ViewUtil.getCustomResource(getActivity());
+                setLanguageText(AppConstant.HINDI);
             }
+            reloadFragment();
 
-            openKYCFragment();
+            // openKYCFragment();
         }
 
+    }
+
+    private void reloadFragment() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (Build.VERSION.SDK_INT >= 26) {
+            ft.setReorderingAllowed(false);
+        }
+        ft.detach(this).attach(this).commit();
     }
 
 

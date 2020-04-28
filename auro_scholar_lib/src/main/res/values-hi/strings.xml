@@ -2,9 +2,9 @@
 
     <!--App-->
     <string name="app_name">AuroScholr</string>
-    <string name="internet_check">Oops, No internet found.Please check your connection or try again.</string>
-    <string name="default_error">Unable to connect. Please try after sometime.</string>
-    <string name="no_data_found">No data available</string>
+    <string name="internet_check">ओह, कोई इंटरनेट नहीं मिला। कृपया अपना कनेक्शन जांचें या फिर से प्रयास करें।</string>
+    <string name="default_error">कनेक्ट करने में असमर्थ। कृपया कुछ देर बाद प्रयास करें।</string>
+    <string name="no_data_found">कोई डेटा उपलब्ध नहीं है</string>
 
     <!--Crop image string -->
     <string name="crop_image_activity_title"></string>
@@ -15,50 +15,51 @@
     <string name="crop_image_menu_flip_horizontally">Flip horizontally</string>
     <string name="crop_image_menu_flip_vertically">Flip vertically</string>
     <string name="pick_image_intent_chooser_title">Select source</string>
-    <string name="crop_image_activity_no_permissions">Cancelling, required permissions are not granted</string>
-    <string name="upload_file">Upload File</string>
+    <string name="crop_image_activity_no_permissions">रद्द करना, आवश्यक अनुमति नहीं दी गई हैं</string>
+    <string name="upload_file">दस्तावेज अपलोड करें</string>
     <string name="rs">₹</string>
-    <string name="score_msg">Score 8/10 and get Rs.50 for each quiz</string>
+    <string name="score_msg">स्कोर 8/10 और प्रत्येक प्रश्नोत्तरी के लिए 50 रु</string>
     <string name="get_scholarship">छात्रवृत्ति प्राप्त करें</string>
-    <string name="quiz">Quiz</string>
+    <string name="quiz">प्रश्नोत्तरी</string>
     <string name="total_no_of_points">अंकों की कुल संख्या:</string>
-    <string name="retake_quiz_to_improve_your_points">Retake Quiz to improve your points</string>
-    <string name="measurement">Measurement</string>
+    <string name="retake_quiz_to_improve_your_points">अपने बिंदुओं को बेहतर बनाने के लिए क्विज़ को रीटेक करें</string>
+    <string name="measurement">माप</string>
     <string name="scholarship">छात्रवृत्ति जीते</string>
-    <string name="wining_price">Wining price:</string>
+    <string name="wining_price">पुरस्कार जीतना:</string>
     <string name="start_quiz">प्रश्नोत्तरी शुरू करें</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="retry">Retry</string>
+    <string name="retry">पुन: प्रयास करें</string>
     <string name="id_proof_front_side">आईडी प्रूफ सामने की ओर</string>
     <string name="title_activity_camera">CameraActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="choose_file">Choose File</string>
-    <string name="no_file_chosen">No File chosen</string>
+    <string name="choose_file">फ़ाइल का चयन</string>
+    <string name="no_file_chosen">कोई फ़ाइल नहीं चुनी गई</string>
     <string name="id_proof_back_side">आईडी प्रूफ बैक साइड</string>
     <string name="school_id_card">स्कूल आई.डी. कार्ड</string>
     <string name="upload_profile_pic">अपनी फोटो अपलोड करें</string>
     <string name="upload">सभी अपलोड करें</string>
-    <string name="submit">Submit</string>
-    <string name="modify">Want To Modify Uploaded File</string>
-    <string name="thank_you">Thank You \nfor taking the quiz!</string>
-    <string name="new_quiz_will_be_available_next_month">New quiz will be available next month!</string>
-    <string name="document_all_four_error_msg">Please select the all four document first</string>
+    <string name="submit">प्रस्तुत</string>
+    <string name="modify">अपलोड की गई फ़ाइल को संशोधित करना चाहते हैं</string>
+    <string name="thank_you">प्रश्नोत्तरी लेने के लिए धन्यवाद!</string>
+    <string name="new_quiz_will_be_available_next_month">अगले महीने उपलब्ध होगी नई क्विज!</string>
+    <string name="document_all_four_error_msg">कृपया पहले सभी चार दस्तावेज़ चुनें</string>
     <string name="question_bank_powered_by_cambridge">कैम्ब्रिज द्वारा संचालित प्रश्न बैंक</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="permission_error_msg">For taking the quiz camera permission is must.</string>
     <string name="complete_the_previous_quiz_to_unlock">अनलॉक करने के लिए पिछले प्रश्नोत्तरी को पूरा करें </string>
-    <string name="you_win">You Win</string>
+    <string name="you_win">तुम जीते</string>
     <string name="your_wallet">आपका वॉलेट</string>
     <string name="upload_doc_text_msg">दस्तावेज़ अपलोड करने के लिए कृपया www.aurosscholar.com पर जाएँ, यदि आपको कोई समस्या आती है तो कृपया हमें +919667480783 पर कॉल करें.
 </string>
     <string name="score_and_get">8/10 स्कोर करें और प्रत्येक क्विज के लिए</string>
     <string name="for_each_quiz">जीतें</string>
     <string name="english">English</string>
+    <string name="sucessfully_uploaded">पूरी तरह से अपलोड किया गया</string>
 
     <string-array name="genderlist">
         <item>Please Select Gender</item>
