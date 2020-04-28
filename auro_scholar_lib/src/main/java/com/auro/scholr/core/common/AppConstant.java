@@ -106,6 +106,13 @@ public interface AppConstant {
 
     }
 
+    interface FriendsLeaderBoard {
+        int LEADERBOARD_TYPE = 100;
+        int LEADERBOARD_INVITE_TYPE = 101;
+        String QUIZ_DASHBOARD_WEB = "QUIZ_DASHBOARD_WEB";
+
+    }
+
     interface SpinnerType {
         String PLEASE_SELECT_GENDER = "Please Select Gender";
         String PLEASE_SELECT_LANGUAGE_MEDIUM = "Please Select Language Medium";

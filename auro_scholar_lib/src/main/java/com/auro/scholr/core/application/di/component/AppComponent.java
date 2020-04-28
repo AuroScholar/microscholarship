@@ -7,6 +7,8 @@ import com.auro.scholr.core.application.di.module.HomeModule;
 import com.auro.scholr.core.application.di.module.UtilsModule;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.fragment.DemographicFragment;
+import com.auro.scholr.home.presentation.view.fragment.FriendsInviteBoardFragment;
+import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardFragment;
 import com.auro.scholr.home.presentation.view.fragment.KYCFragment;
 import com.auro.scholr.home.presentation.view.fragment.KYCViewFragment;
 import com.auro.scholr.home.presentation.view.fragment.PrivacyPolicyFragment;
@@ -42,5 +44,9 @@ public interface AppComponent {
 
 
     void doInjection(PrivacyPolicyFragment privacyPolicyFragment);
+
+    void doInjection(FriendsInviteBoardFragment friendsInviteBoardFragment);
+
+    void doInjection(FriendsLeaderBoardFragment friendsLeaderBoardFragment);
 
 }

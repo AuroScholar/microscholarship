@@ -60,6 +60,13 @@
     <string name="for_each_quiz">जीतें</string>
     <string name="english">English</string>
     <string name="sucessfully_uploaded">पूरी तरह से अपलोड किया गया</string>
+    <string name="friends_leadeboard">Friends \n Leaderboard</string>
+    <string name="invite">Invite</string>
+    <string name="name">Name</string>
+    <string name="scholarship_won">Scholarship won</string>
+    <string name="score">Score</string>
+    <string name="invite_your_friends">Invite Your Friends</string>
+    <string name="your_friend_list">Your Friend List</string>
 
     <string-array name="genderlist">
         <item>Please Select Gender</item>

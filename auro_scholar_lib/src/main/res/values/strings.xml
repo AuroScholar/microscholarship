@@ -92,5 +92,12 @@
     <!--Facebook Integration-->
     <string name="facebook_app_id">224597028845837</string>
     <string name="fb_login_protocol_scheme">fb224597028845837</string>
+    <string name="friends_leadeboard">Friends \nLeaderboard</string>
+    <string name="invite">Invite</string>
+    <string name="name">Name</string>
+    <string name="scholarship_won">Scholarship \nwon</string>
+    <string name="score">Score</string>
+    <string name="invite_your_friends">Invite Your Friends</string>
+    <string name="your_friend_list">Your Friend List</string>
 
 </resources>
