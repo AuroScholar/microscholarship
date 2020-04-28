@@ -273,11 +273,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.wallet_bal_text) {
-            if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+            openFragment(new ScholarShipFacebookIn());
+           /* if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
             } else {
                 openKYCFragment(dashboardResModel);
-            }
+            }*/
         } else if (v.getId() == R.id.privacy_policy) {
             openFragment(new PrivacyPolicyFragment());
         }
