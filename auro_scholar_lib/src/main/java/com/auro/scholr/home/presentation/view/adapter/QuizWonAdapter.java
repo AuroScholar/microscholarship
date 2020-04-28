@@ -53,7 +53,7 @@ public class QuizWonAdapter extends RecyclerView.Adapter<QuizWonAdapter.ViewHold
                 binding.circle.setBackground(mContext.getResources().getDrawable(R.drawable.blue_circle));
                 binding.youWon.setTextColor(mContext.getResources().getColor(R.color.blue_color));
             } else {
-                binding.strip.setBackgroundColor(mContext.getResources().getColor(R.color.ash_grey));
+                binding.strip.setBackgroundColor(mContext.getResources().getColor(R.color.light_grey));
                 binding.circle.setBackground(mContext.getResources().getDrawable(R.drawable.grey_circle));
             }
 

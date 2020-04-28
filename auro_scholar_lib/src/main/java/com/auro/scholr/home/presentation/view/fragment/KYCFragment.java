@@ -3,9 +3,11 @@ package com.auro.scholr.home.presentation.view.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -66,20 +70,17 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     KycFragmentLayoutBinding binding;
     KYCViewModel kycViewModel;
     KYCuploadAdapter kyCuploadAdapter;
-
-    private Activity mActivity;
-    private HideBottomNavigation hideBottomNavigation;
-
     private int pos;
     private DashboardResModel dashboardResModel;
     ArrayList<KYCDocumentDatamodel> kycDocumentDatamodelArrayList;
     private boolean uploadBtnStatus;
+    Resources resources;
 
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = getActivity();
+
     }
 
 
@@ -90,7 +91,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         kycViewModel = ViewModelProviders.of(this, viewModelFactory).get(KYCViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setKycViewModel(kycViewModel);
-        HomeActivity.setListingActiveFragment(HomeActivity.KYC_FRAGMENT);
         return binding.getRoot();
     }
 
@@ -118,6 +118,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             }
         }
 
+
         binding.cambridgeHeading.cambridgeHeading.setTextColor(getResources().getColor(R.color.white));
     }
 
@@ -131,6 +132,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     protected void setListener() {
         /*Do code here*/
         binding.btUploadAll.setOnClickListener(this);
+        binding.toolbarLayout.langEng.setOnClickListener(this);
         if (kycViewModel != null && kycViewModel.serviceLiveData().hasObservers()) {
             kycViewModel.serviceLiveData().removeObservers(this);
 
@@ -366,11 +368,24 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     @Override
     public void onClick(View v) {
-        if (kycViewModel.homeUseCase.checkUploadButtonDoc(kycDocumentDatamodelArrayList)) {
-            uploadBtnStatus = true;
-            uploadAllDocApi();
-        } else {
-            ViewUtil.showSnackBar(binding.getRoot(), getString(R.string.document_all_four_error_msg));
+        if (v.getId() == R.id.bt_upload_all) {
+            if (kycViewModel.homeUseCase.checkUploadButtonDoc(kycDocumentDatamodelArrayList)) {
+                uploadBtnStatus = true;
+                uploadAllDocApi();
+            } else {
+                ViewUtil.showSnackBar(binding.getRoot(), getString(R.string.document_all_four_error_msg));
+            }
+        } else if (v.getId() == R.id.lang_eng) {
+            String text = binding.toolbarLayout.langEng.getText().toString();
+            if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase("Hindi")) {
+                ViewUtil.setLanguage(AppConstant.HINDI);
+                // resources = ViewUtil.getCustomResource(getActivity());
+            } else {
+                ViewUtil.setLanguage(AppConstant.ENGLISH);
+                // resources = ViewUtil.getCustomResource(getActivity());
+            }
+
+            openKYCFragment();
         }
 
     }
@@ -391,9 +406,29 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
 
     private void uploadAllDocApi() {
-        kycViewModel.uploadProfileImage(kycDocumentDatamodelArrayList,dashboardResModel.getPhonenumber());
+        kycViewModel.uploadProfileImage(kycDocumentDatamodelArrayList, dashboardResModel.getPhonenumber());
 
     }
 
+
+    public void openKYCFragment() {
+        Bundle bundle = new Bundle();
+        KYCFragment kycFragment = new KYCFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        kycFragment.setArguments(bundle);
+        openFragment(kycFragment);
+    }
+
+    private void openFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager().popBackStack();
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(AuroApp.getFragmentContainerUiId(), fragment, QuizHomeFragment.class
+                        .getSimpleName())
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
+
+    }
 
 }

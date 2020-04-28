@@ -51,7 +51,7 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
         }
 
         public void setData(QuizResModel quizResModel, int position) {
-            binding.quizAmount.setText(AuroApp.getAppContext().getString(R.string.rs) + " " + quizResModel.getScholarshipamount());
+            binding.quizAmount.setText(quizResModel.getScholarshipamount());
             binding.quizNum.setText(AuroApp.getAppContext().getString(R.string.quiz) + " " + "0" + quizResModel.getNumber());
             binding.quizName.setText(quizResModel.getName());
 

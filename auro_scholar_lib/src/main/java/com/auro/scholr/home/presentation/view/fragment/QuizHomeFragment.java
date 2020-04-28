@@ -1,6 +1,8 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -28,6 +30,8 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
@@ -35,6 +39,7 @@ import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
+import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
@@ -61,6 +66,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     DashboardResModel dashboardResModel;
     QuizResModel quizResModel;
     QuizWonAdapter quizWonAdapter;
+    Resources resources;
+
 
     @Override
     public void onAttach(Context context) {
@@ -75,7 +82,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         quizViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setQuizViewModel(quizViewModel);
-        HomeActivity.setListingActiveFragment(HomeActivity.QUIZ_DASHBOARD_FRAGMENT);
+
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null && TextUtil.isEmpty(prefModel.getUserLanguage())) {
+            ViewUtil.setLanguage(AppConstant.ENGLISH);
+        }
         return binding.getRoot();
     }
 
@@ -119,6 +130,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     protected void setListener() {
         binding.walletBalText.setOnClickListener(this);
         binding.privacyPolicy.setOnClickListener(this);
+        binding.toolbarLayout.langEng.setOnClickListener(this);
     }
 
 
@@ -141,10 +153,40 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
+        resources = ViewUtil.getCustomResource(getActivity());
         init();
         setListener();
+        setDataOnUI();
     }
 
+    private void setDataOnUI() {
+        binding.getScholarshipText.setText(resources.getText(R.string.get_scholarship));
+        binding.headerParent.cambridgeHeading.setText(resources.getString(R.string.question_bank_powered_by_cambridge));
+        String lang = ViewUtil.getLanguage();
+        if (lang.equalsIgnoreCase(AppConstant.ENGLISH )|| TextUtil.isEmpty(lang)) {
+            setLangOnUi("Hindi");
+        } else {
+            setLangOnUi("English");
+        }
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        setLanguage(AppConstant.ENGLISH);
+    }
+
+    private void setLanguage(String language) {
+        ViewUtil.setLanguage(language);
+        resources = ViewUtil.getCustomResource(getActivity());
+    }
 
     private void observeServiceResponse() {
 
@@ -281,8 +323,22 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             }*/
         } else if (v.getId() == R.id.privacy_policy) {
             openFragment(new PrivacyPolicyFragment());
+        } else if (v.getId() == R.id.lang_eng) {
+            String text = binding.toolbarLayout.langEng.getText().toString();
+            if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase("Hindi")) {
+                ViewUtil.setLanguage(AppConstant.HINDI);
+                //  resources = ViewUtil.getCustomResource(getActivity());
+            } else {
+                ViewUtil.setLanguage(AppConstant.ENGLISH);
+                // resources = ViewUtil.getCustomResource(getActivity());
+            }
+            onResume();
         }
 
+    }
+
+    private void setLangOnUi(String lang) {
+        binding.toolbarLayout.langEng.setText(lang);
     }
 
     private void askPermission() {
@@ -318,24 +374,22 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     public void getSpannableString() {
         SpannableStringBuilder builder = new SpannableStringBuilder();
 
-        SpannableStringBuilder span1 = new SpannableStringBuilder("Score 8/10 and get");
+        SpannableStringBuilder span1 = new SpannableStringBuilder(resources.getString(R.string.score_and_get));
         ForegroundColorSpan color1 = new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.auro_grey_color));
         span1.setSpan(color1, 0, span1.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         builder.append(span1);
 
-        SpannableStringBuilder span2 = new SpannableStringBuilder(" "+getString(R.string.rs) + "50");
+        SpannableStringBuilder span2 = new SpannableStringBuilder(" " + getString(R.string.rs) + "50" + " ");
         ForegroundColorSpan color2 = new ForegroundColorSpan(getResources().getColor(R.color.color_red));
         span2.setSpan(color2, 0, span2.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         span2.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, span2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.append(span2);
 
-        SpannableStringBuilder span3 = new SpannableStringBuilder(" for each quiz");
+        SpannableStringBuilder span3 = new SpannableStringBuilder(resources.getString(R.string.for_each_quiz));
         ForegroundColorSpan color3 = new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.auro_grey_color));
         span3.setSpan(color3, 0, span3.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         builder.append(span3);
 
         binding.scoreText.setText(builder, TextView.BufferType.SPANNABLE);
     }
-
-
 }

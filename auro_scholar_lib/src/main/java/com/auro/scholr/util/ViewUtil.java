@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
@@ -46,6 +48,7 @@ import com.auro.scholr.R;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
 
@@ -174,7 +177,7 @@ public class ViewUtil {
 
             }
         }, spanTxt.length() - ("terms_of_service").length(), spanTxt.length(), 0);
-        spanTxt.append(" " + "and"+ " ");
+        spanTxt.append(" " + "and" + " ");
         spanTxt.setSpan(new ForegroundColorSpan(AuroApp.getAppContext().getColor(R.color.color_red)), 0, ("terms_of_service").length(), 0);
         spanTxt.append("privacy_policy");
         spanTxt.setSpan(new ClickableSpan() {
@@ -213,8 +216,6 @@ public class ViewUtil {
     }
 
 
-
-
     public static void setLightStatusBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             int flags = activity.getWindow().getDecorView().getSystemUiVisibility(); // get current flag
@@ -224,7 +225,33 @@ public class ViewUtil {
         }
     }
 
+    public static Resources getCustomResource( Activity activity) {
+        Locale locale = new Locale(getLanguage());
+        Resources standardResources = activity.getResources();
+        AssetManager assets = standardResources.getAssets();
+        DisplayMetrics metrics = standardResources.getDisplayMetrics();
+        Configuration config = new Configuration(standardResources.getConfiguration());
+        config.locale = locale;
+        Resources res = new Resources(assets, metrics, config);
+        return res;
+    }
 
+
+    public static String getLanguage() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null && prefModel.getUserLanguage() != null && !prefModel.getUserLanguage().isEmpty()) {
+            return prefModel.getUserLanguage();
+        }
+        return AppConstant.ENGLISH;
+    }
+
+    public static void setLanguage(String language) {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null ) {
+            prefModel.setUserLanguage(language);
+            AppPref.INSTANCE.setPref(prefModel);
+        }
+    }
 
 
 }

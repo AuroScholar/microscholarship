@@ -22,30 +22,44 @@
             android:layout_height="match_parent"
             android:background="@color/off_white">
 
-
             <include
-                android:id="@+id/cambridge_heading"
-                layout="@layout/quiz_header_layout" />
+                android:id="@+id/toolbar_layout"
+                layout="@layout/toolbar_header_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@android:color/transparent"
                 android:clipToPadding="false"
                 android:paddingBottom="@dimen/_150sdp"
-                app:layout_constraintTop_toBottomOf="@+id/cambridge_heading">
+                app:layout_constraintTop_toBottomOf="@id/toolbar_layout">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <include
+                        android:id="@+id/header_parent"
+                        layout="@layout/quiz_header_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        />
+
 
                     <!--Shimmer Layout-->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp">
 
                         <com.facebook.shimmer.ShimmerFrameLayout
                             android:id="@+id/shimmer_view_quiz"
@@ -74,6 +88,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:visibility="visible">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -89,9 +105,9 @@
                                 android:layout_marginTop="@dimen/_2sdp"
                                 android:text="@string/get_scholarship"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/_20sdp"
+                                android:textSize="@dimen/_25sdp"
                                 android:textStyle="normal"
-                                app:Font="Poppins-Bold.ttf"
+                                app:Font="Poppins-SemiBold.ttf"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -179,7 +195,7 @@
                     </LinearLayout>
 
 
-                </RelativeLayout>
+                </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
 
