@@ -2,21 +2,14 @@ package com.auro.scholr.util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Build;
-import android.provider.Settings;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
@@ -25,12 +18,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.auro.scholr.core.application.AuroApp;
@@ -39,18 +30,11 @@ import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.util.alert_dialog.CustomSnackbar;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.auro.scholr.R;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
-
-import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
 
 public class ViewUtil {
 
@@ -242,7 +226,7 @@ public class ViewUtil {
         if (prefModel != null && prefModel.getUserLanguage() != null && !prefModel.getUserLanguage().isEmpty()) {
             return prefModel.getUserLanguage();
         }
-        return AppConstant.ENGLISH;
+        return AppConstant.LANGUAGE_EN;
     }
 
     public static void setLanguage(String language) {

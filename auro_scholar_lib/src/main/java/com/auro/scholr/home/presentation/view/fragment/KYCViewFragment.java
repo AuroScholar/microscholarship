@@ -3,9 +3,11 @@ package com.auro.scholr.home.presentation.view.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -68,19 +71,14 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
     KYCViewModel kycViewModel;
     KYCViewDocAdapter kycViewDocAdapter;
 
-    private Activity mActivity;
-    private HideBottomNavigation hideBottomNavigation;
-
-    private int pos;
     private DashboardResModel dashboardResModel;
     ArrayList<KYCDocumentDatamodel> kycDocumentDatamodelArrayList;
-    private boolean uploadBtnStatus;
+    Resources resources;
 
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = getActivity();
     }
 
 
@@ -117,11 +115,21 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
     private void setDataOnUi() {
         if (dashboardResModel != null) {
             if (!TextUtil.isEmpty(dashboardResModel.getWalletbalance())) {
-                binding.walletBalText.setText(getString(R.string.rs)+" "+dashboardResModel.getWalletbalance());
+                binding.walletBalText.setText(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
             }
         }
         binding.cambridgeHeading.cambridgeHeading.setTextColor(getResources().getColor(R.color.white));
 
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
+            setLanguageText(AppConstant.HINDI);
+        } else {
+            setLanguageText(AppConstant.ENGLISH);
+        }
+    }
+
+    private void setLanguageText(String text) {
+        binding.toolbarLayout.langEng.setText(text);
     }
 
     @Override
@@ -133,6 +141,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
     protected void setListener() {
         /*Do code here*/
         binding.btModifyAll.setOnClickListener(this);
+        binding.toolbarLayout.langEng.setOnClickListener(this);
         if (kycViewModel != null && kycViewModel.serviceLiveData().hasObservers()) {
             kycViewModel.serviceLiveData().removeObservers(this);
         }
@@ -162,7 +171,30 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        openKYCFragment();
+        if (v.getId() == R.id.bt_modify_all) {
+            openKYCFragment();
+        } else if (v.getId() == R.id.lang_eng) {
+            String text = binding.toolbarLayout.langEng.getText().toString();
+            if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase(AppConstant.HINDI)) {
+                ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
+                resources = ViewUtil.getCustomResource(getActivity());
+                setLanguageText(AppConstant.ENGLISH);
+            } else {
+                ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
+                resources = ViewUtil.getCustomResource(getActivity());
+                setLanguageText(AppConstant.HINDI);
+            }
+            reloadFragment();
+        }
+    }
+
+
+    private void reloadFragment() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (Build.VERSION.SDK_INT >= 26) {
+            ft.setReorderingAllowed(false);
+        }
+        ft.detach(this).attach(this).commit();
     }
 
     public void openKYCFragment() {

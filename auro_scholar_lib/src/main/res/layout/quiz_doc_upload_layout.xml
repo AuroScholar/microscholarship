@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:text="Sucessfully Uploaded"
+                android:text="@string/sucessfully_uploaded"
                 android:textColor="@color/blue_color"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="gone"

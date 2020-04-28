@@ -58,6 +58,7 @@
     <string name="score_and_get">Score 8/10 and get</string>
     <string name="for_each_quiz">\" for each quiz\"</string>
     <string name="english">English</string>
+    <string name="sucessfully_uploaded">Sucessfully Uploaded</string>
 
     <string-array name="genderlist">
         <item>Please Select Gender</item>
