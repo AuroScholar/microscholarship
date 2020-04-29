@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
+import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
 import com.auro.scholr.util.AuroScholar;
 import com.example.aurosampleapplication.databinding.ActivityMainBinding;
 
@@ -79,7 +80,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareIdentity("9681032476");
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
-        AuroScholar.openAuroDashboardFragment(auroScholarDataModel);
+        openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
+
+
     }
 
 

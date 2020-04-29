@@ -306,8 +306,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         .getSimpleName())
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
-
-
     }
 
     @Override

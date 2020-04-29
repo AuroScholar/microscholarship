@@ -18,10 +18,11 @@ import com.auro.scholr.home.presentation.view.fragment.ScholarShipFragment;
 
 public class AuroScholar {
 
-    public static void openAuroDashboardFragment(AuroScholarDataModel auroScholarDataModel) {
+    public static Fragment openAuroDashboardFragment(AuroScholarDataModel auroScholarDataModel) {
         AuroApp.setAuroModel(auroScholarDataModel);
         QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
-        FragmentUtil.replaceFragment(auroScholarDataModel.getActivity(), quizHomeFragment, AuroApp.getFragmentContainerUiId(), false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
+        return quizHomeFragment;
+        // FragmentUtil.replaceFragment(auroScholarDataModel.getActivity(), quizHomeFragment, AuroApp.getFragmentContainerUiId(), false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
     }
 
   /*  public static void openAuroDashboarWebFragment(AuroScholarDataModel auroScholarDataModel) {
