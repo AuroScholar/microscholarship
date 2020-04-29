@@ -54,6 +54,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
+
+
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/friends_board_text"
                             android:layout_width="wrap_content"

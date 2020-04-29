@@ -68,6 +68,7 @@
     <string name="invite_your_friends">Invite Your Friends</string>
     <string name="your_friend_list">Your Friend List</string>
     <string name="facebook">Facebook</string>
+    <string name="login_with_facebook">Login with Facebook</string>
 
     <string-array name="genderlist">
         <item>Please Select Gender</item>
