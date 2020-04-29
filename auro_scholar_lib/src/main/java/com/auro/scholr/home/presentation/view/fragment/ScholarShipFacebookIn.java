@@ -1,6 +1,8 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -11,9 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.auro.scholr.BuildConfig;
 import com.auro.scholr.R;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -21,11 +26,19 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.LoggingBehavior;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -36,7 +49,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * Use the {@link ScholarShipFacebookIn#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ScholarShipFacebookIn extends Fragment {
+public class ScholarShipFacebookIn extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -45,20 +58,35 @@ public class ScholarShipFacebookIn extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    CallbackManager callbackManager;
+
     private static final String EMAIL = "email";
     LoginButton loginButton;
+    ProgressBar mPb;
     // Your Facebook APP ID
+    TextView mFirstName, LastName, txtToken, emailTv, nameTv;
+    ConstraintLayout fb;
+
+
+    CallbackManager callbackManager;
     AccessTokenTracker accessTokenTracker;
+    AccessToken access_token;
+    GraphRequest request;
     ProfileTracker profileTracker;
-    TextView mFirstName, LastName, txtToken;
-    ConstraintLayout fb_login_custom;
+    private String email, facebook_uid, first_name, last_name, social_id, name, picture;
 
 
     public ScholarShipFacebookIn() {
         // Required empty public constructor
     }
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment ScholarShipFacebookIn.
+     */
     // TODO: Rename and change types and number of parameters
     public static ScholarShipFacebookIn newInstance(String param1, String param2) {
         ScholarShipFacebookIn fragment = new ScholarShipFacebookIn();
@@ -76,7 +104,6 @@ public class ScholarShipFacebookIn extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        FacebookSdk.sdkInitialize(getApplicationContext());
     }
 
     @Override
@@ -89,121 +116,134 @@ public class ScholarShipFacebookIn extends Fragment {
         mFirstName = mview.findViewById(R.id.txtFirstName);
         LastName = mview.findViewById(R.id.txtLastName);
         txtToken = mview.findViewById(R.id.txtToken);
-        fb_login_custom = mview.findViewById(R.id.fb_invite_button);
-        fb_login_custom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        fb = mview.findViewById(R.id.fb_invite_button);
 
-                callFacebook();
-               // loginButton.performClick();
-            }
-        });
-
-
+        fb.setOnClickListener(this);
 
         return mview;
     }
 
-    private void callFacebook()
-    {
-        loginButton.setReadPermissions(Arrays.asList(EMAIL));
+
+    private void facebookLoginSignup() {
+        FacebookSdk.sdkInitialize(getContext().getApplicationContext());
+        if (BuildConfig.DEBUG) {
+            FacebookSdk.setIsDebugEnabled(true);
+            FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
+        }
+
+        //   LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("basic_info, user_friends"));
         callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().logInWithReadPermissions((this), Arrays.asList("email", "public_profile", "user_friends","read_friendlists"));
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.d("response Success", "Login");
+                        access_token = loginResult.getAccessToken();
+                        Log.d("response access_token", access_token.toString());
+                        fetchFriendsList();
+                        request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
 
 
-        // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
+                                JSONObject json = response.getJSONObject();
+                                try {
+                                    if (json != null) {
+                                        Log.d("response", json.toString());
+                                        try {
+                                            email = json.getString("email");
+                                            emailTv.setText(email + "");
 
-            }
+                                           /* //
+                                            JSONArray jsonArrayFriends = json.getJSONObject("friendlist").getJSONArray("data");
+                                            JSONObject friendlistObject = jsonArrayFriends.getJSONObject(0);
+                                            String friendListID = friendlistObject.getString("id");
+                                            Toast.makeText(getContext(),"Friend List: "+friendListID,Toast.LENGTH_LONG).show();
+                                            //*/
 
-            @Override
-            public void onCancel() {
-                // App code
-            }
+                                        } catch (Exception e) {
+                                            Toast.makeText(getContext(), "Sorry!!! Your email is not verified on facebook.", Toast.LENGTH_LONG).show();
+                                            return;
+                                        }
+                                        facebook_uid = json.getString("id");
+                                        social_id = json.getString("id");
+                                        first_name = json.getString("first_name");
+                                        last_name = json.getString("last_name");
+                                        name = json.getString("name");
+                                        nameTv.setText(name + "");
 
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-            }
-        });
-        loginButton.setFragment(this);
-        loginButton.setReadPermissions(Arrays.asList("user_status"));
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("basic_info, user_friends"));
-        LoginManager.getInstance().logInWithPublishPermissions(this, Arrays.asList("publish_actions"));
+                                        picture = "https://graph.facebook.com/" + facebook_uid + "/picture?type=large";
+                                        Log.d("response", " picture" + picture);
+                                        // Picasso.with(context).load(picture).placeholder(R.mipmap.ic_launcher).into(userIv);
+                                        mPb.setVisibility(View.GONE);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Log.d("response problem", "problem" + e.getMessage());
+                                }
+                            }
+                        });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,first_name,last_name,link,email,picture");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(getContext(), "Login Cancel", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
 
 
-        accessTokenTracker = new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(AccessToken oldToken, AccessToken newToken) {
-                AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                if (newToken == null) {
-                    Toast.makeText(getContext(), "Successfull", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getContext(), "UnSuccessfull", Toast.LENGTH_LONG).show();
+    private void fetchFriendsList() {
+        GraphRequest request_getFriends = new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/" + AccessToken.getCurrentAccessToken().getUserId() + "/friends?",
+                null,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+
+                    @Override
+                    public void onCompleted(GraphResponse response) {
+
+                        JSONObject object = response.getJSONObject();
+                        try {
+                            if (object != null) {
+                                JSONArray data = object.getJSONArray("data");
+                                for (int i = 0; i < data.length(); i++) {
+                                    String id = data.getJSONObject(i).getString("id");
+                                    String name = data.getJSONObject(i).getString("name");
+
+                                }
+                            }
+                        } catch (JSONException e) {
+
+                        }
+                    }
                 }
-            }
-        };
+        );
 
-
-        profileTracker = new ProfileTracker() {
-            @Override
-            protected void onCurrentProfileChanged(Profile oldProfile, Profile newProfile) {
-                nextActivity(newProfile);
-            }
-        };
-        // If the access token is available already assign it.
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-
-
-        AccessToken token = AccessToken.getCurrentAccessToken();
-        if (token != null) {
-            Log.e("Acess Token", "Access token Facebook" + accessToken);
-            Log.e("access only Token is", String.valueOf(token.getToken()));
-            Toast.makeText(getContext(), "Token Acces " + token, Toast.LENGTH_LONG).show();
-            String facebook_id_token = String.valueOf(token.getToken());
-            txtToken.setText(facebook_id_token);
-        }
-        accessTokenTracker.startTracking();
-        profileTracker.startTracking();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //Facebook login
-        Profile profile = Profile.getCurrentProfile();
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        Log.e("Acess Token", "Access token Facebook" + accessToken);
-
-        nextActivity(profile);
-    }
-
-    private void nextActivity(Profile profile) {
-        if (profile != null) {
-            mFirstName.setText(profile.getFirstName());
-            LastName.setText(profile.getLastName());
-        }
-    }
-
-    @Override
-    public void onPause() {
-
-        super.onPause();
-    }
-
-    public void onStop() {
-        super.onStop();
-        //Facebook login
-        accessTokenTracker.stopTracking();
-        profileTracker.stopTracking();
+        request_getFriends.executeAsync();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+
         super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    public void onClick(View view) {
+        facebookLoginSignup();
+        // mPb.setVisibility(View.VISIBLE);
+    }
 }
