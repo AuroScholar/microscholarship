@@ -129,6 +129,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.walletBalText.setOnClickListener(this);
         binding.privacyPolicy.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
+        binding.leaderCardLayout.setOnClickListener(this);
+        binding.toolbarLayout.backArrow.setOnClickListener(this);
     }
 
 
@@ -161,7 +163,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.getScholarshipText.setText(resources.getText(R.string.get_scholarship));
         binding.headerParent.cambridgeHeading.setText(resources.getString(R.string.question_bank_powered_by_cambridge));
         String lang = ViewUtil.getLanguage();
-        if (lang.equalsIgnoreCase(AppConstant.LANGUAGE_EN)|| TextUtil.isEmpty(lang)) {
+        if (lang.equalsIgnoreCase(AppConstant.LANGUAGE_EN) || TextUtil.isEmpty(lang)) {
             setLangOnUi(AppConstant.HINDI);
         } else {
             setLangOnUi(AppConstant.ENGLISH);
@@ -313,12 +315,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.wallet_bal_text) {
-            openFragment(new FriendsLeaderBoardFragment());
-           /* if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+            if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
             } else {
                 openKYCFragment(dashboardResModel);
-            }*/
+            }
         } else if (v.getId() == R.id.privacy_policy) {
             openFragment(new PrivacyPolicyFragment());
         } else if (v.getId() == R.id.lang_eng) {
@@ -331,6 +332,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 // resources = ViewUtil.getCustomResource(getActivity());
             }
             onResume();
+        } else if (v.getId() == R.id.leader_card_layout) {
+            openFragment(new ScholarShipFacebookIn());
+        } else if (v.getId() == R.id.back_arrow) {
+            getActivity().getSupportFragmentManager().popBackStack();
         }
 
     }

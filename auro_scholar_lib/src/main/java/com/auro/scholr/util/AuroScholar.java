@@ -14,6 +14,7 @@ import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
+import com.auro.scholr.home.presentation.view.fragment.ScholarShipFacebookIn;
 import com.auro.scholr.home.presentation.view.fragment.ScholarShipFragment;
 
 public class AuroScholar {
@@ -33,5 +34,10 @@ public class AuroScholar {
         FragmentUtil.replaceFragment(auroScholarDataModel.getActivity(), scholarShipFragment,AuroApp.getFragmentContainerUiId(), false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
     }
 
+    public static void openFaceBookLoginFragment(AuroScholarDataModel auroScholarDataModel) {
+        AuroApp.setAuroModel(auroScholarDataModel);
+        ScholarShipFacebookIn scholarShipFacebookIn = new ScholarShipFacebookIn();
+        FragmentUtil.replaceFragment(auroScholarDataModel.getActivity(), scholarShipFacebookIn, AuroApp.getFragmentContainerUiId(), false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
+    }
 
 }

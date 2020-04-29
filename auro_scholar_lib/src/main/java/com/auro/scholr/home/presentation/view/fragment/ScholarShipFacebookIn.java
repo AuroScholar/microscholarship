@@ -97,7 +97,6 @@ public class ScholarShipFacebookIn extends Fragment {
         txtToken = mview.findViewById(R.id.txtToken);
         loginButton.setReadPermissions(Arrays.asList(EMAIL));
         callbackManager = CallbackManager.Factory.create();
-
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
 
@@ -138,8 +137,6 @@ public class ScholarShipFacebookIn extends Fragment {
                 }else{
                     Toast.makeText(getContext(),"UnSuccessfull",Toast.LENGTH_LONG).show();
                 }
-                // Log.e("Acess Token","Access token Facebook"+accessToken);
-                //Toast.makeText(getContext(),accessToken + " Access Token "+AccessToken.getAccessToken().getToken(),Toast.LENGTH_LONG).show();
             }
         };
 
@@ -184,11 +181,6 @@ public class ScholarShipFacebookIn extends Fragment {
         if(profile != null){
             mFirstName.setText( profile.getFirstName());
             LastName.setText(profile.getLastName());
-           /* Intent main = new Intent(LoginActivity.this, MainActivity.class);
-            main.putExtra("name", profile.getFirstName());
-            main.putExtra("surname", profile.getLastName());
-            main.putExtra("imageUrl", profile.getProfilePictureUri(200,200).toString());
-            startActivity(main);*/
         }
     }
 
@@ -210,9 +202,5 @@ public class ScholarShipFacebookIn extends Fragment {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
-    /*   @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }*/
+
 }

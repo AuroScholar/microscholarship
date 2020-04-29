@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setMobileNumber(mobileNumber);
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
-        AuroScholar.openAuroDashboardFragment(auroScholarDataModel);
+        AuroScholar.openFaceBookLoginFragment(auroScholarDataModel);
     }
 
 
