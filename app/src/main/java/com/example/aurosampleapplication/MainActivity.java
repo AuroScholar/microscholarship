@@ -120,8 +120,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .getSimpleName())
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
-
-
     }
 
 }

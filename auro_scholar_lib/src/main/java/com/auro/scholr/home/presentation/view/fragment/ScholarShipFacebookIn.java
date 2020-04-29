@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.auro.scholr.BuildConfig;
 import com.auro.scholr.R;
+import com.auro.scholr.core.application.AuroApp;
+import com.auro.scholr.util.AuroScholar;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -141,7 +143,8 @@ public class ScholarShipFacebookIn extends Fragment implements View.OnClickListe
                         Log.d("response Success", "Login");
                         access_token = loginResult.getAccessToken();
                         Log.d("response access_token", access_token.toString());
-                        fetchFriendsList();
+                        AuroScholar.openAuroDashboardFragment(AuroApp.getAuroScholarModel());
+                       // fetchFriendsList();
                         request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
