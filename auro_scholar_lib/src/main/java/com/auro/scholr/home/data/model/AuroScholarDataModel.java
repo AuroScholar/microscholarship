@@ -9,6 +9,11 @@ public class AuroScholarDataModel implements Parcelable {
     String mobileNumber;
     Activity activity;
     int fragmentContainerUiId;
+    String scholrId;
+    String studentClass;
+    String regitrationSource;
+    String shareType;
+    String shareIdentity;
 
     public AuroScholarDataModel() {
 
@@ -18,12 +23,22 @@ public class AuroScholarDataModel implements Parcelable {
     protected AuroScholarDataModel(Parcel in) {
         mobileNumber = in.readString();
         fragmentContainerUiId = in.readInt();
+        scholrId = in.readString();
+        studentClass = in.readString();
+        regitrationSource = in.readString();
+        shareType = in.readString();
+        shareIdentity = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mobileNumber);
         dest.writeInt(fragmentContainerUiId);
+        dest.writeString(scholrId);
+        dest.writeString(studentClass);
+        dest.writeString(regitrationSource);
+        dest.writeString(shareType);
+        dest.writeString(shareIdentity);
     }
 
     @Override
@@ -42,6 +57,46 @@ public class AuroScholarDataModel implements Parcelable {
             return new AuroScholarDataModel[size];
         }
     };
+
+    public String getScholrId() {
+        return scholrId;
+    }
+
+    public void setScholrId(String scholrId) {
+        this.scholrId = scholrId;
+    }
+
+    public String getStudentClass() {
+        return studentClass;
+    }
+
+    public void setStudentClass(String studentClass) {
+        this.studentClass = studentClass;
+    }
+
+    public String getRegitrationSource() {
+        return regitrationSource;
+    }
+
+    public void setRegitrationSource(String regitrationSource) {
+        this.regitrationSource = regitrationSource;
+    }
+
+    public String getShareType() {
+        return shareType;
+    }
+
+    public void setShareType(String shareType) {
+        this.shareType = shareType;
+    }
+
+    public String getShareIdentity() {
+        return shareIdentity;
+    }
+
+    public void setShareIdentity(String shareIdentity) {
+        this.shareIdentity = shareIdentity;
+    }
 
     public String getMobileNumber() {
         return mobileNumber;

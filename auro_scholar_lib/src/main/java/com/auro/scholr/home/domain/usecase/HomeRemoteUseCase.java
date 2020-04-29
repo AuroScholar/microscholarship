@@ -8,6 +8,7 @@ import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.network.NetworkUseCase;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AssignmentResModel;
+import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
@@ -64,9 +65,9 @@ public class HomeRemoteUseCase extends NetworkUseCase {
     }
 
 
-    public Single<ResponseApi> getDashboardData(String mobileNo) {
+    public Single<ResponseApi> getDashboardData(AuroScholarDataModel model) {
 
-        return dashboardRemoteData.getDashboardData(mobileNo).map(new Function<Response<JsonObject>, ResponseApi>() {
+        return dashboardRemoteData.getDashboardData(model).map(new Function<Response<JsonObject>, ResponseApi>() {
             @Override
             public ResponseApi apply(Response<JsonObject> response) throws Exception {
 

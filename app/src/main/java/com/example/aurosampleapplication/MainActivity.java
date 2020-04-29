@@ -71,7 +71,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openSdk(String mobileNumber) {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber(mobileNumber);
+        auroScholarDataModel.setMobileNumber("9713680981");
+        auroScholarDataModel.setScholrId("91003");
+        auroScholarDataModel.setStudentClass("10");
+        auroScholarDataModel.setRegitrationSource("Auro Scholar");
+        auroScholarDataModel.setShareType("telecaller");
+        auroScholarDataModel.setShareIdentity("9681032476");
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         AuroScholar.openAuroDashboardFragment(auroScholarDataModel);

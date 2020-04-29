@@ -24,7 +24,7 @@ public class AuroScholar {
         FragmentUtil.replaceFragment(auroScholarDataModel.getActivity(), quizHomeFragment, AuroApp.getFragmentContainerUiId(), false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
     }
 
-    public static void openAuroDashboarWebFragment(AuroScholarDataModel auroScholarDataModel) {
+  /*  public static void openAuroDashboarWebFragment(AuroScholarDataModel auroScholarDataModel) {
         AuroApp.setAuroModel(auroScholarDataModel);
         ScholarShipFragment scholarShipFragment = new ScholarShipFragment();
         Bundle bundle = new Bundle();
@@ -32,6 +32,6 @@ public class AuroScholar {
         scholarShipFragment.setArguments(bundle);
         FragmentUtil.replaceFragment(auroScholarDataModel.getActivity(), scholarShipFragment,AuroApp.getFragmentContainerUiId(), false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
     }
-
+*/
 
 }

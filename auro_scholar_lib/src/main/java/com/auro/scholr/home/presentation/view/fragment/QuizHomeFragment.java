@@ -115,7 +115,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else {
             observeServiceResponse();
         }
-        quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel().getMobileNumber());
+        quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
     }
 
 
@@ -258,7 +258,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel().getMobileNumber());
+                    quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
                 }
             });
         }
