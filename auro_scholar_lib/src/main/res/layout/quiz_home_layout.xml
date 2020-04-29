@@ -54,6 +54,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
+                        <ImageView
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_leaderboard_icon"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
@@ -62,12 +69,12 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:gravity="end"
                             android:text="@string/friends_leadeboard"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_20sdp"
                             android:textStyle="normal"
-                            android:gravity="end"
-                            android:layout_marginEnd="@dimen/_10sdp"
                             app:Font="Poppins-SemiBold.ttf"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -77,14 +84,13 @@
                             android:id="@+id/fb_invite_button"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
-                            android:layout_marginEnd="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:background="@drawable/rounded_corner_fb"
-                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/friends_board_text"
-                           >
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/friends_board_text">
 
                             <ImageView
                                 android:id="@+id/fb_icon"
@@ -102,14 +108,14 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginStart="@dimen/_8sdp"
+                                android:layout_marginEnd="@dimen/_5sdp"
                                 android:text="@string/facebook"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_12sdp"
-                                android:layout_marginEnd="@dimen/_5sdp"
                                 android:textStyle="normal"
                                 app:Font="Poppins-Regular.ttf"
-                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/fb_icon"
                                 app:layout_constraintTop_toTopOf="parent" />
 
