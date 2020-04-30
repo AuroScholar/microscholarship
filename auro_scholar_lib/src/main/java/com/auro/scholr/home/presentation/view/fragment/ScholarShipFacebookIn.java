@@ -119,19 +119,19 @@ public class ScholarShipFacebookIn extends Fragment implements View.OnClickListe
         LastName = mview.findViewById(R.id.txtLastName);
         txtToken = mview.findViewById(R.id.txtToken);
         fb = mview.findViewById(R.id.fb_invite_button);
-
-        fb.setOnClickListener(this);
-
-        return mview;
-    }
-
-
-    private void facebookLoginSignup() {
         FacebookSdk.sdkInitialize(getContext().getApplicationContext());
         if (BuildConfig.DEBUG) {
             FacebookSdk.setIsDebugEnabled(true);
             FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         }
+        LoginManager.getInstance().logOut();
+        fb.setOnClickListener(this);
+        return mview;
+    }
+
+
+    private void facebookLoginSignup() {
+
 
         //   LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("basic_info, user_friends"));
         callbackManager = CallbackManager.Factory.create();
@@ -166,7 +166,7 @@ public class ScholarShipFacebookIn extends Fragment implements View.OnClickListe
                                             //*/
 
                                         } catch (Exception e) {
-                                            Toast.makeText(getContext(), "Sorry!!! Your email is not verified on facebook.", Toast.LENGTH_LONG).show();
+                                           // Toast.makeText(getContext(), "Sorry!!! Your email is not verified on facebook.", Toast.LENGTH_LONG).show();
                                             return;
                                         }
                                         facebook_uid = json.getString("id");

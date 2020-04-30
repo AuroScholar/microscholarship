@@ -1,6 +1,8 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.auro.scholr.R;
@@ -22,6 +25,8 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.FragmentUtil;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.DemographicFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
@@ -56,6 +61,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     List<String> boardLines;
     List<String> languageLines;
     DashboardResModel dashboardResModel;
+    Resources resources;
 
     DemographicResModel demographicResModel = new DemographicResModel();
 
@@ -94,11 +100,10 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         languageLines = Arrays.asList(getResources().getStringArray(R.array.languagelist));
         spinnermethodcall(languageLines, binding.SpinnerLanguageMedium);
 
-        if (getArguments() != null) {
-            String mobileNumber = getArguments().getString(AppConstant.MOBILE_NUMBER);
-
+        if (getArguments() != null && dashboardResModel != null) {
+            demographicResModel.setPhonenumber(dashboardResModel.getPhonenumber());
         }
-        demographicResModel.setPhonenumber(dashboardResModel.getPhonenumber());
+
         if (demographicViewModel != null && demographicViewModel.serviceLiveData().hasObservers()) {
             demographicViewModel.serviceLiveData().removeObservers(this);
 
@@ -106,6 +111,17 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
             observeServiceResponse();
         }
 
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
+            setLanguageText(AppConstant.HINDI);
+        } else {
+            setLanguageText(AppConstant.ENGLISH);
+        }
+
+    }
+
+    private void setLanguageText(String text) {
+        binding.toolbarLayout.langEng.setText(text);
     }
 
     public void spinnermethodcall(List<String> languageLines, AppCompatSpinner spinner) {
@@ -128,6 +144,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     @Override
     protected void setListener() {
         binding.submitbutton.setOnClickListener(this);
+        binding.toolbarLayout.langEng.setOnClickListener(this);
 
         binding.SpinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -226,8 +243,8 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
                     if (responseApi.apiTypeStatus == DEMOGRAPHIC_API) {
                         handleProgress(1, "");
                         getActivity().getSupportFragmentManager().popBackStack();
-                      //  DemographicResModel demographicResModel = (DemographicResModel) responseApi.data;
-                      //  AuroScholar.openAuroDashboardFragment(AuroApp.getAuroScholarModel());
+                        //  DemographicResModel demographicResModel = (DemographicResModel) responseApi.data;
+                        //  AuroScholar.openAuroDashboardFragment(AuroApp.getAuroScholarModel());
                     }
 
                     break;
@@ -270,13 +287,38 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
 
     @Override
     public void onClick(View v) {
-        String validation = demographicViewModel.homeUseCase.validateDemographic(demographicResModel);
-        if (TextUtil.isEmpty(validation)) {
-            demographicViewModel.getDemographicData(demographicResModel);
-        } else {
-            showSnackbarError(validation);
+        if (v.getId() == R.id.submitbutton) {
+            String validation = demographicViewModel.homeUseCase.validateDemographic(demographicResModel);
+            if (TextUtil.isEmpty(validation)) {
+                demographicViewModel.getDemographicData(demographicResModel);
+            } else {
+                showSnackbarError(validation);
+            }
+        } else if (v.getId() == R.id.lang_eng) {
+            String text = binding.toolbarLayout.langEng.getText().toString();
+            if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase(AppConstant.HINDI)) {
+                ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
+                resources = ViewUtil.getCustomResource(getActivity());
+                setLanguageText(AppConstant.ENGLISH);
+            } else {
+                ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
+                resources = ViewUtil.getCustomResource(getActivity());
+                setLanguageText(AppConstant.HINDI);
+            }
+            reloadFragment();
+
         }
 
 
     }
+
+
+    private void reloadFragment() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (Build.VERSION.SDK_INT >= 26) {
+            ft.setReorderingAllowed(false);
+        }
+        ft.detach(this).attach(this).commit();
+    }
+
 }

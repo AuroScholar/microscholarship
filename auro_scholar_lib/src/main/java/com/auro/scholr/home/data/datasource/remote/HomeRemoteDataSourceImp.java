@@ -2,6 +2,7 @@ package com.auro.scholr.home.data.datasource.remote;
 
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
+import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.repository.HomeRepo;
@@ -27,9 +28,14 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
 
 
     @Override
-    public Single<Response<JsonObject>> getDashboardData(String mobileno) {
+    public Single<Response<JsonObject>> getDashboardData(AuroScholarDataModel model) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put(AppConstant.PHONE_NUMBER, mobileno);
+        params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
+        params.put(AppConstant.DashBoardParams.SCHOLAR_ID, model.getScholrId());
+        params.put(AppConstant.DashBoardParams.STUDENT_CLASS, model.getStudentClass());
+        params.put(AppConstant.DashBoardParams.REGISTRATION_SOURCE, model.getRegitrationSource());
+        params.put(AppConstant.DashBoardParams.SHARE_TYPE, model.getShareType());
+        params.put(AppConstant.DashBoardParams.SHARE_IDENTITY, model.getShareIdentity());
         return homeRemoteApi.getDashboardData(params);
     }
 
@@ -47,7 +53,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
     @Override
     public Single<Response<JsonObject>> postDemographicData(DemographicResModel demographicResModel) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put(AppConstant.PHONE_NUMBER, demographicResModel.getPhonenumber());
+        params.put(AppConstant.MOBILE_NUMBER, demographicResModel.getPhonenumber());
         params.put(AppConstant.DemographicType.GENDER, demographicResModel.getGender());
         params.put(AppConstant.DemographicType.BOARD_TYPE, demographicResModel.getBoard_type());
         params.put(AppConstant.DemographicType.SCHOOL_TYPE, demographicResModel.getSchool_type());

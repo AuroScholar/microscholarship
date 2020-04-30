@@ -115,7 +115,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else {
             observeServiceResponse();
         }
-        quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel().getMobileNumber());
+        quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
     }
 
 
@@ -260,7 +260,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel().getMobileNumber());
+                    quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
                 }
             });
         }
@@ -308,8 +308,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         .getSimpleName())
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
-
-
     }
 
     @Override
@@ -333,7 +331,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             }
             onResume();
         } else if (v.getId() == R.id.leader_card_layout) {
-            openFragment(new ScholarShipFacebookIn());
+            openFragment(new FriendsLeaderBoardFragment());
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
         }

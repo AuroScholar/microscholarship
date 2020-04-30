@@ -5,7 +5,6 @@ apply from: "dependencies.gradle"
 android {
     compileSdkVersion COMPILE_SDK_VERSION
     defaultConfig {
-
         minSdkVersion MIN_SDK_VERSION
         targetSdkVersion TARGET_SDK_VERSION
         versionCode 1
@@ -16,7 +15,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-
     }
     /* buildTypes {
         release {

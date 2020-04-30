@@ -59,6 +59,11 @@
     <string name="for_each_quiz">\" for each quiz\"</string>
     <string name="english">English</string>
     <string name="sucessfully_uploaded">Sucessfully Uploaded</string>
+    <string name="auro_scholar_demographics_details">Auro Scholar Demographics Details</string>
+    <string name="gender">Gender</string>
+    <string name="school_type">School Type</string>
+    <string name="board">Board</string>
+    <string name="language_medium">Language medium</string>
 
     <string-array name="genderlist">
         <item>Please Select Gender</item>

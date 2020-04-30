@@ -394,7 +394,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             }
             reloadFragment();
 
-            // openKYCFragment();
         }
 
     }

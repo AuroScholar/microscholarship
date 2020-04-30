@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
+import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
 import com.auro.scholr.util.AuroScholar;
 import com.example.aurosampleapplication.databinding.ActivityMainBinding;
 
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding.btSdk.setOnClickListener(this);
         binding.btOpen.setOnClickListener(this);
         binding.enterNumber.setText("8178307851");
-
+        binding.btSdk.setVisibility(View.GONE);
+        openSdk("mobileNumber");
        // printHashKey(this);
     }
 
@@ -96,7 +98,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openSdk(String mobileNumber) {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber(mobileNumber);
+        auroScholarDataModel.setMobileNumber("9713680981");
+        auroScholarDataModel.setScholrId("91003");
+        auroScholarDataModel.setStudentClass("10");
+        auroScholarDataModel.setRegitrationSource("Auro Scholar");
+        auroScholarDataModel.setShareType("telecaller");
+        auroScholarDataModel.setShareIdentity("9681032476");
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         AuroScholar.openFaceBookLoginFragment(auroScholarDataModel);

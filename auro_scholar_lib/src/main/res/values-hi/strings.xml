@@ -60,6 +60,7 @@
     <string name="for_each_quiz">जीतें</string>
     <string name="english">English</string>
     <string name="sucessfully_uploaded">पूरी तरह से अपलोड किया गया</string>
+
     <string name="friends_leadeboard">Friends \n Leaderboard</string>
     <string name="invite">Invite</string>
     <string name="name">Name</string>
@@ -69,6 +70,12 @@
     <string name="your_friend_list">Your Friend List</string>
     <string name="facebook">Facebook</string>
     <string name="login_with_facebook">Login with Facebook</string>
+
+    <string name="auro_scholar_demographics_details">ऑरो स्कॉलर जनसांख्यिकी विवरण</string>
+    <string name="gender">लिंग</string>
+    <string name="school_type">स्कूल का प्रकार</string>
+    <string name="board">मंडल</string>
+    <string name="language_medium">भाषा माध्यम</string>
 
     <string-array name="genderlist">
         <item>Please Select Gender</item>

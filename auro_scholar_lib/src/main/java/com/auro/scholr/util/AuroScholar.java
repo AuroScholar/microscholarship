@@ -22,22 +22,25 @@ public class AuroScholar {
     public static void openAuroDashboardFragment(AuroScholarDataModel auroScholarDataModel) {
         AuroApp.setAuroModel(auroScholarDataModel);
         QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
-        FragmentUtil.replaceFragment(auroScholarDataModel.getActivity(), quizHomeFragment, AuroApp.getFragmentContainerUiId(), false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
+
+         FragmentUtil.replaceFragment(auroScholarDataModel.getActivity(), quizHomeFragment, AuroApp.getFragmentContainerUiId(), false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
     }
 
-    public static void openAuroDashboarWebFragment(AuroScholarDataModel auroScholarDataModel) {
+  /*  public static void openAuroDashboarWebFragment(AuroScholarDataModel auroScholarDataModel) {
         AuroApp.setAuroModel(auroScholarDataModel);
         ScholarShipFragment scholarShipFragment = new ScholarShipFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(AppConstant.AURO_DATA_MODEL, auroScholarDataModel);
         scholarShipFragment.setArguments(bundle);
         FragmentUtil.replaceFragment(auroScholarDataModel.getActivity(), scholarShipFragment,AuroApp.getFragmentContainerUiId(), false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
-    }
+    }*/
+
 
     public static void openFaceBookLoginFragment(AuroScholarDataModel auroScholarDataModel) {
         AuroApp.setAuroModel(auroScholarDataModel);
         ScholarShipFacebookIn scholarShipFacebookIn = new ScholarShipFacebookIn();
         FragmentUtil.replaceFragment(auroScholarDataModel.getActivity(), scholarShipFacebookIn, AuroApp.getFragmentContainerUiId(), false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
     }
+
 
 }

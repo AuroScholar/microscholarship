@@ -1,5 +1,6 @@
 package com.auro.scholr.home.data.datasource.remote;
 
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.network.URLConstant;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.google.gson.JsonObject;
@@ -31,7 +32,7 @@ public interface HomeRemoteApi {
 
     @Multipart
     @POST(URLConstant.UPLOAD_IMAGE_URL)
-    Single<Response<JsonObject>> uploadImage(@Part("Phonenumber") RequestBody description,
+    Single<Response<JsonObject>> uploadImage(@Part(AppConstant.MOBILE_NUMBER) RequestBody description,
                                              @Part MultipartBody.Part id_front,
                                              @Part MultipartBody.Part id_back,
                                              @Part MultipartBody.Part student_id,

@@ -11,6 +11,7 @@ import com.auro.scholr.core.common.NetworkUtil;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.network.NetworkUseCase;
+import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
@@ -41,13 +42,13 @@ public class QuizViewModel extends ViewModel {
         this.homeRemoteUseCase = homeRemoteUseCase;
     }
 
-    public void getDashBoardData(String mobilenum) {
+    public void getDashBoardData(AuroScholarDataModel model) {
 
         Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
 
             if (hasInternet) {
 
-                dashBoardApi(mobilenum);
+                dashBoardApi(model);
 
             } else {
                 // please check your internet
@@ -62,9 +63,9 @@ public class QuizViewModel extends ViewModel {
 
 
 
-    private void dashBoardApi(String mobilenum) {
+    private void dashBoardApi(AuroScholarDataModel model) {
         getCompositeDisposable()
-                .add(homeRemoteUseCase.getDashboardData(mobilenum)
+                .add(homeRemoteUseCase.getDashboardData(model)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSubscribe(new Consumer<Disposable>() {

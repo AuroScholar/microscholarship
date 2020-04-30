@@ -18,20 +18,20 @@ public interface AppConstant {
     String DEVICE_ID = "DEVICE_ID";
     String AUTH_TOKEN = "AUTH_TOKEN";
     String MODIFIED_TIME = "MODIFIED_TIME";
-    String MOBILE_NUMBER = "MOBILE_NUMBER";
+    // String MOBILE_NUMBER = "MOBILE_NUMBER";
     String TRUE = "true";
     String FALSE = "false";
     String PROFILE_IMAGE_PATH = "PROFILE_IMAGE_PATH";
     String DASHBOARD_RES_MODEL = "DASHBOARD_RES_MODEL";
     String QUIZ_RES_MODEL = "QUIZ_TEST_MODEL";
     String AURO_DATA_MODEL = "AURO_DATA_MODEL";
-    String PHONE_NUMBER = "Phonenumber";
+    String MOBILE_NUMBER = "mobile_no";
     int CAMERA_REQUEST_CODE = 007;
     String FAILED = "failed";
     String LANGUAGE_EN = "en";
     String LANGUAGE_HI = "hi";
-    String ENGLISH="English";
-    String HINDI="Hindi";
+    String ENGLISH = "English";
+    String HINDI = "Hindi";
 
 
     String COMING_FROM = "navigation_control";
@@ -51,6 +51,14 @@ public interface AppConstant {
     public final static int RIGHT_TO_LEFT = 2;
     public final static int NEITHER_LEFT_NOR_RIGHT = 3;
     public final static int TOP_TO_DOWN = 4;
+
+    interface DashBoardParams {
+        String SCHOLAR_ID = "scholr_id";
+        String STUDENT_CLASS = "student_class";
+        String REGISTRATION_SOURCE = "regitration_source";
+        String SHARE_TYPE = "share_type";
+        String SHARE_IDENTITY = "share_identity";
+    }
 
     interface ResponseConstatnt {
         int RES_200 = 200;
