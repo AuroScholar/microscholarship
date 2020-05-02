@@ -147,6 +147,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onDenied(Context context, ArrayList<String> deniedPermissions) {
                 // permission denied, block the feature.
+                finish();
             }
         });
     }

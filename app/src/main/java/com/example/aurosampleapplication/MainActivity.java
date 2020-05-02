@@ -81,8 +81,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
-
-
     }
 
 

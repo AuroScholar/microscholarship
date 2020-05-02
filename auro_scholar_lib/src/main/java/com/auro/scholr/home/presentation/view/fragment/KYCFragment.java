@@ -292,10 +292,12 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 case AUTH_FAIL:
                 case FAIL_400:
                     showError((String) responseApi.data);
+                    progressBarHandling(1);
                     break;
 
                 default:
                     showError((String) responseApi.data);
+                    progressBarHandling(1);
                     break;
             }
 
