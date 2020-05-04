@@ -29,7 +29,7 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
-import com.auro.scholr.util.alert_dialog.CustomSnackbar;
+import com.auro.scholr.util.alert_dialog.ErrorSnackbar;
 import com.auro.scholr.R;
 
 import java.io.IOException;
@@ -101,7 +101,7 @@ public class ViewUtil {
     }
 
     public static void showSnackBar(View rootLayout, String snackTitle) {
-        snackView = CustomSnackbar.showSnackbar(rootLayout, snackTitle);
+        snackView = ErrorSnackbar.showSnackbar(rootLayout, snackTitle);
     }
 
     public static void dismissSnackBar() {

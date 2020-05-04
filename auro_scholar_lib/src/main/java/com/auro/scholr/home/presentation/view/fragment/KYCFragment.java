@@ -31,6 +31,7 @@ import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.KycFragmentLayoutBinding;
+import com.auro.scholr.home.data.model.CustomSnackBarModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
@@ -41,6 +42,7 @@ import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.alert_dialog.CustomSnackBar;
 import com.auro.scholr.util.cropper.CropImage;
 import com.auro.scholr.util.cropper.CropImageView;
 
@@ -160,6 +162,11 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         setToolbar();
         setListener();
         setAdapter();
+        CustomSnackBarModel customSnackBarModel = new CustomSnackBarModel();
+        customSnackBarModel.setContext(getActivity());
+        customSnackBarModel.setView(binding.getRoot());
+        customSnackBarModel.setStatus(1);
+        CustomSnackBar.INSTANCE.showCartSnackbar(customSnackBarModel);
     }
 
 
@@ -448,4 +455,15 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        CustomSnackBar.INSTANCE.dismissCartSnackbar();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        CustomSnackBar.INSTANCE.dismissCartSnackbar();
+    }
 }

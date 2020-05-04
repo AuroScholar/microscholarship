@@ -33,6 +33,7 @@ import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.core.util.uiwidget.others.HideBottomNavigation;
 import com.auro.scholr.databinding.KycFragmentLayoutBinding;
+import com.auro.scholr.home.data.model.CustomSnackBarModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
@@ -44,6 +45,7 @@ import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.alert_dialog.CustomSnackBar;
 import com.auro.scholr.util.cropper.CropImage;
 import com.auro.scholr.util.cropper.CropImageView;
 
@@ -110,6 +112,11 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         binding.btUploadAll.setVisibility(View.GONE);
         binding.btModifyAll.setVisibility(View.VISIBLE);
         setDataOnUi();
+
+        CustomSnackBarModel customSnackBarModel = new CustomSnackBarModel();
+        customSnackBarModel.setContext(getActivity());
+        customSnackBarModel.setView(binding.getRoot());
+        CustomSnackBar.INSTANCE.showCartSnackbar(customSnackBarModel);
     }
 
     private void setDataOnUi() {
@@ -217,5 +224,9 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 .commitAllowingStateLoss();
 
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        CustomSnackBar.INSTANCE.dismissCartSnackbar();
+    }
 }
