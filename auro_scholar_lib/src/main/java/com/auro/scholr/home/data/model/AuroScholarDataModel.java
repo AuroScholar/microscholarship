@@ -11,9 +11,9 @@ public class AuroScholarDataModel implements Parcelable {
     int fragmentContainerUiId;
     String scholrId;
     String studentClass;
-    String regitrationSource;
-    String shareType;
-    String shareIdentity;
+    String regitrationSource="";
+    String shareType="";
+    String shareIdentity="";
 
     public AuroScholarDataModel() {
 

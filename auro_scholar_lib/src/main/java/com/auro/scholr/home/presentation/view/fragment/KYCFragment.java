@@ -63,7 +63,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     @Named("KYCFragment")
     ViewModelFactory viewModelFactory;
 
-
     KycFragmentLayoutBinding binding;
     KYCViewModel kycViewModel;
     KYCuploadAdapter kyCuploadAdapter;
