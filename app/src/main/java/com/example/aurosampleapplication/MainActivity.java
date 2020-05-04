@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setScholrId("91003");
         auroScholarDataModel.setStudentClass("10");
         auroScholarDataModel.setRegitrationSource("Auro Scholar");
-        auroScholarDataModel.setShareType("telecaller");
-        auroScholarDataModel.setShareIdentity("9681032476");
+     //   auroScholarDataModel.setShareType("telecaller");
+     //   auroScholarDataModel.setShareIdentity("9681032476");
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
