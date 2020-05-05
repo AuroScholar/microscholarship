@@ -10,7 +10,7 @@
         android:scaleType="centerInside"
         tools:ignore="contentDescription"/>
 
-    <com.auro.scholr.util.cropper.CropOverlayView
+    <com.auro.scholr.util.cropper.CropOverlayViews
         android:id="@+id/CropOverlayView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

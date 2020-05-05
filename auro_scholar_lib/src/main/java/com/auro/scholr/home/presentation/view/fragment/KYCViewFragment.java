@@ -1,12 +1,7 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,7 +10,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -27,37 +21,20 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
-import com.auro.scholr.core.common.CommonDataModel;
-import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
-import com.auro.scholr.core.util.uiwidget.others.HideBottomNavigation;
 import com.auro.scholr.databinding.KycFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
-import com.auro.scholr.home.data.model.KYCResItemModel;
-import com.auro.scholr.home.data.model.KYCResListModel;
-import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.adapter.KYCViewDocAdapter;
-import com.auro.scholr.home.presentation.view.adapter.KYCuploadAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
-import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
-import com.auro.scholr.util.cropper.CropImage;
-import com.auro.scholr.util.cropper.CropImageView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import static android.app.Activity.RESULT_OK;
-import static com.auro.scholr.core.common.Status.UPLOAD_PROFILE_IMAGE;
 
 
 public class KYCViewFragment extends BaseFragment implements View.OnClickListener {

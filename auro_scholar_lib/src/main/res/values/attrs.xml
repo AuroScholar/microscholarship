@@ -40,7 +40,7 @@
             <attr name="piv_invertScrollDirection" format="boolean" />
             <attr name="piv_show_scrollbar" format="boolean" />
         </declare-styleable>
-    <declare-styleable name="CropImageView">
+    <declare-styleable name="CropImageViews">
         <attr name="cropGuidelines">
             <enum name="off" value="0"/>
             <enum name="onTouch" value="1"/>
