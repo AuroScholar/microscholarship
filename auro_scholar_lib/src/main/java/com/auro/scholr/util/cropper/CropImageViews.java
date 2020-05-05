@@ -327,7 +327,7 @@ public class CropImageViews extends FrameLayout {
     mFlipVertically = options.flipVertically;
 
     LayoutInflater inflater = LayoutInflater.from(context);
-    View v = inflater.inflate(R.layout.crop_image_view, this, true);
+    View v = inflater.inflate(R.layout.auro_crop_image_view, this, true);
 
     mImageView = v.findViewById(R.id.ImageView_image);
     mImageView.setScaleType(ImageView.ScaleType.MATRIX);
