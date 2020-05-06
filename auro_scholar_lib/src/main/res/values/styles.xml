@@ -18,6 +18,9 @@
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowActionBarOverlay">true</item>
     </style>
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/border_selector_white</item>
+    </style>
 
     <style name="Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <!--

@@ -8,7 +8,12 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -19,6 +24,9 @@ import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
 import com.auro.scholr.util.AuroScholar;
 import com.example.aurosampleapplication.databinding.ActivityMainBinding;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -33,7 +41,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding.btSdk.setOnClickListener(this);
         binding.btOpen.setOnClickListener(this);
         binding.enterNumber.setText("8178307851");
+        binding.btSdk.setVisibility(View.GONE);
+        openSdk("mobileNumber");
+       // printHashKey(this);
+    }
 
+    public static void printHashKey(Context pContext) {
+        try {
+            PackageInfo info = pContext.getPackageManager().getPackageInfo(pContext.getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String hashKey = new String(Base64.encode(md.digest(), 0));
+                Log.i("printHashKey", "printHashKey() Hash Key: " + hashKey);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("printHashKey", "printHashKey()", e);
+        } catch (Exception e) {
+            Log.e("printHashKey", "printHashKey()", e);
+        }
     }
 
     @Override
@@ -80,7 +106,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareIdentity("9681032476");
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
+
         openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
+
+
     }
 
 
@@ -101,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .getSimpleName())
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
+
     }
 
 }

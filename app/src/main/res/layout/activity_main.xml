@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/color_red"
                 android:padding="10dp"
-                android:text="@string/start_sdk"
+                android:text="Start Facebook Sdk"
                 android:textColor="@color/white"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
