@@ -23,6 +23,7 @@
             layout="@layout/toolbar_header_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <include
             android:id="@+id/cambridge_heading"
             layout="@layout/quiz_header_layout"
@@ -49,8 +50,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
-
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,9 +79,9 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:autoLink="all"
-                            android:textColorLink="@color/auro_dark_blue"
                             android:text="@string/upload_doc_text_msg"
                             android:textColor="@color/white"
+                            android:textColorLink="@color/auro_dark_blue"
                             android:textSize="@dimen/_10sdp"
                             app:Font="Poppins-Regular.ttf"
                             app:layout_constraintStart_toStartOf="parent"
@@ -130,28 +129,56 @@
 
                                 app:layout_constraintTop_toTopOf="parent" />
 
-
-                            <com.auro.scholr.core.util.uiwidget.RPTextView
-                                android:id="@+id/bt_upload_all"
+                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15sdp"
-                                android:layout_marginBottom="@dimen/_15sdp"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_marginBottom="@dimen/_10sdp"
                                 android:background="@drawable/button_bg_orange"
-                                android:gravity="center_horizontal"
-                                android:paddingStart="@dimen/_15sdp"
-                                android:paddingTop="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_15sdp"
-                                android:paddingBottom="@dimen/_10sdp"
-                                android:text="@string/upload"
-                                android:textAlignment="center"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/_15sdp"
-                                app:Font="Poppins-Regular.ttf"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/document_upload_recyclerview" />
+                                app:layout_constraintTop_toBottomOf="@+id/document_upload_recyclerview">
+
+                                <com.auro.scholr.core.util.uiwidget.RPTextView
+                                    android:id="@+id/bt_upload_all"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingStart="@dimen/_15sdp"
+                                    android:paddingTop="@dimen/_10sdp"
+                                    android:paddingEnd="@dimen/_15sdp"
+                                    android:paddingBottom="@dimen/_10sdp"
+                                    android:text="@string/upload"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_15sdp"
+                                    android:visibility="visible"
+                                    app:Font="Poppins-Regular.ttf"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ProgressBar
+                                    android:id="@+id/progressBar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:elevation="@dimen/_2sdp"
+                                    android:indeterminateDrawable="@drawable/circular_progress_white"
+                                    android:innerRadiusRatio="3"
+                                    android:paddingStart="@dimen/_20sdp"
+                                    android:paddingTop="@dimen/_5sdp"
+                                    android:paddingEnd="@dimen/_20sdp"
+                                    android:paddingBottom="@dimen/_5sdp"
+                                    android:visibility="gone"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                             <com.auro.scholr.core.util.uiwidget.RPTextView
                                 android:id="@+id/bt_modify_all"
@@ -173,24 +200,6 @@
                                 android:textSize="@dimen/_15sdp"
                                 android:visibility="gone"
                                 app:Font="Poppins-Regular.ttf"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/document_upload_recyclerview" />
-
-                            <ProgressBar
-                                android:id="@+id/progressBar"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:elevation="@dimen/_2sdp"
-                                android:indeterminateDrawable="@drawable/circular_progress_white"
-                                android:innerRadiusRatio="3"
-                                android:visibility="gone"
-                                android:paddingStart="@dimen/_15sdp"
-                                android:paddingTop="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_15sdp"
-                                android:paddingBottom="@dimen/_10sdp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"

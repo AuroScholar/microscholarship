@@ -65,6 +65,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     QuizResModel quizResModel;
     QuizWonAdapter quizWonAdapter;
     Resources resources;
+    boolean isStateRestore;
 
 
     @Override
@@ -75,6 +76,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (binding != null) {
+            isStateRestore = true;
+            return binding.getRoot();
+        }
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
         quizViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel.class);
@@ -162,7 +167,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.getScholarshipText.setText(resources.getText(R.string.get_scholarship));
         binding.headerParent.cambridgeHeading.setText(resources.getString(R.string.question_bank_powered_by_cambridge));
         String lang = ViewUtil.getLanguage();
-        if (lang.equalsIgnoreCase(AppConstant.LANGUAGE_EN)|| TextUtil.isEmpty(lang)) {
+        if (lang.equalsIgnoreCase(AppConstant.LANGUAGE_EN) || TextUtil.isEmpty(lang)) {
             setLangOnUi(AppConstant.HINDI);
         } else {
             setLangOnUi(AppConstant.ENGLISH);
@@ -195,7 +200,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
                 case LOADING:
                     //For ProgressBar
-                    handleProgress(0, "");
+                    if (!isStateRestore) {
+                        handleProgress(0, "");
+                    }
                     break;
 
                 case SUCCESS:
@@ -321,7 +328,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             openFragment(new PrivacyPolicyFragment());
         } else if (v.getId() == R.id.lang_eng) {
             String text = binding.toolbarLayout.langEng.getText().toString();
-            if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase("Hindi")) {
+            if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase(AppConstant.HINDI)) {
                 ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
                 //  resources = ViewUtil.getCustomResource(getActivity());
             } else {
