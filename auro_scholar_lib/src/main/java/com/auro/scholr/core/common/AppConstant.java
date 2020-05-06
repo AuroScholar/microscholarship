@@ -31,7 +31,7 @@ public interface AppConstant {
     String LANGUAGE_EN = "en";
     String LANGUAGE_HI = "hi";
     String ENGLISH = "English";
-    String HINDI = "Hindi";
+    String HINDI = "हिंदी";
 
 
     String COMING_FROM = "navigation_control";

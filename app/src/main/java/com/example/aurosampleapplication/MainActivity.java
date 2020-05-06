@@ -31,25 +31,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.btSdk.setOnClickListener(this);
         binding.btOpen.setOnClickListener(this);
-        binding.enterNumber.setText("8178307851");
-
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-             //   binding.btSdk.setVisibility(View.GONE);
-                String mobileNumber = binding.enterNumber.getText().toString().trim();
-                if (mobileNumber != null && !mobileNumber.isEmpty()) {
-                    //binding.homeContainer.setVisibility(View.VISIBLE);
-                    //  binding.enterNumber.setVisibility(View.GONE);
-                    // binding.btSdk.setVisibility(View.GONE);
-                    openSdk(mobileNumber);
+                    openSdk();
                     hideKeyboard(this);
-                } else {
-                    Toast.makeText(this, "Please enter the number", Toast.LENGTH_LONG);
-                }
                 break;
             case R.id.bt_open:
                 openFragment(new SampleFragment());
@@ -69,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void openSdk(String mobileNumber) {
+    private void openSdk() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
         auroScholarDataModel.setMobileNumber("9713680981");
         auroScholarDataModel.setScholrId("91003");
