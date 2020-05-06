@@ -15,6 +15,10 @@ import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.home.presentation.viewmodel.ScholarShipViewModel;
+import com.auro.scholr.payment.domain.PaymentRemoteUseCase;
+import com.auro.scholr.payment.domain.PaymentUseCase;
+import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
+import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
@@ -24,9 +28,16 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     private HomeDbUseCase homeDbUseCase;
     private HomeRemoteUseCase homeRemoteUseCase;
 
+    /*Payment Module*/
+    private PaymentUseCase paymentUseCase;
+    private PaymentRemoteUseCase paymentRemoteUseCase;
 
-    public ViewModelFactory(Object object) {
 
+    public ViewModelFactory(Object objectOne, Object objectTwo) {
+        if (objectOne instanceof PaymentUseCase && objectTwo instanceof PaymentRemoteUseCase) {
+            this.paymentUseCase = (PaymentUseCase) objectOne;
+            this.paymentRemoteUseCase = (PaymentRemoteUseCase) objectTwo;
+        }
 
     }
 
@@ -54,24 +65,27 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
             return (T) new QuizViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
-        }else if (modelClass.isAssignableFrom(KYCViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(KYCViewModel.class)) {
 
             return (T) new KYCViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
-        }else if (modelClass.isAssignableFrom(ScholarShipViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(ScholarShipViewModel.class)) {
 
             return (T) new ScholarShipViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
-        }else if (modelClass.isAssignableFrom(DemographicViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(DemographicViewModel.class)) {
 
             return (T) new DemographicViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
-        }else if (modelClass.isAssignableFrom(QuizTestViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(QuizTestViewModel.class)) {
 
             return (T) new QuizTestViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
-        }
+        }else if (modelClass.isAssignableFrom(SendMoneyViewModel.class)) {
 
+            return (T) new SendMoneyViewModel(paymentUseCase, paymentRemoteUseCase);
+
+        }
 
 
         throw new IllegalArgumentException("Unknown ViewModel class");

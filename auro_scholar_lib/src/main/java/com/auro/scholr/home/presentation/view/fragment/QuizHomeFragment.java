@@ -37,6 +37,7 @@ import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
+import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
@@ -319,11 +320,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.wallet_bal_text) {
-            if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+            openFragment(new SendMoneyFragment());
+
+           /* if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
             } else {
                 openKYCFragment(dashboardResModel);
-            }
+            }*/
         } else if (v.getId() == R.id.privacy_policy) {
             openFragment(new PrivacyPolicyFragment());
         } else if (v.getId() == R.id.lang_eng) {
