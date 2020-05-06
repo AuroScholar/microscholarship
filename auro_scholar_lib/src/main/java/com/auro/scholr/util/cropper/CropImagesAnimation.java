@@ -23,13 +23,13 @@ import android.widget.ImageView;
  * Animation to handle smooth cropping image matrix transformation change, specifically for
  * zoom-in/out.
  */
-final class CropImageAnimation extends Animation implements Animation.AnimationListener {
+final class CropImagesAnimation extends Animation implements Animation.AnimationListener {
 
   // region: Fields and Consts
 
   private final ImageView mImageView;
 
-  private final CropOverlayView mCropOverlayView;
+  private final CropOverlayViews mCropOverlayViews;
 
   private final float[] mStartBoundPoints = new float[8];
 
@@ -50,9 +50,9 @@ final class CropImageAnimation extends Animation implements Animation.AnimationL
   private final float[] mAnimMatrix = new float[9];
   // endregion
 
-  public CropImageAnimation(ImageView cropImageView, CropOverlayView cropOverlayView) {
+  public CropImagesAnimation(ImageView cropImageView, CropOverlayViews cropOverlayViews) {
     mImageView = cropImageView;
-    mCropOverlayView = cropOverlayView;
+    mCropOverlayViews = cropOverlayViews;
 
     setDuration(300);
     setFillAfter(true);
@@ -63,13 +63,13 @@ final class CropImageAnimation extends Animation implements Animation.AnimationL
   public void setStartState(float[] boundPoints, Matrix imageMatrix) {
     reset();
     System.arraycopy(boundPoints, 0, mStartBoundPoints, 0, 8);
-    mStartCropWindowRect.set(mCropOverlayView.getCropWindowRect());
+    mStartCropWindowRect.set(mCropOverlayViews.getCropWindowRect());
     imageMatrix.getValues(mStartImageMatrix);
   }
 
   public void setEndState(float[] boundPoints, Matrix imageMatrix) {
     System.arraycopy(boundPoints, 0, mEndBoundPoints, 0, 8);
-    mEndCropWindowRect.set(mCropOverlayView.getCropWindowRect());
+    mEndCropWindowRect.set(mCropOverlayViews.getCropWindowRect());
     imageMatrix.getValues(mEndImageMatrix);
   }
 
@@ -88,13 +88,13 @@ final class CropImageAnimation extends Animation implements Animation.AnimationL
     mAnimRect.bottom =
         mStartCropWindowRect.bottom
             + (mEndCropWindowRect.bottom - mStartCropWindowRect.bottom) * interpolatedTime;
-    mCropOverlayView.setCropWindowRect(mAnimRect);
+    mCropOverlayViews.setCropWindowRect(mAnimRect);
 
     for (int i = 0; i < mAnimPoints.length; i++) {
       mAnimPoints[i] =
           mStartBoundPoints[i] + (mEndBoundPoints[i] - mStartBoundPoints[i]) * interpolatedTime;
     }
-    mCropOverlayView.setBounds(mAnimPoints, mImageView.getWidth(), mImageView.getHeight());
+    mCropOverlayViews.setBounds(mAnimPoints, mImageView.getWidth(), mImageView.getHeight());
 
     for (int i = 0; i < mAnimMatrix.length; i++) {
       mAnimMatrix[i] =
@@ -105,7 +105,7 @@ final class CropImageAnimation extends Animation implements Animation.AnimationL
     mImageView.setImageMatrix(m);
 
     mImageView.invalidate();
-    mCropOverlayView.invalidate();
+    mCropOverlayViews.invalidate();
   }
 
   @Override

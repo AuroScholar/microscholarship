@@ -39,51 +39,51 @@ import java.io.IOException;
 
 /**
  * Built-in activity for image cropping.<br>
- * Use {@link CropImage#activity(Uri)} to create a builder to start this activity.
+ * Use {@link CropImages#activity(Uri)} to create a builder to start this activity.
  */
-public class CropImageActivity extends AppCompatActivity
-    implements CropImageView.OnSetImageUriCompleteListener,
-        CropImageView.OnCropImageCompleteListener {
+public class CropImagesActivity extends AppCompatActivity
+    implements CropImageViews.OnSetImageUriCompleteListener,
+        CropImageViews.OnCropImageCompleteListener {
 
   /** The crop image view library widget used in the activity */
-  private CropImageView mCropImageView;
+  private CropImageViews mCropImageViews;
 
   /** Persist URI image to crop URI if specific permissions are required */
   private Uri mCropImageUri;
 
   /** the options that were set for the crop image */
-  private CropImageOptions mOptions;
+  private CropImagesOptions mOptions;
 
   @Override
   @SuppressLint("NewApi")
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.crop_image_activity);
+    setContentView(R.layout.auro_crop_image_activity);
 
-    mCropImageView = findViewById(R.id.cropImageView);
+    mCropImageViews = findViewById(R.id.cropImageView);
 
-    Bundle bundle = getIntent().getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE);
-    mCropImageUri = bundle.getParcelable(CropImage.CROP_IMAGE_EXTRA_SOURCE);
-    mOptions = bundle.getParcelable(CropImage.CROP_IMAGE_EXTRA_OPTIONS);
+    Bundle bundle = getIntent().getBundleExtra(CropImages.CROP_IMAGE_EXTRA_BUNDLE);
+    mCropImageUri = bundle.getParcelable(CropImages.CROP_IMAGE_EXTRA_SOURCE);
+    mOptions = bundle.getParcelable(CropImages.CROP_IMAGE_EXTRA_OPTIONS);
 
     if (savedInstanceState == null) {
       if (mCropImageUri == null || mCropImageUri.equals(Uri.EMPTY)) {
-        if (CropImage.isExplicitCameraPermissionRequired(this)) {
+        if (CropImages.isExplicitCameraPermissionRequired(this)) {
           // request permissions and handle the result in onRequestPermissionsResult()
           requestPermissions(
               new String[] {Manifest.permission.CAMERA},
-              CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
+              CropImages.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
         } else {
-          CropImage.startPickImageActivity(this);
+          CropImages.startPickImageActivity(this);
         }
-      } else if (CropImage.isReadExternalStoragePermissionsRequired(this, mCropImageUri)) {
+      } else if (CropImages.isReadExternalStoragePermissionsRequired(this, mCropImageUri)) {
         // request permissions and handle the result in onRequestPermissionsResult()
         requestPermissions(
             new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
-            CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
+            CropImages.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
       } else {
         // no permissions required or already grunted, can start crop image activity
-        mCropImageView.setImageUriAsync(mCropImageUri);
+        mCropImageViews.setImageUriAsync(mCropImageUri);
       }
     }
 
@@ -101,15 +101,15 @@ public class CropImageActivity extends AppCompatActivity
   @Override
   protected void onStart() {
     super.onStart();
-    mCropImageView.setOnSetImageUriCompleteListener(this);
-    mCropImageView.setOnCropImageCompleteListener(this);
+    mCropImageViews.setOnSetImageUriCompleteListener(this);
+    mCropImageViews.setOnCropImageCompleteListener(this);
   }
 
   @Override
   protected void onStop() {
     super.onStop();
-    mCropImageView.setOnSetImageUriCompleteListener(null);
-    mCropImageView.setOnCropImageCompleteListener(null);
+    mCropImageViews.setOnSetImageUriCompleteListener(null);
+    mCropImageViews.setOnCropImageCompleteListener(null);
   }
 
   @Override
@@ -169,11 +169,11 @@ public class CropImageActivity extends AppCompatActivity
       return true;
     }
     if (item.getItemId() == R.id.crop_image_menu_flip_horizontally) {
-      mCropImageView.flipImageHorizontally();
+      mCropImageViews.flipImageHorizontally();
       return true;
     }
     if (item.getItemId() == R.id.crop_image_menu_flip_vertically) {
-      mCropImageView.flipImageVertically();
+      mCropImageViews.flipImageVertically();
       return true;
     }
     if (item.getItemId() == android.R.id.home) {
@@ -194,25 +194,25 @@ public class CropImageActivity extends AppCompatActivity
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     // handle result of pick image chooser
-    if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
+    if (requestCode == CropImages.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
       if (resultCode == Activity.RESULT_CANCELED) {
         // User cancelled the picker. We don't have anything to crop
         setResultCancel();
       }
 
       if (resultCode == Activity.RESULT_OK) {
-        mCropImageUri = CropImage.getPickImageResultUri(this, data);
+        mCropImageUri = CropImages.getPickImageResultUri(this, data);
 
         // For API >= 23 we need to check specifically that we have permissions to read external
         // storage.
-        if (CropImage.isReadExternalStoragePermissionsRequired(this, mCropImageUri)) {
+        if (CropImages.isReadExternalStoragePermissionsRequired(this, mCropImageUri)) {
           // request permissions and handle the result in onRequestPermissionsResult()
           requestPermissions(
               new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
-              CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
+              CropImages.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
         } else {
           // no permissions required or already grunted, can start crop image activity
-          mCropImageView.setImageUriAsync(mCropImageUri);
+          mCropImageViews.setImageUriAsync(mCropImageUri);
         }
       }
     }
@@ -221,33 +221,33 @@ public class CropImageActivity extends AppCompatActivity
   @Override
   public void onRequestPermissionsResult(
           int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-    if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
+    if (requestCode == CropImages.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
       if (mCropImageUri != null
           && grantResults.length > 0
           && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
         // required permissions granted, start crop image activity
-        mCropImageView.setImageUriAsync(mCropImageUri);
+        mCropImageViews.setImageUriAsync(mCropImageUri);
       } else {
         Toast.makeText(this, R.string.crop_image_activity_no_permissions, Toast.LENGTH_LONG).show();
         setResultCancel();
       }
     }
 
-    if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
+    if (requestCode == CropImages.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
       // Irrespective of whether camera permission was given or not, we show the picker
       // The picker will not add the camera intent if permission is not available
-      CropImage.startPickImageActivity(this);
+      CropImages.startPickImageActivity(this);
     }
   }
 
   @Override
-  public void onSetImageUriComplete(CropImageView view, Uri uri, Exception error) {
+  public void onSetImageUriComplete(CropImageViews view, Uri uri, Exception error) {
     if (error == null) {
       if (mOptions.initialCropWindowRectangle != null) {
-        mCropImageView.setCropRect(mOptions.initialCropWindowRectangle);
+        mCropImageViews.setCropRect(mOptions.initialCropWindowRectangle);
       }
       if (mOptions.initialRotation > -1) {
-        mCropImageView.setRotatedDegrees(mOptions.initialRotation);
+        mCropImageViews.setRotatedDegrees(mOptions.initialRotation);
       }
     } else {
       setResult(null, error, 1);
@@ -255,7 +255,7 @@ public class CropImageActivity extends AppCompatActivity
   }
 
   @Override
-  public void onCropImageComplete(CropImageView view, CropImageView.CropResult result) {
+  public void onCropImageComplete(CropImageViews view, CropImageViews.CropResult result) {
     setResult(result.getUri(), result.getError(), result.getSampleSize());
   }
 
@@ -267,7 +267,7 @@ public class CropImageActivity extends AppCompatActivity
       setResult(null, null, 1);
     } else {
       Uri outputUri = getOutputUri();
-      mCropImageView.saveCroppedImageAsync(
+      mCropImageViews.saveCroppedImageAsync(
           outputUri,
           mOptions.outputCompressFormat,
           mOptions.outputCompressQuality,
@@ -279,7 +279,7 @@ public class CropImageActivity extends AppCompatActivity
 
   /** Rotate the image in the crop image view. */
   protected void rotateImage(int degrees) {
-    mCropImageView.rotateImage(degrees);
+    mCropImageViews.rotateImage(degrees);
   }
 
   /**
@@ -304,7 +304,7 @@ public class CropImageActivity extends AppCompatActivity
 
   /** Result with cropped image data or error if failed. */
   protected void setResult(Uri uri, Exception error, int sampleSize) {
-    int resultCode = error == null ? RESULT_OK : CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE;
+    int resultCode = error == null ? RESULT_OK : CropImages.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE;
     setResult(resultCode, getResultIntent(uri, error, sampleSize));
     finish();
   }
@@ -317,19 +317,19 @@ public class CropImageActivity extends AppCompatActivity
 
   /** Get intent instance to be used for the result of this activity. */
   protected Intent getResultIntent(Uri uri, Exception error, int sampleSize) {
-    CropImage.ActivityResult result =
-        new CropImage.ActivityResult(
-            mCropImageView.getImageUri(),
+    CropImages.ActivityResult result =
+        new CropImages.ActivityResult(
+            mCropImageViews.getImageUri(),
             uri,
             error,
-            mCropImageView.getCropPoints(),
-            mCropImageView.getCropRect(),
-            mCropImageView.getRotatedDegrees(),
-            mCropImageView.getWholeImageRect(),
+            mCropImageViews.getCropPoints(),
+            mCropImageViews.getCropRect(),
+            mCropImageViews.getRotatedDegrees(),
+            mCropImageViews.getWholeImageRect(),
             sampleSize);
     Intent intent = new Intent();
     intent.putExtras(getIntent());
-    intent.putExtra(CropImage.CROP_IMAGE_EXTRA_RESULT, result);
+    intent.putExtra(CropImages.CROP_IMAGE_EXTRA_RESULT, result);
     return intent;
   }
 

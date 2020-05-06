@@ -21,12 +21,12 @@ import android.util.DisplayMetrics;
 import java.lang.ref.WeakReference;
 
 /** Task to load bitmap asynchronously from the UI thread. */
-final class BitmapLoadingWorkerTask extends AsyncTask<Void, Void, BitmapLoadingWorkerTask.Result> {
+final class BitmapLoadingWorkTask extends AsyncTask<Void, Void, BitmapLoadingWorkTask.Result> {
 
   // region: Fields and Consts
 
   /** Use a WeakReference to ensure the ImageView can be garbage collected */
-  private final WeakReference<CropImageView> mCropImageViewReference;
+  private final WeakReference<CropImageViews> mCropImageViewReference;
 
   /** The Android URI of the image to load */
   private final Uri mUri;
@@ -41,13 +41,13 @@ final class BitmapLoadingWorkerTask extends AsyncTask<Void, Void, BitmapLoadingW
   private final int mHeight;
   // endregion
 
-  public BitmapLoadingWorkerTask(CropImageView cropImageView, Uri uri) {
+  public BitmapLoadingWorkTask(CropImageViews cropImageViews, Uri uri) {
     mUri = uri;
-    mCropImageViewReference = new WeakReference<>(cropImageView);
+    mCropImageViewReference = new WeakReference<>(cropImageViews);
 
-    mContext = cropImageView.getContext();
+    mContext = cropImageViews.getContext();
 
-    DisplayMetrics metrics = cropImageView.getResources().getDisplayMetrics();
+    DisplayMetrics metrics = cropImageViews.getResources().getDisplayMetrics();
     double densityAdj = metrics.density > 1 ? 1 / metrics.density : 1;
     mWidth = (int) (metrics.widthPixels * densityAdj);
     mHeight = (int) (metrics.heightPixels * densityAdj);
@@ -69,13 +69,13 @@ final class BitmapLoadingWorkerTask extends AsyncTask<Void, Void, BitmapLoadingW
     try {
       if (!isCancelled()) {
 
-        BitmapUtils.BitmapSampled decodeResult =
-            BitmapUtils.decodeSampledBitmap(mContext, mUri, mWidth, mHeight);
+        BitmapImageUtils.BitmapSampled decodeResult =
+            BitmapImageUtils.decodeSampledBitmap(mContext, mUri, mWidth, mHeight);
 
         if (!isCancelled()) {
 
-          BitmapUtils.RotateBitmapResult rotateResult =
-              BitmapUtils.rotateBitmapByExif(decodeResult.bitmap, mContext, mUri);
+          BitmapImageUtils.RotateBitmapResult rotateResult =
+              BitmapImageUtils.rotateBitmapByExif(decodeResult.bitmap, mContext, mUri);
 
           return new Result(
               mUri, rotateResult.bitmap, decodeResult.sampleSize, rotateResult.degrees);
@@ -97,10 +97,10 @@ final class BitmapLoadingWorkerTask extends AsyncTask<Void, Void, BitmapLoadingW
     if (result != null) {
       boolean completeCalled = false;
       if (!isCancelled()) {
-        CropImageView cropImageView = mCropImageViewReference.get();
-        if (cropImageView != null) {
+        CropImageViews cropImageViews = mCropImageViewReference.get();
+        if (cropImageViews != null) {
           completeCalled = true;
-          cropImageView.onSetImageUriAsyncComplete(result);
+          cropImageViews.onSetImageUriAsyncComplete(result);
         }
       }
       if (!completeCalled && result.bitmap != null) {

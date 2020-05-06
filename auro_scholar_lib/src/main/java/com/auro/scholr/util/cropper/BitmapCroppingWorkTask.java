@@ -20,13 +20,13 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 
 /** Task to crop bitmap asynchronously from the UI thread. */
-final class BitmapCroppingWorkerTask
-    extends AsyncTask<Void, Void, BitmapCroppingWorkerTask.Result> {
+final class BitmapCroppingWorkTask
+    extends AsyncTask<Void, Void, BitmapCroppingWorkTask.Result> {
 
   // region: Fields and Consts
 
   /** Use a WeakReference to ensure the ImageView can be garbage collected */
-  private final WeakReference<CropImageView> mCropImageViewReference;
+  private final WeakReference<CropImageViews> mCropImageViewReference;
 
   /** the bitmap to crop */
   private final Bitmap mBitmap;
@@ -71,7 +71,7 @@ final class BitmapCroppingWorkerTask
   private final boolean mFlipVertically;
 
   /** The option to handle requested width/height */
-  private final CropImageView.RequestSizeOptions mReqSizeOptions;
+  private final CropImageViews.RequestSizeOptions mReqSizeOptions;
 
   /** the Android Uri to save the cropped image to */
   private final Uri mSaveUri;
@@ -83,25 +83,25 @@ final class BitmapCroppingWorkerTask
   private final int mSaveCompressQuality;
   // endregion
 
-  BitmapCroppingWorkerTask(
-      CropImageView cropImageView,
-      Bitmap bitmap,
-      float[] cropPoints,
-      int degreesRotated,
-      boolean fixAspectRatio,
-      int aspectRatioX,
-      int aspectRatioY,
-      int reqWidth,
-      int reqHeight,
-      boolean flipHorizontally,
-      boolean flipVertically,
-      CropImageView.RequestSizeOptions options,
-      Uri saveUri,
-      Bitmap.CompressFormat saveCompressFormat,
-      int saveCompressQuality) {
+  BitmapCroppingWorkTask(
+          CropImageViews cropImageViews,
+          Bitmap bitmap,
+          float[] cropPoints,
+          int degreesRotated,
+          boolean fixAspectRatio,
+          int aspectRatioX,
+          int aspectRatioY,
+          int reqWidth,
+          int reqHeight,
+          boolean flipHorizontally,
+          boolean flipVertically,
+          CropImageViews.RequestSizeOptions options,
+          Uri saveUri,
+          Bitmap.CompressFormat saveCompressFormat,
+          int saveCompressQuality) {
 
-    mCropImageViewReference = new WeakReference<>(cropImageView);
-    mContext = cropImageView.getContext();
+    mCropImageViewReference = new WeakReference<>(cropImageViews);
+    mContext = cropImageViews.getContext();
     mBitmap = bitmap;
     mCropPoints = cropPoints;
     mUri = null;
@@ -121,27 +121,27 @@ final class BitmapCroppingWorkerTask
     mOrgHeight = 0;
   }
 
-  BitmapCroppingWorkerTask(
-      CropImageView cropImageView,
-      Uri uri,
-      float[] cropPoints,
-      int degreesRotated,
-      int orgWidth,
-      int orgHeight,
-      boolean fixAspectRatio,
-      int aspectRatioX,
-      int aspectRatioY,
-      int reqWidth,
-      int reqHeight,
-      boolean flipHorizontally,
-      boolean flipVertically,
-      CropImageView.RequestSizeOptions options,
-      Uri saveUri,
-      Bitmap.CompressFormat saveCompressFormat,
-      int saveCompressQuality) {
+  BitmapCroppingWorkTask(
+          CropImageViews cropImageViews,
+          Uri uri,
+          float[] cropPoints,
+          int degreesRotated,
+          int orgWidth,
+          int orgHeight,
+          boolean fixAspectRatio,
+          int aspectRatioX,
+          int aspectRatioY,
+          int reqWidth,
+          int reqHeight,
+          boolean flipHorizontally,
+          boolean flipVertically,
+          CropImageViews.RequestSizeOptions options,
+          Uri saveUri,
+          Bitmap.CompressFormat saveCompressFormat,
+          int saveCompressQuality) {
 
-    mCropImageViewReference = new WeakReference<>(cropImageView);
-    mContext = cropImageView.getContext();
+    mCropImageViewReference = new WeakReference<>(cropImageViews);
+    mContext = cropImageViews.getContext();
     mUri = uri;
     mCropPoints = cropPoints;
     mDegreesRotated = degreesRotated;
@@ -173,14 +173,14 @@ final class BitmapCroppingWorkerTask
    * @return the decoded bitmap data
    */
   @Override
-  protected BitmapCroppingWorkerTask.Result doInBackground(Void... params) {
+  protected BitmapCroppingWorkTask.Result doInBackground(Void... params) {
     try {
       if (!isCancelled()) {
 
-        BitmapUtils.BitmapSampled bitmapSampled;
+        BitmapImageUtils.BitmapSampled bitmapSampled;
         if (mUri != null) {
           bitmapSampled =
-              BitmapUtils.cropBitmap(
+              BitmapImageUtils.cropBitmap(
                   mContext,
                   mUri,
                   mCropPoints,
@@ -196,7 +196,7 @@ final class BitmapCroppingWorkerTask
                   mFlipVertically);
         } else if (mBitmap != null) {
           bitmapSampled =
-              BitmapUtils.cropBitmapObjectHandleOOM(
+              BitmapImageUtils.cropBitmapObjectHandleOOM(
                   mBitmap,
                   mCropPoints,
                   mDegreesRotated,
@@ -210,12 +210,12 @@ final class BitmapCroppingWorkerTask
         }
 
         Bitmap bitmap =
-            BitmapUtils.resizeBitmap(bitmapSampled.bitmap, mReqWidth, mReqHeight, mReqSizeOptions);
+            BitmapImageUtils.resizeBitmap(bitmapSampled.bitmap, mReqWidth, mReqHeight, mReqSizeOptions);
 
         if (mSaveUri == null) {
           return new Result(bitmap, bitmapSampled.sampleSize);
         } else {
-          BitmapUtils.writeBitmapToUri(
+          BitmapImageUtils.writeBitmapToUri(
               mContext, bitmap, mSaveUri, mSaveCompressFormat, mSaveCompressQuality);
           if (bitmap != null) {
             bitmap.recycle();
@@ -239,10 +239,10 @@ final class BitmapCroppingWorkerTask
     if (result != null) {
       boolean completeCalled = false;
       if (!isCancelled()) {
-        CropImageView cropImageView = mCropImageViewReference.get();
-        if (cropImageView != null) {
+        CropImageViews cropImageViews = mCropImageViewReference.get();
+        if (cropImageViews != null) {
           completeCalled = true;
-          cropImageView.onImageCroppingAsyncComplete(result);
+          cropImageViews.onImageCroppingAsyncComplete(result);
         }
       }
       if (!completeCalled && result.bitmap != null) {

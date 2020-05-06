@@ -42,9 +42,11 @@ import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+
 import com.auro.scholr.util.alert_dialog.CustomSnackBar;
-import com.auro.scholr.util.cropper.CropImage;
-import com.auro.scholr.util.cropper.CropImageView;
+
+import com.auro.scholr.util.cropper.CropImages;
+import com.auro.scholr.util.cropper.CropImageViews;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -138,6 +140,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     @Override
     protected void setListener() {
         /*Do code here*/
+        binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
+        binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.btUploadAll.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
         if (kycViewModel != null && kycViewModel.serviceLiveData().hasObservers()) {
@@ -212,8 +216,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         AppLogger.e("chhonker", "fragment requestCode=" + requestCode);
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+        if (requestCode == CropImages.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImages.ActivityResult result = CropImages.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 try {
                     Uri resultUri = result.getUri();
@@ -222,7 +226,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
                 }
 
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+            } else if (resultCode == CropImages.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
         } else if (requestCode == AppConstant.CAMERA_REQUEST_CODE) {
@@ -401,7 +405,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 setLanguageText(AppConstant.HINDI);
             }
             reloadFragment();
-
+        } else if (v.getId() == R.id.back_arrow) {
+            getActivity().getSupportFragmentManager().popBackStack();
         }
 
     }
@@ -421,8 +426,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         if (kycDocumentDatamodel.getDocumentId() == AppConstant.DocumentType.UPLOAD_YOUR_PHOTO) {
             openActivity();
         } else {
-            CropImage.activity()
-                    .setGuidelines(CropImageView.Guidelines.ON)
+            CropImages.activity()
+                    .setGuidelines(CropImageViews.Guidelines.ON)
                     .start(getActivity());
         }
 

@@ -15,7 +15,7 @@ package com.auro.scholr.util.cropper;
 import android.graphics.RectF;
 
 /** Handler from crop window stuff, moving and knowing possition. */
-final class CropWindowHandler {
+final class CropWindowsHandler {
 
   // region: Fields and Consts
 
@@ -138,7 +138,7 @@ final class CropWindowHandler {
   }
 
   /** Set the variables to be used during crop window handling. */
-  public void setInitialAttributeValues(CropImageOptions options) {
+  public void setInitialAttributeValues(CropImagesOptions options) {
     mMinCropWindowWidth = options.minCropWindowWidth;
     mMinCropWindowHeight = options.minCropWindowHeight;
     mMinCropResultWidth = options.minCropResultWidth;
@@ -171,13 +171,13 @@ final class CropWindowHandler {
    * @param targetRadius the target radius in pixels
    * @return the Handle that was pressed; null if no Handle was pressed
    */
-  public CropWindowMoveHandler getMoveHandler(
-      float x, float y, float targetRadius, CropImageView.CropShape cropShape) {
-    CropWindowMoveHandler.Type type =
-        cropShape == CropImageView.CropShape.OVAL
+  public CropWindowsMoveHandler getMoveHandler(
+          float x, float y, float targetRadius, CropImageViews.CropShape cropShape) {
+    CropWindowsMoveHandler.Type type =
+        cropShape == CropImageViews.CropShape.OVAL
             ? getOvalPressedMoveType(x, y)
             : getRectanglePressedMoveType(x, y, targetRadius);
-    return type != null ? new CropWindowMoveHandler(type, this, x, y) : null;
+    return type != null ? new CropWindowsMoveHandler(type, this, x, y) : null;
   }
 
   // region: Private methods
@@ -191,42 +191,42 @@ final class CropWindowHandler {
    * @param targetRadius the target radius in pixels
    * @return the Handle that was pressed; null if no Handle was pressed
    */
-  private CropWindowMoveHandler.Type getRectanglePressedMoveType(
+  private CropWindowsMoveHandler.Type getRectanglePressedMoveType(
       float x, float y, float targetRadius) {
-    CropWindowMoveHandler.Type moveType = null;
+    CropWindowsMoveHandler.Type moveType = null;
 
     // Note: corner-handles take precedence, then side-handles, then center.
-    if (CropWindowHandler.isInCornerTargetZone(x, y, mEdges.left, mEdges.top, targetRadius)) {
-      moveType = CropWindowMoveHandler.Type.TOP_LEFT;
-    } else if (CropWindowHandler.isInCornerTargetZone(
+    if (CropWindowsHandler.isInCornerTargetZone(x, y, mEdges.left, mEdges.top, targetRadius)) {
+      moveType = CropWindowsMoveHandler.Type.TOP_LEFT;
+    } else if (CropWindowsHandler.isInCornerTargetZone(
         x, y, mEdges.right, mEdges.top, targetRadius)) {
-      moveType = CropWindowMoveHandler.Type.TOP_RIGHT;
-    } else if (CropWindowHandler.isInCornerTargetZone(
+      moveType = CropWindowsMoveHandler.Type.TOP_RIGHT;
+    } else if (CropWindowsHandler.isInCornerTargetZone(
         x, y, mEdges.left, mEdges.bottom, targetRadius)) {
-      moveType = CropWindowMoveHandler.Type.BOTTOM_LEFT;
-    } else if (CropWindowHandler.isInCornerTargetZone(
+      moveType = CropWindowsMoveHandler.Type.BOTTOM_LEFT;
+    } else if (CropWindowsHandler.isInCornerTargetZone(
         x, y, mEdges.right, mEdges.bottom, targetRadius)) {
-      moveType = CropWindowMoveHandler.Type.BOTTOM_RIGHT;
-    } else if (CropWindowHandler.isInCenterTargetZone(
+      moveType = CropWindowsMoveHandler.Type.BOTTOM_RIGHT;
+    } else if (CropWindowsHandler.isInCenterTargetZone(
             x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom)
         && focusCenter()) {
-      moveType = CropWindowMoveHandler.Type.CENTER;
-    } else if (CropWindowHandler.isInHorizontalTargetZone(
+      moveType = CropWindowsMoveHandler.Type.CENTER;
+    } else if (CropWindowsHandler.isInHorizontalTargetZone(
         x, y, mEdges.left, mEdges.right, mEdges.top, targetRadius)) {
-      moveType = CropWindowMoveHandler.Type.TOP;
-    } else if (CropWindowHandler.isInHorizontalTargetZone(
+      moveType = CropWindowsMoveHandler.Type.TOP;
+    } else if (CropWindowsHandler.isInHorizontalTargetZone(
         x, y, mEdges.left, mEdges.right, mEdges.bottom, targetRadius)) {
-      moveType = CropWindowMoveHandler.Type.BOTTOM;
-    } else if (CropWindowHandler.isInVerticalTargetZone(
+      moveType = CropWindowsMoveHandler.Type.BOTTOM;
+    } else if (CropWindowsHandler.isInVerticalTargetZone(
         x, y, mEdges.left, mEdges.top, mEdges.bottom, targetRadius)) {
-      moveType = CropWindowMoveHandler.Type.LEFT;
-    } else if (CropWindowHandler.isInVerticalTargetZone(
+      moveType = CropWindowsMoveHandler.Type.LEFT;
+    } else if (CropWindowsHandler.isInVerticalTargetZone(
         x, y, mEdges.right, mEdges.top, mEdges.bottom, targetRadius)) {
-      moveType = CropWindowMoveHandler.Type.RIGHT;
-    } else if (CropWindowHandler.isInCenterTargetZone(
+      moveType = CropWindowsMoveHandler.Type.RIGHT;
+    } else if (CropWindowsHandler.isInCenterTargetZone(
             x, y, mEdges.left, mEdges.top, mEdges.right, mEdges.bottom)
         && !focusCenter()) {
-      moveType = CropWindowMoveHandler.Type.CENTER;
+      moveType = CropWindowsMoveHandler.Type.CENTER;
     }
 
     return moveType;
@@ -240,7 +240,7 @@ final class CropWindowHandler {
    * @param y the y-coordinate of the touch point
    * @return the Handle that was pressed; null if no Handle was pressed
    */
-  private CropWindowMoveHandler.Type getOvalPressedMoveType(float x, float y) {
+  private CropWindowsMoveHandler.Type getOvalPressedMoveType(float x, float y) {
 
     /*
        Use a 6x6 grid system divided into 9 "handles", with the center the biggest region. While
@@ -262,30 +262,30 @@ final class CropWindowHandler {
     float topCenter = mEdges.top + cellHeight;
     float bottomCenter = mEdges.top + 5 * cellHeight;
 
-    CropWindowMoveHandler.Type moveType;
+    CropWindowsMoveHandler.Type moveType;
     if (x < leftCenter) {
       if (y < topCenter) {
-        moveType = CropWindowMoveHandler.Type.TOP_LEFT;
+        moveType = CropWindowsMoveHandler.Type.TOP_LEFT;
       } else if (y < bottomCenter) {
-        moveType = CropWindowMoveHandler.Type.LEFT;
+        moveType = CropWindowsMoveHandler.Type.LEFT;
       } else {
-        moveType = CropWindowMoveHandler.Type.BOTTOM_LEFT;
+        moveType = CropWindowsMoveHandler.Type.BOTTOM_LEFT;
       }
     } else if (x < rightCenter) {
       if (y < topCenter) {
-        moveType = CropWindowMoveHandler.Type.TOP;
+        moveType = CropWindowsMoveHandler.Type.TOP;
       } else if (y < bottomCenter) {
-        moveType = CropWindowMoveHandler.Type.CENTER;
+        moveType = CropWindowsMoveHandler.Type.CENTER;
       } else {
-        moveType = CropWindowMoveHandler.Type.BOTTOM;
+        moveType = CropWindowsMoveHandler.Type.BOTTOM;
       }
     } else {
       if (y < topCenter) {
-        moveType = CropWindowMoveHandler.Type.TOP_RIGHT;
+        moveType = CropWindowsMoveHandler.Type.TOP_RIGHT;
       } else if (y < bottomCenter) {
-        moveType = CropWindowMoveHandler.Type.RIGHT;
+        moveType = CropWindowsMoveHandler.Type.RIGHT;
       } else {
-        moveType = CropWindowMoveHandler.Type.BOTTOM_RIGHT;
+        moveType = CropWindowsMoveHandler.Type.BOTTOM_RIGHT;
       }
     }
 

@@ -84,6 +84,8 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
 
     @Override
     protected void init() {
+        binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
+
         // Spinner Drop down Gender
         genderLines = Arrays.asList(getResources().getStringArray(R.array.genderlist));
         spinnermethodcall(genderLines, binding.SpinnerGender);
@@ -145,6 +147,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     protected void setListener() {
         binding.submitbutton.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
+        binding.toolbarLayout.backArrow.setOnClickListener(this);
 
         binding.SpinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -307,6 +310,8 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
             }
             reloadFragment();
 
+        } else if (v.getId() == R.id.back_arrow) {
+            getActivity().getSupportFragmentManager().popBackStack();
         }
 
 

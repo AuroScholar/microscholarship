@@ -59,20 +59,20 @@ import java.util.List;
  * to device.
  */
 @SuppressWarnings("WeakerAccess, unused")
-public final class CropImage {
+public final class CropImages {
 
   // region: Fields and Consts
 
-  /** The key used to pass crop image source URI to {@link CropImageActivity}. */
+  /** The key used to pass crop image source URI to {@link CropImagesActivity}. */
   public static final String CROP_IMAGE_EXTRA_SOURCE = "CROP_IMAGE_EXTRA_SOURCE";
 
-  /** The key used to pass crop image options to {@link CropImageActivity}. */
+  /** The key used to pass crop image options to {@link CropImagesActivity}. */
   public static final String CROP_IMAGE_EXTRA_OPTIONS = "CROP_IMAGE_EXTRA_OPTIONS";
 
-  /** The key used to pass crop image bundle data to {@link CropImageActivity}. */
+  /** The key used to pass crop image bundle data to {@link CropImagesActivity}. */
   public static final String CROP_IMAGE_EXTRA_BUNDLE = "CROP_IMAGE_EXTRA_BUNDLE";
 
-  /** The key used to pass crop image result data back from {@link CropImageActivity}. */
+  /** The key used to pass crop image result data back from {@link CropImagesActivity}. */
   public static final String CROP_IMAGE_EXTRA_RESULT = "CROP_IMAGE_EXTRA_RESULT";
 
   /**
@@ -88,16 +88,16 @@ public final class CropImage {
   public static final int CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE = 2011;
 
   /**
-   * The request code used to start {@link CropImageActivity} to be used on result to identify the
+   * The request code used to start {@link CropImagesActivity} to be used on result to identify the
    * this specific request.
    */
   public static final int CROP_IMAGE_ACTIVITY_REQUEST_CODE = 203;
 
-  /** The result code used to return error from {@link CropImageActivity}. */
+  /** The result code used to return error from {@link CropImagesActivity}. */
   public static final int CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE = 204;
   // endregion
 
-  private CropImage() {}
+  private CropImages() {}
 
   /**
    * Create a new bitmap that has all pixels beyond the oval shape transparent. Old bitmap is
@@ -410,7 +410,7 @@ public final class CropImage {
 
   /**
    * Create {@link ActivityBuilder} instance to open image picker for cropping and then start {@link
-   * CropImageActivity} to crop the selected image.<br>
+   * CropImagesActivity} to crop the selected image.<br>
    * Result will be received in {@link Activity#onActivityResult(int, int, Intent)} and can be
    * retrieved using {@link #getActivityResult(Intent)}.
    *
@@ -421,7 +421,7 @@ public final class CropImage {
   }
 
   /**
-   * Create {@link ActivityBuilder} instance to start {@link CropImageActivity} to crop the given
+   * Create {@link ActivityBuilder} instance to start {@link CropImagesActivity} to crop the given
    * image.<br>
    * Result will be received in {@link Activity#onActivityResult(int, int, Intent)} and can be
    * retrieved using {@link #getActivityResult(Intent)}.
@@ -434,7 +434,7 @@ public final class CropImage {
   }
 
   /**
-   * Get {@link CropImageActivity} result data object for crop image activity started using {@link
+   * Get {@link CropImagesActivity} result data object for crop image activity started using {@link
    * #activity(Uri)}.
    *
    * @param data result data intent as received in {@link Activity#onActivityResult(int, int,
@@ -455,19 +455,19 @@ public final class CropImage {
     private final Uri mSource;
 
     /** Options for image crop UX */
-    private final CropImageOptions mOptions;
+    private final CropImagesOptions mOptions;
 
     private ActivityBuilder(@Nullable Uri source) {
       mSource = source;
-      mOptions = new CropImageOptions();
+      mOptions = new CropImagesOptions();
     }
 
-    /** Get {@link CropImageActivity} intent to start the activity. */
+    /** Get {@link CropImagesActivity} intent to start the activity. */
     public Intent getIntent(@NonNull Context context) {
-      return getIntent(context, CropImageActivity.class);
+      return getIntent(context, CropImagesActivity.class);
     }
 
-    /** Get {@link CropImageActivity} intent to start the activity. */
+    /** Get {@link CropImagesActivity} intent to start the activity. */
     public Intent getIntent(@NonNull Context context, @Nullable Class<?> cls) {
       mOptions.validate();
 
@@ -476,12 +476,12 @@ public final class CropImage {
       Bundle bundle = new Bundle();
       bundle.putParcelable(CROP_IMAGE_EXTRA_SOURCE, mSource);
       bundle.putParcelable(CROP_IMAGE_EXTRA_OPTIONS, mOptions);
-      intent.putExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE, bundle);
+      intent.putExtra(CropImages.CROP_IMAGE_EXTRA_BUNDLE, bundle);
       return intent;
     }
 
     /**
-     * Start {@link CropImageActivity}.
+     * Start {@link CropImagesActivity}.
      *
      * @param activity activity to receive result
      */
@@ -491,7 +491,7 @@ public final class CropImage {
     }
 
     /**
-     * Start {@link CropImageActivity}.
+     * Start {@link CropImagesActivity}.
      *
      * @param activity activity to receive result
      */
@@ -501,7 +501,7 @@ public final class CropImage {
     }
 
     /**
-     * Start {@link CropImageActivity}.
+     * Start {@link CropImagesActivity}.
      *
      * @param fragment fragment to receive result
      */
@@ -510,7 +510,7 @@ public final class CropImage {
     }
 
     /**
-     * Start {@link CropImageActivity}.
+     * Start {@link CropImagesActivity}.
      *
      * @param fragment fragment to receive result
      */
@@ -520,7 +520,7 @@ public final class CropImage {
     }
 
     /**
-     * Start {@link CropImageActivity}.
+     * Start {@link CropImagesActivity}.
      *
      * @param fragment fragment to receive result
      */
@@ -530,7 +530,7 @@ public final class CropImage {
     }
 
     /**
-     * Start {@link CropImageActivity}.
+     * Start {@link CropImagesActivity}.
      *
      * @param fragment fragment to receive result
      */
@@ -545,7 +545,7 @@ public final class CropImage {
      * To set square/circle crop shape set aspect ratio to 1:1.<br>
      * <i>Default: RECTANGLE</i>
      */
-    public ActivityBuilder setCropShape(@NonNull CropImageView.CropShape cropShape) {
+    public ActivityBuilder setCropShape(@NonNull CropImageViews.CropShape cropShape) {
       mOptions.cropShape = cropShape;
       return this;
     }
@@ -576,7 +576,7 @@ public final class CropImage {
      * whether the guidelines should be on, off, or only showing when resizing.<br>
      * <i>Default: ON_TOUCH</i>
      */
-    public ActivityBuilder setGuidelines(@NonNull CropImageView.Guidelines guidelines) {
+    public ActivityBuilder setGuidelines(@NonNull CropImageViews.Guidelines guidelines) {
       mOptions.guidelines = guidelines;
       return this;
     }
@@ -585,7 +585,7 @@ public final class CropImage {
      * The initial scale type of the image in the crop image view<br>
      * <i>Default: FIT_CENTER</i>
      */
-    public ActivityBuilder setScaleType(@NonNull CropImageView.ScaleType scaleType) {
+    public ActivityBuilder setScaleType(@NonNull CropImageViews.ScaleType scaleType) {
       mOptions.scaleType = scaleType;
       return this;
     }
@@ -776,7 +776,7 @@ public final class CropImage {
     }
 
     /**
-     * the title of the {@link CropImageActivity}.<br>
+     * the title of the {@link CropImagesActivity}.<br>
      * <i>Default: ""</i>
      */
     public ActivityBuilder setActivityTitle(CharSequence activityTitle) {
@@ -822,11 +822,11 @@ public final class CropImage {
 
     /**
      * the size to resize the cropped image to.<br>
-     * Uses {@link CropImageView.RequestSizeOptions#RESIZE_INSIDE} option.<br>
+     * Uses {@link CropImageViews.RequestSizeOptions#RESIZE_INSIDE} option.<br>
      * <i>Default: 0, 0 - not set, will not resize</i>
      */
     public ActivityBuilder setRequestedSize(int reqWidth, int reqHeight) {
-      return setRequestedSize(reqWidth, reqHeight, CropImageView.RequestSizeOptions.RESIZE_INSIDE);
+      return setRequestedSize(reqWidth, reqHeight, CropImageViews.RequestSizeOptions.RESIZE_INSIDE);
     }
 
     /**
@@ -834,7 +834,7 @@ public final class CropImage {
      * <i>Default: 0, 0 - not set, will not resize</i>
      */
     public ActivityBuilder setRequestedSize(
-        int reqWidth, int reqHeight, CropImageView.RequestSizeOptions options) {
+            int reqWidth, int reqHeight, CropImageViews.RequestSizeOptions options) {
       mOptions.outputRequestWidth = reqWidth;
       mOptions.outputRequestHeight = reqHeight;
       mOptions.outputRequestSizeOptions = options;
@@ -949,7 +949,7 @@ public final class CropImage {
   // region: Inner class: ActivityResult
 
   /** Result data of Crop Image Activity. */
-  public static final class ActivityResult extends CropImageView.CropResult implements Parcelable {
+  public static final class ActivityResult extends CropImageViews.CropResult implements Parcelable {
 
     public static final Creator<ActivityResult> CREATOR =
         new Creator<ActivityResult>() {

@@ -23,6 +23,13 @@
             layout="@layout/toolbar_header_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <include
+            android:id="@+id/cambridge_heading"
+            layout="@layout/quiz_header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,13 +51,7 @@
                     android:orientation="vertical">
 
 
-                    <include
-                        android:id="@+id/cambridge_heading"
-                        layout="@layout/quiz_header_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginEnd="@dimen/_8sdp" />
+
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -78,7 +79,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:autoLink="phone|web|email"
+                            android:autoLink="all"
+                            android:textColorLink="@color/auro_dark_blue"
                             android:text="@string/upload_doc_text_msg"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_10sdp"

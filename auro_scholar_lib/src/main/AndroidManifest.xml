@@ -50,7 +50,7 @@
         </provider>-->
 
         <activity
-            android:name=".util.cropper.CropImageActivity"
+            android:name=".util.cropper.CropImagesActivity"
             android:theme="@style/Base.Theme.AppCompat" />
     </application>
 
