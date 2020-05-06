@@ -64,6 +64,7 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
             }
             if (quizResModel.getStatus().equalsIgnoreCase(AppConstant.TRUE)) {
                 binding.quizMainLayout.setForeground(null);
+                binding.lockLayout.setVisibility(View.GONE);
                 binding.quizButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -74,6 +75,7 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
                 });
             } else {
                 binding.quizMainLayout.setForeground(mContext.getDrawable(R.drawable.transparentbg));
+                binding.lockLayout.setVisibility(View.VISIBLE);
             }
 
             startAnimationQuizButton(binding);

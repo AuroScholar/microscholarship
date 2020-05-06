@@ -29,29 +29,29 @@
                 android:layout_height="wrap_content"
                 />
 
+
+            <include
+                android:id="@+id/header_parent"
+                layout="@layout/quiz_header_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                />
+
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:clipToPadding="false"
                 android:paddingBottom="@dimen/_150sdp"
-                app:layout_constraintTop_toBottomOf="@id/toolbar_layout">
+                app:layout_constraintTop_toBottomOf="@id/header_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
-
-                    <include
-                        android:id="@+id/header_parent"
-                        layout="@layout/quiz_header_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginEnd="@dimen/_8sdp"
-                        />
-
 
                     <!--Shimmer Layout-->
                     <androidx.constraintlayout.widget.ConstraintLayout

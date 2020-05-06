@@ -117,6 +117,8 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
     @Override
     protected void setListener() {
         /*Do code here*/
+        binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
+        binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.btModifyAll.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
         if (kycViewModel != null && kycViewModel.serviceLiveData().hasObservers()) {
@@ -162,6 +164,9 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 setLanguageText(AppConstant.HINDI);
             }
             reloadFragment();
+        }else if(v.getId()==R.id.back_arrow)
+        {
+            getActivity().getSupportFragmentManager().popBackStack();
         }
     }
 

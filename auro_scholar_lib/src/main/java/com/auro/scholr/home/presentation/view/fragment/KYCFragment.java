@@ -137,6 +137,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     @Override
     protected void setListener() {
         /*Do code here*/
+        binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
+        binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.btUploadAll.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
         if (kycViewModel != null && kycViewModel.serviceLiveData().hasObservers()) {
@@ -395,7 +397,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 setLanguageText(AppConstant.HINDI);
             }
             reloadFragment();
-
+        } else if (v.getId() == R.id.back_arrow) {
+            getActivity().getSupportFragmentManager().popBackStack();
         }
 
     }

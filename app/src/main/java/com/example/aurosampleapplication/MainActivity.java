@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setContentView(R.layout.activity_dashboard);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.btSdk.setOnClickListener(this);
         binding.btOpen.setOnClickListener(this);
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-
+             //   binding.btSdk.setVisibility(View.GONE);
                 String mobileNumber = binding.enterNumber.getText().toString().trim();
                 if (mobileNumber != null && !mobileNumber.isEmpty()) {
                     //binding.homeContainer.setVisibility(View.VISIBLE);
@@ -72,12 +71,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openSdk(String mobileNumber) {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-      /*  auroScholarDataModel.setMobileNumber("9713680981");
+        auroScholarDataModel.setMobileNumber("9713680981");
         auroScholarDataModel.setScholrId("91003");
-        auroScholarDataModel.setStudentClass("10");*/
-        auroScholarDataModel.setMobileNumber("7503600686");
+        auroScholarDataModel.setStudentClass("10");
+      /*  auroScholarDataModel.setMobileNumber("7503600686");
         auroScholarDataModel.setScholrId("880426");
-        auroScholarDataModel.setStudentClass("6");
+        auroScholarDataModel.setStudentClass("6");*/
         //auroScholarDataModel.setRegitrationSource("Scholr");
        // auroScholarDataModel.setShareType("telecaller");
        //auroScholarDataModel.setShareIdentity("9681032476");

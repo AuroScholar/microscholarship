@@ -158,6 +158,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void setDataOnUI() {
+        binding.toolbarLayout.backArrow.setVisibility(View.GONE);
         binding.getScholarshipText.setText(resources.getText(R.string.get_scholarship));
         binding.headerParent.cambridgeHeading.setText(resources.getString(R.string.question_bank_powered_by_cambridge));
         String lang = ViewUtil.getLanguage();
