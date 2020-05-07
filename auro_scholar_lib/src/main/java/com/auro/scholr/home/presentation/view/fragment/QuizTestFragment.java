@@ -105,9 +105,18 @@ public class QuizTestFragment extends BaseFragment {
             AuroApp.getAppComponent().doInjection(this);
             quizTestViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizTestViewModel.class);
             binding.setLifecycleOwner(this);
+
         }
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+
     }
 
     @Override
@@ -119,9 +128,11 @@ public class QuizTestFragment extends BaseFragment {
         if (customDialog != null) {
             customDialog.cancel();
         }
+
         super.onDestroy();
 
     }
+
 
     @Override
     protected void init() {
@@ -223,6 +234,8 @@ public class QuizTestFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
+                WindowManager.LayoutParams.FLAG_SECURE);
     }
 
     @SuppressLint("JavascriptInterface")
