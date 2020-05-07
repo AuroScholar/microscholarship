@@ -94,4 +94,9 @@
         <item>English</item>
         <item>Other</item>
     </string-array>
+
+
+    <string name="instructions">&#8226; foo<br/>
+&#8226; bar<br/>
+&#8226; baz<br/></string>
 </resources>
