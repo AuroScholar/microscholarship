@@ -2,6 +2,7 @@ package com.auro.scholr.home.presentation.view.fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,6 +51,7 @@ import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
+import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 
 import java.io.File;
 import java.io.IOException;
@@ -85,6 +88,7 @@ public class QuizTestFragment extends BaseFragment {
     QuizResModel quizResModel;
     AssignmentResModel assignmentResModel;
     CustomDialog customDialog;
+    Dialog customProgressDialog;
 
     // Storage Permissions variables
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -234,7 +238,7 @@ public class QuizTestFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
+       getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
     }
 
@@ -279,10 +283,17 @@ public class QuizTestFragment extends BaseFragment {
 
         @JavascriptInterface
         public void boundMethod(String html) {
+            openProgressDialog();
             AppLogger.e("chhonker bound method", html);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    customProgressDialog.cancel();
+                    openQuizHomeFragment();
+                }
+            }, 4000);
 
         }
-
     }
 
     public class PQClient extends WebViewClient {
@@ -315,7 +326,7 @@ public class QuizTestFragment extends BaseFragment {
                 if (!quizTestViewModel.homeUseCase.checkDemographicStatus(dashboardResModel)) {
                     openDemographicFragment();
                 } else {
-                    openQuizHomeFragment();
+                    //  openQuizHomeFragment();
                 }
 
             }
@@ -328,11 +339,21 @@ public class QuizTestFragment extends BaseFragment {
             loadEvent(clickListener());
             if (url.equalsIgnoreCase("https://assessment.eklavvya.com/Exam/CandidateExam")) {
                 AppLogger.e("chhonker Finished exam", url);
-                customDialog.cancel();
+                closeDialog();
             }
             handleProgress(1, "");
         }
 
+        private void closeDialog() {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (customDialog != null) {
+                        customDialog.cancel();
+                    }
+                }
+            }, 2000);
+        }
 
         private void loadEvent(String javascript) {
             webView.loadUrl("javascript:" + javascript);
@@ -485,17 +506,28 @@ public class QuizTestFragment extends BaseFragment {
         customDialogModel.setContent(getActivity().getResources().getString(R.string.bullted_list));
         customDialogModel.setTwoButtonRequired(false);
         customDialog = new CustomDialog(customDialogModel);
-       // Window window = customDialog.getWindow();
-       // window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        // Window window = customDialog.getWindow();
+        // window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(customDialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-       lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         customDialog.getWindow().setAttributes(lp);
         Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
         customDialog.setCancelable(false);
         customDialog.show();
 
+    }
+
+    private void openProgressDialog() {
+        CustomDialogModel customDialogModel = new CustomDialogModel();
+        customDialogModel.setContext(getActivity());
+        customDialogModel.setTitle("Quiz Instructions");
+        customDialogModel.setContent(getActivity().getResources().getString(R.string.bullted_list));
+        customDialogModel.setTwoButtonRequired(false);
+        customProgressDialog = new CustomProgressDialog(customDialogModel);
+        Objects.requireNonNull(customProgressDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        customProgressDialog.setCancelable(false);
+        customProgressDialog.show();
     }
 }
