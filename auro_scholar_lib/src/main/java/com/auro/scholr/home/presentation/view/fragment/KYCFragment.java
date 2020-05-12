@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,12 +45,22 @@ import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.cropper.CropImages;
 import com.auro.scholr.util.cropper.CropImageViews;
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.Text;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
+import com.google.i18n.phonenumbers.PhoneNumberMatch;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -63,6 +75,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     @Named("KYCFragment")
     ViewModelFactory viewModelFactory;
 
+    String TAG = "KYCFragment";
 
     KycFragmentLayoutBinding binding;
     KYCViewModel kycViewModel;
@@ -214,6 +227,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 try {
                     Uri resultUri = result.getUri();
                     updateKYCList(resultUri.getPath());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
+                    getTextFromImage(bitmap);
                 } catch (Exception e) {
 
                 }
@@ -452,4 +467,96 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     }
 
+    private void getTextFromImage(Bitmap bitmap) {
+        TextRecognizer txtRecognizer = new TextRecognizer.Builder(getActivity()).build();
+        if (!txtRecognizer.isOperational()) {
+            // Shows if your Google Play services is not up to date or OCR is not supported for the device
+            AppLogger.e(TAG, "Detector dependencies are not yet available");
+        } else {
+            // Set the bitmap taken to the frame to perform OCR Operations.
+            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+            SparseArray items = txtRecognizer.detect(frame);
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < items.size(); i++) {
+                TextBlock item = (TextBlock) items.valueAt(i);
+                strBuilder.append(item.getValue());
+                strBuilder.append("\n");
+                // The following Process is used to show how to use lines & elements as well
+                findNameFromAadharCard(items, item);
+            }
+            AppLogger.e(TAG + " Final String ", strBuilder.toString());
+            extractPhoneNumber(strBuilder.toString());
+            validateAadharNumber(strBuilder.toString());
+
+            for (String t : getDate(strBuilder.toString())) {
+                AppLogger.e(TAG, "Date == " + t);
+            }
+        }
+    }
+
+    public void findNameFromAadharCard(SparseArray items, TextBlock item) {
+        String name;
+        for (int j = 0; j < items.size(); j++) {
+            for (int k = 0; k < item.getComponents().size(); k++) {
+                //extract scanned text lines here
+                Text line = item.getComponents().get(k);
+                AppLogger.e(TAG + " lines", line.getValue());
+
+                String lineString = line.getValue().toLowerCase();
+                if (lineString.contains("name")) {
+                    String[] names = lineString.split(":");
+                    name = names[1];
+                    AppLogger.e(TAG, "name here:" + name);
+                } else {
+                    if (lineString.contains("dob")) {
+                        Text dobline = item.getComponents().get(k - 1);
+                        name = dobline.getValue();
+                        AppLogger.e(TAG, "dob name here:" + name);
+                    }
+                }
+
+            }
+        }
+    }
+
+    public List<String> extractPhoneNumber(String input) {
+        List<String> list = new ArrayList<>();
+        Iterator<PhoneNumberMatch> existsPhone = PhoneNumberUtil.getInstance().findNumbers(input, "IN").iterator();
+        while (existsPhone.hasNext()) {
+            String numberOnly = existsPhone.next().number().toString().replaceAll("[^0-9]", "");
+            list.add(numberOnly);
+            AppLogger.e(TAG, "Phone == " + numberOnly);
+        }
+        return list;
+
+    }
+
+    public static void validateAadharNumber(String aadharNumber) {
+        String[] items = aadharNumber.split("\n");
+        for (String str : items) {
+            str.replaceAll("\\s", "");
+            String numberOnly = str.replaceAll("[^0-9]", "");
+            if (numberOnly.length() == 12) {
+                AppLogger.e("KYCFragment", "Aadhar number == " + numberOnly);
+            }
+        }
+
+    }
+
+    private static ArrayList<String> getDate(String desc) {
+        int count = 0;
+        ArrayList<String> allMatches = new ArrayList<>();
+        Matcher m = Pattern.compile("(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d").matcher(desc);
+        while (m.find()) {
+            allMatches.add(m.group());
+        }
+
+        Matcher match_second = Pattern.compile("\\d{4}-\\d{2}-\\d{2}").matcher(desc);
+        while (m.find()) {
+            AppLogger.e("KYCFragment", "Date == " + match_second.group(0));
+            allMatches.add(match_second.group(0));
+        }
+
+        return allMatches;
+    }
 }
