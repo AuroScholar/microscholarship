@@ -11,6 +11,7 @@
     <color name="backgroun_transparent">#f2000000</color>
     <color name="color_black_trns">#918F8F</color>
     <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
 
     <color name="white">#ffffff</color>
     <color name="offWhite">#F7F7F7</color>

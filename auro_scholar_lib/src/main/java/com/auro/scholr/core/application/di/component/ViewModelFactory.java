@@ -14,6 +14,7 @@ import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
 import com.auro.scholr.home.presentation.viewmodel.FriendsInviteViewModel;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
 import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
+import com.auro.scholr.home.presentation.viewmodel.InviteFriendViewModel;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
@@ -81,6 +82,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
             return (T) new FriendsInviteViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
+        }else if(modelClass.isAssignableFrom(InviteFriendViewModel.class)){
+
+            return (T) new InviteFriendViewModel(homeUseCase,homeDbUseCase,homeRemoteUseCase);
         }
 
 

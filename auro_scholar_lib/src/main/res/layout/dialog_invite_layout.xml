@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/too ls"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="InviteFriendViewModel"
+            type="com.auro.scholr.home.presentation.viewmodel.ScholarShipViewModel" />
+    </data>
+<RelativeLayout
+    android:id="@+id/rlClose"
     android:layout_width="match_parent"
-    style="@style/CustomAlertDialog"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@color/background_camera_bottom_bar">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:clickable="false"
+            android:background="@drawable/border_selector_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,29 +61,31 @@
                 android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_16sdp"
+                android:orientation="horizontal"
+                android:weightSum="4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_margin="@dimen/_16sdp"
-                android:weightSum="3"
-                android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/txtInviteBy">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
-                    android:layout_weight="2.5"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_height="wrap_content">
+                    android:layout_weight="3"
+                    android:baselineAligned="false">
 
                     <EditText
                         android:id="@+id/edit_contact"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:focusable="false"
+                        
                         android:hint="@string/please_enter_phone_number"
                         android:paddingLeft="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_15sdp"
                         android:textColorHint="@color/color_black_trns"
-                        android:textSize="@dimen/_10sdp"
+                        android:textSize="@dimen/_8sdp"
+                        android:paddingRight="@dimen/_10sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -95,14 +110,14 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:gravity="center"
-                    android:textSize="@dimen/_8sdp"
-                    android:padding="@dimen/_6sdp"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:background="@drawable/rounded_corner_blue_button"
+                    android:gravity="center"
+                    android:padding="@dimen/_6sdp"
                     android:text="@string/invite"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_8sdp" />
             </LinearLayout>
 
             <LinearLayout
@@ -163,7 +178,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
   <!--  </androidx.cardview.widget.CardView>-->
-
-
-
 </RelativeLayout>
+</layout>
