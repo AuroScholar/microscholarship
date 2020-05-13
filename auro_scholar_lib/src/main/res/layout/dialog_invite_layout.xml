@@ -13,6 +13,7 @@
     android:id="@+id/rlClose"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     android:background="@color/background_camera_bottom_bar">
 
 
