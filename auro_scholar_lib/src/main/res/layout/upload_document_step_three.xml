@@ -23,11 +23,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
-                android:id="@+id/text_upload_document"
+                android:id="@+id/serial_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/_15sdp"
-                android:text="Upload Document"
+                android:text="3. "
                 android:textColor="@color/white"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible"
@@ -35,18 +34,32 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
             <com.auro.scholr.core.util.uiwidget.RPTextView
-                android:id="@+id/text_upload_warning_document"
+                android:id="@+id/text_transfer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/_15sdp"
-                android:text="Please Upload the Document"
+                android:text="Transfer Scholarship"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible"
+                app:Font="Poppins-Regular.ttf"
+                app:layout_constraintStart_toEndOf="@+id/serial_number"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.auro.scholr.core.util.uiwidget.RPTextView
+                android:id="@+id/text_transfer_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/_15sdp"
+                android:text="You will see transfer option after document is verified"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sdp"
                 android:visibility="visible"
                 app:Font="Poppins-Regular.ttf"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_upload_document" />
+                app:layout_constraintStart_toEndOf="@+id/serial_number"
+                app:layout_constraintTop_toBottomOf="@+id/text_transfer" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -62,7 +75,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-    </>
+    </LinearLayout>
 
 
 </layout>

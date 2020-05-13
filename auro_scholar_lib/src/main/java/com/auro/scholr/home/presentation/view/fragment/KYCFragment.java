@@ -166,11 +166,11 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         setToolbar();
         setListener();
         setAdapter();
-        CustomSnackBarModel customSnackBarModel = new CustomSnackBarModel();
+       /* CustomSnackBarModel customSnackBarModel = new CustomSnackBarModel();
         customSnackBarModel.setContext(getActivity());
         customSnackBarModel.setView(binding.getRoot());
         customSnackBarModel.setStatus(1);
-        CustomSnackBar.INSTANCE.showCartSnackbar(customSnackBarModel);
+        CustomSnackBar.INSTANCE.showCartSnackbar(customSnackBarModel);*/
     }
 
 
@@ -463,12 +463,11 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     @Override
     public void onStop() {
         super.onStop();
-        CustomSnackBar.INSTANCE.dismissCartSnackbar();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        CustomSnackBar.INSTANCE.dismissCartSnackbar();
+      //  CustomSnackBar.INSTANCE.dismissCartSnackbar();
     }
 }

@@ -90,11 +90,10 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         binding.btUploadAll.setVisibility(View.GONE);
         binding.btModifyAll.setVisibility(View.VISIBLE);
         setDataOnUi();
-
-        CustomSnackBarModel customSnackBarModel = new CustomSnackBarModel();
+       /* CustomSnackBarModel customSnackBarModel = new CustomSnackBarModel();
         customSnackBarModel.setContext(getActivity());
         customSnackBarModel.setView(binding.getRoot());
-        CustomSnackBar.INSTANCE.showCartSnackbar(customSnackBarModel);
+        CustomSnackBar.INSTANCE.showCartSnackbar(customSnackBarModel);*/
     }
 
     private void setDataOnUi() {
@@ -210,6 +209,6 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onDestroy() {
         super.onDestroy();
-        CustomSnackBar.INSTANCE.dismissCartSnackbar();
+       // CustomSnackBar.INSTANCE.dismissCartSnackbar();
     }
 }
