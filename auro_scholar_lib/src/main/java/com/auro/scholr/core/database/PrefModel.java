@@ -8,6 +8,7 @@ public class PrefModel implements Serializable {
     private String userKYCProfilePhotoPath;
     private String userLanguage;
 
+
     public String getUserLanguage() {
         return userLanguage;
     }

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +31,7 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.presentation.view.adapter.KYCViewDocAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
+import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 
@@ -101,6 +104,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             if (!TextUtil.isEmpty(dashboardResModel.getWalletbalance())) {
                 binding.walletBalText.setText(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
             }
+            setDataStepsOfVerifications();
         }
         binding.cambridgeHeading.cambridgeHeading.setTextColor(getResources().getColor(R.color.white));
 
@@ -171,9 +175,11 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 setLanguageText(AppConstant.HINDI);
             }
             reloadFragment();
-        }else if(v.getId()==R.id.back_arrow)
-        {
+        } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
+        }else if(v.getId()== R.id.bt_transfer_money)
+        {
+            openFragment(new SendMoneyFragment());
         }
     }
 
@@ -206,9 +212,61 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 .commitAllowingStateLoss();
 
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-       // CustomSnackBar.INSTANCE.dismissCartSnackbar();
+        // CustomSnackBar.INSTANCE.dismissCartSnackbar();
+    }
+
+    private void setDataStepsOfVerifications() {
+        int verifyStatus = 1;
+        boolean scholarshipTansfered = false;
+        if (kycViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+            binding.stepOne.tickSign.setVisibility(View.VISIBLE);
+            binding.stepOne.textUploadDocumentMsg.setText(R.string.document_uploaded);
+            binding.stepOne.textUploadDocumentMsg.setTextColor(getResources().getColor(R.color.ufo_green));
+            if (verifyStatus == 0) {
+                binding.stepTwo.textVerifyMsg.setText(getString(R.string.verification_is_in_process));
+                binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
+
+            } else if (verifyStatus == 1) {
+                binding.stepTwo.textVerifyMsg.setText(R.string.document_verified);
+                binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
+                binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
+                binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.ufo_green));
+                if (scholarshipTansfered) {
+                    binding.stepThree.textTransferMsg.setText(R.string.successfully_transfered);
+                    binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
+                    binding.stepThree.tickSign.setVisibility(View.VISIBLE);
+                } else {
+                    binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.ufo_green));
+                    binding.stepThree.textTransferMsg.setText(R.string.transfer_money_text);
+                    binding.stepThree.tickSign.setVisibility(View.VISIBLE);
+                    binding.stepThree.btTransferMoney.setVisibility(View.VISIBLE);
+                    binding.stepThree.btTransferMoney.setOnClickListener(this);
+                  /*  LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen._25sdp),(int) getResources().getDimension(R.dimen._25sdp));
+                    lp.setMargins(0, 0,  0, (int) getResources().getDimension(R.dimen._10sdp));
+                    lp.gravity = Gravity.CENTER_VERTICAL;
+                    binding.stepThree.tickSign.setLayoutParams(lp);*/
+
+
+                }
+            } else if (verifyStatus == 2) {
+                binding.stepTwo.textVerifyMsg.setText(R.string.declined);
+                binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.color_red));
+                binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
+                binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
+                binding.stepTwo.tickSign.setBackground(getResources().getDrawable(R.drawable.ic_cancel_icon));
+
+
+                binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
+                binding.stepThree.textTransferMsg.setText(R.string.you_will_see_transfer);
+                binding.stepThree.btTransferMoney.setVisibility(View.GONE);
+                binding.stepThree.tickSign.setVisibility(View.GONE);
+
+
+            }
+        }
     }
 }

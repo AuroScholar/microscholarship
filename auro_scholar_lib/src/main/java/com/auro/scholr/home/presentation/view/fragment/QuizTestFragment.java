@@ -1,18 +1,27 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -40,12 +49,16 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.alert_dialog.CustomDialog;
+import com.auro.scholr.util.alert_dialog.CustomDialogModel;
+import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -55,7 +68,7 @@ import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
 /**
  * Created by varun
  */
-
+@SuppressLint("SetJavaScriptEnabled")
 public class QuizTestFragment extends BaseFragment {
     public static final String TAG = "QuizTestFragment";
 
@@ -74,6 +87,8 @@ public class QuizTestFragment extends BaseFragment {
     QuizTestViewModel quizTestViewModel;
     QuizResModel quizResModel;
     AssignmentResModel assignmentResModel;
+    CustomDialog customDialog;
+    Dialog customProgressDialog;
 
     // Storage Permissions variables
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -94,21 +109,34 @@ public class QuizTestFragment extends BaseFragment {
             AuroApp.getAppComponent().doInjection(this);
             quizTestViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizTestViewModel.class);
             binding.setLifecycleOwner(this);
+
         }
 
         return binding.getRoot();
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+
+    }
+
+    @Override
     public void onDestroy() {
 
-        if (webView != null)
-        {
+        if (webView != null) {
             webView.destroy();
         }
+        if (customDialog != null) {
+            customDialog.cancel();
+        }
+
         super.onDestroy();
 
     }
+
 
     @Override
     protected void init() {
@@ -134,6 +162,7 @@ public class QuizTestFragment extends BaseFragment {
                         assignmentResModel = (AssignmentResModel) responseApi.data;
                         if (!assignmentResModel.isError()) {
                             String webUrl = URLConstant.TEST_URL + "StudentID=" + assignmentResModel.getStudentID() + "&ExamAssignmentID=" + assignmentResModel.getExamAssignmentID();
+                            openDialog();
                             loadWeb(webUrl);
                         } else {
                             handleProgress(2, getActivity().getString(R.string.default_error));
@@ -209,8 +238,11 @@ public class QuizTestFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+       getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
+                WindowManager.LayoutParams.FLAG_SECURE);
     }
 
+    @SuppressLint("JavascriptInterface")
     private void loadWeb(String webUrl) {
         webView = binding.webView;
         webSettings = webView.getSettings();
@@ -233,13 +265,43 @@ public class QuizTestFragment extends BaseFragment {
             webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
 
+
+        webView.addJavascriptInterface(new MyJavaScriptInterface(getActivity()), "ButtonRecognizer");
+
         webView.loadUrl(webUrl);
 
+    }
+
+
+    class MyJavaScriptInterface {
+
+        private Context ctx;
+
+        MyJavaScriptInterface(Context ctx) {
+            this.ctx = ctx;
+        }
+
+        @JavascriptInterface
+        public void boundMethod(String html) {
+            openProgressDialog();
+            AppLogger.e("chhonker bound method", html);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    customProgressDialog.cancel();
+                    openQuizHomeFragment();
+                }
+            }, 4000);
+
+        }
     }
 
     public class PQClient extends WebViewClient {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             // If url contains mailto link then open Mail Intent
+            AppLogger.e("chhonker shouldOverrideUrlLoading", url);
+
+
             if (url.contains("mailto:")) {
                 // Could be cleverer and use a regex
                 //Open links in new browser
@@ -253,16 +315,17 @@ public class QuizTestFragment extends BaseFragment {
             }
         }
 
+
         //Show loader on url load
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            AppLogger.e("chhonker",url);
+            AppLogger.e("chhonker", url);
             if (view.getUrl().equalsIgnoreCase("http://auroscholar.com/index.php") ||
                     view.getUrl().equalsIgnoreCase("http://auroscholar.com/demographics.php")
                     || view.getUrl().equalsIgnoreCase("http://auroscholar.com/dashboard.php")) {
                 if (!quizTestViewModel.homeUseCase.checkDemographicStatus(dashboardResModel)) {
                     openDemographicFragment();
                 } else {
-                    openQuizHomeFragment();
+                    //  openQuizHomeFragment();
                 }
 
             }
@@ -270,9 +333,41 @@ public class QuizTestFragment extends BaseFragment {
 
         // Called when all page resources loaded
         public void onPageFinished(WebView view, String url) {
+            //webView.loadUrl("<button type=\"button\" value=\"Continue\" onclick=\"Continue.performClick(this.value);\">Continue</button>\n");
+            AppLogger.e("chhonker Finished", url);
+            loadEvent(clickListener());
+            if (url.equalsIgnoreCase("https://assessment.eklavvya.com/Exam/CandidateExam")) {
+                AppLogger.e("chhonker Finished exam", url);
+                closeDialog();
+            }
             handleProgress(1, "");
-            webView.loadUrl("javascript:(function(){ " +
-                    "document.getElementById('android-app').style.display='none';})()");
+        }
+
+        private void closeDialog() {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (customDialog != null) {
+                        customDialog.cancel();
+                    }
+                }
+            }, 2000);
+        }
+
+        private void loadEvent(String javascript) {
+            webView.loadUrl("javascript:" + javascript);
+        }
+
+        private String clickListener() {
+            return getButtons() + "for(var i = 0; i < buttons.length; i++){\n" +
+                    "\tbuttons[i].onclick = function(){ console.log('click worked.'); ButtonRecognizer.boundMethod('button clicked'); };\n" +
+                    "}";
+        }
+
+        private String getButtons() {
+            //  return "var buttons = document.getElementsByClassName('col-sm-12'); console.log(buttons.length + ' buttons');\n";
+            return "var buttons = document.getElementsByClassName('btn-primary btn btn-style'); console.log(buttons.length + ' buttons');\n";
+
         }
     }
 
@@ -401,5 +496,37 @@ public class QuizTestFragment extends BaseFragment {
                 }
             });
         }
+    }
+
+    private void openDialog() {
+        CustomDialogModel customDialogModel = new CustomDialogModel();
+        customDialogModel.setContext(getActivity());
+        customDialogModel.setTitle("Quiz Instructions");
+        customDialogModel.setContent(getActivity().getResources().getString(R.string.bullted_list));
+        customDialogModel.setTwoButtonRequired(false);
+        customDialog = new CustomDialog(customDialogModel);
+        // Window window = customDialog.getWindow();
+        // window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(customDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        customDialog.getWindow().setAttributes(lp);
+        Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        customDialog.setCancelable(false);
+        customDialog.show();
+
+    }
+
+    private void openProgressDialog() {
+        CustomDialogModel customDialogModel = new CustomDialogModel();
+        customDialogModel.setContext(getActivity());
+        customDialogModel.setTitle("Quiz Instructions");
+        customDialogModel.setContent(getActivity().getResources().getString(R.string.bullted_list));
+        customDialogModel.setTwoButtonRequired(false);
+        customProgressDialog = new CustomProgressDialog(customDialogModel);
+        Objects.requireNonNull(customProgressDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        customProgressDialog.setCancelable(false);
+        customProgressDialog.show();
     }
 }

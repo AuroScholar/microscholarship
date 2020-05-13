@@ -28,9 +28,9 @@
                 android:layout_height="wrap_content"
                 android:text="2. "
                 android:textColor="@color/white"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_13sdp"
                 android:visibility="visible"
-                app:Font="Poppins-Regular.ttf"
+                app:Font="Poppins-SemiBold.ttf"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,12 +39,12 @@
                 android:id="@+id/text_document_verification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/_15sdp"
-                android:text="Upload Document"
+                android:paddingEnd="@dimen/_13sdp"
+                android:text="Upload Verification"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_13sdp"
                 android:visibility="visible"
-                app:Font="Poppins-Regular.ttf"
+                app:Font="Poppins-SemiBold.ttf"
                 app:layout_constraintStart_toEndOf="@+id/serial_number"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,10 +53,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/_15sdp"
-                android:text="Verification is in process"
+                android:text="@string/verification_is_in_process"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_12sdp"
-                android:visibility="visible"
+                android:textSize="@dimen/_10sdp"
+                android:visibility="gone"
                 app:Font="Poppins-Regular.ttf"
                 app:layout_constraintStart_toEndOf="@+id/serial_number"
                 app:layout_constraintTop_toBottomOf="@+id/text_document_verification" />
@@ -65,11 +65,12 @@
 
         <ImageView
             android:id="@+id/tick_sign"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:background="@drawable/ic_tick"
+            android:background="@drawable/ic_done_icon"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_document_layout"
             app:layout_constraintTop_toTopOf="parent" />

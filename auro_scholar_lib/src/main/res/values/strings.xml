@@ -31,7 +31,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="retry">Retry</string>
-    <string name="id_proof_front_side">ID Proof Font Side</string>
+    <string name="id_proof_front_side">ID Proof Front Side</string>
     <string name="title_activity_camera">CameraActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="next">Next</string>
@@ -93,4 +93,26 @@
         <item>English</item>
         <item>Other</item>
     </string-array>
+
+
+    <string name="bullted_list">
+          \u25CF  Please read the all instructions carefully,
+       \n \u25CF Question bank is powered by Cambridge.
+        \n \u25CF Quiz contains the 10 questions.
+        \n \u25CF Please read each and every question carefully.
+
+    </string>
+
+
+    <string name="instructions">&#8226; foo \n
+&#8226; bar \n
+&#8226; bar \n</string>
+    <string name="document_uploaded">Document Uploaded</string>
+    <string name="verification_is_in_process">Verification is in process</string>
+    <string name="document_verified">Document Verified</string>
+    <string name="declined">Declined</string>
+    <string name="you_will_see_transfer">You will see transfer option after your document is verified</string>
+    <string name="transfer_money_text">You can transfer money on click of Tansfer Button</string>
+    <string name="successfully_transfered">You have successfully transfered scholarship amount</string>
+    <string name="tranfer_money">Tranfer Money</string>
 </resources>

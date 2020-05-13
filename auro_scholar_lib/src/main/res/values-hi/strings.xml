@@ -94,4 +94,17 @@
         <item>English</item>
         <item>Other</item>
     </string-array>
+
+
+    <string name="instructions">&#8226; foo<br/>
+&#8226; bar<br/>
+&#8226; baz<br/></string>
+    <string name="document_uploaded">Document Uploaded</string>
+    <string name="verification_is_in_process">Verification is in process</string>
+    <string name="document_verified">Document Verified</string>
+    <string name="declined">Declined</string>
+    <string name="you_will_see_transfer">You will see transfer option after your document is verified</string>
+    <string name="transfer_money_text">You can transfer money on click of Tansfer Button</string>
+    <string name="successfully_transfered">You have successfully transfered scholarship amount</string>
+    <string name="tranfer_money">Tranfer Money</string>
 </resources>

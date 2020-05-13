@@ -28,9 +28,9 @@
                 android:layout_height="wrap_content"
                 android:text="1. "
                 android:textColor="@color/white"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_13sdp"
                 android:visibility="visible"
-                app:Font="Poppins-Regular.ttf"
+                app:Font="Poppins-SemiBold.ttf"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,23 +38,23 @@
                 android:id="@+id/text_upload_document"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_13sdp"
                 android:text="Upload Document"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_13sdp"
                 android:visibility="visible"
                 app:Font="Poppins-SemiBold.ttf"
                 app:layout_constraintStart_toEndOf="@+id/serial_number"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
-                android:id="@+id/text_upload_warning_document"
+                android:id="@+id/text_upload_document_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/_15sdp"
                 android:text="Please Upload the Document"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/_10sdp"
                 android:visibility="visible"
                 app:Font="Poppins-Regular.ttf"
                 app:layout_constraintStart_toEndOf="@+id/serial_number"
@@ -64,11 +64,12 @@
 
         <ImageView
             android:id="@+id/tick_sign"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:background="@drawable/ic_tick"
+            android:visibility="gone"
+            android:src="@drawable/ic_done_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_document_layout"
             app:layout_constraintTop_toTopOf="parent" />
