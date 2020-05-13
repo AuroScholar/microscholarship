@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Single;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Response;
@@ -37,6 +38,17 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         params.put(AppConstant.DashBoardParams.SHARE_TYPE, model.getShareType());
         params.put(AppConstant.DashBoardParams.SHARE_IDENTITY, model.getShareIdentity());
         return homeRemoteApi.getDashboardData(params);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> getAzureData(AssignmentReqModel azureReqModel) {
+        RequestBody registration_id = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getRegistration_id());
+        RequestBody exam_id = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getEklavvya_exam_id());
+        RequestBody exam_name = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getExam_name());
+        RequestBody quiz_attempt = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getQuiz_attempt());
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), azureReqModel.getImageBytes());
+        MultipartBody.Part student_photo = MultipartBody.Part.createFormData("exam_face_img", "image.jpg", requestFile);
+        return homeRemoteApi.getAzureApiData(registration_id, exam_id,exam_name,quiz_attempt,student_photo);
     }
 
     @Override

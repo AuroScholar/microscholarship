@@ -26,6 +26,7 @@ public interface AppConstant {
     String QUIZ_RES_MODEL = "QUIZ_TEST_MODEL";
     String AURO_DATA_MODEL = "AURO_DATA_MODEL";
     String MOBILE_NUMBER = "mobile_no";
+
     int CAMERA_REQUEST_CODE = 007;
     String FAILED = "failed";
     String LANGUAGE_EN = "en";
@@ -127,6 +128,14 @@ public interface AppConstant {
         String EXAM_NAME = "exam_name";
         String QUIZ_ATTEMPT = "quiz_attempt";
         String EXAMLANG = "examlang";
+    }
+
+    interface AzureApiParams{
+        String REGISTRATION_ID = "registration_id";
+        String EXAM_NAME = "exam_name";
+        String QUIZ_ATTEMPT = "quiz_attempt";
+        String EKLAVVYA_EXAM_ID="eklavvya_exam_id";
+        String EXAM_FACE_IMG = "exam_face_img";
     }
 
 }

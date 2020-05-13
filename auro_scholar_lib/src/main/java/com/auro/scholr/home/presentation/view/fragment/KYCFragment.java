@@ -254,6 +254,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     }
 
+
     private void loadImageFromStorage(String path) {
         try {
             File f = new File(path);
@@ -266,7 +267,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     private void updateKYCList(String path) {
         try {
-
             if (kycDocumentDatamodelArrayList.get(pos).getDocumentId() == AppConstant.DocumentType.ID_PROOF_FRONT_SIDE) {
                 kycDocumentDatamodelArrayList.get(pos).setDocumentFileName("id_front.jpg");
             } else if (kycDocumentDatamodelArrayList.get(pos).getDocumentId() == AppConstant.DocumentType.ID_PROOF_BACK_SIDE) {

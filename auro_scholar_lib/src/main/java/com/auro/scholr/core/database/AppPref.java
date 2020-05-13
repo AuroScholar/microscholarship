@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.auro.scholr.core.application.AuroApp;
+import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.google.gson.Gson;
 
 import static com.auro.scholr.core.common.AppConstant.PREF_OBJECT;
@@ -38,7 +39,6 @@ public enum AppPref {
 
         return prefModel;
     }
-
 
     /**
      * SAVE MODEL OBJECT IN SHARED PREF

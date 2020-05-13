@@ -26,6 +26,7 @@ public interface HomeRemoteApi {
     @FormUrlEncoded
     Single<Response<JsonObject>> getDashboardData(@FieldMap Map<String, String> params);
 
+
     @POST(URLConstant.DEMOGRAPHIC_API)
     @FormUrlEncoded
     Single<Response<JsonObject>> postDemographicData(@FieldMap Map<String, String> params);
@@ -41,5 +42,14 @@ public interface HomeRemoteApi {
     @POST(URLConstant.GET_ASSIGNMENT_ID)
     @FormUrlEncoded
     Single<Response<JsonObject>> getAssignmentId(@FieldMap  Map<String, String> params);
+
+    @Multipart
+    @POST(URLConstant.AZURE_API)
+    Single<Response<JsonObject>> getAzureApiData(
+            @Part(AppConstant.AzureApiParams.REGISTRATION_ID) RequestBody registration_id,
+            @Part(AppConstant.AzureApiParams.EKLAVVYA_EXAM_ID) RequestBody exam_id,
+            @Part(AppConstant.AzureApiParams.EXAM_NAME) RequestBody exam_name,
+            @Part(AppConstant.AzureApiParams.QUIZ_ATTEMPT) RequestBody quiz_attempt,
+            @Part MultipartBody.Part exam_face_img);
 
 }

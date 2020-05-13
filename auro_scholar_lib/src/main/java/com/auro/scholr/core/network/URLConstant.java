@@ -12,6 +12,8 @@ public interface URLConstant {
 
     String DEMOGRAPHIC_API = BASE_URL + "demographics.php";
 
+    String AZURE_API = BASE_URL + "faceimg.php";
+
 
     String UPLOAD_IMAGE_URL = BASE_URL + "kyc.php";
     String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction.php ";
