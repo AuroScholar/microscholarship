@@ -33,7 +33,7 @@ import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.KycFragmentLayoutBinding;
-import com.auro.scholr.home.data.model.CustomSnackBarModel;
+import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
@@ -41,13 +41,10 @@ import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.adapter.KYCuploadAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
-import com.auro.scholr.payment.presentation.view.fragment.PaytmFragment;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
-
-import com.auro.scholr.util.alert_dialog.CustomSnackBar;
 
 import com.auro.scholr.util.cropper.CropImages;
 import com.auro.scholr.util.cropper.CropImageViews;
@@ -72,6 +69,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import static android.app.Activity.RESULT_OK;
+import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.UPLOAD_PROFILE_IMAGE;
 
 
@@ -90,6 +88,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     private boolean uploadBtnStatus;
     Resources resources;
 
+    /*Face Image Params*/
+    List<AssignmentReqModel> faceModelList;
+    int faceCounter = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -184,6 +185,16 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         setListener();
         setAdapter();
 
+        /*Check for face image is Exist Or Not*/
+        checkForFaceImage();
+    }
+
+    private void checkForFaceImage() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null && !TextUtil.checkListIsEmpty(prefModel.getListAzureImageList())) {
+            faceModelList = prefModel.getListAzureImageList();
+            kycViewModel.sendAzureImageData(faceModelList.get(0));
+        }
     }
 
 
@@ -207,7 +218,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 if (!uploadBtnStatus) {
                     onUploadDocClick(commonDataModel);
                 }
-
                 break;
             case KYC_RESULT_PATH:
                 /*do code here*/
@@ -309,6 +319,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                     if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
                         updateListonResponse((KYCResListModel) responseApi.data);
                         uploadBtnStatus = false;
+                    } else if (responseApi.apiTypeStatus == AZURE_API) {
+                        sendFaceImageOnServer();
                     }
 
                     break;
@@ -318,11 +330,13 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 case FAIL_400:
                     showError((String) responseApi.data);
                     progressBarHandling(1);
+                    updateFaceListInPref();
                     break;
 
                 default:
                     showError((String) responseApi.data);
                     progressBarHandling(1);
+                    updateFaceListInPref();
                     break;
             }
 
@@ -422,8 +436,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             reloadFragment();
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
-        }else if(v.getId()== R.id.bt_transfer_money)
-        {
+        } else if (v.getId() == R.id.bt_transfer_money) {
             openFragment(new SendMoneyFragment());
         }
 
@@ -617,4 +630,31 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         }
     }
 
+
+    private void sendFaceImageOnServer() {
+        if (!TextUtil.checkListIsEmpty(faceModelList)) {
+            faceModelList.get(faceCounter).setUploaded(true);
+            faceCounter++;
+            if (faceModelList.size() > faceCounter) {
+                kycViewModel.sendAzureImageData(faceModelList.get(faceCounter));
+            } else {
+                updateFaceListInPref();
+            }
+        }
+    }
+
+    private void updateFaceListInPref()
+    {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null) {
+            List<AssignmentReqModel> newList = new ArrayList<>();
+            for (AssignmentReqModel model : faceModelList) {
+                if (!model.isUploaded()) {
+                    newList.add(model);
+                }
+            }
+            prefModel.setListAzureImageList(newList);
+            AppPref.INSTANCE.setPref(prefModel);
+        }
+    }
 }

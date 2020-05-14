@@ -12,6 +12,7 @@ public class AssignmentReqModel implements Parcelable {
     String examlang;
     String eklavvya_exam_id;
     byte[] imageBytes;
+    boolean isUploaded;
 
     protected AssignmentReqModel(Parcel in) {
         registration_id = in.readString();
@@ -20,6 +21,23 @@ public class AssignmentReqModel implements Parcelable {
         examlang = in.readString();
         eklavvya_exam_id = in.readString();
         imageBytes = in.createByteArray();
+        isUploaded = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(registration_id);
+        dest.writeString(exam_name);
+        dest.writeString(quiz_attempt);
+        dest.writeString(examlang);
+        dest.writeString(eklavvya_exam_id);
+        dest.writeByteArray(imageBytes);
+        dest.writeByte((byte) (isUploaded ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<AssignmentReqModel> CREATOR = new Creator<AssignmentReqModel>() {
@@ -33,6 +51,14 @@ public class AssignmentReqModel implements Parcelable {
             return new AssignmentReqModel[size];
         }
     };
+
+    public boolean isUploaded() {
+        return isUploaded;
+    }
+
+    public void setUploaded(boolean uploaded) {
+        isUploaded = uploaded;
+    }
 
     public String getEklavvya_exam_id() {
         return eklavvya_exam_id;
@@ -86,18 +112,5 @@ public class AssignmentReqModel implements Parcelable {
         this.examlang = examlang;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(registration_id);
-        parcel.writeString(exam_name);
-        parcel.writeString(quiz_attempt);
-        parcel.writeString(examlang);
-        parcel.writeString(eklavvya_exam_id);
-        parcel.writeByteArray(imageBytes);
-    }
 }

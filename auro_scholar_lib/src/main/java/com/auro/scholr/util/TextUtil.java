@@ -38,9 +38,9 @@ public class TextUtil {
 
     public static boolean checkListIsEmpty(List data) {
         if (data != null && !data.isEmpty()) {
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
 
     }

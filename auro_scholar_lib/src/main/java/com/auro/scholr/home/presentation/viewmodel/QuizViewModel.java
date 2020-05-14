@@ -48,16 +48,12 @@ public class QuizViewModel extends ViewModel {
     public void getDashBoardData(AuroScholarDataModel model) {
 
         Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
-
             if (hasInternet) {
-
                 dashBoardApi(model);
-
             } else {
                 // please check your internet
                 serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
             }
-
         });
 
         getCompositeDisposable().add(disposable);
@@ -68,7 +64,7 @@ public class QuizViewModel extends ViewModel {
             if(hasInternet){
                 azureRequestApi(model);
             }else{
-                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET,AuroApp.getAppContext().getString(R.string.internet_check),Status.NO_INTERNET));
+               // serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET,AuroApp.getAppContext().getString(R.string.internet_check),Status.NO_INTERNET));
             }
         });
         getCompositeDisposable().add(disposable);
