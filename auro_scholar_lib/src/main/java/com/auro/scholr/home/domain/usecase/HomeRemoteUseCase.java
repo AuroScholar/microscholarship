@@ -9,20 +9,16 @@ import com.auro.scholr.core.network.NetworkUseCase;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AssignmentResModel;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
+import com.auro.scholr.home.data.model.AzureResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
-import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.KYCResListModel;
-import com.auro.scholr.home.data.model.KYCResModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
 import com.auro.scholr.util.AppUtil;
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Single;
@@ -34,6 +30,7 @@ import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_400;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_401;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_FAIL;
 import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
+import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
 
@@ -64,6 +61,23 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         });
     }
 
+    public Single<ResponseApi> getAzureData(AssignmentReqModel model){
+
+        return dashboardRemoteData.getAzureData(model).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if(response != null){
+
+                    return handleResponse(response,AZURE_API);
+
+                }else{
+                    return responseFail(null);
+                }
+
+            }
+        });
+    }
 
     public Single<ResponseApi> getDashboardData(AuroScholarDataModel model) {
 
@@ -160,6 +174,9 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         }else if (status == ASSIGNMENT_STUDENT_DATA_API) {
             AssignmentResModel assignmentResModel = new Gson().fromJson(response.body(), AssignmentResModel.class);
             return ResponseApi.success(assignmentResModel, status);
+        }else if(status == AZURE_API){
+            AzureResModel azureResModel = new Gson().fromJson(response.body(),AzureResModel.class);
+            return ResponseApi.success(azureResModel,status);
         }
 
 

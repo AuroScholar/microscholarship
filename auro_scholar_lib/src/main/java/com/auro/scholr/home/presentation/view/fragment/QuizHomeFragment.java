@@ -1,7 +1,9 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -32,8 +34,10 @@ import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
+import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
+import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
@@ -44,12 +48,16 @@ import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import static android.app.Activity.RESULT_OK;
+import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 
 
@@ -61,12 +69,15 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     QuizHomeLayoutBinding binding;
     QuizViewModel quizViewModel;
     QuizItemAdapter quizItemAdapter;
-    private static final String TAG = "CardFragment";
+    private String TAG = "QuizHomeFragment";
     DashboardResModel dashboardResModel;
     QuizResModel quizResModel;
     QuizWonAdapter quizWonAdapter;
     Resources resources;
     boolean isStateRestore;
+
+
+
 
 
     @Override
@@ -215,6 +226,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         } else {
                             setDataOnUi(dashboardResModel);
                         }
+                    }else if(responseApi.apiTypeStatus == AZURE_API){
+                        openQuizTestFragment(dashboardResModel);
 
                     }
 
@@ -291,6 +304,52 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         openFragment(quizTestFragment);
     }
 
+    public void openCameraPhotoFragment(){
+
+            Intent intent = new Intent(getActivity(), CameraActivity.class);
+            startActivityForResult(intent, AppConstant.CAMERA_REQUEST_CODE);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppConstant.CAMERA_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                try {
+                    String path = data.getStringExtra(AppConstant.PROFILE_IMAGE_PATH);
+                    azureImage(path);
+                    // loadImageFromStorage(path);
+                } catch (Exception e) {
+
+                }
+
+
+            } else {
+
+            }
+        }
+    }
+
+    private void azureImage(String path) {
+        try {
+
+          //  File file = new File(kycDocumentDatamodelArrayList.get(pos).getDocumentURi().getPath());
+            Log.d(TAG,"Image Path"+path);
+            File file = new File(path);
+            InputStream is = AuroApp.getAppContext().getApplicationContext().getContentResolver().openInputStream(Uri.fromFile(file));
+            AssignmentReqModel assignmentReqModel= quizViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
+            assignmentReqModel.setImageBytes(quizViewModel.getBytes(is));
+            assignmentReqModel.setEklavvya_exam_id("");
+            quizViewModel.getAzureRequestData(assignmentReqModel);
+
+
+        } catch (Exception e) {
+            /*Do code here when error occur*/
+        }
+    }
+
+
     public void openKYCFragment(DashboardResModel dashboardResModel) {
         Bundle bundle = new Bundle();
         KYCFragment kycFragment = new KYCFragment();
@@ -354,7 +413,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         Permissions.check(getActivity(), PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
             @Override
             public void onGranted() {
-                openQuizTestFragment(dashboardResModel);
+
+               //todo hold  openQuizTestFragment(dashboardResModel);
+                openCameraPhotoFragment();
+
             }
 
             @Override

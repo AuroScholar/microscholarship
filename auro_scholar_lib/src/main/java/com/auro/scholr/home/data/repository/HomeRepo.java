@@ -22,6 +22,8 @@ public interface HomeRepo {
 
         Single<Response<JsonObject>> getAssignmentId(AssignmentReqModel assignmentReqModel);
 
+        Single<Response<JsonObject>> getAzureData(AssignmentReqModel azureReqModel);
+
 
     }
 
