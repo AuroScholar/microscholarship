@@ -59,6 +59,9 @@ public interface AppConstant {
         String REGISTRATION_SOURCE = "regitration_source";
         String SHARE_TYPE = "share_type";
         String SHARE_IDENTITY = "share_identity";
+        String IS_KYC_UPLOADED = "is_kyc_uploaded";
+        String IS_KYC_VERIFIED = "is_kyc_verified";
+        String IS_PAYMENT_LASTMONTH = "is_payment_lastmonth";
     }
 
     interface ResponseConstatnt {
@@ -99,6 +102,11 @@ public interface AppConstant {
         String ID_PROOF_BACK = "id_proof_back";
         String SCHOOL_ID = "school_id_card";
         String STUDENT_PHOTO = "student_photo";
+
+        String YES="Yes";
+        String NO="No";
+        String IN_PROCESS="Inprocess";
+        String REJECTED="Rejected";
     }
 
 

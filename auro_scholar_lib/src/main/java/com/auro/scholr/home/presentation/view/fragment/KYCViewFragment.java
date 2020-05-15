@@ -26,9 +26,11 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.KycFragmentLayoutBinding;
+import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.CustomSnackBarModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.presentation.view.adapter.KYCViewDocAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
@@ -38,9 +40,13 @@ import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomSnackBar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import static com.auro.scholr.core.common.Status.AZURE_API;
+import static com.auro.scholr.core.common.Status.UPLOAD_PROFILE_IMAGE;
 
 
 public class KYCViewFragment extends BaseFragment implements View.OnClickListener {
@@ -57,6 +63,10 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
     private DashboardResModel dashboardResModel;
     ArrayList<KYCDocumentDatamodel> kycDocumentDatamodelArrayList;
     Resources resources;
+
+    /*Face Image Params*/
+    List<AssignmentReqModel> faceModelList;
+    int faceCounter = 0;
 
 
     @Override
@@ -93,10 +103,6 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         binding.btUploadAll.setVisibility(View.GONE);
         binding.btModifyAll.setVisibility(View.VISIBLE);
         setDataOnUi();
-       /* CustomSnackBarModel customSnackBarModel = new CustomSnackBarModel();
-        customSnackBarModel.setContext(getActivity());
-        customSnackBarModel.setView(binding.getRoot());
-        CustomSnackBar.INSTANCE.showCartSnackbar(customSnackBarModel);*/
     }
 
     private void setDataOnUi() {
@@ -134,6 +140,8 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         binding.toolbarLayout.langEng.setOnClickListener(this);
         if (kycViewModel != null && kycViewModel.serviceLiveData().hasObservers()) {
             kycViewModel.serviceLiveData().removeObservers(this);
+        } else {
+            observeServiceResponse();
         }
     }
 
@@ -151,6 +159,17 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         setToolbar();
         setListener();
         setAdapter();
+
+        checkForFaceImage();
+    }
+
+
+    private void checkForFaceImage() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null && !TextUtil.checkListIsEmpty(prefModel.getListAzureImageList())) {
+            faceModelList = prefModel.getListAzureImageList();
+            kycViewModel.sendAzureImageData(faceModelList.get(0));
+        }
     }
 
 
@@ -177,8 +196,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             reloadFragment();
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
-        }else if(v.getId()== R.id.bt_transfer_money)
-        {
+        } else if (v.getId() == R.id.bt_transfer_money) {
             openFragment(new SendMoneyFragment());
         }
     }
@@ -220,22 +238,19 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
     }
 
     private void setDataStepsOfVerifications() {
-        int verifyStatus = 1;
-        boolean scholarshipTansfered = false;
-        if (kycViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+        if (dashboardResModel.getIs_kyc_uploaded().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
             binding.stepOne.tickSign.setVisibility(View.VISIBLE);
             binding.stepOne.textUploadDocumentMsg.setText(R.string.document_uploaded);
             binding.stepOne.textUploadDocumentMsg.setTextColor(getResources().getColor(R.color.ufo_green));
-            if (verifyStatus == 0) {
+            if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.IN_PROCESS)) {
                 binding.stepTwo.textVerifyMsg.setText(getString(R.string.verification_is_in_process));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
-
-            } else if (verifyStatus == 1) {
+            } else if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
                 binding.stepTwo.textVerifyMsg.setText(R.string.document_verified);
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
                 binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.ufo_green));
-                if (scholarshipTansfered) {
+                if (dashboardResModel.getIs_payment_lastmonth().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
                     binding.stepThree.textTransferMsg.setText(R.string.successfully_transfered);
                     binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
                     binding.stepThree.tickSign.setVisibility(View.VISIBLE);
@@ -245,14 +260,9 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                     binding.stepThree.tickSign.setVisibility(View.VISIBLE);
                     binding.stepThree.btTransferMoney.setVisibility(View.VISIBLE);
                     binding.stepThree.btTransferMoney.setOnClickListener(this);
-                  /*  LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen._25sdp),(int) getResources().getDimension(R.dimen._25sdp));
-                    lp.setMargins(0, 0,  0, (int) getResources().getDimension(R.dimen._10sdp));
-                    lp.gravity = Gravity.CENTER_VERTICAL;
-                    binding.stepThree.tickSign.setLayoutParams(lp);*/
-
 
                 }
-            } else if (verifyStatus == 2) {
+            } else if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.REJECTED)) {
                 binding.stepTwo.textVerifyMsg.setText(R.string.declined);
                 binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.color_red));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
@@ -269,4 +279,59 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             }
         }
     }
+
+    private void observeServiceResponse() {
+        kycViewModel.serviceLiveData().observeForever(responseApi -> {
+
+            switch (responseApi.status) {
+                case LOADING:
+                   /*Do handling in background*/
+                    break;
+
+                case SUCCESS:
+                   if (responseApi.apiTypeStatus == AZURE_API) {
+                        sendFaceImageOnServer();
+                    }
+
+                    break;
+
+                case NO_INTERNET:
+                case AUTH_FAIL:
+                case FAIL_400:
+                default:
+                    updateFaceListInPref();
+                    break;
+
+            }
+
+        });
+    }
+
+    private void sendFaceImageOnServer() {
+        if (!TextUtil.checkListIsEmpty(faceModelList)) {
+            faceModelList.get(faceCounter).setUploaded(true);
+            faceCounter++;
+            if (faceModelList.size() > faceCounter) {
+                kycViewModel.sendAzureImageData(faceModelList.get(faceCounter));
+            } else {
+                updateFaceListInPref();
+            }
+        }
+    }
+
+    private void updateFaceListInPref()
+    {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null) {
+            List<AssignmentReqModel> newList = new ArrayList<>();
+            for (AssignmentReqModel model : faceModelList) {
+                if (!model.isUploaded()) {
+                    newList.add(model);
+                }
+            }
+            prefModel.setListAzureImageList(newList);
+            AppPref.INSTANCE.setPref(prefModel);
+        }
+    }
+
 }

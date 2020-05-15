@@ -310,7 +310,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         kycViewModel.serviceLiveData().observeForever(responseApi -> {
 
             switch (responseApi.status) {
-
                 case LOADING:
                     progressBarHandling(0);
                     break;
@@ -320,6 +319,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                         updateListonResponse((KYCResListModel) responseApi.data);
                         uploadBtnStatus = false;
                     } else if (responseApi.apiTypeStatus == AZURE_API) {
+
                         sendFaceImageOnServer();
                     }
 
@@ -598,38 +598,52 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     }
 
     private void setDataStepsOfVerifications() {
-        int verifyStatus = 0;
-        boolean scholarshipTansfered = false;
-        if (kycViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+        if(dashboardResModel.getIs_kyc_uploaded().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
             binding.stepOne.tickSign.setVisibility(View.VISIBLE);
             binding.stepOne.textUploadDocumentMsg.setText(R.string.document_uploaded);
             binding.stepOne.textUploadDocumentMsg.setTextColor(getResources().getColor(R.color.ufo_green));
-            if (verifyStatus == 0) {
+            if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.IN_PROCESS)) {
                 binding.stepTwo.textVerifyMsg.setText(getString(R.string.verification_is_in_process));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
-            } else if (verifyStatus == 1) {
+            } else if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
                 binding.stepTwo.textVerifyMsg.setText(R.string.document_verified);
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
+                binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
                 binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.ufo_green));
-                if (scholarshipTansfered) {
+                if (dashboardResModel.getIs_payment_lastmonth().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
                     binding.stepThree.textTransferMsg.setText(R.string.successfully_transfered);
                     binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
+                    binding.stepThree.tickSign.setVisibility(View.VISIBLE);
                 } else {
                     binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.ufo_green));
                     binding.stepThree.textTransferMsg.setText(R.string.transfer_money_text);
                     binding.stepThree.tickSign.setVisibility(View.VISIBLE);
                     binding.stepThree.btTransferMoney.setVisibility(View.VISIBLE);
                     binding.stepThree.btTransferMoney.setOnClickListener(this);
+                  /*  LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen._25sdp),(int) getResources().getDimension(R.dimen._25sdp));
+                    lp.setMargins(0, 0,  0, (int) getResources().getDimension(R.dimen._10sdp));
+                    lp.gravity = Gravity.CENTER_VERTICAL;
+                    binding.stepThree.tickSign.setLayoutParams(lp);*/
+
+
                 }
-            } else if (verifyStatus == 2) {
+            } else if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.REJECTED)) {
                 binding.stepTwo.textVerifyMsg.setText(R.string.declined);
                 binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.color_red));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
+                binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setBackground(getResources().getDrawable(R.drawable.ic_cancel_icon));
+
+
+                binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
+                binding.stepThree.textTransferMsg.setText(R.string.you_will_see_transfer);
+                binding.stepThree.btTransferMoney.setVisibility(View.GONE);
+                binding.stepThree.tickSign.setVisibility(View.GONE);
+
+
             }
         }
     }
-
 
     private void sendFaceImageOnServer() {
         if (!TextUtil.checkListIsEmpty(faceModelList)) {
