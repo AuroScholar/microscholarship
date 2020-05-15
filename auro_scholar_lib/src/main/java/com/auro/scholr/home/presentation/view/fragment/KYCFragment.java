@@ -33,6 +33,7 @@ import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.KycFragmentLayoutBinding;
+import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
@@ -40,9 +41,11 @@ import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.adapter.KYCuploadAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
+import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+
 import com.auro.scholr.util.cropper.CropImages;
 import com.auro.scholr.util.cropper.CropImageViews;
 import com.google.android.gms.vision.Frame;
@@ -66,6 +69,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import static android.app.Activity.RESULT_OK;
+import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.UPLOAD_PROFILE_IMAGE;
 
 
@@ -74,9 +78,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     @Inject
     @Named("KYCFragment")
     ViewModelFactory viewModelFactory;
-
     String TAG = "KYCFragment";
-
     KycFragmentLayoutBinding binding;
     KYCViewModel kycViewModel;
     KYCuploadAdapter kyCuploadAdapter;
@@ -86,6 +88,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     private boolean uploadBtnStatus;
     Resources resources;
 
+    /*Face Image Params*/
+    List<AssignmentReqModel> faceModelList;
+    int faceCounter = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -119,10 +124,12 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             dashboardResModel = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
         }
         setDataOnUi();
+
     }
 
     private void setDataOnUi() {
         if (dashboardResModel != null) {
+            setDataStepsOfVerifications();
             if (!TextUtil.isEmpty(dashboardResModel.getWalletbalance())) {
                 binding.walletBalText.setText(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
             }
@@ -136,6 +143,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             setLanguageText(AppConstant.ENGLISH);
         }
     }
+
 
     private void setLanguageText(String text) {
         binding.toolbarLayout.langEng.setText(text);
@@ -176,6 +184,17 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         setToolbar();
         setListener();
         setAdapter();
+
+        /*Check for face image is Exist Or Not*/
+        checkForFaceImage();
+    }
+
+    private void checkForFaceImage() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null && !TextUtil.checkListIsEmpty(prefModel.getListAzureImageList())) {
+            faceModelList = prefModel.getListAzureImageList();
+            kycViewModel.sendAzureImageData(faceModelList.get(0));
+        }
     }
 
 
@@ -199,7 +218,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 if (!uploadBtnStatus) {
                     onUploadDocClick(commonDataModel);
                 }
-
                 break;
             case KYC_RESULT_PATH:
                 /*do code here*/
@@ -292,7 +310,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         kycViewModel.serviceLiveData().observeForever(responseApi -> {
 
             switch (responseApi.status) {
-
                 case LOADING:
                     progressBarHandling(0);
                     break;
@@ -301,6 +318,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                     if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
                         updateListonResponse((KYCResListModel) responseApi.data);
                         uploadBtnStatus = false;
+                    } else if (responseApi.apiTypeStatus == AZURE_API) {
+
+                        sendFaceImageOnServer();
                     }
 
                     break;
@@ -310,11 +330,13 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 case FAIL_400:
                     showError((String) responseApi.data);
                     progressBarHandling(1);
+                    updateFaceListInPref();
                     break;
 
                 default:
                     showError((String) responseApi.data);
                     progressBarHandling(1);
+                    updateFaceListInPref();
                     break;
             }
 
@@ -414,6 +436,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             reloadFragment();
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
+        } else if (v.getId() == R.id.bt_transfer_money) {
+            openFragment(new SendMoneyFragment());
         }
 
     }
@@ -464,6 +488,18 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                         .getSimpleName())
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
+
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
     }
 
@@ -558,5 +594,75 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         }
 
         return allMatches;
+
+    }
+
+    private void setDataStepsOfVerifications() {
+        if (dashboardResModel.getIs_kyc_uploaded().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+            binding.stepOne.tickSign.setVisibility(View.VISIBLE);
+            binding.stepOne.textUploadDocumentMsg.setText(R.string.document_uploaded);
+            binding.stepOne.textUploadDocumentMsg.setTextColor(getResources().getColor(R.color.ufo_green));
+            if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.IN_PROCESS)) {
+                binding.stepTwo.textVerifyMsg.setText(getString(R.string.verification_is_in_process));
+                binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
+            } else if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+                binding.stepTwo.textVerifyMsg.setText(R.string.document_verified);
+                binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
+                binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
+                binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.ufo_green));
+                if (dashboardResModel.getIs_payment_lastmonth().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+                    binding.stepThree.textTransferMsg.setText(R.string.successfully_transfered);
+                    binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
+                    binding.stepThree.tickSign.setVisibility(View.VISIBLE);
+                } else {
+                    binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.ufo_green));
+                    binding.stepThree.textTransferMsg.setText(R.string.transfer_money_text);
+                    binding.stepThree.tickSign.setVisibility(View.GONE);
+                    binding.stepThree.btTransferMoney.setVisibility(View.VISIBLE);
+                    binding.stepThree.btTransferMoney.setOnClickListener(this);
+                }
+            } else if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.REJECTED)) {
+                binding.stepTwo.textVerifyMsg.setText(R.string.declined);
+                binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.color_red));
+                binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
+                binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
+                binding.stepTwo.tickSign.setBackground(getResources().getDrawable(R.drawable.ic_cancel_icon));
+
+
+                binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
+                binding.stepThree.textTransferMsg.setText(R.string.you_will_see_transfer);
+                binding.stepThree.btTransferMoney.setVisibility(View.GONE);
+                binding.stepThree.tickSign.setVisibility(View.GONE);
+
+
+            }
+        }
+    }
+
+    private void sendFaceImageOnServer() {
+        if (!TextUtil.checkListIsEmpty(faceModelList)) {
+            faceModelList.get(faceCounter).setUploaded(true);
+            faceCounter++;
+            if (faceModelList.size() > faceCounter) {
+                kycViewModel.sendAzureImageData(faceModelList.get(faceCounter));
+            } else {
+                updateFaceListInPref();
+            }
+        }
+    }
+
+    private void updateFaceListInPref()
+    {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null) {
+            List<AssignmentReqModel> newList = new ArrayList<>();
+            for (AssignmentReqModel model : faceModelList) {
+                if (!model.isUploaded()) {
+                    newList.add(model);
+                }
+            }
+            prefModel.setListAzureImageList(newList);
+            AppPref.INSTANCE.setPref(prefModel);
+        }
     }
 }

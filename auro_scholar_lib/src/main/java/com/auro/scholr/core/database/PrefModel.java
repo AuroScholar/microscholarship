@@ -4,13 +4,15 @@ package com.auro.scholr.core.database;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PrefModel implements Serializable {
 
     private String userKYCProfilePhotoPath;
     private String userLanguage;
-    private List<AssignmentReqModel> listAzureImageList;
+    private List<AssignmentReqModel> listAzureImageList = new ArrayList<>();
+
 
     public String getUserLanguage() {
         return userLanguage;

@@ -4,47 +4,94 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
-import com.google.android.material.snackbar.Snackbar;
+import androidx.databinding.DataBindingUtil;
+
 import com.auro.scholr.R;
+import com.auro.scholr.databinding.CustomUiSnackbarBinding;
+import com.auro.scholr.home.data.model.CustomSnackBarModel;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+
+public enum CustomSnackBar implements View.OnClickListener {
+    INSTANCE;
+
+    private static Snackbar cartSnackbar;
+    private CustomUiSnackbarBinding binding;
+    Context context;
+    View view;
+    CustomSnackBarModel customSnackBarModel;
 
 
-public class CustomSnackbar {
+    public void showCartSnackbar(CustomSnackBarModel customSnackBarModel) {
+        this.view = customSnackBarModel.getView();
+        this.context = customSnackBarModel.getContext();
+        this.customSnackBarModel = customSnackBarModel;
+        if (cartSnackbar == null) {
 
-    private CustomSnackbar() {
+            LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            binding = DataBindingUtil.inflate(inflater, R.layout.custom_ui_snackbar, null, false);
+        }
+
+        if (cartSnackbar == null) {
+            openSnackBar();
+        } else {
+            openSnackBar();
+        }
 
     }
 
-     public static View showSnackbar(View relative, String msg) { // Create the Snackbar
-        Snackbar snackbar = Snackbar.make(relative, "", Snackbar.LENGTH_LONG);
 
-        //inflate view
-        LayoutInflater inflater = (LayoutInflater) relative.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View snackView = inflater.inflate(R.layout.custom_snackbar, null);
+    private void openSnackBar() {
+        if (view == null) {
+            return;
+        }
+        if (view.getParent() == null) {
+            return;
+        }
+        cartSnackbar = Snackbar.make(view, "", Snackbar.LENGTH_LONG);
         // White background
-        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        cartSnackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        // binding.textMsg.setOnClickListener(this);
+        if (customSnackBarModel.getStatus() == 1) {
+            binding.parentLayout.setBackgroundColor(view.getResources().getColor(R.color.color_red));
+            binding.arrow.setVisibility(View.GONE);
+            binding.kycMsg.setText("Your KYC is pending from backend for");
+        }
 
-        TextView tv_msg = snackView.findViewById(R.id.textMsg);
-        tv_msg.setText(msg);
-        Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) snackbar.getView();
+        Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) cartSnackbar.getView();
+        if (binding.getRoot().getParent() != null) {
+            ((ViewGroup) binding.getRoot().getParent()).removeView(binding.getRoot());
 
-        snackBarView.addView(snackView, 0);
-        snackbar.setDuration(2000);
-        snackbar.show();
-        snackBarView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+        }
+        snackBarView.addView(binding.getRoot(), 0);
+        snackBarView.setPadding(0, 0, 0, 0);
+        cartSnackbar.setDuration(BaseTransientBottomBar.LENGTH_INDEFINITE);
+        cartSnackbar.addCallback(new Snackbar.Callback() {
+
             @Override
-            public boolean onPreDraw() {
-                snackBarView.getViewTreeObserver().removeOnPreDrawListener(this);
-                snackbar.setBehavior(null);
-                return true;
+            public void onDismissed(Snackbar snackbar, int event) {
+                //see Snackbar.Callback docs for event details
+                cartSnackbar = null;
+            }
+
+            @Override
+            public void onShown(Snackbar snackbar) {
+//Do code here
             }
         });
-
-         return snackView;
-
+        cartSnackbar.show();
     }
 
+    public void dismissCartSnackbar() {
+        if (cartSnackbar != null && cartSnackbar.isShown()) {
+            cartSnackbar.dismiss();
+        }
+    }
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }

@@ -22,23 +22,22 @@
             android:layout_height="match_parent"
             android:background="@color/off_white">
 
+
             <include
                 android:id="@+id/toolbar_layout"
                 layout="@layout/toolbar_header_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
 
 
             <include
-                android:id="@+id/header_parent"
+                android:id="@+id/header_top_parent"
                 layout="@layout/quiz_header_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -46,20 +45,121 @@
                 android:background="@android:color/transparent"
                 android:clipToPadding="false"
                 android:paddingBottom="@dimen/_150sdp"
-                app:layout_constraintTop_toBottomOf="@id/header_parent">
+                app:layout_constraintTop_toBottomOf="@+id/header_top_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/leaderboard_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/leader_card_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:elevation="@dimen/_5sdp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/_8sdp"
+                            app:cardUseCompatPadding="true"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <!--
+                                                        <androidx.constraintlayout.widget.ConstraintLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent">
+
+
+                                                            <ImageView
+                                                                android:layout_marginTop="@dimen/_10sdp"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content"
+                                                                android:background="@drawable/ic_leaderboard_icon"
+                                                                app:layout_constraintStart_toStartOf="parent"
+                                                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                                                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                                                android:id="@+id/friends_board_text"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_gravity="center_horizontal"
+                                                                android:layout_marginTop="@dimen/_2sdp"
+                                                                android:layout_marginEnd="@dimen/_10sdp"
+                                                                android:gravity="end"
+                                                                android:text="@string/friends_leadeboard"
+                                                                android:textColor="@color/black"
+                                                                android:textSize="@dimen/_20sdp"
+                                                                android:textStyle="normal"
+                                                                app:Font="Poppins-SemiBold.ttf"
+                                                                app:layout_constraintEnd_toEndOf="parent"
+                                                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                                                            <androidx.constraintlayout.widget.ConstraintLayout
+                                                                android:id="@+id/fb_invite_button"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="@dimen/_30sdp"
+                                                                android:layout_marginTop="@dimen/_10sdp"
+                                                                android:layout_marginEnd="@dimen/_10sdp"
+                                                                android:layout_marginBottom="@dimen/_10sdp"
+                                                                android:background="@drawable/rounded_corner_fb"
+                                                                app:layout_constraintBottom_toBottomOf="parent"
+                                                                app:layout_constraintEnd_toEndOf="parent"
+                                                                app:layout_constraintTop_toBottomOf="@+id/friends_board_text">
+
+                                                                <ImageView
+                                                                    android:id="@+id/fb_icon"
+                                                                    android:layout_width="@dimen/_20sdp"
+                                                                    android:layout_height="@dimen/_20sdp"
+                                                                    android:layout_marginStart="@dimen/_7sdp"
+                                                                    android:background="@drawable/ic_facebook"
+                                                                    app:layout_constraintBottom_toBottomOf="parent"
+                                                                    app:layout_constraintStart_toStartOf="parent"
+                                                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                                                <com.auro.scholr.core.util.uiwidget.RPTextView
+                                                                    android:id="@+id/invite_text"
+                                                                    android:layout_width="wrap_content"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_gravity="center_horizontal"
+                                                                    android:layout_marginStart="@dimen/_8sdp"
+                                                                    android:layout_marginEnd="@dimen/_5sdp"
+                                                                    android:text="@string/facebook"
+                                                                    android:textColor="@color/white"
+                                                                    android:textSize="@dimen/_12sdp"
+                                                                    android:textStyle="normal"
+                                                                    app:Font="Poppins-Regular.ttf"
+                                                                    app:layout_constraintBottom_toBottomOf="parent"
+                                                                    app:layout_constraintEnd_toEndOf="parent"
+                                                                    app:layout_constraintStart_toEndOf="@+id/fb_icon"
+                                                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                                        </androidx.constraintlayout.widget.ConstraintLayout>
+                            -->
+
+                        </androidx.cardview.widget.CardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <!--Shimmer Layout-->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_10sdp">
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp">
 
                         <com.facebook.shimmer.ShimmerFrameLayout
                             android:id="@+id/shimmer_view_quiz"
@@ -70,8 +170,7 @@
                             android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:shimmer_duration="800">
+                            app:layout_constraintTop_toTopOf="parent">
 
                             <include
                                 layout="@layout/quiz_home_shimmer_layout"
@@ -87,9 +186,9 @@
                         android:id="@+id/main_parent_layout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
+                        android:orientation="vertical"
                         android:visibility="visible">
 
                         <androidx.constraintlayout.widget.ConstraintLayout

@@ -11,6 +11,7 @@
     <color name="backgroun_transparent">#f2000000</color>
     <color name="color_black_trns">#918F8F</color>
     <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
 
     <color name="white">#ffffff</color>
     <color name="offWhite">#F7F7F7</color>
@@ -92,4 +93,8 @@
     <color name="shimmer_color">#b1b1b1</color>
     <color name="off_white">#F6F6F6</color>
     <color name="auro_dark_blue">#054B74</color>
+    <color name="fb_bg_color">#3B5998</color>
+    <color name="auro_theme_dark_blue">#054b74</color>
+    <color name="item_bg_color">#F8F7FE</color>
+    <color name="auro_green_color">#4caf50</color>
 </resources>

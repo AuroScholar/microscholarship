@@ -5,7 +5,6 @@ apply from: "dependencies.gradle"
 android {
     compileSdkVersion COMPILE_SDK_VERSION
     defaultConfig {
-
         minSdkVersion MIN_SDK_VERSION
         targetSdkVersion TARGET_SDK_VERSION
         versionCode 1
@@ -16,7 +15,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-
     }
     /* buildTypes {
         release {
@@ -95,6 +93,7 @@ dependencies {
     implementation otherDependencies.glide
     annotationProcessor otherDependencies.glideCompiler
     implementation otherDependencies.shimmer
+    implementation otherDependencies.facebook
 
 
     implementation 'com.google.android.gms:play-services-vision:15.0.2'

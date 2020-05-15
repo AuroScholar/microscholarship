@@ -41,6 +41,7 @@ import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
+import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
@@ -74,9 +75,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     QuizWonAdapter quizWonAdapter;
     Resources resources;
     boolean isStateRestore;
-
-
-
+    AssignmentReqModel assignmentReqModel;
 
 
     @Override
@@ -145,6 +144,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.walletBalText.setOnClickListener(this);
         binding.privacyPolicy.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
+        binding.leaderCardLayout.setOnClickListener(this);
+        binding.toolbarLayout.backArrow.setOnClickListener(this);
     }
 
 
@@ -176,7 +177,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     private void setDataOnUI() {
         binding.toolbarLayout.backArrow.setVisibility(View.GONE);
         binding.getScholarshipText.setText(resources.getText(R.string.get_scholarship));
-        binding.headerParent.cambridgeHeading.setText(resources.getString(R.string.question_bank_powered_by_cambridge));
+        binding.headerTopParent.cambridgeHeading.setText(resources.getString(R.string.question_bank_powered_by_cambridge));
         String lang = ViewUtil.getLanguage();
         if (lang.equalsIgnoreCase(AppConstant.LANGUAGE_EN) || TextUtil.isEmpty(lang)) {
             setLangOnUi(AppConstant.HINDI);
@@ -225,9 +226,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         } else {
                             setDataOnUi(dashboardResModel);
                         }
-                    }else if(responseApi.apiTypeStatus == AZURE_API){
-                        openQuizTestFragment(dashboardResModel);
-
+                    } else if (responseApi.apiTypeStatus == AZURE_API) {
+                       // openQuizTestFragment(dashboardResModel);
                     }
 
                     break;
@@ -238,21 +238,25 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     break;
 
                 case AUTH_FAIL:
-
-// When Authrization is fail
-                    handleProgress(2, (String) responseApi.data);
-                    break;
-
                 case FAIL_400:
-                    //When 400 error occur
-                    handleProgress(2, (String) responseApi.data);
+// When Authrization is fail
+                    if (responseApi.apiTypeStatus == DASHBOARD_API) {
+                        handleProgress(2, (String) responseApi.data);
+                    } else {
+                        setImageInPref(assignmentReqModel);
+                        //openQuizTestFragment(dashboardResModel);
+                    }
                     break;
 
 
                 default:
                     Log.d(TAG, "observeServiceResponse: default");
-                    // ViewUtil.showSnackBar(binding.getRoot(), responseApi.data.toString());
-                    handleProgress(2, (String) responseApi.data);
+                    if (responseApi.apiTypeStatus == DASHBOARD_API) {
+                        handleProgress(2, (String) responseApi.data);
+                    } else {
+                        setImageInPref(assignmentReqModel);
+                       // openQuizTestFragment(dashboardResModel);
+                    }
                     break;
             }
 
@@ -303,11 +307,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         openFragment(quizTestFragment);
     }
 
-    public void openCameraPhotoFragment(){
-
-            Intent intent = new Intent(getActivity(), CameraActivity.class);
-            startActivityForResult(intent, AppConstant.CAMERA_REQUEST_CODE);
-
+    public void openCameraPhotoFragment() {
+        Intent intent = new Intent(getActivity(), CameraActivity.class);
+        startActivityForResult(intent, AppConstant.CAMERA_REQUEST_CODE);
     }
 
     @Override
@@ -318,11 +320,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 try {
                     String path = data.getStringExtra(AppConstant.PROFILE_IMAGE_PATH);
                     azureImage(path);
+                    openQuizTestFragment(dashboardResModel);
                     // loadImageFromStorage(path);
                 } catch (Exception e) {
 
                 }
-
 
             } else {
 
@@ -332,17 +334,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void azureImage(String path) {
         try {
-
-          //  File file = new File(kycDocumentDatamodelArrayList.get(pos).getDocumentURi().getPath());
-            Log.d(TAG,"Image Path"+path);
+            Log.d(TAG, "Image Path" + path);
             File file = new File(path);
             InputStream is = AuroApp.getAppContext().getApplicationContext().getContentResolver().openInputStream(Uri.fromFile(file));
-            AssignmentReqModel assignmentReqModel= quizViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
+            assignmentReqModel = quizViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
             assignmentReqModel.setImageBytes(quizViewModel.getBytes(is));
             assignmentReqModel.setEklavvya_exam_id("");
             quizViewModel.getAzureRequestData(assignmentReqModel);
-
-
         } catch (Exception e) {
             /*Do code here when error occur*/
         }
@@ -378,6 +376,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.wallet_bal_text) {
+            //openFragment(new SendMoneyFragment());
             if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
             } else {
@@ -395,6 +394,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 // resources = ViewUtil.getCustomResource(getActivity());
             }
             onResume();
+        } else if (v.getId() == R.id.leader_card_layout) {
+            openFragment(new FriendsLeaderBoardFragment());
+        } else if (v.getId() == R.id.back_arrow) {
+            getActivity().getSupportFragmentManager().popBackStack();
         }
 
     }
@@ -412,7 +415,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onGranted() {
 
-               //todo hold  openQuizTestFragment(dashboardResModel);
+                //todo hold  openQuizTestFragment(dashboardResModel);
                 openCameraPhotoFragment();
 
             }
@@ -428,7 +431,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void commonEventListner(CommonDataModel commonDataModel) {
-
         if (commonDataModel.getClickType() == Status.START_QUIZ_BUTON) {
             quizResModel = (QuizResModel) commonDataModel.getObject();
             askPermission();
@@ -456,5 +458,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         builder.append(span3);
 
         binding.scoreText.setText(builder, TextView.BufferType.SPANNABLE);
+    }
+
+    public void setImageInPref(AssignmentReqModel assignmentReqModel) {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null && prefModel.getListAzureImageList()!=null) {
+            prefModel.getListAzureImageList().add(assignmentReqModel);
+            AppPref.INSTANCE.setPref(prefModel);
+        }
     }
 }

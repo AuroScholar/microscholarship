@@ -111,6 +111,17 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private String message;
 
+    @SerializedName("is_kyc_uploaded")
+    @Expose
+    private String is_kyc_uploaded;
+
+    @SerializedName("is_kyc_verified")
+    @Expose
+    private String is_kyc_verified;
+
+    @SerializedName("is_payment_lastmonth")
+    @Expose
+    private String is_payment_lastmonth;
 
     protected DashboardResModel(Parcel in) {
         status = in.readString();
@@ -139,6 +150,9 @@ public class DashboardResModel implements Parcelable {
         quiz = in.createTypedArrayList(QuizResModel.CREATOR);
         modify = in.readByte() != 0;
         message = in.readString();
+        is_kyc_uploaded = in.readString();
+        is_kyc_verified = in.readString();
+        is_payment_lastmonth = in.readString();
     }
 
     @Override
@@ -169,6 +183,9 @@ public class DashboardResModel implements Parcelable {
         dest.writeTypedList(quiz);
         dest.writeByte((byte) (modify ? 1 : 0));
         dest.writeString(message);
+        dest.writeString(is_kyc_uploaded);
+        dest.writeString(is_kyc_verified);
+        dest.writeString(is_payment_lastmonth);
     }
 
     @Override
@@ -187,6 +204,30 @@ public class DashboardResModel implements Parcelable {
             return new DashboardResModel[size];
         }
     };
+
+    public String getIs_kyc_uploaded() {
+        return is_kyc_uploaded;
+    }
+
+    public void setIs_kyc_uploaded(String is_kyc_uploaded) {
+        this.is_kyc_uploaded = is_kyc_uploaded;
+    }
+
+    public String getIs_kyc_verified() {
+        return is_kyc_verified;
+    }
+
+    public void setIs_kyc_verified(String is_kyc_verified) {
+        this.is_kyc_verified = is_kyc_verified;
+    }
+
+    public String getIs_payment_lastmonth() {
+        return is_payment_lastmonth;
+    }
+
+    public void setIs_payment_lastmonth(String is_payment_lastmonth) {
+        this.is_payment_lastmonth = is_payment_lastmonth;
+    }
 
     public String getAuroid() {
         return auroid;

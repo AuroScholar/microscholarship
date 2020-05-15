@@ -9,8 +9,6 @@
             name="viewModel"
             type="com.auro.scholr.home.presentation.viewmodel.HomeViewModel" />
 
-
-
     </data>
 
 

@@ -1,22 +1,15 @@
 package com.auro.scholr.home.domain.usecase;
 
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-
-import androidx.core.content.ContextCompat;
-
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
+import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.util.TextUtil;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,6 +165,64 @@ public class HomeUseCase {
         }
 
         return count;
+    }
+
+
+    public List<FriendsLeaderBoardModel> makeListForFriendsLeaderBoard(boolean status) {
+        List<FriendsLeaderBoardModel> list = new ArrayList<>();
+
+        FriendsLeaderBoardModel leaderBoardModel_01 = new FriendsLeaderBoardModel();
+        leaderBoardModel_01.setScholarshipWon("1000");
+        leaderBoardModel_01.setStudentName("Manish");
+        leaderBoardModel_01.setStudentScore("90%");
+        leaderBoardModel_01.setImagePath("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS3nRQYJ_9X8Z3LS-yOMwUNU7YGXXTB6SbEHcSqrgAnM7EoCqh_&usqp=CAU");
+        if (status) {
+            leaderBoardModel_01.setViewType(AppConstant.FriendsLeaderBoard.LEADERBOARD_TYPE);
+        } else {
+            leaderBoardModel_01.setViewType(AppConstant.FriendsLeaderBoard.LEADERBOARD_INVITE_TYPE);
+        }
+        list.add(leaderBoardModel_01);
+
+
+        FriendsLeaderBoardModel leaderBoardModel_02 = new FriendsLeaderBoardModel();
+        leaderBoardModel_02.setScholarshipWon("900");
+        leaderBoardModel_02.setStudentName("Kuldip");
+        leaderBoardModel_02.setStudentScore("80%");
+        leaderBoardModel_02.setImagePath("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTHJi1kXOjoXE_tAA1jT6kjvukiCuH3g8q1BYe2apkTQfppxUBN&usqp=CAU");
+
+        if (status) {
+            leaderBoardModel_02.setViewType(AppConstant.FriendsLeaderBoard.LEADERBOARD_TYPE);
+        } else {
+            leaderBoardModel_02.setViewType(AppConstant.FriendsLeaderBoard.LEADERBOARD_INVITE_TYPE);
+        }
+        list.add(leaderBoardModel_02);
+
+        FriendsLeaderBoardModel leaderBoardModel_03 = new FriendsLeaderBoardModel();
+        leaderBoardModel_03.setScholarshipWon("600");
+        leaderBoardModel_03.setStudentName("Rajat");
+        leaderBoardModel_03.setStudentScore("60%");
+        leaderBoardModel_03.setImagePath("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ-gpVj4yzkUuIi9vRM34su4nqucJrCsVx19sjDHqBXVUYvt5x2&usqp=CAU");
+        if (status) {
+            leaderBoardModel_03.setViewType(AppConstant.FriendsLeaderBoard.LEADERBOARD_TYPE);
+        } else {
+            leaderBoardModel_03.setViewType(AppConstant.FriendsLeaderBoard.LEADERBOARD_INVITE_TYPE);
+        }
+        list.add(leaderBoardModel_03);
+
+
+        FriendsLeaderBoardModel leaderBoardModel_04 = new FriendsLeaderBoardModel();
+        leaderBoardModel_04.setScholarshipWon("500");
+        leaderBoardModel_04.setStudentName("Aakash");
+        leaderBoardModel_04.setStudentScore("50%");
+        leaderBoardModel_04.setImagePath("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQufQ4DogWSfi5pDnsXkUh0cXNX2O0Q0kFGkaM5YTl34eB-87pP&usqp=CAU");
+        if (status) {
+            leaderBoardModel_04.setViewType(AppConstant.FriendsLeaderBoard.LEADERBOARD_TYPE);
+        } else {
+            leaderBoardModel_04.setViewType(AppConstant.FriendsLeaderBoard.LEADERBOARD_INVITE_TYPE);
+        }
+        list.add(leaderBoardModel_04);
+
+        return list;
     }
 
 }

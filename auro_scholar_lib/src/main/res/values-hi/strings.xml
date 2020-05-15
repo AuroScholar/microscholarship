@@ -49,6 +49,7 @@
     <string name="new_quiz_will_be_available_next_month">अगले महीने उपलब्ध होगी नई क्विज!</string>
     <string name="document_all_four_error_msg">कृपया पहले सभी चार दस्तावेज़ चुनें</string>
     <string name="question_bank_powered_by_cambridge">कैम्ब्रिज द्वारा संचालित प्रश्न बैंक</string>
+    <string name="permission_contact_error_msg">For taking the quiz contact permission is must.</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="permission_error_msg">For taking the quiz camera permission is must.</string>
     <string name="complete_the_previous_quiz_to_unlock">अनलॉक करने के लिए पिछले प्रश्नोत्तरी को पूरा करें </string>
@@ -60,6 +61,17 @@
     <string name="for_each_quiz">जीतें</string>
     <string name="english">English</string>
     <string name="sucessfully_uploaded">पूरी तरह से अपलोड किया गया</string>
+
+    <string name="friends_leadeboard">Friends \n Leaderboard</string>
+    <string name="invite">Invite</string>
+    <string name="name">Name</string>
+    <string name="scholarship_won">Scholarship won</string>
+    <string name="score">Score</string>
+    <string name="invite_your_friends">Invite Your Friends</string>
+    <string name="your_friend_list">Your Friend List</string>
+    <string name="facebook">Facebook</string>
+    <string name="login_with_facebook">Login with Facebook</string>
+
     <string name="auro_scholar_demographics_details">ऑरो स्कॉलर जनसांख्यिकी विवरण</string>
     <string name="gender">लिंग</string>
     <string name="school_type">स्कूल का प्रकार</string>
@@ -87,6 +99,11 @@
         <item>Goverment School</item>
         <item>Other</item>
     </string-array>
+    <string name="invite_by">Invite By</string>
+    <string name="please_enter_phone_number">Please enter phone number</string>
+    <string name="or">Or</string>
+    <string name="share_with_other">Share With Other</string>
+
 
     <string-array name="languagelist">
         <item>Please Select Language Medium</item>
@@ -103,4 +120,12 @@
     <string name="instructions">&#8226; foo<br/>
 &#8226; bar<br/>
 &#8226; baz<br/></string>
+    <string name="document_uploaded">Document Uploaded</string>
+    <string name="verification_is_in_process">Verification is in process</string>
+    <string name="document_verified">Document Verified</string>
+    <string name="declined">Declined</string>
+    <string name="you_will_see_transfer">You will see transfer option after your document is verified</string>
+    <string name="transfer_money_text">You can transfer money on click of Tansfer Button</string>
+    <string name="successfully_transfered">You have successfully transfered scholarship amount</string>
+    <string name="tranfer_money">Tranfer Money</string>
 </resources>

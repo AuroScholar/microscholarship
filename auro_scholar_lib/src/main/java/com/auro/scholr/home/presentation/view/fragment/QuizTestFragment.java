@@ -322,7 +322,6 @@ public class QuizTestFragment extends BaseFragment {
             if (view.getUrl().equalsIgnoreCase("http://auroscholar.com/index.php") ||
                     view.getUrl().equalsIgnoreCase("http://auroscholar.com/demographics.php")
                     || view.getUrl().equalsIgnoreCase("http://auroscholar.com/dashboard.php")) {
-
                 if (!quizTestViewModel.homeUseCase.checkDemographicStatus(dashboardResModel)) {
                     openDemographicFragment();
                 } else {

@@ -102,6 +102,30 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/warn_msg" />
 
+                        <include
+                            android:id="@+id/step_one"
+                            layout="@layout/upload_document_step_one"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/wallet_bal_text" />
+
+
+                        <include
+                            android:id="@+id/step_two"
+                            layout="@layout/upload_document_step_two"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/step_one" />
+
+
+                        <include
+                            android:id="@+id/step_three"
+                            layout="@layout/upload_document_step_three"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/step_two" />
+
+
                         <ImageView
                             android:id="@+id/refresh"
                             android:layout_width="wrap_content"
@@ -112,11 +136,13 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/warn_msg" />
 
+
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:background="@drawable/bg_white"
-                            app:layout_constraintTop_toBottomOf="@+id/wallet_bal_text"
+                            app:layout_constraintTop_toBottomOf="@+id/step_three"
                             bind:layout_editor_absoluteX="0dp">
 
                             <androidx.recyclerview.widget.RecyclerView

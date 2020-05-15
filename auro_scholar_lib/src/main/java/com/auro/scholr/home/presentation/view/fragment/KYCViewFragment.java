@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,17 +26,27 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.KycFragmentLayoutBinding;
+import com.auro.scholr.home.data.model.AssignmentReqModel;
+import com.auro.scholr.home.data.model.CustomSnackBarModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.presentation.view.adapter.KYCViewDocAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
+import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 
+import com.auro.scholr.util.alert_dialog.CustomSnackBar;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import static com.auro.scholr.core.common.Status.AZURE_API;
+import static com.auro.scholr.core.common.Status.UPLOAD_PROFILE_IMAGE;
 
 
 public class KYCViewFragment extends BaseFragment implements View.OnClickListener {
@@ -51,6 +63,10 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
     private DashboardResModel dashboardResModel;
     ArrayList<KYCDocumentDatamodel> kycDocumentDatamodelArrayList;
     Resources resources;
+
+    /*Face Image Params*/
+    List<AssignmentReqModel> faceModelList;
+    int faceCounter = 0;
 
 
     @Override
@@ -94,6 +110,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             if (!TextUtil.isEmpty(dashboardResModel.getWalletbalance())) {
                 binding.walletBalText.setText(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
             }
+            setDataStepsOfVerifications();
         }
         binding.cambridgeHeading.cambridgeHeading.setTextColor(getResources().getColor(R.color.white));
 
@@ -123,6 +140,8 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         binding.toolbarLayout.langEng.setOnClickListener(this);
         if (kycViewModel != null && kycViewModel.serviceLiveData().hasObservers()) {
             kycViewModel.serviceLiveData().removeObservers(this);
+        } else {
+            observeServiceResponse();
         }
     }
 
@@ -140,6 +159,17 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         setToolbar();
         setListener();
         setAdapter();
+
+        checkForFaceImage();
+    }
+
+
+    private void checkForFaceImage() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null && !TextUtil.checkListIsEmpty(prefModel.getListAzureImageList())) {
+            faceModelList = prefModel.getListAzureImageList();
+            kycViewModel.sendAzureImageData(faceModelList.get(0));
+        }
     }
 
 
@@ -164,9 +194,10 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 setLanguageText(AppConstant.HINDI);
             }
             reloadFragment();
-        }else if(v.getId()==R.id.back_arrow)
-        {
+        } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
+        } else if (v.getId() == R.id.bt_transfer_money) {
+            openFragment(new SendMoneyFragment());
         }
     }
 
@@ -198,6 +229,108 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // CustomSnackBar.INSTANCE.dismissCartSnackbar();
+    }
+
+    private void setDataStepsOfVerifications() {
+        if (dashboardResModel.getIs_kyc_uploaded().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+            binding.stepOne.tickSign.setVisibility(View.VISIBLE);
+            binding.stepOne.textUploadDocumentMsg.setText(R.string.document_uploaded);
+            binding.stepOne.textUploadDocumentMsg.setTextColor(getResources().getColor(R.color.ufo_green));
+            if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.IN_PROCESS)) {
+                binding.stepTwo.textVerifyMsg.setText(getString(R.string.verification_is_in_process));
+                binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
+            } else if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+                binding.stepTwo.textVerifyMsg.setText(R.string.document_verified);
+                binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
+                binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
+                binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.ufo_green));
+                if (dashboardResModel.getIs_payment_lastmonth().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+                    binding.stepThree.textTransferMsg.setText(R.string.successfully_transfered);
+                    binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
+                    binding.stepThree.tickSign.setVisibility(View.VISIBLE);
+                } else {
+                    binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.ufo_green));
+                    binding.stepThree.textTransferMsg.setText(R.string.transfer_money_text);
+                    binding.stepThree.tickSign.setVisibility(View.GONE);
+                    binding.stepThree.btTransferMoney.setVisibility(View.VISIBLE);
+                    binding.stepThree.btTransferMoney.setOnClickListener(this);
+                }
+            } else if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.REJECTED)) {
+                binding.stepTwo.textVerifyMsg.setText(R.string.declined);
+                binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.color_red));
+                binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
+                binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
+                binding.stepTwo.tickSign.setBackground(getResources().getDrawable(R.drawable.ic_cancel_icon));
+
+
+                binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
+                binding.stepThree.textTransferMsg.setText(R.string.you_will_see_transfer);
+                binding.stepThree.btTransferMoney.setVisibility(View.GONE);
+                binding.stepThree.tickSign.setVisibility(View.GONE);
+
+
+            }
+        }
+    }
+
+    private void observeServiceResponse() {
+        kycViewModel.serviceLiveData().observeForever(responseApi -> {
+
+            switch (responseApi.status) {
+                case LOADING:
+                   /*Do handling in background*/
+                    break;
+
+                case SUCCESS:
+                   if (responseApi.apiTypeStatus == AZURE_API) {
+                        sendFaceImageOnServer();
+                    }
+
+                    break;
+
+                case NO_INTERNET:
+                case AUTH_FAIL:
+                case FAIL_400:
+                default:
+                    updateFaceListInPref();
+                    break;
+
+            }
+
+        });
+    }
+
+    private void sendFaceImageOnServer() {
+        if (!TextUtil.checkListIsEmpty(faceModelList)) {
+            faceModelList.get(faceCounter).setUploaded(true);
+            faceCounter++;
+            if (faceModelList.size() > faceCounter) {
+                kycViewModel.sendAzureImageData(faceModelList.get(faceCounter));
+            } else {
+                updateFaceListInPref();
+            }
+        }
+    }
+
+    private void updateFaceListInPref()
+    {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null) {
+            List<AssignmentReqModel> newList = new ArrayList<>();
+            for (AssignmentReqModel model : faceModelList) {
+                if (!model.isUploaded()) {
+                    newList.add(model);
+                }
+            }
+            prefModel.setListAzureImageList(newList);
+            AppPref.INSTANCE.setPref(prefModel);
+        }
     }
 
 }
