@@ -5,12 +5,17 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.databinding.DataBindingUtil;
 
 import com.auro.scholr.R;
+import com.auro.scholr.core.common.CommonCallBackListner;
+import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.CustomUiSnackbarBinding;
 import com.auro.scholr.home.data.model.CustomSnackBarModel;
+import com.auro.scholr.util.AppUtil;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -22,14 +27,15 @@ public enum CustomSnackBar implements View.OnClickListener {
     Context context;
     View view;
     CustomSnackBarModel customSnackBarModel;
+    CommonCallBackListner commonCallBackListner;
 
 
     public void showCartSnackbar(CustomSnackBarModel customSnackBarModel) {
         this.view = customSnackBarModel.getView();
         this.context = customSnackBarModel.getContext();
         this.customSnackBarModel = customSnackBarModel;
+        this.commonCallBackListner = customSnackBarModel.getCommonCallBackListner();
         if (cartSnackbar == null) {
-
             LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             binding = DataBindingUtil.inflate(inflater, R.layout.custom_ui_snackbar, null, false);
         }
@@ -60,6 +66,8 @@ public enum CustomSnackBar implements View.OnClickListener {
             binding.kycMsg.setText("Your KYC is pending from backend for");
         }
 
+        binding.arrow.setOnClickListener(this);
+
         Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) cartSnackbar.getView();
         if (binding.getRoot().getParent() != null) {
             ((ViewGroup) binding.getRoot().getParent()).removeView(binding.getRoot());
@@ -81,6 +89,18 @@ public enum CustomSnackBar implements View.OnClickListener {
 //Do code here
             }
         });
+
+        if (cartSnackbar != null) {
+            cartSnackbar.getView().getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                public boolean onPreDraw() {
+                    if (cartSnackbar != null) {
+                        cartSnackbar.getView().getViewTreeObserver().removeOnPreDrawListener(this);
+                        ((CoordinatorLayout.LayoutParams) cartSnackbar.getView().getLayoutParams()).setBehavior(null);
+                    }
+                    return true;
+                }
+            });
+        }
         cartSnackbar.show();
     }
 
@@ -92,6 +112,12 @@ public enum CustomSnackBar implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if (v.getId() == R.id.arrow) {
+            if (commonCallBackListner != null) {
+                commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(-1, Status.FRIEND_LEADER_BOARD_CLICK, ""));
+            }
 
+        }
     }
+
 }

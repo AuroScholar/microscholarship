@@ -12,56 +12,65 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/_1sdp"
-            android:background="@color/balance_green_color"
+            android:background="@color/off_white"
             android:gravity="center"
             android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/leader_card_layout"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:elevation="@dimen/_5sdp"
+                android:shape="ring"
+                android:layout_marginStart="@dimen/_15sdp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_50sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/ic_leaderboard_icon"
+                />
+
+            </androidx.cardview.widget.CardView>
+
 
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
                 android:id="@+id/kycMsg"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/_5sdp"
-                android:text="Your KYC is approved now you can "
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12sdp"
-                app:layout_constraintEnd_toStartOf="@+id/arrow"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.auro.scholr.core.util.uiwidget.RPTextView
-                android:id="@+id/transferMoney"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/_1sdp"
-                android:text="Transfer Money"
-                android:textAlignment="center"
-                android:textColor="@color/white"
+                android:text="Challenge Your Friends"
+                android:textColor="@color/black"
+                android:paddingStart="@dimen/_10sdp"
                 android:textSize="@dimen/_14sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/arrow"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/kycMsg" />
+                app:layout_constraintStart_toEndOf="@+id/leader_card_layout"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
 
             <RelativeLayout
                 android:id="@+id/arrow"
                 android:visibility="visible"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:background="@drawable/circle_white"
+                android:background="@drawable/circle_blue"
                 android:layout_marginTop="@dimen/_8sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.auro.scholr.core.util.uiwidget.RPTextView
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:layout_centerInParent="true"
                     android:background="@drawable/circle_arrow" />
 

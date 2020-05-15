@@ -35,6 +35,7 @@ import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
+import com.auro.scholr.home.data.model.CustomSnackBarModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
@@ -44,6 +45,7 @@ import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.alert_dialog.CustomSnackBar;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
@@ -165,6 +167,17 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
 
+    private void openSnackBar() {
+        CustomSnackBarModel customSnackBarModel = new CustomSnackBarModel();
+        customSnackBarModel.setView(binding.getRoot());
+        customSnackBarModel.setStatus(0);
+        customSnackBarModel.setContext(getActivity());
+        customSnackBarModel.setCommonCallBackListner(this);
+        CustomSnackBar.INSTANCE.showCartSnackbar(customSnackBarModel);
+
+    }
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -172,6 +185,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         init();
         setListener();
         setDataOnUI();
+        openSnackBar();
     }
 
     private void setDataOnUI() {
@@ -190,6 +204,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onStop() {
         super.onStop();
+        CustomSnackBar.INSTANCE.dismissCartSnackbar();
 
     }
 
@@ -227,7 +242,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                             setDataOnUi(dashboardResModel);
                         }
                     } else if (responseApi.apiTypeStatus == AZURE_API) {
-                       // openQuizTestFragment(dashboardResModel);
+                        // openQuizTestFragment(dashboardResModel);
                     }
 
                     break;
@@ -255,7 +270,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         handleProgress(2, (String) responseApi.data);
                     } else {
                         setImageInPref(assignmentReqModel);
-                       // openQuizTestFragment(dashboardResModel);
+                        // openQuizTestFragment(dashboardResModel);
                     }
                     break;
             }
@@ -434,6 +449,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         if (commonDataModel.getClickType() == Status.START_QUIZ_BUTON) {
             quizResModel = (QuizResModel) commonDataModel.getObject();
             askPermission();
+        } else if (commonDataModel.getClickType() == Status.FRIEND_LEADER_BOARD_CLICK) {
+            openFragment(new FriendsLeaderBoardFragment());
         }
 
     }
@@ -462,7 +479,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     public void setImageInPref(AssignmentReqModel assignmentReqModel) {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (prefModel != null && prefModel.getListAzureImageList()!=null) {
+        if (prefModel != null && prefModel.getListAzureImageList() != null) {
             prefModel.getListAzureImageList().add(assignmentReqModel);
             AppPref.INSTANCE.setPref(prefModel);
         }
