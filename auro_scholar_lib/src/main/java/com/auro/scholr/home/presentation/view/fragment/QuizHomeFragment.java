@@ -431,11 +431,14 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void commonEventListner(CommonDataModel commonDataModel) {
-        if (commonDataModel.getClickType() == Status.START_QUIZ_BUTON) {
+  /*      if (commonDataModel.getClickType() == Status.START_QUIZ_BUTON) {
             quizResModel = (QuizResModel) commonDataModel.getObject();
             askPermission();
-        }
+        }*/
+//todo just test
+        CongratulationsDialog  congratulationsDialog = new CongratulationsDialog(getContext());
 
+        openFragmentDialog(congratulationsDialog);
     }
 
     public void getSpannableString() {
@@ -467,4 +470,15 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             AppPref.INSTANCE.setPref(prefModel);
         }
     }
+    private void openFragmentDialog(Fragment fragment) {
+        /* getActivity().getSupportFragmentManager().popBackStack();*/
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .add(AuroApp.getFragmentContainerUiId(), fragment, CongratulationsDialog.class.getSimpleName())
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
+
+    }
+
 }

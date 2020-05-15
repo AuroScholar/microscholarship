@@ -142,4 +142,11 @@ public class HomeModule {
     ViewModelFactory provideInviteFriendDialogViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
     }
+
+    @Provides
+    @Singleton
+    @Named("CongratulationsDialog")
+    ViewModelFactory provideCongratulationsDialogViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
 }

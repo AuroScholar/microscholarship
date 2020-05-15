@@ -10,6 +10,7 @@ import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
 import com.auro.scholr.home.presentation.view.fragment.QuizTestFragment;
 import com.auro.scholr.home.presentation.viewmodel.CardViewModel;
+import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewModel;
 import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
 import com.auro.scholr.home.presentation.viewmodel.FriendsInviteViewModel;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
@@ -99,6 +100,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }else if(modelClass.isAssignableFrom(InviteFriendViewModel.class)){
 
             return (T) new InviteFriendViewModel(homeUseCase,homeDbUseCase,homeRemoteUseCase);
+        }else if(modelClass.isAssignableFrom(CongratulationsDialogViewModel.class)){
+
+            return (T) new CongratulationsDialogViewModel(homeUseCase,homeDbUseCase,homeRemoteUseCase);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

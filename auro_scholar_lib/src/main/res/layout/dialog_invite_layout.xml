@@ -7,7 +7,7 @@
 
         <variable
             name="InviteFriendViewModel"
-            type="com.auro.scholr.home.presentation.viewmodel.ScholarShipViewModel" />
+            type="com.auro.scholr.home.presentation.viewmodel.InviteFriendViewModel" />
     </data>
 <RelativeLayout
     android:id="@+id/rlClose"

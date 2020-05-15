@@ -66,12 +66,6 @@ public class InviteFriendDialog  extends BaseDialog implements View.OnClickListe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /*binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),getLayout(), null, false);
-        AuroApp.getAppComponent().doInjection(this);
-        viewModel = ViewModelProviders.of(this,viewModelFactory).get(InviteFriendViewModel.class);
-        binding.setLifecycleOwner(this);*/
-
     }
 
     @Nullable

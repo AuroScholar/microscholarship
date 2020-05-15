@@ -7,6 +7,7 @@ import com.auro.scholr.core.application.di.module.HomeModule;
 import com.auro.scholr.core.application.di.module.PaymentModule;
 import com.auro.scholr.core.application.di.module.UtilsModule;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.home.presentation.view.fragment.CongratulationsDialog;
 import com.auro.scholr.home.presentation.view.fragment.DemographicFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsInviteBoardFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardFragment;
@@ -65,5 +66,7 @@ public interface AppComponent {
     void doInjection(FriendsLeaderBoardFragment friendsLeaderBoardFragment);
 
     void doInjection(InviteFriendDialog inviteFriendDialog);
+
+    void doInjection(CongratulationsDialog congratulationsDialog);
 
 }
