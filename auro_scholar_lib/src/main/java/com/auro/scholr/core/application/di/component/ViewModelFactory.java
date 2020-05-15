@@ -4,13 +4,17 @@ package com.auro.scholr.core.application.di.component;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.auro.scholr.databinding.FriendsLeoboardLayoutBinding;
 import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
 import com.auro.scholr.home.presentation.view.fragment.QuizTestFragment;
 import com.auro.scholr.home.presentation.viewmodel.CardViewModel;
 import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
+import com.auro.scholr.home.presentation.viewmodel.FriendsInviteViewModel;
+import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
 import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
+import com.auro.scholr.home.presentation.viewmodel.InviteFriendViewModel;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
@@ -82,12 +86,20 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new QuizTestViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
         }else if (modelClass.isAssignableFrom(SendMoneyViewModel.class)) {
-
             return (T) new SendMoneyViewModel(paymentUseCase, paymentRemoteUseCase);
 
+        }else if (modelClass.isAssignableFrom(FriendsLeaderShipViewModel.class)) {
+
+            return (T) new FriendsLeaderShipViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+
+        }else if (modelClass.isAssignableFrom(FriendsInviteViewModel.class)) {
+
+            return (T) new FriendsInviteViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+
+        }else if(modelClass.isAssignableFrom(InviteFriendViewModel.class)){
+
+            return (T) new InviteFriendViewModel(homeUseCase,homeDbUseCase,homeRemoteUseCase);
         }
-
-
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
 }

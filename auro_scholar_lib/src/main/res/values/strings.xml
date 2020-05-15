@@ -51,6 +51,7 @@
     <string name="question_bank_powered_by_cambridge">Question bank powered by Cambridge</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="permission_error_msg">For taking the quiz camera permission is must.</string>
+    <string name="permission_contact_error_msg">For taking the quiz contact permission is must.</string>
     <string name="complete_the_previous_quiz_to_unlock">Complete the previous quiz to unlock</string>
     <string name="you_win">You Win</string>
     <string name="your_wallet">Your Wallet</string>
@@ -95,6 +96,7 @@
     </string-array>
 
 
+
     <string name="bullted_list">
           \u25CF  Please read the all instructions carefully,
        \n \u25CF Question bank is powered by Cambridge.
@@ -115,4 +117,25 @@
     <string name="transfer_money_text">You can transfer money on click of Tansfer Button</string>
     <string name="successfully_transfered">You have successfully transfered scholarship amount</string>
     <string name="tranfer_money">Tranfer Money</string>
+
+    <string name="invite_by">Invite By</string>
+    <string name="please_enter_phone_number">Please enter phone number</string>
+    <string name="or">Or</string>
+    <string name="share_with_other">Share With Other</string>
+    <string name="invite">Invite</string>
+
+    <!--Facebook Integration-->
+    <string name="facebook_app_id">224597028845837</string>
+    <string name="fb_login_protocol_scheme">fb224597028845837</string>
+    <string name="friends_leadeboard">Friends \nLeaderboard</string>
+
+    <string name="name">Name</string>
+    <string name="scholarship_won">Scholarship \nwon</string>
+    <string name="score">Score</string>
+    <string name="invite_your_friends">Invite Your Friends</string>
+    <string name="your_friend_list">Your Friend List</string>
+    <string name="facebook">Facebook</string>
+    <string name="login_with_facebook">Login with Facebook</string>
+
+
 </resources>

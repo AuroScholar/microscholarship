@@ -1,9 +1,8 @@
 package com.auro.scholr.core.application;
 
-import android.app.ActionBar;
+
 import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
+
 
 import com.auro.scholr.core.application.di.component.AppComponent;
 
