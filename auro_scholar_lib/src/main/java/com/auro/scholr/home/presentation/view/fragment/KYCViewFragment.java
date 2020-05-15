@@ -257,10 +257,9 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 } else {
                     binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.ufo_green));
                     binding.stepThree.textTransferMsg.setText(R.string.transfer_money_text);
-                    binding.stepThree.tickSign.setVisibility(View.VISIBLE);
+                    binding.stepThree.tickSign.setVisibility(View.GONE);
                     binding.stepThree.btTransferMoney.setVisibility(View.VISIBLE);
                     binding.stepThree.btTransferMoney.setOnClickListener(this);
-
                 }
             } else if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.REJECTED)) {
                 binding.stepTwo.textVerifyMsg.setText(R.string.declined);

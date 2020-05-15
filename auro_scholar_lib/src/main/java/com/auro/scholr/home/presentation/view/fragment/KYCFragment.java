@@ -598,7 +598,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     }
 
     private void setDataStepsOfVerifications() {
-        if(dashboardResModel.getIs_kyc_uploaded().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+        if (dashboardResModel.getIs_kyc_uploaded().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
             binding.stepOne.tickSign.setVisibility(View.VISIBLE);
             binding.stepOne.textUploadDocumentMsg.setText(R.string.document_uploaded);
             binding.stepOne.textUploadDocumentMsg.setTextColor(getResources().getColor(R.color.ufo_green));
@@ -617,15 +617,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 } else {
                     binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.ufo_green));
                     binding.stepThree.textTransferMsg.setText(R.string.transfer_money_text);
-                    binding.stepThree.tickSign.setVisibility(View.VISIBLE);
+                    binding.stepThree.tickSign.setVisibility(View.GONE);
                     binding.stepThree.btTransferMoney.setVisibility(View.VISIBLE);
                     binding.stepThree.btTransferMoney.setOnClickListener(this);
-                  /*  LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen._25sdp),(int) getResources().getDimension(R.dimen._25sdp));
-                    lp.setMargins(0, 0,  0, (int) getResources().getDimension(R.dimen._10sdp));
-                    lp.gravity = Gravity.CENTER_VERTICAL;
-                    binding.stepThree.tickSign.setLayoutParams(lp);*/
-
-
                 }
             } else if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.REJECTED)) {
                 binding.stepTwo.textVerifyMsg.setText(R.string.declined);
