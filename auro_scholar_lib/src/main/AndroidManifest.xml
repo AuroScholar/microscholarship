@@ -52,6 +52,9 @@
         <activity
             android:name=".util.cropper.CropImagesActivity"
             android:theme="@style/Base.Theme.AppCompat" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

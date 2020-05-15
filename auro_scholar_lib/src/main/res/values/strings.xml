@@ -93,6 +93,9 @@
         <item>English</item>
         <item>Other</item>
     </string-array>
+    <string name="congratulations">Congratulations</string>
+    <string name="successfully">You have successfully completed\n the 100 Days UI Challenge</string>
+    <string name="share_with">Share With Friends</string>
 
 
     <string name="bullted_list">
@@ -102,6 +105,8 @@
         \n \u25CF Please read each and every question carefully.
 
     </string>
+
+
 
 
     <string name="instructions">&#8226; foo \n

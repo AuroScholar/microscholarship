@@ -95,6 +95,10 @@
         <item>Other</item>
     </string-array>
 
+    <string name="congratulations">Congratulations</string>
+    <string name="share_with">Share With Friends</string>
+    <string name="successfully">You have successfully completed\n the 100 Days UI Challenge</string>
+
 
     <string name="instructions">&#8226; foo<br/>
 &#8226; bar<br/>

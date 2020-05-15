@@ -1,0 +1,15 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners
+        android:bottomLeftRadius="@dimen/_5sdp"
+        android:bottomRightRadius="@dimen/_5sdp"
+        android:topLeftRadius="@dimen/_5sdp"
+        android:topRightRadius="@dimen/_5sdp" />
+    <stroke android:width="@dimen/_2sdp"
+
+        android:color="@color/ufo_green" />
+    <gradient
+        android:centerColor="@color/ufo_green"
+        android:endColor="@color/ufo_green"
+        android:startColor="@color/ufo_green"
+        android:type="linear" />
+</shape>
