@@ -117,7 +117,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     protected void setListener() {
         binding.headerParent.cambridgeHeading.setVisibility(View.GONE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
-        binding.fbInviteButton.setOnClickListener(this);
+        binding.addInviteButton.setOnClickListener(this);
     }
 
 
@@ -157,7 +157,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     public void onClick(View v) {
         if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
-        } else if (v.getId() == R.id.fb_invite_button) {
+        } else if (v.getId() == R.id.add_invite_button) {
 
             mInviteBoxDialog = new InviteFriendDialog(getContext());
 

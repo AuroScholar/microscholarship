@@ -191,7 +191,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     private void checkForFaceImage() {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (prefModel != null && !TextUtil.checkListIsEmpty(prefModel.getListAzureImageList())) {
+        if (prefModel != null && !TextUtil.checkListIsEmpty(prefModel.getListAzureImageList()) && prefModel.getListAzureImageList().size()>0) {
             faceModelList = prefModel.getListAzureImageList();
             kycViewModel.sendAzureImageData(faceModelList.get(0));
         }

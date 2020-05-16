@@ -166,7 +166,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
 
     private void checkForFaceImage() {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (prefModel != null && !TextUtil.checkListIsEmpty(prefModel.getListAzureImageList())) {
+        if (prefModel != null && !TextUtil.checkListIsEmpty(prefModel.getListAzureImageList()) && prefModel.getListAzureImageList().size() > 0) {
             faceModelList = prefModel.getListAzureImageList();
             kycViewModel.sendAzureImageData(faceModelList.get(0));
         }
@@ -284,11 +284,11 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
 
             switch (responseApi.status) {
                 case LOADING:
-                   /*Do handling in background*/
+                    /*Do handling in background*/
                     break;
 
                 case SUCCESS:
-                   if (responseApi.apiTypeStatus == AZURE_API) {
+                    if (responseApi.apiTypeStatus == AZURE_API) {
                         sendFaceImageOnServer();
                     }
 
@@ -318,8 +318,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         }
     }
 
-    private void updateFaceListInPref()
-    {
+    private void updateFaceListInPref() {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null) {
             List<AssignmentReqModel> newList = new ArrayList<>();
