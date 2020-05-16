@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <domain-config>
-        <domain includeSubdomains="true">example.com</domain>
-        <!--<trust-anchors>
-            <certificates src="example.com"/>
-        </trust-anchors>-->
-        <pin-set>
-            <pin digest ="SHA-256">ASHDJAFSJDAKS+SBCABSBKASDKGAKSDGJHASGVDJASV</pin>
-            <pin digest = "SHA-256">HASVJASVJHVSHCBJHVSDJGHHJDSVCJVSDJKCVJSDDS+</pin>
-        </pin-set>
-    </domain-config>
+  <domain-config cleartextTrafficPermitted="false">
+    <domain includeSubdomains="true">auroscholar.com</domain>
+    <trust-anchors>
+      <certificates src="@raw/debug_certificate"/>
+    </trust-anchors>
+  </domain-config>
 </network-security-config>

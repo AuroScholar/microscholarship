@@ -431,14 +431,14 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void commonEventListner(CommonDataModel commonDataModel) {
-  /*      if (commonDataModel.getClickType() == Status.START_QUIZ_BUTON) {
+        if (commonDataModel.getClickType() == Status.START_QUIZ_BUTON) {
             quizResModel = (QuizResModel) commonDataModel.getObject();
             askPermission();
-        }*/
+        }
 //todo just test
-        CongratulationsDialog  congratulationsDialog = new CongratulationsDialog(getContext());
+/*        CongratulationsDialog  congratulationsDialog = new CongratulationsDialog(getContext());
 
-        openFragmentDialog(congratulationsDialog);
+        openFragmentDialog(congratulationsDialog);*/
     }
 
     public void getSpannableString() {
