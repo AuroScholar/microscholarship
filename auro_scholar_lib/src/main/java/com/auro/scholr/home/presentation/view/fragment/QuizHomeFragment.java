@@ -415,8 +415,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onGranted() {
 
-                //todo hold  openQuizTestFragment(dashboardResModel);
-                openCameraPhotoFragment();
+                 openQuizTestFragment(dashboardResModel);
+               //todo dialog openCameraPhotoFragment();
 
             }
 
