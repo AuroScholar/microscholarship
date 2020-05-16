@@ -1,0 +1,35 @@
+[1mdiff --git a/auro_scholar_lib/src/main/java/com/auro/scholr/home/presentation/view/fragment/QuizHomeFragment.java b/auro_scholar_lib/src/main/java/com/auro/scholr/home/presentation/view/fragment/QuizHomeFragment.java[m
+[1mindex 9acb85c..727164b 100644[m
+[1m--- a/auro_scholar_lib/src/main/java/com/auro/scholr/home/presentation/view/fragment/QuizHomeFragment.java[m
+[1m+++ b/auro_scholar_lib/src/main/java/com/auro/scholr/home/presentation/view/fragment/QuizHomeFragment.java[m
+[36m@@ -408,6 +408,7 @@[m [mpublic class QuizHomeFragment extends BaseFragment implements View.OnClickListen[m
+                 ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);[m
+                 // resources = ViewUtil.getCustomResource(getActivity());[m
+             }[m
+[32m+[m
+             onResume();[m
+         } else if (v.getId() == R.id.leader_card_layout) {[m
+             openFragment(new FriendsLeaderBoardFragment());[m
+[1mdiff --git a/auro_scholar_lib/src/main/java/com/auro/scholr/util/alert_dialog/CustomSnackbar.java b/auro_scholar_lib/src/main/java/com/auro/scholr/util/alert_dialog/CustomSnackbar.java[m
+[1mindex 7cafbec..8eff40d 100644[m
+[1m--- a/auro_scholar_lib/src/main/java/com/auro/scholr/util/alert_dialog/CustomSnackbar.java[m
+[1m+++ b/auro_scholar_lib/src/main/java/com/auro/scholr/util/alert_dialog/CustomSnackbar.java[m
+[36m@@ -42,10 +42,7 @@[m [mpublic enum CustomSnackBar implements View.OnClickListener {[m
+ [m
+         if (cartSnackbar == null) {[m
+             openSnackBar();[m
+[31m-        } else {[m
+[31m-            openSnackBar();[m
+         }[m
+[31m-[m
+     }[m
+ [m
+ [m
+[36m@@ -71,7 +68,6 @@[m [mpublic enum CustomSnackBar implements View.OnClickListener {[m
+         Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) cartSnackbar.getView();[m
+         if (binding.getRoot().getParent() != null) {[m
+             ((ViewGroup) binding.getRoot().getParent()).removeView(binding.getRoot());[m
+[31m-[m
+         }[m
+         snackBarView.addView(binding.getRoot(), 0);[m
+         snackBarView.setPadding(0, 0, 0, 0);[m

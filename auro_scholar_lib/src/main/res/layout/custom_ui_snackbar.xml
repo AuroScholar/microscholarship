@@ -44,7 +44,7 @@
                 android:id="@+id/kycMsg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Challenge Your Friends"
+                android:text="@string/challenge_your_friends"
                 android:textColor="@color/black"
                 android:paddingStart="@dimen/_10sdp"
                 android:textSize="@dimen/_14sdp"

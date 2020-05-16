@@ -42,8 +42,6 @@ public enum CustomSnackBar implements View.OnClickListener {
 
         if (cartSnackbar == null) {
             openSnackBar();
-        } else {
-            openSnackBar();
         }
 
     }
