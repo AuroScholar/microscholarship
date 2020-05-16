@@ -13,89 +13,121 @@
     android:layout_width="match_parent"
     android:background="@color/background_camera_bottom_bar"
     android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="@dimen/_30sdp"
         android:layout_marginLeft="@dimen/_30sdp"
         android:layout_marginTop="@dimen/_100sdp"
-        android:background="@drawable/border_selector_white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_100sdp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="@dimen/_100sdp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-
-        <ImageView
-            android:id="@+id/imageView"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/border_selector_white"
-            android:src="@drawable/ic_modal"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/icTroffy"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_190sdp"
-            android:scaleType="fitXY"
-            android:src="@drawable/congratulations_troffy"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:cardCornerRadius="@dimen/_15sdp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
 
-        <com.auro.scholr.core.util.uiwidget.RPTextView
-            android:id="@+id/txtCongratulations"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/congratulations"
-            android:textColor="@color/white"
-            android:layout_marginBottom="@dimen/_30sdp"
-            android:textSize="@dimen/_16sdp"
-            app:layout_constraintBottom_toTopOf="@+id/txtSuccess"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
 
-        <com.auro.scholr.core.util.uiwidget.RPTextView
-            android:id="@+id/txtSuccess"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_30sdp"
-            android:gravity="center"
-            android:text="@string/successfully"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12sdp"
-            app:Font="Poppins-Regular.ttf"
-            app:layout_constraintBottom_toTopOf="@+id/btnShare"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
 
-        <com.auro.scholr.core.util.uiwidget.RPTextView
-            android:id="@+id/btnShare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="27dp"
-            android:background="@drawable/button_bg_with_yellow_stroke"
-            android:paddingTop="@dimen/_5sdp"
-            android:padding="@dimen/_5sdp"
-            android:text="@string/share_with"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:paddingRight="@dimen/_10sdp"
-            android:paddingLeft="@dimen/_100sdp"
-            android:textSize="@dimen/_14sdp"
-            app:Font="Poppins-SemiBold.ttf"
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/border_selector_white"
+                        android:scaleType="fitXY"
 
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+                        android:src="@drawable/ic_modal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/icTroffy"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/congratulations_troffy"
+                        app:layout_constraintBottom_toTopOf="@+id/layoutshare"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutshare"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/icTroffy"
+                        app:layout_constraintVertical_bias="0.0">
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/txtCongratulations"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/congratulations"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_16sdp"
+                            app:layout_constraintBottom_toTopOf="@+id/txtSuccess"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/btnShare"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/button_bg_with_yellow_stroke"
+                            android:paddingLeft="@dimen/_13sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingRight="@dimen/_13sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:text="@string/share_with"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11sdp"
+                            app:Font="Poppins-Regular.ttf"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txtSuccess" />
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/txtSuccess"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/successfully"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            app:Font="Poppins-Regular.ttf"
+                            app:layout_constraintBottom_toTopOf="@+id/btnShare"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txtCongratulations" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!---->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
