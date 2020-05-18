@@ -23,6 +23,8 @@
             android:background="@color/off_white">
 
 
+
+
             <include
                 android:id="@+id/toolbar_layout"
                 layout="@layout/toolbar_header_layout"
@@ -41,10 +43,11 @@
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:background="@android:color/transparent"
                 android:clipToPadding="false"
-                android:paddingBottom="@dimen/_150sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                app:layout_constraintBottom_toTopOf="@+id/custom_ui_snackbar"
                 app:layout_constraintTop_toBottomOf="@+id/header_top_parent">
 
                 <LinearLayout
@@ -315,6 +318,13 @@
                     android:id="@+id/errorLayout"
                     layout="@layout/error_layout" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <include
+                android:id="@+id/custom_ui_snackbar"
+                layout="@layout/custom_ui_snackbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -20,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -148,6 +150,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.toolbarLayout.langEng.setOnClickListener(this);
         binding.leaderCardLayout.setOnClickListener(this);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
+        binding.customUiSnackbar.arrow.setOnClickListener(this);
     }
 
 
@@ -185,13 +188,14 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         init();
         setListener();
         setDataOnUI();
-        openSnackBar();
+        //openSnackBar();
     }
 
     private void setDataOnUI() {
         binding.toolbarLayout.backArrow.setVisibility(View.GONE);
         binding.getScholarshipText.setText(resources.getText(R.string.get_scholarship));
         binding.headerTopParent.cambridgeHeading.setText(resources.getString(R.string.question_bank_powered_by_cambridge));
+        binding.customUiSnackbar.kycMsg.setText(resources.getString(R.string.challenge_your_friends));
         String lang = ViewUtil.getLanguage();
         if (lang.equalsIgnoreCase(AppConstant.LANGUAGE_EN) || TextUtil.isEmpty(lang)) {
             setLangOnUi(AppConstant.HINDI);
@@ -400,6 +404,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else if (v.getId() == R.id.privacy_policy) {
             openFragment(new PrivacyPolicyFragment());
         } else if (v.getId() == R.id.lang_eng) {
+            CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();
             if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase(AppConstant.HINDI)) {
                 ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
@@ -408,14 +413,26 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
                 // resources = ViewUtil.getCustomResource(getActivity());
             }
-            onResume();
+            reloadFragment();
         } else if (v.getId() == R.id.leader_card_layout) {
             openFragment(new FriendsLeaderBoardFragment());
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
         }
+        if (v.getId() == R.id.arrow) {
+            openFragment(new FriendsLeaderBoardFragment());
+        }
 
     }
+
+    private void reloadFragment() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (Build.VERSION.SDK_INT >= 26) {
+            ft.setReorderingAllowed(false);
+        }
+        ft.detach(this).attach(this).commit();
+    }
+
 
     private void setLangOnUi(String lang) {
         binding.toolbarLayout.langEng.setText(lang);
@@ -450,7 +467,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             quizResModel = (QuizResModel) commonDataModel.getObject();
             askPermission();
         } else if (commonDataModel.getClickType() == Status.FRIEND_LEADER_BOARD_CLICK) {
-            openFragment(new FriendsLeaderBoardFragment());
+
         }
 //todo just test
 /*        CongratulationsDialog  congratulationsDialog = new CongratulationsDialog(getContext());
