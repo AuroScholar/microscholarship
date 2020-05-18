@@ -49,9 +49,9 @@
     <string name="new_quiz_will_be_available_next_month">अगले महीने उपलब्ध होगी नई क्विज!</string>
     <string name="document_all_four_error_msg">कृपया पहले सभी चार दस्तावेज़ चुनें</string>
     <string name="question_bank_powered_by_cambridge">कैम्ब्रिज द्वारा संचालित प्रश्न बैंक</string>
-    <string name="permission_contact_error_msg">For taking the quiz contact permission is must.</string>
+    <string name="permission_contact_error_msg">प्रश्नोत्तरी से संपर्क करने के लिए अनुमति आवश्यक है।</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="permission_error_msg">For taking the quiz camera permission is must.</string>
+    <string name="permission_error_msg">प्रश्नोत्तरी कैमरा लेने के लिए अनुमति आवश्यक है।</string>
     <string name="complete_the_previous_quiz_to_unlock">अनलॉक करने के लिए पिछले प्रश्नोत्तरी को पूरा करें </string>
     <string name="you_win">तुम जीते</string>
     <string name="your_wallet">आपका वॉलेट</string>
@@ -62,13 +62,13 @@
     <string name="english">English</string>
     <string name="sucessfully_uploaded">पूरी तरह से अपलोड किया गया</string>
 
-    <string name="friends_leadeboard">Friends \n Leaderboard</string>
-    <string name="invite">Invite</string>
-    <string name="name">Name</string>
-    <string name="scholarship_won">Scholarship won</string>
-    <string name="score">Score</string>
-    <string name="invite_your_friends">Invite Your Friends</string>
-    <string name="your_friend_list">Your Friend List</string>
+    <string name="friends_leadeboard">दोस्तों\nलीडरबोर्ड</string>
+    <string name="invite">आमंत्रण</string>
+    <string name="name">नाम</string>
+    <string name="scholarship_won">छात्रवृत्ति जीती</string>
+    <string name="score">स्कोर</string>
+    <string name="invite_your_friends">अपने दोस्तों को आमंत्रित करें</string>
+    <string name="your_friend_list">आपकी मित्र सूची</string>
     <string name="facebook">Facebook</string>
     <string name="login_with_facebook">Login with Facebook</string>
 
