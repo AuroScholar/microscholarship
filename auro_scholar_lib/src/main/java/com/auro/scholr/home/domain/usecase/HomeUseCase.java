@@ -1,5 +1,9 @@
 package com.auro.scholr.home.domain.usecase;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.util.SparseArray;
+
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
@@ -8,11 +12,22 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.QuizResModel;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.Text;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
+import com.google.i18n.phonenumbers.PhoneNumberMatch;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HomeUseCase {
 
@@ -223,6 +238,112 @@ public class HomeUseCase {
         list.add(leaderBoardModel_04);
 
         return list;
+    }
+
+
+    public void getTextFromImage(Activity activity, Bitmap bitmap, KYCInputModel kycInputModel, boolean status) {
+        TextRecognizer txtRecognizer = new TextRecognizer.Builder(activity).build();
+        if (!txtRecognizer.isOperational()) {
+            // Shows if your Google Play services is not up to date or OCR is not supported for the device
+            AppLogger.e("TAG", "Detector dependencies are not yet available");
+        } else {
+            // Set the bitmap taken to the frame to perform OCR Operations.
+            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+            SparseArray items = txtRecognizer.detect(frame);
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < items.size(); i++) {
+                TextBlock item = (TextBlock) items.valueAt(i);
+                strBuilder.append(item.getValue());
+                strBuilder.append("\n");
+                // The following Process is used to show how to use lines & elements as well
+                kycInputModel.setAadhar_name(findNameFromAadharCard(items, item));
+            }
+
+            AppLogger.e("TAG" + " Final String ", strBuilder.toString());
+            if (status) {
+                kycInputModel.setAadhar_phone(extractPhoneNumber(strBuilder.toString()));
+                kycInputModel.setAadhar_dob(getDOB(strBuilder.toString()));
+            } else {
+                kycInputModel.setSchool_phone(extractPhoneNumber(strBuilder.toString()));
+                kycInputModel.setSchool_dob(getDOB(strBuilder.toString()));
+            }
+            kycInputModel.setAadhar_no(validateAadharNumber(strBuilder.toString()));
+
+        }
+    }
+
+
+    public String validateAadharNumber(String aadharNumber) {
+        String numberOnly = "";
+        String[] items = aadharNumber.split("\n");
+        for (String str : items) {
+            str.replaceAll("\\s", "");
+            numberOnly = str.replaceAll("[^0-9]", "");
+            if (numberOnly.length() == 12) {
+                AppLogger.e("KYCFragment", "Aadhar number == " + numberOnly);
+            }
+        }
+        return numberOnly;
+    }
+
+    public String extractPhoneNumber(String input) {
+        List<String> list = new ArrayList<>();
+        String phoneNumber = "";
+        Iterator<PhoneNumberMatch> existsPhone = PhoneNumberUtil.getInstance().findNumbers(input, "IN").iterator();
+        while (existsPhone.hasNext()) {
+            phoneNumber = existsPhone.next().number().toString().replaceAll("[^0-9]", "");
+            list.add(phoneNumber);
+        }
+        return phoneNumber;
+    }
+
+
+    public String findNameFromAadharCard(SparseArray items, TextBlock item) {
+        String name = "";
+        for (int j = 0; j < items.size(); j++) {
+            for (int k = 0; k < item.getComponents().size(); k++) {
+                //extract scanned text lines here
+                Text line = item.getComponents().get(k);
+                AppLogger.e("KYCFragment" + " lines", line.getValue());
+
+                String lineString = line.getValue().toLowerCase();
+                if (lineString.contains("name")) {
+                    String[] names = lineString.split(":");
+                    name = names[1];
+                    AppLogger.e("KYCFragment", "name here:" + name);
+                } else {
+                    if (lineString.contains("dob")) {
+                        Text dobline = item.getComponents().get(k - 1);
+                        name = dobline.getValue();
+                        AppLogger.e("KYCFragment", "dob name here:" + name);
+                    }
+                }
+
+            }
+        }
+
+        return name;
+    }
+
+    public String getDOB(String desc) {
+        ArrayList<String> allMatches = new ArrayList<>();
+        Matcher m = Pattern.compile("(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d").matcher(desc);
+        while (m.find()) {
+            allMatches.add(m.group());
+        }
+
+        Matcher match_second = Pattern.compile("\\d{4}-\\d{2}-\\d{2}").matcher(desc);
+        while (m.find()) {
+            AppLogger.e("KYCFragment", "Date == " + match_second.group(0));
+            allMatches.add(match_second.group(0));
+        }
+        if (TextUtil.checkListIsEmpty(allMatches)) {
+            return "";
+        } else {
+            return allMatches.get(0);
+        }
+
+
     }
 
 }

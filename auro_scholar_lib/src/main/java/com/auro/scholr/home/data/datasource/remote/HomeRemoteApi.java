@@ -34,6 +34,12 @@ public interface HomeRemoteApi {
     @Multipart
     @POST(URLConstant.UPLOAD_IMAGE_URL)
     Single<Response<JsonObject>> uploadImage(@Part(AppConstant.MOBILE_NUMBER) RequestBody description,
+                                             @Part(AppConstant.DocumentType.AADHAR_NAME) RequestBody aadhar_name,
+                                             @Part(AppConstant.DocumentType.AADHAR_DOB) RequestBody aadhar_dob,
+                                             @Part(AppConstant.DocumentType.AADHAR_PHONE) RequestBody aadhar_phone,
+                                             @Part(AppConstant.DocumentType.AADHAR_NO) RequestBody aadhar_no,
+                                             @Part(AppConstant.DocumentType.SCHOOL_DOB) RequestBody school_dob,
+                                             @Part(AppConstant.DocumentType.SCHOOL_PHONE) RequestBody schhol_phone,
                                              @Part MultipartBody.Part id_front,
                                              @Part MultipartBody.Part id_back,
                                              @Part MultipartBody.Part student_id,

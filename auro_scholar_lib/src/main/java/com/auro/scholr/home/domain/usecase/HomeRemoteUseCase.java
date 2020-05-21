@@ -13,6 +13,7 @@ import com.auro.scholr.home.data.model.AzureResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
 import com.auro.scholr.util.AppUtil;
@@ -43,9 +44,9 @@ public class HomeRemoteUseCase extends NetworkUseCase {
     }
 
 
-    public Single<ResponseApi> uploadProfileImage(List<KYCDocumentDatamodel> list, String phonenumber) {
+    public Single<ResponseApi> uploadProfileImage(List<KYCDocumentDatamodel> list,  KYCInputModel kycInputModel) {
 
-        return dashboardRemoteData.uploadProfileImage(list,phonenumber).map(new Function<Response<JsonObject>, ResponseApi>() {
+        return dashboardRemoteData.uploadProfileImage(list,kycInputModel).map(new Function<Response<JsonObject>, ResponseApi>() {
             @Override
             public ResponseApi apply(Response<JsonObject> response) throws Exception {
 

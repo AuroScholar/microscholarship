@@ -446,9 +446,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         Permissions.check(getActivity(), PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
             @Override
             public void onGranted() {
-
-                 openQuizTestFragment(dashboardResModel);
-               //todo dialog openCameraPhotoFragment();
+                openCameraPhotoFragment();
 
             }
 
@@ -504,6 +502,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             AppPref.INSTANCE.setPref(prefModel);
         }
     }
+
     private void openFragmentDialog(Fragment fragment) {
         /* getActivity().getSupportFragmentManager().popBackStack();*/
         getActivity().getSupportFragmentManager()

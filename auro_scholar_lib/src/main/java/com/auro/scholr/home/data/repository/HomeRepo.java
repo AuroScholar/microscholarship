@@ -4,6 +4,7 @@ import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+import com.auro.scholr.home.data.model.KYCInputModel;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public interface HomeRepo {
     interface DashboardRemoteData {
         Single<Response<JsonObject>> getDashboardData(AuroScholarDataModel model);
 
-        Single<Response<JsonObject>> uploadProfileImage(List<KYCDocumentDatamodel> list,String phonenumber);
+        Single<Response<JsonObject>> uploadProfileImage(List<KYCDocumentDatamodel> list, KYCInputModel kycInputModel);
 
         Single<Response<JsonObject>> postDemographicData(DemographicResModel demographicResModel);
 

@@ -103,6 +103,13 @@ public interface AppConstant {
         String SCHOOL_ID = "school_id_card";
         String STUDENT_PHOTO = "student_photo";
 
+        String AADHAR_PHONE="aadhar_phone";
+        String AADHAR_NO="aadhar_no";
+        String AADHAR_DOB="aadhar_dob";
+        String AADHAR_NAME="aadhar_name";
+        String SCHOOL_PHONE="school_phone";
+        String SCHOOL_DOB="school_dob";
+
         String YES="Yes";
         String NO="No";
         String IN_PROCESS="Inprocess";
