@@ -12,14 +12,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/_1sdp"
-            android:background="@color/off_white"
+            android:background="@color/white"
             android:gravity="center"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingEnd="@dimen/_5sdp"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+<!--            <androidx.cardview.widget.CardView
                 android:id="@+id/leader_card_layout"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
@@ -27,18 +27,25 @@
                 android:elevation="@dimen/_5sdp"
                 android:shape="ring"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="@dimen/_50sdp"
+                app:cardCornerRadius="@dimen/_5sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent">-->
 
                 <ImageView
+                    android:id="@+id/leader_card_layout"
                     android:layout_width="@dimen/_35sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="@dimen/_35sdp"
                     android:layout_gravity="center"
-                    android:background="@drawable/ic_leaderboard_icon" />
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:elevation="@dimen/_5sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_leaderboard_icon"
+                    android:background="@drawable/oval_background" />
 
-            </androidx.cardview.widget.CardView>
+          <!--  </androidx.cardview.widget.CardView>-->
 
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
@@ -48,7 +55,7 @@
                 android:paddingStart="@dimen/_10sdp"
                 android:text="@string/challenge_your_friends"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"
                 app:Font="Poppins-SemiBold.ttf"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/bt_upload_all"
@@ -87,7 +94,8 @@
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="Invite"
+                android:gravity="center"
+                android:text="@string/invite"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sdp"
                 android:visibility="visible"

@@ -142,6 +142,13 @@
     <string name="facebook">Facebook</string>
     <string name="login_with_facebook">Login with Facebook</string>
     <string name="challenge_your_friends">Challenge Your Friends</string>
-
+    <string name="life_is_better_with_friends">Life is better with Friends!</string>
+    <string name="invite_them">Invite them</string>
+    <string name="check_who_is_ahead_of_you">Check who is ahead of you!</string>
+    <string name="see_leaderboard">See\nLeaderboard</string>
+    <string name="hurray">Hurray! You are rank</string>
+    <string name="go_to_leaderboard">Go To Leaderboard</string>
+    <string name="you_friends_have_taken_a_quiz">Your friends have taken a quiz</string>
+    <string name="check_leaderboard">Check\nLeaderboard</string>
 
 </resources>
