@@ -99,7 +99,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         quizViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setQuizViewModel(quizViewModel);
-
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null && TextUtil.isEmpty(prefModel.getUserLanguage())) {
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
@@ -467,10 +466,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else if (commonDataModel.getClickType() == Status.FRIEND_LEADER_BOARD_CLICK) {
 
         }
-//todo just test
-/*        CongratulationsDialog  congratulationsDialog = new CongratulationsDialog(getContext());
 
-        openFragmentDialog(congratulationsDialog);*/
     }
 
     public void getSpannableString() {
@@ -512,6 +508,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
 
+    }
+
+
+    private void openCongratulationsDialog()
+    {
+        CongratulationsDialog  congratulationsDialog = new CongratulationsDialog(getContext());
+        openFragmentDialog(congratulationsDialog);
     }
 
 }

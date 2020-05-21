@@ -90,6 +90,8 @@ public class QuizTestFragment extends BaseFragment {
     CustomDialog customDialog;
     Dialog customProgressDialog;
 
+    boolean submittingTest = false;
+
     // Storage Permissions variables
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -132,7 +134,6 @@ public class QuizTestFragment extends BaseFragment {
         if (customDialog != null) {
             customDialog.cancel();
         }
-
         super.onDestroy();
 
     }
@@ -238,7 +239,7 @@ public class QuizTestFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-       getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
     }
 
@@ -285,14 +286,28 @@ public class QuizTestFragment extends BaseFragment {
         public void boundMethod(String html) {
             openProgressDialog();
             AppLogger.e("chhonker bound method", html);
-            new Handler().postDelayed(new Runnable() {
+          /*  new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    customProgressDialog.cancel();
-                    openQuizHomeFragment();
-                }
-            }, 4000);
+                    cancelDialogAfterSubmittingTest();
 
+                }
+            }, 8000);
+*/
+        }
+    }
+
+    private void cancelDialogAfterSubmittingTest() {
+        if (!submittingTest) {
+            submittingTest = true;
+            if (customProgressDialog != null) {
+                customProgressDialog.cancel();
+            }
+            if (!quizTestViewModel.homeUseCase.checkDemographicStatus(dashboardResModel)) {
+                openDemographicFragment();
+            } else {
+                openQuizHomeFragment();
+            }
         }
     }
 
@@ -322,11 +337,7 @@ public class QuizTestFragment extends BaseFragment {
             if (view.getUrl().equalsIgnoreCase("http://auroscholar.com/index.php") ||
                     view.getUrl().equalsIgnoreCase("http://auroscholar.com/demographics.php")
                     || view.getUrl().equalsIgnoreCase("http://auroscholar.com/dashboard.php")) {
-                if (!quizTestViewModel.homeUseCase.checkDemographicStatus(dashboardResModel)) {
-                    openDemographicFragment();
-                } else {
-                    //  openQuizHomeFragment();
-                }
+                cancelDialogAfterSubmittingTest();
 
             }
         }

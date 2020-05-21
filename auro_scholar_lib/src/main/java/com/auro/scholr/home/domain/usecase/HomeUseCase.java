@@ -7,6 +7,8 @@ import android.util.SparseArray;
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
@@ -16,6 +18,7 @@ import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
+import com.auro.scholr.util.ViewUtil;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
@@ -126,8 +129,13 @@ public class HomeUseCase {
         AssignmentReqModel assignmentReqModel = new AssignmentReqModel();
         assignmentReqModel.setExam_name(String.valueOf(quizResModel.getNumber()));
         assignmentReqModel.setQuiz_attempt(String.valueOf((quizResModel.getAttempt() + 1)));
-        assignmentReqModel.setExamlang("E");
         assignmentReqModel.setRegistration_id(dashboardResModel.getAuroid());
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
+            assignmentReqModel.setExamlang("E");
+        } else {
+            assignmentReqModel.setExamlang("H");
+        }
         return assignmentReqModel;
     }
 
