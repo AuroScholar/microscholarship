@@ -470,8 +470,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
         }
 //todo just test
-/*        CongratulationsDialog  congratulationsDialog = new CongratulationsDialog(getContext());
-
+      /* CongratulationsDialog  congratulationsDialog = new CongratulationsDialog(getContext());
+        congratulationsDialog.setCancelable(true);
         openFragmentDialog(congratulationsDialog);*/
     }
 
