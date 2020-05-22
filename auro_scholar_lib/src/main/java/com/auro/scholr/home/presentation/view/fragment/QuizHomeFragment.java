@@ -239,10 +239,16 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
-                        if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
+                        if (!dashboardResModel.isError()) {
+                            checkStatusforCongratulationDialog();
+                            if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
+                                handleProgress(2, dashboardResModel.getMessage());
+                            } else {
+                                setDataOnUi(dashboardResModel);
+                            }
+                        }else
+                        {
                             handleProgress(2, dashboardResModel.getMessage());
-                        } else {
-                            setDataOnUi(dashboardResModel);
                         }
                     } else if (responseApi.apiTypeStatus == AZURE_API) {
                         // openQuizTestFragment(dashboardResModel);
@@ -523,7 +529,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             if (!TextUtil.isEmpty(assignmentReqModel.getExam_name()) && !TextUtil.isEmpty(assignmentReqModel.getQuiz_attempt())) {
                 if (dashboardResModel != null && !TextUtil.checkListIsEmpty(dashboardResModel.getQuiz())) {
                     for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
-                        if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() <= 8) {
+                        if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 8) {
                             prefModel.setAssignmentReqModel(null);
                             AppPref.INSTANCE.setPref(prefModel);
                             openCongratulationsDialog();

@@ -14,6 +14,10 @@ public class AssignmentResModel {
     @Expose
     private boolean error;
 
+    @SerializedName("message")
+    @Expose
+    private String message;
+
     @SerializedName("StudentID")
     @Expose
     private String StudentID;
@@ -89,5 +93,13 @@ public class AssignmentResModel {
 
     public void setExamAssignmentID(String examAssignmentID) {
         ExamAssignmentID = examAssignmentID;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

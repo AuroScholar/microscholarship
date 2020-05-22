@@ -320,13 +320,17 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
                         KYCResListModel kycResListModel = (KYCResListModel) responseApi.data;
-                        updateListonResponse(kycResListModel);
-                        if (kycViewModel.homeUseCase.checkAllUploadedOrNot(kycResListModel.getList())) {
-                            progressBarHandling(2);
+                        if (!kycResListModel.isError()) {
+                            updateListonResponse(kycResListModel);
+                          /*  if (kycViewModel.homeUseCase.checkAllUploadedOrNot(kycResListModel.getList())) {
+                                progressBarHandling(2);
+                            }*/
+                            uploadBtnStatus = false;
+                        } else {
+                            showError(kycResListModel.getMessage());
+                            progressBarHandling(1);
                         }
-                        uploadBtnStatus = false;
                     } else if (responseApi.apiTypeStatus == AZURE_API) {
-
                         sendFaceImageOnServer();
                     }
 
@@ -360,12 +364,10 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             binding.btUploadAll.setEnabled(true);
             binding.progressBar.setVisibility(View.GONE);
             if (kycViewModel.homeUseCase.checkUploadButtonStatus(kycDocumentDatamodelArrayList)) {
-                binding.btUploadAll.setVisibility(View.INVISIBLE);
+                binding.buttonUploadLayout.setVisibility(View.INVISIBLE);
             } else {
-                binding.btUploadAll.setVisibility(View.VISIBLE);
+                binding.buttonUploadLayout.setVisibility(View.VISIBLE);
             }
-        } else if (status == 2) {
-            binding.btUploadAll.setVisibility(View.INVISIBLE);
         }
 
     }

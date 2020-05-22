@@ -149,7 +149,7 @@ public class QuizTestFragment extends BaseFragment {
 
         setListener();
         if (dashboardResModel != null && quizResModel != null) {
-            assignmentReqModel=quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
+            assignmentReqModel = quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
             quizTestViewModel.getAssignExamData(assignmentReqModel);
         }
     }
@@ -172,7 +172,7 @@ public class QuizTestFragment extends BaseFragment {
                             openDialog();
                             loadWeb(webUrl);
                         } else {
-                            handleProgress(2, getActivity().getString(R.string.default_error));
+                            handleProgress(2,assignmentResModel.getMessage());
                         }
                     }
                     break;
@@ -345,6 +345,7 @@ public class QuizTestFragment extends BaseFragment {
 
         //Show loader on url load
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
             AppLogger.e("chhonker", url);
             if (view.getUrl().equalsIgnoreCase("http://auroscholar.com/index.php") ||
                     view.getUrl().equalsIgnoreCase("http://auroscholar.com/demographics.php")
