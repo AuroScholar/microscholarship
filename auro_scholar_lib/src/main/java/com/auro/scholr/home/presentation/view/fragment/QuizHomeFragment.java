@@ -10,10 +10,12 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +37,9 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
+import com.auro.scholr.core.util.uiwidget.OverlayView;
+import com.auro.scholr.core.util.uiwidget.SimpleTooltip;
+import com.auro.scholr.core.util.uiwidget.SimpleTooltipUtils;
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.CustomSnackBarModel;
@@ -134,6 +139,22 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else {
             observeServiceResponse();
         }
+        new SimpleTooltip.Builder(getContext())
+                .anchorView(binding.walletBalText)
+                .text(R.string.add_your_kyc)
+                .animationPadding(SimpleTooltipUtils.pxFromDp(5))
+                .textColor(R.color.white)
+                .textSize(R.dimen._5sdp)
+                .gravity(Gravity.BOTTOM)
+                .modal(false)
+                .animated(true)
+                .arrowHeight((int) SimpleTooltipUtils.pxFromDp(5))
+                .contentView(R.layout.tool_tip, R.id.tv_text)
+                .arrowWidth((int) SimpleTooltipUtils.pxFromDp(10))
+                .dismissOnOutsideTouch(false)
+                .dismissOnInsideTouch(false)
+                .build()
+                .show();
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
     }
 
@@ -396,11 +417,16 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         if (v.getId() == R.id.wallet_bal_text) {
             //openFragment(new SendMoneyFragment());
-            if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+      /*      if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
             } else {
                 openKYCFragment(dashboardResModel);
-            }
+            }*/
+
+
+
+
+
         } else if (v.getId() == R.id.privacy_policy) {
             openFragment(new PrivacyPolicyFragment());
         } else if (v.getId() == R.id.lang_eng) {

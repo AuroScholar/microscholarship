@@ -175,5 +175,6 @@
     <style name="CustomDialogTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+    <style name="simpletooltip_default" parent="@android:style/TextAppearance.Medium"/>
 
 </resources>
