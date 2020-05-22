@@ -302,13 +302,11 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     private void processImageData(boolean status) {
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
-            kycViewModel.homeUseCase.getTextFromImage(getActivity(), bitmap, kycInputModel,status);
+            kycViewModel.homeUseCase.getTextFromImage(getActivity(), bitmap, kycInputModel, status);
         } catch (Exception e) {
 
         }
     }
-
-
 
 
     private void observeServiceResponse() {
@@ -321,7 +319,11 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
-                        updateListonResponse((KYCResListModel) responseApi.data);
+                        KYCResListModel kycResListModel = (KYCResListModel) responseApi.data;
+                        updateListonResponse(kycResListModel);
+                        if (kycViewModel.homeUseCase.checkAllUploadedOrNot(kycResListModel.getList())) {
+                            progressBarHandling(2);
+                        }
                         uploadBtnStatus = false;
                     } else if (responseApi.apiTypeStatus == AZURE_API) {
 
@@ -353,7 +355,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             binding.btUploadAll.setText("");
             binding.btUploadAll.setEnabled(false);
             binding.progressBar.setVisibility(View.VISIBLE);
-        } else {
+        } else if (status == 1) {
             binding.btUploadAll.setText(getString(R.string.upload));
             binding.btUploadAll.setEnabled(true);
             binding.progressBar.setVisibility(View.GONE);
@@ -362,6 +364,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             } else {
                 binding.btUploadAll.setVisibility(View.VISIBLE);
             }
+        } else if (status == 2) {
+            binding.btUploadAll.setVisibility(View.INVISIBLE);
         }
 
     }

@@ -42,8 +42,11 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.core.network.URLConstant;
 import com.auro.scholr.databinding.QuizTestLayoutBinding;
+import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AssignmentResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
@@ -89,6 +92,8 @@ public class QuizTestFragment extends BaseFragment {
     AssignmentResModel assignmentResModel;
     CustomDialog customDialog;
     Dialog customProgressDialog;
+
+    AssignmentReqModel assignmentReqModel;
 
     boolean submittingTest = false;
 
@@ -144,7 +149,8 @@ public class QuizTestFragment extends BaseFragment {
 
         setListener();
         if (dashboardResModel != null && quizResModel != null) {
-            quizTestViewModel.getAssignExamData(quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel));
+            assignmentReqModel=quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
+            quizTestViewModel.getAssignExamData(assignmentReqModel);
         }
     }
 
@@ -308,6 +314,12 @@ public class QuizTestFragment extends BaseFragment {
             } else {
                 openQuizHomeFragment();
             }
+
+        }
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null) {
+            prefModel.setAssignmentReqModel(assignmentReqModel);
+            AppPref.INSTANCE.setPref(prefModel);
         }
     }
 

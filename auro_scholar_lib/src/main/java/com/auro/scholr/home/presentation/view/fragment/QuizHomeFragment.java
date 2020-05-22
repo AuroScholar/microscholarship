@@ -511,10 +511,28 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
 
-    private void openCongratulationsDialog()
-    {
-        CongratulationsDialog  congratulationsDialog = new CongratulationsDialog(getContext());
+    private void openCongratulationsDialog() {
+        CongratulationsDialog congratulationsDialog = new CongratulationsDialog(getContext());
         openFragmentDialog(congratulationsDialog);
+    }
+
+    public void checkStatusforCongratulationDialog() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null && prefModel.getAssignmentReqModel() != null) {
+            AssignmentReqModel assignmentReqModel = prefModel.getAssignmentReqModel();
+            if (!TextUtil.isEmpty(assignmentReqModel.getExam_name()) && !TextUtil.isEmpty(assignmentReqModel.getQuiz_attempt())) {
+                if (dashboardResModel != null && !TextUtil.checkListIsEmpty(dashboardResModel.getQuiz())) {
+                    for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
+                        if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() <= 8) {
+                            prefModel.setAssignmentReqModel(null);
+                            AppPref.INSTANCE.setPref(prefModel);
+                            openCongratulationsDialog();
+                        }
+                    }
+                }
+
+            }
+        }
     }
 
 }

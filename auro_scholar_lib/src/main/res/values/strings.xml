@@ -94,8 +94,8 @@
         <item>English</item>
         <item>Other</item>
     </string-array>
-    <string name="congratulations">Congratulations</string>
-    <string name="successfully">You have successfully completed\n the 100 Days UI Challenge</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="successfully">You have got ₹50 Scholarship Cash.\n share with your friends!</string>
     <string name="share_with">Share With Friends</string>
 
 

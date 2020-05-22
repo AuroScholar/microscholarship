@@ -15,6 +15,7 @@ import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
+import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
@@ -264,7 +265,7 @@ public class HomeUseCase {
                 strBuilder.append(item.getValue());
                 strBuilder.append("\n");
                 // The following Process is used to show how to use lines & elements as well
-                kycInputModel.setAadhar_name(findNameFromAadharCard(items, item));
+                findNameFromAadharCard(items, item, kycInputModel);
             }
 
             AppLogger.e("TAG" + " Final String ", strBuilder.toString());
@@ -282,16 +283,17 @@ public class HomeUseCase {
 
 
     public String validateAadharNumber(String aadharNumber) {
-        String numberOnly = "";
+        String aadharDigit = "";
         String[] items = aadharNumber.split("\n");
         for (String str : items) {
             str.replaceAll("\\s", "");
-            numberOnly = str.replaceAll("[^0-9]", "");
+            String numberOnly = str.replaceAll("[^0-9]", "");
             if (numberOnly.length() == 12) {
+                aadharDigit = numberOnly;
                 AppLogger.e("KYCFragment", "Aadhar number == " + numberOnly);
             }
         }
-        return numberOnly;
+        return aadharDigit;
     }
 
     public String extractPhoneNumber(String input) {
@@ -306,7 +308,7 @@ public class HomeUseCase {
     }
 
 
-    public String findNameFromAadharCard(SparseArray items, TextBlock item) {
+    public void findNameFromAadharCard(SparseArray items, TextBlock item, KYCInputModel kycInputModel) {
         String name = "";
         for (int j = 0; j < items.size(); j++) {
             for (int k = 0; k < item.getComponents().size(); k++) {
@@ -319,18 +321,24 @@ public class HomeUseCase {
                     String[] names = lineString.split(":");
                     name = names[1];
                     AppLogger.e("KYCFragment", "name here:" + name);
+                    if (!name.isEmpty()) {
+                        kycInputModel.setAadhar_name(name);
+                    }
                 } else {
                     if (lineString.contains("dob")) {
                         Text dobline = item.getComponents().get(k - 1);
                         name = dobline.getValue();
                         AppLogger.e("KYCFragment", "dob name here:" + name);
+                        if (!name.isEmpty()) {
+                            kycInputModel.setAadhar_name(name);
+                        }
                     }
                 }
 
             }
         }
 
-        return name;
+        AppLogger.e("KYCFragment", "Final name here:" + name);
     }
 
     public String getDOB(String desc) {
@@ -351,7 +359,22 @@ public class HomeUseCase {
             return allMatches.get(0);
         }
 
+    }
 
+    public boolean checkAllUploadedOrNot(List<KYCResItemModel> list) {
+        if (TextUtil.checkListIsEmpty(list)) {
+            return false;
+        }
+        int count = 0;
+        for (KYCResItemModel resItemModel : list) {
+            if (!TextUtil.isEmpty(resItemModel.getUrl())) {
+                count++;
+            }
+        }
+        if (count == 4) {
+            return true;
+        }
+        return false;
     }
 
 }
