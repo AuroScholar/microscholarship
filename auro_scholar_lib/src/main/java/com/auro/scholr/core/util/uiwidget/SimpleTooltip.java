@@ -94,11 +94,10 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
     private boolean mIgnoreOverlay;
 
 
-
     public SimpleTooltip(Builder builder) {
         mContext = builder.context;
         mGravity = builder.gravity;
-        mOverlayWindowBackgroundColor = builder.overlayWindowBackgroundColor;
+        mOverlayWindowBackgroundColor=builder.overlayWindowBackgroundColor;
         mArrowDirection = builder.arrowDirection;
         mDismissOnInsideTouch = builder.dismissOnInsideTouch;
         mDismissOnOutsideTouch = builder.dismissOnOutsideTouch;
@@ -194,7 +193,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         if (mIgnoreOverlay) {
             return;
         }
-        mOverlay = mTransparentOverlay ? new View(mContext) : new OverlayView(mContext, mAnchorView, mHighlightShape, mOverlayOffset, mOverlayWindowBackgroundColor);
+        mOverlay = mTransparentOverlay ? new View(mContext) : new OverlayView(mContext, mAnchorView, mHighlightShape, mOverlayOffset,mOverlayWindowBackgroundColor);
         if (mOverlayMatchParent)
             mOverlay.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         else
@@ -292,6 +291,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
     public void dismiss() {
         if (dismissed)
             return;
+
         dismissed = true;
         if (mPopupWindow != null) {
             mPopupWindow.dismiss();
@@ -545,7 +545,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         private int width = ViewGroup.LayoutParams.WRAP_CONTENT;
         private int height = ViewGroup.LayoutParams.WRAP_CONTENT;
         private boolean ignoreOverlay = false;
-        private int overlayWindowBackgroundColor = 0;
+        private int overlayWindowBackgroundColor=0;
 
         public Builder(Context context) {
             this.context = context;
@@ -617,12 +617,12 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
             }
         }
 
-        public Builder setWidth(int width) {
+        public Builder setWidth(int width){
             this.width = width;
             return this;
         }
 
-        public Builder setHeight(int height) {
+        public Builder setHeight(int height){
             this.height = height;
             return this;
         }
@@ -715,7 +715,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
          * <div class="en">Set the target <tt>{@link View}</tt> that the tooltip will point. Make sure that the anchor <tt>{@link View}</tt> shold be showing in the screen.</div>
          *
          * @param anchorView <div class="pt"><tt>View</tt> para qual o tooltip deve apontar</div>
-         *                                                       <div class="en"><tt>View</tt> that the tooltip will point</div>
+         *                   <div class="en"><tt>View</tt> that the tooltip will point</div>
          * @return this
          */
         public Builder anchorView(View anchorView) {
@@ -893,7 +893,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
          * <div class="en">Enables focus in the tooltip content. Default is <tt>false</tt>.</div>
          *
          * @param focusable <div class="pt">Pode receber o foco.</div>
-         *                                                    <div class="en">Can receive focus.</div>
+         *                  <div class="en">Can receive focus.</div>
          * @return this
          */
         public Builder focusable(boolean focusable) {
@@ -913,7 +913,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
          * </div>
          *
          * @param highlightShape <div class="pt">Formato do Shape.</div>
-         *                                                                   <div class="en">Shape type.</div>
+         *                       <div class="en">Shape type.</div>
          * @return this
          * @see OverlayView#HIGHLIGHT_SHAPE_OVAL
          * @see OverlayView#HIGHLIGHT_SHAPE_RECTANGULAR
@@ -936,7 +936,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
          * Like in a Dialog or DialogFragment.</div>
          *
          * @param overlayMatchParent <div class="pt">True se o overlay deve ser MATCH_PARENT. False se ele deve obter o mesmo tamanho do pai.</div>
-         *                                                                               <div class="en">True if the overlay should be MATCH_PARENT. False if it should get the same size as the parent.</div>
+         *                           <div class="en">True if the overlay should be MATCH_PARENT. False if it should get the same size as the parent.</div>
          * @return this
          */
         public Builder overlayMatchParent(boolean overlayMatchParent) {
@@ -946,7 +946,6 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
 
         /**
          * As some dialogs have a problem when displaying tooltip (like expand/subtract) container, this ignores overlay adding altogether.
-         *
          * @param ignoreOverlay flag to ignore overlay adding
          * @return this
          */

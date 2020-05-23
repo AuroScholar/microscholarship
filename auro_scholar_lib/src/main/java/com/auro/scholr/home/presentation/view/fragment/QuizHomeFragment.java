@@ -85,6 +85,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     Resources resources;
     boolean isStateRestore;
     AssignmentReqModel assignmentReqModel;
+    SimpleTooltip  simpletooltip;
 
 
     @Override
@@ -104,6 +105,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         quizViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setQuizViewModel(quizViewModel);
+
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null && TextUtil.isEmpty(prefModel.getUserLanguage())) {
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
@@ -138,22 +140,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else {
             observeServiceResponse();
         }
-        new SimpleTooltip.Builder(getContext())
-                .anchorView(binding.walletBalText)
-                .text(R.string.add_your_kyc)
-                .animationPadding(SimpleTooltipUtils.pxFromDp(5))
-                .textColor(R.color.white)
-                .textSize(R.dimen._5sdp)
-                .gravity(Gravity.BOTTOM)
-                .modal(false)
-                .animated(true)
-                .arrowHeight((int) SimpleTooltipUtils.pxFromDp(5))
-                .contentView(R.layout.tool_tip, R.id.tv_text)
-                .arrowWidth((int) SimpleTooltipUtils.pxFromDp(10))
-                .dismissOnOutsideTouch(false)
-                .dismissOnInsideTouch(false)
-                .build()
-                .show();
+
 
 
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
@@ -210,6 +197,21 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         init();
         setListener();
         setDataOnUI();
+
+
+
+        simpletooltip = new SimpleTooltip(new SimpleTooltip.Builder(getContext())
+                .anchorView(binding.walletBalText)
+                .text(R.string.add_your_kyc)
+                .modal(false)
+                .gravity(Gravity.BOTTOM)
+                .animated(true)
+                .arrowHeight((int) SimpleTooltipUtils.pxFromDp(5))
+                .contentView(R.layout.tool_tip, R.id.tv_text)
+                .arrowWidth((int) SimpleTooltipUtils.pxFromDp(10))
+                .dismissOnOutsideTouch(false)
+                .dismissOnInsideTouch(false));
+        simpletooltip.show();
         //openSnackBar();
     }
 
@@ -231,6 +233,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     public void onStop() {
         super.onStop();
         CustomSnackBar.INSTANCE.dismissCartSnackbar();
+        simpletooltip.dismiss();
+
+
 
     }
 
@@ -262,15 +267,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
-                        if (!dashboardResModel.isError()) {
-                            checkStatusforCongratulationDialog();
-                            if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
-                                handleProgress(2, dashboardResModel.getMessage());
-                            } else {
-                                setDataOnUi(dashboardResModel);
-                            }
-                        } else {
+                        if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
                             handleProgress(2, dashboardResModel.getMessage());
+                        } else {
+                            setDataOnUi(dashboardResModel);
                         }
                     } else if (responseApi.apiTypeStatus == AZURE_API) {
                         // openQuizTestFragment(dashboardResModel);
@@ -423,13 +423,21 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         if (v.getId() == R.id.wallet_bal_text) {
             //openFragment(new SendMoneyFragment());
-            if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+      /*      if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
             } else {
                 openKYCFragment(dashboardResModel);
-            }
+            }*/
+
+
+
+
+
         } else if (v.getId() == R.id.privacy_policy) {
             openFragment(new PrivacyPolicyFragment());
+
+
+
         } else if (v.getId() == R.id.lang_eng) {
             CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -473,6 +481,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         Permissions.check(getActivity(), PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
             @Override
             public void onGranted() {
+
                 // openQuizTestFragment(dashboardResModel);
                 openCameraPhotoFragment();
 
@@ -495,7 +504,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else if (commonDataModel.getClickType() == Status.FRIEND_LEADER_BOARD_CLICK) {
 
         }
-
+//todo just test
+      /* CongratulationsDialog  congratulationsDialog = new CongratulationsDialog(getContext());
+        congratulationsDialog.setCancelable(true);
+        openFragmentDialog(congratulationsDialog);*/
     }
 
     public void getSpannableString() {
@@ -527,7 +539,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             AppPref.INSTANCE.setPref(prefModel);
         }
     }
-
     private void openFragmentDialog(Fragment fragment) {
         /* getActivity().getSupportFragmentManager().popBackStack();*/
         getActivity().getSupportFragmentManager()
@@ -537,31 +548,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
 
-    }
-
-
-    private void openCongratulationsDialog() {
-        CongratulationsDialog congratulationsDialog = new CongratulationsDialog(getContext());
-        openFragmentDialog(congratulationsDialog);
-    }
-
-    public void checkStatusforCongratulationDialog() {
-        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (prefModel != null && prefModel.getAssignmentReqModel() != null) {
-            AssignmentReqModel assignmentReqModel = prefModel.getAssignmentReqModel();
-            if (!TextUtil.isEmpty(assignmentReqModel.getExam_name()) && !TextUtil.isEmpty(assignmentReqModel.getQuiz_attempt())) {
-                if (dashboardResModel != null && !TextUtil.checkListIsEmpty(dashboardResModel.getQuiz())) {
-                    for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
-                        if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 8) {
-                            prefModel.setAssignmentReqModel(null);
-                            AppPref.INSTANCE.setPref(prefModel);
-                            openCongratulationsDialog();
-                        }
-                    }
-                }
-
-            }
-        }
     }
 
 }
