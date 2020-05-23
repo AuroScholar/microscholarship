@@ -121,6 +121,33 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
+
+                            <RelativeLayout
+                                android:id="@+id/rltooltipe"
+                                android:layout_width="@dimen/_90sdp"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="@+id/get_scholarship_text"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:drawableBottom="@drawable/tooltip"
+                                    android:gravity="center" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:gravity="center"
+                                    android:paddingTop="@dimen/_15sdp"
+                                    android:text="@string/add_your_kyc"
+                                    android:textColor="@color/white" />
+
+
+                            </RelativeLayout>
+
                             <com.auro.scholr.core.util.uiwidget.RPTextView
                                 android:id="@+id/get_scholarship_text"
                                 android:layout_width="wrap_content"
@@ -167,7 +194,9 @@
                                 app:layout_constraintTop_toTopOf="parent"
                                 bind:ignore="RtlCompat" />
 
+
                             <RelativeLayout
+                                android:id="@+id/relativeLayout"
                                 android:layout_width="@dimen/_20sdp"
                                 android:layout_height="@dimen/_20sdp"
                                 android:background="@drawable/transparent_circle"
@@ -186,11 +215,14 @@
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/quiz_type_list"
                             android:layout_width="match_parent"
+
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10sdp"
+
                             android:background="@android:color/transparent" />
 
 

@@ -14,6 +14,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,7 +90,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     Resources resources;
     boolean isStateRestore;
     AssignmentReqModel assignmentReqModel;
-    SimpleTooltip  simpletooltip;
+    SimpleTooltip.Builder  simpletooltip;
 
 
     @Override
@@ -141,7 +146,19 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             observeServiceResponse();
         }
 
+/*        TranslateAnimation mAnimation = new TranslateAnimation(TranslateAnimation.START_ON_FIRST_FRAME, 0f, TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.RELATIVE_TO_PARENT, -1f, TranslateAnimation.RELATIVE_TO_PARENT, 1.0f);
+        mAnimation.setDuration(10000);
+        mAnimation.setRepeatCount(-1);
+        mAnimation.setRepeatMode(Animation.INFINITE);
+        mAnimation.setInterpolator(new LinearInterpolator());*/
+        RotateAnimation rotate = new RotateAnimation(-5, 5,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotate.setDuration(10000);
 
+        rotate.setRepeatCount(-1);
+        rotate.setRepeatMode(Animation.INFINITE);
+        rotate.setInterpolator(new CycleInterpolator(5));
+        binding.rltooltipe.startAnimation(rotate);
+        //binding.rltooltipe.setAnimation(mAnimation);
 
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
     }
@@ -197,22 +214,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         init();
         setListener();
         setDataOnUI();
-
-
-
-        simpletooltip = new SimpleTooltip(new SimpleTooltip.Builder(getContext())
-                .anchorView(binding.walletBalText)
-                .text(R.string.add_your_kyc)
-                .modal(false)
-                .gravity(Gravity.BOTTOM)
-                .animated(true)
-                .arrowHeight((int) SimpleTooltipUtils.pxFromDp(5))
-                .contentView(R.layout.tool_tip, R.id.tv_text)
-                .arrowWidth((int) SimpleTooltipUtils.pxFromDp(10))
-                .dismissOnOutsideTouch(false)
-                .dismissOnInsideTouch(false));
-        simpletooltip.show();
-        //openSnackBar();
     }
 
     private void setDataOnUI() {
@@ -233,7 +234,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     public void onStop() {
         super.onStop();
         CustomSnackBar.INSTANCE.dismissCartSnackbar();
-        simpletooltip.dismiss();
+
 
 
 
