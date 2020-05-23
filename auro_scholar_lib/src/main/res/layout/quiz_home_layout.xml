@@ -53,38 +53,13 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/leaderboard_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/leader_card_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginEnd="@dimen/_10sdp"
-                            android:elevation="@dimen/_5sdp"
-                            app:cardBackgroundColor="@color/white"
-                            app:cardCornerRadius="@dimen/_8sdp"
-                            app:cardUseCompatPadding="true"
-                            app:layout_constraintTop_toTopOf="parent">
-
-
-                        </androidx.cardview.widget.CardView>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <!--Shimmer Layout-->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_10sdp">
 
                         <com.facebook.shimmer.ShimmerFrameLayout
@@ -108,7 +83,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <!--Main Layout-->
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/main_parent_layout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -117,36 +92,54 @@
                         android:orientation="vertical"
                         android:visibility="visible">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/quiz_type_list"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tooltip_layout"
+                            android:layout_marginTop="@dimen/_13sdp"
+                            android:background="@android:color/transparent"
+                            app:layout_constraintTop_toBottomOf="@+id/tooltip_layout" />
 
 
-                            <RelativeLayout
-                                android:id="@+id/rltooltipe"
-                                android:layout_width="@dimen/_90sdp"
-                                android:layout_height="wrap_content"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="@+id/get_scholarship_text"
-                                app:layout_constraintTop_toTopOf="parent">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:drawableBottom="@drawable/tooltip"
-                                    android:gravity="center" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerInParent="true"
-                                    android:gravity="center"
-                                    android:paddingTop="@dimen/_15sdp"
-                                    android:text="@string/add_your_kyc"
-                                    android:textColor="@color/white" />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/quizwon_type_list"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/quiz_type_list"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/quiz_type_list" />
 
 
-                            </RelativeLayout>
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/privacy_policy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/quizwon_type_list"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/blue_strip"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="@dimen/_8sdp"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:text="@string/privacy_policy"
+                            android:textAlignment="center"
+                            android:textColor="@color/blue_color"
+                            app:Font="Poppins-Regular.ttf"
+                            app:layout_constraintTop_toBottomOf="@+id/quizwon_type_list" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/tooltip_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent">
+
 
                             <com.auro.scholr.core.util.uiwidget.RPTextView
                                 android:id="@+id/get_scholarship_text"
@@ -175,7 +168,6 @@
                                 app:Font="Poppins-Regular.ttf"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/get_scholarship_text" />
-
 
 
                             <com.auro.scholr.core.util.uiwidget.RPTextView
@@ -214,43 +206,34 @@
 
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/quiz_type_list"
-                            android:layout_width="match_parent"
-
+                        <RelativeLayout
+                            android:id="@+id/rltooltipe"
+                            android:layout_width="@dimen/_90sdp"
                             android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            android:layout_marginTop="@dimen/_40sdp"
+                           android:layout_alignParentEnd="true"
+                          >
 
-                            android:background="@android:color/transparent" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableBottom="@drawable/tooltip"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/_15sdp"
+                                android:text="@string/add_your_kyc"
+                                android:textColor="@color/white" />
+
+                        </RelativeLayout>
 
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/quizwon_type_list"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:orientation="horizontal"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-
-                        <com.auro.scholr.core.util.uiwidget.RPTextView
-                            android:id="@+id/privacy_policy"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@drawable/blue_strip"
-                            android:gravity="center_horizontal"
-                            android:paddingTop="@dimen/_8sdp"
-                            android:paddingBottom="@dimen/_8sdp"
-                            android:text="@string/privacy_policy"
-                            android:textAlignment="center"
-                            android:textColor="@color/blue_color"
-                            app:Font="Poppins-Regular.ttf" />
-                    </LinearLayout>
+                    </RelativeLayout>
 
 
                 </LinearLayout>

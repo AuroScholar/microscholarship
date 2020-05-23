@@ -10,17 +10,12 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.CycleInterpolator;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
-import android.view.animation.TranslateAnimation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,9 +37,7 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
-import com.auro.scholr.core.util.uiwidget.OverlayView;
 import com.auro.scholr.core.util.uiwidget.SimpleTooltip;
-import com.auro.scholr.core.util.uiwidget.SimpleTooltipUtils;
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.CustomSnackBarModel;
@@ -54,7 +47,6 @@ import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
-import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomSnackBar;
@@ -90,7 +82,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     Resources resources;
     boolean isStateRestore;
     AssignmentReqModel assignmentReqModel;
-    SimpleTooltip.Builder  simpletooltip;
+    SimpleTooltip.Builder simpletooltip;
 
 
     @Override
@@ -145,21 +137,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else {
             observeServiceResponse();
         }
-
-/*        TranslateAnimation mAnimation = new TranslateAnimation(TranslateAnimation.START_ON_FIRST_FRAME, 0f, TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.RELATIVE_TO_PARENT, -1f, TranslateAnimation.RELATIVE_TO_PARENT, 1.0f);
-        mAnimation.setDuration(10000);
-        mAnimation.setRepeatCount(-1);
-        mAnimation.setRepeatMode(Animation.INFINITE);
-        mAnimation.setInterpolator(new LinearInterpolator());*/
-        RotateAnimation rotate = new RotateAnimation(-5, 5,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotate.setDuration(10000);
-
-        rotate.setRepeatCount(-1);
-        rotate.setRepeatMode(Animation.INFINITE);
-        rotate.setInterpolator(new CycleInterpolator(5));
-        binding.rltooltipe.startAnimation(rotate);
-        //binding.rltooltipe.setAnimation(mAnimation);
-
+        openToolTip();
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
     }
 
@@ -174,7 +152,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.walletBalText.setOnClickListener(this);
         binding.privacyPolicy.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
-        binding.leaderCardLayout.setOnClickListener(this);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.customUiSnackbar.arrow.setOnClickListener(this);
     }
@@ -234,8 +211,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     public void onStop() {
         super.onStop();
         CustomSnackBar.INSTANCE.dismissCartSnackbar();
-
-
 
 
     }
@@ -424,21 +399,15 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         if (v.getId() == R.id.wallet_bal_text) {
             //openFragment(new SendMoneyFragment());
-      /*      if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+            closeToolTip();
+            if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
             } else {
                 openKYCFragment(dashboardResModel);
-            }*/
-
-
-
-
+            }
 
         } else if (v.getId() == R.id.privacy_policy) {
             openFragment(new PrivacyPolicyFragment());
-
-
-
         } else if (v.getId() == R.id.lang_eng) {
             CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -458,7 +427,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         if (v.getId() == R.id.arrow) {
             openFragment(new FriendsLeaderBoardFragment());
         }
-
     }
 
     private void reloadFragment() {
@@ -540,6 +508,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             AppPref.INSTANCE.setPref(prefModel);
         }
     }
+
     private void openFragmentDialog(Fragment fragment) {
         /* getActivity().getSupportFragmentManager().popBackStack();*/
         getActivity().getSupportFragmentManager()
@@ -549,6 +518,79 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
 
+    }
+
+
+    private void startAnimationFromBottom() {
+        //Animation on button
+        Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.down_to_top_slide);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+                startAnimatioFromTop();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onAnimationStart(Animation arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+        });
+        binding.rltooltipe.startAnimation(anim);
+
+    }
+
+    private void startAnimatioFromTop() {
+        //Animation on button
+        Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.top_to_down_slide);
+
+        anim.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+                startAnimationFromBottom();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onAnimationStart(Animation arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+        });
+        binding.rltooltipe.startAnimation(anim);
+    }
+
+
+    public void openToolTip() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null && !prefModel.isTooltipStatus()) {
+            binding.rltooltipe.setVisibility(View.VISIBLE);
+            startAnimationFromBottom();
+        }
+    }
+
+    public void closeToolTip() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null && !prefModel.isTooltipStatus()) {
+            binding.rltooltipe.setVisibility(View.GONE);
+            prefModel.setTooltipStatus(true);
+            AppPref.INSTANCE.setPref(prefModel);
+        }
     }
 
 }

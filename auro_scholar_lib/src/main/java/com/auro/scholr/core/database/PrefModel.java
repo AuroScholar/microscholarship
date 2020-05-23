@@ -12,6 +12,7 @@ public class PrefModel implements Serializable {
     private String userKYCProfilePhotoPath;
     private String userLanguage;
     private AssignmentReqModel assignmentReqModel;
+    private boolean tooltipStatus;
     private List<AssignmentReqModel> listAzureImageList = new ArrayList<>();
 
     public AssignmentReqModel getAssignmentReqModel() {
@@ -47,4 +48,11 @@ public class PrefModel implements Serializable {
     }
 
 
+    public boolean isTooltipStatus() {
+        return tooltipStatus;
+    }
+
+    public void setTooltipStatus(boolean tooltipStatus) {
+        this.tooltipStatus = tooltipStatus;
+    }
 }

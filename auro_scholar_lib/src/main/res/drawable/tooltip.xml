@@ -7,11 +7,10 @@
         android:gravity="top|center_horizontal">
         <rotate
             android:fromDegrees="45"
-            android:pivotX="100%"
-            android:pivotY="50%"
+            android:pivotX="180%"
+            android:pivotY="310%"
             android:toDegrees="45">
             <shape android:shape="rectangle">
-
                 <corners android:bottomRightRadius="0dp"/>
 
                 <gradient

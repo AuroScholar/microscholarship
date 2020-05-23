@@ -2,8 +2,8 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <translate
-        android:duration="300"
-        android:fromYDelta="-100%"
+        android:duration="1500"
+        android:fromYDelta="2%"
         android:interpolator="@android:anim/accelerate_interpolator"
         android:toYDelta="0%" />
 
