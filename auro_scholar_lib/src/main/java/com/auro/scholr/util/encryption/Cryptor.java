@@ -2,6 +2,7 @@ package com.auro.scholr.util.encryption;
 
 import android.util.Base64;
 
+import com.auro.scholr.util.AppLogger;
 import com.google.android.gms.common.util.Hex;
 
 import java.io.UnsupportedEncodingException;
@@ -85,6 +86,7 @@ public final class Cryptor {
 
     public String HMAC_SHA256(String secret, String message)
     {
+
         String hash="";
         try{
             Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
@@ -112,9 +114,13 @@ public final class Cryptor {
                 hexChars[j * 2] = hexArray[v >>> 4];
                 hexChars[j * 2 + 1] = hexArray[v & 0x0F];
             }
+
             return new String(hexChars);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
+
+
+
 }

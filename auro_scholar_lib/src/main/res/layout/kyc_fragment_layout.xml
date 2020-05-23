@@ -25,6 +25,7 @@
             android:layout_height="wrap_content" />
 
         <include
+            android:visibility="gone"
             android:id="@+id/cambridge_heading"
             layout="@layout/quiz_header_layout"
             android:layout_width="match_parent"
@@ -102,29 +103,6 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/warn_msg" />
 
-                        <include
-                            android:id="@+id/step_one"
-                            layout="@layout/upload_document_step_one"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintTop_toBottomOf="@+id/wallet_bal_text" />
-
-
-                        <include
-                            android:id="@+id/step_two"
-                            layout="@layout/upload_document_step_two"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintTop_toBottomOf="@+id/step_one" />
-
-
-                        <include
-                            android:id="@+id/step_three"
-                            layout="@layout/upload_document_step_three"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintTop_toBottomOf="@+id/step_two" />
-
 
                         <ImageView
                             android:id="@+id/refresh"
@@ -142,8 +120,42 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:background="@drawable/bg_white"
-                            app:layout_constraintTop_toBottomOf="@+id/step_three"
+                            app:layout_constraintTop_toBottomOf="@+id/wallet_bal_text"
                             bind:layout_editor_absoluteX="0dp">
+
+                            <include
+                                android:id="@+id/step_one"
+                                layout="@layout/upload_document_step_one"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                            <include
+                                android:id="@+id/step_two"
+                                layout="@layout/upload_document_step_two"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toBottomOf="@+id/step_one" />
+
+
+                            <include
+                                android:id="@+id/step_three"
+                                layout="@layout/upload_document_step_three"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toBottomOf="@+id/step_two" />
+
+                            <View
+                                android:id="@+id/view_line"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_1sdp"
+                                android:background="@color/light_grey"
+                                android:layout_marginStart="@dimen/_15sdp"
+                                android:layout_marginEnd="@dimen/_15sdp"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                app:layout_constraintTop_toBottomOf="@+id/step_three" />
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/document_upload_recyclerview"
@@ -152,8 +164,7 @@
                                 android:layout_marginStart="@dimen/_15sdp"
                                 android:layout_marginTop="@dimen/_15sdp"
                                 android:layout_marginEnd="@dimen/_15sdp"
-
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toBottomOf="@+id/view_line" />
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/buttonUploadLayout"

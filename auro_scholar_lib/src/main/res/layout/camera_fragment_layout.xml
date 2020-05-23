@@ -42,7 +42,19 @@
             android:background="@drawable/qr_square_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <com.auro.scholr.core.util.uiwidget.RPTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                app:Font="Poppins-Regular.ttf"
+                android:textSize="@dimen/_12sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:text="@string/please_put_your_face_inside_the_box"/>
+        </RelativeLayout>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout

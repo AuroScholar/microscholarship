@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String jsonString ="{\"userid\":\"9999999999\",\"mode\":\"W\"}";
         String secret="5d41402abc4b2a76b9719d911017c592";
         String tt=new Cryptor().HMAC_SHA256(secret,jsonString);
-        AppLogger.e("chhonker",tt);
+      //  AppLogger.e("chhonker",tt);
     }
 
     public static void printHashKey(Context pContext) {

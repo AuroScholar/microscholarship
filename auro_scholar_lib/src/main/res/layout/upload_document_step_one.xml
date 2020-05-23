@@ -8,7 +8,7 @@
         android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue_color"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1. "
-                android:textColor="@color/white"
+                android:textColor="@color/auro_dark_blue"
                 android:textSize="@dimen/_13sdp"
                 android:visibility="visible"
                 app:Font="Poppins-SemiBold.ttf"
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/_13sdp"
                 android:text="Upload Document"
-                android:textColor="@color/white"
+                android:textColor="@color/auro_dark_blue"
                 android:textSize="@dimen/_13sdp"
                 android:visibility="visible"
                 app:Font="Poppins-SemiBold.ttf"
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/_15sdp"
                 android:text="Please Upload the Document"
-                android:textColor="@color/white"
+                android:textColor="@color/auro_dark_blue"
                 android:textSize="@dimen/_10sdp"
                 android:visibility="visible"
                 app:Font="Poppins-Regular.ttf"

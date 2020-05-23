@@ -55,7 +55,7 @@
     <string name="complete_the_previous_quiz_to_unlock">अनलॉक करने के लिए पिछले प्रश्नोत्तरी को पूरा करें </string>
     <string name="you_win">तुम जीते</string>
     <string name="your_wallet">आपका वॉलेट</string>
-    <string name="upload_doc_text_msg">दस्तावेज़ अपलोड करने के लिए कृपया www.aurosscholar.com पर जाएँ, यदि आपको कोई समस्या आती है तो कृपया हमें +919667480783 पर कॉल करें.
+    <string name="upload_doc_text_msg">यदि आपको कोई समस्या आती है तो कृपया हमें +919667480783 पर कॉल करें.
 </string>
     <string name="score_and_get">8/10 स्कोर करें और प्रत्येक क्विज के लिए</string>
     <string name="for_each_quiz">जीतें</string>
@@ -129,4 +129,7 @@
     <string name="successfully_transfered">You have successfully transfered scholarship amount</string>
     <string name="tranfer_money">Tranfer Money</string>
     <string name="challenge_your_friends">अपने दोस्तों को चुनौती दें</string>
+    <string name="please_put_your_face_inside_the_box">Please put your face inside the box</string>
+    <string name="call_our_customercare">\"Please call our customer care number to get your scholarship cash \"</string>
+    <string name="call">Call</string>
 </resources>

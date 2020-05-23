@@ -516,6 +516,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
 
     private void setDataStepsOfVerifications() {
+       /* dashboardResModel.setIs_kyc_uploaded("Yes");
+        dashboardResModel.setIs_kyc_verified("Rejected");
+        dashboardResModel.setIs_payment_lastmonth("Yes");*/
         if (dashboardResModel.getIs_kyc_uploaded().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
             binding.stepOne.tickSign.setVisibility(View.VISIBLE);
             binding.stepOne.textUploadDocumentMsg.setText(R.string.document_uploaded);
@@ -530,11 +533,11 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.ufo_green));
                 if (dashboardResModel.getIs_payment_lastmonth().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
                     binding.stepThree.textTransferMsg.setText(R.string.successfully_transfered);
-                    binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
+                    binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.ufo_green));
                     binding.stepThree.tickSign.setVisibility(View.VISIBLE);
                 } else {
                     binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.ufo_green));
-                    binding.stepThree.textTransferMsg.setText(R.string.transfer_money_text);
+                    binding.stepThree.textTransferMsg.setText(R.string.call_our_customercare);
                     binding.stepThree.tickSign.setVisibility(View.GONE);
                     binding.stepThree.btTransferMoney.setVisibility(View.VISIBLE);
                     binding.stepThree.btTransferMoney.setOnClickListener(this);
@@ -547,7 +550,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 binding.stepTwo.tickSign.setBackground(getResources().getDrawable(R.drawable.ic_cancel_icon));
 
 
-                binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
+                binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.auro_dark_blue));
                 binding.stepThree.textTransferMsg.setText(R.string.you_will_see_transfer);
                 binding.stepThree.btTransferMoney.setVisibility(View.GONE);
                 binding.stepThree.tickSign.setVisibility(View.GONE);

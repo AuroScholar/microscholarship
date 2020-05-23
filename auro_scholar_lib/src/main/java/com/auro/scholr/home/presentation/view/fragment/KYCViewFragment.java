@@ -1,7 +1,9 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -197,8 +199,15 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
         } else if (v.getId() == R.id.bt_transfer_money) {
-            openFragment(new SendMoneyFragment());
+            //openFragment(new SendMoneyFragment());
+            callNumber();
         }
+    }
+
+    public void callNumber() {
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:9667480783"));
+        startActivity(callIntent);
     }
 
 
@@ -238,6 +247,9 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
     }
 
     private void setDataStepsOfVerifications() {
+       /* dashboardResModel.setIs_kyc_uploaded("Yes");
+        dashboardResModel.setIs_kyc_verified("Rejected");
+        dashboardResModel.setIs_payment_lastmonth("Yes");*/
         if (dashboardResModel.getIs_kyc_uploaded().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
             binding.stepOne.tickSign.setVisibility(View.VISIBLE);
             binding.stepOne.textUploadDocumentMsg.setText(R.string.document_uploaded);
@@ -252,11 +264,11 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.ufo_green));
                 if (dashboardResModel.getIs_payment_lastmonth().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
                     binding.stepThree.textTransferMsg.setText(R.string.successfully_transfered);
-                    binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
+                    binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.ufo_green));
                     binding.stepThree.tickSign.setVisibility(View.VISIBLE);
                 } else {
                     binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.ufo_green));
-                    binding.stepThree.textTransferMsg.setText(R.string.transfer_money_text);
+                    binding.stepThree.textTransferMsg.setText(R.string.call_our_customercare);
                     binding.stepThree.tickSign.setVisibility(View.GONE);
                     binding.stepThree.btTransferMoney.setVisibility(View.VISIBLE);
                     binding.stepThree.btTransferMoney.setOnClickListener(this);
@@ -269,7 +281,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 binding.stepTwo.tickSign.setBackground(getResources().getDrawable(R.drawable.ic_cancel_icon));
 
 
-                binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
+                binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.auro_dark_blue));
                 binding.stepThree.textTransferMsg.setText(R.string.you_will_see_transfer);
                 binding.stepThree.btTransferMoney.setVisibility(View.GONE);
                 binding.stepThree.tickSign.setVisibility(View.GONE);
