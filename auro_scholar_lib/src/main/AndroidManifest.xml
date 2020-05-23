@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- Read Contacts from phone -->
 
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS"/>
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
@@ -23,7 +24,7 @@
         android:required="true" />
 
     <application
-        android:networkSecurityConfig="@xml/network_security_config">
+        >
         <activity
             android:name=".home.presentation.view.activity.CameraActivity"
             android:label="@string/title_activity_camera"

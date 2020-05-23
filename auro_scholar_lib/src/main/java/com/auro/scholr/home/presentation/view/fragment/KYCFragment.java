@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +35,7 @@ import com.auro.scholr.databinding.KycFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
@@ -48,22 +48,13 @@ import com.auro.scholr.util.ViewUtil;
 
 import com.auro.scholr.util.cropper.CropImages;
 import com.auro.scholr.util.cropper.CropImageViews;
-import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.text.Text;
-import com.google.android.gms.vision.text.TextBlock;
-import com.google.android.gms.vision.text.TextRecognizer;
-import com.google.i18n.phonenumbers.PhoneNumberMatch;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -87,10 +78,12 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     ArrayList<KYCDocumentDatamodel> kycDocumentDatamodelArrayList;
     private boolean uploadBtnStatus;
     Resources resources;
+    KYCInputModel kycInputModel = new KYCInputModel();
 
     /*Face Image Params*/
     List<AssignmentReqModel> faceModelList;
     int faceCounter = 0;
+    Uri resultUri;
 
     @Override
     public void onAttach(Context context) {
@@ -191,7 +184,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     private void checkForFaceImage() {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (prefModel != null && !TextUtil.checkListIsEmpty(prefModel.getListAzureImageList()) && prefModel.getListAzureImageList().size()>0) {
+        if (prefModel != null && !TextUtil.checkListIsEmpty(prefModel.getListAzureImageList()) && prefModel.getListAzureImageList().size() > 0) {
             faceModelList = prefModel.getListAzureImageList();
             kycViewModel.sendAzureImageData(faceModelList.get(0));
         }
@@ -243,10 +236,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             CropImages.ActivityResult result = CropImages.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 try {
-                    Uri resultUri = result.getUri();
+                    resultUri = result.getUri();
                     updateKYCList(resultUri.getPath());
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
-                    getTextFromImage(bitmap);
+
                 } catch (Exception e) {
 
                 }
@@ -264,14 +256,12 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
                 }
 
-
             } else {
 
             }
         }
 
     }
-
 
     private void loadImageFromStorage(String path) {
         try {
@@ -287,10 +277,12 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         try {
             if (kycDocumentDatamodelArrayList.get(pos).getDocumentId() == AppConstant.DocumentType.ID_PROOF_FRONT_SIDE) {
                 kycDocumentDatamodelArrayList.get(pos).setDocumentFileName("id_front.jpg");
+                processImageData(true);
             } else if (kycDocumentDatamodelArrayList.get(pos).getDocumentId() == AppConstant.DocumentType.ID_PROOF_BACK_SIDE) {
                 kycDocumentDatamodelArrayList.get(pos).setDocumentFileName("id_back.jpg");
             } else if (kycDocumentDatamodelArrayList.get(pos).getDocumentId() == AppConstant.DocumentType.SCHOOL_ID_CARD) {
                 kycDocumentDatamodelArrayList.get(pos).setDocumentFileName("id_school.jpg");
+                processImageData(false);
             } else if (kycDocumentDatamodelArrayList.get(pos).getDocumentId() == AppConstant.DocumentType.UPLOAD_YOUR_PHOTO) {
                 kycDocumentDatamodelArrayList.get(pos).setDocumentFileName("profile.jpg");
             }
@@ -306,6 +298,17 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         }
     }
 
+
+    private void processImageData(boolean status) {
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
+            kycViewModel.homeUseCase.getTextFromImage(getActivity(), bitmap, kycInputModel, status);
+        } catch (Exception e) {
+
+        }
+    }
+
+
     private void observeServiceResponse() {
         kycViewModel.serviceLiveData().observeForever(responseApi -> {
 
@@ -316,10 +319,18 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
-                        updateListonResponse((KYCResListModel) responseApi.data);
-                        uploadBtnStatus = false;
+                        KYCResListModel kycResListModel = (KYCResListModel) responseApi.data;
+                        if (!kycResListModel.isError()) {
+                            updateListonResponse(kycResListModel);
+                          /*  if (kycViewModel.homeUseCase.checkAllUploadedOrNot(kycResListModel.getList())) {
+                                progressBarHandling(2);
+                            }*/
+                            uploadBtnStatus = false;
+                        } else {
+                            showError(kycResListModel.getMessage());
+                            progressBarHandling(1);
+                        }
                     } else if (responseApi.apiTypeStatus == AZURE_API) {
-
                         sendFaceImageOnServer();
                     }
 
@@ -348,14 +359,14 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             binding.btUploadAll.setText("");
             binding.btUploadAll.setEnabled(false);
             binding.progressBar.setVisibility(View.VISIBLE);
-        } else {
+        } else if (status == 1) {
             binding.btUploadAll.setText(getString(R.string.upload));
             binding.btUploadAll.setEnabled(true);
             binding.progressBar.setVisibility(View.GONE);
             if (kycViewModel.homeUseCase.checkUploadButtonStatus(kycDocumentDatamodelArrayList)) {
-                binding.btUploadAll.setVisibility(View.INVISIBLE);
+                binding.buttonUploadLayout.setVisibility(View.INVISIBLE);
             } else {
-                binding.btUploadAll.setVisibility(View.VISIBLE);
+                binding.buttonUploadLayout.setVisibility(View.VISIBLE);
             }
         }
 
@@ -466,8 +477,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
 
     private void uploadAllDocApi() {
-        kycViewModel.uploadProfileImage(kycDocumentDatamodelArrayList, dashboardResModel.getPhonenumber());
-
+        kycInputModel.setUser_phone(dashboardResModel.getPhonenumber());
+        kycViewModel.uploadProfileImage(kycDocumentDatamodelArrayList, kycInputModel);
     }
 
 
@@ -503,101 +514,11 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     }
 
-    private void getTextFromImage(Bitmap bitmap) {
-        TextRecognizer txtRecognizer = new TextRecognizer.Builder(getActivity()).build();
-        if (!txtRecognizer.isOperational()) {
-            // Shows if your Google Play services is not up to date or OCR is not supported for the device
-            AppLogger.e(TAG, "Detector dependencies are not yet available");
-        } else {
-            // Set the bitmap taken to the frame to perform OCR Operations.
-            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-            SparseArray items = txtRecognizer.detect(frame);
-            StringBuilder strBuilder = new StringBuilder();
-            for (int i = 0; i < items.size(); i++) {
-                TextBlock item = (TextBlock) items.valueAt(i);
-                strBuilder.append(item.getValue());
-                strBuilder.append("\n");
-                // The following Process is used to show how to use lines & elements as well
-                findNameFromAadharCard(items, item);
-            }
-            AppLogger.e(TAG + " Final String ", strBuilder.toString());
-            extractPhoneNumber(strBuilder.toString());
-            validateAadharNumber(strBuilder.toString());
-
-            for (String t : getDate(strBuilder.toString())) {
-                AppLogger.e(TAG, "Date == " + t);
-            }
-        }
-    }
-
-    public void findNameFromAadharCard(SparseArray items, TextBlock item) {
-        String name;
-        for (int j = 0; j < items.size(); j++) {
-            for (int k = 0; k < item.getComponents().size(); k++) {
-                //extract scanned text lines here
-                Text line = item.getComponents().get(k);
-                AppLogger.e(TAG + " lines", line.getValue());
-
-                String lineString = line.getValue().toLowerCase();
-                if (lineString.contains("name")) {
-                    String[] names = lineString.split(":");
-                    name = names[1];
-                    AppLogger.e(TAG, "name here:" + name);
-                } else {
-                    if (lineString.contains("dob")) {
-                        Text dobline = item.getComponents().get(k - 1);
-                        name = dobline.getValue();
-                        AppLogger.e(TAG, "dob name here:" + name);
-                    }
-                }
-
-            }
-        }
-    }
-
-    public List<String> extractPhoneNumber(String input) {
-        List<String> list = new ArrayList<>();
-        Iterator<PhoneNumberMatch> existsPhone = PhoneNumberUtil.getInstance().findNumbers(input, "IN").iterator();
-        while (existsPhone.hasNext()) {
-            String numberOnly = existsPhone.next().number().toString().replaceAll("[^0-9]", "");
-            list.add(numberOnly);
-            AppLogger.e(TAG, "Phone == " + numberOnly);
-        }
-        return list;
-
-    }
-
-    public static void validateAadharNumber(String aadharNumber) {
-        String[] items = aadharNumber.split("\n");
-        for (String str : items) {
-            str.replaceAll("\\s", "");
-            String numberOnly = str.replaceAll("[^0-9]", "");
-            if (numberOnly.length() == 12) {
-                AppLogger.e("KYCFragment", "Aadhar number == " + numberOnly);
-            }
-        }
-
-    }
-
-    private static ArrayList<String> getDate(String desc) {
-        int count = 0;
-        ArrayList<String> allMatches = new ArrayList<>();
-        Matcher m = Pattern.compile("(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d").matcher(desc);
-        while (m.find()) {
-            allMatches.add(m.group());
-        }
-
-        Matcher match_second = Pattern.compile("\\d{4}-\\d{2}-\\d{2}").matcher(desc);
-        while (m.find()) {
-            AppLogger.e("KYCFragment", "Date == " + match_second.group(0));
-            allMatches.add(match_second.group(0));
-        }
-
-        return allMatches;
-
-    }
 
     private void setDataStepsOfVerifications() {
+       /* dashboardResModel.setIs_kyc_uploaded("Yes");
+        dashboardResModel.setIs_kyc_verified("Rejected");
+        dashboardResModel.setIs_payment_lastmonth("Yes");*/
         if (dashboardResModel.getIs_kyc_uploaded().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
             binding.stepOne.tickSign.setVisibility(View.VISIBLE);
             binding.stepOne.textUploadDocumentMsg.setText(R.string.document_uploaded);
@@ -612,11 +533,11 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.ufo_green));
                 if (dashboardResModel.getIs_payment_lastmonth().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
                     binding.stepThree.textTransferMsg.setText(R.string.successfully_transfered);
-                    binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
+                    binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.ufo_green));
                     binding.stepThree.tickSign.setVisibility(View.VISIBLE);
                 } else {
                     binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.ufo_green));
-                    binding.stepThree.textTransferMsg.setText(R.string.transfer_money_text);
+                    binding.stepThree.textTransferMsg.setText(R.string.call_our_customercare);
                     binding.stepThree.tickSign.setVisibility(View.GONE);
                     binding.stepThree.btTransferMoney.setVisibility(View.VISIBLE);
                     binding.stepThree.btTransferMoney.setOnClickListener(this);
@@ -629,7 +550,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 binding.stepTwo.tickSign.setBackground(getResources().getDrawable(R.drawable.ic_cancel_icon));
 
 
-                binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.white));
+                binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.auro_dark_blue));
                 binding.stepThree.textTransferMsg.setText(R.string.you_will_see_transfer);
                 binding.stepThree.btTransferMoney.setVisibility(View.GONE);
                 binding.stepThree.tickSign.setVisibility(View.GONE);
@@ -651,8 +572,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         }
     }
 
-    private void updateFaceListInPref()
-    {
+    private void updateFaceListInPref() {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null) {
             List<AssignmentReqModel> newList = new ArrayList<>();

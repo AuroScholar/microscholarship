@@ -15,6 +15,11 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private String status;
 
+    @SerializedName("error")
+    @Expose
+    private boolean error ;
+
+
     @SerializedName("phonenumber")
     @Expose
     private String phonenumber;
@@ -123,8 +128,10 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private String is_payment_lastmonth;
 
+
     protected DashboardResModel(Parcel in) {
         status = in.readString();
+        error = in.readByte() != 0;
         phonenumber = in.readString();
         auroid = in.readString();
         scholarid = in.readString();
@@ -158,6 +165,7 @@ public class DashboardResModel implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(status);
+        dest.writeByte((byte) (error ? 1 : 0));
         dest.writeString(phonenumber);
         dest.writeString(auroid);
         dest.writeString(scholarid);
@@ -204,6 +212,14 @@ public class DashboardResModel implements Parcelable {
             return new DashboardResModel[size];
         }
     };
+
+    public boolean isError() {
+        return error;
+    }
+
+    public void setError(boolean error) {
+        this.error = error;
+    }
 
     public String getIs_kyc_uploaded() {
         return is_kyc_uploaded;

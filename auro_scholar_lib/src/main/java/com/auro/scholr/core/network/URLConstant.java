@@ -8,7 +8,7 @@ public interface URLConstant {
 //    String BASE_URL = "http://14.142.204.99:7070/"; // SIT
     // String BASE_URL = BuildConfig.BASE_URL;
 
-    String DASHBOARD_API = BASE_URL + "dashboard.php";
+    String DASHBOARD_API = BASE_URL + "dashboard_sdk.php";
 
     String DEMOGRAPHIC_API = BASE_URL + "demographics.php";
 
@@ -19,6 +19,7 @@ public interface URLConstant {
     String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction.php ";
     String TEST_URL = "https://assessment.eklavvya.com/exam/StartExam?";
     String PRIVACY_POLICY = "https://auroscholar.com/privacy_policy.php";
+
 
 
 }

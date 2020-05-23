@@ -46,10 +46,11 @@ public class KYCViewDocAdapter extends RecyclerView.Adapter<KYCViewDocAdapter.Vi
         }
 
         public void setData(KYCDocumentDatamodel kycDocumentDatamodel, int position) {
-            binding.docImageLayout.setVisibility(View.VISIBLE);
+            binding.docImageLayout.setVisibility(View.GONE);
+            binding.imageCloudDone.setVisibility(View.VISIBLE);
             binding.uploadImageLayout.setVisibility(View.GONE);
             binding.tvIdHead.setText(kycDocumentDatamodel.getDocumentName());
-            ImageUtil.loadNormalImage(binding.docImage, kycDocumentDatamodel.getDocumentUrl());
+            //ImageUtil.loadNormalImage(binding.docImage, kycDocumentDatamodel.getDocumentUrl());
         }
 
     }
@@ -65,7 +66,6 @@ public class KYCViewDocAdapter extends RecyclerView.Adapter<KYCViewDocAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder Vholder, int position) {
         Vholder.setData(mValues.get(position), position);
-
 
     }
 

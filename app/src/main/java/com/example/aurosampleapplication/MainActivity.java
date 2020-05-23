@@ -22,7 +22,9 @@ import android.widget.Toast;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AuroScholar;
+import com.auro.scholr.util.encryption.Cryptor;
 import com.example.aurosampleapplication.databinding.ActivityMainBinding;
 
 import java.security.MessageDigest;
@@ -42,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        // binding.enterNumber.setText("8178307851");
         binding.btSdk.setVisibility(View.VISIBLE);
        // printHashKey(this);
+        String jsonString ="{\"userid\":\"9999999999\",\"mode\":\"W\"}";
+        String secret="5d41402abc4b2a76b9719d911017c592";
+        String tt=new Cryptor().HMAC_SHA256(secret,jsonString);
+      //  AppLogger.e("chhonker",tt);
     }
 
     public static void printHashKey(Context pContext) {
@@ -87,9 +93,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openSdk() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber("9713680981");
-       auroScholarDataModel.setScholrId("91003");
-        auroScholarDataModel.setStudentClass("10");
+        auroScholarDataModel.setMobileNumber("7503600687");
+        auroScholarDataModel.setStudentClass("6");
    /*    auroScholarDataModel.setMobileNumber("7503600686");
         auroScholarDataModel.setScholrId("880426");
         auroScholarDataModel.setStudentClass("6");*/

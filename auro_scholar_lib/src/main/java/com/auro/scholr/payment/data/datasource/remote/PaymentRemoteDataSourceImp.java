@@ -23,14 +23,11 @@ public class PaymentRemoteDataSourceImp implements PaymentRepo.PaymentRemoteData
 
     @Override
     public Single<Response<JsonObject>> getDashboardData(AuroScholarDataModel model) {
+        /*These param for generic sdk*/
         Map<String, String> params = new HashMap<String, String>();
         params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
-        params.put(AppConstant.DashBoardParams.SCHOLAR_ID, model.getScholrId());
         params.put(AppConstant.DashBoardParams.STUDENT_CLASS, model.getStudentClass());
         params.put(AppConstant.DashBoardParams.REGISTRATION_SOURCE, model.getRegitrationSource());
-        params.put(AppConstant.DashBoardParams.SHARE_TYPE, model.getShareType());
-        params.put(AppConstant.DashBoardParams.SHARE_IDENTITY, model.getShareIdentity());
-
         return paymentRemoteApi.getDashboardData(params);
     }
 

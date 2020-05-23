@@ -5,6 +5,7 @@ import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
 import com.auro.scholr.util.ConversionUtil;
 import com.google.gson.JsonObject;
@@ -32,11 +33,8 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
     public Single<Response<JsonObject>> getDashboardData(AuroScholarDataModel model) {
         Map<String, String> params = new HashMap<String, String>();
         params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
-        params.put(AppConstant.DashBoardParams.SCHOLAR_ID, model.getScholrId());
         params.put(AppConstant.DashBoardParams.STUDENT_CLASS, model.getStudentClass());
         params.put(AppConstant.DashBoardParams.REGISTRATION_SOURCE, model.getRegitrationSource());
-        params.put(AppConstant.DashBoardParams.SHARE_TYPE, model.getShareType());
-        params.put(AppConstant.DashBoardParams.SHARE_IDENTITY, model.getShareIdentity());
         return homeRemoteApi.getDashboardData(params);
     }
 
@@ -48,18 +46,34 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         RequestBody quiz_attempt = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getQuiz_attempt());
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), azureReqModel.getImageBytes());
         MultipartBody.Part student_photo = MultipartBody.Part.createFormData("exam_face_img", "image.jpg", requestFile);
-        return homeRemoteApi.getAzureApiData(registration_id, exam_id,exam_name,quiz_attempt,student_photo);
+        return homeRemoteApi.getAzureApiData(registration_id, exam_id, exam_name, quiz_attempt, student_photo);
     }
 
     @Override
-    public Single<Response<JsonObject>> uploadProfileImage(List<KYCDocumentDatamodel> list,String phone) {
-        RequestBody phonenumber = RequestBody.create(okhttp3.MultipartBody.FORM, phone);
+    public Single<Response<JsonObject>> uploadProfileImage(List<KYCDocumentDatamodel> list, KYCInputModel kycInputModel) {
+        RequestBody phonenumber = RequestBody.create(okhttp3.MultipartBody.FORM, kycInputModel.getUser_phone());
+        RequestBody aadhar_phone = RequestBody.create(okhttp3.MultipartBody.FORM, kycInputModel.getAadhar_phone());
+        RequestBody aadhar_dob = RequestBody.create(okhttp3.MultipartBody.FORM, kycInputModel.getAadhar_dob());
+        RequestBody aadhar_name = RequestBody.create(okhttp3.MultipartBody.FORM, kycInputModel.getAadhar_name());
+        RequestBody aadhar_no = RequestBody.create(okhttp3.MultipartBody.FORM, kycInputModel.getAadhar_no());
+        RequestBody school_phone = RequestBody.create(okhttp3.MultipartBody.FORM, kycInputModel.getSchool_phone());
+        RequestBody school_dob = RequestBody.create(okhttp3.MultipartBody.FORM, kycInputModel.getSchool_dob());
         MultipartBody.Part id_proof_front = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(0));
         MultipartBody.Part id_proof_back = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(1));
         MultipartBody.Part school_id_card = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(2));
         MultipartBody.Part student_photo = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(3));
 
-        return homeRemoteApi.uploadImage(phonenumber, id_proof_front, id_proof_back, school_id_card, student_photo);
+        return homeRemoteApi.uploadImage(phonenumber,
+                aadhar_name,
+                aadhar_dob,
+                aadhar_phone,
+                aadhar_no,
+                school_dob,
+                school_phone,
+                id_proof_front,
+                id_proof_back,
+                school_id_card,
+                student_photo);
     }
 
     @Override

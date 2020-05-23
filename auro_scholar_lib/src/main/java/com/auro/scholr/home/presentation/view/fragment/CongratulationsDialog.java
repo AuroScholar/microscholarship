@@ -60,7 +60,6 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
         AuroApp.getAppComponent().doInjection(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CongratulationsDialogViewModel.class);
         binding.setLifecycleOwner(this);
-
         init();
         setListener();
         return binding.getRoot();
@@ -91,17 +90,16 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.btnShare){
+        if (id == R.id.btnShare) {
 
-           shareWithFriends();
+            shareWithFriends();
 
-        }else if(id == R.id.icClose){
-
+        } else if (id == R.id.icClose) {
             dismiss();
         }
     }
 
-    public void shareWithFriends(){
+    public void shareWithFriends() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");

@@ -13,6 +13,7 @@ import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
@@ -49,12 +50,11 @@ public class KYCViewModel extends ViewModel {
     }
 
 
-    public void uploadProfileImage(List<KYCDocumentDatamodel> list, String phonenumber) {
+    public void uploadProfileImage(List<KYCDocumentDatamodel> list, KYCInputModel kycInputModel) {
 
         Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
             if(hasInternet) {
-
-                callUploadImageApi(list,phonenumber);
+                callUploadImageApi(list,kycInputModel);
 
             } else {
 
@@ -74,9 +74,9 @@ public class KYCViewModel extends ViewModel {
         }
         return compositeDisposable;
     }
-    private void callUploadImageApi(List<KYCDocumentDatamodel> list, String phonenumber) {
+    private void callUploadImageApi(List<KYCDocumentDatamodel> list,  KYCInputModel kycInputModel) {
 
-        getCompositeDisposable().add(homeRemoteUseCase.uploadProfileImage(list,phonenumber).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).doOnSubscribe(new Consumer<Disposable>() {
+        getCompositeDisposable().add(homeRemoteUseCase.uploadProfileImage(list,kycInputModel).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).doOnSubscribe(new Consumer<Disposable>() {
             @Override
             public void accept(Disposable __) throws Exception {
                 serviceLiveData.setValue(ResponseApi.loading(null));

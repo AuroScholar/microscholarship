@@ -42,8 +42,11 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.core.network.URLConstant;
 import com.auro.scholr.databinding.QuizTestLayoutBinding;
+import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AssignmentResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
@@ -90,6 +93,10 @@ public class QuizTestFragment extends BaseFragment {
     CustomDialog customDialog;
     Dialog customProgressDialog;
 
+    AssignmentReqModel assignmentReqModel;
+
+    boolean submittingTest = false;
+
     // Storage Permissions variables
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -132,7 +139,6 @@ public class QuizTestFragment extends BaseFragment {
         if (customDialog != null) {
             customDialog.cancel();
         }
-
         super.onDestroy();
 
     }
@@ -143,7 +149,8 @@ public class QuizTestFragment extends BaseFragment {
 
         setListener();
         if (dashboardResModel != null && quizResModel != null) {
-            quizTestViewModel.getAssignExamData(quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel));
+            assignmentReqModel = quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
+            quizTestViewModel.getAssignExamData(assignmentReqModel);
         }
     }
 
@@ -165,7 +172,7 @@ public class QuizTestFragment extends BaseFragment {
                             openDialog();
                             loadWeb(webUrl);
                         } else {
-                            handleProgress(2, getActivity().getString(R.string.default_error));
+                            handleProgress(2,assignmentResModel.getMessage());
                         }
                     }
                     break;
@@ -238,7 +245,7 @@ public class QuizTestFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-       getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
     }
 
@@ -285,14 +292,34 @@ public class QuizTestFragment extends BaseFragment {
         public void boundMethod(String html) {
             openProgressDialog();
             AppLogger.e("chhonker bound method", html);
-            new Handler().postDelayed(new Runnable() {
+          /*  new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    customProgressDialog.cancel();
-                    openQuizHomeFragment();
-                }
-            }, 4000);
+                    cancelDialogAfterSubmittingTest();
 
+                }
+            }, 8000);
+*/
+        }
+    }
+
+    private void cancelDialogAfterSubmittingTest() {
+        if (!submittingTest) {
+            submittingTest = true;
+            if (customProgressDialog != null) {
+                customProgressDialog.cancel();
+            }
+            if (!quizTestViewModel.homeUseCase.checkDemographicStatus(dashboardResModel)) {
+                openDemographicFragment();
+            } else {
+                openQuizHomeFragment();
+            }
+
+        }
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null) {
+            prefModel.setAssignmentReqModel(assignmentReqModel);
+            AppPref.INSTANCE.setPref(prefModel);
         }
     }
 
@@ -318,15 +345,12 @@ public class QuizTestFragment extends BaseFragment {
 
         //Show loader on url load
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
             AppLogger.e("chhonker", url);
             if (view.getUrl().equalsIgnoreCase("http://auroscholar.com/index.php") ||
                     view.getUrl().equalsIgnoreCase("http://auroscholar.com/demographics.php")
                     || view.getUrl().equalsIgnoreCase("http://auroscholar.com/dashboard.php")) {
-                if (!quizTestViewModel.homeUseCase.checkDemographicStatus(dashboardResModel)) {
-                    openDemographicFragment();
-                } else {
-                    //  openQuizHomeFragment();
-                }
+                cancelDialogAfterSubmittingTest();
 
             }
         }

@@ -55,7 +55,7 @@
     <string name="complete_the_previous_quiz_to_unlock">Complete the previous quiz to unlock</string>
     <string name="you_win">You Win</string>
     <string name="your_wallet">Your Wallet</string>
-    <string name="upload_doc_text_msg">To upload documents please visit www.auroscholar.com. if you have face any issues please call us at +919667480783</string>
+    <string name="upload_doc_text_msg">if you have face any issues please call us at +919667480783</string>
     <string name="score_and_get">Score 8/10 and get</string>
     <string name="for_each_quiz">for each quiz</string>
     <string name="english">English</string>
@@ -94,8 +94,8 @@
         <item>English</item>
         <item>Other</item>
     </string-array>
-    <string name="congratulations">Congratulations</string>
-    <string name="successfully">You have successfully completed\n the 100 Days UI Challenge</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="successfully">You have got ₹50 Scholarship Cash.\n share with your friends!</string>
     <string name="share_with">Share With Friends</string>
 
 
@@ -142,6 +142,7 @@
     <string name="facebook">Facebook</string>
     <string name="login_with_facebook">Login with Facebook</string>
     <string name="challenge_your_friends">Challenge Your Friends</string>
+
     <string name="life_is_better_with_friends">Life is better with Friends!</string>
     <string name="invite_them">Invite them</string>
     <string name="check_who_is_ahead_of_you">Check who is ahead of you!</string>
@@ -151,5 +152,11 @@
     <string name="you_friends_have_taken_a_quiz">Your friends have taken a quiz</string>
     <string name="check_leaderboard">Check\nLeaderboard</string>
     <string name="add_your_kyc">Add your kyc</string>
+
+    <string name="please_put_your_face_inside_the_box">Please put your face inside the box</string>
+    <string name="call_our_customercare">Please call our customer care number to get your scholarship cash</string>
+    <string name="call">Call</string>
+
+
 
 </resources>
