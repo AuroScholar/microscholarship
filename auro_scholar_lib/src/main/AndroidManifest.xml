@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.auro.scholr">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,29 +10,19 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <!-- Read Contacts from phone -->
-
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS"/>
-    <uses-permission android:name="android.permission.READ_CALL_LOG" />
-
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="true" />
 
-    <application
-        >
+    <application>
         <activity
             android:name=".home.presentation.view.activity.CameraActivity"
             android:label="@string/title_activity_camera"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".util.permission.PermissionsActivity" />
         <activity android:name=".home.presentation.view.activity.HomeActivity" />
-
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -46,51 +37,21 @@
              android:name="com.google.android.geo.API_KEY"
              android:value="@string/google_api_places_key" />
         -->
-
-        <!--<provider-->
-
-        <!--Facebook integration-->
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
-        <activity
-            android:name="com.facebook.CustomTabActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="@string/fb_login_protocol_scheme" />
-            </intent-filter>
-        </activity>
-        <!--Facebook integration-->
-
-        <provider
-
+        <!--<provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.auro.scholr.provider"
             android:exported="false"
             android:grantUriPermissions="true">
 
-            <!-- ressource file to create-->
+            &lt;!&ndash; ressource file to create &ndash;&gt;
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
+        </provider>-->
 
         <activity
             android:name=".util.cropper.CropImagesActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
