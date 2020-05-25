@@ -108,6 +108,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/quiz_type_list"
+                            android:layout_centerHorizontal="true"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:orientation="horizontal"
@@ -206,14 +207,14 @@
 
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
+
                         <RelativeLayout
                             android:id="@+id/rltooltipe"
                             android:layout_width="@dimen/_90sdp"
                             android:layout_height="wrap_content"
-                            android:visibility="visible"
+                            android:layout_alignParentEnd="true"
                             android:layout_marginTop="@dimen/_40sdp"
-                           android:layout_alignParentEnd="true"
-                          >
+                            android:visibility="visible">
 
                             <TextView
                                 android:layout_width="wrap_content"

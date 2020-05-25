@@ -179,7 +179,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         setAdapter();
 
         /*Check for face image is Exist Or Not*/
-        checkForFaceImage();
+       // checkForFaceImage();
     }
 
     private void checkForFaceImage() {
