@@ -16,13 +16,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 
-import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
-import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
-import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.home.data.model.AuroScholarInputModel;
 import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.encryption.Cryptor;
 import com.example.aurosampleapplication.databinding.ActivityMainBinding;
@@ -41,13 +38,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.btSdk.setOnClickListener(this);
         binding.btOpen.setOnClickListener(this);
-       // binding.enterNumber.setText("8178307851");
+        // binding.enterNumber.setText("8178307851");
         binding.btSdk.setVisibility(View.VISIBLE);
-       // printHashKey(this);
-        String jsonString ="{\"userid\":\"9999999999\",\"mode\":\"W\"}";
-        String secret="5d41402abc4b2a76b9719d911017c592";
-        String tt=new Cryptor().HMAC_SHA256(secret,jsonString);
-      //  AppLogger.e("chhonker",tt);
+        // printHashKey(this);
+        String jsonString = "{\"userid\":\"9999999999\",\"mode\":\"W\"}";
+        String secret = "5d41402abc4b2a76b9719d911017c592";
+        String tt = new Cryptor().HMAC_SHA256(secret, jsonString);
+        //  AppLogger.e("chhonker",tt);
     }
 
     public static void printHashKey(Context pContext) {
@@ -70,8 +67,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-                    openSdk();
-                    hideKeyboard(this);
+                openGenricSDK();
+              //  openScholarSpecificSdk();
+                hideKeyboard(this);
                 break;
             case R.id.bt_open:
                 openFragment(new SampleFragment());
@@ -79,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
+
 
     public static void hideKeyboard(Context context) {
         if (context == null) {
@@ -91,21 +90,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void openSdk() {
+    private void openScholarSpecificSdk() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber("7503600687");
-        auroScholarDataModel.setStudentClass("6");
    /*    auroScholarDataModel.setMobileNumber("7503600686");
         auroScholarDataModel.setScholrId("880426");
         auroScholarDataModel.setStudentClass("6");*/
-        //auroScholarDataModel.setRegitrationSource("Scholr");
-       // auroScholarDataModel.setShareType("telecaller");
-       //auroScholarDataModel.setShareIdentity("9681032476");
+
+        auroScholarDataModel.setMobileNumber("9654234507");
+        auroScholarDataModel.setStudentClass("10");
+        auroScholarDataModel.setScholrId("10000014");
+        auroScholarDataModel.setRegitrationSource("AuroScholr");
+        auroScholarDataModel.setShareType("telecaller");
+        auroScholarDataModel.setShareIdentity("9681032476");
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
 
 
+    }
+
+    private void openGenricSDK() {
+        AuroScholarInputModel inputModel = new AuroScholarInputModel();
+        inputModel.setMobileNumber("9654234507");
+        inputModel.setStudentClass("10");
+        inputModel.setRegitrationSource("AuroScholr");
+        inputModel.setActivity(this);
+        inputModel.setFragmentContainerUiId(R.id.home_container);
+        openFragment(AuroScholar.startAuroSDK(inputModel));
     }
 
 
@@ -128,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .commitAllowingStateLoss();
 
     }
-
 
 
 }

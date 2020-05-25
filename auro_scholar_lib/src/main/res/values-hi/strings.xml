@@ -142,5 +142,9 @@
 
     <string name="please_put_your_face_inside_the_box">कृपया अपना चेहरा बॉक्स के अंदर रखें</string>
     <string name="call_our_customercare">"कृपया अपनी छात्रवृत्ति प्राप्त करने के लिए हमारे ग्राहक सेवा नंबर पर कॉल करें"</string>
-    <string name="call">Call</string>
+    <string name="call">कॉल</string>
+    <string name="upload_document">दस्तावेज़ अपलोड करें</string>
+    <string name="please_upload_the_document">कृपया दस्तावेज़ अपलोड करें</string>
+    <string name="upload_verification">सत्यापन अपलोड करें</string>
+    <string name="transfer_scholarship">छात्रवृत्ति हस्तांतरित करें</string>
 </resources>

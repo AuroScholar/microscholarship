@@ -12,6 +12,7 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
+import com.auro.scholr.home.data.model.AuroScholarInputModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
 import com.auro.scholr.home.presentation.view.fragment.ScholarShipFacebookIn;
@@ -19,29 +20,24 @@ import com.auro.scholr.home.presentation.view.fragment.ScholarShipFragment;
 
 public class AuroScholar {
 
-    public  static Fragment  openAuroDashboardFragment(AuroScholarDataModel auroScholarDataModel) {
+    public static Fragment openAuroDashboardFragment(AuroScholarDataModel auroScholarDataModel) {
         AuroApp.setAuroModel(auroScholarDataModel);
         QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
-
-         FragmentUtil.replaceFragment(auroScholarDataModel.getActivity(), quizHomeFragment, AuroApp.getFragmentContainerUiId(), false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
-
-         return quizHomeFragment;
+        return quizHomeFragment;
     }
 
-  /*  public static void openAuroDashboarWebFragment(AuroScholarDataModel auroScholarDataModel) {
-        AuroApp.setAuroModel(auroScholarDataModel);
-        ScholarShipFragment scholarShipFragment = new ScholarShipFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(AppConstant.AURO_DATA_MODEL, auroScholarDataModel);
-        scholarShipFragment.setArguments(bundle);
-        FragmentUtil.replaceFragment(auroScholarDataModel.getActivity(), scholarShipFragment,AuroApp.getFragmentContainerUiId(), false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
-    }*/
+    /*For generic with PhoneNumber and class*/
+    public static Fragment startAuroSDK(AuroScholarInputModel inputModel) {
+        AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
+        auroScholarDataModel.setMobileNumber(inputModel.getMobileNumber());
+        auroScholarDataModel.setStudentClass(inputModel.getStudentClass());
+        auroScholarDataModel.setRegitrationSource(inputModel.getRegitrationSource());
+        auroScholarDataModel.setActivity(inputModel.getActivity());
+        auroScholarDataModel.setFragmentContainerUiId(inputModel.getFragmentContainerUiId());
 
-
-    public static void openFaceBookLoginFragment(AuroScholarDataModel auroScholarDataModel) {
         AuroApp.setAuroModel(auroScholarDataModel);
-        ScholarShipFacebookIn scholarShipFacebookIn = new ScholarShipFacebookIn();
-        FragmentUtil.replaceFragment(auroScholarDataModel.getActivity(), scholarShipFacebookIn, AuroApp.getFragmentContainerUiId(), false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
+        QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
+        return quizHomeFragment;
     }
 
 

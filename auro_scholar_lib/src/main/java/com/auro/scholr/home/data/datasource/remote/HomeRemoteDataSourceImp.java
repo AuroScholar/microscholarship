@@ -7,7 +7,9 @@ import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.ConversionUtil;
+import com.auro.scholr.util.TextUtil;
 import com.google.gson.JsonObject;
 
 import java.util.HashMap;
@@ -32,11 +34,26 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
     @Override
     public Single<Response<JsonObject>> getDashboardData(AuroScholarDataModel model) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
-        params.put(AppConstant.DashBoardParams.STUDENT_CLASS, model.getStudentClass());
-        params.put(AppConstant.DashBoardParams.REGISTRATION_SOURCE, model.getRegitrationSource());
-        return homeRemoteApi.getDashboardData(params);
+        if (TextUtil.isEmpty(model.getScholrId())) {
+            params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
+            params.put(AppConstant.DashBoardParams.STUDENT_CLASS, model.getStudentClass());
+            params.put(AppConstant.DashBoardParams.REGISTRATION_SOURCE, model.getRegitrationSource());
+            AppLogger.e("HomeRemoteDataSourceImp","Calling  Generic SDK");
+            return homeRemoteApi.getDashboardSDKData(params);
+        } else {
+            params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
+            params.put(AppConstant.DashBoardParams.SCHOLAR_ID, model.getScholrId());
+            params.put(AppConstant.DashBoardParams.STUDENT_CLASS, model.getStudentClass());
+            params.put(AppConstant.DashBoardParams.REGISTRATION_SOURCE, model.getRegitrationSource());
+            params.put(AppConstant.DashBoardParams.SHARE_TYPE, model.getShareType());
+            params.put(AppConstant.DashBoardParams.SHARE_IDENTITY, model.getShareIdentity());
+            AppLogger.e("HomeRemoteDataSourceImp","Calling  Scholar SDK");
+            return homeRemoteApi.getDashboardData(params);
+        }
+
+
     }
+
 
     @Override
     public Single<Response<JsonObject>> getAzureData(AssignmentReqModel azureReqModel) {

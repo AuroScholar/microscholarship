@@ -26,6 +26,11 @@ public interface HomeRemoteApi {
     @FormUrlEncoded
     Single<Response<JsonObject>> getDashboardData(@FieldMap Map<String, String> params);
 
+    @POST(URLConstant.DASHBOARD_SDK_API)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> getDashboardSDKData(@FieldMap Map<String, String> params);
+
+
 
     @POST(URLConstant.DEMOGRAPHIC_API)
     @FormUrlEncoded

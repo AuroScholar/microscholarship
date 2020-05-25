@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/_15sdp"
-                android:text="Transfer Scholarship"
+                android:text="@string/transfer_scholarship"
                 android:textColor="@color/auro_dark_blue"
                 android:textSize="@dimen/_13sdp"
                 android:visibility="visible"

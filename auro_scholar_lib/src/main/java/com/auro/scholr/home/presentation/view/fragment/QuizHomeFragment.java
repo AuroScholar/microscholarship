@@ -138,6 +138,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             observeServiceResponse();
         }
         openToolTip();
+
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
     }
 
@@ -581,6 +582,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         if (prefModel != null && !prefModel.isTooltipStatus()) {
             binding.rltooltipe.setVisibility(View.VISIBLE);
             startAnimationFromBottom();
+        } else {
+            binding.rltooltipe.setVisibility(View.GONE);
         }
     }
 

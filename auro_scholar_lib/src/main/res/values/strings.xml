@@ -156,7 +156,10 @@
     <string name="please_put_your_face_inside_the_box">Please put your face inside the box</string>
     <string name="call_our_customercare">Please call our customer care number to get your scholarship cash</string>
     <string name="call">Call</string>
-
+    <string name="upload_document">Upload Document</string>
+    <string name="please_upload_the_document">Please Upload the Document</string>
+    <string name="upload_verification">Upload Verification</string>
+    <string name="transfer_scholarship">Transfer Scholarship</string>
 
 
 </resources>

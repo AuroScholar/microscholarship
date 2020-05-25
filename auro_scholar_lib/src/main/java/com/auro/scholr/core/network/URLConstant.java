@@ -8,7 +8,9 @@ public interface URLConstant {
 //    String BASE_URL = "http://14.142.204.99:7070/"; // SIT
     // String BASE_URL = BuildConfig.BASE_URL;
 
-    String DASHBOARD_API = BASE_URL + "dashboard_sdk.php";
+    String DASHBOARD_API = BASE_URL + "dashboard.php";
+
+    String DASHBOARD_SDK_API = BASE_URL + "dashboard_sdk.php";
 
     String DEMOGRAPHIC_API = BASE_URL + "demographics.php";
 
