@@ -244,11 +244,17 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
-                        if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
-                            handleProgress(2, dashboardResModel.getMessage());
+                        if (!dashboardResModel.isError()) {
+                            checkStatusforCongratulationDialog();
+                            if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
+                                handleProgress(2, dashboardResModel.getMessage());
+                            } else {
+                                setDataOnUi(dashboardResModel);
+                            }
                         } else {
-                            setDataOnUi(dashboardResModel);
+                            handleProgress(2, dashboardResModel.getMessage());
                         }
+
                     } else if (responseApi.apiTypeStatus == AZURE_API) {
                         // openQuizTestFragment(dashboardResModel);
                     }
@@ -593,6 +599,30 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             binding.rltooltipe.setVisibility(View.GONE);
             prefModel.setTooltipStatus(true);
             AppPref.INSTANCE.setPref(prefModel);
+        }
+    }
+
+    private void openCongratulationsDialog() {
+        CongratulationsDialog congratulationsDialog = new CongratulationsDialog(getContext());
+        openFragmentDialog(congratulationsDialog);
+    }
+
+    public void checkStatusforCongratulationDialog() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null && prefModel.getAssignmentReqModel() != null) {
+            AssignmentReqModel assignmentReqModel = prefModel.getAssignmentReqModel();
+            if (!TextUtil.isEmpty(assignmentReqModel.getExam_name()) && !TextUtil.isEmpty(assignmentReqModel.getQuiz_attempt())) {
+                if (dashboardResModel != null && !TextUtil.checkListIsEmpty(dashboardResModel.getQuiz())) {
+                    for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
+                        if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 8) {
+                            prefModel.setAssignmentReqModel(null);
+                            AppPref.INSTANCE.setPref(prefModel);
+                            openCongratulationsDialog();
+                        }
+                    }
+                }
+
+            }
         }
     }
 

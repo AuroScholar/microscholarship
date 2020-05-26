@@ -322,9 +322,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                         KYCResListModel kycResListModel = (KYCResListModel) responseApi.data;
                         if (!kycResListModel.isError()) {
                             updateListonResponse(kycResListModel);
-                          /*  if (kycViewModel.homeUseCase.checkAllUploadedOrNot(kycResListModel.getList())) {
-                                progressBarHandling(2);
-                            }*/
+
                             uploadBtnStatus = false;
                         } else {
                             showError(kycResListModel.getMessage());

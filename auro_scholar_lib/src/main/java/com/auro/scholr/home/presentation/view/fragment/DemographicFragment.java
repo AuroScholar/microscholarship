@@ -244,10 +244,14 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == DEMOGRAPHIC_API) {
-                        handleProgress(1, "");
-                        getActivity().getSupportFragmentManager().popBackStack();
-                        //  DemographicResModel demographicResModel = (DemographicResModel) responseApi.data;
-                        //  AuroScholar.openAuroDashboardFragment(AuroApp.getAuroScholarModel());
+                        DemographicResModel demographicResModel = (DemographicResModel) responseApi.data;
+                        if (!demographicResModel.getError()) {
+                            handleProgress(1, "");
+                            getActivity().getSupportFragmentManager().popBackStack();
+                        } else {
+                            showSnackbarError(getString(R.string.default_error));
+                        }
+
                     }
 
                     break;

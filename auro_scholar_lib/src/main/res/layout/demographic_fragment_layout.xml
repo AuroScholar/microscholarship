@@ -13,12 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <include
-            android:id="@+id/cambridge_heading"
-            layout="@layout/quiz_header_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -26,7 +20,7 @@
             android:background="@android:color/transparent"
             android:clipToPadding="false"
             android:paddingBottom="@dimen/_150sdp"
-            app:layout_constraintTop_toBottomOf="@+id/cambridge_heading">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +34,7 @@
                     android:id="@+id/demograph_head"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
                     android:gravity="center_horizontal"
                     android:text="@string/auro_scholar_demographics_details"
                     android:textAlignment="center"

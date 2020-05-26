@@ -7,7 +7,7 @@ public class DemographicResModel {
 
     @SerializedName("error")
     @Expose
-    String error;
+    boolean error;
 
     @SerializedName("status")
     @Expose
@@ -41,11 +41,11 @@ public class DemographicResModel {
 
     }
 
-    public String getError() {
+    public boolean getError() {
         return error;
     }
 
-    public void setError(String error) {
+    public void setError(boolean error) {
         this.error = error;
     }
 

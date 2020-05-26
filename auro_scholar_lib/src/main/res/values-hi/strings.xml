@@ -117,9 +117,9 @@
     <string name="successfully">You have successfully completed\n the 100 Days UI Challenge</string>
 
 
-    <string name="instructions">&#8226; foo<br/>
-&#8226; bar<br/>
-&#8226; baz<br/></string>
+    <string name="instructions">&#8226; foo<br />
+&#8226; bar<br />
+&#8226; baz<br /></string>
     <string name="document_uploaded">दस्तावेज़ अपलोड किया गया</string>
     <string name="verification_is_in_process">सत्यापन प्रक्रिया में है</string>
     <string name="document_verified">दस्तावेज़ सत्यापित</string>
@@ -147,4 +147,7 @@
     <string name="please_upload_the_document">कृपया दस्तावेज़ अपलोड करें</string>
     <string name="upload_verification">सत्यापन अपलोड करें</string>
     <string name="transfer_scholarship">छात्रवृत्ति हस्तांतरित करें</string>
+
+    <string name="share_msg">Hey!\nI have just got Scholarship Cash on Scholr App, you can too!\nJust take a 10 min quiz and win.\nStart now - https://bit.ly/3en7pnQ</string>
+
 </resources>

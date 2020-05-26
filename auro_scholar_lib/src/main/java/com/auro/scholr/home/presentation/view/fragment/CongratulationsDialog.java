@@ -102,9 +102,8 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
     public void shareWithFriends() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, mcontext.getResources().getString(R.string.share_msg));
         sendIntent.setType("text/plain");
-
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         dismiss();
         mcontext.startActivity(shareIntent);
