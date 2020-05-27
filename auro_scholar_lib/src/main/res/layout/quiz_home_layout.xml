@@ -247,10 +247,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom|right"
                 android:layout_margin="16dp"
-                android:background="#79ba7e"
+                app:maxImageSize="@dimen/_40sdp"
+
+                android:background="@color/ufo_green"
                 android:contentDescription="@string/submit"
                 android:src="@drawable/ic_iconswhatsapps"
-                app:backgroundTint="#79ba7e"
+                app:backgroundTint="@color/ufo_green"
                 app:layout_anchor="@id/scrollview"
                 app:layout_anchorGravity="end|bottom|right"
                 app:layout_behavior="com.codepath.floatingactionbuttontest.ScrollAwareFABBehavior"
@@ -259,7 +261,7 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.93" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
