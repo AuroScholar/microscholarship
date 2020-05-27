@@ -411,7 +411,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
             } else {
-                openKYCFragment(dashboardResModel);git
+                openKYCFragment(dashboardResModel);
             }
 
         } else if (v.getId() == R.id.privacy_policy) {

@@ -1,12 +1,14 @@
 package com.auro.scholr.home.presentation.view.adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,7 +65,9 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
                 binding.totalNoPoints.setText(AuroApp.getAppContext().getString(R.string.total_no_of_points) + quizResModel.getScorepoints() + "/" + quizResModel.getTotalpoints());
             }
             if (quizResModel.getStatus().equalsIgnoreCase(AppConstant.TRUE)) {
-                binding.quizMainLayout.setForeground(null);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    binding.quizMainLayout.setForeground(null);
+                }
                 binding.lockLayout.setVisibility(View.GONE);
                 binding.quizButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -74,10 +78,11 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.ViewHo
                     }
                 });
             } else {
-                binding.quizMainLayout.setForeground(mContext.getDrawable(R.drawable.transparentbg));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    binding.quizMainLayout.setForeground(mContext.getDrawable(R.drawable.transparentbg));
+                }
                 binding.lockLayout.setVisibility(View.VISIBLE);
             }
-
             startAnimationQuizButton(binding);
             if (quizResModel.getAttempt() == 3 && quizResModel.getStatus().equalsIgnoreCase(AppConstant.FALSE)) {
                 binding.quizAttemptLayout.setVisibility(View.VISIBLE);
