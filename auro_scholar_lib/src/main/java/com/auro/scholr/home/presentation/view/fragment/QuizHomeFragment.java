@@ -149,6 +149,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         /*Do code here*/
     }
 
+
     @Override
     protected void setListener() {
         binding.walletBalText.setOnClickListener(this);
@@ -156,6 +157,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.toolbarLayout.langEng.setOnClickListener(this);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.customUiSnackbar.arrow.setOnClickListener(this);
+        binding.fab.setOnClickListener(this);
     }
 
 
@@ -411,7 +413,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
             } else {
-                openKYCFragment(dashboardResModel);git
+                openKYCFragment(dashboardResModel);
             }
 
         } else if (v.getId() == R.id.privacy_policy) {
@@ -434,6 +436,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         }
         if (v.getId() == R.id.arrow) {
             openFragment(new FriendsLeaderBoardFragment());
+        }else if (v.getId() == R.id.fab){
+            openChat();
         }
     }
 
@@ -626,6 +630,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             }
         }
     }
+
 
 
     private void openChat() {
