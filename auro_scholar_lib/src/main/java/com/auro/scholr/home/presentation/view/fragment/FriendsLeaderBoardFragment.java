@@ -96,6 +96,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         AuroApp.getAppComponent().doInjection(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendsLeaderShipViewModel.class);
         binding.setLifecycleOwner(this);
+        setRetainInstance(true);
         return binding.getRoot();
     }
 

@@ -78,6 +78,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         demographicViewModel = ViewModelProviders.of(this, viewModelFactory).get(DemographicViewModel.class);
         binding.setLifecycleOwner(this);
         HomeActivity.setListingActiveFragment(HomeActivity.DEMOGRAPHIC_FRAGMENT);
+        setRetainInstance(true);
         return binding.getRoot();
     }
 

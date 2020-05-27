@@ -107,6 +107,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         if (prefModel != null && TextUtil.isEmpty(prefModel.getUserLanguage())) {
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
         }
+        setRetainInstance(true);
         return binding.getRoot();
     }
 
@@ -410,7 +411,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
             } else {
-                openKYCFragment(dashboardResModel);
+                openKYCFragment(dashboardResModel);git
             }
 
         } else if (v.getId() == R.id.privacy_policy) {
@@ -626,4 +627,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
+
+    private void openChat() {
+        Uri uri = Uri.parse("https://wa.me/919667480783");
+        Intent i = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(Intent.createChooser(i, ""));
+    }
 }

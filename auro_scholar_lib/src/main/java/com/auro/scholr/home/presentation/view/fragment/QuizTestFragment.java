@@ -116,7 +116,7 @@ public class QuizTestFragment extends BaseFragment {
             AuroApp.getAppComponent().doInjection(this);
             quizTestViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizTestViewModel.class);
             binding.setLifecycleOwner(this);
-
+            setRetainInstance(true);
         }
 
         return binding.getRoot();
@@ -172,7 +172,7 @@ public class QuizTestFragment extends BaseFragment {
                             openDialog();
                             loadWeb(webUrl);
                         } else {
-                            handleProgress(2,assignmentResModel.getMessage());
+                            handleProgress(2, assignmentResModel.getMessage());
                         }
                     }
                     break;

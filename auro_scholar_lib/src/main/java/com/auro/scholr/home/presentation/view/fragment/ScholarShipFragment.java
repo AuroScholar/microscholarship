@@ -73,6 +73,7 @@ public class ScholarShipFragment extends Fragment {
 
         }
         HomeActivity.setListingActiveFragment(HomeActivity.QUIZ_DASHBOARD_WEB_FRAGMENT);
+        setRetainInstance(true);
         return binding.getRoot();
     }
 

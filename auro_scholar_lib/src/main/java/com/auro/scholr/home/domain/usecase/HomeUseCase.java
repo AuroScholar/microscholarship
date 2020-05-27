@@ -47,14 +47,17 @@ public class HomeUseCase {
 
     public ArrayList<KYCDocumentDatamodel> makeAdapterDocumentList(DashboardResModel dashboardResModel) {
         ArrayList<KYCDocumentDatamodel> kycDocumentList = new ArrayList<>();
+
         KYCDocumentDatamodel kyc_one = new KYCDocumentDatamodel();
         kyc_one.setDocumentId(AppConstant.DocumentType.ID_PROOF_FRONT_SIDE);
         kyc_one.setDocumentName(AuroApp.getAppContext().getString(R.string.id_proof_front_side));
         kyc_one.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
         kyc_one.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
-        kyc_one.setModify(dashboardResModel.isModify());
+        if (dashboardResModel != null) {
+            kyc_one.setModify(dashboardResModel.isModify());
+        }
         kyc_one.setId_name(AppConstant.DocumentType.ID_PROOF);
-        if (!TextUtil.isEmpty(dashboardResModel.getIdfront())) {
+        if (dashboardResModel !=null && !TextUtil.isEmpty(dashboardResModel.getIdfront())) {
             kyc_one.setDocumentstatus(true);
             kyc_one.setDocumentUrl(dashboardResModel.getIdfront());
         }
@@ -67,7 +70,7 @@ public class HomeUseCase {
         kyc_two.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
         kyc_two.setModify(dashboardResModel.isModify());
         kyc_two.setId_name(AppConstant.DocumentType.ID_PROOF_BACK);
-        if (!TextUtil.isEmpty(dashboardResModel.getIdback())) {
+        if (dashboardResModel !=null &&!TextUtil.isEmpty(dashboardResModel.getIdback())) {
             kyc_two.setDocumentstatus(true);
             kyc_two.setDocumentUrl(dashboardResModel.getIdback());
         }
@@ -77,9 +80,11 @@ public class HomeUseCase {
         kyc_three.setDocumentName(AuroApp.getAppContext().getString(R.string.school_id_card));
         kyc_three.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
         kyc_three.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
-        kyc_three.setModify(dashboardResModel.isModify());
+        if (dashboardResModel != null) {
+            kyc_three.setModify(dashboardResModel.isModify());
+        }
         kyc_three.setId_name(AppConstant.DocumentType.SCHOOL_ID);
-        if (!TextUtil.isEmpty(dashboardResModel.getSchoolid())) {
+        if (dashboardResModel !=null && !TextUtil.isEmpty(dashboardResModel.getSchoolid())) {
             kyc_three.setDocumentstatus(true);
             kyc_three.setDocumentUrl(dashboardResModel.getSchoolid());
         }
@@ -89,9 +94,11 @@ public class HomeUseCase {
         kyc_four.setDocumentName(AuroApp.getAppContext().getString(R.string.upload_profile_pic));
         kyc_four.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
         kyc_four.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
-        kyc_four.setModify(dashboardResModel.isModify());
+        if (dashboardResModel != null) {
+            kyc_four.setModify(dashboardResModel.isModify());
+        }
         kyc_four.setId_name(AppConstant.DocumentType.STUDENT_PHOTO);
-        if (!TextUtil.isEmpty(dashboardResModel.getPhoto())) {
+        if (dashboardResModel !=null && !TextUtil.isEmpty(dashboardResModel.getPhoto())) {
             kyc_four.setDocumentstatus(true);
             kyc_four.setDocumentUrl(dashboardResModel.getPhoto());
         }

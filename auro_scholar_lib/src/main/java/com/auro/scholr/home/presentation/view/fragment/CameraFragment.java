@@ -89,7 +89,7 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
         if (hasFrontCamera()) {
             cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
         }
-
+        setRetainInstance(true);
         checkValueEverySecond();
         return binding.getRoot();
     }

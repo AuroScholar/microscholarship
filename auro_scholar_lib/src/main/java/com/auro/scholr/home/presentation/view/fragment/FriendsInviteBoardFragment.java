@@ -57,7 +57,7 @@ public class FriendsInviteBoardFragment extends BaseFragment implements View.OnC
         AuroApp.getAppComponent().doInjection(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendsInviteViewModel.class);
         binding.setLifecycleOwner(this);
-
+        setRetainInstance(true);
         return binding.getRoot();
     }
 

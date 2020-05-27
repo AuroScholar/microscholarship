@@ -90,7 +90,7 @@ public class PrivacyPolicyFragment extends BaseFragment {
             binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
             binding.setLifecycleOwner(this);
         }
-
+        setRetainInstance(true);
         return binding.getRoot();
     }
 

@@ -84,6 +84,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         kycViewModel = ViewModelProviders.of(this, viewModelFactory).get(KYCViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setKycViewModel(kycViewModel);
+        setRetainInstance(true);
         return binding.getRoot();
     }
 
