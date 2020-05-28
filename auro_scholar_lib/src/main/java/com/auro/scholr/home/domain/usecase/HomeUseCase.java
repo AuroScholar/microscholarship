@@ -57,7 +57,7 @@ public class HomeUseCase {
             kyc_one.setModify(dashboardResModel.isModify());
         }
         kyc_one.setId_name(AppConstant.DocumentType.ID_PROOF);
-        if (dashboardResModel !=null && !TextUtil.isEmpty(dashboardResModel.getIdfront())) {
+        if (dashboardResModel != null && !TextUtil.isEmpty(dashboardResModel.getIdfront())) {
             kyc_one.setDocumentstatus(true);
             kyc_one.setDocumentUrl(dashboardResModel.getIdfront());
         }
@@ -68,9 +68,11 @@ public class HomeUseCase {
         kyc_two.setDocumentName(AuroApp.getAppContext().getString(R.string.id_proof_back_side));
         kyc_two.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
         kyc_two.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
-        kyc_two.setModify(dashboardResModel.isModify());
+        if (dashboardResModel != null) {
+            kyc_two.setModify(dashboardResModel.isModify());
+        }
         kyc_two.setId_name(AppConstant.DocumentType.ID_PROOF_BACK);
-        if (dashboardResModel !=null &&!TextUtil.isEmpty(dashboardResModel.getIdback())) {
+        if (dashboardResModel != null && !TextUtil.isEmpty(dashboardResModel.getIdback())) {
             kyc_two.setDocumentstatus(true);
             kyc_two.setDocumentUrl(dashboardResModel.getIdback());
         }
@@ -84,7 +86,7 @@ public class HomeUseCase {
             kyc_three.setModify(dashboardResModel.isModify());
         }
         kyc_three.setId_name(AppConstant.DocumentType.SCHOOL_ID);
-        if (dashboardResModel !=null && !TextUtil.isEmpty(dashboardResModel.getSchoolid())) {
+        if (dashboardResModel != null && !TextUtil.isEmpty(dashboardResModel.getSchoolid())) {
             kyc_three.setDocumentstatus(true);
             kyc_three.setDocumentUrl(dashboardResModel.getSchoolid());
         }
@@ -98,7 +100,7 @@ public class HomeUseCase {
             kyc_four.setModify(dashboardResModel.isModify());
         }
         kyc_four.setId_name(AppConstant.DocumentType.STUDENT_PHOTO);
-        if (dashboardResModel !=null && !TextUtil.isEmpty(dashboardResModel.getPhoto())) {
+        if (dashboardResModel != null && !TextUtil.isEmpty(dashboardResModel.getPhoto())) {
             kyc_four.setDocumentstatus(true);
             kyc_four.setDocumentUrl(dashboardResModel.getPhoto());
         }

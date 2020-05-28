@@ -139,11 +139,11 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
             TextView text = view.findViewById(R.id.text_one);
             if (i == pos) {
                 Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Poppins-Regular.ttf");
-                text.setTextColor(getResources().getColor(R.color.blue_color));
+                text.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.blue_color));
                 text.setTypeface(face);
             } else {
                 Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Poppins-Regular.ttf");
-                text.setTextColor(getResources().getColor(R.color.white));
+                text.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.white));
                 text.setTypeface(face);
             }
 

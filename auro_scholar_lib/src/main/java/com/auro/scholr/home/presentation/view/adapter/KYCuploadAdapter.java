@@ -61,17 +61,17 @@ public class KYCuploadAdapter extends RecyclerView.Adapter<KYCuploadAdapter.View
                 binding.chooseFile.setVisibility(View.GONE);
                 binding.tvNoFileChoosen.setVisibility(View.GONE);
                 binding.tvSucessfullyUploaded.setVisibility(View.VISIBLE);
-                binding.chooseFile.setBackgroundColor(AuroApp.getAppContext().getColor(R.color.rich_electric_blue));
+                binding.chooseFile.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.rich_electric_blue));
             } else {
                 if (progressStatus && kycDocumentDatamodel.isProgress()) {
                     binding.progressBar.setVisibility(View.VISIBLE);
                 }
                 if (progressStatus && !kycDocumentDatamodel.isProgress()) {
                     binding.chooseFile.setEnabled(false);
-                    binding.chooseFile.setBackgroundColor(AuroApp.getAppContext().getColor(R.color.grey_color));
+                    binding.chooseFile.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.grey_color));
                 } else {
                     binding.chooseFile.setEnabled(true);
-                    binding.chooseFile.setBackgroundColor(AuroApp.getAppContext().getColor(R.color.blue_color));
+                    binding.chooseFile.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.blue_color));
                 }
             }
 

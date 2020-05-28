@@ -29,7 +29,9 @@ public class AuroApp {
     }
 
     public static AppComponent getAppComponent() {
-
+        if (appComponent == null) {
+            intialiseSdk(auroScholarDataModel.getActivity());
+        }
         return appComponent;
     }
 

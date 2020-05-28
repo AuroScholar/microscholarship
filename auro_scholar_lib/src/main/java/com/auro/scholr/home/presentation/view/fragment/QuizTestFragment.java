@@ -52,6 +52,7 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
@@ -110,15 +111,15 @@ public class QuizTestFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        setHasOptionsMenu(true);
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
             AuroApp.getAppComponent().doInjection(this);
             quizTestViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizTestViewModel.class);
             binding.setLifecycleOwner(this);
-            setRetainInstance(true);
-        }
+            setHasOptionsMenu(true);
 
+        }
+        setRetainInstance(true);
         return binding.getRoot();
     }
 
@@ -346,12 +347,13 @@ public class QuizTestFragment extends BaseFragment {
         //Show loader on url load
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            AppLogger.e("chhonker", url);
-            if (view.getUrl().equalsIgnoreCase("http://auroscholar.com/index.php") ||
-                    view.getUrl().equalsIgnoreCase("http://auroscholar.com/demographics.php")
-                    || view.getUrl().equalsIgnoreCase("http://auroscholar.com/dashboard.php")) {
-                cancelDialogAfterSubmittingTest();
-
+            AppLogger.e("chhonker onPageStarted", url);
+            if (!TextUtil.isEmpty(url)) {
+                if (url.equalsIgnoreCase("http://auroscholar.com/index.php") ||
+                        url.equalsIgnoreCase("http://auroscholar.com/demographics.php")
+                        || url.equalsIgnoreCase("http://auroscholar.com/dashboard.php")) {
+                    cancelDialogAfterSubmittingTest();
+                }
             }
         }
 
@@ -360,7 +362,7 @@ public class QuizTestFragment extends BaseFragment {
             //webView.loadUrl("<button type=\"button\" value=\"Continue\" onclick=\"Continue.performClick(this.value);\">Continue</button>\n");
             AppLogger.e("chhonker Finished", url);
             loadEvent(clickListener());
-            if (url.equalsIgnoreCase("https://assessment.eklavvya.com/Exam/CandidateExam")) {
+            if (!TextUtil.isEmpty(url) && url.equalsIgnoreCase("https://assessment.eklavvya.com/Exam/CandidateExam")) {
                 AppLogger.e("chhonker Finished exam", url);
                 closeDialog();
             }

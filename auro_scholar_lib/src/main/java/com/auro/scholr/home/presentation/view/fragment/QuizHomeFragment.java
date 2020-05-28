@@ -500,7 +500,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         builder.append(span1);
 
         SpannableStringBuilder span2 = new SpannableStringBuilder(" " + getString(R.string.rs) + "50" + " ");
-        ForegroundColorSpan color2 = new ForegroundColorSpan(getResources().getColor(R.color.color_red));
+        ForegroundColorSpan color2 = new ForegroundColorSpan(AuroApp.getAppContext().getResources().getColor(R.color.color_red));
         span2.setSpan(color2, 0, span2.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         span2.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, span2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.append(span2);

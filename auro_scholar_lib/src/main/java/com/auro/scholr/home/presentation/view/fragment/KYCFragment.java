@@ -125,7 +125,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         if (dashboardResModel != null) {
             setDataStepsOfVerifications();
             if (!TextUtil.isEmpty(dashboardResModel.getWalletbalance())) {
-                binding.walletBalText.setText(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
+                binding.walletBalText.setText(AuroApp.getAppContext().getResources().getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
             }
         }
         binding.cambridgeHeading.cambridgeHeading.setTextColor(getResources().getColor(R.color.white));
@@ -524,7 +524,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_uploaded()) && dashboardResModel.getIs_kyc_uploaded().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
             binding.stepOne.tickSign.setVisibility(View.VISIBLE);
             binding.stepOne.textUploadDocumentMsg.setText(R.string.document_uploaded);
-            binding.stepOne.textUploadDocumentMsg.setTextColor(getResources().getColor(R.color.ufo_green));
+            binding.stepOne.textUploadDocumentMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
             if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.IN_PROCESS)) {
                 binding.stepTwo.textVerifyMsg.setText(getString(R.string.verification_is_in_process));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
@@ -532,13 +532,13 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 binding.stepTwo.textVerifyMsg.setText(R.string.document_verified);
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
-                binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.ufo_green));
+                binding.stepTwo.textVerifyMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
                 if (!TextUtil.isEmpty(dashboardResModel.getIs_payment_lastmonth()) && dashboardResModel.getIs_payment_lastmonth().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
                     binding.stepThree.textTransferMsg.setText(R.string.successfully_transfered);
-                    binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.ufo_green));
+                    binding.stepThree.textTransferMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
                     binding.stepThree.tickSign.setVisibility(View.VISIBLE);
                 } else {
-                    binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.ufo_green));
+                    binding.stepThree.textTransferMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
                     binding.stepThree.textTransferMsg.setText(R.string.call_our_customercare);
                     binding.stepThree.tickSign.setVisibility(View.GONE);
                     binding.stepThree.btTransferMoney.setVisibility(View.VISIBLE);
@@ -546,12 +546,12 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 }
             } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.REJECTED)) {
                 binding.stepTwo.textVerifyMsg.setText(R.string.declined);
-                binding.stepTwo.textVerifyMsg.setTextColor(getResources().getColor(R.color.color_red));
+                binding.stepTwo.textVerifyMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.color_red));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setBackground(getResources().getDrawable(R.drawable.ic_cancel_icon));
 
-                binding.stepThree.textTransferMsg.setTextColor(getResources().getColor(R.color.auro_dark_blue));
+                binding.stepThree.textTransferMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.auro_dark_blue));
                 binding.stepThree.textTransferMsg.setText(R.string.you_will_see_transfer);
                 binding.stepThree.btTransferMoney.setVisibility(View.GONE);
                 binding.stepThree.tickSign.setVisibility(View.GONE);

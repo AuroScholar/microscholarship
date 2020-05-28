@@ -101,6 +101,13 @@ public class ViewUtil {
     }
 
     public static void showSnackBar(View rootLayout, String snackTitle) {
+
+        if (rootLayout == null) {
+            return;
+        }
+        if (rootLayout.getParent() == null) {
+            return ;
+        }
         snackView = ErrorSnackbar.showSnackbar(rootLayout, snackTitle);
     }
 
@@ -162,7 +169,7 @@ public class ViewUtil {
             }
         }, spanTxt.length() - ("terms_of_service").length(), spanTxt.length(), 0);
         spanTxt.append(" " + "and" + " ");
-        spanTxt.setSpan(new ForegroundColorSpan(AuroApp.getAppContext().getColor(R.color.color_red)), 0, ("terms_of_service").length(), 0);
+        spanTxt.setSpan(new ForegroundColorSpan(AuroApp.getAppContext().getResources().getColor(R.color.color_red)), 0, ("terms_of_service").length(), 0);
         spanTxt.append("privacy_policy");
         spanTxt.setSpan(new ClickableSpan() {
             @Override
@@ -173,7 +180,7 @@ public class ViewUtil {
                 }
             }
         }, spanTxt.length() - ("privacy_policy").length(), spanTxt.length(), 0);
-        spanTxt.setSpan(new ForegroundColorSpan(AuroApp.getAppContext().getColor(R.color.color_red)), (spanTxt.length() - ("privacy_policy").length()), spanTxt.length(), 0);
+        spanTxt.setSpan(new ForegroundColorSpan(AuroApp.getAppContext().getResources().getColor(R.color.color_red)), (spanTxt.length() - ("privacy_policy").length()), spanTxt.length(), 0);
         view.setMovementMethod(LinkMovementMethod.getInstance());
         view.setText(spanTxt, TextView.BufferType.SPANNABLE);
     }

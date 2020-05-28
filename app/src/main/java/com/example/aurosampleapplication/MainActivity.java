@@ -111,8 +111,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openGenricSDK() {
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
-        inputModel.setMobileNumber("8448252695");
-        inputModel.setStudentClass("11");
+        inputModel.setMobileNumber("7503600686");
+        inputModel.setStudentClass("6");
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setActivity(this);
         inputModel.setFragmentContainerUiId(R.id.home_container);
