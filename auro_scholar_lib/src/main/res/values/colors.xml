@@ -11,11 +11,13 @@
     <color name="backgroun_transparent">#f2000000</color>
     <color name="color_black_trns">#918F8F</color>
     <color name="black">#000000</color>
+
     <color name="transparent">#00000000</color>
 
     <color name="white">#ffffff</color>
     <color name="offWhite">#F7F7F7</color>
     <color name="snow">#fbfbfb</color>
+
     <color name="background_camera_bottom_bar">#55000000</color>
 
 
@@ -97,6 +99,8 @@
     <color name="auro_theme_dark_blue">#054b74</color>
     <color name="item_bg_color">#F8F7FE</color>
     <color name="auro_green_color">#4caf50</color>
+    <color name="yellowdark">#FFB60D</color>
+    <color name="red_dark">#E04F5F</color>
 
 
     <color name="simpletooltip_background">@color/colorAccent</color>
