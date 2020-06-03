@@ -32,42 +32,60 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
-            <include
-                android:id="@+id/amount_trajection"
-                layout="@layout/amount_approved_header_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/header_parent"/>
-            <com.auro.scholr.core.util.uiwidget.RPTextView
-                android:id="@+id/txttransactions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/transactions"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_20sdp"
-                android:textStyle="normal"
-                android:layout_marginLeft="@dimen/_8sdp"
-                android:layout_marginRight="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_13sdp"
-                app:Font="Poppins-SemiBold.ttf"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/amount_trajection" />
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/monthly_wise_list"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_13sdp"
-                android:layout_marginRight="@dimen/_8sdp"
-                android:layout_marginLeft="@dimen/_8sdp"
                 android:background="@android:color/transparent"
-                app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txttransactions"/>
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/_150sdp"
+                app:layout_constraintTop_toBottomOf="@id/header_parent">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+
+
+                        <include
+                            android:id="@+id/amount_trajection"
+                            layout="@layout/amount_approved_header_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                           />
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/txttransactions"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/transactions"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_20sdp"
+                            android:textStyle="normal"
+                            android:layout_marginLeft="@dimen/_8sdp"
+                            android:layout_marginRight="@dimen/_8sdp"
+                            android:layout_marginTop="@dimen/_13sdp"
+                            app:Font="Poppins-SemiBold.ttf"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/amount_trajection" />
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/monthly_wise_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/_8sdp"
+                            android:layout_marginLeft="@dimen/_8sdp"
+                            
+                            android:background="@android:color/transparent"
+                            app:layout_constraintStart_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txttransactions"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

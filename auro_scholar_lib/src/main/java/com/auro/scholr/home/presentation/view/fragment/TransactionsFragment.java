@@ -116,7 +116,7 @@ public class TransactionsFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-
+        binding.headerParent.cambridgeHeading.setVisibility(View.GONE);
     }
 
     @Override
@@ -127,6 +127,7 @@ public class TransactionsFragment extends BaseFragment {
     public void setTransationsBoard(){
         binding.monthlyWiseList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.monthlyWiseList.setHasFixedSize(true);
+        binding.monthlyWiseList.setNestedScrollingEnabled(false);
         leaderBoardAdapter = new MontlyWiseAdapter(viewModel.homeUseCase.makeListForMonthlyScholarShip());
         binding.monthlyWiseList.setAdapter(leaderBoardAdapter);
     }
