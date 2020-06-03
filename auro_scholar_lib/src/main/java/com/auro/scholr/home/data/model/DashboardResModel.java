@@ -128,6 +128,15 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private String is_payment_lastmonth;
 
+    @SerializedName("is_block")
+    @Expose
+    private boolean is_block;
+
+
+    @SerializedName("upgrade")
+    @Expose
+    private UpgradeResModel upgradeResModel;
+
 
     protected DashboardResModel(Parcel in) {
         status = in.readString();
@@ -160,6 +169,8 @@ public class DashboardResModel implements Parcelable {
         is_kyc_uploaded = in.readString();
         is_kyc_verified = in.readString();
         is_payment_lastmonth = in.readString();
+        is_block = in.readByte() != 0;
+        upgradeResModel = in.readParcelable(UpgradeResModel.class.getClassLoader());
     }
 
     @Override
@@ -194,6 +205,8 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(is_kyc_uploaded);
         dest.writeString(is_kyc_verified);
         dest.writeString(is_payment_lastmonth);
+        dest.writeByte((byte) (is_block ? 1 : 0));
+        dest.writeParcelable(upgradeResModel, flags);
     }
 
     @Override
@@ -451,5 +464,21 @@ public class DashboardResModel implements Parcelable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public UpgradeResModel getUpgradeResModel() {
+        return upgradeResModel;
+    }
+
+    public void setUpgradeResModel(UpgradeResModel upgradeResModel) {
+        this.upgradeResModel = upgradeResModel;
+    }
+
+    public boolean isIs_block() {
+        return is_block;
+    }
+
+    public void setIs_block(boolean is_block) {
+        this.is_block = is_block;
     }
 }
