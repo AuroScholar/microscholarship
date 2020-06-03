@@ -2,28 +2,52 @@ package com.auro.scholr.home.presentation.view.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.auro.scholr.R;
+import com.auro.scholr.core.application.AuroApp;
+import com.auro.scholr.core.application.base_component.BaseFragment;
+import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.databinding.FragmentTransactionsBinding;
+import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
+import com.auro.scholr.home.presentation.view.adapter.MontlyWiseAdapter;
+import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
+import com.auro.scholr.home.presentation.viewmodel.TransactionsViewModel;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TransactionsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TransactionsFragment extends Fragment {
+public class TransactionsFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+
+    @Inject
+    @Named("TransactionsFragment")
+    ViewModelFactory viewModelFactory;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    FragmentTransactionsBinding binding;
+    TransactionsViewModel viewModel;
+    MontlyWiseAdapter leaderBoardAdapter;
+
 
     public TransactionsFragment() {
         // Required empty public constructor
@@ -60,6 +84,50 @@ public class TransactionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_transactions, container, false);
+       // return inflater.inflate(R.layout.fragment_transactions, container, false);
+
+        binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
+        AuroApp.getAppComponent().doInjection(this);
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(TransactionsViewModel.class);
+        binding.setLifecycleOwner(this);
+        setRetainInstance(true);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        init();
+        setToolbar();
+        setListener();
+    }
+
+    @Override
+    protected void init() {
+        setListener();
+        setTransationsBoard();
+    }
+
+    @Override
+    protected void setToolbar() {
+
+    }
+
+    @Override
+    protected void setListener() {
+
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.fragment_transactions;
+    }
+
+    public void setTransationsBoard(){
+        binding.monthlyWiseList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.monthlyWiseList.setHasFixedSize(true);
+        leaderBoardAdapter = new MontlyWiseAdapter(viewModel.homeUseCase.makeListForMonthlyScholarShip());
+        binding.monthlyWiseList.setAdapter(leaderBoardAdapter);
     }
 }

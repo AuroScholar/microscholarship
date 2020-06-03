@@ -16,6 +16,7 @@ import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
+import com.auro.scholr.home.data.model.MonthlyScholarShipModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
@@ -385,5 +386,25 @@ public class HomeUseCase {
         }
         return false;
     }
+    public List<MonthlyScholarShipModel> makeListForMonthlyScholarShip() {
+
+        List<MonthlyScholarShipModel> list = new ArrayList<>();
+        MonthlyScholarShipModel month1 = new MonthlyScholarShipModel();
+        month1.setMonthly("March ScholarShip");
+        month1.setMoney("₹150");
+        month1.setApproved("Approved");
+        month1.setViewType(AppConstant.FriendsLeaderBoard.TRANSACTIONS_ADAPTER);
+        list.add(month1);
+
+
+        MonthlyScholarShipModel month2 = new MonthlyScholarShipModel();
+        month2.setMonthly("December ScholarShip");
+        month2.setMoney("₹150");
+        month2.setApproved("");
+        month2.setViewType(AppConstant.FriendsLeaderBoard.TRANSACTIONS_ADAPTER);
+        list.add(month2);
+        return list;
+    }
+
 
 }

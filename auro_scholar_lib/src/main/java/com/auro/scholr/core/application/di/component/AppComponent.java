@@ -18,6 +18,7 @@ import com.auro.scholr.home.presentation.view.fragment.PrivacyPolicyFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizTestFragment;
 import com.auro.scholr.home.presentation.view.fragment.ScholarShipFragment;
+import com.auro.scholr.home.presentation.view.fragment.TransactionsFragment;
 import com.auro.scholr.payment.domain.PaymentUseCase;
 import com.auro.scholr.payment.presentation.view.fragment.BankFragment;
 import com.auro.scholr.payment.presentation.view.fragment.PaytmFragment;
@@ -68,5 +69,7 @@ public interface AppComponent {
     void doInjection(InviteFriendDialog inviteFriendDialog);
 
     void doInjection(CongratulationsDialog congratulationsDialog);
+
+    void doInjection(TransactionsFragment transactionsFragment);
 
 }

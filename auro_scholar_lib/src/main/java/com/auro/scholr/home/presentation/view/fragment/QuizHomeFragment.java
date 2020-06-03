@@ -437,7 +437,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         if (v.getId() == R.id.arrow) {
             openFragment(new FriendsLeaderBoardFragment());
         }else if (v.getId() == R.id.fab){
-            openChat();
+         //   openChat(); //todo change later
+            TransactionsFragment mtransactionsFragment = new TransactionsFragment();
+            openFragment(mtransactionsFragment);
         }
     }
 
