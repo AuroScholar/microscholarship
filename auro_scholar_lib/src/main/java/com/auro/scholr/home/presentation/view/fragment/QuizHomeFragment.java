@@ -438,11 +438,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             openFragment(new FriendsLeaderBoardFragment());
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
-        }
-        if (v.getId() == R.id.arrow) {
-            openFragment(new FriendsLeaderBoardFragment());
         } else if (v.getId() == R.id.fab) {
             openChat();
+
         }
     }
 
