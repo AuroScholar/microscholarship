@@ -166,6 +166,12 @@
     <string name="amount_rejected">Amount Rejected</string>
     <string name="priceAmmount_one">₹50.00</string>
     <string name="strike_amount"><strike>₹50.00</strike></string>
+    <string name="save_more_details">Save More Details?</string>
+    <string name="teacher_name">Teacher Name</string>
+    <string name="email_address">Email Address</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="skip_for_now"><u>Skip For Now</u></string>
+
 
 
     <string name="share_msg">Hey!\nI have just got Scholarship Cash on Scholr App, you can too!\nJust take a 10 min quiz and win.\nStart now - https://bit.ly/3en7pnQ</string>

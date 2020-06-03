@@ -101,6 +101,7 @@
     <color name="auro_green_color">#4caf50</color>
     <color name="yellowdark">#FFB60D</color>
     <color name="red_dark">#E04F5F</color>
+    <color name="check_color">#32bea6</color>
 
 
     <color name="simpletooltip_background">@color/colorAccent</color>
