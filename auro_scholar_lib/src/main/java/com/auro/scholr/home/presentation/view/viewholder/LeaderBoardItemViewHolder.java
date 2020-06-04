@@ -52,26 +52,35 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
         }
         layoutBinding.nameText.setText(model.getStudentName());
 
-        Glide.with(layoutBinding.profileImage.getContext())
-                .asBitmap()
-                .load((String) model.getImagePath())
-                .listener(new RequestListener<Bitmap>() {
-                              @Override
-                              public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Bitmap> target, boolean b) {
-                                  return true;
-                              }
+            Glide.with(layoutBinding.profileImage.getContext())
+                    .asBitmap()
+                    .load((String) model.getImagePath())
+                    .listener(new RequestListener<Bitmap>() {
+                                  @Override
+                                  public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Bitmap> target, boolean b) {
+                                      return true;
+                                  }
 
-                              @Override
-                              public boolean onResourceReady(Bitmap resource, Object o, Target<Bitmap> target, DataSource dataSource, boolean b) {
-                                  // add image to the imageView here
-                                  RoundedBitmapDrawable circularBitmapDrawable =
-                                          RoundedBitmapDrawableFactory.create(AuroApp.getAppContext().getResources(), resource);
-                                  circularBitmapDrawable.setCircular(true);
-                                  layoutBinding.profileImage.setImageDrawable(circularBitmapDrawable);
-                                  return true;
+                                  @Override
+                                  public boolean onResourceReady(Bitmap resource, Object o, Target<Bitmap> target, DataSource dataSource, boolean b) {
+                                      // add image to the imageView here
+                                      RoundedBitmapDrawable circularBitmapDrawable =
+                                              RoundedBitmapDrawableFactory.create(AuroApp.getAppContext().getResources(), resource);
+                                      circularBitmapDrawable.setCircular(true);
+
+                                      AuroApp.getAppContext().runOnUiThread(new Runnable() {
+                                          @Override
+                                          public void run() {
+                                              // TODO your Code
+                                              layoutBinding.profileImage.setImageDrawable(circularBitmapDrawable);
+                                          }
+                                      });
+
+                                      return true;
+                                  }
                               }
-                          }
-                ).submit();
+                    ).submit();
+
 
     }
 }

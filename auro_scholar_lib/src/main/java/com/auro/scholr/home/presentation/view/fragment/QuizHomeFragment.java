@@ -329,10 +329,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
 
     private void setDataOnUi(DashboardResModel dashboardResModel) {
-        quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
-        setQuizListAdapter(dashboardResModel.getQuiz());
-        setQuizWonListAdapter(dashboardResModel.getQuiz());
-        getSpannableString();
+        if (isAdded()) {
+            quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
+            setQuizListAdapter(dashboardResModel.getQuiz());
+            setQuizWonListAdapter(dashboardResModel.getQuiz());
+            getSpannableString();
+        }
+
     }
 
     public void openQuizTestFragment(DashboardResModel dashboardResModel) {

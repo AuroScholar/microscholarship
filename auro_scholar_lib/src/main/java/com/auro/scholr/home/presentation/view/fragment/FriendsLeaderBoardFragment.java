@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -41,6 +42,8 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.FriendsLeoboardLayoutBinding;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
@@ -49,6 +52,7 @@ import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.alert_dialog.CustomSnackBar;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
@@ -138,15 +142,15 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     ViewModelFactory viewModelFactory;
 
     private static final int REQUEST_CODE_PICK_CONTACTS = 1;
-    private Uri uriContact;
-    private String contactID;
     private static final String TAG = FriendsLeaderBoardFragment.class.getSimpleName();
     FriendsLeoboardLayoutBinding binding;
     FriendsLeaderShipViewModel viewModel;
     InviteFriendDialog mInviteBoxDialog;
 
     LeaderBoardAdapter leaderBoardAdapter;
-
+    boolean isFriendList = true;
+    Resources resources;
+    boolean isStateRestore;
 
     @Override
     public void onAttach(Context context) {
@@ -156,6 +160,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendsLeaderShipViewModel.class);
@@ -169,8 +174,38 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     protected void init() {
 
         setListener();
-        setLeaderBoard();
+
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
+        setDataUi();
+
+        if (!isStateRestore) {
+            setLeaderBoard();
+        }
+    }
+
+    private void setDataUi() {
+        if (isFriendList) {
+            binding.noFriendLayout.setVisibility(View.GONE);
+            binding.friendBoardBg.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.color_blue));
+            binding.friendBgImgLayout.setBackground(AuroApp.getAppContext().getResources().getDrawable(R.drawable.friend_background));
+            binding.boardListLayout.setVisibility(View.VISIBLE);
+            binding.friendsBoardText.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.white));
+
+        } else {
+            binding.friendBoardBg.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.transparent));
+            binding.friendBgImgLayout.setBackground(null);
+            binding.boardListLayout.setVisibility(View.GONE);
+            binding.noFriendLayout.setVisibility(View.VISIBLE);
+            binding.friendsBoardText.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.black));
+        }
+
+
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
+            setLanguageText(AppConstant.HINDI);
+        } else {
+            setLanguageText(AppConstant.ENGLISH);
+        }
 
     }
 
@@ -185,6 +220,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         binding.headerParent.cambridgeHeading.setVisibility(View.GONE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.inviteButton.setOnClickListener(this);
+        binding.toolbarLayout.langEng.setOnClickListener(this);
     }
 
 
@@ -228,7 +264,18 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
             openShareDefaultDialog();
            /* mInviteBoxDialog = new InviteFriendDialog(getContext());
             openFragmentDialog(mInviteBoxDialog);*/
-
+        } else if (v.getId() == R.id.lang_eng) {
+            String text = binding.toolbarLayout.langEng.getText().toString();
+            if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase(AppConstant.HINDI)) {
+                ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
+                resources = ViewUtil.getCustomResource(getActivity());
+                setLanguageText(AppConstant.ENGLISH);
+            } else {
+                ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
+                resources = ViewUtil.getCustomResource(getActivity());
+                setLanguageText(AppConstant.HINDI);
+            }
+            reloadFragment();
         }
     }
 
@@ -271,4 +318,9 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         getActivity().startActivity(shareIntent);
     }
+
+    private void setLanguageText(String text) {
+        binding.toolbarLayout.langEng.setText(text);
+    }
+
 }
