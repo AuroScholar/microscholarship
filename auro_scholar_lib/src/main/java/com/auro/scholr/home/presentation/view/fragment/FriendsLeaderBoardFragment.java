@@ -186,7 +186,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     private void setDataUi() {
         if (isFriendList) {
             binding.noFriendLayout.setVisibility(View.GONE);
-            binding.friendBoardBg.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.color_blue));
+            binding.friendBoardBg.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.blue_color));
             binding.friendBgImgLayout.setBackground(AuroApp.getAppContext().getResources().getDrawable(R.drawable.friend_background));
             binding.boardListLayout.setVisibility(View.VISIBLE);
             binding.friendsBoardText.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.white));
