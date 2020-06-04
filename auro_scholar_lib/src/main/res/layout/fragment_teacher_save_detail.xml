@@ -198,7 +198,7 @@
         android:textSize="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:gravity="center"
-        android:background="@drawable/border_selector_blue"
+        android:background="@drawable/ic_rectangle"
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@color/white"
         android:paddingTop="@dimen/_10sdp"
