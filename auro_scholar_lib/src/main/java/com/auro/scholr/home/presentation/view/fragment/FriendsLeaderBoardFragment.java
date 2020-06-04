@@ -224,11 +224,10 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     public void onClick(View v) {
         if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
-        } else if (v.getId() == R.id.add_invite_button) {
-
-            mInviteBoxDialog = new InviteFriendDialog(getContext());
-
-            openFragmentDialog(mInviteBoxDialog);
+        } else if (v.getId() == R.id.invite_button) {
+            openShareDefaultDialog();
+           /* mInviteBoxDialog = new InviteFriendDialog(getContext());
+            openFragmentDialog(mInviteBoxDialog);*/
 
         }
     }
@@ -262,5 +261,14 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
             ft.setReorderingAllowed(false);
         }
         ft.detach(this).attach(this).commit();
+    }
+
+    private void openShareDefaultDialog() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        sendIntent.setType("text/plain");
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        getActivity().startActivity(shareIntent);
     }
 }
