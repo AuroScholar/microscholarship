@@ -177,4 +177,19 @@
     </style>
     <style name="simpletooltip_default" parent="@android:style/TextAppearance.Medium"/>
 
+
+    <style name="TextInputLayout" parent="TextAppearance.AppCompat">
+        <item name="colorAccent">@android:color/white</item>
+        <item name="android:textColorHint">@color/color_dim_grey</item>
+        <item name="colorControlNormal">@color/color_dim_grey</item>
+        <item name="colorControlActivated">@color/color_dim_grey</item>
+        <item name="colorControlHighlight">@color/color_dim_grey </item>
+        <item name="android:textSize">@dimen/_8sdp</item>
+    </style>
+
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/color_dim_grey</item>
+        <item name="colorControlActivated">@color/color_dim_grey</item>
+    </style>
+
 </resources>

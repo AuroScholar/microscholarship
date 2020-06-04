@@ -73,6 +73,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilteachertxt"
                     android:layout_width="0dp"
+                    app:hintTextAppearance="@style/TextInputLayout"
+                    app:hintTextColor="@color/color_dim_grey"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.5"
                     android:layout_marginRight="@dimen/_10sdp"
@@ -81,7 +83,7 @@
                     <com.auro.scholr.core.util.uiwidget.RPEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        android:theme="@style/MyEditText"
                         android:hint="@string/teacher_name"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp"
@@ -115,6 +117,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
+                app:hintTextAppearance="@style/TextInputLayout"
+                app:hintTextColor="@color/color_dim_grey"
                 android:layout_marginRight="@dimen/_10sdp">
 
                 <com.auro.scholr.core.util.uiwidget.RPEditText
@@ -123,6 +127,7 @@
                     android:hint="@string/email_address"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
+                    android:theme="@style/MyEditText"
                     app:Font="Poppins-Regular.ttf" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -149,15 +154,18 @@
                 android:id="@+id/tilmobiletxt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/TextInputLayout"
+                app:hintTextColor="@color/color_dim_grey"
                 android:layout_weight="3.5"
                 android:layout_marginRight="@dimen/_10sdp">
 
                 <com.auro.scholr.core.util.uiwidget.RPEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:textColorHint="@color/color_dim_grey"
                     android:hint="@string/mobile_number"
                     android:textColor="@color/black"
+                    android:theme="@style/MyEditText"
                     android:textSize="@dimen/_12sdp"
                     app:Font="Poppins-Regular.ttf" />
 
