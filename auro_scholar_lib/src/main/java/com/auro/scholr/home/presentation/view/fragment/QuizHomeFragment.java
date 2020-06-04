@@ -161,7 +161,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.privacyPolicy.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
-        binding.customUiSnackbar.arrow.setOnClickListener(this);
+        binding.customUiSnackbar.btUploadAll.setOnClickListener(this);
         binding.fab.setOnClickListener(this);
     }
 
@@ -434,7 +434,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 // resources = ViewUtil.getCustomResource(getActivity());
             }
             reloadFragment();
-        } else if (v.getId() == R.id.leader_card_layout) {
+        } else if (v.getId() == R.id.bt_upload_all) {
             openFragment(new FriendsLeaderBoardFragment());
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
