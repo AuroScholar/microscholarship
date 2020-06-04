@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:elevation="@dimen/_5sdp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_8sdp"
+        app:cardElevation="@dimen/_5sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:layout_margin="@dimen/_8sdp"
+            android:rowCount="1"
+            android:alignmentMode="alignMargins"
+            android:columnOrderPreserved="false">
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical">
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/txtAmountreject"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/amount_rejected"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp"
+                    app:Font="Poppins-SemiBold.ttf" />
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:layout_below="@+id/txtAmountreject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:inputType="textMultiLine"
+                    android:text="@string/strike_amount"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:textColor="@color/red_dark"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold"
+                    app:Font="Poppins-SemiBold.ttf" />
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="@dimen/_90sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/color_dim_grey"/>
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:orientation="vertical">
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/txtVerification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@string/verification_In_Progress"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp"
+                    android:inputType="textMultiLine"
+                    app:Font="Poppins-SemiBold.ttf" />
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:text="@string/priceAmmount"
+                    android:textColor="@color/yellowdark"
+                    android:layout_below="@+id/txtVerification"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold"
+                    app:Font="Poppins-SemiBold.ttf" />
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="@dimen/_90sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+
+                    android:background="@color/color_dim_grey"/>
+
+            </RelativeLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:orientation="vertical">
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@string/scholarship_amount_approved"
+                    android:inputType="textMultiLine"
+                    android:textSize="@dimen/_13sdp"
+                    app:Font="Poppins-SemiBold.ttf" />
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:text="@string/priceAmmount_one"
+                    android:textColor="@color/auro_green_color"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold"
+                    app:Font="Poppins-SemiBold.ttf" />
+
+            </LinearLayout>
+
+        </GridLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -148,6 +148,17 @@
     <string name="upload_verification">सत्यापन अपलोड करें</string>
     <string name="transfer_scholarship">छात्रवृत्ति हस्तांतरित करें</string>
 
+    <string name="verification_In_Progress">Verification In Progress</string>
+    <string name="scholarship_amount_approved">Scholarship Amount Approved</string>
+    <string name="transactions">Transactions</string>
+    <string name="priceAmmount"><u>₹50.00</u></string>
+    <string name="approved">Approved</string>
+    <string name="amount_rejected">Amount Rejected</string>
+    <string name="priceAmmount_one">₹50.00</string>
+    <string name="strike_amount"><strike>₹50.00</strike></string>
+
+
     <string name="share_msg">Hey!\nI have just got Scholarship Cash on Scholr App, you can too!\nJust take a 10 min quiz and win.\nStart now - https://bit.ly/3en7pnQ</string>
+    <string name="information">Information</string>
 
 </resources>

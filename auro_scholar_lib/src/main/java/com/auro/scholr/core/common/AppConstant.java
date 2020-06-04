@@ -133,6 +133,7 @@ public interface AppConstant {
     interface FriendsLeaderBoard {
         int LEADERBOARD_TYPE = 100;
         int LEADERBOARD_INVITE_TYPE = 101;
+        int TRANSACTIONS_ADAPTER = 102;
         String QUIZ_DASHBOARD_WEB = "QUIZ_DASHBOARD_WEB";
 
     }

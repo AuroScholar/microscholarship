@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout   xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_height="wrap_content">
+
+    <com.auro.scholr.core.util.uiwidget.RPTextView
+        android:id="@+id/regularTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="March Scholarship"
+        android:textColor="@color/color_dim_grey"
+        android:textSize="@dimen/_16sdp"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:textStyle="normal"
+
+        app:Font="Poppins-Regular.ttf"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toEndOf="@+id/regularTextView"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/auro_theme_dark_blue"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold"
+            app:Font="Poppins-SemiBold.ttf"
+            android:text="₹150" />
+
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_8sdp"
+            android:textStyle="bold"
+            android:textColor="@color/auro_green_color"
+            app:Font="Poppins-SemiBold.ttf"
+            android:text="@string/approved"
+           />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

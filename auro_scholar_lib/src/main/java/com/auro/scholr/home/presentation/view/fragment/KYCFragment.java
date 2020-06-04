@@ -155,6 +155,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.btUploadAll.setOnClickListener(this);
+        binding.walletInfo.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
         if (kycViewModel != null && kycViewModel.serviceLiveData().hasObservers()) {
             kycViewModel.serviceLiveData().removeObservers(this);
@@ -448,6 +449,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             getActivity().getSupportFragmentManager().popBackStack();
         } else if (v.getId() == R.id.bt_transfer_money) {
             openFragment(new SendMoneyFragment());
+        }else if(v.getId()==R.id.wallet_info)
+        {
+            openFragment(new TransactionsFragment());
         }
 
     }
