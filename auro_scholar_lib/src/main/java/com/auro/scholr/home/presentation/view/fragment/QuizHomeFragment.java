@@ -438,21 +438,21 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             openFragment(new FriendsLeaderBoardFragment());
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
-<<<<<<< HEAD
+
         }
         if (v.getId() == R.id.arrow) {
             openFragment(new FriendsLeaderBoardFragment());
         }else if (v.getId() == R.id.fab){
-           // openChat();//todo later change
-            TeacherSaveDetailFragment mteacherSaveDetailFragment = new TeacherSaveDetailFragment();
+            openChat();//todo later change
+           // TeacherSaveDetailFragment mteacherSaveDetailFragment = new TeacherSaveDetailFragment();
             /*TransactionsFragment mtransactionsFragment = new TransactionsFragment();*/
-            openFragment(mteacherSaveDetailFragment);
-=======
-        } else if (v.getId() == R.id.fab) {
+          //  openFragment(mteacherSaveDetailFragment);
+
+        } /*else if (v.getId() == R.id.fab) {
             openChat();
 
->>>>>>> f7aa6e1fb472fcc67738f6af7750bf6598d1fe77
-        }
+
+        }*/
     }
 
     private void reloadFragment() {
