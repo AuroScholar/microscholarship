@@ -25,6 +25,7 @@ import com.auro.scholr.payment.presentation.view.fragment.BankFragment;
 import com.auro.scholr.payment.presentation.view.fragment.PaytmFragment;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.payment.presentation.view.fragment.UPIFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
 
 import javax.inject.Singleton;
 
@@ -41,6 +42,8 @@ public interface AppComponent {
     void doInjection(HomeActivity homeActivity);
 
     void doInjection(KYCViewFragment kycViewFragment);
+
+    void doInjection(MyClassroomFragment fragment);
 
     void doInjection(ScholarShipFragment scholarShipFragment);
 

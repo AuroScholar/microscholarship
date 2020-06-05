@@ -70,9 +70,9 @@ public class TeacherModule {
 
     @Provides
     @Singleton
-    @Named("CardFragment")
-    ViewModelFactory provideCardFragmentViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
-        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    @Named("MyClassroomFragment")
+    ViewModelFactory provideMyClassRoomViewmodelViewModelFactory(TeacherUseCase teacherUseCase, TeacherDbUseCase teacherDbUseCase, TeacherRemoteUseCase teacherRemoteUseCase) {
+        return new ViewModelFactory(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
     }
 
 
