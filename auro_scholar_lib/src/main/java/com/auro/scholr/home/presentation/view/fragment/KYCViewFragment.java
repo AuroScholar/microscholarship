@@ -140,6 +140,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.btModifyAll.setOnClickListener(this);
+        binding.walletInfo.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
         if (kycViewModel != null && kycViewModel.serviceLiveData().hasObservers()) {
             kycViewModel.serviceLiveData().removeObservers(this);
@@ -202,6 +203,9 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         } else if (v.getId() == R.id.bt_transfer_money) {
             //openFragment(new SendMoneyFragment());
             callNumber();
+        }else if(v.getId()==R.id.wallet_info)
+        {
+            openFragment(new TransactionsFragment());
         }
     }
 

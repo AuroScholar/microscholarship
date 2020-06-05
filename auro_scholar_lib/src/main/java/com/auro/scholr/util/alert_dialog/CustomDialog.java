@@ -64,7 +64,6 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
 
     public void showProgress(boolean isShow, String btnTxt) {
         if (isShow) {
-
             binding.btnYes.setText("");
             binding.btnYes.setClickable(false);
         } else {
@@ -91,7 +90,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
 
         if (istwoBtnRequired) {
             binding.btnYes.setVisibility(View.VISIBLE);
-            binding.btnNo.setVisibility(View.VISIBLE);
+            binding.btnNo.setVisibility(View.GONE);
             binding.btnYes.setText(secondBtnTxt);
             binding.btnNo.setText(firstBtnTxt);
             binding.btnYes.setOnClickListener(this);

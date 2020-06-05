@@ -3,6 +3,8 @@ package com.auro.scholr.home.presentation.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
@@ -49,6 +52,8 @@ import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.alert_dialog.CustomDialog;
+import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.alert_dialog.CustomSnackBar;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
@@ -58,6 +63,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -82,7 +88,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     Resources resources;
     boolean isStateRestore;
     AssignmentReqModel assignmentReqModel;
-    SimpleTooltip.Builder simpletooltip;
+    CustomDialog customDialog;
 
 
     @Override
@@ -139,7 +145,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             observeServiceResponse();
         }
         openToolTip();
-
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
     }
 
@@ -433,6 +438,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             openFragment(new FriendsLeaderBoardFragment());
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
+<<<<<<< HEAD
         }
         if (v.getId() == R.id.arrow) {
             openFragment(new FriendsLeaderBoardFragment());
@@ -441,6 +447,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             TeacherSaveDetailFragment mteacherSaveDetailFragment = new TeacherSaveDetailFragment();
             /*TransactionsFragment mtransactionsFragment = new TransactionsFragment();*/
             openFragment(mteacherSaveDetailFragment);
+=======
+        } else if (v.getId() == R.id.fab) {
+            openChat();
+
+>>>>>>> f7aa6e1fb472fcc67738f6af7750bf6598d1fe77
         }
     }
 
@@ -634,11 +645,35 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
-
-
     private void openChat() {
         Uri uri = Uri.parse("https://wa.me/919667480783");
         Intent i = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(Intent.createChooser(i, ""));
+    }
+
+
+    private void openErrorDialog() {
+        CustomDialogModel customDialogModel = new CustomDialogModel();
+        customDialogModel.setContext(getActivity());
+        customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
+        customDialogModel.setContent("Your grade is upgraded from 10 to 12");
+        customDialogModel.setTwoButtonRequired(true);
+        customDialog = new CustomDialog(customDialogModel);
+        customDialog.setSecondBtnTxt("Ok");
+        customDialog.setSecondCallcack(new CustomDialog.SecondCallcack() {
+            @Override
+            public void clickYesCallback() {
+                customDialog.dismiss();
+            }
+        });
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(customDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        customDialog.getWindow().setAttributes(lp);
+        Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        customDialog.setCancelable(false);
+        customDialog.show();
+
     }
 }
