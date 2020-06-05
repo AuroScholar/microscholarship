@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.auro.scholr.core.application.di.module.AppModule;
 import com.auro.scholr.core.application.di.module.HomeModule;
 import com.auro.scholr.core.application.di.module.PaymentModule;
+import com.auro.scholr.core.application.di.module.TeacherModule;
 import com.auro.scholr.core.application.di.module.UtilsModule;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.fragment.CongratulationsDialog;
@@ -30,7 +31,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 
-@Component(modules = {AppModule.class, UtilsModule.class, HomeModule.class, PaymentModule.class,})
+@Component(modules = {AppModule.class, UtilsModule.class, HomeModule.class, PaymentModule.class, TeacherModule.class,})
 @Singleton
 public interface AppComponent {
 
