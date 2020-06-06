@@ -61,7 +61,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             this.homeUseCase = (HomeUseCase) objectOne;
             this.homeDbUseCase = (HomeDbUseCase) objectTwo;
             this.homeRemoteUseCase = (HomeRemoteUseCase) objectThree;
-        } else if (objectOne instanceof TeacherUseCase && objectTwo instanceof TeacherDbUseCase && objectThree instanceof HomeRemoteUseCase) {
+        } else if (objectOne instanceof TeacherUseCase && objectTwo instanceof TeacherDbUseCase && objectThree instanceof TeacherRemoteUseCase) {
             this.teacherUseCase = (TeacherUseCase) objectOne;
             this.teacherDbUseCase = (TeacherDbUseCase) objectTwo;
             this.teacherRemoteUseCase = (TeacherRemoteUseCase) objectThree;

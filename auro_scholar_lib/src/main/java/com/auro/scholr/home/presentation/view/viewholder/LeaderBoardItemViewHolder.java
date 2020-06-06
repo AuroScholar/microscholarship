@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.auro.scholr.R;
 import com.auro.scholr.databinding.FriendsBoardItemLayoutBinding;
 import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
+import com.auro.scholr.util.ImageUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -51,35 +52,7 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
             layoutBinding.parentLayout.setBackgroundColor(layoutBinding.parentLayout.getContext().getResources().getColor(R.color.white));
         }
         layoutBinding.nameText.setText(model.getStudentName());
-
-            Glide.with(layoutBinding.profileImage.getContext())
-                    .asBitmap()
-                    .load((String) model.getImagePath())
-                    .listener(new RequestListener<Bitmap>() {
-                                  @Override
-                                  public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Bitmap> target, boolean b) {
-                                      return true;
-                                  }
-
-                                  @Override
-                                  public boolean onResourceReady(Bitmap resource, Object o, Target<Bitmap> target, DataSource dataSource, boolean b) {
-                                      // add image to the imageView here
-                                      RoundedBitmapDrawable circularBitmapDrawable =
-                                              RoundedBitmapDrawableFactory.create(AuroApp.getAppContext().getResources(), resource);
-                                      circularBitmapDrawable.setCircular(true);
-
-                                      AuroApp.getAppContext().runOnUiThread(new Runnable() {
-                                          @Override
-                                          public void run() {
-                                              // TODO your Code
-                                              layoutBinding.profileImage.setImageDrawable(circularBitmapDrawable);
-                                          }
-                                      });
-
-                                      return true;
-                                  }
-                              }
-                    ).submit();
+        ImageUtil.loadCircleImage(layoutBinding.profileImage, (String) model.getImagePath());
 
 
     }

@@ -17,7 +17,7 @@ import io.reactivex.disposables.CompositeDisposable;
 public class MyClassroomViewModel extends ViewModel {
     CompositeDisposable compositeDisposable;
 
-    TeacherUseCase teacherUseCase;
+    public TeacherUseCase teacherUseCase;
     TeacherRemoteUseCase teacherRemoteUseCase;
     TeacherDbUseCase teacherDbUseCase;
 

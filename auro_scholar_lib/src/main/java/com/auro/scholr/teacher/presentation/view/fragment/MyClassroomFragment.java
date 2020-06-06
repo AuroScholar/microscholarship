@@ -7,26 +7,32 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
-import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
-import com.auro.scholr.core.common.FragmentUtil;
-import com.auro.scholr.databinding.KycFragmentLayoutBinding;
-import com.auro.scholr.home.presentation.view.activity.CameraActivity;
-import com.auro.scholr.home.presentation.view.fragment.CameraFragment;
+import com.auro.scholr.databinding.TeacherMyClassroomLayoutBinding;
+import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
+import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
+import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
+import com.auro.scholr.teacher.presentation.view.adapter.MyClassroomAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
+import com.auro.scholr.util.TextUtil;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,7 +44,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     @Named("MyClassroomFragment")
     ViewModelFactory viewModelFactory;
     String TAG = "MyClassroomFragment";
-    KycFragmentLayoutBinding binding;
+    TeacherMyClassroomLayoutBinding binding;
     MyClassroomViewModel myClassroomViewModel;
 
     @Override
@@ -59,13 +65,21 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     }
 
     public void setAdapter() {
-
+        binding.studentList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.studentList.setHasFixedSize(true);
+        MyClassroomAdapter leaderBoardAdapter = new MyClassroomAdapter(getActivity(), myClassroomViewModel.teacherUseCase.makeListForFriendsLeaderBoard(true), null);
+        binding.studentList.setAdapter(leaderBoardAdapter);
     }
 
 
     @Override
     protected void init() {
-
+        List<String> list = new ArrayList<>();
+        list.add("odd");
+        list.add("even");
+        list.add("primary");
+        binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
+        monthSpinner();
         setDataOnUi();
 
     }
@@ -74,9 +88,31 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
     }
 
+    private void monthSpinner() {
+
+        if (!TextUtil.checkListIsEmpty(myClassroomViewModel.teacherUseCase.monthDataModelList())) {
+            MonthSpinnerAdapter stateSpinnerAdapter = new MonthSpinnerAdapter(myClassroomViewModel.teacherUseCase.monthDataModelList());
+            binding.monthSpinner.setAdapter(stateSpinnerAdapter);
+            binding.monthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (position != 0) {
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        }
+
+
+    }
+
 
     private void setLanguageText(String text) {
-        binding.toolbarLayout.langEng.setText(text);
+        // binding.toolbarLayout.langEng.setText(text);
     }
 
 
@@ -99,7 +135,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
     @Override
     protected int getLayout() {
-        return R.layout.kyc_fragment_layout;
+        return R.layout.teacher_my_classroom_layout;
     }
 
 
@@ -157,4 +193,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     public void onClick(View v) {
 
     }
+
+
 }

@@ -17,7 +17,7 @@
             android:maxLines="2"
             android:text="1."
             android:textColor="@color/black"
-            android:textSize="@dimen/_16sdp"
+            android:textSize="@dimen/_12sdp"
             android:textStyle="normal"
             android:layout_marginStart="@dimen/_5sdp"
             app:Font="Poppins-Regular.ttf"
@@ -45,7 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingStart="@dimen/_10sdp"
+            android:paddingStart="@dimen/_5sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/invite_button"
             app:layout_constraintStart_toEndOf="@+id/profile_image"
@@ -60,7 +60,7 @@
                 android:text="Student Name"
                 android:ellipsize="end"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp"
+                android:textSize="@dimen/_12sdp"
                 android:textStyle="normal"
                 app:Font="Poppins-Regular.ttf" />
 
@@ -71,7 +71,7 @@
                 android:text="+91 7503600686"
                 android:ellipsize="end"
                 android:textColor="@color/grey_color"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/_10sdp"
                 android:textStyle="normal"
                 app:Font="Poppins-Regular.ttf" />
 
@@ -83,7 +83,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:paddingStart="@dimen/_5sdp"
             android:paddingEnd="@dimen/_5sdp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -98,12 +97,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_1sdp"
                 android:layout_marginEnd="@dimen/_2sdp"
-                android:paddingStart="@dimen/_15sdp"
-                android:paddingEnd="@dimen/_5sdp"
                 android:text="Score : 5109"
                 android:ellipsize="end"
                 android:textColor="@color/light_grey"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_10sdp"
                 app:Font="Poppins-Regular.ttf"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -111,7 +108,7 @@
             <ImageView
                 android:layout_width="@dimen/_27sdp"
                 android:layout_height="@dimen/_27sdp"
-                android:background="@drawable/ic_send_msg"
+                android:background="@color/orange"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/score_text" />
 
@@ -123,7 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_20sdp"
             android:background="@color/light_grey"
             app:layout_constraintTop_toBottomOf="@+id/profile_image"></View>
