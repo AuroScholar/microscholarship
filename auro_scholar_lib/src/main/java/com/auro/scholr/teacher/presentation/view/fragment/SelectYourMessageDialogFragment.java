@@ -1,4 +1,4 @@
-package com.auro.scholr.home.presentation.view.fragment;
+package com.auro.scholr.teacher.presentation.view.fragment;
 
 import android.os.Bundle;
 

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_camera_bottom_bar"
-    tools:context=".home.presentation.view.fragment.SelectYourMessageDialogFragment">
+    tools:context=".teacher.presentation.view.fragment.SelectYourMessageDialogFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"

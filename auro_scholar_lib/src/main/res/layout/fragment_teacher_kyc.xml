@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.presentation.view.fragment.TeacherKycFragment">
+    tools:context=".teacher.presentation.view.fragment.TeacherKycFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

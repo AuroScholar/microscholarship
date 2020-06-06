@@ -1,4 +1,4 @@
-package com.auro.scholr.home.presentation.view.fragment;
+package com.auro.scholr.teacher.presentation.view.fragment;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.auro.scholr.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TeacherProfileFragment#newInstance} factory method to
+ * Use the {@link TeacherSaveDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TeacherProfileFragment extends Fragment {
+public class TeacherSaveDetailFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -25,7 +25,7 @@ public class TeacherProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public TeacherProfileFragment() {
+    public TeacherSaveDetailFragment() {
         // Required empty public constructor
     }
 
@@ -35,11 +35,11 @@ public class TeacherProfileFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TeacherProfileFragment.
+     * @return A new instance of fragment TeacherSaveDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TeacherProfileFragment newInstance(String param1, String param2) {
-        TeacherProfileFragment fragment = new TeacherProfileFragment();
+    public static TeacherSaveDetailFragment newInstance(String param1, String param2) {
+        TeacherSaveDetailFragment fragment = new TeacherSaveDetailFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,6 +60,6 @@ public class TeacherProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_teacher_profile, container, false);
+        return inflater.inflate(R.layout.fragment_teacher_save_detail, container, false);
     }
 }
