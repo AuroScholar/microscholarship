@@ -50,6 +50,7 @@ import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
+import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
@@ -161,7 +162,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.privacyPolicy.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
-        binding.customUiSnackbar.arrow.setOnClickListener(this);
+        binding.customUiSnackbar.btUploadAll.setOnClickListener(this);
         binding.fab.setOnClickListener(this);
     }
 
@@ -329,10 +330,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
 
     private void setDataOnUi(DashboardResModel dashboardResModel) {
-        quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
-        setQuizListAdapter(dashboardResModel.getQuiz());
-        setQuizWonListAdapter(dashboardResModel.getQuiz());
-        getSpannableString();
+        if (isAdded()) {
+            quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
+            setQuizListAdapter(dashboardResModel.getQuiz());
+            setQuizWonListAdapter(dashboardResModel.getQuiz());
+            getSpannableString();
+        }
+
     }
 
     public void openQuizTestFragment(DashboardResModel dashboardResModel) {
@@ -413,13 +417,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.wallet_bal_text) {
-            //openFragment(new SendMoneyFragment());
-            closeToolTip();
+            openFragment(new MyClassroomFragment());
+          /*  closeToolTip();
             if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
             } else {
                 openKYCFragment(dashboardResModel);
-            }
+            }*/
 
         } else if (v.getId() == R.id.privacy_policy) {
             openFragment(new PrivacyPolicyFragment());
@@ -434,7 +438,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 // resources = ViewUtil.getCustomResource(getActivity());
             }
             reloadFragment();
-        } else if (v.getId() == R.id.leader_card_layout) {
+        } else if (v.getId() == R.id.bt_upload_all) {
             openFragment(new FriendsLeaderBoardFragment());
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();

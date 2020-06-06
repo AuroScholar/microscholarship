@@ -204,7 +204,6 @@ public class HomeUseCase {
 
     public List<FriendsLeaderBoardModel> makeListForFriendsLeaderBoard(boolean status) {
         List<FriendsLeaderBoardModel> list = new ArrayList<>();
-
         FriendsLeaderBoardModel leaderBoardModel_01 = new FriendsLeaderBoardModel();
         leaderBoardModel_01.setScholarshipWon("1000");
         leaderBoardModel_01.setStudentName("Manish");

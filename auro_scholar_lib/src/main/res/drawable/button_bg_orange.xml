@@ -4,9 +4,6 @@
         android:bottomRightRadius="@dimen/_20sdp"
         android:topLeftRadius="@dimen/_20sdp"
         android:topRightRadius="@dimen/_20sdp" />
-    <stroke android:width="@dimen/_1sdp"
-
-        android:color="@color/white" />
     <gradient
         android:centerColor="@color/orange"
         android:endColor="@color/orange"

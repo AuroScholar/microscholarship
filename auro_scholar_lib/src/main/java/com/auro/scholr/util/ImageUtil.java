@@ -14,8 +14,11 @@ import android.os.Environment;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.databinding.BindingAdapter;
 
+import com.auro.scholr.core.application.AuroApp;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DataSource;
@@ -232,6 +235,40 @@ public class ImageUtil {
         src.recycle();
         src = null;
         return bmOut;
+    }
+
+
+    public static void loadCircleImage(ImageView imageView, String imagePath)
+    {
+
+        Glide.with(imageView.getContext())
+                .asBitmap()
+                .load(imagePath)
+                .listener(new RequestListener<Bitmap>() {
+                              @Override
+                              public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Bitmap> target, boolean b) {
+                                  return true;
+                              }
+
+                              @Override
+                              public boolean onResourceReady(Bitmap resource, Object o, Target<Bitmap> target, DataSource dataSource, boolean b) {
+                                  // add image to the imageView here
+                                  RoundedBitmapDrawable circularBitmapDrawable =
+                                          RoundedBitmapDrawableFactory.create(AuroApp.getAppContext().getResources(), resource);
+                                  circularBitmapDrawable.setCircular(true);
+
+                                  AuroApp.getAppContext().runOnUiThread(new Runnable() {
+                                      @Override
+                                      public void run() {
+                                          // TODO your Code
+                                          imageView.setImageDrawable(circularBitmapDrawable);
+                                      }
+                                  });
+
+                                  return true;
+                              }
+                          }
+                ).submit();
     }
 
 }

@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.auro.scholr.core.application.di.module.AppModule;
 import com.auro.scholr.core.application.di.module.HomeModule;
 import com.auro.scholr.core.application.di.module.PaymentModule;
+import com.auro.scholr.core.application.di.module.TeacherModule;
 import com.auro.scholr.core.application.di.module.UtilsModule;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.fragment.CongratulationsDialog;
@@ -24,13 +25,14 @@ import com.auro.scholr.payment.presentation.view.fragment.BankFragment;
 import com.auro.scholr.payment.presentation.view.fragment.PaytmFragment;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.payment.presentation.view.fragment.UPIFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
 
 
-@Component(modules = {AppModule.class, UtilsModule.class, HomeModule.class, PaymentModule.class,})
+@Component(modules = {AppModule.class, UtilsModule.class, HomeModule.class, PaymentModule.class, TeacherModule.class,})
 @Singleton
 public interface AppComponent {
 
@@ -40,6 +42,8 @@ public interface AppComponent {
     void doInjection(HomeActivity homeActivity);
 
     void doInjection(KYCViewFragment kycViewFragment);
+
+    void doInjection(MyClassroomFragment fragment);
 
     void doInjection(ScholarShipFragment scholarShipFragment);
 

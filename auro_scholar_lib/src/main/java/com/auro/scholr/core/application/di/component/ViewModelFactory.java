@@ -25,6 +25,10 @@ import com.auro.scholr.payment.domain.PaymentRemoteUseCase;
 import com.auro.scholr.payment.domain.PaymentUseCase;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
+import com.auro.scholr.teacher.domain.TeacherDbUseCase;
+import com.auro.scholr.teacher.domain.TeacherRemoteUseCase;
+import com.auro.scholr.teacher.domain.TeacherUseCase;
+import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
@@ -38,6 +42,10 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     private PaymentUseCase paymentUseCase;
     private PaymentRemoteUseCase paymentRemoteUseCase;
 
+    /*Teacher module*/
+    TeacherUseCase teacherUseCase;
+    TeacherRemoteUseCase teacherRemoteUseCase;
+    TeacherDbUseCase teacherDbUseCase;
 
     public ViewModelFactory(Object objectOne, Object objectTwo) {
         if (objectOne instanceof PaymentUseCase && objectTwo instanceof PaymentRemoteUseCase) {
@@ -53,6 +61,10 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             this.homeUseCase = (HomeUseCase) objectOne;
             this.homeDbUseCase = (HomeDbUseCase) objectTwo;
             this.homeRemoteUseCase = (HomeRemoteUseCase) objectThree;
+        } else if (objectOne instanceof TeacherUseCase && objectTwo instanceof TeacherDbUseCase && objectThree instanceof TeacherRemoteUseCase) {
+            this.teacherUseCase = (TeacherUseCase) objectOne;
+            this.teacherDbUseCase = (TeacherDbUseCase) objectTwo;
+            this.teacherRemoteUseCase = (TeacherRemoteUseCase) objectThree;
         }
 
     }
@@ -87,26 +99,29 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
             return (T) new QuizTestViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
-        }else if (modelClass.isAssignableFrom(SendMoneyViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(SendMoneyViewModel.class)) {
             return (T) new SendMoneyViewModel(paymentUseCase, paymentRemoteUseCase);
 
-        }else if (modelClass.isAssignableFrom(FriendsLeaderShipViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(FriendsLeaderShipViewModel.class)) {
 
             return (T) new FriendsLeaderShipViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
-        }else if (modelClass.isAssignableFrom(FriendsInviteViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(FriendsInviteViewModel.class)) {
 
             return (T) new FriendsInviteViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
-        }else if(modelClass.isAssignableFrom(InviteFriendViewModel.class)){
+        } else if (modelClass.isAssignableFrom(InviteFriendViewModel.class)) {
 
-            return (T) new InviteFriendViewModel(homeUseCase,homeDbUseCase,homeRemoteUseCase);
-        }else if(modelClass.isAssignableFrom(CongratulationsDialogViewModel.class)){
+            return (T) new InviteFriendViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+        } else if (modelClass.isAssignableFrom(CongratulationsDialogViewModel.class)) {
 
-            return (T) new CongratulationsDialogViewModel(homeUseCase,homeDbUseCase,homeRemoteUseCase);
-        }else  if(modelClass.isAssignableFrom(TransactionsViewModel.class)){
+            return (T) new CongratulationsDialogViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+        } else if (modelClass.isAssignableFrom(TransactionsViewModel.class)) {
 
-            return (T) new TransactionsViewModel(homeUseCase,homeDbUseCase,homeRemoteUseCase);
+            return (T) new TransactionsViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+        } else if (modelClass.isAssignableFrom(MyClassroomViewModel.class)) {
+
+            return (T) new MyClassroomViewModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
