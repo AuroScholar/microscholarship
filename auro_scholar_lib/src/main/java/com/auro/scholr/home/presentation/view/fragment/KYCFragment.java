@@ -181,7 +181,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         setAdapter();
 
         /*Check for face image is Exist Or Not*/
-        // checkForFaceImage();
+        checkForFaceImage();
     }
 
     private void checkForFaceImage() {
@@ -449,8 +449,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             getActivity().getSupportFragmentManager().popBackStack();
         } else if (v.getId() == R.id.bt_transfer_money) {
             openFragment(new SendMoneyFragment());
-        }else if(v.getId()==R.id.wallet_info)
-        {
+        } else if (v.getId() == R.id.wallet_info) {
             openFragment(new TransactionsFragment());
         }
 

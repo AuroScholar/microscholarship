@@ -282,7 +282,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         handleProgress(2, (String) responseApi.data);
                     } else {
                         setImageInPref(assignmentReqModel);
-                        //openQuizTestFragment(dashboardResModel);
+                       // openQuizTestFragment(dashboardResModel);
                     }
                     break;
 
@@ -293,7 +293,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         handleProgress(2, (String) responseApi.data);
                     } else {
                         setImageInPref(assignmentReqModel);
-                        // openQuizTestFragment(dashboardResModel);
+                       //  openQuizTestFragment(dashboardResModel);
                     }
                     break;
             }
@@ -481,8 +481,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onGranted() {
 
-                openQuizTestFragment(dashboardResModel);
-                //  openCameraPhotoFragment();
+             //   openQuizTestFragment(dashboardResModel);
+                openCameraPhotoFragment();
 
             }
 

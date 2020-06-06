@@ -164,7 +164,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         setListener();
         setAdapter();
 
-       // checkForFaceImage();
+        checkForFaceImage();
     }
 
 
