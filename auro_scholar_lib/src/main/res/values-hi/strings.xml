@@ -175,6 +175,12 @@
     <string name="city">City</string>
     <string name="choose_your_state">Choose Your State</string>
     <string name="choose_your_city">Choose Your City</string>
+    <string name="upload_govt_id">Upload Govt.ID</string>
+    <string name="upload_govt_id_back_side">Upload Govt.ID Back Side</string>
+    <string name="upload_school_id">Upload School ID</string>
+    <string name="upload_picture">Upload Picture</string>
+    <string name="uplaod">UPLOAD</string>
+    <string name="save_changes">SAVE CHANGES</string>
 
     <string name="share_msg">Hey!\nI have just got Scholarship Cash on Scholr App, you can too!\nJust take a 10 min quiz and win.\nStart now - https://bit.ly/3en7pnQ</string>
     <string name="information">Information</string>
