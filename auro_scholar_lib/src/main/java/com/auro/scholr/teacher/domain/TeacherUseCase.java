@@ -18,6 +18,7 @@ import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.MonthlyScholarShipModel;
 import com.auro.scholr.home.data.model.QuizResModel;
+import com.auro.scholr.home.data.model.TeacherDocumentModel;
 import com.auro.scholr.teacher.data.model.common.MonthDataModel;
 import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
 import com.auro.scholr.util.AppLogger;
@@ -132,5 +133,31 @@ public class TeacherUseCase {
 
         return list;
 
+    }
+
+    public List<TeacherDocumentModel> makeListForTeacherDocumentModel() {
+
+        List<TeacherDocumentModel> list = new ArrayList<>();
+        TeacherDocumentModel document1 = new TeacherDocumentModel();
+        document1.setUploadDocumentname("Upload Govt. ID");
+        document1.setViewType(AppConstant.FriendsLeaderBoard.TEACHERDOCUMENTADAPTER);
+        list.add(document1);
+
+
+        TeacherDocumentModel document2 = new TeacherDocumentModel();
+        document2.setUploadDocumentname("Upload Govt. ID Back Side");
+        document2.setViewType(AppConstant.FriendsLeaderBoard.TEACHERDOCUMENTADAPTER);
+        list.add(document2);
+
+        TeacherDocumentModel document3 = new TeacherDocumentModel();
+        document3.setUploadDocumentname("Upload School ID");
+        document3.setViewType(AppConstant.FriendsLeaderBoard.TEACHERDOCUMENTADAPTER);
+        list.add(document3);
+
+        TeacherDocumentModel document4 = new TeacherDocumentModel();
+        document4.setUploadDocumentname("Upload Picture");
+        document4.setViewType(AppConstant.FriendsLeaderBoard.TEACHERDOCUMENTADAPTER);
+        list.add(document4);
+        return list;
     }
 }

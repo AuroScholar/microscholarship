@@ -75,5 +75,12 @@ public class TeacherModule {
         return new ViewModelFactory(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
     }
 
+    @Provides
+    @Singleton
+    @Named("TeacherKycFragment")
+    ViewModelFactory provideTeacherKycFragmentViewModelFactory(TeacherUseCase teacherUseCase, TeacherDbUseCase teacherDbUseCase, TeacherRemoteUseCase teacherRemoteUseCase) {
+        return new ViewModelFactory(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
+    }
+
 
 }

@@ -135,6 +135,7 @@ public interface AppConstant {
         int LEADERBOARD_INVITE_TYPE = 101;
         int TRANSACTIONS_ADAPTER = 102;
         String QUIZ_DASHBOARD_WEB = "QUIZ_DASHBOARD_WEB";
+        int TEACHERDOCUMENTADAPTER = 103;
 
     }
 

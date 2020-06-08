@@ -188,7 +188,7 @@
                                 android:layout_height="@dimen/_20sdp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="0.5"
-                                android:src="@drawable/ic_check"
+                                android:src="@drawable/ic_uncheck"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/text_document_layout"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -229,7 +229,7 @@
                                 android:layout_height="@dimen/_20sdp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="0.5"
-                                android:src="@drawable/ic_check"
+                                android:src="@drawable/ic_uncheck"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/text_document_layout"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -270,7 +270,7 @@
                                 android:layout_height="@dimen/_20sdp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="0.5"
-                                android:src="@drawable/ic_check"
+                                android:src="@drawable/ic_uncheck"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/text_document_layout"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -375,7 +375,7 @@
                             android:layout_height="@dimen/_20sdp"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="0.5"
-                            android:src="@drawable/ic_check"
+                            android:src="@drawable/ic_uncheck"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_document_layout"
                             app:layout_constraintTop_toTopOf="parent" />
