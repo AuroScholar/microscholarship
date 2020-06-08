@@ -52,6 +52,7 @@ import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.SelectYourMessageDialogFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherKycFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.TeacherSaveDetailFragment;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
@@ -453,7 +454,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             /*TransactionsFragment mtransactionsFragment = new TransactionsFragment();*/
           //  openFragment(mteacherSaveDetailFragment);
 
-            TeacherKycFragment mfragment = new TeacherKycFragment();
+            TeacherSaveDetailFragment mfragment = new TeacherSaveDetailFragment();
             openFragment(mfragment);
 
         }

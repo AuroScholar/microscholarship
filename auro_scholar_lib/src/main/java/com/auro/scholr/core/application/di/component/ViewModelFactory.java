@@ -27,6 +27,7 @@ import com.auro.scholr.teacher.domain.TeacherRemoteUseCase;
 import com.auro.scholr.teacher.domain.TeacherUseCase;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherKycViewModel;
+import com.auro.scholr.teacher.presentation.viewmodel.TeacherSaveDetailViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
@@ -123,6 +124,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }else if (modelClass.isAssignableFrom(TeacherKycViewModel.class)) {
 
             return (T) new TeacherKycViewModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
+        }else if (modelClass.isAssignableFrom(TeacherSaveDetailViewModel.class)) {
+
+            return (T) new TeacherSaveDetailViewModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

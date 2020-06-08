@@ -82,5 +82,11 @@ public class TeacherModule {
         return new ViewModelFactory(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
     }
 
+    @Provides
+    @Singleton
+    @Named("TeacherSaveDetailFragment")
+    ViewModelFactory provideTeacherSaveDetailViewModelFactory(TeacherUseCase teacherUseCase, TeacherDbUseCase teacherDbUseCase, TeacherRemoteUseCase teacherRemoteUseCase) {
+        return new ViewModelFactory(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
+    }
 
 }
