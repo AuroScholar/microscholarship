@@ -2,60 +2,58 @@ package com.auro.scholr.teacher.presentation.view.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.FragmentTeacherProfileBinding;
-import com.auro.scholr.teacher.presentation.viewmodel.TeacherKycViewModel;
+import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
+import com.auro.scholr.teacher.data.model.common.StateDataModel;
+import com.auro.scholr.teacher.presentation.view.adapter.DistrictSpinnerAdapter;
+import com.auro.scholr.teacher.presentation.view.adapter.StateSpinnerAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherProfileViewModel;
+import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.TextUtil;
+import com.auro.scholr.util.ViewUtil;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TeacherProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class TeacherProfileFragment extends BaseFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     @Inject
     @Named("TeacherProfileFragment")
     ViewModelFactory viewModelFactory;
-    TeacherProfileViewModel teacherProfileViewModel;
+    TeacherProfileViewModel viewModel;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
 
     FragmentTeacherProfileBinding binding;
     private String mParam1;
     private String mParam2;
     boolean isStateRestore;
+    List<StateDataModel> stateDataModelList;
+    List<DistrictDataModel> districtDataModels;
 
     public TeacherProfileFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TeacherProfileFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static TeacherProfileFragment newInstance(String param1, String param2) {
         TeacherProfileFragment fragment = new TeacherProfileFragment();
@@ -84,16 +82,30 @@ public class TeacherProfileFragment extends BaseFragment {
         }
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
-        teacherProfileViewModel = ViewModelProviders.of(this, viewModelFactory).get(TeacherProfileViewModel.class);
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(TeacherProfileViewModel.class);
         binding.setLifecycleOwner(this);
-        binding.setTeacherProfileViewModel(teacherProfileViewModel);
+        binding.setTeacherProfileViewModel(viewModel);
         setRetainInstance(true);
         return binding.getRoot();
     }
 
     @Override
-    protected void init() {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        init();
 
+    }
+
+    @Override
+    protected void init() {
+       binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
+        if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
+            viewModel.serviceLiveData().removeObservers(this);
+        } else {
+            observeServiceResponse();
+        }
+        viewModel.getStateListData();
+        viewModel.getDistrictListData();
     }
 
     @Override
@@ -110,4 +122,90 @@ public class TeacherProfileFragment extends BaseFragment {
     protected int getLayout() {
         return R.layout.fragment_teacher_profile;
     }
+
+    private void observeServiceResponse() {
+
+        viewModel.serviceLiveData().observeForever(responseApi -> {
+            switch (responseApi.status) {
+
+                case LOADING:
+                    break;
+
+                case SUCCESS:
+                    if (responseApi.apiTypeStatus == Status.KYC_RESULT_PATH) {
+                    }
+                    break;
+
+                case FAIL:
+                case NO_INTERNET:
+
+                    showSnackbarError((String) responseApi.data);
+                    break;
+
+
+                /*For state list*/
+                case STATE_LIST_ARRAY:
+                    stateDataModelList = (List<StateDataModel>) responseApi.data;
+                    stateSpinner();
+                    break;
+
+                case DISTRICT_LIST_DATA:
+                    districtDataModels = (List<DistrictDataModel>) responseApi.data;
+                    districtSpinner();
+                    break;
+
+                default:
+                    showSnackbarError(getString(R.string.default_error));
+                    break;
+            }
+
+        });
+    }
+    private void showSnackbarError(String message) {
+        ViewUtil.showSnackBar(binding.getRoot(), message);
+    }
+
+    private void stateSpinner() {
+        if (!TextUtil.checkListIsEmpty(stateDataModelList)) {
+            StateSpinnerAdapter stateSpinnerAdapter = new StateSpinnerAdapter(stateDataModelList);
+            binding.stateSpinner.setAdapter(stateSpinnerAdapter);
+            binding.stateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (position != 0) {
+                        viewModel.getStateDistrictData(stateDataModelList.get(position).getState_code());
+                    }
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        }
+
+
+    }
+
+    private void districtSpinner() {
+        if (!TextUtil.checkListIsEmpty(districtDataModels)) {
+            binding.cityTitle.setVisibility(View.VISIBLE);
+            binding.citySpinner.setVisibility(View.VISIBLE);
+            DistrictSpinnerAdapter stateSpinnerAdapter = new DistrictSpinnerAdapter(districtDataModels);
+            binding.citySpinner.setAdapter(stateSpinnerAdapter);
+            binding.citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        } else {
+            binding.cityTitle.setVisibility(View.GONE);
+            binding.citySpinner.setVisibility(View.GONE);
+        }
+    }
+
 }

@@ -20,7 +20,10 @@ import com.auro.scholr.home.data.model.MonthlyScholarShipModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.SelectResponseModel;
 import com.auro.scholr.home.data.model.TeacherDocumentModel;
+import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.MonthDataModel;
+import com.auro.scholr.teacher.data.model.common.StateDataModel;
+import com.auro.scholr.teacher.data.repository.TeacherRepo;
 import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
@@ -31,6 +34,10 @@ import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.i18n.phonenumbers.PhoneNumberMatch;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +45,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TeacherUseCase {
+
 
 
     public ArrayList<QuizResModel> makeDummyQuizList() {
@@ -184,4 +192,63 @@ public class TeacherUseCase {
 
         return list;
     }
+
+
+    public List<StateDataModel> readStateData() {
+        List<StateDataModel> stateList = new ArrayList<>();
+        InputStream inStream = AuroApp.getAppContext().getResources().openRawResource(R.raw.state);
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
+        String line = "";
+        try {
+            while ((line = buffer.readLine()) != null) {
+                String[] colums = line.split(",");
+                if (colums.length != 7) {
+                    AppLogger.d("CSVParser", "Skipping Bad CSV Row");
+                    continue;
+                } else {
+                    StateDataModel stateDataModel = new StateDataModel();
+                    stateDataModel.setState_code(colums[0].replaceAll("\"", ""));
+                    stateDataModel.setState_name(colums[1].replaceAll("\"", ""));
+                    stateDataModel.setShort_name(colums[2].replaceAll("\"", ""));
+                    stateDataModel.setActive_status(colums[3].replaceAll("\"", ""));
+                    stateDataModel.setFlag(colums[6].replaceAll("\"", ""));
+                    stateList.add(stateDataModel);
+                    AppLogger.d("CSVParser", "state_name" + colums[1]);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stateList;
+    }
+
+
+    public List<DistrictDataModel> readDistrictData() {
+        List<DistrictDataModel> districtList = new ArrayList<>();
+        InputStream inStream = AuroApp.getAppContext().getResources().openRawResource(R.raw.district);
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
+        String line = "";
+        try {
+            while ((line = buffer.readLine()) != null) {
+                String[] colums = line.split(",");
+                if (colums.length != 7) {
+                    AppLogger.d("CSVParser", "Skipping Bad CSV Row");
+                    continue;
+                } else {
+                    DistrictDataModel districtDataModel = new DistrictDataModel();
+                    districtDataModel.setState_code(colums[0].replaceAll("\"", ""));
+                    districtDataModel.setDistrict_code(colums[1].replaceAll("\"", ""));
+                    districtDataModel.setDistrict_name(colums[2].replaceAll("\"", ""));
+                    districtDataModel.setActive_status(colums[3].replaceAll("\"", ""));
+                    districtDataModel.setFlag(colums[6].replaceAll("\"", ""));
+                    districtList.add(districtDataModel);
+                    AppLogger.d("CSVParser", "district_name" + colums[2]);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return districtList;
+    }
+
 }

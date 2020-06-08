@@ -56,8 +56,8 @@ public class TeacherModule {
 
     @Provides
     @Singleton
-    TeacherDbUseCase provideTeacherDbUseCase() {
-        return new TeacherDbUseCase();
+    TeacherDbUseCase provideTeacherDbUseCase(TeacherRepo.TeacherDbData teacherDbData) {
+        return new TeacherDbUseCase(teacherDbData);
     }
 
 
@@ -88,21 +88,20 @@ public class TeacherModule {
     ViewModelFactory provideTeacherSaveDetailViewModelFactory(TeacherUseCase teacherUseCase, TeacherDbUseCase teacherDbUseCase, TeacherRemoteUseCase teacherRemoteUseCase) {
         return new ViewModelFactory(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
     }
+
     @Provides
     @Singleton
     @Named("SelectYourMessageDialogFragment")
     ViewModelFactory provideSelectYourMessageDialogModelFactory(TeacherUseCase teacherUseCase, TeacherDbUseCase teacherDbUseCase, TeacherRemoteUseCase teacherRemoteUseCase) {
         return new ViewModelFactory(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
     }
+
     @Provides
     @Singleton
     @Named("TeacherProfileFragment")
     ViewModelFactory provideTeacherProfileViewModelFactory(TeacherUseCase teacherUseCase, TeacherDbUseCase teacherDbUseCase, TeacherRemoteUseCase teacherRemoteUseCase) {
         return new ViewModelFactory(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
     }
-
-
-
 
 
 }

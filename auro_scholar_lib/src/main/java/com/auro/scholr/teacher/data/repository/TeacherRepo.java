@@ -5,6 +5,8 @@ import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
+import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
+import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -18,13 +20,21 @@ public interface TeacherRepo {
         Single<Response<JsonObject>> getTeacherData(AuroScholarDataModel model);
 
 
-
-
     }
 
 
     interface TeacherDbData {
-        Single<Integer> getTeacherDataCount();
+
+        Single<Long[]> insertStateList(List<StateDataModel> stateDataModelList);
+
+        Single<Long[]> insertDistrictList(List<DistrictDataModel> stateDataModelList);
+
+        Single<List<StateDataModel>> getStateList();
+
+        Single<List<DistrictDataModel>> getDistrictList();
+
+
+        Single<List<DistrictDataModel>> getStateDistrictList(String stateCode);
 
     }
 
