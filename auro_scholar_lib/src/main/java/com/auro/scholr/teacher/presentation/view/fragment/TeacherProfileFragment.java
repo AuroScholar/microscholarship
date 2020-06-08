@@ -6,11 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
@@ -21,7 +24,9 @@ import com.auro.scholr.databinding.FragmentTeacherProfileBinding;
 import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.teacher.presentation.view.adapter.DistrictSpinnerAdapter;
+import com.auro.scholr.teacher.presentation.view.adapter.ProfileScreenAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.StateSpinnerAdapter;
+import com.auro.scholr.teacher.presentation.view.adapter.TeacherKycDocumentAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherProfileViewModel;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.TextUtil;
@@ -92,8 +97,15 @@ public class TeacherProfileFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        init();
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        init();
+        setRecycleView();
     }
 
     @Override
@@ -106,6 +118,7 @@ public class TeacherProfileFragment extends BaseFragment {
         }
         viewModel.getStateListData();
         viewModel.getDistrictListData();
+        setRecycleView();
     }
 
     @Override
@@ -206,6 +219,27 @@ public class TeacherProfileFragment extends BaseFragment {
             binding.cityTitle.setVisibility(View.GONE);
             binding.citySpinner.setVisibility(View.GONE);
         }
+    }
+    public void setRecycleView(){
+        Toast.makeText(getActivity(), "recycle view", Toast.LENGTH_SHORT).show();
+        //for class recycleview
+
+        GridLayoutManager gridlayout = new GridLayoutManager(getActivity(),2);
+        gridlayout.setOrientation(LinearLayoutManager.HORIZONTAL);
+        binding.recycleViewclass.setLayoutManager(gridlayout);
+        binding.recycleViewclass.setHasFixedSize(true);
+        binding.recycleViewclass.setNestedScrollingEnabled(false);
+        ProfileScreenAdapter mProfileScreenAdapterAdapter = new ProfileScreenAdapter(viewModel.teacherUseCase.makeListForClassModel());
+        binding.recycleViewclass.setAdapter(mProfileScreenAdapterAdapter);
+
+        //for subject recycle view
+        GridLayoutManager gridlayout2 = new GridLayoutManager(getActivity(),2);
+        gridlayout2.setOrientation(LinearLayoutManager.HORIZONTAL);
+        binding.recycleViewsubject.setLayoutManager(gridlayout2);
+        binding.recycleViewsubject.setHasFixedSize(true);
+        binding.recycleViewsubject.setNestedScrollingEnabled(false);
+        ProfileScreenAdapter mProfileScreenAdapterAdapter1 = new ProfileScreenAdapter(viewModel.teacherUseCase.makeListForSubjectModel());
+        binding.recycleViewsubject.setAdapter(mProfileScreenAdapterAdapter1);
     }
 
 }

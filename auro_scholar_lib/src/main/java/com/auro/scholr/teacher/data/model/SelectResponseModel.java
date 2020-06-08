@@ -1,4 +1,4 @@
-package com.auro.scholr.home.data.model;
+package com.auro.scholr.teacher.data.model;
 
 public class SelectResponseModel {
 

@@ -10,10 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.auro.scholr.R;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.databinding.SendMessageItemLayoutBinding;
-import com.auro.scholr.databinding.TeacherDocumentItemLayoutBinding;
-import com.auro.scholr.home.data.model.SelectResponseModel;
+import com.auro.scholr.teacher.data.model.SelectResponseModel;
 import com.auro.scholr.teacher.presentation.viewmodel.SelectMessageViewHolder;
-import com.auro.scholr.teacher.presentation.viewmodel.TeacherDoumentViewHolder;
 
 import java.util.List;
 

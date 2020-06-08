@@ -1,48 +1,24 @@
 package com.auro.scholr.teacher.domain;
 
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.util.SparseArray;
-
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
-import com.auro.scholr.core.database.AppPref;
-import com.auro.scholr.core.database.PrefModel;
-import com.auro.scholr.home.data.model.AssignmentReqModel;
-import com.auro.scholr.home.data.model.DashboardResModel;
-import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
-import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
-import com.auro.scholr.home.data.model.KYCInputModel;
-import com.auro.scholr.home.data.model.KYCResItemModel;
-import com.auro.scholr.home.data.model.MonthlyScholarShipModel;
 import com.auro.scholr.home.data.model.QuizResModel;
-import com.auro.scholr.home.data.model.SelectResponseModel;
-import com.auro.scholr.home.data.model.TeacherDocumentModel;
+import com.auro.scholr.teacher.data.model.ClassResponseModel;
+import com.auro.scholr.teacher.data.model.SelectResponseModel;
+import com.auro.scholr.teacher.data.model.TeacherDocumentModel;
 import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.MonthDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
-import com.auro.scholr.teacher.data.repository.TeacherRepo;
-import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
 import com.auro.scholr.util.AppLogger;
-import com.auro.scholr.util.TextUtil;
-import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.text.Text;
-import com.google.android.gms.vision.text.TextBlock;
-import com.google.android.gms.vision.text.TextRecognizer;
-import com.google.i18n.phonenumbers.PhoneNumberMatch;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class TeacherUseCase {
 
@@ -249,6 +225,76 @@ public class TeacherUseCase {
             e.printStackTrace();
         }
         return districtList;
+    }
+
+    public List<ClassResponseModel> makeListForClassModel() {
+
+        List<ClassResponseModel> list = new ArrayList<>();
+        ClassResponseModel classmodel = new ClassResponseModel();
+        classmodel.setClasses("1st");
+        classmodel.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classmodel);
+
+        ClassResponseModel classmodel1 = new ClassResponseModel();
+        classmodel1.setClasses("2nd");
+        classmodel1.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classmodel1);
+
+        ClassResponseModel classmode2 = new ClassResponseModel();
+        classmode2.setClasses("3th");
+        classmode2.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classmode2);
+
+        ClassResponseModel classmode3 = new ClassResponseModel();
+        classmode3.setClasses("4th");
+        classmode3.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classmode3);
+
+        ClassResponseModel classmode4 = new ClassResponseModel();
+        classmode4.setClasses("5th");
+        classmode4.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classmode4);
+
+        ClassResponseModel classmode5 = new ClassResponseModel();
+        classmode5.setClasses("6th");
+        classmode5.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classmode5);
+        return list;
+    }
+
+    public List<ClassResponseModel> makeListForSubjectModel() {
+
+        List<ClassResponseModel> list = new ArrayList<>();
+        ClassResponseModel classmodel = new ClassResponseModel();
+        classmodel.setClasses("Maths");
+        classmodel.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
+        list.add(classmodel);
+
+        ClassResponseModel classmodel1 = new ClassResponseModel();
+        classmodel1.setClasses("English");
+        classmodel1.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
+        list.add(classmodel1);
+
+        ClassResponseModel classmode2 = new ClassResponseModel();
+        classmode2.setClasses("Hindi");
+        classmode2.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
+        list.add(classmode2);
+
+        ClassResponseModel classmode3 = new ClassResponseModel();
+        classmode3.setClasses("Science");
+        classmode3.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
+        list.add(classmode3);
+
+        ClassResponseModel classmode4 = new ClassResponseModel();
+        classmode4.setClasses("S.Science");
+        classmode4.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
+        list.add(classmode4);
+
+        ClassResponseModel classmode5 = new ClassResponseModel();
+        classmode5.setClasses("Sanskrit");
+        classmode5.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
+        list.add(classmode5);
+        return list;
     }
 
 }

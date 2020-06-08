@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginRight="@dimen/_5sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/class_borader_background">
+
+    <com.auro.scholr.core.util.uiwidget.RPTextView
+        android:id="@+id/txtClass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:paddingTop="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_2sdp"
+        android:gravity="center"
+        android:text="1st"
+        android:textColor="@color/grey_color"
+        android:textSize="@dimen/_8sdp"
+        app:Font="Poppins-Regular.ttf"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -304,12 +304,13 @@
                             app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recycleView"
+                            android:id="@+id/recycleViewclass"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:visibility="gone"
+
+                            android:visibility="visible"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/txtClasses" />
 
@@ -321,7 +322,7 @@
                             android:background="@color/color_dim_grey"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/recycleView" />
+                            app:layout_constraintTop_toBottomOf="@+id/recycleViewclass" />
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/txtSubject"
@@ -336,11 +337,11 @@
                             app:layout_constraintTop_toBottomOf="@+id/view" />
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recycleView1"
+                            android:id="@+id/recycleViewsubject"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:visibility="gone"
+
+                            android:visibility="visible"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/txtSubject" />
@@ -353,7 +354,7 @@
                             android:background="@color/color_dim_grey"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/recycleView1" />
+                            app:layout_constraintTop_toBottomOf="@+id/recycleViewsubject" />
 
                         <LinearLayout
                             android:id="@+id/llschool"

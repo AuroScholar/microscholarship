@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.common.AppConstant;
-import com.auro.scholr.databinding.MonthWiseItemLayoutBinding;
 import com.auro.scholr.databinding.TeacherDocumentItemLayoutBinding;
-import com.auro.scholr.home.data.model.TeacherDocumentModel;
-import com.auro.scholr.home.presentation.view.viewholder.MonthlyWiseViewHolder;
+import com.auro.scholr.teacher.data.model.TeacherDocumentModel;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherDoumentViewHolder;
 
 import java.util.List;
