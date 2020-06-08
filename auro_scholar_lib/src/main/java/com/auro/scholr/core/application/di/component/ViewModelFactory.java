@@ -28,6 +28,7 @@ import com.auro.scholr.teacher.domain.TeacherUseCase;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
 import com.auro.scholr.teacher.presentation.viewmodel.SelectYourMessageDialogModel;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherKycViewModel;
+import com.auro.scholr.teacher.presentation.viewmodel.TeacherProfileViewModel;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherSaveDetailViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
@@ -131,6 +132,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }else if (modelClass.isAssignableFrom(SelectYourMessageDialogModel.class)) {
 
             return (T) new SelectYourMessageDialogModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
+        }else if (modelClass.isAssignableFrom(TeacherProfileViewModel.class)) {
+
+            return (T) new TeacherProfileViewModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

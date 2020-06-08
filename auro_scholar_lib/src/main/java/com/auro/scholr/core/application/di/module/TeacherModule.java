@@ -94,6 +94,13 @@ public class TeacherModule {
     ViewModelFactory provideSelectYourMessageDialogModelFactory(TeacherUseCase teacherUseCase, TeacherDbUseCase teacherDbUseCase, TeacherRemoteUseCase teacherRemoteUseCase) {
         return new ViewModelFactory(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
     }
+    @Provides
+    @Singleton
+    @Named("TeacherProfileFragment")
+    ViewModelFactory provideTeacherProfileViewModelFactory(TeacherUseCase teacherUseCase, TeacherDbUseCase teacherDbUseCase, TeacherRemoteUseCase teacherRemoteUseCase) {
+        return new ViewModelFactory(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
+    }
+
 
 
 

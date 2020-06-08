@@ -28,6 +28,7 @@ import com.auro.scholr.payment.presentation.view.fragment.UPIFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.SelectYourMessageDialogFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherKycFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.TeacherProfileFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherSaveDetailFragment;
 
 import javax.inject.Singleton;
@@ -84,5 +85,7 @@ public interface AppComponent {
     void doInjection(TeacherSaveDetailFragment fragment);
 
     void doInjection(SelectYourMessageDialogFragment dialog);
+
+    void doInjection(TeacherProfileFragment fragment);
 
 }

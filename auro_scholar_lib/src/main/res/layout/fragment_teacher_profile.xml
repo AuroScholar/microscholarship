@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="teacherProfileViewModel"
+            type="com.auro.scholr.teacher.presentation.viewmodel.TeacherProfileViewModel" />
+
+
+    </data>
+    <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".teacher.presentation.view.fragment.TeacherProfileFragment">
@@ -16,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_mask_group"
+            android:src="@drawable/mask_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -105,7 +116,7 @@
                 android:layout_marginRight="@dimen/_8sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:background="@drawable/ic_get_button"
+                android:background="@drawable/get_button"
                 android:gravity="center"
                 app:Font="Poppins-Regular.ttf"
                 app:layout_constraintHorizontal_bias="0.92"
@@ -188,7 +199,7 @@
                                 android:layout_height="@dimen/_20sdp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="0.5"
-                                android:src="@drawable/ic_uncheck"
+                                android:src="@drawable/ic_check"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/text_document_layout"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -229,7 +240,7 @@
                                 android:layout_height="@dimen/_20sdp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="0.5"
-                                android:src="@drawable/ic_uncheck"
+                                android:src="@drawable/ic_check"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/text_document_layout"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -270,7 +281,7 @@
                                 android:layout_height="@dimen/_20sdp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="0.5"
-                                android:src="@drawable/ic_uncheck"
+                                android:src="@drawable/ic_check"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/text_document_layout"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -418,14 +429,14 @@
                     <com.auro.scholr.core.util.uiwidget.RPTextView
                         android:id="@+id/button"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_40sdp"
                         android:layout_marginLeft="@dimen/_20sdp"
                         android:layout_marginRight="@dimen/_20sdp"
                         android:text="@string/save_changes"
                         android:textSize="@dimen/_12sdp"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:gravity="center"
-                        android:background="@drawable/ic_rectangle"
+                        android:background="@drawable/rectangle_backs"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:textColor="@color/white"
                         android:paddingTop="@dimen/_10sdp"
@@ -444,3 +455,4 @@
 
     </RelativeLayout>
 </androidx.core.widget.NestedScrollView>
+</layout>
