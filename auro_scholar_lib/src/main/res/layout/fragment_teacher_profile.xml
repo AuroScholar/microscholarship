@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="teacherProfileViewModel"
+            type="com.auro.scholr.teacher.presentation.viewmodel.TeacherProfileViewModel" />
+
+
+    </data>
+    <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.presentation.view.fragment.TeacherProfileFragment">
+    tools:context=".teacher.presentation.view.fragment.TeacherProfileFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_mask_group"
+            android:src="@drawable/mask_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,6 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_8sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/header_top_parent">
 
@@ -54,11 +67,17 @@
                     <com.auro.scholr.core.util.uiwidget.RPTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp"
+                        app:Font="Poppins-Regular.ttf"
                         android:text="@string/total_points" />
 
                     <com.auro.scholr.core.util.uiwidget.RPTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        app:Font="Poppins-Regular.ttf"
+                        android:layout_marginLeft="@dimen/_4sdp"
                         android:text="1230" />
                 </LinearLayout>
 
@@ -70,12 +89,18 @@
                     <com.auro.scholr.core.util.uiwidget.RPTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/total_points" />
+                        app:Font="Poppins-Regular.ttf"
+                        android:textSize="@dimen/_12sdp"
+                        android:textColor="@color/white"
+                        android:text="@string/wallet_cash" />
 
                     <com.auro.scholr.core.util.uiwidget.RPTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1230" />
+                        app:Font="Poppins-Regular.ttf"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_15sdp"
+                        android:text="₹1230" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -86,19 +111,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/get_now"
+                android:textColor="@color/white"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/get_button"
+                android:gravity="center"
+                app:Font="Poppins-Regular.ttf"
                 app:layout_constraintHorizontal_bias="0.92"
                 app:layout_constraintStart_toEndOf="@+id/linearLayout3"
-                app:layout_constraintTop_toBottomOf="@+id/header_top_parent" />
+                app:layout_constraintTop_toTopOf="@+id/linearLayout3" />
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
                 android:id="@+id/RPTextView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:text="@string/teacher_profile"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:Font="Poppins-Bold.ttf"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
@@ -107,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardUseCompatPadding="true"
@@ -115,7 +150,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_15sdp">
 
                     <LinearLayout
                         android:id="@+id/linearLayout2"
@@ -256,12 +292,158 @@
 
                     <com.auro.scholr.core.util.uiwidget.RPTextView
                         android:id="@+id/txtClasses"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/classes"
+                        android:gravity="left"
+                        android:textColor="@color/color_dim_grey"
+                        app:Font="Poppins-Regular.ttf"
+                        android:layout_marginTop="@dimen/_15sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycleView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtClasses" />
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/color_dim_grey"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/recycleView" />
+                    <com.auro.scholr.core.util.uiwidget.RPTextView
+                        android:id="@+id/txtSubject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                       android:text="@string/subjects_you_teach_till"
+                        android:textColor="@color/color_dim_grey"
+                        app:Font="Poppins-Regular.ttf"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycleView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtSubject" />
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/color_dim_grey"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/recycleView1" />
+
+                    <LinearLayout
+                        android:id="@+id/llschool"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view1"
+                        android:weightSum="4">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/schooltxt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:layout_weight="3.5"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            app:hintTextAppearance="@style/TextInputLayout"
+                            app:hintTextColor="@color/color_dim_grey">
+
+                            <com.auro.scholr.core.util.uiwidget.RPEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/school_name"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_12sdp"
+                                android:theme="@style/MyEditText"
+                                app:Font="Poppins-Regular.ttf" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ImageView
+                            android:id="@+id/icschoolname"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.5"
+                            android:src="@drawable/ic_uncheck"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_document_layout"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llstate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/llschool">
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/state"
+                            android:textColor="@color/color_dim_grey"/>
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:tooltipText="@string/choose_your_state"
+                            android:layout_marginTop="@dimen/_15sdp"/>
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/city"
+                            android:textColor="@color/color_dim_grey"/>
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:tooltipText="@string/choose_your_state"
+                            android:layout_marginTop="@dimen/_15sdp"/>
+
+                    </LinearLayout>
+                    <com.auro.scholr.core.util.uiwidget.RPTextView
+                        android:id="@+id/button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:text="@string/save_changes"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:gravity="center"
+                        android:background="@drawable/rectangle_backs"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="@color/white"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/llstate" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -273,3 +455,4 @@
 
     </RelativeLayout>
 </androidx.core.widget.NestedScrollView>
+</layout>

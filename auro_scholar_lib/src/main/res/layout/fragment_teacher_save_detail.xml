@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".home.presentation.view.fragment.TeacherSaveDetailFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <include
-        android:id="@+id/toolbar_layout"
-        layout="@layout/toolbar_header_layout"
+
+    <data>
+
+        <variable
+            name="teacherSaveDetailViewModel"
+            type="com.auro.scholr.teacher.presentation.viewmodel.TeacherSaveDetailViewModel" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        tools:context=".teacher.presentation.view.fragment.TeacherSaveDetailFragment">
 
-    <include
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar_header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
         android:id="@+id/header_parent"
         layout="@layout/quiz_header_layout"
         android:layout_width="match_parent"
@@ -24,7 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
 
-    <com.auro.scholr.core.util.uiwidget.RPTextView
+        <com.auro.scholr.core.util.uiwidget.RPTextView
         android:id="@+id/RPTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,13 +46,12 @@
         android:textColor="@color/black"
         android:layout_marginTop="@dimen/_15sdp"
         android:textSize="@dimen/_20sdp"
-        android:textStyle="bold"
-        app:Font="Poppins-Regular.ttf"
+        app:Font="Poppins-Bold.ttf"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/header_parent"
         app:layout_constraintTop_toBottomOf="@+id/header_parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -188,17 +200,19 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.auro.scholr.core.util.uiwidget.RPTextView
+        <com.auro.scholr.core.util.uiwidget.RPTextView
         android:id="@+id/button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_40sdp"
         android:layout_marginLeft="@dimen/_20sdp"
         android:layout_marginRight="@dimen/_20sdp"
         android:text="@string/next"
+        app:Font="Poppins-Bold.ttf"
         android:textSize="@dimen/_12sdp"
+        android:textAllCaps="true"
         android:layout_marginTop="@dimen/_20sdp"
         android:gravity="center"
-        android:background="@drawable/ic_rectangle"
+        android:background="@drawable/rectangle_backs"
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@color/white"
         android:paddingTop="@dimen/_10sdp"
@@ -206,7 +220,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-    <com.auro.scholr.core.util.uiwidget.RPTextView
+        <com.auro.scholr.core.util.uiwidget.RPTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/skip_for_now"
@@ -220,3 +234,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

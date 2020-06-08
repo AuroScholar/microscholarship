@@ -4,11 +4,9 @@ package com.auro.scholr.core.application.di.component;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.auro.scholr.databinding.FriendsLeoboardLayoutBinding;
 import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
-import com.auro.scholr.home.presentation.view.fragment.QuizTestFragment;
 import com.auro.scholr.home.presentation.viewmodel.CardViewModel;
 import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewModel;
 import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
@@ -23,12 +21,15 @@ import com.auro.scholr.home.presentation.viewmodel.ScholarShipViewModel;
 import com.auro.scholr.home.presentation.viewmodel.TransactionsViewModel;
 import com.auro.scholr.payment.domain.PaymentRemoteUseCase;
 import com.auro.scholr.payment.domain.PaymentUseCase;
-import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
 import com.auro.scholr.teacher.domain.TeacherDbUseCase;
 import com.auro.scholr.teacher.domain.TeacherRemoteUseCase;
 import com.auro.scholr.teacher.domain.TeacherUseCase;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
+import com.auro.scholr.teacher.presentation.viewmodel.SelectYourMessageDialogModel;
+import com.auro.scholr.teacher.presentation.viewmodel.TeacherKycViewModel;
+import com.auro.scholr.teacher.presentation.viewmodel.TeacherProfileViewModel;
+import com.auro.scholr.teacher.presentation.viewmodel.TeacherSaveDetailViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
@@ -122,6 +123,18 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         } else if (modelClass.isAssignableFrom(MyClassroomViewModel.class)) {
 
             return (T) new MyClassroomViewModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
+        }else if (modelClass.isAssignableFrom(TeacherKycViewModel.class)) {
+
+            return (T) new TeacherKycViewModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
+        }else if (modelClass.isAssignableFrom(TeacherSaveDetailViewModel.class)) {
+
+            return (T) new TeacherSaveDetailViewModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
+        }else if (modelClass.isAssignableFrom(SelectYourMessageDialogModel.class)) {
+
+            return (T) new SelectYourMessageDialogModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
+        }else if (modelClass.isAssignableFrom(TeacherProfileViewModel.class)) {
+
+            return (T) new TeacherProfileViewModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

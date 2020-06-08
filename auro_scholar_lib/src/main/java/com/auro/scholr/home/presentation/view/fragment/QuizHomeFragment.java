@@ -40,7 +40,6 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
-import com.auro.scholr.core.util.uiwidget.SimpleTooltip;
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.CustomSnackBarModel;
@@ -51,6 +50,10 @@ import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.SelectYourMessageDialogFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.TeacherKycFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.TeacherProfileFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.TeacherSaveDetailFragment;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
@@ -447,16 +450,15 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         if (v.getId() == R.id.arrow) {
             openFragment(new FriendsLeaderBoardFragment());
         }else if (v.getId() == R.id.fab){
-            openChat();//todo later change
+           // openChat();//todo later change
            // TeacherSaveDetailFragment mteacherSaveDetailFragment = new TeacherSaveDetailFragment();
             /*TransactionsFragment mtransactionsFragment = new TransactionsFragment();*/
           //  openFragment(mteacherSaveDetailFragment);
 
-        } /*else if (v.getId() == R.id.fab) {
-            openChat();
+            TeacherProfileFragment mfragment = new TeacherProfileFragment();
+            openFragment(mfragment);
 
-
-        }*/
+        }
     }
 
     private void reloadFragment() {

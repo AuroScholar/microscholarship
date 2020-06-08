@@ -1,15 +1,28 @@
-package com.auro.scholr.home.presentation.view.fragment;
+package com.auro.scholr.teacher.presentation.view.fragment;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.auro.scholr.R;
+import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseDialog;
+import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.databinding.DialogTeacherSelectYourMessageBinding;
+import com.auro.scholr.home.presentation.viewmodel.InviteFriendViewModel;
+import com.auro.scholr.teacher.presentation.view.adapter.SelectMessageAdapter;
+import com.auro.scholr.teacher.presentation.view.adapter.TeacherKycDocumentAdapter;
+import com.auro.scholr.teacher.presentation.viewmodel.SelectYourMessageDialogModel;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,12 +32,17 @@ import com.auro.scholr.core.application.base_component.BaseDialog;
 public class SelectYourMessageDialogFragment extends BaseDialog {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    @Inject
+    @Named("SelectYourMessageDialogFragment")
+    ViewModelFactory viewModelFactory;
+    SelectYourMessageDialogModel selectYourMessageDialogModel;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    DialogTeacherSelectYourMessageBinding binding;
 
     public SelectYourMessageDialogFragment() {
         // Required empty public constructor
@@ -59,6 +77,7 @@ public class SelectYourMessageDialogFragment extends BaseDialog {
 
     @Override
     protected void init() {
+        selectMessageBoard();
 
     }
 
@@ -74,13 +93,31 @@ public class SelectYourMessageDialogFragment extends BaseDialog {
 
     @Override
     protected int getLayout() {
-        return 0;
+        return R.layout.dialog_teacher_select_your_message;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_select_your_message_dialog, container, false);
+
+        binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
+        AuroApp.getAppComponent().doInjection(this);
+        selectYourMessageDialogModel = ViewModelProviders.of(this, viewModelFactory).get(SelectYourMessageDialogModel.class);
+        binding.setLifecycleOwner(this);
+        init();
+        setListener();
+
+        return binding.getRoot();
+    }
+
+    public void selectMessageBoard(){
+
+        binding.rvselectMessage.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.rvselectMessage.setHasFixedSize(true);
+        binding.rvselectMessage.setNestedScrollingEnabled(false);
+        SelectMessageAdapter mteacherKycDocumentAdapter = new SelectMessageAdapter(selectYourMessageDialogModel.teacherUseCase.makeListForSelectMessageModel());
+        binding.rvselectMessage.setAdapter(mteacherKycDocumentAdapter);
+
+
     }
 }

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="teacherKycViewModel"
+            type="com.auro.scholr.teacher.presentation.viewmodel.TeacherKycViewModel" />
+
+
+    </data>
+
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".teacher.presentation.view.fragment.TeacherKycFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/mask_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/parent_layout_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <include
+                android:id="@+id/header_top_parent"
+                layout="@layout/quiz_header_layout"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <RelativeLayout
+                android:id="@+id/rlpayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                app:layout_constraintTop_toBottomOf="@+id/header_top_parent">
+
+
+
+
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerVertical="true">
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_10sdp"
+                    app:Font="Poppins-Regular.ttf"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:text="@string/total_points" />
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    app:Font="Poppins-Regular.ttf"
+                    android:layout_marginLeft="@dimen/_4sdp"
+                    android:text="123" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llverify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true">
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:Font="Poppins-Regular.ttf"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:text="@string/wallet_cash"/>
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:Font="Poppins-Regular.ttf"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp"
+                    android:text="₹1230"
+                  />
+
+            </LinearLayout>
+            </RelativeLayout>
+
+
+            <com.auro.scholr.core.util.uiwidget.RPTextView
+                android:id="@+id/RPTextView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/kyc_verification"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:textColor="@color/white"
+               android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:textSize="@dimen/_20sdp"
+                app:Font="Poppins-Bold.ttf"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rlpayment" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/parent_layout_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginRight="@dimen/_13sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintTop_toBottomOf="@id/RPTextView2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_15sdp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvDoucumentUpload"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.auro.scholr.core.util.uiwidget.RPTextView
+                        android:id="@+id/button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:text="@string/upload"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:gravity="center"
+                        app:Font="Poppins-Bold.ttf"
+                        android:background="@drawable/rectangle_backs"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="@color/white"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rvDoucumentUpload" />
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>
+</layout>
