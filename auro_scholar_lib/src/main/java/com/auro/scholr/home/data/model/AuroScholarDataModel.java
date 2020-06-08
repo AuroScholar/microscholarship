@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.auro.scholr.core.common.SdkCallBack;
+import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
+
 public class AuroScholarDataModel implements Parcelable {
 
     String mobileNumber;
@@ -14,9 +17,10 @@ public class AuroScholarDataModel implements Parcelable {
     String regitrationSource="";
     String shareType="";
     String shareIdentity="";
+    SdkCallBack msdkcallback;
+
 
     public AuroScholarDataModel() {
-
     }
 
 
@@ -120,5 +124,13 @@ public class AuroScholarDataModel implements Parcelable {
 
     public void setFragmentContainerUiId(int fragmentContainerUiId) {
         this.fragmentContainerUiId = fragmentContainerUiId;
+    }
+
+    public SdkCallBack getMsdkcallback() {
+        return msdkcallback;
+    }
+
+    public void setMsdkcallback(SdkCallBack msdkcallback) {
+        this.msdkcallback = msdkcallback;
     }
 }
