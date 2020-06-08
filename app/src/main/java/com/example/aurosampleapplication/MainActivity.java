@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setActivity(this);
         inputModel.setFragmentContainerUiId(R.id.home_container);
-
         openFragment(AuroScholar.startAuroSDK(inputModel));
     }
 
