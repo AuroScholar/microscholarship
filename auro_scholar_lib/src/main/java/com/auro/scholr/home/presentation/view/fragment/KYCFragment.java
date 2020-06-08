@@ -188,7 +188,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null && !TextUtil.checkListIsEmpty(prefModel.getListAzureImageList()) && prefModel.getListAzureImageList().size() > 0) {
             faceModelList = prefModel.getListAzureImageList();
-            kycViewModel.sendAzureImageData(faceModelList.get(0));
+            if (faceModelList.get(0) != null) {
+                kycViewModel.sendAzureImageData(faceModelList.get(0));
+            }
         }
     }
 
@@ -450,7 +452,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         } else if (v.getId() == R.id.bt_transfer_money) {
             openFragment(new SendMoneyFragment());
         } else if (v.getId() == R.id.wallet_info) {
-            openFragment(new TransactionsFragment());
+           // openFragment(new TransactionsFragment());
         }
 
     }

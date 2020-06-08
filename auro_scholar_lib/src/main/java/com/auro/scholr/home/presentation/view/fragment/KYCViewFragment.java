@@ -172,7 +172,9 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null && !TextUtil.checkListIsEmpty(prefModel.getListAzureImageList()) && prefModel.getListAzureImageList().size() > 0) {
             faceModelList = prefModel.getListAzureImageList();
-            kycViewModel.sendAzureImageData(faceModelList.get(0));
+            if (faceModelList.get(0) != null) {
+                kycViewModel.sendAzureImageData(faceModelList.get(0));
+            }
         }
     }
 
@@ -203,9 +205,8 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         } else if (v.getId() == R.id.bt_transfer_money) {
             //openFragment(new SendMoneyFragment());
             callNumber();
-        }else if(v.getId()==R.id.wallet_info)
-        {
-            openFragment(new TransactionsFragment());
+        } else if (v.getId() == R.id.wallet_info) {
+          //  openFragment(new TransactionsFragment());
         }
     }
 
