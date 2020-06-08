@@ -63,6 +63,7 @@ import com.auro.scholr.util.alert_dialog.CustomSnackBar;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.io.InputStream;
@@ -151,7 +152,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else {
             observeServiceResponse();
         }
+        Glide.with(this).load(R.raw.anima).into(binding.customUiSnackbar.gifview);
         openToolTip();
+
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
     }
 
