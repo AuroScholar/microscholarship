@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.SdkCallBack;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
@@ -29,7 +30,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     ActivityMainBinding binding;
     private String TAG = "MainActivity";
@@ -69,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-                openGenricSDK();
-                //openScholarSpecificSdk();
+                // openGenricSDK();
+                openScholarSpecificSdk();
                 hideKeyboard(this);
                 break;
             case R.id.bt_open:
@@ -92,12 +93,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void openScholarSpecificSdk() {
-        AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-   /*    auroScholarDataModel.setMobileNumber("7503600686");
+    /*    auroScholarDataModel.setMobileNumber("7503600686");
         auroScholarDataModel.setScholrId("880426");
         auroScholarDataModel.setStudentClass("6");*/
 
+    private void openScholarSpecificSdk() {
+        AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
         auroScholarDataModel.setMobileNumber("9654234507");
         auroScholarDataModel.setStudentClass("10");
         auroScholarDataModel.setScholrId("10000014");
@@ -106,13 +107,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareIdentity("chandan Sir");
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
-        auroScholarDataModel.setMsdkcallback(new SdkCallBack() {
+        /*If you want to open Student SDK*/
+        auroScholarDataModel.setSdkType(AppConstant.SdkType.STUDENT_SDK);
+        /*If you want to open Teacher SDK*/
+        auroScholarDataModel.setSdkType(AppConstant.SdkType.TEACHER_SDK);
+        auroScholarDataModel.setSdkFragmentType(AppConstant.SdkFragmentType.TEACHER_DASHBOARD_FRAGMENT);
+        auroScholarDataModel.setSdkcallback(new SdkCallBack() {
             @Override
             public void callBack(String message) {
-                Log.e(TAG,"Pradeep connect the message " +message);
+                /*Api response here*/
             }
         });
-
         openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
 
 

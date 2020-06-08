@@ -103,17 +103,17 @@ public interface AppConstant {
         String SCHOOL_ID = "school_id_card";
         String STUDENT_PHOTO = "student_photo";
 
-        String AADHAR_PHONE="aadhar_phone";
-        String AADHAR_NO="aadhar_no";
-        String AADHAR_DOB="aadhar_dob";
-        String AADHAR_NAME="aadhar_name";
-        String SCHOOL_PHONE="school_phone";
-        String SCHOOL_DOB="school_dob";
+        String AADHAR_PHONE = "aadhar_phone";
+        String AADHAR_NO = "aadhar_no";
+        String AADHAR_DOB = "aadhar_dob";
+        String AADHAR_NAME = "aadhar_name";
+        String SCHOOL_PHONE = "school_phone";
+        String SCHOOL_DOB = "school_dob";
 
-        String YES="Yes";
-        String NO="No";
-        String IN_PROCESS="Inprocess";
-        String REJECTED="Rejected";
+        String YES = "Yes";
+        String NO = "No";
+        String IN_PROCESS = "Inprocess";
+        String REJECTED = "Rejected";
     }
 
 
@@ -136,7 +136,7 @@ public interface AppConstant {
         int TRANSACTIONS_ADAPTER = 102;
         String QUIZ_DASHBOARD_WEB = "QUIZ_DASHBOARD_WEB";
         int TEACHERDOCUMENTADAPTER = 103;
-        int SELECTMESSAGEADAPTER =104;
+        int SELECTMESSAGEADAPTER = 104;
 
     }
 
@@ -155,12 +155,23 @@ public interface AppConstant {
         String EXAMLANG = "examlang";
     }
 
-    interface AzureApiParams{
+    interface AzureApiParams {
         String REGISTRATION_ID = "registration_id";
         String EXAM_NAME = "exam_name";
         String QUIZ_ATTEMPT = "quiz_attempt";
-        String EKLAVVYA_EXAM_ID="eklavvya_exam_id";
+        String EKLAVVYA_EXAM_ID = "eklavvya_exam_id";
         String EXAM_FACE_IMG = "exam_face_img";
     }
 
+
+    interface SdkType {
+        int TEACHER_SDK = 100;
+        int STUDENT_SDK = 101;
+    }
+
+    interface SdkFragmentType {
+        int TEACHER_DASHBOARD_FRAGMENT = 100;
+        int TEACHER_PROFILE_FRAGMENT = 102;
+        int TEACHER_KYC_FRAGMENT = 103;
+    }
 }

@@ -14,15 +14,13 @@ public class AuroScholarDataModel implements Parcelable {
     int fragmentContainerUiId;
     String scholrId;
     String studentClass;
-    String regitrationSource="";
-    String shareType="";
-    String shareIdentity="";
-    SdkCallBack msdkcallback;
-
-
-    public AuroScholarDataModel() {
-    }
-
+    String regitrationSource = "";
+    String shareType = "";
+    String shareIdentity = "";
+    String referralLink = "";
+    SdkCallBack sdkcallback;
+    int sdkType;
+    int sdkFragmentType;
 
     protected AuroScholarDataModel(Parcel in) {
         mobileNumber = in.readString();
@@ -32,6 +30,9 @@ public class AuroScholarDataModel implements Parcelable {
         regitrationSource = in.readString();
         shareType = in.readString();
         shareIdentity = in.readString();
+        referralLink = in.readString();
+        sdkType = in.readInt();
+        sdkFragmentType = in.readInt();
     }
 
     @Override
@@ -43,6 +44,9 @@ public class AuroScholarDataModel implements Parcelable {
         dest.writeString(regitrationSource);
         dest.writeString(shareType);
         dest.writeString(shareIdentity);
+        dest.writeString(referralLink);
+        dest.writeInt(sdkType);
+        dest.writeInt(sdkFragmentType);
     }
 
     @Override
@@ -61,6 +65,43 @@ public class AuroScholarDataModel implements Parcelable {
             return new AuroScholarDataModel[size];
         }
     };
+
+    public int getSdkType() {
+        return sdkType;
+    }
+
+    public void setSdkType(int sdkType) {
+        this.sdkType = sdkType;
+    }
+
+    public int getSdkFragmentType() {
+        return sdkFragmentType;
+    }
+
+    public void setSdkFragmentType(int sdkFragmentType) {
+        this.sdkFragmentType = sdkFragmentType;
+    }
+
+    public SdkCallBack getSdkcallback() {
+        return sdkcallback;
+    }
+
+    public void setSdkcallback(SdkCallBack sdkcallback) {
+        this.sdkcallback = sdkcallback;
+    }
+
+    public String getReferralLink() {
+        return referralLink;
+    }
+
+    public void setReferralLink(String referralLink) {
+        this.referralLink = referralLink;
+    }
+
+    public AuroScholarDataModel() {
+
+    }
+
 
     public String getScholrId() {
         return scholrId;
@@ -126,11 +167,5 @@ public class AuroScholarDataModel implements Parcelable {
         this.fragmentContainerUiId = fragmentContainerUiId;
     }
 
-    public SdkCallBack getMsdkcallback() {
-        return msdkcallback;
-    }
 
-    public void setMsdkcallback(SdkCallBack msdkcallback) {
-        this.msdkcallback = msdkcallback;
-    }
 }

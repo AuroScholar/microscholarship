@@ -63,6 +63,7 @@ import com.auro.scholr.util.alert_dialog.CustomSnackBar;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.InputStream;
@@ -94,8 +95,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     boolean isStateRestore;
     AssignmentReqModel assignmentReqModel;
     CustomDialog customDialog;
-
-
 
 
     @Override
@@ -264,6 +263,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
                                 handleProgress(2, dashboardResModel.getMessage());
                             } else {
+
+                                if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
+                                    String jsonString = new Gson().toJson(dashboardResModel);
+                                    AuroApp.getAuroScholarModel().getSdkcallback().callBack(jsonString);
+                                }
                                 setDataOnUi(dashboardResModel);
                             }
                         } else {
@@ -288,7 +292,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         handleProgress(2, (String) responseApi.data);
                     } else {
                         setImageInPref(assignmentReqModel);
-                       // openQuizTestFragment(dashboardResModel);
+                        // openQuizTestFragment(dashboardResModel);
                     }
                     break;
 
@@ -299,7 +303,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         handleProgress(2, (String) responseApi.data);
                     } else {
                         setImageInPref(assignmentReqModel);
-                       //  openQuizTestFragment(dashboardResModel);
+                        //  openQuizTestFragment(dashboardResModel);
                     }
                     break;
             }
@@ -423,7 +427,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.wallet_bal_text) {
-           // openFragment(new TeacherProfileFragment());
+            // openFragment(new TeacherProfileFragment());
             closeToolTip();
             if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
@@ -452,11 +456,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         }
         if (v.getId() == R.id.arrow) {
             openFragment(new FriendsLeaderBoardFragment());
-        }else if (v.getId() == R.id.fab){
-           // openChat();//todo later change
-           // TeacherSaveDetailFragment mteacherSaveDetailFragment = new TeacherSaveDetailFragment();
+        } else if (v.getId() == R.id.fab) {
+            // openChat();//todo later change
+            // TeacherSaveDetailFragment mteacherSaveDetailFragment = new TeacherSaveDetailFragment();
             /*TransactionsFragment mtransactionsFragment = new TransactionsFragment();*/
-          //  openFragment(mteacherSaveDetailFragment);
+            //  openFragment(mteacherSaveDetailFragment);
 
             TeacherProfileFragment mfragment = new TeacherProfileFragment();
             openFragment(mfragment);
@@ -486,7 +490,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onGranted() {
 
-             //   openQuizTestFragment(dashboardResModel);
+                //   openQuizTestFragment(dashboardResModel);
                 openCameraPhotoFragment();
 
             }

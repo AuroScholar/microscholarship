@@ -3,6 +3,7 @@ package com.auro.scholr.util;
 import androidx.fragment.app.Fragment;
 
 import com.auro.scholr.core.application.AuroApp;
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.SdkCallBack;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
@@ -12,8 +13,14 @@ public class AuroScholar {
 
     public static Fragment openAuroDashboardFragment(AuroScholarDataModel auroScholarDataModel) {
         AuroApp.setAuroModel(auroScholarDataModel);
-        QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
-        return quizHomeFragment;
+        if (auroScholarDataModel.getSdkType() == AppConstant.SdkType.STUDENT_SDK) {
+            QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
+            return quizHomeFragment;
+        } else {
+            QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
+            return quizHomeFragment;
+        }
+
     }
 
     /*For generic with PhoneNumber and class*/
@@ -24,7 +31,6 @@ public class AuroScholar {
         auroScholarDataModel.setRegitrationSource(inputModel.getRegitrationSource());
         auroScholarDataModel.setActivity(inputModel.getActivity());
         auroScholarDataModel.setFragmentContainerUiId(inputModel.getFragmentContainerUiId());
-
         AuroApp.setAuroModel(auroScholarDataModel);
         QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
         return quizHomeFragment;
