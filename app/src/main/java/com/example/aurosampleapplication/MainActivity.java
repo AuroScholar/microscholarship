@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 
+import com.auro.scholr.core.common.SdkCallBack;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
 import com.auro.scholr.util.AuroScholar;
@@ -28,9 +29,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     ActivityMainBinding binding;
+    private String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareIdentity("chandan Sir");
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
+        auroScholarDataModel.setMsdkcallback(new SdkCallBack() {
+            @Override
+            public void callBack(String message) {
+                Log.e(TAG,"Pradeep connect the message " +message);
+            }
+        });
+
         openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
 
 
@@ -116,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setActivity(this);
         inputModel.setFragmentContainerUiId(R.id.home_container);
+
         openFragment(AuroScholar.startAuroSDK(inputModel));
     }
 

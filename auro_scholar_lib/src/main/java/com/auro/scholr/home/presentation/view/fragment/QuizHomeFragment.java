@@ -37,6 +37,7 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.common.SdkCallBack;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
@@ -93,6 +94,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     boolean isStateRestore;
     AssignmentReqModel assignmentReqModel;
     CustomDialog customDialog;
+
+
 
 
     @Override

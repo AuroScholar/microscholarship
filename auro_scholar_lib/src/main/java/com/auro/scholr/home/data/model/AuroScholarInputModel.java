@@ -12,8 +12,9 @@ public class AuroScholarInputModel implements Parcelable {
     String studentClass;
     String regitrationSource="";
 
-    public AuroScholarInputModel() {
 
+
+    public AuroScholarInputModel() {
     }
 
 
@@ -22,6 +23,7 @@ public class AuroScholarInputModel implements Parcelable {
         fragmentContainerUiId = in.readInt();
         studentClass = in.readString();
         regitrationSource = in.readString();
+
     }
 
     @Override
@@ -90,4 +92,6 @@ public class AuroScholarInputModel implements Parcelable {
     public void setFragmentContainerUiId(int fragmentContainerUiId) {
         this.fragmentContainerUiId = fragmentContainerUiId;
     }
+
+
 }

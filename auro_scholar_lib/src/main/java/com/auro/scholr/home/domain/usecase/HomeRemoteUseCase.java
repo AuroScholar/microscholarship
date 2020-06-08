@@ -88,6 +88,8 @@ public class HomeRemoteUseCase extends NetworkUseCase {
 
                 if (response != null) {
 
+                    model.getMsdkcallback().callBack("SucessFull");
+
                     return handleResponse(response, DASHBOARD_API);
 
                 } else {
