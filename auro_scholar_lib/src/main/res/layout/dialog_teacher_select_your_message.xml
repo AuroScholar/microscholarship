@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="selectYourMessageDialogModel"
+            type="com.auro.scholr.teacher.presentation.viewmodel.SelectYourMessageDialogModel" />
+
+
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_camera_bottom_bar"
@@ -54,72 +66,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/llayout1"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvselect_message"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:orientation="horizontal"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSelect">
+                app:layout_constraintTop_toBottomOf="@+id/txtSelect"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_check" />
 
-                <com.auro.scholr.core.util.uiwidget.RPTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:text="@string/default_message" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llayout2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/llayout1">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_uncheck" />
-
-                <com.auro.scholr.core.util.uiwidget.RPTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:text="@string/default_message" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llayout3"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/llayout2">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_uncheck" />
-
-                <com.auro.scholr.core.util.uiwidget.RPTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:text="@string/default_message" />
-
-            </LinearLayout>
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
                 android:id="@+id/button"
@@ -133,12 +88,14 @@
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:text="@string/send_message"
+                app:Font="Poppins-Bold.ttf"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sdp"
+                android:textAllCaps="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/llayout3" />
+                app:layout_constraintTop_toBottomOf="@+id/rvselect_message" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -159,3 +116,5 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

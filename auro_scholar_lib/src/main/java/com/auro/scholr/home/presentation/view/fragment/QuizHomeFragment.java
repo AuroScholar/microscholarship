@@ -454,7 +454,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             /*TransactionsFragment mtransactionsFragment = new TransactionsFragment();*/
           //  openFragment(mteacherSaveDetailFragment);
 
-            TeacherSaveDetailFragment mfragment = new TeacherSaveDetailFragment();
+            SelectYourMessageDialogFragment mfragment = new SelectYourMessageDialogFragment();
             openFragment(mfragment);
 
         }

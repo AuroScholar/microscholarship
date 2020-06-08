@@ -18,6 +18,7 @@ import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.MonthlyScholarShipModel;
 import com.auro.scholr.home.data.model.QuizResModel;
+import com.auro.scholr.home.data.model.SelectResponseModel;
 import com.auro.scholr.home.data.model.TeacherDocumentModel;
 import com.auro.scholr.teacher.data.model.common.MonthDataModel;
 import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
@@ -158,6 +159,29 @@ public class TeacherUseCase {
         document4.setUploadDocumentname("Upload Picture");
         document4.setViewType(AppConstant.FriendsLeaderBoard.TEACHERDOCUMENTADAPTER);
         list.add(document4);
+        return list;
+    }
+
+    public List<SelectResponseModel> makeListForSelectMessageModel() {
+
+        List<SelectResponseModel> list = new ArrayList<>();
+        SelectResponseModel document1 = new SelectResponseModel();
+        document1.setMessage("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum.");
+        document1.setViewType(AppConstant.FriendsLeaderBoard.SELECTMESSAGEADAPTER);
+        list.add(document1);
+
+
+        SelectResponseModel document2 = new SelectResponseModel();
+        document2.setMessage("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum.");
+        document2.setViewType(AppConstant.FriendsLeaderBoard.SELECTMESSAGEADAPTER);
+        list.add(document2);
+
+        SelectResponseModel document3 = new SelectResponseModel();
+        document3.setMessage("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum.");
+        document3.setViewType(AppConstant.FriendsLeaderBoard.SELECTMESSAGEADAPTER);
+        list.add(document3);
+
+
         return list;
     }
 }
