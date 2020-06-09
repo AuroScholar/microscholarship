@@ -10,6 +10,7 @@ import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
+import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.auro.scholr.teacher.domain.TeacherDbUseCase;
 import com.auro.scholr.teacher.domain.TeacherRemoteUseCase;
 import com.auro.scholr.teacher.domain.TeacherUseCase;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -37,6 +39,53 @@ public class TeacherProfileViewModel extends ViewModel {
         this.teacherUseCase = teacherUseCase;
         this.teacherRemoteUseCase = teacherRemoteUseCase;
     }
+
+
+    public void updateTeacherProfileData(TeacherReqModel reqModel) {
+
+        Disposable disposable = teacherRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
+            if (hasInternet) {
+                updateTeacherProfileApi(reqModel);
+            } else {
+                // please check your internet
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
+            }
+
+        });
+
+        getCompositeDisposable().add(disposable);
+
+    }
+
+
+    private void updateTeacherProfileApi(TeacherReqModel demographicResModel) {
+        getCompositeDisposable()
+                .add(teacherRemoteUseCase.updateTeacherProfileApi(demographicResModel)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(Disposable __) throws Exception {
+                                /*Do code here*/
+                                serviceLiveData.setValue(ResponseApi.loading(null));
+                            }
+                        })
+                        .subscribe(new Consumer<ResponseApi>() {
+                                       @Override
+                                       public void accept(ResponseApi responseApi) throws Exception {
+                                           serviceLiveData.setValue(responseApi);
+                                       }
+                                   },
+
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        defaultError();
+                                    }
+                                }));
+
+    }
+
 
 
     public void getStateListData() {

@@ -64,6 +64,18 @@ public interface AppConstant {
         String IS_PAYMENT_LASTMONTH = "is_payment_lastmonth";
     }
 
+
+    interface TeacherProfileParams {
+        String MOBILE_NUMBER = "mobile_no";
+        String TEACHER_NAME = "teacher_name";
+        String TEACHER_EMAIL = "teacher_email";
+        String SCHOOL_NAME = "school_name";
+        String STATE_ID = "state_id";
+        String DISTRICT_ID = "district_id";
+        String TEACHER_CLASS = "teacher_class";
+        String TEACHER_SUBJECT = "teacher_subject";
+    }
+
     interface ResponseConstatnt {
         int RES_200 = 200;
         int RES_400 = 400;

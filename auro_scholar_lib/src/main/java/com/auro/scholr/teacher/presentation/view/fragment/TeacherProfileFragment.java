@@ -20,6 +20,7 @@ import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.FragmentTeacherProfileBinding;
 import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
+import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.auro.scholr.teacher.presentation.view.adapter.DistrictSpinnerAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.StateSpinnerAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherProfileViewModel;
@@ -39,13 +40,9 @@ public class TeacherProfileFragment extends BaseFragment {
     @Named("TeacherProfileFragment")
     ViewModelFactory viewModelFactory;
     TeacherProfileViewModel viewModel;
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
+    TeacherReqModel teacherReqModel = new TeacherReqModel();
 
     FragmentTeacherProfileBinding binding;
-    private String mParam1;
-    private String mParam2;
     boolean isStateRestore;
     List<StateDataModel> stateDataModelList;
     List<DistrictDataModel> districtDataModels;
@@ -54,23 +51,11 @@ public class TeacherProfileFragment extends BaseFragment {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static TeacherProfileFragment newInstance(String param1, String param2) {
-        TeacherProfileFragment fragment = new TeacherProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -98,7 +83,7 @@ public class TeacherProfileFragment extends BaseFragment {
 
     @Override
     protected void init() {
-       binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
+        binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
             viewModel.serviceLiveData().removeObservers(this);
         } else {
@@ -132,7 +117,8 @@ public class TeacherProfileFragment extends BaseFragment {
                     break;
 
                 case SUCCESS:
-                    if (responseApi.apiTypeStatus == Status.KYC_RESULT_PATH) {
+                    if (responseApi.apiTypeStatus == Status.UPDATE_TEACHER_PROFILE_API) {
+
                     }
                     break;
 
@@ -161,6 +147,7 @@ public class TeacherProfileFragment extends BaseFragment {
 
         });
     }
+
     private void showSnackbarError(String message) {
         ViewUtil.showSnackBar(binding.getRoot(), message);
     }
@@ -176,6 +163,7 @@ public class TeacherProfileFragment extends BaseFragment {
                         viewModel.getStateDistrictData(stateDataModelList.get(position).getState_code());
                     }
                 }
+
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
 
