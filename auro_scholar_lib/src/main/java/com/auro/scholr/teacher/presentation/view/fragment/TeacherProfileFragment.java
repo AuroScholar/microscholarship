@@ -271,43 +271,43 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher 
         //teacher name validation
         if(editable == binding.editteachername.getEditableText()){
             if(editable.length()>=5){
-                Log.e("TextWacher","Edit name2 "+binding.editemail.getEditableText());
+
                 binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_check));
             }else{
-                Log.e("TextWacher","Edit name3 "+binding.editemail.getEditableText());
+
                 binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck));
             }
         }
         //email validation
         if(editable == binding.editemail.getEditableText()){
-            Log.e("TextWacher","Edit Email1 "+binding.editemail.getEditableText());
+
             if(emailValidation(binding.editemail)){
-                Log.e("TextWacher","Edit Email2 "+binding.editemail.getEditableText());
-                binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_check));
+
+                binding.icemail.setImageDrawable(getResources().getDrawable(R.drawable.ic_check));
             }else{
-                Log.e("TextWacher","Edit Email3 "+binding.editemail.getEditableText());
-                binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck));
+
+                binding.icemail.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck));
             }
         }
         //
         if(editable == binding.editPhoneNumber.getEditableText()){
-            Log.e("TextWacher","Edit Phone1 "+binding.editemail.getEditableText());
-            if(binding.editPhoneNumber.getText().toString().trim().length()>=10){
-                Log.e("TextWacher","Edit Phone2 "+binding.editemail.getEditableText());
-                binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_check));
+
+            if(editable.length()==10){
+
+                binding.icmobilenumber.setImageDrawable(getResources().getDrawable(R.drawable.ic_check));
             }else{
-                Log.e("TextWacher","Edit Phone3 "+binding.editemail.getEditableText());
-                binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck));
+
+                binding.icmobilenumber.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck));
             }
         }
         if(editable == binding.editSchoolName.getEditableText()){
-            Log.e("TextWacher","Edit Phone1 "+binding.editemail.getEditableText());
-            if(editable.length()<=10){
-                Log.e("TextWacher","Edit Phone2 "+binding.editemail.getEditableText());
-                binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_check));
+
+            if(editable.length()>=5){
+
+                binding.icschoolname.setImageDrawable(getResources().getDrawable(R.drawable.ic_check));
             }else{
-                Log.e("TextWacher","Edit Phone3 "+binding.editemail.getEditableText());
-                binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck));
+
+                binding.icschoolname.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck));
             }
         }
     }
@@ -316,19 +316,13 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher 
 
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         if(emailtext.getText().toString().isEmpty()) {
-
             binding.inputemailedittext.setError(null);
             return false;
-
-
         }else {
             if (emailtext.getText().toString().trim().matches(emailPattern)) {
                 binding.inputemailedittext.setError(null);
                return true;
-
-
             } else {
-
                 binding.inputemailedittext.setError("Invalid email address");
                 return false;
 
