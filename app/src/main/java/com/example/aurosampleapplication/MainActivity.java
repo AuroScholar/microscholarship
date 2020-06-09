@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                  openGenricSDK();
                 //openScholarSpecificSdk();
                 hideKeyboard(this);
+
+
                 break;
             case R.id.bt_open:
                 openFragment(new SampleFragment());
