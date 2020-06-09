@@ -289,7 +289,7 @@
                                                 android:textColorHint="@color/color_dim_grey"
                                                 android:textSize="@dimen/_12sdp"
                                                 android:inputType="number"
-                                                android:maxLength="10"
+                                                android:maxLength="11"
                                                 android:theme="@style/MyEditText"
                                                 app:Font="Poppins-Regular.ttf" />
 
