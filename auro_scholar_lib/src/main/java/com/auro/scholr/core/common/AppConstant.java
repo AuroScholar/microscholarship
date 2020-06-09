@@ -149,6 +149,8 @@ public interface AppConstant {
         String QUIZ_DASHBOARD_WEB = "QUIZ_DASHBOARD_WEB";
         int TEACHERDOCUMENTADAPTER = 103;
         int SELECTMESSAGEADAPTER = 104;
+        int SUBJECTADAPTER = 105;
+        int CLASSESADAPTER = 106;
 
     }
 

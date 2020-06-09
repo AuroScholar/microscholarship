@@ -192,4 +192,8 @@
         <item name="colorControlActivated">@color/color_dim_grey</item>
     </style>
 
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/sppiner_background</item>
+    </style>
+
 </resources>

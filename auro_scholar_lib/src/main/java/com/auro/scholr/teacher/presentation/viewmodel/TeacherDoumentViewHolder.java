@@ -3,10 +3,8 @@ package com.auro.scholr.teacher.presentation.viewmodel;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.auro.scholr.databinding.MonthWiseItemLayoutBinding;
 import com.auro.scholr.databinding.TeacherDocumentItemLayoutBinding;
-import com.auro.scholr.home.data.model.MonthlyScholarShipModel;
-import com.auro.scholr.home.data.model.TeacherDocumentModel;
+import com.auro.scholr.teacher.data.model.TeacherDocumentModel;
 
 public class TeacherDoumentViewHolder  extends RecyclerView.ViewHolder {
 

@@ -14,16 +14,10 @@
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_camera_bottom_bar"
     tools:context=".teacher.presentation.view.fragment.SelectYourMessageDialogFragment">
-
-
-
-
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
