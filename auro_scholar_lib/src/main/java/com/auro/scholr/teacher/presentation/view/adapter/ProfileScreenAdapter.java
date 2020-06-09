@@ -1,5 +1,6 @@
 package com.auro.scholr.teacher.presentation.view.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -11,7 +12,7 @@ import com.auro.scholr.R;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.databinding.ClassItemLayoutBinding;
 
-import com.auro.scholr.teacher.data.model.ClassResponseModel;
+import com.auro.scholr.teacher.data.model.request.SelectClassesSubject;
 import com.auro.scholr.teacher.presentation.viewmodel.ClassViewHolder;
 
 
@@ -19,10 +20,14 @@ import java.util.List;
 
 public class ProfileScreenAdapter extends RecyclerView.Adapter {
 
-    List<ClassResponseModel> classlist;
+    List<SelectClassesSubject> classlist;
+    Context mcontext;
 
-    public ProfileScreenAdapter(List<ClassResponseModel> classlist) {
+
+    public ProfileScreenAdapter(List<SelectClassesSubject> classlist,Context mcontext) {
         this.classlist = classlist;
+        this.mcontext= mcontext;
+
     }
 
 
@@ -51,11 +56,11 @@ public class ProfileScreenAdapter extends RecyclerView.Adapter {
 
         switch (viewType) {
             case AppConstant.FriendsLeaderBoard.SUBJECTADAPTER:
-                ((ClassViewHolder) holder).bindUser(classlist.get(position), position);
+                ((ClassViewHolder) holder).bindUser(classlist.get(position), position, mcontext);
                 break;
 
             case AppConstant.FriendsLeaderBoard.CLASSESADAPTER:
-                ((ClassViewHolder) holder).bindUser(classlist.get(position),position);
+                ((ClassViewHolder) holder).bindUser(classlist.get(position),position,mcontext);
                 break;
         }
     }
