@@ -170,17 +170,18 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
             switch (responseApi.status) {
 
                 case LOADING:
+                    handleProgress(0);
                     break;
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == Status.UPDATE_TEACHER_PROFILE_API) {
-
+                        handleProgress(1);
                     }
                     break;
 
                 case FAIL:
                 case NO_INTERNET:
-
+                    handleProgress(1);
                     showSnackbarError((String) responseApi.data);
                     break;
 
@@ -197,6 +198,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                     break;
 
                 default:
+                    handleProgress(1);
                     showSnackbarError(getString(R.string.default_error));
                     break;
             }
@@ -393,6 +395,19 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
             case CLASS_CLICK:
                 SelectClassesSubject class_click = (SelectClassesSubject) commonDataModel.getObject();
                 classHashmap.put(class_click.getText(), class_click.getText());
+                break;
+        }
+    }
+
+    public void handleProgress(int status) {
+        switch (status) {
+            case 0:
+                binding.button.setVisibility(View.GONE);
+                binding.progressBar.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                binding.button.setVisibility(View.VISIBLE);
+                binding.progressBar.setVisibility(View.GONE);
                 break;
         }
     }

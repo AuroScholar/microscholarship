@@ -497,10 +497,11 @@
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="@dimen/_40sdp"
                                 android:layout_marginLeft="@dimen/_20sdp"
                                 android:layout_marginTop="@dimen/_20sdp"
                                 android:layout_marginRight="@dimen/_20sdp"
+                                android:background="@drawable/rectangle_backs"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/llstate">
@@ -510,7 +511,6 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_40sdp"
                                     android:layout_centerInParent="true"
-                                    android:background="@drawable/rectangle_backs"
                                     android:gravity="center"
                                     android:paddingTop="@dimen/_10sdp"
                                     android:paddingBottom="@dimen/_10sdp"
