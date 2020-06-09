@@ -437,7 +437,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/_5sdp"
-                                        android:layout_marginRight="@dimen/_15sdp"
+                                        android:layout_marginRight="@dimen/_8sdp"
                                         android:tooltipText="@string/choose_your_state" />
 
                                     <View
@@ -462,14 +462,14 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/_5sdp"
-                                        android:layout_marginRight="@dimen/_15sdp"
+                                        android:layout_marginRight="@dimen/_8sdp"
                                         android:tooltipText="@string/choose_your_state" />
 
                                     <View
-                                        android:layout_width="match_parent"
+          de                              android:layout_width="match_parent"
                                         android:layout_height="@dimen/_1sdp"
                                         android:layout_marginTop="@dimen/_5sdp"
-                                        android:layout_marginRight="@dimen/_15sdp"
+                                        android:layout_marginRight="@dimen/_8sdp"
                                         android:background="@color/color_dim_grey" />
 
                                 </LinearLayout>
