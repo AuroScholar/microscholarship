@@ -196,6 +196,7 @@ public class TeacherProfileFragment extends BaseFragment {
             binding.citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 }
 
                 @Override
@@ -208,6 +209,7 @@ public class TeacherProfileFragment extends BaseFragment {
             binding.citySpinner.setVisibility(View.GONE);
         }
     }
+
     public void setRecycleView(){
         //for class recycleview
 
