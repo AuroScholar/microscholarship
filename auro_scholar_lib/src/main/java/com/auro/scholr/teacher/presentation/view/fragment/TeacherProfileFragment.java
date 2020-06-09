@@ -221,7 +221,6 @@ public class TeacherProfileFragment extends BaseFragment {
         }
     }
     public void setRecycleView(){
-        Toast.makeText(getActivity(), "recycle view", Toast.LENGTH_SHORT).show();
         //for class recycleview
 
         GridLayoutManager gridlayout = new GridLayoutManager(getActivity(),2);

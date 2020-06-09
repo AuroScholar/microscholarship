@@ -37,200 +37,218 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
 
-        <com.auro.scholr.core.util.uiwidget.RPTextView
-        android:id="@+id/RPTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/save_more_details"
-        android:textColor="@color/black"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:textSize="@dimen/_20sdp"
-        app:Font="Poppins-Bold.ttf"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        app:layout_constraintStart_toStartOf="@+id/header_parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_parent" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginRight="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RPTextView">
-
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="8.2"
-            android:orientation="vertical"
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            android:fillViewport="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-
-            <LinearLayout
+            app:layout_constraintTop_toBottomOf="@+id/header_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="4"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                >
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilteachertxt"
-                    android:layout_width="0dp"
-                    app:hintTextAppearance="@style/TextInputLayout"
-                    app:hintTextColor="@color/color_dim_grey"
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/RPTextView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3.5"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    >
+                    android:gravity="center"
+                    android:text="@string/save_more_details"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_20sdp"
+                    app:Font="Poppins-Bold.ttf"
+                   app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-                    <com.auro.scholr.core.util.uiwidget.RPEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/MyEditText"
-                        android:hint="@string/teacher_name"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12sdp"
-                        app:Font="Poppins-Regular.ttf" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/RPTextView">
 
-                <ImageView
-                    android:id="@+id/icteachername"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="0.5"
-                    android:src="@drawable/ic_check"
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="8.2"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="4"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilteachertxt"
+                                android:layout_width="0dp"
+                                app:hintTextAppearance="@style/TextInputLayout"
+                                app:hintTextColor="@color/color_dim_grey"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3.5"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                >
+
+                                <com.auro.scholr.core.util.uiwidget.RPEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:theme="@style/MyEditText"
+                                    android:hint="@string/teacher_name"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_12sdp"
+                                    app:Font="Poppins-Regular.ttf" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <ImageView
+                                android:id="@+id/icteachername"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="0.5"
+                                android:src="@drawable/ic_check"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/text_document_layout"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="4"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tiledittext"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3.5"
+                                app:hintTextAppearance="@style/TextInputLayout"
+                                app:hintTextColor="@color/color_dim_grey"
+                                android:layout_marginRight="@dimen/_10sdp">
+
+                                <com.auro.scholr.core.util.uiwidget.RPEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/email_address"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:theme="@style/MyEditText"
+                                    app:Font="Poppins-Regular.ttf" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <ImageView
+                                android:id="@+id/icemail"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="0.5"
+                                android:src="@drawable/ic_check"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/text_document_layout"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="4"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:orientation="horizontal">
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilmobiletxt"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                app:hintTextAppearance="@style/TextInputLayout"
+                                app:hintTextColor="@color/color_dim_grey"
+                                android:layout_weight="3.5"
+                                android:layout_marginRight="@dimen/_10sdp">
+
+                                <com.auro.scholr.core.util.uiwidget.RPEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColorHint="@color/color_dim_grey"
+                                    android:hint="@string/mobile_number"
+                                    android:textColor="@color/black"
+                                    android:theme="@style/MyEditText"
+                                    android:textSize="@dimen/_12sdp"
+                                    app:Font="Poppins-Regular.ttf" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <ImageView
+                                android:id="@+id/icmobilenumber"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="0.5"
+                                android:src="@drawable/ic_check"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/text_document_layout"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/button"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:text="@string/next"
+                    app:Font="Poppins-Bold.ttf"
+                    android:textSize="@dimen/_12sdp"
+                    android:textAllCaps="true"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:gravity="center"
+                    android:background="@drawable/rectangle_backs"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textColor="@color/white"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/RPTextView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/skip_for_now"
+                    android:textColor="@color/black"
+                    app:Font="Poppins-Regular.ttf"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/text_document_layout"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/button"
+                    app:layout_constraintVertical_bias="0.38" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
 
-            </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="4"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiledittext"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3.5"
-                app:hintTextAppearance="@style/TextInputLayout"
-                app:hintTextColor="@color/color_dim_grey"
-                android:layout_marginRight="@dimen/_10sdp">
-
-                <com.auro.scholr.core.util.uiwidget.RPEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/email_address"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp"
-                    android:theme="@style/MyEditText"
-                    app:Font="Poppins-Regular.ttf" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-            <ImageView
-                android:id="@+id/icemail"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_20sdp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="0.5"
-                android:src="@drawable/ic_check"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_document_layout"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="4"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:orientation="horizontal">
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilmobiletxt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/TextInputLayout"
-                app:hintTextColor="@color/color_dim_grey"
-                android:layout_weight="3.5"
-                android:layout_marginRight="@dimen/_10sdp">
-
-                <com.auro.scholr.core.util.uiwidget.RPEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/color_dim_grey"
-                    android:hint="@string/mobile_number"
-                    android:textColor="@color/black"
-                    android:theme="@style/MyEditText"
-                    android:textSize="@dimen/_12sdp"
-                    app:Font="Poppins-Regular.ttf" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-            <ImageView
-                android:id="@+id/icmobilenumber"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_20sdp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="0.5"
-                android:src="@drawable/ic_check"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_document_layout"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </LinearLayout>
-
-        </LinearLayout>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <com.auro.scholr.core.util.uiwidget.RPTextView
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginRight="@dimen/_20sdp"
-        android:text="@string/next"
-        app:Font="Poppins-Bold.ttf"
-        android:textSize="@dimen/_12sdp"
-        android:textAllCaps="true"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:gravity="center"
-        android:background="@drawable/rectangle_backs"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/white"
-        android:paddingTop="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-        <com.auro.scholr.core.util.uiwidget.RPTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/skip_for_now"
-        android:textColor="@color/black"
-        app:Font="Poppins-Regular.ttf"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.38" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
