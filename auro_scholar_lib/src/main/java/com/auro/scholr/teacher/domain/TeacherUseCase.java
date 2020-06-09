@@ -5,12 +5,12 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
 import com.auro.scholr.home.data.model.QuizResModel;
-import com.auro.scholr.teacher.data.model.ClassResponseModel;
 import com.auro.scholr.teacher.data.model.SelectResponseModel;
 import com.auro.scholr.teacher.data.model.TeacherDocumentModel;
 import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.MonthDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
+import com.auro.scholr.teacher.data.model.request.SelectClassesSubject;
 import com.auro.scholr.util.AppLogger;
 
 import java.io.BufferedReader;
@@ -227,74 +227,111 @@ public class TeacherUseCase {
         return districtList;
     }
 
-    public List<ClassResponseModel> makeListForClassModel() {
+    public List<SelectClassesSubject> selectClass() {
+        List<SelectClassesSubject> list = new ArrayList<>();
 
-        List<ClassResponseModel> list = new ArrayList<>();
-        ClassResponseModel classmodel = new ClassResponseModel();
-        classmodel.setClasses("1st");
-        classmodel.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
-        list.add(classmodel);
+        SelectClassesSubject classes1 = new SelectClassesSubject();
+        classes1.setText("1st");
+        classes1.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classes1);
 
-        ClassResponseModel classmodel1 = new ClassResponseModel();
-        classmodel1.setClasses("2nd");
-        classmodel1.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
-        list.add(classmodel1);
+        SelectClassesSubject classes2 = new SelectClassesSubject();
+        classes2.setText("7th");
+        classes2.setSelected(false);
+        classes2.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classes2);
 
-        ClassResponseModel classmode2 = new ClassResponseModel();
-        classmode2.setClasses("3th");
-        classmode2.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
-        list.add(classmode2);
+        SelectClassesSubject classes3 = new SelectClassesSubject();
+        classes3.setText("2nd");
+        classes3.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classes3);
 
-        ClassResponseModel classmode3 = new ClassResponseModel();
-        classmode3.setClasses("4th");
-        classmode3.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
-        list.add(classmode3);
+        SelectClassesSubject classes4 = new SelectClassesSubject();
+        classes4.setText("8th");
+        classes4.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classes4);
 
-        ClassResponseModel classmode4 = new ClassResponseModel();
-        classmode4.setClasses("5th");
-        classmode4.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
-        list.add(classmode4);
+        SelectClassesSubject classes12 = new SelectClassesSubject();
+        classes12.setText("3rd");
+        classes12.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classes12);
 
-        ClassResponseModel classmode5 = new ClassResponseModel();
-        classmode5.setClasses("6th");
-        classmode5.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
-        list.add(classmode5);
-        return list;
+        SelectClassesSubject classes5 = new SelectClassesSubject();
+        classes5.setText("9th");
+        classes5.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classes5);
+
+        SelectClassesSubject classes6 = new SelectClassesSubject();
+        classes6.setText("4th");
+        classes6.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classes6);
+
+        SelectClassesSubject classes7 = new SelectClassesSubject();
+        classes7.setText("10th");
+        classes7.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classes7);
+
+        SelectClassesSubject classes8 = new SelectClassesSubject();
+        classes8.setText("5th");
+        classes8.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classes8);
+
+        SelectClassesSubject classes9 = new SelectClassesSubject();
+        classes9.setText("11th");
+        classes9.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classes9);
+
+        SelectClassesSubject classes10 = new SelectClassesSubject();
+        classes10.setText("6th");
+        classes10.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classes10);
+
+        SelectClassesSubject classes11 = new SelectClassesSubject();
+        classes11.setText("12th");
+        classes11.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+        list.add(classes11);
+
+        return  list;
+
     }
 
-    public List<ClassResponseModel> makeListForSubjectModel() {
+    public List<SelectClassesSubject> selectSubject() {
+        List<SelectClassesSubject> list = new ArrayList<>();
+        SelectClassesSubject classes1 = new SelectClassesSubject();
+        classes1.setText("Maths");
 
-        List<ClassResponseModel> list = new ArrayList<>();
-        ClassResponseModel classmodel = new ClassResponseModel();
-        classmodel.setClasses("Maths");
-        classmodel.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
-        list.add(classmodel);
+        classes1.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
+        list.add(classes1);
 
-        ClassResponseModel classmodel1 = new ClassResponseModel();
-        classmodel1.setClasses("English");
-        classmodel1.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
-        list.add(classmodel1);
+        SelectClassesSubject classes2 = new SelectClassesSubject();
+        classes2.setText("Social Science");
 
-        ClassResponseModel classmode2 = new ClassResponseModel();
-        classmode2.setClasses("Hindi");
-        classmode2.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
-        list.add(classmode2);
+        classes2.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
+        list.add(classes2);
 
-        ClassResponseModel classmode3 = new ClassResponseModel();
-        classmode3.setClasses("Science");
-        classmode3.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
-        list.add(classmode3);
+        SelectClassesSubject classes3 = new SelectClassesSubject();
+        classes3.setText("English");
 
-        ClassResponseModel classmode4 = new ClassResponseModel();
-        classmode4.setClasses("S.Science");
-        classmode4.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
-        list.add(classmode4);
+        classes3.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
+        list.add(classes3);
+        SelectClassesSubject classes4 = new SelectClassesSubject();
+        classes4.setText("Science");
 
-        ClassResponseModel classmode5 = new ClassResponseModel();
-        classmode5.setClasses("Sanskrit");
-        classmode5.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
-        list.add(classmode5);
-        return list;
+        classes4.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
+        list.add(classes4);
+        SelectClassesSubject classes5 = new SelectClassesSubject();
+        classes5.setText("Hindi");
+
+        classes5.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
+        list.add(classes5);
+        SelectClassesSubject classes6 = new SelectClassesSubject();
+        classes6.setText("Other");
+
+        classes6.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
+        list.add(classes6);
+        return  list;
+
     }
+   
 
 }

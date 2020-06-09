@@ -187,4 +187,30 @@
     <string name="information">Information</string>
     <string name="friends_ke_bina_kya_fun">Friends ke bina kya fun!</string>
 
+    <string-array name="classes">
+        <item>1st</item>
+        <item>7th </item>
+        <item>2nd</item>
+        <item>8th</item>
+        <item>3rd</item>
+        <item>9th</item>
+        <item>4th</item>
+        <item>10th</item>
+        <item>5th</item>
+        <item>11th</item>
+        <item>6th</item>
+        <item>12th</item>
+    </string-array>
+
+    <string-array name="subject">
+        <item>Maths</item>
+        <item>Social Science</item>
+        <item>English</item>
+        <item>Science</item>
+        <item>Hindi</item>
+        <item>Other</item>
+    </string-array>
+
+
+
 </resources>

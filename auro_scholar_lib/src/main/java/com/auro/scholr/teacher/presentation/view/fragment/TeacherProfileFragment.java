@@ -9,16 +9,21 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.FragmentTeacherProfileBinding;
 import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
@@ -33,13 +38,14 @@ import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 
-public class TeacherProfileFragment extends BaseFragment {
+public class TeacherProfileFragment extends BaseFragment implements TextWatcher {
 
     @Inject
     @Named("TeacherProfileFragment")
@@ -51,6 +57,8 @@ public class TeacherProfileFragment extends BaseFragment {
     boolean isStateRestore;
     List<StateDataModel> stateDataModelList;
     List<DistrictDataModel> districtDataModels;
+    List<String> classesList;
+    List<String> subjectlist;
 
     public TeacherProfileFragment() {
         // Required empty public constructor
@@ -90,6 +98,7 @@ public class TeacherProfileFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         init();
+        setListener();
         setRecycleView();
     }
 
@@ -104,6 +113,8 @@ public class TeacherProfileFragment extends BaseFragment {
         viewModel.getStateListData();
         viewModel.getDistrictListData();
         setRecycleView();
+
+
     }
 
     @Override
@@ -113,7 +124,8 @@ public class TeacherProfileFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-
+        binding.editteachername.addTextChangedListener(this);
+        binding.editemail.addTextChangedListener(this);
     }
 
     @Override
@@ -174,6 +186,18 @@ public class TeacherProfileFragment extends BaseFragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     if (position != 0) {
                         viewModel.getStateDistrictData(stateDataModelList.get(position).getState_code());
+                        binding.cityTitle.setVisibility(View.VISIBLE);
+                        binding.cityView.setVisibility(View.VISIBLE);
+                        binding.citySpinner.setVisibility(View.VISIBLE);
+
+                    }else if(stateDataModelList.get(position).getState_name().trim().equalsIgnoreCase("pleaseselectstate")){
+                        binding.cityTitle.setVisibility(View.GONE);
+                        binding.cityView.setVisibility(View.GONE);
+                        binding.citySpinner.setVisibility(View.GONE);
+                    }else{
+                        binding.cityTitle.setVisibility(View.GONE);
+                        binding.cityView.setVisibility(View.GONE);
+                        binding.citySpinner.setVisibility(View.GONE);
                     }
                 }
 
@@ -212,23 +236,105 @@ public class TeacherProfileFragment extends BaseFragment {
 
     public void setRecycleView(){
         //for class recycleview
-
+        classesList = Arrays.asList(getResources().getStringArray(R.array.classes));
         GridLayoutManager gridlayout = new GridLayoutManager(getActivity(),2);
         gridlayout.setOrientation(LinearLayoutManager.HORIZONTAL);
         binding.recycleViewclass.setLayoutManager(gridlayout);
         binding.recycleViewclass.setHasFixedSize(true);
         binding.recycleViewclass.setNestedScrollingEnabled(false);
-        ProfileScreenAdapter mProfileScreenAdapterAdapter = new ProfileScreenAdapter(viewModel.teacherUseCase.makeListForClassModel());
+        ProfileScreenAdapter mProfileScreenAdapterAdapter = new ProfileScreenAdapter(viewModel.teacherUseCase.selectClass(),getContext());
         binding.recycleViewclass.setAdapter(mProfileScreenAdapterAdapter);
 
         //for subject recycle view
+        subjectlist = Arrays.asList(getResources().getStringArray(R.array.subject));
         GridLayoutManager gridlayout2 = new GridLayoutManager(getActivity(),2);
         gridlayout2.setOrientation(LinearLayoutManager.HORIZONTAL);
         binding.recycleViewsubject.setLayoutManager(gridlayout2);
         binding.recycleViewsubject.setHasFixedSize(true);
         binding.recycleViewsubject.setNestedScrollingEnabled(false);
-        ProfileScreenAdapter mProfileScreenAdapterAdapter1 = new ProfileScreenAdapter(viewModel.teacherUseCase.makeListForSubjectModel());
+        ProfileScreenAdapter mProfileScreenAdapterAdapter1 = new ProfileScreenAdapter(viewModel.teacherUseCase.selectSubject(),getContext());
         binding.recycleViewsubject.setAdapter(mProfileScreenAdapterAdapter1);
     }
 
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+        //teacher name validation
+        if(editable == binding.editteachername.getEditableText()){
+            if(editable.length()>=5){
+                Log.e("TextWacher","Edit name2 "+binding.editemail.getEditableText());
+                binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_check));
+            }else{
+                Log.e("TextWacher","Edit name3 "+binding.editemail.getEditableText());
+                binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck));
+            }
+        }
+        //email validation
+        if(editable == binding.editemail.getEditableText()){
+            Log.e("TextWacher","Edit Email1 "+binding.editemail.getEditableText());
+            if(emailValidation(binding.editemail)){
+                Log.e("TextWacher","Edit Email2 "+binding.editemail.getEditableText());
+                binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_check));
+            }else{
+                Log.e("TextWacher","Edit Email3 "+binding.editemail.getEditableText());
+                binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck));
+            }
+        }
+        //
+        if(editable == binding.editPhoneNumber.getEditableText()){
+            Log.e("TextWacher","Edit Phone1 "+binding.editemail.getEditableText());
+            if(binding.editPhoneNumber.getText().toString().trim().length()>=10){
+                Log.e("TextWacher","Edit Phone2 "+binding.editemail.getEditableText());
+                binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_check));
+            }else{
+                Log.e("TextWacher","Edit Phone3 "+binding.editemail.getEditableText());
+                binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck));
+            }
+        }
+        if(editable == binding.editSchoolName.getEditableText()){
+            Log.e("TextWacher","Edit Phone1 "+binding.editemail.getEditableText());
+            if(editable.length()<=10){
+                Log.e("TextWacher","Edit Phone2 "+binding.editemail.getEditableText());
+                binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_check));
+            }else{
+                Log.e("TextWacher","Edit Phone3 "+binding.editemail.getEditableText());
+                binding.icteachername.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck));
+            }
+        }
+    }
+
+    public boolean emailValidation(EditText emailtext){
+
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        if(emailtext.getText().toString().isEmpty()) {
+
+            binding.inputemailedittext.setError(null);
+            return false;
+
+
+        }else {
+            if (emailtext.getText().toString().trim().matches(emailPattern)) {
+                binding.inputemailedittext.setError(null);
+               return true;
+
+
+            } else {
+
+                binding.inputemailedittext.setError("Invalid email address");
+                return false;
+
+            }
+        }
+    }
 }

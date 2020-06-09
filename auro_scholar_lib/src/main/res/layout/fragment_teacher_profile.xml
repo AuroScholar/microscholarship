@@ -194,9 +194,12 @@
                                             app:hintTextColor="@color/color_dim_grey">
 
                                             <com.auro.scholr.core.util.uiwidget.RPEditText
+                                                android:id="@+id/editteachername"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:hint="@string/teacher_name"
+                                                android:maxLines="1"
+                                                android:inputType="textPersonName"
                                                 android:textColor="@color/black"
                                                 android:textSize="@dimen/_12sdp"
                                                 android:theme="@style/MyEditText"
@@ -210,7 +213,7 @@
                                             android:layout_height="@dimen/_20sdp"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="0.5"
-                                            android:src="@drawable/ic_check"
+                                            android:src="@drawable/ic_uncheck"
                                             app:layout_constraintBottom_toBottomOf="parent"
                                             app:layout_constraintStart_toEndOf="@+id/text_document_layout"
                                             app:layout_constraintTop_toTopOf="parent" />
@@ -226,7 +229,7 @@
                                         android:weightSum="4">
 
                                         <com.google.android.material.textfield.TextInputLayout
-                                            android:id="@+id/tiledittext"
+                                            android:id="@+id/inputemailedittext"
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginRight="@dimen/_10sdp"
@@ -235,11 +238,14 @@
                                             app:hintTextColor="@color/color_dim_grey">
 
                                             <com.auro.scholr.core.util.uiwidget.RPEditText
+                                                android:id="@+id/editemail"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:hint="@string/email_address"
                                                 android:textColor="@color/black"
+                                                android:inputType="textEmailAddress"
                                                 android:textSize="@dimen/_12sdp"
+                                                android:maxLines="1"
                                                 android:theme="@style/MyEditText"
                                                 app:Font="Poppins-Regular.ttf" />
 
@@ -251,7 +257,7 @@
                                             android:layout_height="@dimen/_20sdp"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="0.5"
-                                            android:src="@drawable/ic_check"
+                                            android:src="@drawable/ic_uncheck"
                                             app:layout_constraintBottom_toBottomOf="parent"
                                             app:layout_constraintStart_toEndOf="@+id/text_document_layout"
                                             app:layout_constraintTop_toTopOf="parent" />
@@ -275,12 +281,15 @@
                                             app:hintTextColor="@color/color_dim_grey">
 
                                             <com.auro.scholr.core.util.uiwidget.RPEditText
+                                                android:id="@+id/editPhoneNumber"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:hint="@string/mobile_number"
                                                 android:textColor="@color/black"
                                                 android:textColorHint="@color/color_dim_grey"
                                                 android:textSize="@dimen/_12sdp"
+                                                android:inputType="number"
+                                                android:maxLength="10"
                                                 android:theme="@style/MyEditText"
                                                 app:Font="Poppins-Regular.ttf" />
 
@@ -292,7 +301,7 @@
                                             android:layout_height="@dimen/_20sdp"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="0.5"
-                                            android:src="@drawable/ic_check"
+                                            android:src="@drawable/ic_uncheck"
                                             app:layout_constraintBottom_toBottomOf="parent"
                                             app:layout_constraintStart_toEndOf="@+id/text_document_layout"
                                             app:layout_constraintTop_toTopOf="parent" />
@@ -318,7 +327,7 @@
                                     android:id="@+id/recycleViewclass"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-
+                                    android:overScrollMode="never"
                                     android:visibility="visible"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintHorizontal_bias="0.0"
@@ -352,7 +361,7 @@
                                     android:id="@+id/recycleViewsubject"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-
+                                    android:overScrollMode="never"
                                     android:visibility="visible"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -390,11 +399,13 @@
                                         app:hintTextColor="@color/color_dim_grey">
 
                                         <com.auro.scholr.core.util.uiwidget.RPEditText
+                                            android:id="@+id/editSchoolName"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:hint="@string/school_name"
                                             android:textColor="@color/black"
                                             android:textSize="@dimen/_12sdp"
+                                            android:inputType="textPersonName"
                                             android:theme="@style/MyEditText"
                                             app:Font="Poppins-Regular.ttf" />
 
@@ -406,7 +417,7 @@
                                         android:layout_height="@dimen/_20sdp"
                                         android:layout_gravity="center_vertical"
                                         android:layout_weight="0.5"
-                                        android:src="@drawable/ic_check"
+                                        android:src="@drawable/ic_uncheck"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintStart_toEndOf="@+id/text_document_layout"
                                         app:layout_constraintTop_toTopOf="parent" />
@@ -437,7 +448,8 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/_5sdp"
-                                        android:layout_marginRight="@dimen/_15sdp"
+                                        android:layout_marginRight="@dimen/_8sdp"
+                                        android:gravity="left"
                                         android:tooltipText="@string/choose_your_state" />
 
                                     <View
@@ -452,7 +464,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/_15sdp"
-
+                                        android:visibility="gone"
                                         android:text="@string/city"
                                         android:textColor="@color/color_dim_grey" />
 
@@ -462,14 +474,18 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/_5sdp"
-                                        android:layout_marginRight="@dimen/_15sdp"
+                                        android:visibility="gone"
+                                        android:gravity="left"
+                                        android:layout_marginRight="@dimen/_8sdp"
                                         android:tooltipText="@string/choose_your_state" />
 
                                     <View
+                                        android:id="@+id/cityView"
                                         android:layout_width="match_parent"
                                         android:layout_height="@dimen/_1sdp"
                                         android:layout_marginTop="@dimen/_5sdp"
-                                        android:layout_marginRight="@dimen/_15sdp"
+                                        android:visibility="gone"
+                                        android:layout_marginRight="@dimen/_8sdp"
                                         android:background="@color/color_dim_grey" />
 
                                 </LinearLayout>
