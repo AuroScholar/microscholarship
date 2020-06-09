@@ -7,6 +7,7 @@ import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
+import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -17,7 +18,8 @@ import retrofit2.Response;
 public interface TeacherRepo {
 
     interface TeacherRemoteData {
-        Single<Response<JsonObject>> getTeacherData(AuroScholarDataModel model);
+
+        Single<Response<JsonObject>> updateTeacherProfileApi(TeacherReqModel model);
 
 
     }

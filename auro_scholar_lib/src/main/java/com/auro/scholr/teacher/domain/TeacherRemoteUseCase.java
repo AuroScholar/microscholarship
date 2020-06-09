@@ -6,21 +6,13 @@ import com.auro.scholr.core.common.NetworkUtil;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.network.NetworkUseCase;
-import com.auro.scholr.home.data.model.AssignmentReqModel;
-import com.auro.scholr.home.data.model.AssignmentResModel;
-import com.auro.scholr.home.data.model.AuroScholarDataModel;
-import com.auro.scholr.home.data.model.AzureResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
-import com.auro.scholr.home.data.model.DemographicResModel;
-import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
-import com.auro.scholr.home.data.model.KYCInputModel;
-import com.auro.scholr.home.data.model.KYCResListModel;
+import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
+import com.auro.scholr.teacher.data.model.response.TeacherResModel;
 import com.auro.scholr.teacher.data.repository.TeacherRepo;
 import com.auro.scholr.util.AppUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
-import java.util.List;
 
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
@@ -30,29 +22,27 @@ import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_200;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_400;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_401;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_FAIL;
-import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
-import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
-import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
+import static com.auro.scholr.core.common.Status.UPDATE_TEACHER_PROFILE_API;
 
 public class TeacherRemoteUseCase extends NetworkUseCase {
     TeacherRepo.TeacherRemoteData teacherRemoteData;
     Gson gson = new Gson();
 
-    public TeacherRemoteUseCase( TeacherRepo.TeacherRemoteData teacherRemoteData) {
+    public TeacherRemoteUseCase(TeacherRepo.TeacherRemoteData teacherRemoteData) {
         this.teacherRemoteData = teacherRemoteData;
     }
 
 
-    public Single<ResponseApi> uploadProfileImage(AuroScholarDataModel kycInputModel) {
+    public Single<ResponseApi> updateTeacherProfileApi(TeacherReqModel reqModel) {
 
-        return teacherRemoteData.getTeacherData(kycInputModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+        return teacherRemoteData.updateTeacherProfileApi(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
             @Override
             public ResponseApi apply(Response<JsonObject> response) throws Exception {
 
                 if (response != null) {
 
-                    return handleResponse(response, Status.UPLOAD_PROFILE_IMAGE);
+                    return handleResponse(response, Status.UPDATE_TEACHER_PROFILE_API);
 
                 } else {
 
@@ -91,9 +81,14 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
 
     @Override
     public ResponseApi response200(Response<JsonObject> response, Status status) {
-        if (status == DASHBOARD_API) {
-            DashboardResModel dashboardResModel = gson.fromJson(response.body(), DashboardResModel.class);
-            return ResponseApi.success(dashboardResModel, status);
+        if (status == UPDATE_TEACHER_PROFILE_API) {
+            TeacherResModel teacherResModel = gson.fromJson(response.body(), TeacherResModel.class);
+            if (!teacherResModel.getError()) {
+                return ResponseApi.success(teacherResModel, status);
+            } else {
+                return ResponseApi.fail(teacherResModel.getMessage(), status);
+            }
+
         }
 
 

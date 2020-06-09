@@ -19,8 +19,8 @@ import retrofit2.http.Part;
 public interface TeacherRemoteApi {
 
 
-    @POST(URLConstant.DASHBOARD_API)
+    @POST(URLConstant.TEACHER_PROFILE_UPDATE_API)
     @FormUrlEncoded
-    Single<Response<JsonObject>> getDashboardData(@FieldMap Map<String, String> params);
+    Single<Response<JsonObject>> updateTeacherProfileApi(@FieldMap Map<String, String> params);
 
 }
