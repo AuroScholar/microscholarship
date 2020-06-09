@@ -5,35 +5,25 @@
 
 
     <item
-        android:id="@+id/action_cards"
+        android:id="@+id/action_profile"
         android:enabled="true"
-        android:icon="@drawable/home_icon_color"
-        android:title="Home"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_rewards"
+        android:id="@+id/action_dashboard"
         android:enabled="true"
-        android:title="Edge"
+        android:title="My Classroom"
         android:icon="@drawable/more_icon"
+
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_home"
+        android:id="@+id/action_kyc"
         android:enabled="false"
-        android:title=""
+        android:icon="@drawable/more_icon"
+        android:title="KYC"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/action_location"
-        android:enabled="true"
-        android:icon="@drawable/more_icon"
-        android:title="Scholarship"
-        app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/action_more"
-        android:enabled="true"
-        android:icon="@drawable/more_icon"
-        android:title="Me"
-        app:showAsAction="ifRoom" />
 </menu>

@@ -188,4 +188,10 @@ public interface AppConstant {
         int TEACHER_PROFILE_FRAGMENT = 102;
         int TEACHER_KYC_FRAGMENT = 103;
     }
+
+    interface CLickType {
+        int SUBJECT_CLICK = 100;
+        int CLASS_CLICK = 101;
+    }
+
 }

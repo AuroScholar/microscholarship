@@ -8,6 +8,7 @@ import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.network.NetworkUseCase;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 import com.auro.scholr.teacher.data.model.response.TeacherResModel;
 import com.auro.scholr.teacher.data.repository.TeacherRepo;
 import com.auro.scholr.util.AppUtil;
@@ -53,6 +54,25 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
     }
 
 
+    public Single<ResponseApi> getTeacherProfileApi(String mobileNumber) {
+
+        return teacherRemoteData.getTeacherProfileApi(mobileNumber).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+
+                    return handleResponse(response, Status.GET_TEACHER_PROFILE_API);
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
+
     private ResponseApi handleResponse(Response<JsonObject> response, Status apiTypeStatus) {
 
         switch (response.code()) {
@@ -81,14 +101,18 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
 
     @Override
     public ResponseApi response200(Response<JsonObject> response, Status status) {
-        if (status == UPDATE_TEACHER_PROFILE_API) {
-            TeacherResModel teacherResModel = gson.fromJson(response.body(), TeacherResModel.class);
-            if (!teacherResModel.getError()) {
-                return ResponseApi.success(teacherResModel, status);
-            } else {
-                return ResponseApi.fail(teacherResModel.getMessage(), status);
-            }
+        switch (status) {
+            case UPDATE_TEACHER_PROFILE_API:
+                TeacherResModel teacherResModel = gson.fromJson(response.body(), TeacherResModel.class);
+                if (!teacherResModel.getError()) {
+                    return ResponseApi.success(teacherResModel, status);
+                } else {
+                    return ResponseApi.fail(teacherResModel.getMessage(), status);
+                }
 
+            case GET_TEACHER_PROFILE_API:
+                MyClassRoomResModel myClassRoomResModel = gson.fromJson(response.body(), MyClassRoomResModel.class);
+                return ResponseApi.success(myClassRoomResModel, status);
         }
 
 

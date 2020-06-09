@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -30,12 +32,16 @@ import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
 
 import com.auro.scholr.core.application.base_component.BaseActivity;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.TeacherKycFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.TeacherProfileFragment;
 import com.auro.scholr.util.AppLogger;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-public class HomeActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener {
+public class HomeActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     @Inject
     HomeRemoteApi remoteApi;
@@ -56,8 +62,8 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
     private String TAG = HomeActivity.class.getSimpleName();
     String memberType;
     CommonCallBackListner commonCallBackListner;
-    public static int screenHeight=0;
-    public static int screenWidth=0;
+    public static int screenHeight = 0;
+    public static int screenWidth = 0;
 
     AuroScholarDataModel auroScholarDataModel;
 
@@ -102,7 +108,6 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
-
 
         setHomeFragmentTab();
     }
@@ -187,7 +192,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
-        AppLogger.e("chhonker","Activity requestCode="+requestCode);
+        AppLogger.e("chhonker", "Activity requestCode=" + requestCode);
     }
 
     private void popBackStack() {
@@ -202,19 +207,9 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
 
 
     public void setHomeFragmentTab() {
-        /*switch (auroScholarDataModel.getScreenType()) {
-            case AppConstant.ScreenType.QUIZ_DASHBOARD:
-                openQuizFragment(auroScholarDataModel.getMobileNumber());
-                break;
-            case AppConstant.ScreenType.QUIZ_DASHBOARD_WEB:
-                openScholarShipFragment(auroScholarDataModel);
-                break;
-            default:
-//Default code here
-                finish();
-                break;
-        }*/
-
+        binding.naviagtionContent.bottomNavigation.setOnNavigationItemSelectedListener(this);
+        openFragment(new MyClassroomFragment());
+        selectNavigationMenu(1);
     }
 
 
@@ -224,21 +219,29 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
     }
 
 
-    public void openQuizFragment(String mobileNumber) {
-        QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(AppConstant.MOBILE_NUMBER, mobileNumber);
-        quizHomeFragment.setArguments(bundle);
-        FragmentUtil.replaceFragment(AuroApp.getAppContext(), quizHomeFragment, R.id.home_container, false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        if (menuItem.getItemId() == R.id.action_dashboard) {
+            openFragment(new MyClassroomFragment());
+            selectNavigationMenu(1);
+
+        } else if (menuItem.getItemId() == R.id.action_profile) {
+            openFragment(new TeacherProfileFragment());
+            selectNavigationMenu(0);
+
+        } else if (menuItem.getItemId() == R.id.action_kyc) {
+            openFragment(new TeacherKycFragment());
+            selectNavigationMenu(2);
+        }
+
+        return false;
+    }
+    private void selectNavigationMenu(int pos) {
+        binding.naviagtionContent.bottomNavigation.getMenu().getItem(pos).setChecked(true);
+
     }
 
-
-    public void openScholarShipFragment(AuroScholarDataModel auroScholarDataModel) {
-        ScholarShipFragment scholarShipFragment = new ScholarShipFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(AppConstant.AURO_DATA_MODEL, auroScholarDataModel);
-        scholarShipFragment.setArguments(bundle);
-        FragmentUtil.replaceFragment(AuroApp.getAppContext(), scholarShipFragment, R.id.home_container, false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
-    }
 
 }

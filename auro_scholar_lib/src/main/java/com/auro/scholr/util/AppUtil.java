@@ -15,12 +15,15 @@ import androidx.annotation.NonNull;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 
 import org.json.JSONObject;
 
 import java.util.Locale;
 
 public class AppUtil {
+
+    public static MyClassRoomResModel myClassRoomResModel;
 
     public static boolean isMyServiceRunning(Class<?> serviceClass, Context context) {
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -69,13 +72,12 @@ public class AppUtil {
         try {
             errorJson = new JSONObject(responseData);
             JSONObject description = (JSONObject) errorJson.getJSONArray("errorDetails").opt(0);
-           // return description.optString(AppConstant.DESCRIPTION);
+            // return description.optString(AppConstant.DESCRIPTION);
             return "";
         } catch (Exception e) {
             return defaultMsg;
         }
     }
-
 
 
     public static void openDialer(Context context, String phone) {
@@ -84,8 +86,7 @@ public class AppUtil {
         context.startActivity(intent);
     }
 
-    public static void openUrlInBrowser(String url, Context context)
-    {
+    public static void openUrlInBrowser(String url, Context context) {
         Uri uri = Uri.parse(url); // missing 'http://' will cause crashed
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         context.startActivity(intent);

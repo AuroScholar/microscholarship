@@ -22,6 +22,7 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.SdkCallBack;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
+import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.encryption.Cryptor;
 import com.example.aurosampleapplication.databinding.ActivityMainBinding;
@@ -132,7 +133,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setActivity(this);
         inputModel.setFragmentContainerUiId(R.id.home_container);
-        openFragment(AuroScholar.startAuroSDK(inputModel));
+        AuroScholar.startTeaccherSDK(inputModel);
+       // openFragment(AuroScholar.startAuroSDK(inputModel));
     }
 
 

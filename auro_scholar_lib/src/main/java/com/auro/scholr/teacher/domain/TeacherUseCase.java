@@ -3,6 +3,7 @@ package com.auro.scholr.teacher.domain;
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.common.ValidationModel;
 import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.teacher.data.model.SelectResponseModel;
@@ -11,7 +12,9 @@ import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.MonthDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.teacher.data.model.request.SelectClassesSubject;
+import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.TextUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherUseCase {
-
 
 
     public ArrayList<QuizResModel> makeDummyQuizList() {
@@ -291,7 +293,7 @@ public class TeacherUseCase {
         classes11.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
         list.add(classes11);
 
-        return  list;
+        return list;
 
     }
 
@@ -329,9 +331,32 @@ public class TeacherUseCase {
 
         classes6.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
         list.add(classes6);
-        return  list;
+        return list;
 
     }
-   
+
+
+    public ValidationModel checkTeacherProfileValidation(TeacherReqModel reqModel) {
+        if (TextUtil.isEmpty(reqModel.getTeacher_name())) {
+            return new ValidationModel(false, "Please enter the teacher name");
+        } else if (TextUtil.isEmpty(reqModel.getTeacher_email())) {
+            return new ValidationModel(false, "Please enter the email");
+        } else if (TextUtil.isEmpty(reqModel.getMobile_no())) {
+            return new ValidationModel(false, "Please enter the mobile number");
+        } else if (TextUtil.isEmpty(reqModel.getTeacher_class())) {
+            return new ValidationModel(false, "Please enter the select the class");
+        }
+        if (TextUtil.isEmpty(reqModel.getTeacher_subject())) {
+            return new ValidationModel(false, "Please enter the select the subject");
+        }
+        if (TextUtil.isEmpty(reqModel.getState_id())) {
+            return new ValidationModel(false, "Please select  the state");
+        }
+        if (TextUtil.isEmpty(reqModel.getDistrict_id())) {
+            return new ValidationModel(false, "Please select  the state city");
+        }
+        return new ValidationModel(true, "");
+
+    }
 
 }

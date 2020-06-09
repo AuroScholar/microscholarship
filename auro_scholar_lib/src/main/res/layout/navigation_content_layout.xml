@@ -18,12 +18,11 @@
         android:layout_height="match_parent">
 
 
-
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/home_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -45,19 +44,17 @@
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:theme="@style/Widget.BottomNavigationView"
             app:itemTextAppearanceActive="@style/Widget.BottomNavigationViewSelect"
             app:itemTextColor="@drawable/drawer_selecter"
             app:labelVisibilityMode="labeled"
-            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/bottom_navigation_home" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>
