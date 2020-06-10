@@ -22,7 +22,6 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.SdkCallBack;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
-import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.encryption.Cryptor;
 import com.example.aurosampleapplication.databinding.ActivityMainBinding;
@@ -110,30 +109,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareIdentity("chandan Sir");
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
-        /*If you want to open Student SDK*/
-        auroScholarDataModel.setSdkType(AppConstant.SdkType.STUDENT_SDK);
-        /*If you want to open Teacher SDK*/
-        auroScholarDataModel.setSdkType(AppConstant.SdkType.TEACHER_SDK);
-        auroScholarDataModel.setSdkFragmentType(AppConstant.SdkFragmentType.TEACHER_DASHBOARD_FRAGMENT);
         auroScholarDataModel.setSdkcallback(new SdkCallBack() {
             @Override
             public void callBack(String message) {
                 /*Api response here*/
             }
         });
+
         openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
 
 
     }
 
     private void openGenricSDK() {
-        AuroScholarInputModel inputModel = new AuroScholarInputModel();
-        inputModel.setMobileNumber("8178307851");
-        inputModel.setStudentClass("10");
-        inputModel.setRegitrationSource("AuroScholr");
-        inputModel.setActivity(this);
-        inputModel.setFragmentContainerUiId(R.id.home_container);
-        AuroScholar.startTeaccherSDK(inputModel);
+        AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
+        auroScholarDataModel.setMobileNumber("9654234507");
+        auroScholarDataModel.setStudentClass("10");
+        auroScholarDataModel.setScholrId("10000014");
+        auroScholarDataModel.setRegitrationSource("AuroScholr");
+        auroScholarDataModel.setShareType("teacher");
+        auroScholarDataModel.setShareIdentity("chandan Sir");
+        auroScholarDataModel.setActivity(this);
+        auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
+        auroScholarDataModel.setSdkcallback(new SdkCallBack() {
+            @Override
+            public void callBack(String message) {
+                /*Api response here*/
+            }
+        });
+
+        AuroScholar.startTeacherSDK(auroScholarDataModel);
        // openFragment(AuroScholar.startAuroSDK(inputModel));
     }
 

@@ -29,16 +29,14 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.TeacherMyClassroomLayoutBinding;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
-import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
-import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.MyClassroomAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
 import com.auro.scholr.util.AppUtil;
-import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.google.gson.Gson;
 
 
 import java.util.ArrayList;
@@ -98,7 +96,9 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         list.add("primary");
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
         setDataOnUi();
-        viewModel.getTeacherProfileData("9654234507");
+        // viewModel.getTeacherProfileData("7503600686");
+
+        viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
 
     }
 
@@ -218,9 +218,9 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.whatsapp) {
-            sendWhatsapp(AuroApp.getAppContext().getResources().getString(R.string.share_msg));
+            sendWhatsapp(AuroApp.getAppContext().getResources().getString(R.string.teacher_share_msg));
         } else if (v.getId() == R.id.facebook) {
-            shareAppLinkViaFacebook(AuroApp.getAppContext().getResources().getString(R.string.share_msg));
+            shareAppLinkViaFacebook(AuroApp.getAppContext().getResources().getString(R.string.teacher_share_msg));
         } else {
             shareWithFriends();
         }
@@ -238,12 +238,23 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                     break;
 
                 case SUCCESS:
-                    if (responseApi.apiTypeStatus == Status.GET_TEACHER_PROFILE_API) {
+                    if (responseApi.apiTypeStatus == Status.GET_TEACHER_DASHBOARD_API) {
                         handleProgress(1, "");
                         myClassRoomResModel = (MyClassRoomResModel) responseApi.data;
                         AppUtil.myClassRoomResModel = myClassRoomResModel;
-                        setAdapter();
+                        if (myClassRoomResModel != null && myClassRoomResModel.getTeacherResModel() != null
+                                && !TextUtil.checkListIsEmpty(myClassRoomResModel.getTeacherResModel().getStudentResModels())) {
+                            setAdapter();
+                        } else {
+                            binding.studentList.setVisibility(View.GONE);
+                            binding.errorTxt.setVisibility(View.VISIBLE);
+                        }
                         monthSpinner();
+                        /*Sending call back*/
+                        if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
+                            String jsonString = new Gson().toJson(myClassRoomResModel);
+                            AuroApp.getAuroScholarModel().getSdkcallback().callBack(jsonString);
+                        }
 
                     }
                     break;
@@ -304,7 +315,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     public void shareWithFriends() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, AuroApp.getAppContext().getResources().getString(R.string.share_msg));
+        sendIntent.putExtra(Intent.EXTRA_TEXT, AuroApp.getAppContext().getResources().getString(R.string.teacher_share_msg));
         sendIntent.setType("text/plain");
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         AuroApp.getAppContext().startActivity(shareIntent);

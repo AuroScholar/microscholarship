@@ -8,9 +8,9 @@ import com.auro.scholr.core.common.NetworkUtil;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.network.NetworkUseCase;
-import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
+import com.auro.scholr.teacher.data.model.response.MyProfileResModel;
 import com.auro.scholr.teacher.data.model.response.TeacherResModel;
 import com.auro.scholr.teacher.data.repository.TeacherRepo;
 import com.auro.scholr.util.AppUtil;
@@ -25,8 +25,6 @@ import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_200;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_400;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_401;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_FAIL;
-import static com.auro.scholr.core.common.Status.DASHBOARD_API;
-import static com.auro.scholr.core.common.Status.UPDATE_TEACHER_PROFILE_API;
 
 public class TeacherRemoteUseCase extends NetworkUseCase {
     TeacherRepo.TeacherRemoteData teacherRemoteData;
@@ -57,16 +55,32 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
         });
     }
 
+    public Single<ResponseApi> getProfileTeacherApi(String mobileNumber) {
 
-    public Single<ResponseApi> getTeacherProfileApi(String mobileNumber) {
-
-        return teacherRemoteData.getTeacherProfileApi(mobileNumber).map(new Function<Response<JsonObject>, ResponseApi>() {
+        return teacherRemoteData.getProfileTeacherApi(mobileNumber).map(new Function<Response<JsonObject>, ResponseApi>() {
             @Override
             public ResponseApi apply(Response<JsonObject> response) throws Exception {
 
                 if (response != null) {
 
-                    return handleResponse(response, Status.GET_TEACHER_PROFILE_API);
+                    return handleResponse(response, Status.GET_PROFILE_TEACHER_API);
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+    public Single<ResponseApi> getTeacherDashboardApi(String mobileNumber) {
+
+        return teacherRemoteData.getTeacherDashboardApi(mobileNumber).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+
+                    return handleResponse(response, Status.GET_TEACHER_DASHBOARD_API);
 
                 } else {
 
@@ -114,9 +128,14 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
                     return ResponseApi.fail(teacherResModel.getMessage(), status);
                 }
 
-            case GET_TEACHER_PROFILE_API:
+            case GET_TEACHER_DASHBOARD_API:
                 MyClassRoomResModel myClassRoomResModel = gson.fromJson(response.body(), MyClassRoomResModel.class);
                 return ResponseApi.success(myClassRoomResModel, status);
+
+            case GET_PROFILE_TEACHER_API:
+                MyProfileResModel resModel = gson.fromJson(response.body(), MyProfileResModel.class);
+                return ResponseApi.success(resModel, status);
+
         }
 
 

@@ -25,6 +25,10 @@ public interface TeacherRemoteApi {
 
     @POST(URLConstant.GET_PROFILE_UPDATE_API)
     @FormUrlEncoded
-    Single<Response<JsonObject>> getTeacherProfileApi(@FieldMap Map<String, String> params);
+    Single<Response<JsonObject>> getTeacherDashboardApi(@FieldMap Map<String, String> params);
+
+    @POST(URLConstant.GET_PROFILE_TEACHER_API)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> getProfileTeacherApi(@FieldMap Map<String, String> params);
 
 }

@@ -41,6 +41,52 @@ public class TeacherProfileViewModel extends ViewModel {
     }
 
 
+    public void getTeacherProfileData(String mobileNumber) {
+
+        Disposable disposable = teacherRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
+            if (hasInternet) {
+                getTeacherProfileDataApi(mobileNumber);
+            } else {
+                // please check your internet
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
+            }
+
+        });
+
+        getCompositeDisposable().add(disposable);
+
+    }
+
+    private void getTeacherProfileDataApi(String mobileNumber) {
+        getCompositeDisposable()
+                .add(teacherRemoteUseCase.getProfileTeacherApi(mobileNumber)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(Disposable __) throws Exception {
+                                /*Do code here*/
+                                serviceLiveData.setValue(ResponseApi.loading(Status.GET_PROFILE_TEACHER_API));
+                            }
+                        })
+                        .subscribe(new Consumer<ResponseApi>() {
+                                       @Override
+                                       public void accept(ResponseApi responseApi) throws Exception {
+                                           serviceLiveData.setValue(responseApi);
+                                       }
+                                   },
+
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        defaultError();
+                                    }
+                                }));
+
+    }
+
+
+
     public void updateTeacherProfileData(TeacherReqModel reqModel) {
 
         Disposable disposable = teacherRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
