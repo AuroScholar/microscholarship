@@ -67,6 +67,8 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
     List<String> subjectlist;
     HashMap<String, String> subjectHashmap = new HashMap<>();
     HashMap<String, String> classHashmap = new HashMap<>();
+    String subject = "English, Maths, Social Science, Science,";
+    String classes = "4th, 8th, 10th, 3rd, 9th, 7th, 2nd,";
 
 
     public TeacherProfileFragment() {
@@ -294,7 +296,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         binding.recycleViewclass.setLayoutManager(gridlayout);
         binding.recycleViewclass.setHasFixedSize(true);
         binding.recycleViewclass.setNestedScrollingEnabled(false);
-        ProfileScreenAdapter mProfileScreenAdapterAdapter = new ProfileScreenAdapter(viewModel.teacherUseCase.selectClass(), getContext(), this);
+        ProfileScreenAdapter mProfileScreenAdapterAdapter = new ProfileScreenAdapter(viewModel.teacherUseCase.selectClass(classes), getContext(), this);
         binding.recycleViewclass.setAdapter(mProfileScreenAdapterAdapter);
 
         //for subject recycle view
@@ -304,7 +306,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         binding.recycleViewsubject.setLayoutManager(gridlayout2);
         binding.recycleViewsubject.setHasFixedSize(true);
         binding.recycleViewsubject.setNestedScrollingEnabled(false);
-        ProfileScreenAdapter mProfileScreenAdapterAdapter1 = new ProfileScreenAdapter(viewModel.teacherUseCase.selectSubject(), getContext(), this);
+        ProfileScreenAdapter mProfileScreenAdapterAdapter1 = new ProfileScreenAdapter(viewModel.teacherUseCase.selectSubject(subject), getContext(), this);
         binding.recycleViewsubject.setAdapter(mProfileScreenAdapterAdapter1);
     }
 

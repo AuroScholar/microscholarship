@@ -2,7 +2,7 @@ package com.auro.scholr.teacher.data.model.request;
 
 public class SelectClassesSubject {
     private String text;
-    private boolean isSelected = false;
+    private boolean isSelected ;
     private int viewType;
 
     public String getText() {

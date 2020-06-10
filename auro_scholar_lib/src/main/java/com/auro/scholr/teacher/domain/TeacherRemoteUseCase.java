@@ -1,5 +1,7 @@
 package com.auro.scholr.teacher.domain;
 
+import android.util.Log;
+
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.NetworkUtil;
@@ -36,14 +38,16 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
 
 
     public Single<ResponseApi> updateTeacherProfileApi(TeacherReqModel reqModel) {
-
+        Log.e("Request","TeacherDistrict "+reqModel.getDistrict_id() + " State "+reqModel.getState_id());
         return teacherRemoteData.updateTeacherProfileApi(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
             @Override
             public ResponseApi apply(Response<JsonObject> response) throws Exception {
 
                 if (response != null) {
 
+
                     return handleResponse(response, Status.UPDATE_TEACHER_PROFILE_API);
+
 
                 } else {
 
