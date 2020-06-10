@@ -1,5 +1,7 @@
 package com.auro.scholr.teacher.domain;
 
+import android.util.Log;
+
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
@@ -23,8 +25,12 @@ import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import java.util.Arrays;
+
 import java.util.Calendar;
 import java.util.Date;
+
 import java.util.List;
 
 public class TeacherUseCase {
@@ -271,11 +277,14 @@ public class TeacherUseCase {
         return districtList;
     }
 
-    public List<SelectClassesSubject> selectClass() {
+    public List<SelectClassesSubject> selectClass(String classes) {
+
+        List<String> newData = getStringList(classes);
         List<SelectClassesSubject> list = new ArrayList<>();
 
         SelectClassesSubject classes1 = new SelectClassesSubject();
         classes1.setText("1st");
+        classes1.setSelected(false);
         classes1.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
         list.add(classes1);
 
@@ -287,59 +296,85 @@ public class TeacherUseCase {
 
         SelectClassesSubject classes3 = new SelectClassesSubject();
         classes3.setText("2nd");
+        classes3.setSelected(false);
         classes3.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
         list.add(classes3);
 
         SelectClassesSubject classes4 = new SelectClassesSubject();
         classes4.setText("8th");
+        classes4.setSelected(false);
         classes4.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
         list.add(classes4);
 
         SelectClassesSubject classes12 = new SelectClassesSubject();
         classes12.setText("3rd");
+        classes12.setSelected(false);
         classes12.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
         list.add(classes12);
 
         SelectClassesSubject classes5 = new SelectClassesSubject();
         classes5.setText("9th");
+        classes5.setSelected(false);
         classes5.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
         list.add(classes5);
 
         SelectClassesSubject classes6 = new SelectClassesSubject();
         classes6.setText("4th");
+        classes6.setSelected(false);
         classes6.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
         list.add(classes6);
 
         SelectClassesSubject classes7 = new SelectClassesSubject();
         classes7.setText("10th");
+        classes7.setSelected(false);
         classes7.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
         list.add(classes7);
 
         SelectClassesSubject classes8 = new SelectClassesSubject();
         classes8.setText("5th");
+        classes8.setSelected(false);
         classes8.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
         list.add(classes8);
 
         SelectClassesSubject classes9 = new SelectClassesSubject();
         classes9.setText("11th");
+        classes9.setSelected(false);
         classes9.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
         list.add(classes9);
 
         SelectClassesSubject classes10 = new SelectClassesSubject();
         classes10.setText("6th");
+        classes10.setSelected(false);
         classes10.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
         list.add(classes10);
 
         SelectClassesSubject classes11 = new SelectClassesSubject();
         classes11.setText("12th");
+        classes11.setSelected(false);
         classes11.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
         list.add(classes11);
 
+        if(!newData.isEmpty()){
+            for(int i=0;i<newData.size();i++){
+                for(int j = 0 ;j<list.size();j++){
+                    if(newData.get(i).equalsIgnoreCase(list.get(j).getText())){
+                        SelectClassesSubject classes13 = new SelectClassesSubject();
+                        classes13.setText(newData.get(i).toString());
+                        classes13.setSelected(true);
+                        classes13.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+                        list.set(j,classes13);
+
+                    }
+                }
+            }
+        }
+        Log.e("Data","list data"+list);
         return list;
 
     }
 
-    public List<SelectClassesSubject> selectSubject() {
+    public List<SelectClassesSubject> selectSubject(String Subject) {
+        List<String> newData = getStringList(Subject);
         List<SelectClassesSubject> list = new ArrayList<>();
         SelectClassesSubject classes1 = new SelectClassesSubject();
         classes1.setText("Maths");
@@ -373,8 +408,29 @@ public class TeacherUseCase {
 
         classes6.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
         list.add(classes6);
+
+        if(!newData.isEmpty()){
+            for(int i=0;i<newData.size();i++){
+                for(int j = 0 ;j<list.size();j++){
+                    if(newData.get(i).equalsIgnoreCase(list.get(j).getText())){
+                        SelectClassesSubject classes13 = new SelectClassesSubject();
+                        classes13.setText(newData.get(i).toString());
+                        classes13.setSelected(true);
+                        classes13.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+                        list.set(j,classes13);
+
+                    }
+                }
+            }
+        }
         return list;
 
+    }
+
+    public List<String> getStringList(String data){
+        String[] array = data.replace(" ","").split(",");
+        List<String> datainlist =new ArrayList<>(Arrays.asList(array));
+        return datainlist;
     }
 
 
