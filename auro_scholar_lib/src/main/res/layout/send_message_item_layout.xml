@@ -24,6 +24,7 @@
                 android:src="@drawable/circle_outline" />
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
+                android:id="@+id/msg_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_15sdp"

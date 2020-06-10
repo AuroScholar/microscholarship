@@ -5,9 +5,13 @@ import com.auro.scholr.core.common.AppConstant;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 public class DateUtil {
@@ -189,10 +193,6 @@ public class DateUtil {
         return calenderModel;
     }
 */
-
-
-
-
 
 
     public static String get12HourFormatTime(String time) {

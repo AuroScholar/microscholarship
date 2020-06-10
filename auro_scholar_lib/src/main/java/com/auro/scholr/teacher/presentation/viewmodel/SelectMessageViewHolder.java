@@ -25,13 +25,11 @@ public class SelectMessageViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindUser(SelectResponseModel model, int position, CommonCallBackListner commonCallBackListner) {
-        //  binding.txtDocumentName.setText(model.getUploadDocumentname());
+        binding.msgText.setText(model.getMessage());
 
-        if(model.isCheck())
-        {
+        if (model.isCheck()) {
             binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_check));
-        }else
-        {
+        } else {
             binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.circle_outline));
 
         }
