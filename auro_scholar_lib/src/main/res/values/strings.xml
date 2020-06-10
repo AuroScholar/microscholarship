@@ -197,6 +197,9 @@
     <string name="information">Information</string>
     <string name="friends_ke_bina_kya_fun">Friends ke bina kya fun!</string>
 
+    <string name="teacher_share_msg">Hi, I have just referred you to get Scholarship  on Scholr App! \nTake quiz and get Scholarship Certificate every month. \nDownload App - https://bit.ly/3b1puWr</string>
+
+
     <string-array name="classes">
         <item>1st</item>
         <item>7th </item>

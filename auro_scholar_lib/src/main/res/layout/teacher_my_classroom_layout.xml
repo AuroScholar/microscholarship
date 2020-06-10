@@ -149,6 +149,21 @@
                                 app:layout_constraintStart_toStartOf="@+id/month_spinner"
                                 app:layout_constraintTop_toTopOf="@+id/month_spinner" />
 
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/error_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_40sdp"
+                                android:layout_marginBottom="@dimen/_40sdp"
+                                android:text="No Student Data Found!"
+                                app:Font="Poppins-SemiBold.ttf"
+                                android:visibility="gone"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_14sdp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/month_spinner" />
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/student_list"

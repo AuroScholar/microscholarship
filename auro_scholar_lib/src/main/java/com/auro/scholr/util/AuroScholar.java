@@ -16,14 +16,8 @@ public class AuroScholar {
 
     public static Fragment openAuroDashboardFragment(AuroScholarDataModel auroScholarDataModel) {
         AuroApp.setAuroModel(auroScholarDataModel);
-        if (auroScholarDataModel.getSdkType() == AppConstant.SdkType.STUDENT_SDK) {
-            QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
-            return quizHomeFragment;
-        } else {
-            QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
-            return quizHomeFragment;
-        }
-
+        QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
+        return quizHomeFragment;
     }
 
     /*For generic with PhoneNumber and class*/
@@ -40,16 +34,15 @@ public class AuroScholar {
     }
 
 
-    /*For generic with PhoneNumber and class*/
-    public static void startTeaccherSDK(AuroScholarInputModel inputModel) {
-        AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber(inputModel.getMobileNumber());
-        auroScholarDataModel.setStudentClass(inputModel.getStudentClass());
-        auroScholarDataModel.setRegitrationSource(inputModel.getRegitrationSource());
-        auroScholarDataModel.setActivity(inputModel.getActivity());
-        auroScholarDataModel.setFragmentContainerUiId(inputModel.getFragmentContainerUiId());
+    public static void startTeacherSDK(AuroScholarDataModel auroScholarDataModel) {
         AuroApp.setAuroModel(auroScholarDataModel);
-        inputModel.getActivity().startActivity(new Intent(inputModel.getActivity(), HomeActivity.class));
+        auroScholarDataModel.getActivity().startActivity(new Intent(auroScholarDataModel.getActivity(), HomeActivity.class));
+    }
+
+    public static void setReferralLink(String referralLink) {
+        if (AuroApp.getAuroScholarModel() != null) {
+            AuroApp.getAuroScholarModel().setReferralLink(referralLink);
+        }
     }
 
 
