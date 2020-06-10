@@ -70,6 +70,10 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
     String subject = "English, Maths, Social Science, Science,";
     String classes = "4th, 8th, 10th, 3rd, 9th, 7th, 2nd,";
 
+    String distict = "52";
+    String state =  "5";
+
+
 
     public TeacherProfileFragment() {
         // Required empty public constructor
@@ -146,6 +150,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
 
         binding.editPhoneNumber.setText("9654234507");
         binding.icmobilenumber.setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -234,9 +239,15 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         if (!TextUtil.checkListIsEmpty(stateDataModelList)) {
             StateSpinnerAdapter stateSpinnerAdapter = new StateSpinnerAdapter(stateDataModelList);
             binding.stateSpinner.setAdapter(stateSpinnerAdapter);
+            for(int i = 0; i<stateDataModelList.size();i++){
+                if(state.equalsIgnoreCase(stateDataModelList.get(i).getState_code())){
+                    binding.stateSpinner.setSelection(i);
+                }
+            }
             binding.stateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                     if (position != 0) {
                         teacherReqModel.setState_id(stateDataModelList.get(position).getState_code());
                         viewModel.getStateDistrictData(stateDataModelList.get(position).getState_code());
