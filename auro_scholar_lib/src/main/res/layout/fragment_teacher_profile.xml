@@ -127,6 +127,7 @@
                         android:background="@drawable/get_button"
                         android:gravity="center"
                         android:text="@string/get_now"
+                        android:visibility="gone"
                         android:textColor="@color/white"
                         app:Font="Poppins-Regular.ttf"
                         app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"

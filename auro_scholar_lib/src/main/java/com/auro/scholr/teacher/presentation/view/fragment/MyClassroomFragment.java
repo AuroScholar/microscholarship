@@ -29,14 +29,11 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.TeacherMyClassroomLayoutBinding;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
-import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
-import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.MyClassroomAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
 import com.auro.scholr.util.AppUtil;
-import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.google.gson.Gson;
@@ -99,9 +96,9 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         list.add("primary");
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
         setDataOnUi();
-       // viewModel.getTeacherProfileData("7503600686");
+        // viewModel.getTeacherProfileData("7503600686");
 
-          viewModel.getTeacherProfileData("9654234507");
+        viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
 
     }
 
@@ -241,15 +238,14 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                     break;
 
                 case SUCCESS:
-                    if (responseApi.apiTypeStatus == Status.GET_TEACHER_PROFILE_API) {
+                    if (responseApi.apiTypeStatus == Status.GET_TEACHER_DASHBOARD_API) {
                         handleProgress(1, "");
                         myClassRoomResModel = (MyClassRoomResModel) responseApi.data;
                         AppUtil.myClassRoomResModel = myClassRoomResModel;
                         if (myClassRoomResModel != null && myClassRoomResModel.getTeacherResModel() != null
                                 && !TextUtil.checkListIsEmpty(myClassRoomResModel.getTeacherResModel().getStudentResModels())) {
                             setAdapter();
-                        }else
-                        {
+                        } else {
                             binding.studentList.setVisibility(View.GONE);
                             binding.errorTxt.setVisibility(View.VISIBLE);
                         }

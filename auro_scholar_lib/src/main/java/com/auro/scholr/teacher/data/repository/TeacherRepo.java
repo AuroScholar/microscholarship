@@ -21,7 +21,9 @@ public interface TeacherRepo {
 
         Single<Response<JsonObject>> updateTeacherProfileApi(TeacherReqModel model);
 
-        Single<Response<JsonObject>> getTeacherProfileApi(String mobileNumber);
+        Single<Response<JsonObject>> getTeacherDashboardApi(String mobileNumber);
+
+        Single<Response<JsonObject>> getProfileTeacherApi(String mobileNumber);
 
 
     }

@@ -34,6 +34,8 @@ import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.teacher.data.model.request.SelectClassesSubject;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
+import com.auro.scholr.teacher.data.model.response.MyProfileResModel;
+import com.auro.scholr.teacher.data.model.response.TeacherResModel;
 import com.auro.scholr.teacher.presentation.view.adapter.DistrictSpinnerAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.ProfileScreenAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.StateSpinnerAdapter;
@@ -112,6 +114,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         init();
         setListener();
         setRecycleView();
+        viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
     }
 
     @Override
@@ -144,8 +147,10 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
             }
         }
 
-        binding.editPhoneNumber.setText("9654234507");
-        binding.icmobilenumber.setVisibility(View.VISIBLE);
+        if (!TextUtil.isEmpty(AuroApp.getAuroScholarModel().getMobileNumber())) {
+            binding.editPhoneNumber.setText(AuroApp.getAuroScholarModel().getMobileNumber());
+            binding.icmobilenumber.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -190,19 +195,26 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
             switch (responseApi.status) {
 
                 case LOADING:
-                    handleProgress(0);
+                    if (responseApi.apiTypeStatus == Status.UPDATE_TEACHER_PROFILE_API) {
+                        handleProgress(0);
+                    }
+
                     break;
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == Status.UPDATE_TEACHER_PROFILE_API) {
                         handleProgress(1);
+                    } else if (responseApi.apiTypeStatus == Status.GET_PROFILE_TEACHER_API) {
+                        MyProfileResModel teacherResModel = (MyProfileResModel) responseApi.data;
                     }
                     break;
 
                 case FAIL:
                 case NO_INTERNET:
-                    handleProgress(1);
-                    showSnackbarError((String) responseApi.data);
+                    if (responseApi.apiTypeStatus == Status.UPDATE_TEACHER_PROFILE_API) {
+                        handleProgress(1);
+                        showSnackbarError((String) responseApi.data);
+                    }
                     break;
 
 
@@ -218,8 +230,10 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                     break;
 
                 default:
-                    handleProgress(1);
-                    showSnackbarError(getString(R.string.default_error));
+                        handleProgress(1);
+                        showSnackbarError(getString(R.string.default_error));
+
+
                     break;
             }
 
@@ -391,8 +405,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
             }
             teacherReqModel.setTeacher_class(classBuilder.toString());
         }
-
-        teacherReqModel.setMobile_no("9654234507");
+        teacherReqModel.setMobile_no(AuroApp.getAuroScholarModel().getMobileNumber());
         teacherReqModel.setTeacher_name(binding.editteachername.getText().toString());
         teacherReqModel.setTeacher_email(binding.editemail.getText().toString());
         teacherReqModel.setSchool_name(binding.editSchoolName.getText().toString());

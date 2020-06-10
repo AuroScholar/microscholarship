@@ -1,11 +1,8 @@
 package com.auro.scholr.teacher.data.datasource.remote;
 
 import com.auro.scholr.core.common.AppConstant;
-import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.auro.scholr.teacher.data.repository.TeacherRepo;
-import com.auro.scholr.util.AppLogger;
-import com.auro.scholr.util.TextUtil;
 import com.google.gson.JsonObject;
 
 import java.util.HashMap;
@@ -41,9 +38,16 @@ public class TeacherRemoteDataSourceImp implements TeacherRepo.TeacherRemoteData
     }
 
     @Override
-    public Single<Response<JsonObject>> getTeacherProfileApi(String mobileNumber) {
+    public Single<Response<JsonObject>> getTeacherDashboardApi(String mobileNumber) {
         Map<String, String> params = new HashMap<String, String>();
             params.put(AppConstant.MOBILE_NUMBER,mobileNumber);
-            return teacherRemoteApi.getTeacherProfileApi(params);
+            return teacherRemoteApi.getTeacherDashboardApi(params);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> getProfileTeacherApi(String mobileNumber) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.MOBILE_NUMBER,mobileNumber);
+        return teacherRemoteApi.getProfileTeacherApi(params);
     }
 }

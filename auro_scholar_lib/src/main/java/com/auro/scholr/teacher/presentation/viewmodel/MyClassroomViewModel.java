@@ -8,7 +8,6 @@ import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
-import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.auro.scholr.teacher.domain.TeacherDbUseCase;
 import com.auro.scholr.teacher.domain.TeacherRemoteUseCase;
 import com.auro.scholr.teacher.domain.TeacherUseCase;
@@ -38,7 +37,7 @@ public class MyClassroomViewModel extends ViewModel {
 
         Disposable disposable = teacherRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
             if (hasInternet) {
-                getTeacherProfileApi(mobileNumber);
+                getTeacherDashboardApi(mobileNumber);
             } else {
                 // please check your internet
                 serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
@@ -51,9 +50,9 @@ public class MyClassroomViewModel extends ViewModel {
     }
 
 
-    private void getTeacherProfileApi(String mobileNumber) {
+    private void getTeacherDashboardApi(String mobileNumber) {
         getCompositeDisposable()
-                .add(teacherRemoteUseCase.getTeacherProfileApi(mobileNumber)
+                .add(teacherRemoteUseCase.getTeacherDashboardApi(mobileNumber)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSubscribe(new Consumer<Disposable>() {
