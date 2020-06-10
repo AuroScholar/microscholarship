@@ -152,18 +152,18 @@ public class TeacherUseCase {
 
         List<SelectResponseModel> list = new ArrayList<>();
         SelectResponseModel document1 = new SelectResponseModel();
-        document1.setMessage("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum.");
+        document1.setMessage("Don't wait, take quiz now & get Scholarship! I know you can do it!");
         document1.setViewType(AppConstant.FriendsLeaderBoard.SELECTMESSAGEADAPTER);
         list.add(document1);
 
 
         SelectResponseModel document2 = new SelectResponseModel();
-        document2.setMessage("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum.");
+        document2.setMessage("Congratulations on winning Scholarship! Keep learning and make us proud!");
         document2.setViewType(AppConstant.FriendsLeaderBoard.SELECTMESSAGEADAPTER);
         list.add(document2);
 
         SelectResponseModel document3 = new SelectResponseModel();
-        document3.setMessage("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum.");
+        document3.setMessage("You are almost there! Take the quiz again and don't give up!");
         document3.setViewType(AppConstant.FriendsLeaderBoard.SELECTMESSAGEADAPTER);
         list.add(document3);
 

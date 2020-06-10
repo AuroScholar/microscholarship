@@ -36,6 +36,7 @@ import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherKycFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherProfileFragment;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.ViewUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import javax.inject.Inject;
@@ -58,7 +59,10 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
     public static final int QUIZ_DASHBOARD_FRAGMENT = 1;
     public static final int QUIZ_DASHBOARD_WEB_FRAGMENT = 2;
     public static final int KYC_FRAGMENT = 3;
-    public static final int DEMOGRAPHIC_FRAGMENT = 44;
+    public static final int DEMOGRAPHIC_FRAGMENT = 04;
+    public static final int TEACHER_KYC_FRAGMENT = 05;
+    public static final int TEACHER_DASHBOARD_FRAGMENT = 06;
+    public static final int TEACHER_PROFILE_FRAGMENT = 07;
     private String TAG = HomeActivity.class.getSimpleName();
     String memberType;
     CommonCallBackListner commonCallBackListner;
@@ -129,7 +133,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
             int flags = activity.getWindow().getDecorView().getSystemUiVisibility(); // get current flag
             flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; // add LIGHT_STATUS_BAR to flag
             activity.getWindow().getDecorView().setSystemUiVisibility(flags);
-            activity.getWindow().setStatusBarColor(this.getResources().getColor(R.color.toolbar_pink)); // optional
+            activity.getWindow().setStatusBarColor(this.getResources().getColor(R.color.white)); // optional
 
         }
     }
@@ -171,10 +175,11 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
 
         switch (LISTING_ACTIVE_FRAGMENT) {
 
-            case QUIZ_DASHBOARD_WEB_FRAGMENT:
-            case QUIZ_DASHBOARD_FRAGMENT:
+            case TEACHER_DASHBOARD_FRAGMENT:
+            case TEACHER_KYC_FRAGMENT:
+            case TEACHER_PROFILE_FRAGMENT:
                 dismissApplication();
-
+                break;
             case DEMOGRAPHIC_FRAGMENT:
             case KYC_FRAGMENT:
                 popBackStack();
@@ -202,7 +207,12 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
 
 
     private void dismissApplication() {
-        finish();
+        if (backPress == 0) {
+            backPress++;
+            ViewUtil.showSnackBar(binding.naviagtionContent.homeContainer, "Press again to close Auro Scholar app");
+        } else {
+            finishAffinity();
+        }
     }
 
 
@@ -217,7 +227,6 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
     public void onClick(View view) {
 
     }
-
 
 
     @Override
@@ -238,7 +247,8 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
 
         return false;
     }
-    private void selectNavigationMenu(int pos) {
+
+    public void selectNavigationMenu(int pos) {
         binding.naviagtionContent.bottomNavigation.getMenu().getItem(pos).setChecked(true);
 
     }

@@ -107,6 +107,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/send_message"
                 android:layout_width="@dimen/_27sdp"
                 android:layout_height="@dimen/_27sdp"
                 android:background="@drawable/send_msg"

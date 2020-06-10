@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.databinding.SendMessageItemLayoutBinding;
 import com.auro.scholr.teacher.data.model.SelectResponseModel;
 import com.auro.scholr.teacher.presentation.viewmodel.SelectMessageViewHolder;
@@ -19,9 +20,18 @@ public class SelectMessageAdapter extends RecyclerView.Adapter {
 
 
     List<SelectResponseModel> list;
-    public SelectMessageAdapter(List<SelectResponseModel> list) {
+    CommonCallBackListner commonCallBackListner;
+
+    public SelectMessageAdapter(List<SelectResponseModel> list, CommonCallBackListner commonCallBackListner) {
         this.list = list;
+        this.commonCallBackListner = commonCallBackListner;
     }
+
+    public void setData(List<SelectResponseModel> list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override
@@ -41,10 +51,11 @@ public class SelectMessageAdapter extends RecyclerView.Adapter {
 
         switch (viewType) {
             case AppConstant.FriendsLeaderBoard.SELECTMESSAGEADAPTER:
-                ((SelectMessageViewHolder) holder).bindUser(list.get(position), position);
+                ((SelectMessageViewHolder) holder).bindUser(list.get(position), position, commonCallBackListner);
                 break;
         }
     }
+
     @Override
     public int getItemViewType(int position) {
 

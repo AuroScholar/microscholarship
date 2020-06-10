@@ -1,5 +1,6 @@
 package com.auro.scholr.teacher.presentation.view.fragment;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -16,10 +17,19 @@ import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.common.CommonCallBackListner;
+import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.databinding.FragmentTeacherKycBinding;
+import com.auro.scholr.home.presentation.view.activity.CameraActivity;
+import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.teacher.presentation.view.adapter.TeacherKycDocumentAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherKycViewModel;
+import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.cropper.CropImageViews;
+import com.auro.scholr.util.cropper.CropImages;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -29,7 +39,7 @@ import javax.inject.Named;
  * Use the {@link TeacherKycFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TeacherKycFragment extends BaseFragment {
+public class TeacherKycFragment extends BaseFragment implements CommonCallBackListner {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     @Inject
@@ -44,7 +54,7 @@ public class TeacherKycFragment extends BaseFragment {
     private String mParam2;
     boolean isStateRestore;
     Resources resources;
-   // TeacherDocumentViewModel viewModel;
+    // TeacherDocumentViewModel viewModel;
 
     public TeacherKycFragment() {
         // Required empty public constructor
@@ -114,9 +124,10 @@ public class TeacherKycFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_KYC_FRAGMENT);
         resources = ViewUtil.getCustomResource(getActivity());
         init();
+        setDataOnUI();
     }
 
     @Override
@@ -124,14 +135,51 @@ public class TeacherKycFragment extends BaseFragment {
         return R.layout.fragment_teacher_kyc;
     }
 
-    public void setTeacherKycBoard(){
+    public void setTeacherKycBoard() {
 
         binding.rvDoucumentUpload.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvDoucumentUpload.setHasFixedSize(true);
         binding.rvDoucumentUpload.setNestedScrollingEnabled(false);
-        TeacherKycDocumentAdapter mteacherKycDocumentAdapter = new TeacherKycDocumentAdapter(teacherKycViewModel.teacherUseCase.makeListForTeacherDocumentModel());
+        TeacherKycDocumentAdapter mteacherKycDocumentAdapter = new TeacherKycDocumentAdapter(teacherKycViewModel.teacherUseCase.makeListForTeacherDocumentModel(), this);
         binding.rvDoucumentUpload.setAdapter(mteacherKycDocumentAdapter);
 
 
+    }
+
+    private void setDataOnUI() {
+        if (AppUtil.myClassRoomResModel != null && AppUtil.myClassRoomResModel.getTeacherResModel() != null) {
+            if (!TextUtil.isEmpty(String.valueOf(AppUtil.myClassRoomResModel.getTeacherResModel().getScoreTotal()))) {
+                binding.points.setText("" + AppUtil.myClassRoomResModel.getTeacherResModel().getScoreTotal());
+            } else {
+                binding.points.setText("0");
+            }
+
+            if (!TextUtil.isEmpty(String.valueOf(AppUtil.myClassRoomResModel.getTeacherResModel().getWalletBalance()))) {
+                binding.walletBal.setText(" " + AuroApp.getAppContext().getResources().getString(R.string.rs) + AppUtil.myClassRoomResModel.getTeacherResModel().getWalletBalance());
+            } else {
+                binding.walletBal.setText("0");
+            }
+        }
+    }
+
+
+    @Override
+    public void commonEventListner(CommonDataModel commonDataModel) {
+        switch (commonDataModel.getClickType()) {
+            case DOCUMENT_CLICK:
+                if (commonDataModel.getSource() == 3) {
+                    openActivity();
+                } else {
+                    CropImages.activity()
+                            .setGuidelines(CropImageViews.Guidelines.ON)
+                            .start(getActivity());
+                }
+                break;
+        }
+    }
+
+    public void openActivity() {
+        Intent intent = new Intent(getActivity(), CameraActivity.class);
+        startActivityForResult(intent, AppConstant.CAMERA_REQUEST_CODE);
     }
 }

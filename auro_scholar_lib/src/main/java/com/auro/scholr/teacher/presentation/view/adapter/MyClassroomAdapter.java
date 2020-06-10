@@ -5,6 +5,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -14,10 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
+import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.util.uiwidget.RPTextView;
 import com.auro.scholr.databinding.StudentClassItemLayoutBinding;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomStudentResModel;
+import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ImageUtil;
 import com.auro.scholr.util.TextUtil;
 
@@ -75,6 +79,15 @@ public class MyClassroomAdapter extends RecyclerView.Adapter<MyClassroomAdapter.
                 ImageUtil.loadCircleImage(binding.profileImage, model.getStudentPhoto());
             }
             binding.numberText.setText("" + (position + 1) + ".");
+
+            binding.sendMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (commonCallBackListner != null) {
+                        commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(AppConstant.CLickType.SEND_MESSAGE_CLICK, Status.SEND_MESSAGE_CLICK, ""));
+                    }
+                }
+            });
         }
 
     }

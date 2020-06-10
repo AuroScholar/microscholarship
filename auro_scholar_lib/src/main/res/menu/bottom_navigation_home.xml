@@ -15,13 +15,13 @@
         android:id="@+id/action_dashboard"
         android:enabled="true"
         android:title="My Classroom"
-        android:icon="@drawable/more_icon"
+        android:icon="@drawable/ic_dashboard"
 
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_kyc"
-        android:enabled="false"
-        android:icon="@drawable/more_icon"
+        android:enabled="true"
+        android:icon="@drawable/ic_kyc"
         android:title="KYC"
         app:showAsAction="ifRoom" />
 

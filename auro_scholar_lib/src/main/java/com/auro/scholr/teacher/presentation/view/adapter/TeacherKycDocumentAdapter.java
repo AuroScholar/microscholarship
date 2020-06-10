@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.databinding.TeacherDocumentItemLayoutBinding;
 import com.auro.scholr.teacher.data.model.TeacherDocumentModel;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherDoumentViewHolder;
@@ -19,10 +20,12 @@ public class TeacherKycDocumentAdapter extends RecyclerView.Adapter {
 
 
     List<TeacherDocumentModel> list;
+    CommonCallBackListner commonCallBackListner;
 
-    public TeacherKycDocumentAdapter(List<TeacherDocumentModel> list) {
+    public TeacherKycDocumentAdapter(List<TeacherDocumentModel> list, CommonCallBackListner commonCallBackListner) {
 
         this.list = list;
+        this.commonCallBackListner = commonCallBackListner;
     }
 
     @NonNull
@@ -30,7 +33,7 @@ public class TeacherKycDocumentAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         switch (viewType) {
             case AppConstant.FriendsLeaderBoard.TEACHERDOCUMENTADAPTER:
-                TeacherDocumentItemLayoutBinding  teacherDocumentItemLayoutBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.teacher_document_item_layout, viewGroup, false);
+                TeacherDocumentItemLayoutBinding teacherDocumentItemLayoutBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.teacher_document_item_layout, viewGroup, false);
                 return new TeacherDoumentViewHolder(teacherDocumentItemLayoutBinding);
         }
         return null;
@@ -43,7 +46,7 @@ public class TeacherKycDocumentAdapter extends RecyclerView.Adapter {
 
         switch (viewType) {
             case AppConstant.FriendsLeaderBoard.TEACHERDOCUMENTADAPTER:
-                ((TeacherDoumentViewHolder) holder).bindUser(list.get(position), position);
+                ((TeacherDoumentViewHolder) holder).bindUser(list.get(position), position,commonCallBackListner);
                 break;
         }
     }

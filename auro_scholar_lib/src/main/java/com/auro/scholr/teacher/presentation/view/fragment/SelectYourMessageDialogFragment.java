@@ -1,5 +1,6 @@
 package com.auro.scholr.teacher.presentation.view.fragment;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -15,11 +16,16 @@ import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseDialog;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.core.common.CommonCallBackListner;
+import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.databinding.DialogTeacherSelectYourMessageBinding;
 import com.auro.scholr.home.presentation.viewmodel.InviteFriendViewModel;
+import com.auro.scholr.teacher.data.model.SelectResponseModel;
 import com.auro.scholr.teacher.presentation.view.adapter.SelectMessageAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.TeacherKycDocumentAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.SelectYourMessageDialogModel;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -29,7 +35,7 @@ import javax.inject.Named;
  * Use the {@link SelectYourMessageDialogFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SelectYourMessageDialogFragment extends BaseDialog {
+public class SelectYourMessageDialogFragment extends BaseDialog implements View.OnClickListener, CommonCallBackListner {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     @Inject
@@ -42,7 +48,9 @@ public class SelectYourMessageDialogFragment extends BaseDialog {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    SelectMessageAdapter mteacherKycDocumentAdapter;
     DialogTeacherSelectYourMessageBinding binding;
+    List<SelectResponseModel> list;
 
     public SelectYourMessageDialogFragment() {
         // Required empty public constructor
@@ -88,7 +96,7 @@ public class SelectYourMessageDialogFragment extends BaseDialog {
 
     @Override
     protected void setListener() {
-
+        binding.closeButton.setOnClickListener(this);
     }
 
     @Override
@@ -104,20 +112,44 @@ public class SelectYourMessageDialogFragment extends BaseDialog {
         AuroApp.getAppComponent().doInjection(this);
         selectYourMessageDialogModel = ViewModelProviders.of(this, viewModelFactory).get(SelectYourMessageDialogModel.class);
         binding.setLifecycleOwner(this);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0));
         init();
         setListener();
 
         return binding.getRoot();
     }
 
-    public void selectMessageBoard(){
-
+    public void selectMessageBoard() {
+        list = selectYourMessageDialogModel.teacherUseCase.makeListForSelectMessageModel();
         binding.rvselectMessage.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvselectMessage.setHasFixedSize(true);
         binding.rvselectMessage.setNestedScrollingEnabled(false);
-        SelectMessageAdapter mteacherKycDocumentAdapter = new SelectMessageAdapter(selectYourMessageDialogModel.teacherUseCase.makeListForSelectMessageModel());
+        mteacherKycDocumentAdapter = new SelectMessageAdapter(list, this);
         binding.rvselectMessage.setAdapter(mteacherKycDocumentAdapter);
 
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.close_button) {
+            dismiss();
+        }
+    }
+
+    @Override
+    public void commonEventListner(CommonDataModel commonDataModel) {
+        switch (commonDataModel.getClickType()) {
+            case MESSAGE_SELECT_CLICK:
+                for (int i = 0; i < list.size(); i++) {
+                    if (i == commonDataModel.getSource()) {
+                        list.get(i).setCheck(true);
+                    } else {
+                        list.get(i).setCheck(false);
+                    }
+                }
+                mteacherKycDocumentAdapter.setData(list);
+                break;
+        }
     }
 }

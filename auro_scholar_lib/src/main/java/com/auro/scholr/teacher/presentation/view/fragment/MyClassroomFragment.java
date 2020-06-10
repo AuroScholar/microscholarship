@@ -1,7 +1,11 @@
 package com.auro.scholr.teacher.presentation.view.fragment;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,6 +28,7 @@ import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.TeacherMyClassroomLayoutBinding;
+import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
@@ -78,14 +83,14 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     public void setAdapter() {
         binding.studentList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.studentList.setHasFixedSize(true);
-        MyClassroomAdapter leaderBoardAdapter = new MyClassroomAdapter(getActivity(), myClassRoomResModel.getTeacherResModel().getStudentResModels(), null);
+        MyClassroomAdapter leaderBoardAdapter = new MyClassroomAdapter(getActivity(), myClassRoomResModel.getTeacherResModel().getStudentResModels(), this);
         binding.studentList.setAdapter(leaderBoardAdapter);
     }
 
 
     @Override
     protected void init() {
-
+        HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_DASHBOARD_FRAGMENT);
         List<String> list = new ArrayList<>();
         list.add("odd");
         list.add("even");
@@ -176,8 +181,10 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     @Override
     public void commonEventListner(CommonDataModel commonDataModel) {
         switch (commonDataModel.getClickType()) {
-            case KYC_BUTTON_CLICK:
-
+            case SEND_MESSAGE_CLICK:
+                SelectYourMessageDialogFragment fragment = new SelectYourMessageDialogFragment(); //where MyFragment is my fragment I want to show
+                fragment.setCancelable(true);
+                fragment.show(getActivity().getSupportFragmentManager(), MyClassroomFragment.class.getSimpleName());
                 break;
             case KYC_RESULT_PATH:
                 /*do code here*/
@@ -207,7 +214,13 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
     @Override
     public void onClick(View v) {
-        shareWithFriends();
+        if (v.getId() == R.id.whatsapp) {
+            sendWhatsapp(AuroApp.getAppContext().getResources().getString(R.string.share_msg));
+        } else if (v.getId() == R.id.facebook) {
+            shareAppLinkViaFacebook(AuroApp.getAppContext().getResources().getString(R.string.share_msg));
+        } else {
+            shareWithFriends();
+        }
     }
 
     private void observeServiceResponse() {
@@ -271,7 +284,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                 binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        viewModel.getTeacherProfileData("9654234507");
                     }
                 });
                 break;
@@ -291,5 +304,40 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         sendIntent.setType("text/plain");
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         AuroApp.getAppContext().startActivity(shareIntent);
+    }
+
+
+    private void sendWhatsapp(String message) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+        sendIntent.setType("text/plain");
+        sendIntent.setPackage("com.whatsapp");
+        if (sendIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(sendIntent);
+        }
+    }
+
+    private void shareAppLinkViaFacebook(String urlToShare) {
+        try {
+            Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, urlToShare);
+            PackageManager pm = AuroApp.getAppContext().getPackageManager();
+            List<ResolveInfo> activityList = pm.queryIntentActivities(shareIntent, 0);
+            for (final ResolveInfo app : activityList) {
+                if ((app.activityInfo.name).contains("facebook")) {
+                    final ActivityInfo activity = app.activityInfo;
+                    final ComponentName name = new ComponentName(activity.applicationInfo.packageName, activity.name);
+                    shareIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                    shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |             Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                    shareIntent.setComponent(name);
+                    AuroApp.getAppContext().startActivity(shareIntent);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            shareWithFriends();
+        }
     }
 }

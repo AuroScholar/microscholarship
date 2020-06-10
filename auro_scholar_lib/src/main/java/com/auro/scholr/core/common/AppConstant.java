@@ -192,6 +192,9 @@ public interface AppConstant {
     interface CLickType {
         int SUBJECT_CLICK = 100;
         int CLASS_CLICK = 101;
+        int SEND_MESSAGE_CLICK = 102;
+        int DOCUMENT_CLICK = 103;
+        int MESSAGE_SELECT_CLICK = 104;
     }
 
 }

@@ -6,6 +6,8 @@ public class SelectResponseModel {
 
     private int viewType;
 
+    private boolean isCheck;
+
     public SelectResponseModel() {
     }
 
@@ -23,5 +25,13 @@ public class SelectResponseModel {
 
     public void setViewType(int viewType) {
         this.viewType = viewType;
+    }
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
     }
 }

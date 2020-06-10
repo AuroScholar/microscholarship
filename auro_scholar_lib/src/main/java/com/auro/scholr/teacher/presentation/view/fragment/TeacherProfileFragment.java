@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,11 +22,14 @@ import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.common.ValidationModel;
 import com.auro.scholr.databinding.FragmentTeacherProfileBinding;
+import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.teacher.data.model.request.SelectClassesSubject;
@@ -102,6 +106,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
     @Override
     public void onResume() {
         super.onResume();
+        HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_PROFILE_FRAGMENT);
         init();
         setListener();
         setRecycleView();
@@ -138,6 +143,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         }
 
         binding.editPhoneNumber.setText("9654234507");
+        binding.icmobilenumber.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -151,12 +157,24 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         binding.editemail.addTextChangedListener(this);
         binding.editPhoneNumber.addTextChangedListener(this);
         binding.editSchoolName.addTextChangedListener(this);
+        binding.txtGetNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFragment(new TeacherKycFragment());
+                ((HomeActivity) getActivity()).selectNavigationMenu(2);
+            }
+        });
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callSaveTeacherProfileApi();
             }
         });
+    }
+
+
+    public void openFragment(Fragment fragment) {
+        FragmentUtil.replaceFragment(getActivity(), fragment, R.id.home_container, false, AppConstant.NEITHER_LEFT_NOR_RIGHT);
     }
 
     @Override
