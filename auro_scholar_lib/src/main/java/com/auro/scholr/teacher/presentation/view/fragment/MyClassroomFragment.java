@@ -36,6 +36,7 @@ import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.MyClassroomAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
 import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 
@@ -96,7 +97,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         list.add("even");
         list.add("primary");
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
-        monthSpinner();
         setDataOnUi();
         viewModel.getTeacherProfileData("9654234507");
 
@@ -107,9 +107,12 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     }
 
     private void monthSpinner() {
-
-        if (!TextUtil.checkListIsEmpty(viewModel.teacherUseCase.monthDataModelList())) {
-            MonthSpinnerAdapter stateSpinnerAdapter = new MonthSpinnerAdapter(viewModel.teacherUseCase.monthDataModelList());
+        String date = "";
+        if (myClassRoomResModel.getTeacherResModel() != null && !TextUtil.isEmpty(myClassRoomResModel.getTeacherResModel().getRegistrationDate())) {
+            date = myClassRoomResModel.getTeacherResModel().getRegistrationDate();
+        }
+        if (!TextUtil.checkListIsEmpty(viewModel.teacherUseCase.monthDataModelList(date))) {
+            MonthSpinnerAdapter stateSpinnerAdapter = new MonthSpinnerAdapter(viewModel.teacherUseCase.monthDataModelList(date));
             binding.monthSpinner.setAdapter(stateSpinnerAdapter);
             binding.monthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -240,6 +243,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                         myClassRoomResModel = (MyClassRoomResModel) responseApi.data;
                         AppUtil.myClassRoomResModel = myClassRoomResModel;
                         setAdapter();
+                        monthSpinner();
 
                     }
                     break;
@@ -330,7 +334,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                     final ActivityInfo activity = app.activityInfo;
                     final ComponentName name = new ComponentName(activity.applicationInfo.packageName, activity.name);
                     shareIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-                    shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |             Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                    shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                     shareIntent.setComponent(name);
                     AuroApp.getAppContext().startActivity(shareIntent);
                     break;

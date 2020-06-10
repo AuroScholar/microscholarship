@@ -20,7 +20,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class TeacherUseCase {
@@ -121,6 +125,44 @@ public class TeacherUseCase {
         return list;
 
     }
+
+
+    public List<MonthDataModel> monthDataModelList(String start) {
+        List<MonthDataModel> list = new ArrayList<>();
+        try {
+
+            Date b = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date a = dateFormat.parse(start);
+            for (Date d : datesBetween(a, b)) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(d);
+                String monthName = new SimpleDateFormat("MMMM").format(calendar.getTime());
+                int year = calendar.get(Calendar.YEAR);
+                MonthDataModel model = new MonthDataModel();
+                model.setMonth(monthName + " " + year);
+                list.add(model);
+                AppLogger.e("Date month name-", year + "--" + monthName);
+            }
+            AppLogger.e("Date convert", "months" + datesBetween(a, b).size());
+        } catch (Exception e) {
+            AppLogger.e("Date exception", "months--" + e.getMessage());
+        }
+        return list;
+
+    }
+
+    private List<Date> datesBetween(Date d1, Date d2) {
+        List<Date> ret = new ArrayList<Date>();
+        Calendar c = Calendar.getInstance();
+        c.setTime(d1);
+        while (c.getTimeInMillis() < d2.getTime()) {
+            c.add(Calendar.MONTH, 1);
+            ret.add(c.getTime());
+        }
+        return ret;
+    }
+
 
     public List<TeacherDocumentModel> makeListForTeacherDocumentModel() {
 
