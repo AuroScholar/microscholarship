@@ -150,7 +150,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                 binding.walletBal.setText("0");
             }
         }
-status
+
 
 
         if (!TextUtil.isEmpty(AuroApp.getAuroScholarModel().getMobileNumber())) {
