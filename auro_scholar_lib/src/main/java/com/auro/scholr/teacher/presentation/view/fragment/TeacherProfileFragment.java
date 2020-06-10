@@ -147,6 +147,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                 binding.walletBal.setText("0");
             }
         }
+status
 
         binding.editPhoneNumber.setText("9654234507");
         binding.icmobilenumber.setVisibility(View.VISIBLE);
