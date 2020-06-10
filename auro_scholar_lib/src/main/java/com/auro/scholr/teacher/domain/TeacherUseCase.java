@@ -279,7 +279,7 @@ public class TeacherUseCase {
 
     public List<SelectClassesSubject> selectClass(String classes) {
 
-        List<String> newData = getStringList(classes);
+
         List<SelectClassesSubject> list = new ArrayList<>();
 
         SelectClassesSubject classes1 = new SelectClassesSubject();
@@ -353,28 +353,29 @@ public class TeacherUseCase {
         classes11.setSelected(false);
         classes11.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
         list.add(classes11);
+        if(classes != null){
+            List<String> newData = getStringList(classes);
+            if(!newData.isEmpty()){
+                for(int i=0;i<newData.size();i++){
+                    for(int j = 0 ;j<list.size();j++){
+                        if(newData.get(i).equalsIgnoreCase(list.get(j).getText())){
+                            SelectClassesSubject classes13 = new SelectClassesSubject();
+                            classes13.setText(newData.get(i).toString());
+                            classes13.setSelected(true);
+                            classes13.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+                            list.set(j,classes13);
 
-        if(!newData.isEmpty()){
-            for(int i=0;i<newData.size();i++){
-                for(int j = 0 ;j<list.size();j++){
-                    if(newData.get(i).equalsIgnoreCase(list.get(j).getText())){
-                        SelectClassesSubject classes13 = new SelectClassesSubject();
-                        classes13.setText(newData.get(i).toString());
-                        classes13.setSelected(true);
-                        classes13.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
-                        list.set(j,classes13);
-
+                        }
                     }
                 }
             }
         }
-        Log.e("Data","list data"+list);
         return list;
 
     }
 
     public List<SelectClassesSubject> selectSubject(String Subject) {
-        List<String> newData = getStringList(Subject);
+
         List<SelectClassesSubject> list = new ArrayList<>();
         SelectClassesSubject classes1 = new SelectClassesSubject();
         classes1.setText("Maths");
@@ -408,17 +409,19 @@ public class TeacherUseCase {
 
         classes6.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
         list.add(classes6);
+        if(Subject != null) {
+            List<String> newData = getStringList(Subject);
+            if (!newData.isEmpty()) {
+                for (int i = 0; i < newData.size(); i++) {
+                    for (int j = 0; j < list.size(); j++) {
+                        if (newData.get(i).equalsIgnoreCase(list.get(j).getText())) {
+                            SelectClassesSubject classes13 = new SelectClassesSubject();
+                            classes13.setText(newData.get(i).toString());
+                            classes13.setSelected(true);
+                            classes13.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+                            list.set(j, classes13);
 
-        if(!newData.isEmpty()){
-            for(int i=0;i<newData.size();i++){
-                for(int j = 0 ;j<list.size();j++){
-                    if(newData.get(i).equalsIgnoreCase(list.get(j).getText())){
-                        SelectClassesSubject classes13 = new SelectClassesSubject();
-                        classes13.setText(newData.get(i).toString());
-                        classes13.setSelected(true);
-                        classes13.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
-                        list.set(j,classes13);
-
+                        }
                     }
                 }
             }
