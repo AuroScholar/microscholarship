@@ -25,12 +25,12 @@ import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-<<<<<<< HEAD
+
 import java.util.Arrays;
-=======
+
 import java.util.Calendar;
 import java.util.Date;
->>>>>>> 5a6606193bd4f2f8a98a7228599f66b7b3ccc0cc
+
 import java.util.List;
 
 public class TeacherUseCase {
