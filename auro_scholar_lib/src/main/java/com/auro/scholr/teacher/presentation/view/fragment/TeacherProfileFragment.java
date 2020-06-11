@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,11 +70,13 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
     List<String> subjectlist;
     HashMap<String, String> subjectHashmap = new HashMap<>();
     HashMap<String, String> classHashmap = new HashMap<>();
-    String subject = "English, Maths, Social Science, Science,";
+/*    String subject = "English, Maths, Social Science, Science,";
     String classes = "4th, 8th, 10th, 3rd, 9th, 7th, 2nd,";
 
     String distict = "52";
-    String state =  "5";
+    String state =  "5";*/
+
+
 
 
 
@@ -117,7 +120,6 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_PROFILE_FRAGMENT);
         init();
         setListener();
-        setRecycleView();
         viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
     }
 
@@ -131,7 +133,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         }
         viewModel.getStateListData();
         viewModel.getDistrictListData();
-        setRecycleView();
+        setRecycleView("","");
         setDataOnUI();
 
     }
@@ -203,23 +205,29 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
 
                 case LOADING:
                     if (responseApi.apiTypeStatus == Status.UPDATE_TEACHER_PROFILE_API) {
-                        handleProgress(0);
+                        handleProgress(0,"");
                     }
 
                     break;
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == Status.UPDATE_TEACHER_PROFILE_API) {
-                        handleProgress(1);
+                        handleProgress(1,"");
                     } else if (responseApi.apiTypeStatus == Status.GET_PROFILE_TEACHER_API) {
                         MyProfileResModel teacherResModel = (MyProfileResModel) responseApi.data;
+                        if (teacherResModel != null ) {
+                           setModelinteacherprofile(teacherResModel);
+                        } else {
+                           /* binding.studentList.setVisibility(View.GONE);
+                            binding.errorTxt.setVisibility(View.VISIBLE);*/
+                        }
                     }
                     break;
 
                 case FAIL:
                 case NO_INTERNET:
                     if (responseApi.apiTypeStatus == Status.UPDATE_TEACHER_PROFILE_API) {
-                        handleProgress(1);
+                        handleProgress(1,"");
                         showSnackbarError((String) responseApi.data);
                     }
                     break;
@@ -228,16 +236,16 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                 /*For state list*/
                 case STATE_LIST_ARRAY:
                     stateDataModelList = (List<StateDataModel>) responseApi.data;
-                    stateSpinner();
+                    stateSpinner("");
                     break;
 
                 case DISTRICT_LIST_DATA:
                     districtDataModels = (List<DistrictDataModel>) responseApi.data;
-                    districtSpinner();
+                    districtSpinner("");
                     break;
 
                 default:
-                        handleProgress(1);
+                        handleProgress(1,"");
                         showSnackbarError(getString(R.string.default_error));
 
 
@@ -251,15 +259,18 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         ViewUtil.showSnackBar(binding.getRoot(), message);
     }
 
-    private void stateSpinner() {
+    private void stateSpinner(String state) {
         if (!TextUtil.checkListIsEmpty(stateDataModelList)) {
             StateSpinnerAdapter stateSpinnerAdapter = new StateSpinnerAdapter(stateDataModelList);
             binding.stateSpinner.setAdapter(stateSpinnerAdapter);
-            for(int i = 0; i<stateDataModelList.size();i++){
-                if(state.equalsIgnoreCase(stateDataModelList.get(i).getState_code())){
-                    binding.stateSpinner.setSelection(i);
+            if(state != null){
+                for(int i = 0; i<stateDataModelList.size();i++){
+                    if(state.equalsIgnoreCase(stateDataModelList.get(i).getState_code())){
+                        binding.stateSpinner.setSelection(i);
+                    }
                 }
             }
+
             binding.stateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -292,10 +303,17 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
 
     }
 
-    private void districtSpinner() {
+    private void districtSpinner(String district) {
         if (!TextUtil.checkListIsEmpty(districtDataModels)) {
             binding.cityTitle.setVisibility(View.VISIBLE);
             binding.citySpinner.setVisibility(View.VISIBLE);
+            if(district != null){
+                for(int i = 0; i<districtDataModels.size();i++){
+                    if(district.equalsIgnoreCase(districtDataModels.get(i).getState_code())){
+                        binding.stateSpinner.setSelection(i);
+                    }
+                }
+            }
             DistrictSpinnerAdapter stateSpinnerAdapter = new DistrictSpinnerAdapter(districtDataModels);
             binding.citySpinner.setAdapter(stateSpinnerAdapter);
             binding.citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -315,19 +333,19 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         }
     }
 
-    public void setRecycleView() {
+    public void setRecycleView(String classesdata,String subject) {
         //for class recycleview
-        classesList = Arrays.asList(getResources().getStringArray(R.array.classes));
+
         GridLayoutManager gridlayout = new GridLayoutManager(getActivity(), 2);
         gridlayout.setOrientation(LinearLayoutManager.HORIZONTAL);
         binding.recycleViewclass.setLayoutManager(gridlayout);
         binding.recycleViewclass.setHasFixedSize(true);
         binding.recycleViewclass.setNestedScrollingEnabled(false);
-        ProfileScreenAdapter mProfileScreenAdapterAdapter = new ProfileScreenAdapter(viewModel.teacherUseCase.selectClass(classes), getContext(), this);
+        ProfileScreenAdapter mProfileScreenAdapterAdapter = new ProfileScreenAdapter(viewModel.teacherUseCase.selectClass(classesdata), getContext(), this);
         binding.recycleViewclass.setAdapter(mProfileScreenAdapterAdapter);
 
         //for subject recycle view
-        subjectlist = Arrays.asList(getResources().getStringArray(R.array.subject));
+
         GridLayoutManager gridlayout2 = new GridLayoutManager(getActivity(), 2);
         gridlayout2.setOrientation(LinearLayoutManager.HORIZONTAL);
         binding.recycleViewsubject.setLayoutManager(gridlayout2);
@@ -445,7 +463,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         }
     }
 
-    public void handleProgress(int status) {
+    /*public void handleProgress(int status) {
         switch (status) {
             case 0:
                 binding.button.setVisibility(View.GONE);
@@ -456,5 +474,58 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                 binding.progressBar.setVisibility(View.GONE);
                 break;
         }
+    }*/
+
+    private void handleProgress(int status, String message) {
+        switch (status) {
+            case 0:
+                binding.parentLayout.setVisibility(View.GONE);
+                binding.errorConstraint.setVisibility(View.GONE);
+                binding.shimmerMyClassroom.setVisibility(View.VISIBLE);
+                binding.shimmerMyClassroom.startShimmer();
+                break;
+
+            case 1:
+                binding.parentLayout.setVisibility(View.VISIBLE);
+                binding.errorConstraint.setVisibility(View.GONE);
+                binding.shimmerMyClassroom.setVisibility(View.GONE);
+                binding.shimmerMyClassroom.stopShimmer();
+                break;
+
+            case 2:
+                binding.errorConstraint.setVisibility(View.VISIBLE);
+                binding.parentLayout.setVisibility(View.GONE);
+                binding.shimmerMyClassroom.setVisibility(View.GONE);
+                binding.shimmerMyClassroom.stopShimmer();
+                binding.errorLayout.textError.setText(message);
+                binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        viewModel.getTeacherProfileData("9654234507");
+                    }
+                });
+                break;
+        }
+
+    }
+
+    public void setModelinteacherprofile(MyProfileResModel teacherResModel){
+        if(teacherResModel.getSchoolName() != null){
+            binding.editSchoolName.setText(teacherResModel.getSchoolName().toString());
+        }
+        if(teacherResModel.getTeacherName() != null){
+            binding.editteachername.setText(teacherResModel.getTeacherName().toString());
+        }
+        if(teacherResModel.getTeacherEmail() != null){
+            binding.editemail.setText(teacherResModel.getTeacherEmail().toString());
+        }
+        if(teacherResModel.getTeacherClass() != null && teacherResModel.getTeacherSubject() != null){
+            setRecycleView(teacherResModel.getTeacherClass(),teacherResModel.getTeacherSubject());
+        }
+        if(teacherResModel.getDistrictId() != null && teacherResModel.getStateId() != null){
+            stateSpinner(teacherResModel.getStateId());
+            districtSpinner(teacherResModel.getDistrictId());
+        }
+
     }
 }
