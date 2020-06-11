@@ -8,6 +8,8 @@ import com.auro.scholr.core.common.NetworkUtil;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.network.NetworkUseCase;
+import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 import com.auro.scholr.teacher.data.model.response.MyProfileResModel;
@@ -16,6 +18,8 @@ import com.auro.scholr.teacher.data.repository.TeacherRepo;
 import com.auro.scholr.util.AppUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import java.util.List;
 
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
@@ -36,7 +40,7 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
 
 
     public Single<ResponseApi> updateTeacherProfileApi(TeacherReqModel reqModel) {
-        Log.e("Request","TeacherDistrict "+reqModel.getDistrict_id() + " State "+reqModel.getState_id());
+        Log.e("Request", "TeacherDistrict " + reqModel.getDistrict_id() + " State " + reqModel.getState_id());
         return teacherRemoteData.updateTeacherProfileApi(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
             @Override
             public ResponseApi apply(Response<JsonObject> response) throws Exception {
@@ -72,6 +76,25 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
             }
         });
     }
+
+    public Single<ResponseApi> uploadTeacherKYC(List<KYCDocumentDatamodel> list) {
+
+        return teacherRemoteData.uploadTeacherKYC(list).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+
+                    return handleResponse(response, Status.TEACHER_KYC_API);
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
     public Single<ResponseApi> getTeacherDashboardApi(String mobileNumber) {
 
         return teacherRemoteData.getTeacherDashboardApi(mobileNumber).map(new Function<Response<JsonObject>, ResponseApi>() {
@@ -135,6 +158,11 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
             case GET_PROFILE_TEACHER_API:
                 MyProfileResModel resModel = gson.fromJson(response.body(), MyProfileResModel.class);
                 return ResponseApi.success(resModel, status);
+
+
+            case TEACHER_KYC_API:
+                KYCResListModel list = new Gson().fromJson(response.body(), KYCResListModel.class);
+                return ResponseApi.success(list, status);
 
         }
 

@@ -27,4 +27,8 @@ public interface URLConstant {
     String GET_PROFILE_UPDATE_API = BASE_URL + "students_score_data_api.php ";
 
     String GET_PROFILE_TEACHER_API = BASE_URL + "teacher_profile_display_api.php ";
+
+    String TEACHER_KYC_API = BASE_URL + "teacher_kyc_api.php ";
+
+
 }

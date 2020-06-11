@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareType("teacher");
         auroScholarDataModel.setShareIdentity("chandan Sir");
         auroScholarDataModel.setActivity(this);
+        auroScholarDataModel.setReferralLink("");
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         auroScholarDataModel.setSdkcallback(new SdkCallBack() {
             @Override
@@ -137,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 /*Api response here*/
             }
         });
+
 
         AuroScholar.startTeacherSDK(auroScholarDataModel);
        // openFragment(AuroScholar.startAuroSDK(inputModel));

@@ -315,7 +315,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     private void observeServiceResponse() {
         kycViewModel.serviceLiveData().observeForever(responseApi -> {
-
             switch (responseApi.status) {
                 case LOADING:
                     progressBarHandling(0);

@@ -5,10 +5,13 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.auro.scholr.R;
+import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.TeacherDocumentItemLayoutBinding;
+import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.teacher.data.model.TeacherDocumentModel;
 import com.auro.scholr.util.AppUtil;
 
@@ -22,13 +25,17 @@ public class TeacherDoumentViewHolder extends RecyclerView.ViewHolder {
         this.binding = binding;
     }
 
-    public void bindUser(TeacherDocumentModel model, int position, CommonCallBackListner commonCallBackListner) {
-        binding.txtDocumentName.setText(model.getUploadDocumentname());
+    public void bindUser(KYCDocumentDatamodel model, int position, CommonCallBackListner commonCallBackListner) {
+        binding.txtDocumentName.setText(model.getDocumentName());
+        if (!model.getDocumentFileName().equalsIgnoreCase(AuroApp.getAppContext().getString(R.string.no_file_chosen))) {
+            binding.txtFileName.setVisibility(View.VISIBLE);
+            binding.txtFileName.setText(model.getDocumentFileName());
+        }
         binding.docImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (commonCallBackListner != null) {
-                    commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.DOCUMENT_CLICK,model));
+                    commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.DOCUMENT_CLICK, model));
                 }
 
             }

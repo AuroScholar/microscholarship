@@ -115,6 +115,10 @@ public interface AppConstant {
         String SCHOOL_ID = "school_id_card";
         String STUDENT_PHOTO = "student_photo";
 
+        String GOVT_ID_FRONT = "govt_id_front";
+        String GOVT_ID_BACK = "govt_id_back";
+        String TEACHER_PHOTO = "teacher_photo";
+
         String AADHAR_PHONE = "aadhar_phone";
         String AADHAR_NO = "aadhar_no";
         String AADHAR_DOB = "aadhar_dob";
@@ -147,7 +151,7 @@ public interface AppConstant {
         int LEADERBOARD_INVITE_TYPE = 101;
         int TRANSACTIONS_ADAPTER = 102;
         String QUIZ_DASHBOARD_WEB = "QUIZ_DASHBOARD_WEB";
-        int TEACHERDOCUMENTADAPTER = 103;
+        int TEACHER_DOC_ADAPTER = 103;
         int SELECTMESSAGEADAPTER = 104;
         int SUBJECTADAPTER = 105;
         int CLASSESADAPTER = 106;

@@ -25,6 +25,8 @@ public interface TeacherRepo {
 
         Single<Response<JsonObject>> getProfileTeacherApi(String mobileNumber);
 
+        Single<Response<JsonObject>> uploadTeacherKYC(List<KYCDocumentDatamodel> list);
+
 
     }
 

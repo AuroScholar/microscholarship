@@ -7,9 +7,9 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.ValidationModel;
 import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
+import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.teacher.data.model.SelectResponseModel;
-import com.auro.scholr.teacher.data.model.TeacherDocumentModel;
 import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.MonthDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
@@ -19,6 +19,7 @@ import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -170,31 +171,54 @@ public class TeacherUseCase {
     }
 
 
-    public List<TeacherDocumentModel> makeListForTeacherDocumentModel() {
+    public ArrayList<KYCDocumentDatamodel> makeAdapterDocumentList( ) {
+        ArrayList<KYCDocumentDatamodel> kycDocumentList = new ArrayList<>();
 
-        List<TeacherDocumentModel> list = new ArrayList<>();
-        TeacherDocumentModel document1 = new TeacherDocumentModel();
-        document1.setUploadDocumentname("Upload Govt. ID");
-        document1.setViewType(AppConstant.FriendsLeaderBoard.TEACHERDOCUMENTADAPTER);
-        list.add(document1);
+        KYCDocumentDatamodel kyc_one = new KYCDocumentDatamodel();
+        kyc_one.setDocumentId(AppConstant.DocumentType.ID_PROOF_FRONT_SIDE);
+        kyc_one.setDocumentName(AuroApp.getAppContext().getString(R.string.upload_govt_id));
+        kyc_one.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
+        kyc_one.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
+        kyc_one.setViewType(AppConstant.FriendsLeaderBoard.TEACHER_DOC_ADAPTER);
+        kyc_one.setId_name(AppConstant.DocumentType.GOVT_ID_FRONT);
 
 
-        TeacherDocumentModel document2 = new TeacherDocumentModel();
-        document2.setUploadDocumentname("Upload Govt. ID Back Side");
-        document2.setViewType(AppConstant.FriendsLeaderBoard.TEACHERDOCUMENTADAPTER);
-        list.add(document2);
 
-        TeacherDocumentModel document3 = new TeacherDocumentModel();
-        document3.setUploadDocumentname("Upload School ID");
-        document3.setViewType(AppConstant.FriendsLeaderBoard.TEACHERDOCUMENTADAPTER);
-        list.add(document3);
+        KYCDocumentDatamodel kyc_two = new KYCDocumentDatamodel();
+        kyc_two.setDocumentId(AppConstant.DocumentType.ID_PROOF_BACK_SIDE);
+        kyc_two.setDocumentName(AuroApp.getAppContext().getString(R.string.upload_govt_id_back_side));
+        kyc_two.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
+        kyc_two.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
+        kyc_two.setViewType(AppConstant.FriendsLeaderBoard.TEACHER_DOC_ADAPTER);
+        kyc_two.setId_name(AppConstant.DocumentType.GOVT_ID_BACK);
 
-        TeacherDocumentModel document4 = new TeacherDocumentModel();
-        document4.setUploadDocumentname("Upload Picture");
-        document4.setViewType(AppConstant.FriendsLeaderBoard.TEACHERDOCUMENTADAPTER);
-        list.add(document4);
-        return list;
+
+        KYCDocumentDatamodel kyc_three = new KYCDocumentDatamodel();
+        kyc_three.setDocumentId(AppConstant.DocumentType.SCHOOL_ID_CARD);
+        kyc_three.setDocumentName(AuroApp.getAppContext().getString(R.string.upload_school_id));
+        kyc_three.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
+        kyc_three.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
+        kyc_three.setViewType(AppConstant.FriendsLeaderBoard.TEACHER_DOC_ADAPTER);
+        kyc_three.setId_name(AppConstant.DocumentType.SCHOOL_ID);
+
+
+        KYCDocumentDatamodel kyc_four = new KYCDocumentDatamodel();
+        kyc_four.setDocumentId(AppConstant.DocumentType.UPLOAD_YOUR_PHOTO);
+        kyc_four.setDocumentName(AuroApp.getAppContext().getString(R.string.upload_picture));
+        kyc_four.setDocumentFileName(AuroApp.getAppContext().getString(R.string.no_file_chosen));
+        kyc_four.setViewType(AppConstant.FriendsLeaderBoard.TEACHER_DOC_ADAPTER);
+        kyc_four.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
+        kyc_four.setId_name(AppConstant.DocumentType.TEACHER_PHOTO);
+
+        kycDocumentList.add(kyc_one);
+        kycDocumentList.add(kyc_two);
+        kycDocumentList.add(kyc_three);
+        kycDocumentList.add(kyc_four);
+
+        return kycDocumentList;
+
     }
+
 
     public List<SelectResponseModel> makeListForSelectMessageModel() {
 
@@ -456,5 +480,28 @@ public class TeacherUseCase {
         return new ValidationModel(true, "");
 
     }
+    public byte[] getBytes(InputStream is) throws IOException {
+        ByteArrayOutputStream byteBuff = new ByteArrayOutputStream();
 
+        int buffSize = 1024;
+        byte[] buff = new byte[buffSize];
+
+        int len = 0;
+        while ((len = is.read(buff)) != -1) {
+            byteBuff.write(buff, 0, len);
+        }
+
+        return byteBuff.toByteArray();
+    }
+
+    public boolean checkUploadButtonDoc(ArrayList<KYCDocumentDatamodel> list) {
+        String noFileChosen = AuroApp.getAppContext().getString(R.string.no_file_chosen);
+        if (!list.get(0).getDocumentFileName().equalsIgnoreCase(noFileChosen) && !list.get(1).getDocumentFileName().equalsIgnoreCase(noFileChosen) &&
+                !list.get(2).getDocumentFileName().equalsIgnoreCase(noFileChosen) && !list.get(3).getDocumentFileName().equalsIgnoreCase(noFileChosen)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }

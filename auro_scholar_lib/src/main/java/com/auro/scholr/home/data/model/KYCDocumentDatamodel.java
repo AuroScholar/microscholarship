@@ -19,6 +19,15 @@ public class KYCDocumentDatamodel {
     String id_name;
     String documentUrl;
     byte[] imageBytes;
+    int viewType;
+
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
+    }
 
     public boolean isModify() {
         return modify;

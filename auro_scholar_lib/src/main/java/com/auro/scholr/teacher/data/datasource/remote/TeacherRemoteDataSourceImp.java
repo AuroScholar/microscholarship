@@ -1,14 +1,20 @@
 package com.auro.scholr.teacher.data.datasource.remote;
 
+import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.auro.scholr.teacher.data.repository.TeacherRepo;
+import com.auro.scholr.util.ConversionUtil;
 import com.google.gson.JsonObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Single;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Response;
 
 public class TeacherRemoteDataSourceImp implements TeacherRepo.TeacherRemoteData {
@@ -18,8 +24,6 @@ public class TeacherRemoteDataSourceImp implements TeacherRepo.TeacherRemoteData
     public TeacherRemoteDataSourceImp(TeacherRemoteApi teacherRemoteApi) {
         this.teacherRemoteApi = teacherRemoteApi;
     }
-
-
 
 
     @Override
@@ -40,14 +44,29 @@ public class TeacherRemoteDataSourceImp implements TeacherRepo.TeacherRemoteData
     @Override
     public Single<Response<JsonObject>> getTeacherDashboardApi(String mobileNumber) {
         Map<String, String> params = new HashMap<String, String>();
-            params.put(AppConstant.MOBILE_NUMBER,mobileNumber);
-            return teacherRemoteApi.getTeacherDashboardApi(params);
+        params.put(AppConstant.MOBILE_NUMBER, mobileNumber);
+        return teacherRemoteApi.getTeacherDashboardApi(params);
     }
 
     @Override
     public Single<Response<JsonObject>> getProfileTeacherApi(String mobileNumber) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put(AppConstant.MOBILE_NUMBER,mobileNumber);
+        params.put(AppConstant.MOBILE_NUMBER, mobileNumber);
         return teacherRemoteApi.getProfileTeacherApi(params);
+    }
+
+
+    @Override
+    public Single<Response<JsonObject>> uploadTeacherKYC(List<KYCDocumentDatamodel> list) {
+        RequestBody phonenumber = RequestBody.create(okhttp3.MultipartBody.FORM, AuroApp.getAuroScholarModel().getMobileNumber());
+        MultipartBody.Part id_proof_front = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(0));
+        MultipartBody.Part id_proof_back = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(1));
+        MultipartBody.Part school_id_card = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(2));
+        MultipartBody.Part student_photo = ConversionUtil.INSTANCE.makeMultipartRequest(list.get(3));
+        return teacherRemoteApi.uploadTeacherKYC(phonenumber,
+                id_proof_front,
+                id_proof_back,
+                school_id_card,
+                student_photo);
     }
 }

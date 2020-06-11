@@ -2,13 +2,16 @@ package com.auro.scholr.teacher.presentation.view.fragment;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,70 +23,52 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.FragmentTeacherKycBinding;
+import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.teacher.presentation.view.adapter.TeacherKycDocumentAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherKycViewModel;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.cropper.CropImageViews;
 import com.auro.scholr.util.cropper.CropImages;
 
+import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TeacherKycFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class TeacherKycFragment extends BaseFragment implements CommonCallBackListner {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+import static android.app.Activity.RESULT_OK;
+
+public class TeacherKycFragment extends BaseFragment implements CommonCallBackListner, View.OnClickListener {
     @Inject
     @Named("TeacherKycFragment")
     ViewModelFactory viewModelFactory;
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     FragmentTeacherKycBinding binding;
-    TeacherKycViewModel teacherKycViewModel;
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    TeacherKycViewModel viewModel;
     boolean isStateRestore;
+    private boolean uploadBtnStatus;
     Resources resources;
-    // TeacherDocumentViewModel viewModel;
+    int pos;
+    Uri resultUri;
+    ArrayList<KYCDocumentDatamodel> kycDocumentDatamodelArrayList;
+    TeacherKycDocumentAdapter mteacherKycDocumentAdapter;
 
     public TeacherKycFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TeacherKycFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TeacherKycFragment newInstance(String param1, String param2) {
-        TeacherKycFragment fragment = new TeacherKycFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -96,19 +81,20 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
         }
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
-        teacherKycViewModel = ViewModelProviders.of(this, viewModelFactory).get(TeacherKycViewModel.class);
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(TeacherKycViewModel.class);
         binding.setLifecycleOwner(this);
-        binding.setTeacherKycViewModel(teacherKycViewModel);
+        binding.setTeacherKycViewModel(viewModel);
         setRetainInstance(true);
+        setAdapter();
+
         return binding.getRoot();
     }
 
     @Override
     protected void init() {
-
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
         setListener();
-        setTeacherKycBoard();
+
     }
 
     @Override
@@ -118,7 +104,67 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
 
     @Override
     protected void setListener() {
+        if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
+            viewModel.serviceLiveData().removeObservers(this);
+        } else {
+            observeServiceResponse();
+        }
 
+        binding.button.setOnClickListener(this);
+    }
+
+
+    private void observeServiceResponse() {
+
+        viewModel.serviceLiveData().observeForever(responseApi -> {
+            switch (responseApi.status) {
+
+                case LOADING:
+                    if (responseApi.apiTypeStatus == Status.TEACHER_KYC_API) {
+                        handleProgress(0);
+                    }
+
+                    break;
+
+                case SUCCESS:
+                    if (responseApi.apiTypeStatus == Status.TEACHER_KYC_API) {
+                        handleProgress(1);
+                        uploadBtnStatus = false;
+
+                    }
+                    break;
+
+                case FAIL:
+                case NO_INTERNET:
+                    if (responseApi.apiTypeStatus == Status.TEACHER_KYC_API) {
+                        handleProgress(1);
+                        showSnackbarError((String) responseApi.data);
+                    }
+                    break;
+
+
+                default:
+                    handleProgress(1);
+                    showSnackbarError(getString(R.string.default_error));
+
+
+                    break;
+            }
+
+        });
+    }
+
+    public void handleProgress(int status) {
+        switch (status) {
+            case 0:
+                binding.button.setVisibility(View.GONE);
+                binding.progressBar.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                binding.button.setVisibility(View.VISIBLE);
+                binding.progressBar.setVisibility(View.GONE);
+                break;
+        }
     }
 
     @Override
@@ -135,12 +181,12 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
         return R.layout.fragment_teacher_kyc;
     }
 
-    public void setTeacherKycBoard() {
-
+    public void setAdapter() {
+        kycDocumentDatamodelArrayList = viewModel.teacherUseCase.makeAdapterDocumentList();
         binding.rvDoucumentUpload.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvDoucumentUpload.setHasFixedSize(true);
         binding.rvDoucumentUpload.setNestedScrollingEnabled(false);
-        TeacherKycDocumentAdapter mteacherKycDocumentAdapter = new TeacherKycDocumentAdapter(teacherKycViewModel.teacherUseCase.makeListForTeacherDocumentModel(), this);
+        mteacherKycDocumentAdapter = new TeacherKycDocumentAdapter(viewModel.teacherUseCase.makeAdapterDocumentList(), this);
         binding.rvDoucumentUpload.setAdapter(mteacherKycDocumentAdapter);
 
 
@@ -167,12 +213,8 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
     public void commonEventListner(CommonDataModel commonDataModel) {
         switch (commonDataModel.getClickType()) {
             case DOCUMENT_CLICK:
-                if (commonDataModel.getSource() == 3) {
-                    openActivity();
-                } else {
-                    CropImages.activity()
-                            .setGuidelines(CropImageViews.Guidelines.ON)
-                            .start(getActivity());
+                if (!uploadBtnStatus) {
+                    onUploadDocClick(commonDataModel);
                 }
                 break;
         }
@@ -182,4 +224,95 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
         Intent intent = new Intent(getActivity(), CameraActivity.class);
         startActivityForResult(intent, AppConstant.CAMERA_REQUEST_CODE);
     }
+
+
+    private void showSnackbarError(String message) {
+        uploadBtnStatus = false;
+        ViewUtil.showSnackBar(binding.getRoot(), message);
+    }
+
+    private void onUploadDocClick(CommonDataModel commonDataModel) {
+        pos = commonDataModel.getSource();
+        KYCDocumentDatamodel kycDocumentDatamodel = (KYCDocumentDatamodel) commonDataModel.getObject();
+        if (kycDocumentDatamodel.getDocumentId() == AppConstant.DocumentType.UPLOAD_YOUR_PHOTO) {
+            openActivity();
+        } else {
+            CropImages.activity()
+                    .setGuidelines(CropImageViews.Guidelines.ON)
+                    .start(getActivity());
+        }
+
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        AppLogger.e("chhonker", "fragment requestCode=" + requestCode);
+        if (requestCode == CropImages.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImages.ActivityResult result = CropImages.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                try {
+                    resultUri = result.getUri();
+                    updateKYCList(resultUri.getPath());
+
+                } catch (Exception e) {
+
+                }
+
+            } else if (resultCode == CropImages.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        } else if (requestCode == AppConstant.CAMERA_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                try {
+                    String path = data.getStringExtra(AppConstant.PROFILE_IMAGE_PATH);
+                    updateKYCList(path);
+                } catch (Exception e) {
+
+                }
+
+            } else {
+
+            }
+        }
+
+    }
+
+
+    private void updateKYCList(String path) {
+        try {
+            if (kycDocumentDatamodelArrayList.get(pos).getDocumentId() == AppConstant.DocumentType.ID_PROOF_FRONT_SIDE) {
+                kycDocumentDatamodelArrayList.get(pos).setDocumentFileName("id_front.jpg");
+            } else if (kycDocumentDatamodelArrayList.get(pos).getDocumentId() == AppConstant.DocumentType.ID_PROOF_BACK_SIDE) {
+                kycDocumentDatamodelArrayList.get(pos).setDocumentFileName("id_back.jpg");
+            } else if (kycDocumentDatamodelArrayList.get(pos).getDocumentId() == AppConstant.DocumentType.SCHOOL_ID_CARD) {
+                kycDocumentDatamodelArrayList.get(pos).setDocumentFileName("id_school.jpg");
+            } else if (kycDocumentDatamodelArrayList.get(pos).getDocumentId() == AppConstant.DocumentType.UPLOAD_YOUR_PHOTO) {
+                kycDocumentDatamodelArrayList.get(pos).setDocumentFileName("profile.jpg");
+            }
+            kycDocumentDatamodelArrayList.get(pos).setDocumentURi(Uri.parse(path));
+            File file = new File(kycDocumentDatamodelArrayList.get(pos).getDocumentURi().getPath());
+            InputStream is = AuroApp.getAppContext().getApplicationContext().getContentResolver().openInputStream(Uri.fromFile(file));
+            kycDocumentDatamodelArrayList.get(pos).setImageBytes(viewModel.teacherUseCase.getBytes(is));
+            mteacherKycDocumentAdapter.updateList(kycDocumentDatamodelArrayList);
+        } catch (Exception e) {
+            /*Do code here when error occur*/
+        }
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        if (viewModel.teacherUseCase.checkUploadButtonDoc(kycDocumentDatamodelArrayList)) {
+            uploadBtnStatus = true;
+            uploadAllDocApi();
+        } else {
+            ViewUtil.showSnackBar(binding.getRoot(), getString(R.string.document_all_four_error_msg));
+        }
+    }
+    private void uploadAllDocApi() {
+        viewModel.teacherKYCUpload(kycDocumentDatamodelArrayList);
+    }
+
 }

@@ -1,9 +1,14 @@
 package com.auro.scholr.teacher.data.datasource.remote;
 
+import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.network.URLConstant;
+import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+import com.auro.scholr.home.data.model.KYCInputModel;
+import com.auro.scholr.util.ConversionUtil;
 import com.google.gson.JsonObject;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Single;
@@ -30,5 +35,19 @@ public interface TeacherRemoteApi {
     @POST(URLConstant.GET_PROFILE_TEACHER_API)
     @FormUrlEncoded
     Single<Response<JsonObject>> getProfileTeacherApi(@FieldMap Map<String, String> params);
+
+    @POST(URLConstant.TEACHER_KYC_API)
+    @Multipart
+    Single<Response<JsonObject>> uploadTeacherKYC(
+            @Part(AppConstant.MOBILE_NUMBER) RequestBody mobileNumber,
+            @Part MultipartBody.Part govt_id_front,
+            @Part MultipartBody.Part govt_id_back,
+            @Part MultipartBody.Part school_id_card,
+            @Part MultipartBody.Part teacher_photo
+    );
+
+
+
+
 
 }
