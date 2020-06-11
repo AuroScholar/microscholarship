@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareType("teacher");
         auroScholarDataModel.setShareIdentity("chandan Sir");
         auroScholarDataModel.setActivity(this);
-        auroScholarDataModel.setReferralLink("varun chhonker");
+        auroScholarDataModel.setReferralLink("");
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         auroScholarDataModel.setSdkcallback(new SdkCallBack() {
             @Override

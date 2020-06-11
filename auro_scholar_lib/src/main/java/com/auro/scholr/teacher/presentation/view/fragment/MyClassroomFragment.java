@@ -222,7 +222,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         if (AuroApp.getAuroScholarModel() != null && !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getReferralLink())) {
             completeLink = completeLink + AuroApp.getAuroScholarModel().getReferralLink();
         } else {
-            completeLink = completeLink + "https://bit.ly/3b1puWr";
+            completeLink = completeLink + " https://bit.ly/3b1puWr";
         }
 
         if (v.getId() == R.id.whatsapp) {
