@@ -178,6 +178,7 @@
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <RelativeLayout
+                                    android:id="@+id/button_layout"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_40sdp"
                                     android:layout_marginLeft="@dimen/_20sdp"

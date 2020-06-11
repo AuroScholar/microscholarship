@@ -30,16 +30,23 @@ public class TeacherDoumentViewHolder extends RecyclerView.ViewHolder {
         if (!model.getDocumentFileName().equalsIgnoreCase(AuroApp.getAppContext().getString(R.string.no_file_chosen))) {
             binding.txtFileName.setVisibility(View.VISIBLE);
             binding.txtFileName.setText(model.getDocumentFileName());
+            binding.docImg.setOnClickListener(null);
         }
-        binding.docImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (commonCallBackListner != null) {
-                    commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.DOCUMENT_CLICK, model));
-                }
+        if (model.isModify()) {
+            binding.docImg.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_check));
+        } else {
+            binding.docImg.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_upload));
+            binding.docImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (commonCallBackListner != null) {
+                        commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.DOCUMENT_CLICK, model));
+                    }
 
-            }
-        });
+                }
+            });
+        }
+
 
     }
 }

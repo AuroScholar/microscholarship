@@ -442,7 +442,7 @@ public class TeacherUseCase {
                             SelectClassesSubject classes13 = new SelectClassesSubject();
                             classes13.setText(newData.get(i).toString());
                             classes13.setSelected(true);
-                            classes13.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+                            classes13.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
                             list.set(j, classes13);
 
                         }

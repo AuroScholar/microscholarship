@@ -44,7 +44,9 @@ public class TextUtil {
         }
 
     }
-
+    public static String removeLastChar(String str) {
+        return str.substring(0, str.length() - 1);
+    }
 
     public static String removeAllSpace(String text) {
         return text.replaceAll("\\s+", "");

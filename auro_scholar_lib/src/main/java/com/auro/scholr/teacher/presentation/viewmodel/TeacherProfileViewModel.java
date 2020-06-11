@@ -86,7 +86,6 @@ public class TeacherProfileViewModel extends ViewModel {
     }
 
 
-
     public void updateTeacherProfileData(TeacherReqModel reqModel) {
 
         Disposable disposable = teacherRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
@@ -113,7 +112,7 @@ public class TeacherProfileViewModel extends ViewModel {
                             @Override
                             public void accept(Disposable __) throws Exception {
                                 /*Do code here*/
-                                serviceLiveData.setValue(ResponseApi.loading(null));
+                                serviceLiveData.setValue(ResponseApi.loading(Status.UPDATE_TEACHER_PROFILE_API));
                             }
                         })
                         .subscribe(new Consumer<ResponseApi>() {
@@ -131,7 +130,6 @@ public class TeacherProfileViewModel extends ViewModel {
                                 }));
 
     }
-
 
 
     public void getStateListData() {

@@ -16,11 +16,11 @@ import com.auro.scholr.teacher.data.model.request.SelectClassesSubject;
 import com.auro.scholr.util.AppUtil;
 
 
-public class ClassViewHolder extends RecyclerView.ViewHolder {
+public class SubjectViewHolder extends RecyclerView.ViewHolder {
 
     ClassItemLayoutBinding binding;
 
-    public ClassViewHolder(@NonNull ClassItemLayoutBinding binding) {
+    public SubjectViewHolder(@NonNull ClassItemLayoutBinding binding) {
         super(binding.getRoot());
         this.binding = binding;
 
@@ -35,16 +35,15 @@ public class ClassViewHolder extends RecyclerView.ViewHolder {
         binding.buttonClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (view.getId() == R.id.buttonClick) {
-                    if (model.isSelected()) {
-                        model.setSelected(false);
-                    } else {
-                        model.setSelected(true);
-                    }
-                    binding.buttonClick.setBackground(model.isSelected() ? ContextCompat.getDrawable(mcontext, R.drawable.class_bule_border_background) : ContextCompat.getDrawable(mcontext, R.drawable.class_borader_background));
-                    binding.txtClass.setTextColor(model.isSelected() ? ContextCompat.getColor(mcontext, R.color.white) : ContextCompat.getColor(mcontext, R.color.grey_color));
-                    setClickListnerForSubject(commonCallBackListner, model, adapter);
+                if (model.isSelected()) {
+                    model.setSelected(false);
+                } else {
+                    model.setSelected(true);
                 }
+                binding.buttonClick.setBackground(model.isSelected() ? ContextCompat.getDrawable(mcontext, R.drawable.class_bule_border_background) : ContextCompat.getDrawable(mcontext, R.drawable.class_borader_background));
+                binding.txtClass.setTextColor(model.isSelected() ? ContextCompat.getColor(mcontext, R.color.white) : ContextCompat.getColor(mcontext, R.color.grey_color));
+                setClickListnerForSubject(commonCallBackListner, model, adapter);
+
             }
         });
     }

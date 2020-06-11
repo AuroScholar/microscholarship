@@ -17,6 +17,7 @@ import com.auro.scholr.databinding.ClassItemLayoutBinding;
 
 import com.auro.scholr.teacher.data.model.request.SelectClassesSubject;
 import com.auro.scholr.teacher.presentation.viewmodel.ClassViewHolder;
+import com.auro.scholr.teacher.presentation.viewmodel.SubjectViewHolder;
 import com.auro.scholr.util.AppUtil;
 
 
@@ -36,6 +37,10 @@ public class ProfileScreenAdapter extends RecyclerView.Adapter {
 
     }
 
+    public void updatelist(List<SelectClassesSubject> classlist) {
+        this.classlist = classlist;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -43,7 +48,7 @@ public class ProfileScreenAdapter extends RecyclerView.Adapter {
         switch (viewType) {
             case AppConstant.FriendsLeaderBoard.SUBJECTADAPTER:
                 ClassItemLayoutBinding ClassItemLayoutBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.class_item_layout, viewGroup, false);
-                return new ClassViewHolder(ClassItemLayoutBinding);
+                return new SubjectViewHolder(ClassItemLayoutBinding);
 
             case AppConstant.FriendsLeaderBoard.CLASSESADAPTER:
                 ClassItemLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.class_item_layout, viewGroup, false);
@@ -61,11 +66,11 @@ public class ProfileScreenAdapter extends RecyclerView.Adapter {
 
         switch (viewType) {
             case AppConstant.FriendsLeaderBoard.SUBJECTADAPTER:
-                ((ClassViewHolder) holder).bindUser(classlist.get(position), position, mcontext,commonCallBackListner,AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
+                ((SubjectViewHolder) holder).bindUser(classlist.get(position), position, mcontext, commonCallBackListner, AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
                 break;
 
             case AppConstant.FriendsLeaderBoard.CLASSESADAPTER:
-                ((ClassViewHolder) holder).bindUser(classlist.get(position), position, mcontext,commonCallBackListner,AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
+                ((ClassViewHolder) holder).bindUser(classlist.get(position), position, mcontext, commonCallBackListner, AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
                 break;
         }
     }
@@ -89,7 +94,6 @@ public class ProfileScreenAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return classlist.size();
     }
-
 
 
 }

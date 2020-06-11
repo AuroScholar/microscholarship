@@ -26,6 +26,9 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.FragmentTeacherKycBinding;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+import com.auro.scholr.home.data.model.KYCResItemModel;
+import com.auro.scholr.home.data.model.KYCResListModel;
+import com.auro.scholr.home.data.model.KYCResModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.teacher.presentation.view.adapter.TeacherKycDocumentAdapter;
@@ -128,8 +131,13 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == Status.TEACHER_KYC_API) {
+                        KYCResListModel kycResListModel = (KYCResListModel) responseApi.data;
+                        if (!TextUtil.checkListIsEmpty(kycResListModel.getList())) {
+                            updateUIKYC(kycResListModel);
+                        }
                         handleProgress(1);
                         uploadBtnStatus = false;
+
 
                     }
                     break;
@@ -152,6 +160,23 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
             }
 
         });
+    }
+
+    private void updateUIKYC(KYCResListModel kycResListModel) {
+        int count = 0;
+        for (int i = 0; i < kycResListModel.getList().size(); i++) {
+            count++;
+            KYCResItemModel model = kycResListModel.getList().get(i);
+            if (!model.getError()) {
+                kycDocumentDatamodelArrayList.get(i).setModify(true);
+            } else {
+                kycDocumentDatamodelArrayList.get(i).setModify(false);
+            }
+        }
+        mteacherKycDocumentAdapter.updateList(kycDocumentDatamodelArrayList);
+        if (count == 4) {
+            binding.buttonLayout.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void handleProgress(int status) {
@@ -311,6 +336,7 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
             ViewUtil.showSnackBar(binding.getRoot(), getString(R.string.document_all_four_error_msg));
         }
     }
+
     private void uploadAllDocApi() {
         viewModel.teacherKYCUpload(kycDocumentDatamodelArrayList);
     }
