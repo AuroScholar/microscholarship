@@ -311,10 +311,18 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         ft.detach(this).attach(this).commit();
     }
 
+
     private void openShareDefaultDialog() {
+        String completeLink = AuroApp.getAppContext().getResources().getString(R.string.invite_friend_refrral);
+        if (AuroApp.getAuroScholarModel() != null && !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getReferralLink())) {
+            completeLink = completeLink + " " + AuroApp.getAuroScholarModel().getReferralLink();
+        } else {
+            completeLink = completeLink + " https://bit.ly/3b1puWr";
+        }
+
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, completeLink);
         sendIntent.setType("text/plain");
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         getActivity().startActivity(shareIntent);
