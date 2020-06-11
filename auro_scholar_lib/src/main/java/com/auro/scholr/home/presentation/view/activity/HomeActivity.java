@@ -133,7 +133,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
             int flags = activity.getWindow().getDecorView().getSystemUiVisibility(); // get current flag
             flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; // add LIGHT_STATUS_BAR to flag
             activity.getWindow().getDecorView().setSystemUiVisibility(flags);
-            activity.getWindow().setStatusBarColor(this.getResources().getColor(R.color.white)); // optional
+            activity.getWindow().setStatusBarColor(this.getResources().getColor(R.color.blue_color)); // optional
 
         }
     }

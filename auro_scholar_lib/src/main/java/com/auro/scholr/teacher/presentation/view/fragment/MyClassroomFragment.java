@@ -34,6 +34,7 @@ import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.MyClassroomAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
 import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.google.gson.Gson;
@@ -217,12 +218,20 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.whatsapp) {
-            sendWhatsapp(AuroApp.getAppContext().getResources().getString(R.string.teacher_share_msg));
-        } else if (v.getId() == R.id.facebook) {
-            shareAppLinkViaFacebook(AuroApp.getAppContext().getResources().getString(R.string.teacher_share_msg));
+        String completeLink = AuroApp.getAppContext().getResources().getString(R.string.teacher_share_msg);
+        if (AuroApp.getAuroScholarModel() != null && !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getReferralLink())) {
+            completeLink = completeLink + AuroApp.getAuroScholarModel().getReferralLink();
         } else {
-            shareWithFriends();
+            completeLink = completeLink + "https://bit.ly/3b1puWr";
+        }
+
+        if (v.getId() == R.id.whatsapp) {
+            sendWhatsapp(completeLink);
+        } else if (v.getId() == R.id.facebook) {
+
+            shareAppLinkViaFacebook(completeLink);
+        } else {
+            shareWithFriends(completeLink);
         }
     }
 
@@ -312,10 +321,10 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     }
 
 
-    public void shareWithFriends() {
+    public void shareWithFriends(String link) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, AuroApp.getAppContext().getResources().getString(R.string.teacher_share_msg));
+        sendIntent.putExtra(Intent.EXTRA_TEXT, link);
         sendIntent.setType("text/plain");
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         AuroApp.getAppContext().startActivity(shareIntent);
@@ -352,7 +361,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                 }
             }
         } catch (Exception e) {
-            shareWithFriends();
+            shareWithFriends(urlToShare);
         }
     }
 }

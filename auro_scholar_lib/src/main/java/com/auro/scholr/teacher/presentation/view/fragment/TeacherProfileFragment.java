@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -35,6 +36,7 @@ import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.teacher.data.model.request.SelectClassesSubject;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomTeacherResModel;
 import com.auro.scholr.teacher.data.model.response.MyProfileResModel;
 import com.auro.scholr.teacher.data.model.response.TeacherResModel;
 import com.auro.scholr.teacher.presentation.view.adapter.DistrictSpinnerAdapter;
@@ -119,7 +121,10 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_PROFILE_FRAGMENT);
         init();
         setListener();
-        viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
+        if (AppUtil.myClassRoomResModel != null && AppUtil.myClassRoomResModel.getTeacherResModel() != null) {
+            setModelinteacherprofile(AppUtil.myClassRoomResModel.getTeacherResModel());
+        }
+        // viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
     }
 
     @Override
@@ -214,7 +219,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                     } else if (responseApi.apiTypeStatus == Status.GET_PROFILE_TEACHER_API) {
                         MyProfileResModel teacherResModel = (MyProfileResModel) responseApi.data;
                         if (teacherResModel != null) {
-                            setModelinteacherprofile(teacherResModel);
+                            //  setModelinteacherprofile(teacherResModel);
                         } else {
                            /* binding.studentList.setVisibility(View.GONE);
                             binding.errorTxt.setVisibility(View.VISIBLE);*/
@@ -510,7 +515,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                 binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
+                        //viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
                     }
                 });
                 break;
@@ -518,7 +523,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
 
     }
 
-    public void setModelinteacherprofile(MyProfileResModel teacherResModel) {
+    public void setModelinteacherprofile(MyClassRoomTeacherResModel teacherResModel) {
 
         if (teacherResModel.getSchoolName() != null) {
             binding.editSchoolName.setText(teacherResModel.getSchoolName().toString());
@@ -549,10 +554,16 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
 
             //setRecycleView(teacherResModel.getTeacherClass(), teacherResModel.getTeacherSubject());
         }
-        if (teacherResModel.getDistrictId() != null && teacherResModel.getStateId() != null) {
-            stateSpinner(teacherResModel.getStateId());
-            districtSpinner(teacherResModel.getDistrictId());
-        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (teacherResModel.getDistrictId() != null && teacherResModel.getStateId() != null) {
+                    stateSpinner(teacherResModel.getStateId());
+                    districtSpinner(teacherResModel.getDistrictId());
+                }
+            }
+        }, 1000);
+
 
     }
 }

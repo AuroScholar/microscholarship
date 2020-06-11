@@ -35,6 +35,51 @@ public class TeacherKycViewModel extends ViewModel {
         this.teacherRemoteUseCase = teacherRemoteUseCase;
     }
 
+    public void getTeacherDashboardData(String mobileNumber) {
+
+        Disposable disposable = teacherRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
+            if (hasInternet) {
+                getTeacherDashboardApi(mobileNumber);
+            } else {
+                // please check your internet
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
+            }
+
+        });
+
+        getCompositeDisposable().add(disposable);
+
+    }
+
+
+    private void getTeacherDashboardApi(String mobileNumber) {
+        getCompositeDisposable()
+                .add(teacherRemoteUseCase.getTeacherDashboardApi(mobileNumber)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(Disposable __) throws Exception {
+                                /*Do code here*/
+                                serviceLiveData.setValue(ResponseApi.loading(Status.GET_TEACHER_DASHBOARD_API));
+                            }
+                        })
+                        .subscribe(new Consumer<ResponseApi>() {
+                                       @Override
+                                       public void accept(ResponseApi responseApi) throws Exception {
+                                           serviceLiveData.setValue(responseApi);
+                                       }
+                                   },
+
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        defaultError();
+                                    }
+                                }));
+
+    }
+
     public void teacherKYCUpload(List<KYCDocumentDatamodel> list) {
 
         Disposable disposable = teacherRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {

@@ -2,7 +2,6 @@ package com.auro.scholr.teacher.presentation.view.fragment;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,7 +10,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +26,9 @@ import com.auro.scholr.databinding.FragmentTeacherKycBinding;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.KYCResListModel;
-import com.auro.scholr.home.data.model.KYCResModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 import com.auro.scholr.teacher.presentation.view.adapter.TeacherKycDocumentAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherKycViewModel;
 import com.auro.scholr.util.AppLogger;
@@ -97,7 +95,7 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
     protected void init() {
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
         setListener();
-
+        viewModel.getTeacherDashboardData(AuroApp.getAuroScholarModel().getMobileNumber());
     }
 
     @Override
@@ -134,6 +132,8 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
                         KYCResListModel kycResListModel = (KYCResListModel) responseApi.data;
                         if (!TextUtil.checkListIsEmpty(kycResListModel.getList())) {
                             updateUIKYC(kycResListModel);
+                        } else if (responseApi.apiTypeStatus == Status.GET_TEACHER_DASHBOARD_API) {
+                            AppUtil.myClassRoomResModel = (MyClassRoomResModel) responseApi.data;
                         }
                         handleProgress(1);
                         uploadBtnStatus = false;
@@ -214,7 +214,15 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
         mteacherKycDocumentAdapter = new TeacherKycDocumentAdapter(viewModel.teacherUseCase.makeAdapterDocumentList(), this);
         binding.rvDoucumentUpload.setAdapter(mteacherKycDocumentAdapter);
 
-
+        int count = 0;
+        for (KYCDocumentDatamodel kycDocumentDatamodel : kycDocumentDatamodelArrayList) {
+            if (kycDocumentDatamodel.isModify()) {
+                count++;
+            }
+        }
+        if (count == 4) {
+            binding.buttonLayout.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void setDataOnUI() {

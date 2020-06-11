@@ -15,7 +15,9 @@ import com.auro.scholr.teacher.data.model.common.MonthDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.teacher.data.model.request.SelectClassesSubject;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomTeacherResModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.TextUtil;
 
 import java.io.BufferedReader;
@@ -171,9 +173,9 @@ public class TeacherUseCase {
     }
 
 
-    public ArrayList<KYCDocumentDatamodel> makeAdapterDocumentList( ) {
-        ArrayList<KYCDocumentDatamodel> kycDocumentList = new ArrayList<>();
+    public ArrayList<KYCDocumentDatamodel> makeAdapterDocumentList() {
 
+        ArrayList<KYCDocumentDatamodel> kycDocumentList = new ArrayList<>();
         KYCDocumentDatamodel kyc_one = new KYCDocumentDatamodel();
         kyc_one.setDocumentId(AppConstant.DocumentType.ID_PROOF_FRONT_SIDE);
         kyc_one.setDocumentName(AuroApp.getAppContext().getString(R.string.upload_govt_id));
@@ -181,7 +183,6 @@ public class TeacherUseCase {
         kyc_one.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
         kyc_one.setViewType(AppConstant.FriendsLeaderBoard.TEACHER_DOC_ADAPTER);
         kyc_one.setId_name(AppConstant.DocumentType.GOVT_ID_FRONT);
-
 
 
         KYCDocumentDatamodel kyc_two = new KYCDocumentDatamodel();
@@ -209,6 +210,26 @@ public class TeacherUseCase {
         kyc_four.setViewType(AppConstant.FriendsLeaderBoard.TEACHER_DOC_ADAPTER);
         kyc_four.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
         kyc_four.setId_name(AppConstant.DocumentType.TEACHER_PHOTO);
+
+        if (AppUtil.myClassRoomResModel != null && AppUtil.myClassRoomResModel.getTeacherResModel() != null) {
+            MyClassRoomTeacherResModel model = AppUtil.myClassRoomResModel.getTeacherResModel();
+            if (!TextUtil.isEmpty(model.getGovt_id_front())) {
+                kyc_one.setModify(true);
+            }
+
+            if (!TextUtil.isEmpty(model.getGovt_id_back())) {
+                kyc_two.setModify(true);
+            }
+
+
+            if (!TextUtil.isEmpty(model.getSchool_id_card())) {
+                kyc_three.setModify(true);
+            }
+
+            if (!TextUtil.isEmpty(model.getSchool_id_card())) {
+                kyc_four.setModify(true);
+            }
+        }
 
         kycDocumentList.add(kyc_one);
         kycDocumentList.add(kyc_two);
@@ -377,17 +398,17 @@ public class TeacherUseCase {
         classes11.setSelected(false);
         classes11.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
         list.add(classes11);
-        if(classes != null){
+        if (classes != null) {
             List<String> newData = getStringList(classes);
-            if(!newData.isEmpty()){
-                for(int i=0;i<newData.size();i++){
-                    for(int j = 0 ;j<list.size();j++){
-                        if(newData.get(i).equalsIgnoreCase(list.get(j).getText())){
+            if (!newData.isEmpty()) {
+                for (int i = 0; i < newData.size(); i++) {
+                    for (int j = 0; j < list.size(); j++) {
+                        if (newData.get(i).equalsIgnoreCase(list.get(j).getText())) {
                             SelectClassesSubject classes13 = new SelectClassesSubject();
                             classes13.setText(newData.get(i).toString());
                             classes13.setSelected(true);
                             classes13.setViewType(AppConstant.FriendsLeaderBoard.CLASSESADAPTER);
-                            list.set(j,classes13);
+                            list.set(j, classes13);
 
                         }
                     }
@@ -433,7 +454,7 @@ public class TeacherUseCase {
 
         classes6.setViewType(AppConstant.FriendsLeaderBoard.SUBJECTADAPTER);
         list.add(classes6);
-        if(Subject != null) {
+        if (Subject != null) {
             List<String> newData = getStringList(Subject);
             if (!newData.isEmpty()) {
                 for (int i = 0; i < newData.size(); i++) {
@@ -454,9 +475,9 @@ public class TeacherUseCase {
 
     }
 
-    public List<String> getStringList(String data){
-        String[] array = data.replace(" ","").split(",");
-        List<String> datainlist =new ArrayList<>(Arrays.asList(array));
+    public List<String> getStringList(String data) {
+        String[] array = data.split(",");
+        List<String> datainlist = new ArrayList<>(Arrays.asList(array));
         return datainlist;
     }
 
@@ -483,6 +504,7 @@ public class TeacherUseCase {
         return new ValidationModel(true, "");
 
     }
+
     public byte[] getBytes(InputStream is) throws IOException {
         ByteArrayOutputStream byteBuff = new ByteArrayOutputStream();
 
