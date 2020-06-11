@@ -25,6 +25,8 @@ public interface HomeRepo {
 
         Single<Response<JsonObject>> getAzureData(AssignmentReqModel azureReqModel);
 
+        Single<Response<JsonObject>> inviteFriendListApi( );
+
 
     }
 

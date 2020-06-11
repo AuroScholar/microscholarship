@@ -22,6 +22,7 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.SdkCallBack;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.encryption.Cryptor;
 import com.example.aurosampleapplication.databinding.ActivityMainBinding;
@@ -70,8 +71,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-                 openGenricSDK();
-                //openScholarSpecificSdk();
+               // openGenricSDK();
+                openScholarSpecificSdk();
                 hideKeyboard(this);
 
 
@@ -114,6 +115,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void callBack(String message) {
                 /*Api response here*/
             }
+
+            @Override
+            public void logOut() {
+                AppLogger.e("Chhonker", "Logout");
+            }
         });
 
         openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
@@ -132,16 +138,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setReferralLink("");
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
-        auroScholarDataModel.setSdkcallback(new SdkCallBack() {
-            @Override
-            public void callBack(String message) {
-                /*Api response here*/
-            }
-        });
+
 
 
         AuroScholar.startTeacherSDK(auroScholarDataModel);
-       // openFragment(AuroScholar.startAuroSDK(inputModel));
+        // openFragment(AuroScholar.startAuroSDK(inputModel));
     }
 
 

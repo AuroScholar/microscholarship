@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,27 +23,30 @@ import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.databinding.FriendsInviteLayoutBinding;
 import com.auro.scholr.databinding.FriendsLeoboardLayoutBinding;
+import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
 import com.auro.scholr.home.presentation.viewmodel.FriendsInviteViewModel;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
+import com.google.gson.Gson;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import static com.auro.scholr.core.common.Status.AZURE_API;
+import static com.auro.scholr.core.common.Status.DASHBOARD_API;
+import static com.auro.scholr.core.common.Status.INVITE_FRIENDS_LIST;
 
-public class FriendsInviteBoardFragment extends BaseFragment implements View.OnClickListener  {
+
+public class FriendsInviteBoardFragment extends BaseFragment implements View.OnClickListener {
 
     @Inject
     @Named("FriendsInviteBoardFragment")
     ViewModelFactory viewModelFactory;
-
-
     FriendsInviteLayoutBinding binding;
     FriendsInviteViewModel viewModel;
-
-
     LeaderBoardAdapter leaderBoardAdapter;
 
     @Override
@@ -66,8 +70,10 @@ public class FriendsInviteBoardFragment extends BaseFragment implements View.OnC
     protected void init() {
         binding.headerParent.cambridgeHeading.setVisibility(View.GONE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
-      //  mlistener = this;
+        //  mlistener = this;
+        setListener();
         setLeaderBoard();
+        viewModel.getFriendsListData();
     }
 
 
@@ -78,7 +84,12 @@ public class FriendsInviteBoardFragment extends BaseFragment implements View.OnC
 
     @Override
     protected void setListener() {
+        if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
+            viewModel.serviceLiveData().removeObservers(this);
 
+        } else {
+            observeServiceResponse();
+        }
     }
 
 
@@ -120,6 +131,44 @@ public class FriendsInviteBoardFragment extends BaseFragment implements View.OnC
     }
 
 
+    private void observeServiceResponse() {
 
+        viewModel.serviceLiveData().observeForever(responseApi -> {
+
+            switch (responseApi.status) {
+
+                case LOADING:
+                    //For ProgressBar
+                    handleProgress(0);
+
+                    break;
+
+                case SUCCESS:
+                    if (responseApi.apiTypeStatus == INVITE_FRIENDS_LIST) {
+                        handleProgress(1);
+                    }
+                    break;
+
+                case NO_INTERNET:
+                    handleProgress(2);
+                    break;
+
+                case AUTH_FAIL:
+                case FAIL_400:
+                    handleProgress(2);
+
+                    break;
+
+
+                default:
+
+                    break;
+            }
+
+        });
+    }
+
+    private void handleProgress(int i) {
+    }
 
 }

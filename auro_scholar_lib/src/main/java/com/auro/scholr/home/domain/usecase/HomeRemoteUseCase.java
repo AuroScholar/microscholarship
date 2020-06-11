@@ -12,6 +12,7 @@ import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AzureResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
+import com.auro.scholr.home.data.model.FriendListResDataModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResListModel;
@@ -34,6 +35,7 @@ import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
 import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
+import static com.auro.scholr.core.common.Status.INVITE_FRIENDS_LIST;
 
 public class HomeRemoteUseCase extends NetworkUseCase {
     HomeRepo.DashboardRemoteData dashboardRemoteData;
@@ -43,10 +45,27 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         this.dashboardRemoteData = dashboardRemoteData;
     }
 
+    public Single<ResponseApi> inviteFriendListApi() {
 
-    public Single<ResponseApi> uploadProfileImage(List<KYCDocumentDatamodel> list,  KYCInputModel kycInputModel) {
+        return dashboardRemoteData.inviteFriendListApi().map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
 
-        return dashboardRemoteData.uploadProfileImage(list,kycInputModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+                if (response != null) {
+
+                    return handleResponse(response, Status.INVITE_FRIENDS_LIST);
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
+    public Single<ResponseApi> uploadProfileImage(List<KYCDocumentDatamodel> list, KYCInputModel kycInputModel) {
+
+        return dashboardRemoteData.uploadProfileImage(list, kycInputModel).map(new Function<Response<JsonObject>, ResponseApi>() {
             @Override
             public ResponseApi apply(Response<JsonObject> response) throws Exception {
 
@@ -62,17 +81,17 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         });
     }
 
-    public Single<ResponseApi> getAzureData(AssignmentReqModel model){
+    public Single<ResponseApi> getAzureData(AssignmentReqModel model) {
 
         return dashboardRemoteData.getAzureData(model).map(new Function<Response<JsonObject>, ResponseApi>() {
             @Override
             public ResponseApi apply(Response<JsonObject> response) throws Exception {
 
-                if(response != null){
+                if (response != null) {
 
-                    return handleResponse(response,AZURE_API);
+                    return handleResponse(response, AZURE_API);
 
-                }else{
+                } else {
                     return responseFail(null);
                 }
 
@@ -171,12 +190,15 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         } else if (status == DEMOGRAPHIC_API) {
             DemographicResModel demographicResModel = new Gson().fromJson(response.body(), DemographicResModel.class);
             return ResponseApi.success(demographicResModel, status);
-        }else if (status == ASSIGNMENT_STUDENT_DATA_API) {
+        } else if (status == ASSIGNMENT_STUDENT_DATA_API) {
             AssignmentResModel assignmentResModel = new Gson().fromJson(response.body(), AssignmentResModel.class);
             return ResponseApi.success(assignmentResModel, status);
-        }else if(status == AZURE_API){
-            AzureResModel azureResModel = new Gson().fromJson(response.body(),AzureResModel.class);
-            return ResponseApi.success(azureResModel,status);
+        } else if (status == AZURE_API) {
+            AzureResModel azureResModel = new Gson().fromJson(response.body(), AzureResModel.class);
+            return ResponseApi.success(azureResModel, status);
+        } else if (status == INVITE_FRIENDS_LIST) {
+            FriendListResDataModel resDataModel = new Gson().fromJson(response.body(), FriendListResDataModel.class);
+            return ResponseApi.success(resDataModel, status);
         }
 
 

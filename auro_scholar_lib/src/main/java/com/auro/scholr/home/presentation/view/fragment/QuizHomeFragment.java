@@ -171,7 +171,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.privacyPolicy.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
-        binding.customUiSnackbar.btUploadAll.setOnClickListener(this);
+        binding.customUiSnackbar.btInvite.setOnClickListener(this);
         binding.fab.setOnClickListener(this);
     }
 
@@ -458,7 +458,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             getActivity().getSupportFragmentManager().popBackStack();
 
         }
-        if (v.getId() == R.id.arrow) {
+        if (v.getId() == R.id.bt_invite) {
             openFragment(new FriendsLeaderBoardFragment());
         } else if (v.getId() == R.id.fab) {
             openChat();

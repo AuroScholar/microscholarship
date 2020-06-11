@@ -1,5 +1,6 @@
 package com.auro.scholr.home.data.datasource.remote;
 
+import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
@@ -38,7 +39,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
             params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
             params.put(AppConstant.DashBoardParams.STUDENT_CLASS, model.getStudentClass());
             params.put(AppConstant.DashBoardParams.REGISTRATION_SOURCE, model.getRegitrationSource());
-            AppLogger.e("HomeRemoteDataSourceImp","Calling  Generic SDK");
+            AppLogger.e("HomeRemoteDataSourceImp", "Calling  Generic SDK");
             return homeRemoteApi.getDashboardSDKData(params);
         } else {
             params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
@@ -47,7 +48,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
             params.put(AppConstant.DashBoardParams.REGISTRATION_SOURCE, model.getRegitrationSource());
             params.put(AppConstant.DashBoardParams.SHARE_TYPE, model.getShareType());
             params.put(AppConstant.DashBoardParams.SHARE_IDENTITY, model.getShareIdentity());
-            AppLogger.e("HomeRemoteDataSourceImp","Calling  Scholar SDK");
+            AppLogger.e("HomeRemoteDataSourceImp", "Calling  Scholar SDK");
             return homeRemoteApi.getDashboardData(params);
         }
 
@@ -64,6 +65,13 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), azureReqModel.getImageBytes());
         MultipartBody.Part student_photo = MultipartBody.Part.createFormData("exam_face_img", "image.jpg", requestFile);
         return homeRemoteApi.getAzureApiData(registration_id, exam_id, exam_name, quiz_attempt, student_photo);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> inviteFriendListApi() {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.MOBILE_NUMBER, AuroApp.getAuroScholarModel().getMobileNumber());
+        return homeRemoteApi.inviteFriendListApi(params);
     }
 
     @Override

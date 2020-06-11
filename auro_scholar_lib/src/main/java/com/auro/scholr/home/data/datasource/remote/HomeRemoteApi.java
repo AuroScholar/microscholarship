@@ -63,4 +63,10 @@ public interface HomeRemoteApi {
             @Part(AppConstant.AzureApiParams.QUIZ_ATTEMPT) RequestBody quiz_attempt,
             @Part MultipartBody.Part exam_face_img);
 
+
+
+    @POST(URLConstant.INVITE_FRIEND_LIST_API)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> inviteFriendListApi(@FieldMap Map<String, String> params);
+
 }

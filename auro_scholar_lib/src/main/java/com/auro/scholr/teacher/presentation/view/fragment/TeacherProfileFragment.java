@@ -179,8 +179,11 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         binding.txtGetNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openFragment(new TeacherKycFragment());
-                ((HomeActivity) getActivity()).selectNavigationMenu(2);
+                if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
+                    AuroApp.getAuroScholarModel().getSdkcallback().logOut();
+                }
+                //  openFragment(new TeacherKycFragment());
+                //  ((HomeActivity) getActivity()).selectNavigationMenu(2);
             }
         });
         binding.button.setOnClickListener(new View.OnClickListener() {

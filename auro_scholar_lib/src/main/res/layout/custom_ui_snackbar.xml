@@ -52,7 +52,7 @@
                 android:textSize="@dimen/_14sdp"
                 app:Font="Poppins-SemiBold.ttf"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/bt_upload_all"
+                app:layout_constraintEnd_toStartOf="@+id/bt_invite"
                 app:layout_constraintStart_toEndOf="@+id/leader_card_layout"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,7 +81,7 @@
             </RelativeLayout>
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
-                android:id="@+id/bt_upload_all"
+                android:id="@+id/bt_invite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/_15sdp"

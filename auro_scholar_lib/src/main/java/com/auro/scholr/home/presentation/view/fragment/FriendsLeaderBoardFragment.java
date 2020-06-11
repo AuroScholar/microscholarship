@@ -1,35 +1,16 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -40,99 +21,23 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
-import com.auro.scholr.core.common.CommonCallBackListner;
-import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.FriendsLeoboardLayoutBinding;
-import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.home.data.model.FriendListResDataModel;
 import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
-import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
-import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
-import com.auro.scholr.util.alert_dialog.CustomSnackBar;
-import com.auro.scholr.util.permission.PermissionHandler;
-import com.auro.scholr.util.permission.PermissionUtil;
-import com.auro.scholr.util.permission.Permissions;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import com.google.firebase.abt.component.AbtRegistrar;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import static android.app.Activity.RESULT_OK;
-import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
 
-
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.auro.scholr.R;
-import com.auro.scholr.core.application.AuroApp;
-import com.auro.scholr.core.application.base_component.BaseFragment;
-import com.auro.scholr.core.application.di.component.ViewModelFactory;
-import com.auro.scholr.core.common.AppConstant;
-import com.auro.scholr.core.common.CommonCallBackListner;
-import com.auro.scholr.core.common.CommonDataModel;
-import com.auro.scholr.databinding.FriendsLeoboardLayoutBinding;
-import com.auro.scholr.home.presentation.view.activity.HomeActivity;
-import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
-import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
-import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
-import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
-import com.auro.scholr.util.TextUtil;
-import com.auro.scholr.util.ViewUtil;
-import com.auro.scholr.util.permission.PermissionHandler;
-import com.auro.scholr.util.permission.PermissionUtil;
-import com.auro.scholr.util.permission.Permissions;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import static android.app.Activity.RESULT_OK;
-import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
+import static com.auro.scholr.core.common.Status.INVITE_FRIENDS_LIST;
 
 
 public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnClickListener {
@@ -172,15 +77,14 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
 
     @Override
     protected void init() {
-
         setListener();
-
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
         setDataUi();
 
         if (!isStateRestore) {
-            setLeaderBoard();
+            viewModel.getFriendsListData();
         }
+
     }
 
     private void setDataUi() {
@@ -221,6 +125,103 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.inviteButton.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
+
+        if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
+            viewModel.serviceLiveData().removeObservers(this);
+
+        } else {
+            observeServiceResponse();
+        }
+    }
+
+    private void observeServiceResponse() {
+
+        viewModel.serviceLiveData().observeForever(responseApi -> {
+
+            switch (responseApi.status) {
+
+                case LOADING:
+                    //For ProgressBar
+                    handleProgress(0, "");
+
+                    break;
+
+                case SUCCESS:
+                    if (responseApi.apiTypeStatus == INVITE_FRIENDS_LIST) {
+
+                        FriendListResDataModel model = (FriendListResDataModel) responseApi.data;
+                        if (model.getError()) {
+                            handleProgress(2, model.getMessage());
+                        } else {
+                            handleProgress(1, "");
+                            setAdapter();
+                        }
+                    }
+                    break;
+
+
+                case NO_INTERNET:
+                case FAIL_400:
+                    handleProgress(3, (String) responseApi.data);
+                    // showSnackbarError((String) responseApi.data);
+                    break;
+
+                default:
+                    handleProgress(3, (String) responseApi.data);
+                    //   showSnackbarError(getString(R.string.default_error));
+                    break;
+            }
+
+        });
+    }
+
+    private void handleProgress(int i, String msg) {
+        switch (i) {
+            case 0:
+                binding.progressBar.setVisibility(View.VISIBLE);
+                binding.errorConstraint.setVisibility(View.GONE);
+                binding.noFriendLayout.setVisibility(View.GONE);
+                binding.boardListLayout.setVisibility(View.GONE);
+                break;
+
+            case 1:
+                binding.progressBar.setVisibility(View.GONE);
+                binding.errorConstraint.setVisibility(View.GONE);
+                binding.noFriendLayout.setVisibility(View.GONE);
+                binding.boardListLayout.setVisibility(View.VISIBLE);
+                break;
+
+            case 2:
+                binding.progressBar.setVisibility(View.GONE);
+                binding.errorConstraint.setVisibility(View.VISIBLE);
+                binding.errorLayout.errorIcon.setVisibility(View.GONE);
+                binding.errorLayout.btRetry.setVisibility(View.GONE);
+                binding.errorLayout.textError.setText(msg);
+                binding.noFriendLayout.setVisibility(View.GONE);
+                binding.boardListLayout.setVisibility(View.GONE);
+                break;
+
+            case 3:
+                binding.progressBar.setVisibility(View.GONE);
+                binding.errorConstraint.setVisibility(View.VISIBLE);
+                binding.errorLayout.errorIcon.setVisibility(View.VISIBLE);
+                binding.errorLayout.textError.setText(msg);
+                binding.noFriendLayout.setVisibility(View.GONE);
+                binding.boardListLayout.setVisibility(View.GONE);
+                binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        viewModel.getFriendsListData();
+                    }
+                });
+                break;
+
+        }
+
+    }
+
+    private void showSnackbarError(String message) {
+        ViewUtil.showSnackBar(binding.getRoot(), message);
     }
 
 
@@ -242,7 +243,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         setListener();
     }
 
-    private void setLeaderBoard() {
+    private void setAdapter() {
         binding.friendsList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.friendsList.setHasFixedSize(true);
         leaderBoardAdapter = new LeaderBoardAdapter(viewModel.homeUseCase.makeListForFriendsLeaderBoard(true));

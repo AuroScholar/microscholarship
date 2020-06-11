@@ -30,5 +30,7 @@ public interface URLConstant {
 
     String TEACHER_KYC_API = BASE_URL + "teacher_kyc_api.php ";
 
+    String INVITE_FRIEND_LIST_API = BASE_URL + "student_referral_data.php";
+
 
 }

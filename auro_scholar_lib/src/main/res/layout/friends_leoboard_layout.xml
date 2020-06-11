@@ -235,18 +235,19 @@
 
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/invite_now"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_8sdp"
-                            android:text="@string/invite_them"
                             android:background="@drawable/button_bg_orange"
+                            android:paddingStart="@dimen/_20sdp"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_20sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:text="@string/invite_them"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp"
-                            android:paddingStart="@dimen/_20sdp"
-                            android:paddingEnd="@dimen/_20sdp"
-                            android:paddingTop="@dimen/_10sdp"
-                            android:paddingBottom="@dimen/_10sdp"
                             app:Font="Poppins-Regular.ttf" />
 
                     </LinearLayout>
@@ -272,6 +273,26 @@
                     android:id="@+id/errorLayout"
                     layout="@layout/error_layout" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:elevation="@dimen/_2sdp"
+                android:indeterminateDrawable="@drawable/circular_progress"
+                android:innerRadiusRatio="3"
+                android:paddingStart="@dimen/_20sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_20sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
