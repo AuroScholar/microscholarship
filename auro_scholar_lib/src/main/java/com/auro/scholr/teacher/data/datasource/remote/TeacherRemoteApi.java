@@ -47,7 +47,8 @@ public interface TeacherRemoteApi {
     );
 
 
-
-
+    @POST(URLConstant.SEND_NOTIFICATION_API)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> sendInviteNotificationApi(@FieldMap Map<String, String> params);
 
 }

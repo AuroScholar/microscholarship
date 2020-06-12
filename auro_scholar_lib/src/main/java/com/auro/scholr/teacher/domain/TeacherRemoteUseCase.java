@@ -10,6 +10,7 @@ import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.network.NetworkUseCase;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCResListModel;
+import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 import com.auro.scholr.teacher.data.model.response.MyProfileResModel;
@@ -37,7 +38,24 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
     public TeacherRemoteUseCase(TeacherRepo.TeacherRemoteData teacherRemoteData) {
         this.teacherRemoteData = teacherRemoteData;
     }
+    public Single<ResponseApi> sendInviteApi(SendInviteNotificationReqModel reqModel) {
+        return teacherRemoteData.sendInviteNotificationApi(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
 
+                if (response != null) {
+
+
+                    return handleResponse(response, Status.SEND_INVITE_API);
+
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
 
     public Single<ResponseApi> updateTeacherProfileApi(TeacherReqModel reqModel) {
         Log.e("Request", "TeacherDistrict " + reqModel.getDistrict_id() + " State " + reqModel.getState_id());
@@ -163,6 +181,10 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
             case TEACHER_KYC_API:
                 KYCResListModel list = new Gson().fromJson(response.body(), KYCResListModel.class);
                 return ResponseApi.success(list, status);
+
+            case SEND_INVITE_API:
+                TeacherResModel  teacherResModel1 = new Gson().fromJson(response.body(), TeacherResModel.class);
+                return ResponseApi.success(teacherResModel1, status);
 
         }
 

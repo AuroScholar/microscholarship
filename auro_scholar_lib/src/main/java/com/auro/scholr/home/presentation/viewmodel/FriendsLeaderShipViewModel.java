@@ -12,6 +12,7 @@ import com.auro.scholr.core.common.Status;
 import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
+import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -35,6 +36,50 @@ public class FriendsLeaderShipViewModel extends ViewModel {
         this.homeRemoteUseCase = homeRemoteUseCase;
     }
 
+    public void sendInviteNotificationApi(SendInviteNotificationReqModel reqModel) {
+
+        Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
+            if (hasInternet) {
+                sendInviteApi(reqModel);
+            } else {
+                // please check your internet
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
+            }
+
+        });
+
+        getCompositeDisposable().add(disposable);
+
+    }
+
+
+    private void sendInviteApi(SendInviteNotificationReqModel reqModel) {
+        getCompositeDisposable()
+                .add(homeRemoteUseCase.sendInviteApi(reqModel)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(Disposable __) throws Exception {
+                                /*Do code here*/
+                                serviceLiveData.setValue(ResponseApi.loading(null));
+                            }
+                        })
+                        .subscribe(new Consumer<ResponseApi>() {
+                                       @Override
+                                       public void accept(ResponseApi responseApi) throws Exception {
+                                           serviceLiveData.setValue(responseApi);
+                                       }
+                                   },
+
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        defaultError();
+                                    }
+                                }));
+
+    }
 
     public void getFriendsListData() {
         Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {

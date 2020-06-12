@@ -4,7 +4,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -16,70 +15,47 @@ import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseDialog;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.common.Status;
+import com.auro.scholr.core.common.ValidationModel;
 import com.auro.scholr.databinding.DialogTeacherSelectYourMessageBinding;
-import com.auro.scholr.home.presentation.viewmodel.InviteFriendViewModel;
 import com.auro.scholr.teacher.data.model.SelectResponseModel;
+import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
+import com.auro.scholr.teacher.data.model.common.StateDataModel;
+import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomStudentResModel;
+import com.auro.scholr.teacher.data.model.response.MyProfileResModel;
+import com.auro.scholr.teacher.data.model.response.TeacherResModel;
 import com.auro.scholr.teacher.presentation.view.adapter.SelectMessageAdapter;
-import com.auro.scholr.teacher.presentation.view.adapter.TeacherKycDocumentAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.SelectYourMessageDialogModel;
+import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.TextUtil;
+import com.auro.scholr.util.ViewUtil;
 
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SelectYourMessageDialogFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SelectYourMessageDialogFragment extends BaseDialog implements View.OnClickListener, CommonCallBackListner {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     @Inject
     @Named("SelectYourMessageDialogFragment")
     ViewModelFactory viewModelFactory;
-    SelectYourMessageDialogModel selectYourMessageDialogModel;
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    SelectYourMessageDialogModel viewModel;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     SelectMessageAdapter mteacherKycDocumentAdapter;
     DialogTeacherSelectYourMessageBinding binding;
     List<SelectResponseModel> list;
-
-    public SelectYourMessageDialogFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SelectYourMessageDialogFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SelectYourMessageDialogFragment newInstance(String param1, String param2) {
-        SelectYourMessageDialogFragment fragment = new SelectYourMessageDialogFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    MyClassRoomStudentResModel myClassRoomStudentResModel;
+    SendInviteNotificationReqModel reqModel = new SendInviteNotificationReqModel();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            myClassRoomStudentResModel = getArguments().getParcelable(AppConstant.SENDING_DATA.STUDENT_DATA);
         }
     }
 
@@ -97,6 +73,12 @@ public class SelectYourMessageDialogFragment extends BaseDialog implements View.
     @Override
     protected void setListener() {
         binding.closeButton.setOnClickListener(this);
+        binding.button.setOnClickListener(this);
+        if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
+            viewModel.serviceLiveData().removeObservers(this);
+        } else {
+            observeServiceResponse();
+        }
     }
 
     @Override
@@ -110,7 +92,7 @@ public class SelectYourMessageDialogFragment extends BaseDialog implements View.
 
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
-        selectYourMessageDialogModel = ViewModelProviders.of(this, viewModelFactory).get(SelectYourMessageDialogModel.class);
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SelectYourMessageDialogModel.class);
         binding.setLifecycleOwner(this);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0));
         init();
@@ -120,7 +102,7 @@ public class SelectYourMessageDialogFragment extends BaseDialog implements View.
     }
 
     public void selectMessageBoard() {
-        list = selectYourMessageDialogModel.teacherUseCase.makeListForSelectMessageModel();
+        list = viewModel.teacherUseCase.makeListForSelectMessageModel();
         binding.rvselectMessage.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvselectMessage.setHasFixedSize(true);
         binding.rvselectMessage.setNestedScrollingEnabled(false);
@@ -134,6 +116,22 @@ public class SelectYourMessageDialogFragment extends BaseDialog implements View.
     public void onClick(View v) {
         if (v.getId() == R.id.close_button) {
             dismiss();
+        } else if (v.getId() == R.id.button) {
+            callSendInvitApi();
+        }
+    }
+
+    private void callSendInvitApi() {
+        if (myClassRoomStudentResModel != null && !TextUtil.isEmpty(myClassRoomStudentResModel.getSudentMobile())) {
+            reqModel.setNotification_title("Invitation");
+            reqModel.setReceiver_mobile_no(reqModel.getSender_mobile_no());
+            reqModel.setSender_mobile_no(AuroApp.getAuroScholarModel().getMobileNumber());
+            ValidationModel validationModel = viewModel.teacherUseCase.validateSendInviteReq(reqModel);
+            if (validationModel.isStatus()) {
+                viewModel.sendInviteNotificationApi(reqModel);
+            } else {
+                showSnackbarError(validationModel.getMessage());
+            }
         }
     }
 
@@ -148,7 +146,66 @@ public class SelectYourMessageDialogFragment extends BaseDialog implements View.
                         list.get(i).setCheck(false);
                     }
                 }
+
+                reqModel.setNotification_message(list.get(commonDataModel.getSource()).getMessage());
                 mteacherKycDocumentAdapter.setData(list);
+                break;
+        }
+    }
+
+    private void observeServiceResponse() {
+
+        viewModel.serviceLiveData().observeForever(responseApi -> {
+            switch (responseApi.status) {
+                case LOADING:
+
+                    handleProgress(0);
+
+                    break;
+
+                case SUCCESS:
+                    if (responseApi.apiTypeStatus == Status.SEND_INVITE_API) {
+                        TeacherResModel teacherResModel = (TeacherResModel) responseApi.data;
+                        if(teacherResModel.getError()){
+
+                        }
+                        handleProgress(1);
+                    }
+                    break;
+
+                case FAIL:
+                case NO_INTERNET:
+                    handleProgress(1);
+                    showSnackbarError((String) responseApi.data);
+
+                    break;
+
+
+                default:
+                    handleProgress(1);
+                    showSnackbarError(getString(R.string.default_error));
+                    break;
+            }
+
+        });
+    }
+
+
+    private void showSnackbarError(String message) {
+        ViewUtil.showSnackBar(binding.getRoot(), message);
+    }
+
+
+    public void handleProgress(int status) {
+        switch (status) {
+            case 0:
+                binding.button.setVisibility(View.GONE);
+                binding.progressBar.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                dismiss();
+                binding.button.setVisibility(View.VISIBLE);
+                binding.progressBar.setVisibility(View.GONE);
                 break;
         }
     }

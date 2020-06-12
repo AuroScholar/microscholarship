@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.databinding.FriendsBoardItemLayoutBinding;
 import com.auro.scholr.databinding.FriendsInviteItemLayoutBinding;
 import com.auro.scholr.databinding.MonthWiseItemLayoutBinding;
@@ -22,10 +23,12 @@ import java.util.List;
 
 public class LeaderBoardAdapter extends RecyclerView.Adapter {
     List<FriendsLeaderBoardModel> list;
+    CommonCallBackListner commonCallBackListner;
 
 
-    public LeaderBoardAdapter(List<FriendsLeaderBoardModel> list) {
+    public LeaderBoardAdapter(List<FriendsLeaderBoardModel> list, CommonCallBackListner commonCallBackListner) {
         this.list = list;
+        this.commonCallBackListner = commonCallBackListner;
     }
 
 
@@ -34,9 +37,6 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public LeaderBoardAdapter() {
-
-    }
 
     @NonNull
     @Override
@@ -52,8 +52,6 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter {
                 return new InviteItemViewHolder(binding);
 
 
-
-
         }
         return null;
     }
@@ -65,15 +63,13 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter {
         switch (viewType) {
 
             case AppConstant.FriendsLeaderBoard.LEADERBOARD_TYPE:
-                ((LeaderBoardItemViewHolder) holder).bindUser(list.get(position),position);
+                ((LeaderBoardItemViewHolder) holder).bindUser(list.get(position), position,commonCallBackListner);
                 break;
 
 
             case AppConstant.FriendsLeaderBoard.LEADERBOARD_INVITE_TYPE:
-                ((InviteItemViewHolder) holder).bindUser(list.get(position),position);
+                ((InviteItemViewHolder) holder).bindUser(list.get(position), position);
                 break;
-
-
 
 
         }

@@ -122,8 +122,8 @@
 
                     <com.auro.scholr.core.util.uiwidget.RPTextView
                         android:id="@+id/txtGetNow"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_40sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_8sdp"
                         android:layout_marginRight="@dimen/_8sdp"
                         android:background="@drawable/ic_exit"

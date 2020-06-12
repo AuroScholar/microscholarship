@@ -21,15 +21,18 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.common.CommonCallBackListner;
+import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.FriendsLeoboardLayoutBinding;
 import com.auro.scholr.home.data.model.FriendListResDataModel;
+import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
 import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
+import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
-import com.google.firebase.abt.component.AbtRegistrar;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,9 +41,10 @@ import javax.inject.Named;
 import androidx.fragment.app.FragmentTransaction;
 
 import static com.auro.scholr.core.common.Status.INVITE_FRIENDS_LIST;
+import static com.auro.scholr.core.common.Status.SEND_INVITE_API;
 
 
-public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnClickListener {
+public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner {
 
     @Inject
     @Named("FriendsLeaderBoardFragment")
@@ -51,11 +55,14 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     FriendsLeoboardLayoutBinding binding;
     FriendsLeaderShipViewModel viewModel;
     InviteFriendDialog mInviteBoxDialog;
+    FriendListResDataModel resModel;
 
     LeaderBoardAdapter leaderBoardAdapter;
     boolean isFriendList = true;
     Resources resources;
     boolean isStateRestore;
+
+    int itemPos;
 
     @Override
     public void onAttach(Context context) {
@@ -142,33 +149,49 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
 
                 case LOADING:
                     //For ProgressBar
-                    handleProgress(0, "");
+                    if (responseApi.apiTypeStatus == INVITE_FRIENDS_LIST) {
+                        handleProgress(0, "");
+                    } else {
+                        updateData(true);
+                    }
 
                     break;
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == INVITE_FRIENDS_LIST) {
 
-                        FriendListResDataModel model = (FriendListResDataModel) responseApi.data;
-                        if (model.getError()) {
-                            handleProgress(2, model.getMessage());
+                        resModel = (FriendListResDataModel) responseApi.data;
+                        if (resModel.getError()) {
+                            handleProgress(2, resModel.getMessage());
                         } else {
                             handleProgress(1, "");
                             setAdapter();
                         }
+                    } else if (responseApi.apiTypeStatus == SEND_INVITE_API) {
+                        updateData(false);
                     }
                     break;
 
 
                 case NO_INTERNET:
                 case FAIL_400:
-                    handleProgress(3, (String) responseApi.data);
-                    // showSnackbarError((String) responseApi.data);
+                    if (responseApi.apiTypeStatus == INVITE_FRIENDS_LIST) {
+
+                        handleProgress(3, (String) responseApi.data);
+
+                    } else {
+                        updateData(false);
+                    }
+                    showSnackbarError((String) responseApi.data);
                     break;
 
                 default:
-                    handleProgress(3, (String) responseApi.data);
-                    //   showSnackbarError(getString(R.string.default_error));
+                    if (responseApi.apiTypeStatus == INVITE_FRIENDS_LIST) {
+                        handleProgress(3, (String) responseApi.data);
+                    } else {
+                        updateData(false);
+                    }
+                    showSnackbarError((String) responseApi.data);
                     break;
             }
 
@@ -178,6 +201,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     private void handleProgress(int i, String msg) {
         switch (i) {
             case 0:
+
                 binding.progressBar.setVisibility(View.VISIBLE);
                 binding.errorConstraint.setVisibility(View.GONE);
                 binding.noFriendLayout.setVisibility(View.GONE);
@@ -244,10 +268,15 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     }
 
     private void setAdapter() {
-        binding.friendsList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        binding.friendsList.setHasFixedSize(true);
-        leaderBoardAdapter = new LeaderBoardAdapter(viewModel.homeUseCase.makeListForFriendsLeaderBoard(true));
-        binding.friendsList.setAdapter(leaderBoardAdapter);
+        if (!TextUtil.checkListIsEmpty(resModel.getFriends())) {
+            for (FriendsLeaderBoardModel model : resModel.getFriends()) {
+                model.setViewType(AppConstant.FriendsLeaderBoard.LEADERBOARD_TYPE);
+            }
+            binding.friendsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+            binding.friendsList.setHasFixedSize(true);
+            leaderBoardAdapter = new LeaderBoardAdapter(resModel.getFriends(), this);
+            binding.friendsList.setAdapter(leaderBoardAdapter);
+        }
     }
 
 
@@ -332,4 +361,42 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         binding.toolbarLayout.langEng.setText(text);
     }
 
+    @Override
+    public void commonEventListner(CommonDataModel commonDataModel) {
+        switch (commonDataModel.getClickType()) {
+            case SEND_INVITE_CLICK:
+                itemPos = commonDataModel.getSource();
+                FriendsLeaderBoardModel model = (FriendsLeaderBoardModel) commonDataModel.getObject();
+                callSendInviteApi(model);
+                break;
+        }
+    }
+
+    private void callSendInviteApi(FriendsLeaderBoardModel model) {
+        if (!TextUtil.isEmpty(model.getMobileNo())) {
+            SendInviteNotificationReqModel reqModel = new SendInviteNotificationReqModel();
+            reqModel.setReceiver_mobile_no(model.getMobileNo());
+            reqModel.setSender_mobile_no(AuroApp.getAuroScholarModel().getMobileNumber());
+            reqModel.setNotification_title("Challenged You");
+            String msg = getString(R.string.challenge_msg);
+            if (!TextUtil.isEmpty(model.getStudentName())) {
+                msg = model.getStudentName() + " " + msg;
+            }
+            reqModel.setNotification_message(msg);
+            viewModel.sendInviteNotificationApi(reqModel);
+        }
+    }
+
+    private void updateData(boolean status) {
+        if (resModel != null && !TextUtil.checkListIsEmpty(resModel.getFriends())) {
+            resModel.getFriends().get(itemPos).setProgress(status);
+            if (!status) {
+                resModel.getFriends().get(itemPos).setSent(true);
+            }
+            leaderBoardAdapter.setDataList(resModel.getFriends());
+        }
+
+
+    }
 }
+

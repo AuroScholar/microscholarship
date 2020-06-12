@@ -3,6 +3,7 @@ package com.auro.scholr.teacher.data.datasource.remote;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
+import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.auro.scholr.teacher.data.repository.TeacherRepo;
 import com.auro.scholr.util.ConversionUtil;
@@ -69,4 +70,16 @@ public class TeacherRemoteDataSourceImp implements TeacherRepo.TeacherRemoteData
                 school_id_card,
                 student_photo);
     }
+
+    @Override
+    public Single<Response<JsonObject>> sendInviteNotificationApi(SendInviteNotificationReqModel reqModel) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.SendInviteNotificationApiParam.SENDER_MOBILE_NUMBER, reqModel.getSender_mobile_no());
+        params.put(AppConstant.SendInviteNotificationApiParam.RECEIVER_MOBILE_NUMBER, reqModel.getReceiver_mobile_no());
+        params.put(AppConstant.SendInviteNotificationApiParam.NOTIFICATION_TITLE, reqModel.getNotification_title());
+        params.put(AppConstant.SendInviteNotificationApiParam.NOTIFICATION_MESSAGE, reqModel.getNotification_message());
+        return teacherRemoteApi.sendInviteNotificationApi(params);
+    }
+
+
 }

@@ -84,7 +84,7 @@ public class MyClassroomAdapter extends RecyclerView.Adapter<MyClassroomAdapter.
                 @Override
                 public void onClick(View v) {
                     if (commonCallBackListner != null) {
-                        commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(AppConstant.CLickType.SEND_MESSAGE_CLICK, Status.SEND_MESSAGE_CLICK, ""));
+                        commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(AppConstant.CLickType.SEND_MESSAGE_CLICK, Status.SEND_MESSAGE_CLICK, model));
                     }
                 }
             });

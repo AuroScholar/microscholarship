@@ -19,8 +19,8 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:scaleType="fitXY"
             android:background="@drawable/ic_profile"
+            android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -62,12 +62,12 @@
 
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <RelativeLayout
             android:id="@+id/invite_button"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:background="@drawable/ic_button_with_challenge"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -75,25 +75,78 @@
             app:layout_constraintTop_toTopOf="parent">
 
 
-            <com.auro.scholr.core.util.uiwidget.RPTextView
-                android:id="@+id/invite_text"
-                android:layout_width="0dp"
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/_15sdp"
-                android:text="challenge"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_11sdp"
-                android:visibility="invisible"
-                android:layout_marginEnd="@dimen/_2sdp"
-                android:paddingEnd="@dimen/_25sdp"
-                app:Font="Poppins-Regular.ttf"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:elevation="@dimen/_2sdp"
+                android:indeterminateDrawable="@drawable/circular_progress"
+                android:innerRadiusRatio="3"
+                android:paddingStart="@dimen/_20sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_20sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/sent_layout"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/sent_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sent"
+                    app:Font="Poppins-Regular.ttf"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/black" />
+
+                <ImageView
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:background="@drawable/ic_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/invite_button_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_button_with_challenge"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/invite_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:paddingStart="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_25sdp"
+                    android:text="challenge"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11sdp"
+                    android:visibility="invisible"
+                    app:Font="Poppins-Regular.ttf"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"

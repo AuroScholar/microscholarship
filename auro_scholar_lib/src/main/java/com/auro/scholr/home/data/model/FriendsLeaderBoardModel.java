@@ -1,11 +1,58 @@
 package com.auro.scholr.home.data.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class FriendsLeaderBoardModel {
+
+
+    @SerializedName("mobile_no")
+    @Expose
+    private String mobileNo;
+
+    @SerializedName("student_name")
+    @Expose
     private String studentName;
+
+    @SerializedName("quiz_score")
+    @Expose
     private String studentScore;
-    private String scholarshipWon;
+
+    @SerializedName("profile_pic")
+    @Expose
     private String imagePath;
+
+    boolean progress;
+
+    boolean sent;
+
+    public boolean isSent() {
+        return sent;
+    }
+
+    public void setSent(boolean sent) {
+        this.sent = sent;
+    }
+
+    public boolean isProgress() {
+        return progress;
+    }
+
+    public void setProgress(boolean progress) {
+        this.progress = progress;
+    }
+
+    private String scholarshipWon;
+
     private int viewType;
+
+    public String getMobileNo() {
+        return mobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
+    }
 
     public String getImagePath() {
         return imagePath;

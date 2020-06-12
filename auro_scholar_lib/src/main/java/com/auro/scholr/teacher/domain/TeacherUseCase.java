@@ -14,6 +14,7 @@ import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.MonthDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.teacher.data.model.request.SelectClassesSubject;
+import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomTeacherResModel;
 import com.auro.scholr.util.AppLogger;
@@ -528,5 +529,12 @@ public class TeacherUseCase {
             return false;
         }
 
+    }
+
+    public ValidationModel validateSendInviteReq(SendInviteNotificationReqModel reqModel) {
+        if (TextUtil.isEmpty(reqModel.getNotification_message())) {
+            return new ValidationModel(false, "Please select the message");
+        }
+        return new ValidationModel(true, "");
     }
 }

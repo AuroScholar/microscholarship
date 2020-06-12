@@ -187,6 +187,10 @@ public interface AppConstant {
         int STUDENT_SDK = 101;
     }
 
+    interface SENDING_DATA {
+        String STUDENT_DATA = "STUDENT_DATA";
+    }
+
     interface SdkFragmentType {
         int TEACHER_DASHBOARD_FRAGMENT = 100;
         int TEACHER_PROFILE_FRAGMENT = 102;
@@ -199,6 +203,14 @@ public interface AppConstant {
         int SEND_MESSAGE_CLICK = 102;
         int DOCUMENT_CLICK = 103;
         int MESSAGE_SELECT_CLICK = 104;
+    }
+
+
+    interface SendInviteNotificationApiParam {
+        String SENDER_MOBILE_NUMBER = "sender_mobile_no";
+        String RECEIVER_MOBILE_NUMBER = "receiver_mobile_no";
+        String NOTIFICATION_TITLE = "notification_title";
+        String NOTIFICATION_MESSAGE = "notification_message";
     }
 
 }

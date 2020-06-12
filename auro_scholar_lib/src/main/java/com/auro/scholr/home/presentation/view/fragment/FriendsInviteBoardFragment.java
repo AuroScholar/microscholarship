@@ -72,7 +72,7 @@ public class FriendsInviteBoardFragment extends BaseFragment implements View.OnC
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         //  mlistener = this;
         setListener();
-        setLeaderBoard();
+        //setLeaderBoard();
         viewModel.getFriendsListData();
     }
 
@@ -114,7 +114,7 @@ public class FriendsInviteBoardFragment extends BaseFragment implements View.OnC
     private void setLeaderBoard() {
         binding.friendsList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.friendsList.setHasFixedSize(true);
-        leaderBoardAdapter = new LeaderBoardAdapter(viewModel.homeUseCase.makeListForFriendsLeaderBoard(false));
+      //  leaderBoardAdapter = new LeaderBoardAdapter(viewModel.homeUseCase.makeListForFriendsLeaderBoard(false));
         binding.friendsList.setAdapter(leaderBoardAdapter);
     }
 

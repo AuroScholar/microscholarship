@@ -8,6 +8,7 @@ import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
+import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
@@ -70,8 +71,18 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
     @Override
     public Single<Response<JsonObject>> inviteFriendListApi() {
         Map<String, String> params = new HashMap<String, String>();
-        params.put(AppConstant.MOBILE_NUMBER, AuroApp.getAuroScholarModel().getMobileNumber());
+        params.put(AppConstant.MOBILE_NUMBER, "9744176874");
         return homeRemoteApi.inviteFriendListApi(params);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> sendInviteNotificationApi(SendInviteNotificationReqModel reqModel) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.SendInviteNotificationApiParam.SENDER_MOBILE_NUMBER, reqModel.getSender_mobile_no());
+        params.put(AppConstant.SendInviteNotificationApiParam.RECEIVER_MOBILE_NUMBER, reqModel.getReceiver_mobile_no());
+        params.put(AppConstant.SendInviteNotificationApiParam.NOTIFICATION_TITLE, reqModel.getNotification_title());
+        params.put(AppConstant.SendInviteNotificationApiParam.NOTIFICATION_MESSAGE, reqModel.getNotification_message());
+        return homeRemoteApi.sendInviteNotificationApi(params);
     }
 
     @Override

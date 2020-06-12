@@ -5,6 +5,7 @@ import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
+import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -26,6 +27,10 @@ public interface HomeRepo {
         Single<Response<JsonObject>> getAzureData(AssignmentReqModel azureReqModel);
 
         Single<Response<JsonObject>> inviteFriendListApi( );
+
+        Single<Response<JsonObject>> sendInviteNotificationApi(SendInviteNotificationReqModel reqModel);
+
+
 
 
     }

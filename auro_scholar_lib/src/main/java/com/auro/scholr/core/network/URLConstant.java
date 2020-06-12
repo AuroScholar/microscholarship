@@ -32,5 +32,7 @@ public interface URLConstant {
 
     String INVITE_FRIEND_LIST_API = BASE_URL + "student_referral_data.php";
 
+    String SEND_NOTIFICATION_API = BASE_URL + "push_notification.php";
+
 
 }

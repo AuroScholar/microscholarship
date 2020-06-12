@@ -17,6 +17,8 @@ import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
+import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
+import com.auro.scholr.teacher.data.model.response.TeacherResModel;
 import com.auro.scholr.util.AppUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -36,6 +38,7 @@ import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
 import static com.auro.scholr.core.common.Status.INVITE_FRIENDS_LIST;
+import static com.auro.scholr.core.common.Status.SEND_INVITE_API;
 
 public class HomeRemoteUseCase extends NetworkUseCase {
     HomeRepo.DashboardRemoteData dashboardRemoteData;
@@ -43,6 +46,26 @@ public class HomeRemoteUseCase extends NetworkUseCase {
 
     public HomeRemoteUseCase(HomeRepo.DashboardRemoteData dashboardRemoteData) {
         this.dashboardRemoteData = dashboardRemoteData;
+    }
+
+
+    public Single<ResponseApi> sendInviteApi(SendInviteNotificationReqModel reqModel) {
+        return dashboardRemoteData.sendInviteNotificationApi(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+
+
+                    return handleResponse(response, Status.SEND_INVITE_API);
+
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
     }
 
     public Single<ResponseApi> inviteFriendListApi() {
@@ -199,6 +222,9 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         } else if (status == INVITE_FRIENDS_LIST) {
             FriendListResDataModel resDataModel = new Gson().fromJson(response.body(), FriendListResDataModel.class);
             return ResponseApi.success(resDataModel, status);
+        } else if (status == SEND_INVITE_API) {
+            TeacherResModel teacherResModel1 = new Gson().fromJson(response.body(), TeacherResModel.class);
+            return ResponseApi.success(teacherResModel1, status);
         }
 
 

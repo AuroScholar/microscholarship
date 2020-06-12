@@ -4,6 +4,8 @@ package com.auro.scholr.home.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class FriendListResDataModel {
 
     @SerializedName("status")
@@ -15,6 +17,11 @@ public class FriendListResDataModel {
     @SerializedName("Message")
     @Expose
     private String message;
+
+    @SerializedName("friends")
+    @Expose
+    private List<FriendsLeaderBoardModel> friends = null;
+
 
     public String getStatus() {
         return status;
@@ -40,4 +47,11 @@ public class FriendListResDataModel {
         this.message = message;
     }
 
+    public List<FriendsLeaderBoardModel> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<FriendsLeaderBoardModel> friends) {
+        this.friends = friends;
+    }
 }

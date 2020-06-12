@@ -1,12 +1,9 @@
 package com.auro.scholr.teacher.data.repository;
 
-import com.auro.scholr.home.data.model.AssignmentReqModel;
-import com.auro.scholr.home.data.model.AuroScholarDataModel;
-import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
-import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
+import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.google.gson.JsonObject;
 
@@ -26,6 +23,8 @@ public interface TeacherRepo {
         Single<Response<JsonObject>> getProfileTeacherApi(String mobileNumber);
 
         Single<Response<JsonObject>> uploadTeacherKYC(List<KYCDocumentDatamodel> list);
+
+        Single<Response<JsonObject>> sendInviteNotificationApi(SendInviteNotificationReqModel reqModel);
 
 
     }

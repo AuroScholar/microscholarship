@@ -24,12 +24,14 @@ import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.TeacherMyClassroomLayoutBinding;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomStudentResModel;
 import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.MyClassroomAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
@@ -186,8 +188,11 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     public void commonEventListner(CommonDataModel commonDataModel) {
         switch (commonDataModel.getClickType()) {
             case SEND_MESSAGE_CLICK:
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(AppConstant.SENDING_DATA.STUDENT_DATA, (MyClassRoomStudentResModel) commonDataModel.getObject());
                 SelectYourMessageDialogFragment fragment = new SelectYourMessageDialogFragment(); //where MyFragment is my fragment I want to show
                 fragment.setCancelable(true);
+                fragment.setArguments(bundle);
                 fragment.show(getActivity().getSupportFragmentManager(), MyClassroomFragment.class.getSimpleName());
                 break;
             case KYC_RESULT_PATH:
