@@ -10,6 +10,7 @@ import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
 import com.google.gson.JsonObject;
@@ -71,7 +72,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
     @Override
     public Single<Response<JsonObject>> inviteFriendListApi() {
         Map<String, String> params = new HashMap<String, String>();
-        params.put(AppConstant.MOBILE_NUMBER, "9744176874");
+        params.put(AppConstant.MOBILE_NUMBER, AuroApp.getAuroScholarModel().getMobileNumber());
         return homeRemoteApi.inviteFriendListApi(params);
     }
 
