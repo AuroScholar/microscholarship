@@ -16,6 +16,7 @@ import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.teacher.data.model.request.SelectClassesSubject;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomStudentResModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomTeacherResModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
@@ -136,11 +137,36 @@ public class TeacherUseCase {
 
     }
 
+    public List<MyClassRoomStudentResModel> makeStudentList(List<MyClassRoomStudentResModel> resModelList, int month, int year) {
+        List<MyClassRoomStudentResModel> list = new ArrayList<>();
+        for (MyClassRoomStudentResModel model : resModelList) {
+            setValues(model);
+            if (model.getMonthNumber() == month && model.getYear() == year) {
+                list.add(model);
+            }
+        }
+        return list;
+    }
+
+
+    private void setValues(MyClassRoomStudentResModel model) {
+        try {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date a = dateFormat.parse(model.getRegistration_date());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(a);
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            model.setMonthNumber(month);
+            model.setYear(year);
+        } catch (Exception e) {
+            AppLogger.e("Date exception", "months--" + e.getMessage());
+        }
+    }
 
     public List<MonthDataModel> monthDataModelList(String start) {
         List<MonthDataModel> list = new ArrayList<>();
         try {
-
             Date b = new Date();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date a = dateFormat.parse(start);
@@ -149,8 +175,11 @@ public class TeacherUseCase {
                 calendar.setTime(d);
                 String monthName = new SimpleDateFormat("MMMM").format(calendar.getTime());
                 int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
                 MonthDataModel model = new MonthDataModel();
                 model.setMonth(monthName + " " + year);
+                model.setMonthNumber(month);
+                model.setYear(year);
                 list.add(model);
                 AppLogger.e("Date month name-", year + "--" + monthName);
             }
@@ -167,8 +196,8 @@ public class TeacherUseCase {
         Calendar c = Calendar.getInstance();
         c.setTime(d1);
         while (c.getTimeInMillis() < d2.getTime()) {
-            c.add(Calendar.MONTH, 1);
             ret.add(c.getTime());
+            c.add(Calendar.MONTH, 1);
         }
         return ret;
     }

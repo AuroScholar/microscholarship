@@ -248,5 +248,20 @@ public class DateUtil {
         return 0;
     }
 
+    public static int getcurrentMonthNumber() {
+        Date a = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(a);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        return month;
+    }
 
+    public static int getcurrentYearNumber() {
+        Date a = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(a);
+        int year = calendar.get(Calendar.YEAR);
+        return year;
+    }
 }

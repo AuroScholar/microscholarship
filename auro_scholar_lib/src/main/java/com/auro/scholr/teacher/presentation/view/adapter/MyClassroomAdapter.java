@@ -43,7 +43,7 @@ public class MyClassroomAdapter extends RecyclerView.Adapter<MyClassroomAdapter.
         mContext = context;
     }
 
-    public void updateList(ArrayList<MyClassRoomStudentResModel> values) {
+    public void updateList(List<MyClassRoomStudentResModel> values) {
         mValues = values;
         notifyDataSetChanged();
     }

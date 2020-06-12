@@ -267,11 +267,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
                                 handleProgress(2, dashboardResModel.getMessage());
                             } else {
-
-                                if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
-                                    String jsonString = new Gson().toJson(dashboardResModel);
-                                    AuroApp.getAuroScholarModel().getSdkcallback().callBack(jsonString);
-                                }
                                 setDataOnUi(dashboardResModel);
                             }
                         } else {

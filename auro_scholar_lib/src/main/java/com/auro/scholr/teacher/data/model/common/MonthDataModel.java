@@ -3,7 +3,17 @@ package com.auro.scholr.teacher.data.model.common;
 public class MonthDataModel {
 
     String month;
-    String year;
+    int year;
+    int monthNumber;
+
+    public int getMonthNumber() {
+        return monthNumber;
+    }
+
+    public void setMonthNumber(int monthNumber) {
+        this.monthNumber = monthNumber;
+    }
+
 
     public String getMonth() {
         return month;
@@ -13,11 +23,11 @@ public class MonthDataModel {
         this.month = month;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 }

@@ -30,6 +30,7 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.TeacherMyClassroomLayoutBinding;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.teacher.data.model.common.MonthDataModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomStudentResModel;
 import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
@@ -37,12 +38,15 @@ import com.auro.scholr.teacher.presentation.view.adapter.MyClassroomAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.AuroScholar;
+import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.google.gson.Gson;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -59,6 +63,8 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     MyClassroomViewModel viewModel;
     boolean isStateRestore;
     MyClassRoomResModel myClassRoomResModel;
+    List<MonthDataModel> monthDataModelList;
+    MyClassroomAdapter leaderBoardAdapter;
 
 
     @Override
@@ -82,10 +88,10 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         return binding.getRoot();
     }
 
-    public void setAdapter() {
+    public void setAdapter(List<MyClassRoomStudentResModel> resModelList) {
         binding.studentList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.studentList.setHasFixedSize(true);
-        MyClassroomAdapter leaderBoardAdapter = new MyClassroomAdapter(getActivity(), myClassRoomResModel.getTeacherResModel().getStudentResModels(), this);
+        leaderBoardAdapter = new MyClassroomAdapter(getActivity(), resModelList, this);
         binding.studentList.setAdapter(leaderBoardAdapter);
     }
 
@@ -114,14 +120,14 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         if (myClassRoomResModel.getTeacherResModel() != null && !TextUtil.isEmpty(myClassRoomResModel.getTeacherResModel().getRegistrationDate())) {
             date = myClassRoomResModel.getTeacherResModel().getRegistrationDate();
         }
-        if (!TextUtil.checkListIsEmpty(viewModel.teacherUseCase.monthDataModelList(date))) {
-            MonthSpinnerAdapter stateSpinnerAdapter = new MonthSpinnerAdapter(viewModel.teacherUseCase.monthDataModelList(date));
+        monthDataModelList = viewModel.teacherUseCase.monthDataModelList(date);
+        if (!TextUtil.checkListIsEmpty(monthDataModelList)) {
+            MonthSpinnerAdapter stateSpinnerAdapter = new MonthSpinnerAdapter(monthDataModelList);
             binding.monthSpinner.setAdapter(stateSpinnerAdapter);
             binding.monthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (position != 0) {
-                    }
+                    leaderBoardAdapter.updateList(viewModel.teacherUseCase.makeStudentList(myClassRoomResModel.getTeacherResModel().getStudentResModels(), monthDataModelList.get(position).getMonthNumber(), monthDataModelList.get(position).getYear()));
                 }
 
                 @Override
@@ -129,6 +135,14 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
                 }
             });
+            int year = DateUtil.getcurrentYearNumber();
+            int month = DateUtil.getcurrentMonthNumber();
+            for (int i = 0; i < monthDataModelList.size(); i++) {
+                MonthDataModel model = monthDataModelList.get(i);
+                if (year == model.getYear() && month == model.getMonthNumber()) {
+                    binding.monthSpinner.setSelection(i);
+                }
+            }
         }
 
 
@@ -256,18 +270,13 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                         handleProgress(1, "");
                         myClassRoomResModel = (MyClassRoomResModel) responseApi.data;
                         AppUtil.myClassRoomResModel = myClassRoomResModel;
+                        monthSpinner();
                         if (myClassRoomResModel != null && myClassRoomResModel.getTeacherResModel() != null
                                 && !TextUtil.checkListIsEmpty(myClassRoomResModel.getTeacherResModel().getStudentResModels())) {
-                            setAdapter();
+                            setAdapter(viewModel.teacherUseCase.makeStudentList(myClassRoomResModel.getTeacherResModel().getStudentResModels(), DateUtil.getcurrentMonthNumber(), DateUtil.getcurrentYearNumber()));
                         } else {
                             binding.studentList.setVisibility(View.GONE);
                             binding.errorTxt.setVisibility(View.VISIBLE);
-                        }
-                        monthSpinner();
-                        /*Sending call back*/
-                        if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
-                            String jsonString = new Gson().toJson(myClassRoomResModel);
-                            AuroApp.getAuroScholarModel().getSdkcallback().callBack(jsonString);
                         }
 
                     }

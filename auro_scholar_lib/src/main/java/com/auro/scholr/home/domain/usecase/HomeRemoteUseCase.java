@@ -204,6 +204,11 @@ public class HomeRemoteUseCase extends NetworkUseCase {
 
     @Override
     public ResponseApi response200(Response<JsonObject> response, Status status) {
+        if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
+            String jsonString = new Gson().toJson(response.body());
+            AuroApp.getAuroScholarModel().getSdkcallback().callBack(jsonString);
+        }
+
         if (status == DASHBOARD_API) {
             DashboardResModel dashboardResModel = gson.fromJson(response.body(), DashboardResModel.class);
             return ResponseApi.success(dashboardResModel, status);
@@ -226,6 +231,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
             TeacherResModel teacherResModel1 = new Gson().fromJson(response.body(), TeacherResModel.class);
             return ResponseApi.success(teacherResModel1, status);
         }
+
 
 
         return ResponseApi.fail(null, status);

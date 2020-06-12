@@ -33,6 +33,7 @@ import com.auro.scholr.teacher.presentation.viewmodel.SelectYourMessageDialogMod
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -124,7 +125,7 @@ public class SelectYourMessageDialogFragment extends BaseDialog implements View.
     private void callSendInvitApi() {
         if (myClassRoomStudentResModel != null && !TextUtil.isEmpty(myClassRoomStudentResModel.getSudentMobile())) {
             reqModel.setNotification_title("Invitation");
-            reqModel.setReceiver_mobile_no(reqModel.getSender_mobile_no());
+            reqModel.setReceiver_mobile_no(myClassRoomStudentResModel.getSudentMobile());
             reqModel.setSender_mobile_no(AuroApp.getAuroScholarModel().getMobileNumber());
             ValidationModel validationModel = viewModel.teacherUseCase.validateSendInviteReq(reqModel);
             if (validationModel.isStatus()) {
@@ -166,8 +167,9 @@ public class SelectYourMessageDialogFragment extends BaseDialog implements View.
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == Status.SEND_INVITE_API) {
                         TeacherResModel teacherResModel = (TeacherResModel) responseApi.data;
-                        if(teacherResModel.getError()){
 
+                        if (teacherResModel.getError()) {
+                            showSnackbarError("Something Went Wrong! While Sending Invitation");
                         }
                         handleProgress(1);
                     }

@@ -31,8 +31,10 @@ import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
 import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
+import com.auro.scholr.teacher.data.model.response.TeacherResModel;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.google.gson.Gson;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -152,14 +154,13 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
                     if (responseApi.apiTypeStatus == INVITE_FRIENDS_LIST) {
                         handleProgress(0, "");
                     } else {
-                        updateData(true);
+                        updateData(true, true);
                     }
 
                     break;
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == INVITE_FRIENDS_LIST) {
-
                         resModel = (FriendListResDataModel) responseApi.data;
                         if (resModel.getError()) {
                             handleProgress(2, resModel.getMessage());
@@ -168,7 +169,8 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
                             setAdapter();
                         }
                     } else if (responseApi.apiTypeStatus == SEND_INVITE_API) {
-                        updateData(false);
+                        TeacherResModel resModel = (TeacherResModel) responseApi.data;
+                        updateData(false, resModel.getError());
                     }
                     break;
 
@@ -176,11 +178,9 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
                 case NO_INTERNET:
                 case FAIL_400:
                     if (responseApi.apiTypeStatus == INVITE_FRIENDS_LIST) {
-
                         handleProgress(3, (String) responseApi.data);
-
                     } else {
-                        updateData(false);
+                        updateData(false, true);
                     }
                     showSnackbarError((String) responseApi.data);
                     break;
@@ -189,7 +189,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
                     if (responseApi.apiTypeStatus == INVITE_FRIENDS_LIST) {
                         handleProgress(3, (String) responseApi.data);
                     } else {
-                        updateData(false);
+                        updateData(false, true);
                     }
                     showSnackbarError((String) responseApi.data);
                     break;
@@ -387,10 +387,10 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         }
     }
 
-    private void updateData(boolean status) {
+    private void updateData(boolean status, boolean sent) {
         if (resModel != null && !TextUtil.checkListIsEmpty(resModel.getFriends())) {
             resModel.getFriends().get(itemPos).setProgress(status);
-            if (!status) {
+            if (!sent) {
                 resModel.getFriends().get(itemPos).setSent(true);
             }
             leaderBoardAdapter.setDataList(resModel.getFriends());

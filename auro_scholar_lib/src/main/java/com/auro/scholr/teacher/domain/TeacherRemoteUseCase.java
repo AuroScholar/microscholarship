@@ -160,6 +160,10 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
 
     @Override
     public ResponseApi response200(Response<JsonObject> response, Status status) {
+        if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
+            String jsonString = new Gson().toJson(response.body());
+            AuroApp.getAuroScholarModel().getSdkcallback().callBack(jsonString);
+        }
         switch (status) {
             case UPDATE_TEACHER_PROFILE_API:
                 TeacherResModel teacherResModel = gson.fromJson(response.body(), TeacherResModel.class);
