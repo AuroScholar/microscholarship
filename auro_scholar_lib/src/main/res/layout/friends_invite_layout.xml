@@ -178,7 +178,7 @@
                             android:layout_width="@dimen/_25sdp"
                             android:layout_height="@dimen/_25sdp"
                             android:layout_marginStart="@dimen/_7sdp"
-                            android:background="@drawable/ic_facebook"
+                            android:background="@drawable/ic_auro_facebook"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />

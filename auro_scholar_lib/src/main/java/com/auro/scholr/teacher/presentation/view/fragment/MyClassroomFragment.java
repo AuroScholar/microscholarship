@@ -117,7 +117,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
     private void monthSpinner() {
         String date = "";
-        if (myClassRoomResModel.getTeacherResModel() != null && !TextUtil.isEmpty(myClassRoomResModel.getTeacherResModel().getRegistrationDate())) {
+        if (myClassRoomResModel != null && myClassRoomResModel.getTeacherResModel() != null && !TextUtil.isEmpty(myClassRoomResModel.getTeacherResModel().getRegistrationDate())) {
             date = myClassRoomResModel.getTeacherResModel().getRegistrationDate();
         }
         monthDataModelList = viewModel.teacherUseCase.monthDataModelList(date);
@@ -127,7 +127,10 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             binding.monthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    leaderBoardAdapter.updateList(viewModel.teacherUseCase.makeStudentList(myClassRoomResModel.getTeacherResModel().getStudentResModels(), monthDataModelList.get(position).getMonthNumber(), monthDataModelList.get(position).getYear()));
+
+                    if (leaderBoardAdapter != null && myClassRoomResModel != null && !TextUtil.checkListIsEmpty(myClassRoomResModel.getTeacherResModel().getStudentResModels())) {
+                        leaderBoardAdapter.updateList(viewModel.teacherUseCase.makeStudentList(myClassRoomResModel.getTeacherResModel().getStudentResModels(), monthDataModelList.get(position).getMonthNumber(), monthDataModelList.get(position).getYear()));
+                    }
                 }
 
                 @Override
@@ -247,7 +250,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         if (v.getId() == R.id.whatsapp) {
             sendWhatsapp(completeLink);
         } else if (v.getId() == R.id.facebook) {
-
             shareAppLinkViaFacebook(completeLink);
         } else {
             shareWithFriends(completeLink);

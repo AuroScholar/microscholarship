@@ -7,12 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
-import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.TeacherDocumentItemLayoutBinding;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
-import com.auro.scholr.teacher.data.model.TeacherDocumentModel;
 import com.auro.scholr.util.AppUtil;
 
 public class TeacherDoumentViewHolder extends RecyclerView.ViewHolder {
@@ -35,7 +33,7 @@ public class TeacherDoumentViewHolder extends RecyclerView.ViewHolder {
         if (model.isModify()) {
             binding.docImg.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_check));
         } else {
-            binding.docImg.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_upload));
+            binding.docImg.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_auro_upload));
             binding.docImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -56,6 +56,10 @@ public class MyClassRoomTeacherResModel {
     @Expose
     private Integer scoreTotal;
 
+    @SerializedName("APImyclassroomstudent")
+    @Expose
+    private List<MyClassRoomStudentResModel> studentResModels = null;
+
     public String getTeacherName() {
         return teacherName;
     }
@@ -144,12 +148,6 @@ public class MyClassRoomTeacherResModel {
         this.teacher_photo = teacher_photo;
     }
 
-    @SerializedName("APImyclassroomstudent")
-    @Expose
-
-
-
-    private List<MyClassRoomStudentResModel> studentResModels = null;
 
     public String getRegistrationDate() {
         return registrationDate;

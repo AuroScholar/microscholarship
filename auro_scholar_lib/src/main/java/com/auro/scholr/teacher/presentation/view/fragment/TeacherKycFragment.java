@@ -227,7 +227,7 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
 
     private void setDataOnUI() {
         if (AppUtil.myClassRoomResModel != null && AppUtil.myClassRoomResModel.getTeacherResModel() != null) {
-            if (!TextUtil.isEmpty(String.valueOf(AppUtil.myClassRoomResModel.getTeacherResModel().getScoreTotal()))) {
+            if (AppUtil.myClassRoomResModel.getTeacherResModel().getScoreTotal() != null && !TextUtil.isEmpty(String.valueOf(AppUtil.myClassRoomResModel.getTeacherResModel().getScoreTotal()))) {
                 binding.points.setText("" + AppUtil.myClassRoomResModel.getTeacherResModel().getScoreTotal());
             } else {
                 binding.points.setText("0");
