@@ -324,7 +324,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                 binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        viewModel.getTeacherProfileData("9654234507");
+                        viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
                     }
                 });
                 break;

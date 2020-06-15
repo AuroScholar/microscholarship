@@ -31,7 +31,7 @@ public class TeacherDoumentViewHolder extends RecyclerView.ViewHolder {
             binding.docImg.setOnClickListener(null);
         }
         if (model.isModify()) {
-            binding.docImg.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_check));
+            binding.docImg.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_auro_check));
         } else {
             binding.docImg.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_auro_upload));
             binding.docImg.setOnClickListener(new View.OnClickListener() {

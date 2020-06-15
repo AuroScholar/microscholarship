@@ -1,6 +1,5 @@
 package com.auro.scholr.teacher.presentation.viewmodel;
 
-import android.provider.VoicemailContract;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -8,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
-import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.SendMessageItemLayoutBinding;
@@ -28,7 +26,7 @@ public class SelectMessageViewHolder extends RecyclerView.ViewHolder {
         binding.msgText.setText(model.getMessage());
 
         if (model.isCheck()) {
-            binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_check));
+            binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_auro_check));
         } else {
             binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.circle_outline));
 

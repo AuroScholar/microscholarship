@@ -130,9 +130,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openGenricSDK() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber("9654234507");
-        auroScholarDataModel.setStudentClass("10");
-        auroScholarDataModel.setScholrId("10000014");
+        auroScholarDataModel.setMobileNumber("7814921621");
+        auroScholarDataModel.setStudentClass("6");
+        auroScholarDataModel.setScholrId("880426");
         auroScholarDataModel.setRegitrationSource("AuroScholr");
         auroScholarDataModel.setShareType("teacher");
         auroScholarDataModel.setShareIdentity("chandan Sir");
