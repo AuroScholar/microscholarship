@@ -86,7 +86,7 @@ public class FriendsLeaderShipViewModel extends ViewModel {
             if (hasInternet) {
                 inviteFriendListApi();
             } else {
-                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.INVITE_FRIENDS_LIST));
             }
         });
         getCompositeDisposable().add(disposable);
@@ -98,7 +98,7 @@ public class FriendsLeaderShipViewModel extends ViewModel {
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
-
+                        serviceLiveData.setValue(ResponseApi.loading(Status.INVITE_FRIENDS_LIST));
                     }
                 })
                 .subscribe(new Consumer<ResponseApi>() {

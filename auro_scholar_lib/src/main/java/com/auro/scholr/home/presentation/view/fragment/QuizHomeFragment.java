@@ -172,6 +172,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.toolbarLayout.langEng.setOnClickListener(this);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.customUiSnackbar.btInvite.setOnClickListener(this);
+        binding.customUiSnackbar.inviteParentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFragment(new FriendsLeaderBoardFragment());
+            }
+        });
         binding.fab.setOnClickListener(this);
     }
 
@@ -319,6 +325,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else if (value == 1) {
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.VISIBLE);
+            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.VISIBLE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
             binding.shimmerViewQuiz.stopShimmer();
         } else {
@@ -327,6 +334,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             binding.shimmerViewQuiz.setVisibility(View.GONE);
             binding.shimmerViewQuiz.stopShimmer();
             binding.errorLayout.textError.setText(message);
+            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.GONE);
             binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -452,8 +460,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
 
-        }
-        if (v.getId() == R.id.bt_invite) {
+        } else if (v.getId() == R.id.bt_invite) {
             openFragment(new FriendsLeaderBoardFragment());
         } else if (v.getId() == R.id.fab) {
             openChat();
