@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-               // openTeacherSDK();
-                openGenricSDK();
+                openTeacherSDK();
+                //openGenricSDK();
                 // openScholarSpecificSdk();
                 hideKeyboard(this);
 
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openScholarSpecificSdk() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber("9654234507");
+        auroScholarDataModel.setMobileNumber("7978027446");
         auroScholarDataModel.setStudentClass("10");
         auroScholarDataModel.setScholrId("10000014");
         auroScholarDataModel.setRegitrationSource("AuroScholr");
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openTeacherSDK() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber("7814921621");
+        auroScholarDataModel.setMobileNumber("7978027446");
         auroScholarDataModel.setStudentClass("6");
         auroScholarDataModel.setScholrId("880426");
         auroScholarDataModel.setRegitrationSource("AuroScholr");

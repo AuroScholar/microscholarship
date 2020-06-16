@@ -98,7 +98,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/_4sdp"
-                                    android:text="123"
+                                    android:text="0"
                                     android:textColor="@color/white"
                                     app:Font="Poppins-Regular.ttf" />
 
@@ -125,7 +125,7 @@
                                     android:id="@+id/wallet_bal"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="₹1230"
+                                    android:text="₹0"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/_15sdp"
                                     app:Font="Poppins-Regular.ttf" />

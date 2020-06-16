@@ -36,6 +36,7 @@ import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.teacher.data.model.request.SelectClassesSubject;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomTeacherResModel;
 import com.auro.scholr.teacher.data.model.response.MyProfileResModel;
 import com.auro.scholr.teacher.data.model.response.TeacherResModel;
@@ -126,11 +127,11 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         if (AppUtil.myClassRoomResModel != null && AppUtil.myClassRoomResModel.getTeacherResModel() != null) {
             setModelinteacherprofile(AppUtil.myClassRoomResModel.getTeacherResModel());
             if (!TextUtil.isEmpty(AppUtil.myClassRoomResModel.getTeacherResModel().getStateId())) {
-                stateCode= AppUtil.myClassRoomResModel.getTeacherResModel().getStateId();
+                stateCode = AppUtil.myClassRoomResModel.getTeacherResModel().getStateId();
             }
 
             if (!TextUtil.isEmpty(AppUtil.myClassRoomResModel.getTeacherResModel().getDistrictId())) {
-                districtCode= AppUtil.myClassRoomResModel.getTeacherResModel().getDistrictId();
+                districtCode = AppUtil.myClassRoomResModel.getTeacherResModel().getDistrictId();
             }
         }
         // viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
@@ -193,6 +194,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
             public void onClick(View v) {
                 if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
                     AuroApp.getAuroScholarModel().getSdkcallback().logOut();
+                    AppUtil.myClassRoomResModel = null;
                 }
                 //  openFragment(new TeacherKycFragment());
                 //  ((HomeActivity) getActivity()).selectNavigationMenu(2);
@@ -254,21 +256,21 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                 /*For state list*/
                 case STATE_LIST_ARRAY:
                     stateDataModelList = (List<StateDataModel>) responseApi.data;
-                        if (!TextUtil.isEmpty(stateCode)) {
-                            stateSpinner(stateCode);
-                            stateCode="";
-                        } else {
-                            stateSpinner(stateCode);
+                    if (!TextUtil.isEmpty(stateCode)) {
+                        stateSpinner(stateCode);
+                        stateCode = "";
+                    } else {
+                        stateSpinner(stateCode);
                     }
                     break;
 
                 case DISTRICT_LIST_DATA:
                     districtDataModels = (List<DistrictDataModel>) responseApi.data;
-                        if (!TextUtil.isEmpty(districtCode)) {
-                            districtSpinner(districtCode);
-                            districtCode="";
-                        } else {
-                            districtSpinner(districtCode);
+                    if (!TextUtil.isEmpty(districtCode)) {
+                        districtSpinner(districtCode);
+                        districtCode = "";
+                    } else {
+                        districtSpinner(districtCode);
                     }
 
                     break;
