@@ -134,6 +134,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.inviteButton.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
+        binding.inviteNow.setOnClickListener(this);
 
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
             viewModel.serviceLiveData().removeObservers(this);
@@ -217,11 +218,11 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
 
             case 2:
                 binding.progressBar.setVisibility(View.GONE);
-                binding.errorConstraint.setVisibility(View.VISIBLE);
+                binding.errorConstraint.setVisibility(View.GONE);
                 binding.errorLayout.errorIcon.setVisibility(View.GONE);
                 binding.errorLayout.btRetry.setVisibility(View.GONE);
                 binding.errorLayout.textError.setText(msg);
-                binding.noFriendLayout.setVisibility(View.GONE);
+                binding.noFriendLayout.setVisibility(View.VISIBLE);
                 binding.boardListLayout.setVisibility(View.GONE);
                 break;
 
@@ -306,6 +307,8 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
                 setLanguageText(AppConstant.HINDI);
             }
             reloadFragment();
+        } else if (v.getId() == R.id.invite_now) {
+            openShareDefaultDialog();
         }
     }
 
