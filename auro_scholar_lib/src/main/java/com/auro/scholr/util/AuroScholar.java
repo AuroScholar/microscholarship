@@ -15,7 +15,20 @@ import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
 public class AuroScholar {
 
     public static Fragment openAuroDashboardFragment(AuroScholarDataModel auroScholarDataModel) {
+        if (TextUtil.isEmpty(auroScholarDataModel.getShareIdentity())) {
+            auroScholarDataModel.setShareIdentity("");
+        }
+        if (TextUtil.isEmpty(auroScholarDataModel.getShareType())) {
+            auroScholarDataModel.setShareType("");
+        }
+
+        if (TextUtil.isEmpty(auroScholarDataModel.getRegitrationSource())) {
+            auroScholarDataModel.setRegitrationSource("");
+        }
+
+
         AuroApp.setAuroModel(auroScholarDataModel);
+
         QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
         return quizHomeFragment;
     }
@@ -35,6 +48,17 @@ public class AuroScholar {
 
 
     public static void startTeacherSDK(AuroScholarDataModel auroScholarDataModel) {
+
+        if (TextUtil.isEmpty(auroScholarDataModel.getShareIdentity())) {
+            auroScholarDataModel.setShareIdentity("");
+        }
+        if (TextUtil.isEmpty(auroScholarDataModel.getShareType())) {
+            auroScholarDataModel.setShareType("");
+        }
+
+        if (TextUtil.isEmpty(auroScholarDataModel.getRegitrationSource())) {
+            auroScholarDataModel.setRegitrationSource("");
+        }
         AuroApp.setAuroModel(auroScholarDataModel);
         auroScholarDataModel.getActivity().startActivity(new Intent(auroScholarDataModel.getActivity(), HomeActivity.class));
     }
