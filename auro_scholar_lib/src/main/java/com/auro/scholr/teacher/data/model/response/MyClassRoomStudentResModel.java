@@ -7,12 +7,12 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MyClassRoomStudentResModel  implements Parcelable {
+public class MyClassRoomStudentResModel implements Parcelable {
 
-    @SerializedName("sudent_name")
+    @SerializedName("student_name")
     @Expose
     private String sudentName;
-    @SerializedName("sudent_mobile")
+    @SerializedName("student_mobile")
     @Expose
     private String sudentMobile;
     @SerializedName("total_score")
@@ -25,6 +25,11 @@ public class MyClassRoomStudentResModel  implements Parcelable {
     @Expose
     private String registration_date;
 
+
+    @SerializedName("invite_date")
+    @Expose
+    private String invite_date;
+
     int year;
     int monthNumber;
 
@@ -34,6 +39,7 @@ public class MyClassRoomStudentResModel  implements Parcelable {
         totalScore = in.readString();
         studentPhoto = in.readString();
         registration_date = in.readString();
+        invite_date = in.readString();
         year = in.readInt();
         monthNumber = in.readInt();
     }
@@ -45,6 +51,7 @@ public class MyClassRoomStudentResModel  implements Parcelable {
         dest.writeString(totalScore);
         dest.writeString(studentPhoto);
         dest.writeString(registration_date);
+        dest.writeString(invite_date);
         dest.writeInt(year);
         dest.writeInt(monthNumber);
     }
@@ -65,6 +72,14 @@ public class MyClassRoomStudentResModel  implements Parcelable {
             return new MyClassRoomStudentResModel[size];
         }
     };
+
+    public String getInvite_date() {
+        return invite_date;
+    }
+
+    public void setInvite_date(String invite_date) {
+        this.invite_date = invite_date;
+    }
 
     public int getYear() {
         return year;

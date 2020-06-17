@@ -20,6 +20,7 @@ import com.auro.scholr.teacher.data.model.response.MyClassRoomStudentResModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomTeacherResModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.TextUtil;
 
 import java.io.BufferedReader;
@@ -141,7 +142,7 @@ public class TeacherUseCase {
         List<MyClassRoomStudentResModel> list = new ArrayList<>();
         for (MyClassRoomStudentResModel model : resModelList) {
             setValues(model);
-            if (model.getMonthNumber() == month && model.getYear() == year) {
+            if (model.getMonthNumber() <= month && model.getYear() <= year) {
                 list.add(model);
             }
         }
@@ -152,7 +153,7 @@ public class TeacherUseCase {
     private void setValues(MyClassRoomStudentResModel model) {
         try {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date a = dateFormat.parse(model.getRegistration_date());
+            Date a = dateFormat.parse(model.getInvite_date());
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(a);
             int year = calendar.get(Calendar.YEAR);
@@ -167,6 +168,8 @@ public class TeacherUseCase {
     public List<MonthDataModel> monthDataModelList(String start) {
         List<MonthDataModel> list = new ArrayList<>();
         try {
+
+            // start="2019-06-15 18:21:18";
             Date b = new Date();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date a = dateFormat.parse(start);

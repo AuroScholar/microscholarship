@@ -63,10 +63,15 @@ public class MyClassroomAdapter extends RecyclerView.Adapter<MyClassroomAdapter.
         public void setData(MyClassRoomStudentResModel model, int position) {
             if (model != null && !TextUtil.isEmpty(model.getSudentName())) {
                 binding.nameText.setText(model.getSudentName());
+            } else {
+                binding.nameText.setVisibility(View.GONE);
             }
 
             if (model != null && !TextUtil.isEmpty(model.getSudentMobile())) {
                 binding.mobileText.setText(model.getSudentMobile());
+            }else
+            {
+                binding.mobileText.setVisibility(View.GONE);
             }
 
 
