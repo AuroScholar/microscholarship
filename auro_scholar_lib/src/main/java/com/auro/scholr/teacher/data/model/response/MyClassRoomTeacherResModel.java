@@ -60,6 +60,30 @@ public class MyClassRoomTeacherResModel {
     @Expose
     private List<MyClassRoomStudentResModel> studentResModels = null;
 
+    @SerializedName("campaign")
+    @Expose
+    private String campaign;
+
+    @SerializedName("regitration_source ")
+    @Expose
+    private String regitration_source ;
+
+    public String getCampaign() {
+        return campaign;
+    }
+
+    public void setCampaign(String campaign) {
+        this.campaign = campaign;
+    }
+
+    public String getRegitration_source() {
+        return regitration_source;
+    }
+
+    public void setRegitration_source(String regitration_source) {
+        this.regitration_source = regitration_source;
+    }
+
     public String getTeacherName() {
         return teacherName;
     }
