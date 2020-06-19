@@ -341,7 +341,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         if (prefModel != null) {
             List<AssignmentReqModel> newList = new ArrayList<>();
             for (AssignmentReqModel model : faceModelList) {
-                if (!model.isUploaded()) {
+                if (model != null && !model.isUploaded()) {
                     newList.add(model);
                 }
             }
