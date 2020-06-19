@@ -87,6 +87,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     boolean isFlash = false;
     CameraFragmentLayoutBinding binding;
     public static boolean status;
+    private boolean safeToTakePicture = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,7 +225,11 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             flashIsAvailable();
 
         } else if (v.getId() == R.id.stillshot) {
-            clickPicture();
+            if (safeToTakePicture){
+                clickPicture();
+                safeToTakePicture= false;
+            }
+
         }
     }
 

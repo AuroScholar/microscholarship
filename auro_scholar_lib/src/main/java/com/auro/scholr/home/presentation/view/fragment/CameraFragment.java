@@ -75,6 +75,7 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
     public static boolean status;
 
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -192,7 +193,7 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
             flashIsAvailable();
 
         } else if (v.getId() == R.id.stillshot) {
-            clickPicture();
+                clickPicture();
         }
     }
 
@@ -267,8 +268,10 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
                     loadImageFromStorage(saveToInternalStorage(loadedImage));
 
 
+
                 } catch (Exception e) {
                     e.printStackTrace();
+
                 }
             }
         });
