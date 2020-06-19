@@ -172,8 +172,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         binding.facebook.setOnClickListener(this);
         binding.whatsapp.setOnClickListener(this);
         binding.share.setOnClickListener(this);
-
-
     }
 
 
@@ -297,7 +295,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
         });
     }
-
 
     private void handleProgress(int status, String message) {
         switch (status) {
