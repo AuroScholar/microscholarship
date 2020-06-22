@@ -26,6 +26,7 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.FriendsLeoboardLayoutBinding;
+import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.FriendListResDataModel;
 import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
 import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
@@ -89,7 +90,9 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         setListener();
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
         setDataUi();
-
+        if (AuroApp.getAuroScholarModel() != null) {
+            AuroApp.getAuroScholarModel().setSdkFragmentType(AppConstant.FragmentType.QUIZ_DASHBOARD);
+        }
         if (!isStateRestore) {
             viewModel.getFriendsListData();
         }
@@ -291,6 +294,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     public void onClick(View v) {
         if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
+            openFragment(new QuizHomeFragment());
         } else if (v.getId() == R.id.invite_button) {
             openShareDefaultDialog();
            /* mInviteBoxDialog = new InviteFriendDialog(getContext());

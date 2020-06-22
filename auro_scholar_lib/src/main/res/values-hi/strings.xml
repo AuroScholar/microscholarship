@@ -148,12 +148,12 @@
     <string name="upload_verification">सत्यापन अपलोड करें</string>
     <string name="transfer_scholarship">छात्रवृत्ति हस्तांतरित करें</string>
 
-    <string name="verification_In_Progress">Verification In Progress</string>
-    <string name="scholarship_amount_approved">Scholarship Amount Approved</string>
+    <string name="verification_In_Progress">प्रगति में राशि पुनरीक्षण</string>
+    <string name="scholarship_amount_approved">छात्रवृत्ति राशि स्वीकृत</string>
     <string name="transactions">Transactions</string>
     <string name="priceAmmount"><u>₹50.00</u></string>
     <string name="approved">Approved</string>
-    <string name="amount_rejected">Amount Rejected</string>
+    <string name="amount_rejected">राशि अस्वीकृत की गई</string>
     <string name="priceAmmount_one">₹50.00</string>
     <string name="strike_amount"><strike>₹50.00</strike></string>
     <string name="save_more_details">Save More Details?</string>

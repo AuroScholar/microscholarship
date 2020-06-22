@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.SdkCallBack;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
@@ -71,8 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.bt_sdk:
               //openTeacherSDK();
-               openGenricSDK();
-                //openScholarSpecificSdk();
+             //  openGenricSDK();
+                openScholarSpecificSdk();
                 hideKeyboard(this);
 
 
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareType(null);
         auroScholarDataModel.setShareIdentity(null);
         auroScholarDataModel.setActivity(this);
+        auroScholarDataModel.setSdkFragmentType(AppConstant.FragmentType.QUIZ_DASHBOARD);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         auroScholarDataModel.setSdkcallback(new SdkCallBack() {
             @Override

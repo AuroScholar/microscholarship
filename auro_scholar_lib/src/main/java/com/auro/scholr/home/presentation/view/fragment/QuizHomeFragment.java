@@ -456,12 +456,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             }
             reloadFragment();
         } else if (v.getId() == R.id.bt_upload_all) {
-            openFragment(new FriendsLeaderBoardFragment());
+            openFriendLeaderBoardFragment();
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
-
         } else if (v.getId() == R.id.bt_invite) {
-            openFragment(new FriendsLeaderBoardFragment());
+            openFriendLeaderBoardFragment();
         } else if (v.getId() == R.id.fab) {
             openChat();
             // openFragment(new TeacherProfileFragment());
@@ -472,6 +471,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             // openFragment(mfragment);
 
         }
+    }
+
+
+    private void openFriendLeaderBoardFragment() {
+        FriendsLeaderBoardFragment fragment = new FriendsLeaderBoardFragment();
+        openFragment(fragment);
     }
 
     private void reloadFragment() {

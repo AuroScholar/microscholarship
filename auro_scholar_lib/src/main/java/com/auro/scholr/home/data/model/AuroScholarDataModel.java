@@ -22,6 +22,7 @@ public class AuroScholarDataModel implements Parcelable {
     int sdkType;
     int sdkFragmentType;
 
+
     protected AuroScholarDataModel(Parcel in) {
         mobileNumber = in.readString();
         fragmentContainerUiId = in.readInt();

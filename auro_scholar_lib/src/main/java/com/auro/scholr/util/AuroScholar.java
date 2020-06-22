@@ -10,6 +10,7 @@ import com.auro.scholr.core.common.SdkCallBack;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
 
 public class AuroScholar {
@@ -25,12 +26,19 @@ public class AuroScholar {
         if (TextUtil.isEmpty(auroScholarDataModel.getRegitrationSource())) {
             auroScholarDataModel.setRegitrationSource("");
         }
-
-
         AuroApp.setAuroModel(auroScholarDataModel);
 
-        QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
-        return quizHomeFragment;
+
+        if (AuroApp.getAuroScholarModel() != null) {
+            switch (AuroApp.getAuroScholarModel().getSdkFragmentType()) {
+                case AppConstant.FragmentType.FRIENDS_LEADER_BOARD:
+                    return new FriendsLeaderBoardFragment();
+                default:
+                    return new QuizHomeFragment();
+            }
+        } else {
+            return new QuizHomeFragment();
+        }
     }
 
     /*For generic with PhoneNumber and class*/

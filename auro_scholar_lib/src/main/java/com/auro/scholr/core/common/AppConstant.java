@@ -35,13 +35,11 @@ public interface AppConstant {
     String HINDI = "हिंदी";
 
 
-    String COMING_FROM = "navigation_control";
-
+    String COMING_FROM = "COMING_FROM";
     int TERMS_CONDITION_TEXT = 109;
     int PRIVACY_POLICY_TEXT = 110;
     int SELECT_PROFILE_ACTIVITY = 111;
     public static final String PUSH_NOTIFICATION = "pushNotification";
-
     public static final int NOTIFICATION_ID = 100;
     public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
 
@@ -140,9 +138,9 @@ public interface AppConstant {
         String LANGUAGE = "language";
     }
 
-    interface ScreenType {
-        String QUIZ_DASHBOARD = "QUIZ_DASHBOARD";
-        String QUIZ_DASHBOARD_WEB = "QUIZ_DASHBOARD_WEB";
+    interface FragmentType {
+        int FRIENDS_LEADER_BOARD = 1;
+        int QUIZ_DASHBOARD = 0;
 
     }
 
@@ -213,4 +211,7 @@ public interface AppConstant {
         String NOTIFICATION_MESSAGE = "notification_message";
     }
 
+    interface Source {
+        String QUIZ_DASHBOARD_FRAGMENT="QUIZ_DASHBOARD_FRAGMENT";
+    }
 }

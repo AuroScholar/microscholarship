@@ -206,7 +206,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             //openFragment(new SendMoneyFragment());
             callNumber();
         } else if (v.getId() == R.id.wallet_info) {
-          //  openFragment(new TransactionsFragment());
+            openFragment(new TransactionsFragment());
         }
     }
 

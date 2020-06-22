@@ -129,7 +129,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             }
         }
         binding.cambridgeHeading.cambridgeHeading.setTextColor(getResources().getColor(R.color.white));
-
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
             setLanguageText(AppConstant.HINDI);
@@ -451,7 +450,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         } else if (v.getId() == R.id.bt_transfer_money) {
             openFragment(new SendMoneyFragment());
         } else if (v.getId() == R.id.wallet_info) {
-           // openFragment(new TransactionsFragment());
+            openFragment(new TransactionsFragment());
         }
 
     }
