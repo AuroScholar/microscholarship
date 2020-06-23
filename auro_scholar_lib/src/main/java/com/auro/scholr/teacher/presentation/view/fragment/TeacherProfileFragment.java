@@ -1,5 +1,7 @@
 package com.auro.scholr.teacher.presentation.view.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Handler;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
@@ -192,10 +196,47 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         binding.txtGetNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage(getString(R.string.sure_to_logout));
+
+                // Set the alert dialog yes button click listener
+                builder.setPositiveButton(Html.fromHtml("<font color='#00A1DB'>YES</font>"), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do something when user clicked the Yes button
+                        // Set the TextView visibility GONE
+                       // tv.setVisibility(View.GONE);
+
+                        if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
+                            dialog.dismiss();
+                            AuroApp.getAuroScholarModel().getSdkcallback().logOut();
+                            AppUtil.myClassRoomResModel = null;
+                        }
+
+                    }
+                });
+
+                // Set the alert dialog no button click listener
+                builder.setNegativeButton(Html.fromHtml("<font color='#00A1DB'>NO</font>"), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do something when No button clicked
+                        dialog.dismiss();
+                     /*   Toast.makeText(getApplicationContext(),
+                                "No Button Clicked",Toast.LENGTH_SHORT).show();*/
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                // Display the alert dialog on interface
+                dialog.show();
+
+
+
+               /* if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
                     AuroApp.getAuroScholarModel().getSdkcallback().logOut();
                     AppUtil.myClassRoomResModel = null;
-                }
+                }*/
                 //  openFragment(new TeacherKycFragment());
                 //  ((HomeActivity) getActivity()).selectNavigationMenu(2);
             }
@@ -233,8 +274,10 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == Status.UPDATE_TEACHER_PROFILE_API) {
                         handleProgress(1);
+                        showSnackbarError(getString(R.string.saved));
                     } else if (responseApi.apiTypeStatus == Status.GET_PROFILE_TEACHER_API) {
                         MyProfileResModel teacherResModel = (MyProfileResModel) responseApi.data;
+
                         if (teacherResModel != null) {
                             //  setModelinteacherprofile(teacherResModel);
                         } else {

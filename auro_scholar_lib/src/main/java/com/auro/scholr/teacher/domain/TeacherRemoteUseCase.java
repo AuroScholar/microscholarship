@@ -120,7 +120,6 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
             public ResponseApi apply(Response<JsonObject> response) throws Exception {
 
                 if (response != null) {
-
                     return handleResponse(response, Status.GET_TEACHER_DASHBOARD_API);
 
                 } else {

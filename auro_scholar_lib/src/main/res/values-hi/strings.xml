@@ -164,7 +164,7 @@
     <string name="select_your_message">Select Your Message</string>
     <string name="send_message">Send Message</string>
     <string name="default_message">Lorem ipsum is simply dummy text of the printing and typeseeting industry lorem ipsum</string>
-    <string name="total_points">TotalPoints:</string>
+    <string name="total_points">Total Points:</string>
     <string name="wallet_cash">Wallet Cash:</string>
     <string name="get_now">GET NOW</string>
     <string name="teacher_profile">Teacher Profile</string>
@@ -175,7 +175,7 @@
     <string name="city">City</string>
     <string name="choose_your_state">Choose Your State</string>
     <string name="choose_your_city">Choose Your City</string>
-    <string name="upload_govt_id">Upload Govt.ID</string>
+    <string name="upload_govt_id">Upload Govt Id Front side</string>
     <string name="upload_govt_id_back_side">Upload Govt.ID Back Side</string>
     <string name="upload_school_id">Upload School ID</string>
     <string name="upload_picture">Upload Picture</string>
@@ -186,6 +186,10 @@
     <string name="share_msg">Hey!\nI have just got Scholarship Cash on Scholr App, you can too!\nJust take a 10 min quiz and win.\nStart now - https://bit.ly/3en7pnQ</string>
     <string name="information">Information</string>
     <string name="friends_ke_bina_kya_fun">Friends ke bina kya fun!</string>
+    <string name="logout">Logout</string>
+    <string name="sure_to_logout">Are you sure you want to logout?</string>
+    <string name="saved">The changes were saved successfully</string>
+    <string name="successfully_send">Successfully Send!!</string>
 
     <string-array name="classes">
         <item>1st</item>

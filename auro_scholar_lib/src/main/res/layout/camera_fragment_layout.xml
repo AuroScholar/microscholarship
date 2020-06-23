@@ -125,6 +125,7 @@
                 android:id="@+id/flash_toggle"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
+                android:layout_centerInParent="true"
                 android:background="@drawable/cam_circle_selector"
                 android:padding="@dimen/_5sdp"
                 android:scaleType="fitXY"

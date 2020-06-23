@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -171,6 +172,7 @@ public class SelectYourMessageDialogFragment extends BaseDialog implements View.
                         if (teacherResModel.getError()) {
                             showSnackbarError("Something Went Wrong! While Sending Invitation");
                         }
+                       // showSnackbarError(getString(R.string.successfully_send));
                         handleProgress(1);
                     }
                     break;
@@ -205,9 +207,12 @@ public class SelectYourMessageDialogFragment extends BaseDialog implements View.
                 binding.progressBar.setVisibility(View.VISIBLE);
                 break;
             case 1:
-                dismiss();
+
+                showSnackbarError(getString(R.string.successfully_send));
                 binding.button.setVisibility(View.VISIBLE);
                 binding.progressBar.setVisibility(View.GONE);
+                dismiss();
+
                 break;
         }
     }

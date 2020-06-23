@@ -120,14 +120,17 @@
 
                     </LinearLayout>
 
+
                     <com.auro.scholr.core.util.uiwidget.RPTextView
                         android:id="@+id/txtGetNow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_8sdp"
                         android:layout_marginRight="@dimen/_8sdp"
-                        android:background="@drawable/ic_exit"
+
+                        android:drawablePadding="@dimen/_5sdp"
                         android:gravity="center"
+                        android:text="@string/logout"
                         android:textColor="@color/white"
                         android:visibility="visible"
                         app:Font="Poppins-Regular.ttf"
