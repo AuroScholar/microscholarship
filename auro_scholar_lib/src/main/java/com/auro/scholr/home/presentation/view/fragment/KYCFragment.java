@@ -125,7 +125,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         if (dashboardResModel != null) {
             setDataStepsOfVerifications();
             if (!TextUtil.isEmpty(dashboardResModel.getWalletbalance())) {
-                binding.walletBalText.setText(AuroApp.getAppContext().getResources().getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
+                // binding.walletBalText.setText(AuroApp.getAppContext().getResources().getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
+                binding.walletBalText.setText(AuroApp.getAppContext().getResources().getString(R.string.rs) + " " + kycViewModel.homeUseCase.getWalletBalance(dashboardResModel));
             }
         }
         binding.cambridgeHeading.cambridgeHeading.setTextColor(getResources().getColor(R.color.white));
@@ -450,9 +451,23 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         } else if (v.getId() == R.id.bt_transfer_money) {
             openFragment(new SendMoneyFragment());
         } else if (v.getId() == R.id.wallet_info) {
-            openFragment(new TransactionsFragment());
+            openTransactionFragment();
         }
 
+    }
+
+    private void openTransactionFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        TransactionsFragment fragment = new TransactionsFragment();
+        fragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(AuroApp.getFragmentContainerUiId(), fragment, QuizHomeFragment.class
+                        .getSimpleName())
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
     }
 
     private void reloadFragment() {

@@ -137,6 +137,18 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private UpgradeResModel upgradeResModel;
 
+    @SerializedName("unapproved_scholarship_money")
+    @Expose
+    private String unapproved_scholarship_money;
+
+    @SerializedName("disapproved_scholarship_money")
+    @Expose
+    private String disapproved_scholarship_money;
+
+    @SerializedName("approved_scholarship_money")
+    @Expose
+    private String approved_scholarship_money;
+
 
     protected DashboardResModel(Parcel in) {
         status = in.readString();
@@ -171,6 +183,9 @@ public class DashboardResModel implements Parcelable {
         is_payment_lastmonth = in.readString();
         is_block = in.readByte() != 0;
         upgradeResModel = in.readParcelable(UpgradeResModel.class.getClassLoader());
+        unapproved_scholarship_money = in.readString();
+        disapproved_scholarship_money = in.readString();
+        approved_scholarship_money = in.readString();
     }
 
     @Override
@@ -207,6 +222,9 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(is_payment_lastmonth);
         dest.writeByte((byte) (is_block ? 1 : 0));
         dest.writeParcelable(upgradeResModel, flags);
+        dest.writeString(unapproved_scholarship_money);
+        dest.writeString(disapproved_scholarship_money);
+        dest.writeString(approved_scholarship_money);
     }
 
     @Override
@@ -480,5 +498,29 @@ public class DashboardResModel implements Parcelable {
 
     public void setIs_block(boolean is_block) {
         this.is_block = is_block;
+    }
+
+    public String getApproved_scholarship_money() {
+        return approved_scholarship_money;
+    }
+
+    public void setApproved_scholarship_money(String approved_scholarship_money) {
+        this.approved_scholarship_money = approved_scholarship_money;
+    }
+
+    public String getDisapproved_scholarship_money() {
+        return disapproved_scholarship_money;
+    }
+
+    public void setDisapproved_scholarship_money(String disapproved_scholarship_money) {
+        this.disapproved_scholarship_money = disapproved_scholarship_money;
+    }
+
+    public String getUnapproved_scholarship_money() {
+        return unapproved_scholarship_money;
+    }
+
+    public void setUnapproved_scholarship_money(String unapproved_scholarship_money) {
+        this.unapproved_scholarship_money = unapproved_scholarship_money;
     }
 }

@@ -111,7 +111,8 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
     private void setDataOnUi() {
         if (dashboardResModel != null) {
             if (!TextUtil.isEmpty(dashboardResModel.getWalletbalance())) {
-                binding.walletBalText.setText(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
+                //binding.walletBalText.setText(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
+                binding.walletBalText.setText(getString(R.string.rs) + " " + kycViewModel.homeUseCase.getWalletBalance(dashboardResModel));
             }
             setDataStepsOfVerifications();
         }
@@ -206,9 +207,19 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             //openFragment(new SendMoneyFragment());
             callNumber();
         } else if (v.getId() == R.id.wallet_info) {
-            openFragment(new TransactionsFragment());
+            openTransactionFragment();
         }
     }
+
+
+    private void openTransactionFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        TransactionsFragment fragment = new TransactionsFragment();
+        fragment.setArguments(bundle);
+        openFragment(fragment);
+    }
+
 
     public void callNumber() {
         Intent callIntent = new Intent(Intent.ACTION_DIAL);
@@ -231,11 +242,12 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         KYCFragment kycFragment = new KYCFragment();
         bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
         kycFragment.setArguments(bundle);
+
+        getActivity().getSupportFragmentManager().popBackStack();
         openFragment(kycFragment);
     }
 
     private void openFragment(Fragment fragment) {
-        getActivity().getSupportFragmentManager().popBackStack();
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)

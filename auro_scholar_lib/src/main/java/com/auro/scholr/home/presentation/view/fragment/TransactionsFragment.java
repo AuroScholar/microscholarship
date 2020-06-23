@@ -24,6 +24,7 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.FragmentTransactionsBinding;
+import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
 import com.auro.scholr.home.presentation.view.adapter.MontlyWiseAdapter;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
@@ -45,6 +46,7 @@ public class TransactionsFragment extends BaseFragment implements View.OnClickLi
     TransactionsViewModel viewModel;
     MontlyWiseAdapter leaderBoardAdapter;
     Resources resources;
+    DashboardResModel dashboardResModel;
 
 
     public TransactionsFragment() {
@@ -85,6 +87,10 @@ public class TransactionsFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     protected void init() {
+
+        if (getArguments() != null) {
+            dashboardResModel = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
+        }
         setListener();
         setTransationsBoard();
 
@@ -94,6 +100,8 @@ public class TransactionsFragment extends BaseFragment implements View.OnClickLi
         } else {
             setLanguageText(AppConstant.ENGLISH);
         }
+
+        setData1OnUI();
     }
 
     @Override
@@ -126,8 +134,7 @@ public class TransactionsFragment extends BaseFragment implements View.OnClickLi
     public void onClick(View v) {
         if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
-        } else if(v.getId()==R.id.lang_eng)
-        {
+        } else if (v.getId() == R.id.lang_eng) {
             changeLanguage();
         }
     }
@@ -157,6 +164,27 @@ public class TransactionsFragment extends BaseFragment implements View.OnClickLi
             ft.setReorderingAllowed(false);
         }
         ft.detach(this).attach(this).commit();
+    }
+
+    private void setData1OnUI() {
+        String rs = getActivity().getResources().getString(R.string.rs);
+        if (dashboardResModel != null && !TextUtil.isEmpty(dashboardResModel.getApproved_scholarship_money())) {
+            binding.amountTrajection.txtAmountApproved.setText(rs + dashboardResModel.getApproved_scholarship_money());
+        } else {
+            binding.amountTrajection.txtAmountApproved.setText(rs + "0");
+        }
+
+        if (dashboardResModel != null && !TextUtil.isEmpty(dashboardResModel.getDisapproved_scholarship_money())) {
+            binding.amountTrajection.txtAmountRejected.setText(rs + dashboardResModel.getDisapproved_scholarship_money());
+        } else {
+            binding.amountTrajection.txtAmountRejected.setText(rs + "0");
+        }
+
+        if (dashboardResModel != null && !TextUtil.isEmpty(dashboardResModel.getUnapproved_scholarship_money())) {
+            binding.amountTrajection.txtAmountVerification.setText(rs + dashboardResModel.getUnapproved_scholarship_money());
+        } else {
+            binding.amountTrajection.txtAmountVerification.setText(rs + "0");
+        }
     }
 
 

@@ -34,7 +34,7 @@
                 android:orientation="vertical">
 
                 <com.auro.scholr.core.util.uiwidget.RPTextView
-                    android:id="@+id/txtAmountreject"
+                    android:id="@+id/titleAmountreject"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_height="wrap_content"
@@ -44,7 +44,8 @@
                     app:Font="Poppins-SemiBold.ttf" />
 
                 <com.auro.scholr.core.util.uiwidget.RPTextView
-                    android:layout_below="@+id/txtAmountreject"
+                    android:id="@+id/txtAmountRejected"
+                    android:layout_below="@+id/titleAmountreject"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
@@ -74,7 +75,7 @@
                 android:orientation="vertical">
 
                 <com.auro.scholr.core.util.uiwidget.RPTextView
-                    android:id="@+id/txtVerification"
+                    android:id="@+id/titleVerification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
@@ -85,13 +86,14 @@
                     app:Font="Poppins-SemiBold.ttf" />
 
                 <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/txtAmountVerification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:text="@string/priceAmmount"
                     android:textColor="@color/yellowdark"
-                    android:layout_below="@+id/txtVerification"
+                    android:layout_below="@+id/titleVerification"
                     android:textSize="@dimen/_16sdp"
                     android:textStyle="bold"
                     app:Font="Poppins-SemiBold.ttf" />
@@ -126,10 +128,10 @@
                     app:Font="Poppins-SemiBold.ttf" />
 
                 <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/txtAmountApproved"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-
                     android:layout_marginTop="@dimen/_14sdp"
                     android:text="@string/priceAmmount_one"
                     android:textColor="@color/auro_green_color"

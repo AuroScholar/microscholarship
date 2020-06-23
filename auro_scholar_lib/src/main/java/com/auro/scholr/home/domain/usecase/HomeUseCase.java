@@ -19,6 +19,7 @@ import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.MonthlyScholarShipModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.Text;
@@ -384,6 +385,7 @@ public class HomeUseCase {
         }
         return false;
     }
+
     public List<MonthlyScholarShipModel> makeListForMonthlyScholarShip() {
 
         List<MonthlyScholarShipModel> list = new ArrayList<>();
@@ -405,6 +407,15 @@ public class HomeUseCase {
     }
 
 
+    public String getWalletBalance(DashboardResModel resModel) {
+        if (resModel != null && !TextUtil.isEmpty(resModel.getApproved_scholarship_money()) && !TextUtil.isEmpty(resModel.getUnapproved_scholarship_money())) {
+            int approved = ConversionUtil.INSTANCE.convertStringToInteger(resModel.getApproved_scholarship_money());
+            int inprogressAmount = ConversionUtil.INSTANCE.convertStringToInteger(resModel.getUnapproved_scholarship_money());
+            int totalAmount = approved + inprogressAmount;
+            return String.valueOf(totalAmount);
+        }
+        return "0";
+    }
 
 
 }
