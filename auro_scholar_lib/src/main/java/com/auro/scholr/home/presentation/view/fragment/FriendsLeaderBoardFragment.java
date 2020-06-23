@@ -87,6 +87,12 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
 
     @Override
     protected void init() {
+
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null && TextUtil.isEmpty(prefModel.getUserLanguage())) {
+            ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
+        }
+
         setListener();
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
         setDataUi();

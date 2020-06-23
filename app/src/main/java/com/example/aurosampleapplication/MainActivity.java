@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareType(null);
         auroScholarDataModel.setShareIdentity(null);
         auroScholarDataModel.setActivity(this);
-        auroScholarDataModel.setSdkFragmentType(AppConstant.FragmentType.QUIZ_DASHBOARD);
+        auroScholarDataModel.setSdkFragmentType(AppConstant.FragmentType.FRIENDS_LEADER_BOARD);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         auroScholarDataModel.setSdkcallback(new SdkCallBack() {
             @Override
@@ -126,8 +126,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
-
-
     }
 
     private void openTeacherSDK() {
