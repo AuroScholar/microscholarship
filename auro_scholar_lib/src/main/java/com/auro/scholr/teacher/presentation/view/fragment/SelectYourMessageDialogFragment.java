@@ -211,7 +211,16 @@ public class SelectYourMessageDialogFragment extends BaseDialog implements View.
                 showSnackbarError(getString(R.string.successfully_send));
                 binding.button.setVisibility(View.VISIBLE);
                 binding.progressBar.setVisibility(View.GONE);
-                dismiss();
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                       dismiss();
+                    }
+                }, 3000);
+
+
+
 
                 break;
         }
