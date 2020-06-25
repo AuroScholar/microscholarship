@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openTeacherSDK() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber("7503600686");
+        auroScholarDataModel.setMobileNumber("8178307851");
         auroScholarDataModel.setStudentClass("6");
         auroScholarDataModel.setScholrId("880426");
         auroScholarDataModel.setRegitrationSource("AuroScholr");
