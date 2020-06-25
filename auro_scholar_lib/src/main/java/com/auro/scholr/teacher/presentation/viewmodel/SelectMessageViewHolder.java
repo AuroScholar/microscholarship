@@ -31,7 +31,7 @@ public class SelectMessageViewHolder extends RecyclerView.ViewHolder {
             binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.circle_outline));
 
         }
-        binding.checkIcon.setOnClickListener(new View.OnClickListener() {
+        binding.llayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (commonCallBackListner != null) {

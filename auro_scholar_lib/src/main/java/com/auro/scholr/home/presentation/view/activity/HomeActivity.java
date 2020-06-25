@@ -124,6 +124,11 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
         return R.layout.activity_dashboard;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+    }
 
     private void setLightStatusBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

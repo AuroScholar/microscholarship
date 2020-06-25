@@ -174,7 +174,7 @@
     <string name="select_your_message">Select Your Message</string>
     <string name="send_message">Send Message</string>
     <string name="default_message">Lorem ipsum is simply dummy text of the printing and typeseeting industry lorem ipsum</string>
-    <string name="total_points">TotalPoints :</string>
+    <string name="total_points">Total Points :</string>
     <string name="wallet_cash">Wallet Cash :</string>
     <string name="get_now">GET NOW</string>
     <string name="teacher_profile">Teacher Profile</string>
@@ -185,7 +185,7 @@
     <string name="city">City</string>
     <string name="choose_your_state">Choose Your State</string>
     <string name="choose_your_city">Choose Your City</string>
-    <string name="upload_govt_id">Upload Govt.ID</string>
+    <string name="upload_govt_id">Upload Govt Id Front side</string>
     <string name="upload_govt_id_back_side">Upload Govt.ID Back Side</string>
     <string name="upload_school_id">Upload School ID</string>
     <string name="upload_picture">Upload Picture</string>
@@ -200,6 +200,10 @@
     <string name="teacher_share_msg">Hi, I have just referred you to get Scholarship  on Scholr App! \nTake quiz and get Scholarship Certificate every month. \nDownload App -</string>
     <string name="invite_friend_refrral">Ek Vishesh Nimantran! Scholr App par mujhase juden, doston ko challenge karein aur roz Scholarship &amp; Certificates paayein!\n Click to Install App - ></string>
     <string name="challenge_msg">just challenged you in a quiz! Can you beat their score?</string>
+    <string name="logout">Logout</string>
+    <string name="saved">The changes were saved successfully</string>
+    <string name="successfully_send">Successfully Send!!</string>
+    <string name="sure_to_logout">Are you sure you want to logout?</string>
 
 
     <string-array name="classes">
