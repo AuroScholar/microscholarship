@@ -6,6 +6,7 @@
     <string name="default_error">Unable to connect. Please try after sometime.</string>
     <string name="no_data_found">No data available</string>
 
+
     <!--Crop image string -->
     <string name="crop_image_activity_title"></string>
     <string name="crop_image_menu_rotate_left">Rotate counter clockwise</string>

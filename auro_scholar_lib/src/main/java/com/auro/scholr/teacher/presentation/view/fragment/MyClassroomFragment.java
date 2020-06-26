@@ -42,6 +42,10 @@ import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.gson.Gson;
 
 
@@ -66,6 +70,8 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     MyClassRoomResModel myClassRoomResModel;
     List<MonthDataModel> monthDataModelList;
     MyClassroomAdapter leaderBoardAdapter;
+    private CallbackManager callbackManager;
+    ShareDialog shareDialog;
 
 
     @Override
@@ -108,8 +114,21 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         setDataOnUi();
         // viewModel.getTeacherProfileData("7503600686");
 
+        shareDialog = new ShareDialog(this);
+
         viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
 
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Initialize facebook SDK.
+        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
+
+        // Create a callbackManager to handle the login responses.
+        callbackManager = CallbackManager.Factory.create();
     }
 
     private void setDataOnUi() {
@@ -371,6 +390,16 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                     shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                     shareIntent.setComponent(name);
                     AuroApp.getAppContext().startActivity(shareIntent);
+                    break;
+                }else {
+                    ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                            .setQuote(urlToShare.replace("- https://bit.ly/3b1puWr",""))
+                            .setContentUrl(Uri.parse(" https://bit.ly/3b1puWr"))
+                            .build();
+
+                    if(ShareDialog.canShow(ShareLinkContent.class)){
+                        shareDialog.show(linkContent);
+                    }
                     break;
                 }
             }

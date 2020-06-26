@@ -3,9 +3,14 @@ package com.auro.scholr.home.presentation.view.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -39,11 +44,16 @@ import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.ViewUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
 public class HomeActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
+
+    private  String TAG = HomeActivity.class.getSimpleName().toString();;
     @Inject
     HomeRemoteApi remoteApi;
 
@@ -63,7 +73,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
     public static final int TEACHER_KYC_FRAGMENT = 05;
     public static final int TEACHER_DASHBOARD_FRAGMENT = 06;
     public static final int TEACHER_PROFILE_FRAGMENT = 07;
-    private String TAG = HomeActivity.class.getSimpleName();
+
     String memberType;
     CommonCallBackListner commonCallBackListner;
     public static int screenHeight = 0;
@@ -109,10 +119,9 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
-
+       // printHashKey(this);
         setHomeFragmentTab();
     }
-
 
     @Override
     protected void setListener() {
@@ -256,6 +265,21 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
 
     }
 
+    public  void printHashKey(Activity context) {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String hashKey = new String(Base64.encode(md.digest(), 0));
+                Log.i(TAG, "printHashKey() Hash Key: " + hashKey);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "printHashKey()", e);
+        } catch (Exception e) {
+            Log.e(TAG, "printHashKey()", e);
+        }
+    }
 
 
 

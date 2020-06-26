@@ -219,9 +219,6 @@ public class SelectYourMessageDialogFragment extends BaseDialog implements View.
                     }
                 }, 3000);
 
-
-
-
                 break;
         }
     }
