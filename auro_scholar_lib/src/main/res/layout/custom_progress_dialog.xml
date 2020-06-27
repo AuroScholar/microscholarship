@@ -39,8 +39,8 @@
                 android:id="@+id/cp_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
                 android:layout_gravity="center"
+                android:background="@android:color/transparent"
                 android:gravity="center">
 
                 <ProgressBar
@@ -48,11 +48,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
                     android:layout_gravity="center"
-                    android:indeterminate="true"
-                    android:indeterminateTintMode="src_atop"
-                    android:indeterminateTint="@color/white"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/white"
+                    android:indeterminateTintMode="src_atop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -62,18 +62,42 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_15sdp"
-                    android:textAlignment="center"
                     android:gravity="center"
                     android:text="Calculating your Score..."
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
                     android:textSize="@dimen/_14sdp"
                     app:Font="Poppins-Regular.ttf"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintTop_toBottomOf="@+id/cp_pbar"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cp_pbar" />
+
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/cp_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/bg_white"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_20sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_20sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="Retry"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/holo_blue_light"
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="gone"
+                    app:Font="Poppins-Regular.ttf"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cp_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

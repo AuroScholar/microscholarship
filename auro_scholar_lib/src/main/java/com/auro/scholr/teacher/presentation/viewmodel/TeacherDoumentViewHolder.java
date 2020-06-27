@@ -29,6 +29,8 @@ public class TeacherDoumentViewHolder extends RecyclerView.ViewHolder {
             binding.txtFileName.setVisibility(View.VISIBLE);
             binding.txtFileName.setText(model.getDocumentFileName());
             binding.docImg.setOnClickListener(null);
+        } else {
+            binding.txtFileName.setVisibility(View.GONE);
         }
         if (model.isModify()) {
             binding.docImg.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_auro_check));

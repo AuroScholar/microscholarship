@@ -2,6 +2,8 @@ package com.auro.scholr.teacher.presentation.view.fragment;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -35,12 +37,15 @@ import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.alert_dialog.CustomDialogModel;
+import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 import com.auro.scholr.util.cropper.CropImageViews;
 import com.auro.scholr.util.cropper.CropImages;
 
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -60,6 +65,7 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
     Uri resultUri;
     ArrayList<KYCDocumentDatamodel> kycDocumentDatamodelArrayList;
     TeacherKycDocumentAdapter mteacherKycDocumentAdapter;
+    CustomProgressDialog customProgressDialog;
 
     public TeacherKycFragment() {
         // Required empty public constructor
@@ -122,7 +128,8 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
 
                 case LOADING:
                     if (responseApi.apiTypeStatus == Status.TEACHER_KYC_API) {
-                        handleProgress(0);
+                        // handleProgress(0);
+                        openProgressDialog();
                     }
 
                     break;
@@ -137,7 +144,7 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
                         }
                         handleProgress(1);
                         uploadBtnStatus = false;
-
+                        closeDialog();
 
                     }
                     break;
@@ -148,13 +155,14 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
                         handleProgress(1);
                         showSnackbarError((String) responseApi.data);
                     }
+                    updateDialogUi();
                     break;
 
 
                 default:
                     handleProgress(1);
                     showSnackbarError(getString(R.string.default_error));
-
+                    updateDialogUi();
 
                     break;
             }
@@ -211,9 +219,8 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
         binding.rvDoucumentUpload.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvDoucumentUpload.setHasFixedSize(true);
         binding.rvDoucumentUpload.setNestedScrollingEnabled(false);
-        mteacherKycDocumentAdapter = new TeacherKycDocumentAdapter(viewModel.teacherUseCase.makeAdapterDocumentList(), this);
+        mteacherKycDocumentAdapter = new TeacherKycDocumentAdapter(kycDocumentDatamodelArrayList, this);
         binding.rvDoucumentUpload.setAdapter(mteacherKycDocumentAdapter);
-
         int count = 0;
         for (KYCDocumentDatamodel kycDocumentDatamodel : kycDocumentDatamodelArrayList) {
             if (kycDocumentDatamodel.isModify()) {
@@ -329,6 +336,7 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
             InputStream is = AuroApp.getAppContext().getApplicationContext().getContentResolver().openInputStream(Uri.fromFile(file));
             kycDocumentDatamodelArrayList.get(pos).setImageBytes(viewModel.teacherUseCase.getBytes(is));
             mteacherKycDocumentAdapter.updateList(kycDocumentDatamodelArrayList);
+            uploadAllDocApi();
         } catch (Exception e) {
             /*Do code here when error occur*/
         }
@@ -349,4 +357,45 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
         viewModel.teacherKYCUpload(kycDocumentDatamodelArrayList);
     }
 
+
+    private void openProgressDialog() {
+        if (customProgressDialog != null && customProgressDialog.isShowing()) {
+            return;
+        }
+        CustomDialogModel customDialogModel = new CustomDialogModel();
+        customDialogModel.setContext(getActivity());
+        customDialogModel.setTitle("Uploading...");
+        customDialogModel.setTwoButtonRequired(true);
+        customProgressDialog = new CustomProgressDialog(customDialogModel);
+        Objects.requireNonNull(customProgressDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        customProgressDialog.setCancelable(false);
+        customProgressDialog.setCallcack(new CustomProgressDialog.ButtonClickCallback() {
+            @Override
+            public void retryCallback() {
+                uploadAllDocApi();
+                customProgressDialog.updateUI(1);
+            }
+
+            @Override
+            public void closeCallback() {
+                kycDocumentDatamodelArrayList.get(pos).setDocumentFileName(getActivity().getResources().getString(R.string.no_file_chosen));
+                mteacherKycDocumentAdapter.updateList(kycDocumentDatamodelArrayList);
+            }
+        });
+        customProgressDialog.show();
+    }
+
+
+    public void updateDialogUi() {
+        if (customProgressDialog != null) {
+            customProgressDialog.updateUI(0);
+        }
+
+    }
+
+    public void closeDialog() {
+        if (customProgressDialog != null) {
+            customProgressDialog.dismiss();
+        }
+    }
 }

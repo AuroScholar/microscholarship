@@ -546,7 +546,7 @@ public class QuizTestFragment extends BaseFragment {
     private void openProgressDialog() {
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(getActivity());
-        customDialogModel.setTitle("Quiz Instructions");
+        customDialogModel.setTitle("Calculating Your Score");
         customDialogModel.setContent(getActivity().getResources().getString(R.string.bullted_list));
         customDialogModel.setTwoButtonRequired(false);
         customProgressDialog = new CustomProgressDialog(customDialogModel);
