@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.encryption.Cryptor;
 import com.example.aurosampleapplication.databinding.ActivityMainBinding;
 
+import java.lang.reflect.Field;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String secret = "5d41402abc4b2a76b9719d911017c592";
         String tt = new Cryptor().HMAC_SHA256(secret, jsonString);
         //  AppLogger.e("chhonker",tt);
+        printDeviceInfo();
     }
 
     public static void printHashKey(Context pContext) {
@@ -71,9 +74,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-              openTeacherSDK();
-             //  openGenricSDK();
-               // openScholarSpecificSdk();
+                //   openTeacherSDK();
+                openGenricSDK();
+                //openScholarSpecificSdk();
                 hideKeyboard(this);
 
 
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareType(null);
         auroScholarDataModel.setShareIdentity(null);
         auroScholarDataModel.setActivity(this);
-        auroScholarDataModel.setSdkFragmentType(AppConstant.FragmentType.FRIENDS_LEADER_BOARD);
+        auroScholarDataModel.setSdkFragmentType(AppConstant.FragmentType.QUIZ_DASHBOARD);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         auroScholarDataModel.setSdkcallback(new SdkCallBack() {
             @Override
@@ -154,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         AuroScholar.startTeacherSDK(auroScholarDataModel);
-     //   openFragment(AuroScholar.startAuroSDK(inputModel));
+        //   openFragment(AuroScholar.startAuroSDK(inputModel));
     }
 
     private void openGenricSDK() {
@@ -188,5 +191,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
+    private void printDeviceInfo() {
+        Log.i("chhonker", "SERIAL: " + Build.SERIAL);
+        Log.i("chhonker", "MODEL: " + Build.MODEL);
+        Log.i("chhonker", "ID: " + Build.ID);
+        Log.i("chhonker", "Manufacture: " + Build.MANUFACTURER);
+        Log.i("chhonker", "brand: " + Build.BRAND);
+        Log.i("chhonker", "type: " + Build.TYPE);
+        Log.i("chhonker", "user: " + Build.USER);
+        Log.i("chhonker", "BASE: " + Build.VERSION_CODES.BASE);
+        Log.i("chhonker", "INCREMENTAL " + Build.VERSION.INCREMENTAL);
+        Log.i("chhonker", "SDK  " + Build.VERSION.SDK);
+        Log.i("chhonker", "BOARD: " + Build.BOARD);
+        Log.i("chhonker", "BRAND " + Build.BRAND);
+        Log.i("chhonker", "HOST " + Build.HOST);
+        Log.i("chhonker", "FINGERPRINT: " + Build.FINGERPRINT);
+        Log.i("chhonker", "Version Code: " + Build.VERSION.RELEASE);
+        Log.i("chhonker", "Version Name: " + getVersionName());
+    }
+
+    private String getVersionName() {
+        Field[] fields = Build.VERSION_CODES.class.getFields();
+        String codeName = "UNKNOWN";
+        for (Field field : fields) {
+            try {
+                if (field.getInt(Build.VERSION_CODES.class) == Build.VERSION.SDK_INT) {
+                    codeName = field.getName();
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return codeName;
+    }
 
 }
