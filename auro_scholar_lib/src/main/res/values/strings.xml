@@ -6,6 +6,7 @@
     <string name="default_error">Unable to connect. Please try after sometime.</string>
     <string name="no_data_found">No data available</string>
 
+
     <!--Crop image string -->
     <string name="crop_image_activity_title"></string>
     <string name="crop_image_menu_rotate_left">Rotate counter clockwise</string>
@@ -127,8 +128,8 @@
     <string name="invite">Invite</string>
 
     <!--Facebook Integration-->
-    <string name="facebook_app_id">224597028845837</string>
-    <string name="fb_login_protocol_scheme">fb224597028845837</string>
+    <string name="facebook_app_id">1614821145461747</string>
+    <string name="fb_login_protocol_scheme">fb1614821145461747</string>
     <string name="friends_leadeboard">Friends \nLeaderboard</string>
 
     <string name="name">Name</string>

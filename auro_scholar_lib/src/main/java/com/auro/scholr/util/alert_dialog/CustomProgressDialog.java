@@ -66,6 +66,7 @@ public class CustomProgressDialog extends Dialog {
 
     public interface ButtonClickCallback {
         void retryCallback();
+
         void closeCallback();
     }
 
@@ -84,6 +85,18 @@ public class CustomProgressDialog extends Dialog {
                 setTitle("Uploading Failed!");
                 break;
             case 1:
+                customKycDialogBinding.cpPbar.setVisibility(View.VISIBLE);
+                customKycDialogBinding.closeButton.setVisibility(View.GONE);
+                customKycDialogBinding.buttonLayout.setVisibility(View.GONE);
+                setTitle(customDialogModel.getTitle());
+                break;
+        }
+
+    }
+
+    public void updateDataUi(int status) {
+        switch (status) {
+            case 0:
                 customKycDialogBinding.cpPbar.setVisibility(View.VISIBLE);
                 customKycDialogBinding.closeButton.setVisibility(View.GONE);
                 customKycDialogBinding.buttonLayout.setVisibility(View.GONE);

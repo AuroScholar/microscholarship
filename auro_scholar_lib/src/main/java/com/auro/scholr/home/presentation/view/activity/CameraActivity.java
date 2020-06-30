@@ -9,7 +9,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +26,8 @@ import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.CameraFragmentLayoutBinding;
 import com.auro.scholr.home.presentation.view.fragment.CameraFragment;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.alert_dialog.CustomDialogModel;
+import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 import com.auro.scholr.util.camera.CameraOverlay;
 import com.auro.scholr.util.camera.FaceOverlayGraphics;
 import com.auro.scholr.util.permission.PermissionHandler;
@@ -63,6 +67,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -88,6 +93,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     CameraFragmentLayoutBinding binding;
     public static boolean status;
     private boolean safeToTakePicture = true;
+    CustomProgressDialog customProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -225,9 +231,9 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             flashIsAvailable();
 
         } else if (v.getId() == R.id.stillshot) {
-            if (safeToTakePicture){
+            if (safeToTakePicture) {
                 clickPicture();
-                safeToTakePicture= false;
+                safeToTakePicture = false;
             }
 
         }
@@ -293,8 +299,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void clickPicture() {
-
-        binding.loadingSpinner.setVisibility(View.VISIBLE);
+        openProgressDialog();
+        binding.loadingSpinner.setVisibility(View.GONE);
         mCameraSource.takePicture(null, new CameraSource.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] bytes) {
@@ -344,6 +350,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
                                     new Consumer<String>() {
                                         @Override
                                         public void accept(String path) throws Exception {
+                                            closeDialog();
                                             Intent intent = new Intent();
                                             intent.putExtra(AppConstant.PROFILE_IMAGE_PATH, path);
                                             setResult(Activity.RESULT_OK, intent);
@@ -512,4 +519,26 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         stopCamera();
     }
 
+
+    private void openProgressDialog() {
+        if (customProgressDialog != null && customProgressDialog.isShowing()) {
+            return;
+        }
+        CustomDialogModel customDialogModel = new CustomDialogModel();
+        customDialogModel.setContext(this);
+        customDialogModel.setTitle("Processing...");
+        customDialogModel.setTwoButtonRequired(true);
+        customProgressDialog = new CustomProgressDialog(customDialogModel);
+        Objects.requireNonNull(customProgressDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        customProgressDialog.setCancelable(false);
+        customProgressDialog.show();
+        customProgressDialog.updateDataUi(0);
+    }
+
+
+    public void closeDialog() {
+        if (customProgressDialog != null) {
+            customProgressDialog.dismiss();
+        }
+    }
 }

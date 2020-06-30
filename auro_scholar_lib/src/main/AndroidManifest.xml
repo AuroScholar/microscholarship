@@ -17,6 +17,8 @@
         android:required="true" />
 
     <application>
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <activity
             android:name=".home.presentation.view.activity.CameraActivity"
             android:label="@string/title_activity_camera"
@@ -32,6 +34,12 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+
+
+        <provider android:authorities="com.facebook.app.FacebookContentProvider1614821145461747"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
         <!--
  <meta-data
              android:name="com.google.android.geo.API_KEY"
