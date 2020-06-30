@@ -37,7 +37,7 @@
 
 
 
-        <provider android:authorities="com.facebook.app.FacebookContentProvider224597028845837"
+        <provider android:authorities="com.facebook.app.FacebookContentProvider1614821145461747"
             android:name="com.facebook.FacebookContentProvider"
             android:exported="true"/>
         <!--

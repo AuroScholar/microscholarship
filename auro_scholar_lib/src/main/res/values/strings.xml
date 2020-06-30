@@ -128,8 +128,8 @@
     <string name="invite">Invite</string>
 
     <!--Facebook Integration-->
-    <string name="facebook_app_id">224597028845837</string>
-    <string name="fb_login_protocol_scheme">fb224597028845837</string>
+    <string name="facebook_app_id">1614821145461747</string>
+    <string name="fb_login_protocol_scheme">fb1614821145461747</string>
     <string name="friends_leadeboard">Friends \nLeaderboard</string>
 
     <string name="name">Name</string>

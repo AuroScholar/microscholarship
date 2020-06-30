@@ -71,9 +71,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-              openTeacherSDK();
+
+                openTeacherSDK();
              //  openGenricSDK();
-               // openScholarSpecificSdk();
+             //   openScholarSpecificSdk();
                 hideKeyboard(this);
 
 
