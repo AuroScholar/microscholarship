@@ -9,28 +9,30 @@
         android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/bt_sdk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/color_red"
-                android:padding="10dp"
-                android:text="@string/start_sdk"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/white"
-              />
+        <TextView
+            android:id="@+id/bt_sdk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/color_red"
+            android:padding="10dp"
+            android:text="Student SDK"
+            android:textColor="@color/white" />
 
-            <TextView
-                android:id="@+id/bt_open"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:background="@color/color_red"
-                android:padding="10dp"
-                android:text="@string/start_sdk"
-                android:textColor="@color/white"
-                android:visibility="gone" />
+        <TextView
+            android:id="@+id/bt_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_sdk"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/color_red"
+            android:padding="10dp"
+            android:text="Teacher SDk"
+            android:textColor="@color/white"
+            android:visibility="visible" />
 
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout

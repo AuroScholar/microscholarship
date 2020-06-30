@@ -45,6 +45,7 @@
                 android:layout_height="0dp"
                 android:background="@android:color/transparent"
                 android:clipToPadding="false"
+                android:overScrollMode="never"
                 android:paddingBottom="@dimen/_10sdp"
                 app:layout_constraintBottom_toTopOf="@+id/custom_ui_snackbar"
                 app:layout_constraintTop_toBottomOf="@+id/header_top_parent">
@@ -100,6 +101,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/tooltip_layout"
                             android:layout_marginTop="@dimen/_13sdp"
+                            android:overScrollMode="never"
                             android:background="@android:color/transparent"
                             app:layout_constraintTop_toBottomOf="@+id/tooltip_layout" />
 

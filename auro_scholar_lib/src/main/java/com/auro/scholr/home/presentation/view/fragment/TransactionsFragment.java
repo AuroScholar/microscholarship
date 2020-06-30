@@ -111,7 +111,7 @@ public class TransactionsFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     protected void setListener() {
-        binding.headerParent.cambridgeHeading.setVisibility(View.GONE);
+        binding.headerParent.cambridgeHeading.setVisibility(View.VISIBLE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
     }

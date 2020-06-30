@@ -74,16 +74,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-                  // openTeacherSDK();
                 openGenricSDK();
                 //openScholarSpecificSdk();
-
                 hideKeyboard(this);
 
 
                 break;
             case R.id.bt_open:
-                openFragment(new SampleFragment());
+                openTeacherSDK();
                 break;
 
         }
@@ -96,8 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         View view = ((AppCompatActivity) context).getCurrentFocus();
         if (view != null) {
-            ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).
-                    hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 

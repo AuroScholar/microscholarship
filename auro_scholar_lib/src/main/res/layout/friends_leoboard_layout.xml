@@ -34,6 +34,7 @@
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:overScrollMode="never"
                 android:background="@android:color/transparent"
                 android:clipToPadding="false"
                 android:paddingBottom="@dimen/_10sdp"

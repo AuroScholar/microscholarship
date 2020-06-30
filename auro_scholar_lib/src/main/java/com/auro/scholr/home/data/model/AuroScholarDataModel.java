@@ -21,7 +21,7 @@ public class AuroScholarDataModel implements Parcelable {
     SdkCallBack sdkcallback;
     int sdkType;
     int sdkFragmentType;
-
+    boolean isEmailVerified;
 
     protected AuroScholarDataModel(Parcel in) {
         mobileNumber = in.readString();
@@ -34,6 +34,7 @@ public class AuroScholarDataModel implements Parcelable {
         referralLink = in.readString();
         sdkType = in.readInt();
         sdkFragmentType = in.readInt();
+        isEmailVerified = in.readByte() != 0;
     }
 
     @Override
@@ -48,6 +49,7 @@ public class AuroScholarDataModel implements Parcelable {
         dest.writeString(referralLink);
         dest.writeInt(sdkType);
         dest.writeInt(sdkFragmentType);
+        dest.writeByte((byte) (isEmailVerified ? 1 : 0));
     }
 
     @Override
@@ -66,6 +68,14 @@ public class AuroScholarDataModel implements Parcelable {
             return new AuroScholarDataModel[size];
         }
     };
+
+    public boolean isEmailVerified() {
+        return isEmailVerified;
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        isEmailVerified = emailVerified;
+    }
 
     public int getSdkType() {
         return sdkType;
