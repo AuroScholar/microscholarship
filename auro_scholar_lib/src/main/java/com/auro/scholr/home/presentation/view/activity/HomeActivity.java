@@ -185,7 +185,6 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
     private synchronized void backStack() {
 
         switch (LISTING_ACTIVE_FRAGMENT) {
-
             case TEACHER_DASHBOARD_FRAGMENT:
             case TEACHER_KYC_FRAGMENT:
             case TEACHER_PROFILE_FRAGMENT:
@@ -195,7 +194,6 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
             case KYC_FRAGMENT:
                 popBackStack();
                 break;
-
             default:
                 popBackStack();
                 break;

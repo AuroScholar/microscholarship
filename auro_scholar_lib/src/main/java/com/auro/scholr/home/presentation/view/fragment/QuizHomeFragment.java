@@ -685,6 +685,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
 
+
     private void openErrorDialog() {
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(getActivity());
@@ -719,22 +720,22 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 resources.getString(R.string.text2_random_chalange_your_friends),
                 resources.getDimension(R.dimen._4sdp),
                 resources.getString(R.string.button1_random),
-                resources.getDimension(R.dimen._2sdp));
+                resources.getDimension(R.dimen._3sdp));
         RandomInviteFriendsDataModel  model3 = new RandomInviteFriendsDataModel(
                 resources.getString(R.string.text3_random_double_the),
                 resources.getDimension(R.dimen._4sdp),
                 resources.getString(R.string.button2_random),
-                resources.getDimension(R.dimen._2sdp));
+                resources.getDimension(R.dimen._3sdp));
         RandomInviteFriendsDataModel  model4 = new RandomInviteFriendsDataModel(
                 resources.getString(R.string.text4_random_learning),
-                resources.getDimension(R.dimen._4sdp),
+                resources.getDimension(R.dimen._3sdp),
                 resources.getString(R.string.button2_random),
-                resources.getDimension(R.dimen._2sdp));
+                resources.getDimension(R.dimen._3sdp));
         RandomInviteFriendsDataModel  model5 = new RandomInviteFriendsDataModel(
                 resources.getString(R.string.text5_random_multiply),
                 resources.getDimension(R.dimen._4sdp),
                 resources.getString(R.string.button1_random),
-                resources.getDimension(R.dimen._2sdp));
+                resources.getDimension(R.dimen._3sdp));
 
         list = new ArrayList<>();
         list.add(model);
