@@ -1,0 +1,39 @@
+[1mdiff --git a/auro_scholar_lib/src/main/java/com/auro/scholr/home/presentation/view/fragment/FriendsLeaderBoardFragment.java b/auro_scholar_lib/src/main/java/com/auro/scholr/home/presentation/view/fragment/FriendsLeaderBoardFragment.java[m
+[1mindex 1162bf4..f31fcd9 100644[m
+[1m--- a/auro_scholar_lib/src/main/java/com/auro/scholr/home/presentation/view/fragment/FriendsLeaderBoardFragment.java[m
+[1m+++ b/auro_scholar_lib/src/main/java/com/auro/scholr/home/presentation/view/fragment/FriendsLeaderBoardFragment.java[m
+[36m@@ -408,8 +408,6 @@[m [mpublic class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC[m
+             }[m
+             leaderBoardAdapter.setDataList(resModel.getFriends());[m
+         }[m
+[31m-[m
+[31m-[m
+     }[m
+ }[m
+ [m
+[1mdiff --git a/auro_scholar_lib/src/main/java/com/auro/scholr/home/presentation/view/fragment/KYCViewFragment.java b/auro_scholar_lib/src/main/java/com/auro/scholr/home/presentation/view/fragment/KYCViewFragment.java[m
+[1mindex dec8e59..2e9dce6 100644[m
+[1m--- a/auro_scholar_lib/src/main/java/com/auro/scholr/home/presentation/view/fragment/KYCViewFragment.java[m
+[1m+++ b/auro_scholar_lib/src/main/java/com/auro/scholr/home/presentation/view/fragment/KYCViewFragment.java[m
+[36m@@ -7,6 +7,7 @@[m [mimport android.net.Uri;[m
+ import android.os.Build;[m
+ import android.os.Bundle;[m
+ import android.view.Gravity;[m
+[32m+[m[32mimport android.view.KeyEvent;[m
+ import android.view.LayoutInflater;[m
+ import android.view.View;[m
+ import android.view.ViewGroup;[m
+[1mdiff --git a/auro_scholar_lib/src/main/java/com/auro/scholr/teacher/presentation/view/fragment/TeacherKycFragment.java b/auro_scholar_lib/src/main/java/com/auro/scholr/teacher/presentation/view/fragment/TeacherKycFragment.java[m
+[1mindex 7a317b1..64ffbb0 100644[m
+[1m--- a/auro_scholar_lib/src/main/java/com/auro/scholr/teacher/presentation/view/fragment/TeacherKycFragment.java[m
+[1m+++ b/auro_scholar_lib/src/main/java/com/auro/scholr/teacher/presentation/view/fragment/TeacherKycFragment.java[m
+[36m@@ -359,9 +359,6 @@[m [mpublic class TeacherKycFragment extends BaseFragment implements CommonCallBackLi[m
+ [m
+ [m
+     private void openProgressDialog() {[m
+[31m-        if (customProgressDialog != null && customProgressDialog.isShowing()) {[m
+[31m-            return;[m
+[31m-        }[m
+         CustomDialogModel customDialogModel = new CustomDialogModel();[m
+         customDialogModel.setContext(getActivity());[m
+         customDialogModel.setTitle("Uploading...");[m
