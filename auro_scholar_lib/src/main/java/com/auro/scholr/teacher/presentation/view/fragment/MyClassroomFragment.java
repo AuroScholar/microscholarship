@@ -160,6 +160,9 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             });
             int year = DateUtil.getcurrentYearNumber();
             int month = DateUtil.getcurrentMonthNumber();
+            if (month != 0) {
+                month = month - 1;
+            }
             for (int i = 0; i < monthDataModelList.size(); i++) {
                 MonthDataModel model = monthDataModelList.get(i);
                 if (year == model.getYear() && month == model.getMonthNumber()) {
@@ -391,13 +394,13 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                     shareIntent.setComponent(name);
                     AuroApp.getAppContext().startActivity(shareIntent);
                     break;
-                }else {
+                } else {
                     ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                            .setQuote(urlToShare.replace("- https://bit.ly/3b1puWr",""))
+                            .setQuote(urlToShare.replace("- https://bit.ly/3b1puWr", ""))
                             .setContentUrl(Uri.parse(" https://bit.ly/3b1puWr"))
                             .build();
 
-                    if(ShareDialog.canShow(ShareLinkContent.class)){
+                    if (ShareDialog.canShow(ShareLinkContent.class)) {
                         shareDialog.show(linkContent);
                     }
                     break;

@@ -25,6 +25,7 @@ import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AuroScholar;
+import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.encryption.Cryptor;
 import com.example.aurosampleapplication.databinding.ActivityMainBinding;
 
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-               //penGenricSDK();
+                //penGenricSDK();
                 openScholarSpecificSdk();
                 hideKeyboard(this);
 
@@ -225,4 +226,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return codeName;
     }
 
+    @Override
+    public void onBackPressed() {
+        ViewUtil.showSnackBar(binding.getRoot(), "Press again to close Auro Scholar app");
+    }
 }
