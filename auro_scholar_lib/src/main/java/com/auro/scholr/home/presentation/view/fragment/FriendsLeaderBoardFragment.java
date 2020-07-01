@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -293,6 +294,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     @Override
     public void onResume() {
         super.onResume();
+        setKeyListner();
     }
 
 
@@ -408,8 +410,22 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
             }
             leaderBoardAdapter.setDataList(resModel.getFriends());
         }
+    }
 
 
+    private void setKeyListner() {
+        this.getView().setFocusableInTouchMode(true);
+        this.getView().requestFocus();
+        this.getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    getActivity().getSupportFragmentManager().popBackStack();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }
 
