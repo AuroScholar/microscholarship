@@ -191,6 +191,16 @@
     <string name="saved">The changes were saved successfully</string>
     <string name="successfully_send">Successfully Send!!</string>
 
+
+
+  <!--  <string name="text1_random">जितना ज़्यादा उतना अच्छा</string>
+    <string name="text2_random_chalange_your_friends">प्रश्नोत्तरी लेने के लिए अपने दोस्तों को चुनौती!</string>
+    <string name="text3_random_double_the">मज़ा दोगुना। पुरस्कार दोगुना करें।</string>
+    <string name="text4_random_learning">सीखना मजेदार है, लेकिन साथ में सीखना और भी फायदेमंद है!</string>
+    <string name="text5_random_multiply">अपने पुरस्कारों को गुणा करें और अपने दुखों को विभाजित करें!</string>
+    <string name="button1_random">Invite Your Friends</string>
+    <string name="button2_random">Challenge Your Friends</string>-->
+
     <string-array name="classes">
         <item>1st</item>
         <item>7th </item>
