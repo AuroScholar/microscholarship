@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setSdkFragmentType(AppConstant.FragmentType.QUIZ_DASHBOARD);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
+        auroScholarDataModel.setEmailVerified(true);
         auroScholarDataModel.setSdkcallback(new SdkCallBack() {
             @Override
             public void callBack(String message) {
