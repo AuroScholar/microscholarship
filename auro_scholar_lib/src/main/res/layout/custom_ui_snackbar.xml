@@ -8,12 +8,13 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical">
+
         <ImageView
             android:id="@+id/gifview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/parent_layout"
             android:layout_alignTop="@+id/parent_layout"
+            android:layout_alignBottom="@+id/parent_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -26,34 +27,31 @@
             android:orientation="vertical">
 
 
-
             <ImageView
                 android:id="@+id/leader_card_layout"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:background="@drawable/oval_background"
                 android:elevation="@dimen/_5sdp"
+                android:src="@drawable/ic_leaderboard_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/ic_leaderboard_icon"
-                android:background="@drawable/oval_background" />
-
-
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
                 android:id="@+id/kycMsg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
                 android:paddingStart="@dimen/_10sdp"
                 android:text="@string/challenge_your_friends"
                 android:textColor="@color/black"
-                android:padding="@dimen/_5sdp"
                 app:Font="Poppins-SemiBold.ttf"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/bt_invite"
+                app:layout_constraintEnd_toStartOf="@+id/bt_invite_layout"
                 app:layout_constraintStart_toEndOf="@+id/leader_card_layout"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,25 +79,37 @@
 
             </RelativeLayout>
 
-            <com.auro.scholr.core.util.uiwidget.RPTextView
-                android:id="@+id/bt_invite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:layout_margin="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:gravity="center"
-                android:text="@string/invite"
-                android:textColor="@color/white"
-                android:visibility="visible"
-                app:Font="Poppins-Regular.ttf"
-                android:background="@drawable/button_bg_orange"
 
+            <RelativeLayout
+                android:id="@+id/bt_invite_layout"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/bt_invite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:background="@drawable/button_bg_orange"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/invite"
+                    android:textColor="@color/white"
+                    android:visibility="visible"
+                    app:Font="Poppins-Regular.ttf"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </RelativeLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
