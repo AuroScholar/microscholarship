@@ -51,6 +51,7 @@ import com.auro.scholr.teacher.presentation.viewmodel.TeacherProfileViewModel;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.firebase.FirebaseEventUtil;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -81,6 +82,8 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
     ProfileScreenAdapter mProfileSubjectAdapter;
     String stateCode = "";
     String districtCode = "";
+    FirebaseEventUtil firebaseEventUtil;
+    Map<String,String> logparam;
 /*    String subject = "English, Maths, Social Science, Science,";
     String classes = "4th, 8th, 10th, 3rd, 9th, 7th, 2nd,";
 
@@ -144,6 +147,9 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
     @Override
     protected void init() {
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
+        firebaseEventUtil = new FirebaseEventUtil(getContext());
+        logparam = new HashMap<>();
+
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
             viewModel.serviceLiveData().removeObservers(this);
         } else {
@@ -244,6 +250,8 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                logparam.put(getResources().getString(R.string.log_save_profile_btn_teacher),"true");
+                firebaseEventUtil.logEvent(getResources().getString(R.string.log_save_profile_teacher),logparam);
                 callSaveTeacherProfileApi();
             }
         });
@@ -274,6 +282,8 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == Status.UPDATE_TEACHER_PROFILE_API) {
                         handleProgress(1);
+                        logparam.put(getResources().getString(R.string.log_save_profile_api_teacher),"true");
+                        firebaseEventUtil.logEvent(getResources().getString(R.string.log_save_profile_teacher),logparam);
                         showSnackbarError(getString(R.string.saved));
                     } else if (responseApi.apiTypeStatus == Status.GET_PROFILE_TEACHER_API) {
                         MyProfileResModel teacherResModel = (MyProfileResModel) responseApi.data;

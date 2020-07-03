@@ -212,7 +212,27 @@
     <string name="text5_random_multiply">Multiply your rewards and divide your sorrows!</string>
     <string name="button1_random">Invite Your Friends</string>
     <string name="button2_random">Challenge Your Friends</string>
-
+    <string name="log_save_profile_teacher">save_profile_log_teacher</string>
+    <string name="log_save_profile_api_teacher">save_profile_api_teacher</string>
+    <string name="log_save_profile_btn_teacher">save_profile_btn_teacher</string>
+    <string name="log_send_message_teacher">send_message_teacher</string>
+    <string name="log_send_message_log_teacher">send_message_log_teacher</string>
+    <string name="log_facebook_teacher">facebook_teacher</string>
+    <string name="log_share_links_teacher">share_links_teacher</string>
+    <string name="log_whatapplink_teacher">whatapplink_teacher</string>
+    <string name="log_link_teacher">link_teacher</string>
+    <string name="log_click_on_whatapp_student">click_on_whatapp_student</string>
+    <string name="log_quiz_home_fragment_student">quiz_home_fragment_student</string>
+    <string name="log_start_quiz">start_quiz_student</string>
+    <string name="log_click_add_kyc_student">click_add_kyc_student</string>
+    <string name="log_friend_leader_board_student">friend_leader_board_student</string>
+    <string name="log_invite_button">invite_student</string>
+    <string name="log_get_referal_link_bydynamic_teacher">get_referal_link_bydynamic_teacher</string>
+    <string name="log_get_referal_link_byscolor_teacher">get_referal_link_byscolor_teacher</string>
+    <string name="tutorial_link">Please click here to invite your students &amp;\n track scholarship results</string>
+    <string name="skip">Skip</string>
+    <string name="tutorial_profile">Please click here to complete your profile</string>
+    <string name="tutorial_kyc">Please click here to upload your KYC details</string>
 
     <string-array name="classes">
         <item>1st</item>

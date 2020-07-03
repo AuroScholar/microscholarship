@@ -11,16 +11,19 @@ import java.util.Map;
 public class FirebaseEventUtil {
 
     private FirebaseAnalytics mObjFirebaseAnalytics;
+    Bundle bundle;
+
+    public FirebaseEventUtil(Context context) {
+        mObjFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        bundle = new Bundle();
+    }
 
 
-    public void logEvent(Context context, String pStrEventName, Map<String,String> detailsList) {
+    public void logEvent(String pStrEventName, Map<String,String> detailsList) {
 
         try {
 
-            mObjFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
 
-
-            Bundle bundle = new Bundle();
 
             for (Map.Entry<String,String> eventDetails: detailsList.entrySet()){
                 Log.e("EventDetails",eventDetails.getKey()+ " ====" +eventDetails.getValue());

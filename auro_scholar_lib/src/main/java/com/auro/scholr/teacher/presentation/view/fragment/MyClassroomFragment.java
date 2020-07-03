@@ -13,9 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
@@ -38,24 +41,29 @@ import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.MyClassroomAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
 import com.auro.scholr.util.AppUtil;
-import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.firebase.FirebaseEventUtil;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
-import com.google.gson.Gson;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import me.toptas.fancyshowcase.FancyShowCaseQueue;
+import me.toptas.fancyshowcase.FancyShowCaseView;
+import me.toptas.fancyshowcase.FocusShape;
+import me.toptas.fancyshowcase.listener.OnViewInflateListener;
 
 
 public class MyClassroomFragment extends BaseFragment implements CommonCallBackListner, View.OnClickListener {
@@ -72,6 +80,13 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     MyClassroomAdapter leaderBoardAdapter;
     private CallbackManager callbackManager;
     ShareDialog shareDialog;
+    private FirebaseEventUtil mFirebaseAnalytics;
+    Map<String,String> logeventparam ;
+    FancyShowCaseView btnfacebook;
+    FancyShowCaseQueue queue;
+    BottomNavigationView toolbar;
+    FancyShowCaseView btnprofile;
+    FancyShowCaseView btnKycapp;
 
 
     @Override
@@ -91,6 +106,8 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         AuroApp.getAppComponent().doInjection(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MyClassroomViewModel.class);
         binding.setLifecycleOwner(this);
+
+
         setRetainInstance(true);
         return binding.getRoot();
     }
@@ -106,6 +123,10 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     @Override
     protected void init() {
         HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_DASHBOARD_FRAGMENT);
+        mFirebaseAnalytics = new FirebaseEventUtil(getContext());
+        logeventparam= new HashMap<>();
+
+
         List<String> list = new ArrayList<>();
         list.add("odd");
         list.add("even");
@@ -123,6 +144,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        toolbar = (BottomNavigationView) getActivity().findViewById(R.id.bottom_navigation);
 
         // Initialize facebook SDK.
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
@@ -226,6 +248,8 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     public void commonEventListner(CommonDataModel commonDataModel) {
         switch (commonDataModel.getClickType()) {
             case SEND_MESSAGE_CLICK:
+                logeventparam.put(getResources().getString(R.string.log_send_message_teacher),"true");
+                mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_send_message_log_teacher),logeventparam);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(AppConstant.SENDING_DATA.STUDENT_DATA, (MyClassRoomStudentResModel) commonDataModel.getObject());
                 SelectYourMessageDialogFragment fragment = new SelectYourMessageDialogFragment(); //where MyFragment is my fragment I want to show
@@ -264,8 +288,12 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         String completeLink = AuroApp.getAppContext().getResources().getString(R.string.teacher_share_msg);
         if (AuroApp.getAuroScholarModel() != null && !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getReferralLink())) {
             completeLink = completeLink + AuroApp.getAuroScholarModel().getReferralLink();
+            logeventparam.put(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"true");
+            mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
         } else {
             completeLink = completeLink + " https://bit.ly/3b1puWr";
+            logeventparam.put(getResources().getString(R.string.log_get_referal_link_bydynamic_teacher),"true");
+            mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
         }
 
         if (v.getId() == R.id.whatsapp) {
@@ -290,6 +318,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == Status.GET_TEACHER_DASHBOARD_API) {
+                        displayTutofacebook();
                         handleProgress(1, "");
                         myClassRoomResModel = (MyClassRoomResModel) responseApi.data;
                         AppUtil.myClassRoomResModel = myClassRoomResModel;
@@ -358,6 +387,9 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
 
     public void shareWithFriends(String link) {
+        logeventparam.put(getResources().getString(R.string.log_link_teacher),link);
+        mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
+
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, link);
@@ -368,6 +400,9 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
 
     private void sendWhatsapp(String message) {
+        logeventparam.put(getResources().getString(R.string.log_whatapplink_teacher),message);
+        mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
+
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, message);
@@ -380,6 +415,8 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
     private void shareAppLinkViaFacebook(String urlToShare) {
         try {
+            logeventparam.put(getResources().getString(R.string.log_facebook_teacher),urlToShare);
+            mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
             Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, urlToShare);
@@ -409,5 +446,63 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         } catch (Exception e) {
             shareWithFriends(urlToShare);
         }
+    }
+    protected void displayTutofacebook() {
+
+        queue =  new FancyShowCaseQueue();
+
+        btnfacebook = new FancyShowCaseView.Builder(getActivity())
+                .focusOn(binding.socialShareLayout)
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+                .customView(R.layout.tutorial_my_class_facebook_layout, new OnViewInflateListener() {
+                    @Override
+                    public void onViewInflated(View view) {
+                        setAnimatedContent(view, btnfacebook);
+                    }
+                })
+                .build();
+         btnprofile = new FancyShowCaseView.Builder(getActivity())
+                .focusOn(toolbar.findViewById(R.id.action_profile))
+                .focusShape(FocusShape.CIRCLE)
+                 .customView(R.layout.tutorial_my_class_facebook_layout, new OnViewInflateListener() {
+                     @Override
+                     public void onViewInflated(View view) {
+                         setAnimatedContent(view, btnprofile);
+                     }
+                 })
+                .build();
+        btnKycapp = new FancyShowCaseView.Builder(getActivity())
+                .focusOn(toolbar.findViewById(R.id.action_kyc))
+                .focusShape(FocusShape.CIRCLE)
+                .customView(R.layout.tutorial_my_class_facebook_layout, new OnViewInflateListener() {
+                    @Override
+                    public void onViewInflated(View view) {
+                        setAnimatedContent(view, btnKycapp);
+                    }
+                })
+                .build();
+        queue.add(btnfacebook);
+        queue.add(btnprofile);
+        queue.add(btnKycapp);
+        queue.show();
+    }
+    public void setAnimatedContent(View view,FancyShowCaseView fancyShowCaseView){
+        TextView link = view.findViewById(R.id.descFb);
+        TextView profile = view.findViewById(R.id.tutorial_profile);
+        TextView kyc =view.findViewById(R.id.tutorial_kyc);
+        if (fancyShowCaseView == btnfacebook) {
+            link.setVisibility(View.VISIBLE);
+            link.setText(getResources().getString(R.string.tutorial_link));
+        }else if(fancyShowCaseView == btnprofile){
+            link.setVisibility(View.GONE);
+            profile.setVisibility(View.VISIBLE);
+            profile.setText(getResources().getString(R.string.tutorial_profile));
+        }else if(fancyShowCaseView == btnKycapp){
+            link.setVisibility(View.GONE);
+            profile.setVisibility(View.GONE);
+            kyc.setVisibility(View.VISIBLE);
+            kyc.setText(getResources().getString(R.string.tutorial_kyc));
+        }
+
     }
 }

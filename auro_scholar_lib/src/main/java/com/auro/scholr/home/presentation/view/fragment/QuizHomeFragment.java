@@ -61,6 +61,7 @@ import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.alert_dialog.CustomSnackBar;
+import com.auro.scholr.util.firebase.FirebaseEventUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
@@ -71,7 +72,9 @@ import com.bumptech.glide.Glide;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
@@ -100,6 +103,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     AssignmentReqModel assignmentReqModel;
     CustomDialog customDialog;
     List<RandomInviteFriendsDataModel> list;
+    FirebaseEventUtil firebaseEventUtil;
+    Map<String,String> logparam;
 
 
     @Override
@@ -150,6 +155,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         if (getArguments() != null) {
             // mobileNumber = getArguments().getString(AppConstant.MOBILE_NUMBER);
         }
+        firebaseEventUtil = new FirebaseEventUtil(getContext());
+        logparam = new HashMap<>();
+
         if (quizViewModel != null && quizViewModel.serviceLiveData().hasObservers()) {
             quizViewModel.serviceLiveData().removeObservers(this);
 
@@ -367,6 +375,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     public void openQuizTestFragment(DashboardResModel dashboardResModel) {
         Bundle bundle = new Bundle();
+
         QuizTestFragment quizTestFragment = new QuizTestFragment();
         bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
         bundle.putParcelable(AppConstant.QUIZ_RES_MODEL, quizResModel);
@@ -388,6 +397,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     String path = data.getStringExtra(AppConstant.PROFILE_IMAGE_PATH);
                     azureImage(path);
                     openQuizTestFragment(dashboardResModel);
+                    logparam.put(getResources().getString(R.string.log_start_quiz),"true");
+                    firebaseEventUtil.logEvent(getResources().getString(R.string.log_quiz_home_fragment_student),logparam);
                     // loadImageFromStorage(path);
                 } catch (Exception e) {
 
@@ -445,6 +456,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         if (v.getId() == R.id.wallet_bal_text) {
             // openFragment(new TeacherProfileFragment());
             closeToolTip();
+            logparam.put(getResources().getString(R.string.log_click_add_kyc_student),"true");
+            firebaseEventUtil.logEvent(getResources().getString(R.string.log_start_quiz),logparam);
             if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
             } else {
@@ -680,6 +693,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void openChat() {
         Uri uri = Uri.parse("https://wa.me/919667480783");
+        logparam.put(getResources().getString(R.string.log_click_on_whatapp_student),"true");
+        firebaseEventUtil.logEvent(getResources().getString(R.string.log_quiz_home_fragment_student),logparam);
         Intent i = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(Intent.createChooser(i, ""));
     }

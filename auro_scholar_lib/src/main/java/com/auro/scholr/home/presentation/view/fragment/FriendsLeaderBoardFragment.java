@@ -36,6 +36,7 @@ import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel
 import com.auro.scholr.teacher.data.model.response.TeacherResModel;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.firebase.FirebaseEventUtil;
 import com.google.gson.Gson;
 
 import javax.inject.Inject;
@@ -43,6 +44,9 @@ import javax.inject.Named;
 
 
 import androidx.fragment.app.FragmentTransaction;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.auro.scholr.core.common.Status.INVITE_FRIENDS_LIST;
 import static com.auro.scholr.core.common.Status.SEND_INVITE_API;
@@ -65,6 +69,8 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     boolean isFriendList = true;
     Resources resources;
     boolean isStateRestore;
+    FirebaseEventUtil firebaseEventUtil;
+    Map<String,String> logparam;
 
     int itemPos;
 
@@ -93,6 +99,8 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         if (prefModel != null && TextUtil.isEmpty(prefModel.getUserLanguage())) {
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
         }
+        firebaseEventUtil = new FirebaseEventUtil(getContext());
+        logparam = new HashMap<>();
 
         setListener();
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
@@ -304,6 +312,9 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
             getActivity().getSupportFragmentManager().popBackStack();
             openFragment(new QuizHomeFragment());
         } else if (v.getId() == R.id.invite_button) {
+            logparam.put(getResources().getString(R.string.log_invite_button),"true");
+            firebaseEventUtil.logEvent(getResources().getString(R.string.log_friend_leader_board_student),logparam);
+
             openShareDefaultDialog();
            /* mInviteBoxDialog = new InviteFriendDialog(getContext());
             openFragmentDialog(mInviteBoxDialog);*/
@@ -320,6 +331,8 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
             }
             reloadFragment();
         } else if (v.getId() == R.id.invite_now) {
+            logparam.put(getResources().getString(R.string.log_invite_button),"true");
+            firebaseEventUtil.logEvent(getResources().getString(R.string.log_friend_leader_board_student),logparam);
             openShareDefaultDialog();
         }
     }
