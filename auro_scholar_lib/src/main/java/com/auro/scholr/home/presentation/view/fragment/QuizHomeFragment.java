@@ -46,6 +46,7 @@ import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.CustomSnackBarModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
+import com.auro.scholr.home.data.model.RandomInviteFriendsDataModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
@@ -72,6 +73,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -97,12 +99,14 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     boolean isStateRestore;
     AssignmentReqModel assignmentReqModel;
     CustomDialog customDialog;
+    List<RandomInviteFriendsDataModel> list;
 
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
+
 
 
     @Override
@@ -157,6 +161,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
     }
+
+
+
 
 
     @Override
@@ -222,7 +229,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.toolbarLayout.backArrow.setVisibility(View.GONE);
         binding.getScholarshipText.setText(resources.getText(R.string.get_scholarship));
         binding.headerTopParent.cambridgeHeading.setText(resources.getString(R.string.question_bank_powered_by_cambridge));
-        binding.customUiSnackbar.kycMsg.setText(resources.getString(R.string.challenge_your_friends));
+        randomlistforsnackbar();
+
         String lang = ViewUtil.getLanguage();
         if (lang.equalsIgnoreCase(AppConstant.LANGUAGE_EN) || TextUtil.isEmpty(lang)) {
             setLangOnUi(AppConstant.HINDI);
@@ -677,6 +685,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
 
+
     private void openErrorDialog() {
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(getActivity());
@@ -701,4 +710,49 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         customDialog.show();
 
     }
+    public void randomlistforsnackbar(){
+        RandomInviteFriendsDataModel  model = new RandomInviteFriendsDataModel(
+                resources.getString(R.string.text1_random),
+                resources.getDimension(R.dimen._4sdp),
+                resources.getString(R.string.button1_random),
+                resources.getDimension(R.dimen._3sdp));
+        RandomInviteFriendsDataModel  model2 = new RandomInviteFriendsDataModel(
+                resources.getString(R.string.text2_random_chalange_your_friends),
+                resources.getDimension(R.dimen._4sdp),
+                resources.getString(R.string.button1_random),
+                resources.getDimension(R.dimen._3sdp));
+        RandomInviteFriendsDataModel  model3 = new RandomInviteFriendsDataModel(
+                resources.getString(R.string.text3_random_double_the),
+                resources.getDimension(R.dimen._4sdp),
+                resources.getString(R.string.button2_random),
+                resources.getDimension(R.dimen._3sdp));
+        RandomInviteFriendsDataModel  model4 = new RandomInviteFriendsDataModel(
+                resources.getString(R.string.text4_random_learning),
+                resources.getDimension(R.dimen._3sdp),
+                resources.getString(R.string.button2_random),
+                resources.getDimension(R.dimen._3sdp));
+        RandomInviteFriendsDataModel  model5 = new RandomInviteFriendsDataModel(
+                resources.getString(R.string.text5_random_multiply),
+                resources.getDimension(R.dimen._4sdp),
+                resources.getString(R.string.button1_random),
+                resources.getDimension(R.dimen._3sdp));
+
+        list = new ArrayList<>();
+        list.add(model);
+        list.add(model2);
+        list.add(model3);
+        list.add(model4);
+        list.add(model5);
+
+        pickRandom();
+    }
+    public void pickRandom(){
+        Random rand = new Random();
+        RandomInviteFriendsDataModel randomElement = list.get(rand.nextInt(list.size()));
+        binding.customUiSnackbar.kycMsg.setText(randomElement.getTextTitle());
+        binding.customUiSnackbar.kycMsg.setTextSize(randomElement.getTextTitleSize());
+        binding.customUiSnackbar.btInvite.setText(randomElement.getButtonTitle());
+        binding.customUiSnackbar.btInvite.setTextSize(randomElement.getButtonSize());
+    }
+
 }

@@ -205,6 +205,13 @@
     <string name="saved">The changes were saved successfully</string>
     <string name="successfully_send">Successfully Send!!</string>
     <string name="sure_to_logout">Are you sure you want to logout?</string>
+    <string name="text1_random">The more, the merrier</string>
+    <string name="text2_random_chalange_your_friends">Challenge Your Friends To Take The Quiz!</string>
+    <string name="text3_random_double_the">Double the fun. Double the Award.</string>
+    <string name="text4_random_learning">Learning is fun, but learning together is even more rewarding!</string>
+    <string name="text5_random_multiply">Multiply your rewards and divide your sorrows!</string>
+    <string name="button1_random">Invite Your Friends</string>
+    <string name="button2_random">Challenge Your Friends</string>
 
 
     <string-array name="classes">
