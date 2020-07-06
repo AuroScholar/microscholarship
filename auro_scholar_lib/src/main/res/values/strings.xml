@@ -228,7 +228,7 @@
     <string name="log_friend_leader_board_student">friend_leader_board_student</string>
     <string name="log_invite_button">invite_student</string>
     <string name="log_get_referal_link_bydynamic_teacher">get_referal_link_bydynamic_teacher</string>
-    <string name="log_get_referal_link_byscolor_teacher">get_referal_link_byscolor_teacher</string>
+    <string name="log_get_referal_link_byscolor_teacher">get_referal_link_scholar_teacher</string>
     <string name="tutorial_link">Please click here to invite your students &amp; track scholarship results</string>
     <string name="skip">Skip</string>
     <string name="tutorial_profile">Please click here to complete your profile</string>

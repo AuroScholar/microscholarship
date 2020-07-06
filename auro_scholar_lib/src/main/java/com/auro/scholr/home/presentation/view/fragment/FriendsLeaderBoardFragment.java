@@ -314,7 +314,6 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         } else if (v.getId() == R.id.invite_button) {
             logparam.put(getResources().getString(R.string.log_invite_button),"true");
             firebaseEventUtil.logEvent(getResources().getString(R.string.log_friend_leader_board_student),logparam);
-
             openShareDefaultDialog();
            /* mInviteBoxDialog = new InviteFriendDialog(getContext());
             openFragmentDialog(mInviteBoxDialog);*/

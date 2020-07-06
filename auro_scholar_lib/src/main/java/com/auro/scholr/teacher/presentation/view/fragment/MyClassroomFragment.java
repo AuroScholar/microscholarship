@@ -295,7 +295,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
         } else {
             completeLink = completeLink + " https://bit.ly/3b1puWr";
-            logeventparam.put(getResources().getString(R.string.log_get_referal_link_bydynamic_teacher),"true");
+            logeventparam.put(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"false");
             mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
         }
         if (v.getId() == R.id.whatsapp) {
