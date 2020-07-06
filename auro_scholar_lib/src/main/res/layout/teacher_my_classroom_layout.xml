@@ -63,19 +63,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.auro.scholr.core.util.uiwidget.RPTextView
-                        android:id="@+id/txt_invite_student"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:text="Invite Students With"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12sdp"
-                        app:Font="Poppins-SemiBold.ttf"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_myclassroom" />
-                    <RelativeLayout
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/social_share_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -83,15 +72,32 @@
                         android:paddingLeft="@dimen/_20sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_invite_student">
+                        app:layout_constraintTop_toBottomOf="@+id/txt_myclassroom">
 
-                        <LinearLayout
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/txt_invite_student"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_20sdp"
-                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:text="Invite Students With"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            app:Font="Poppins-SemiBold.ttf"
+                            app:layout_constraintBottom_toTopOf="@+id/lllinks"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <LinearLayout
+                            android:id="@+id/lllinks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                           >
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent">
 
 
                             <ImageView
@@ -116,7 +122,7 @@
                                 android:padding="@dimen/_5sdp"
                                 android:src="@drawable/ic_auro_share" />
                         </LinearLayout>
-                    </RelativeLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
