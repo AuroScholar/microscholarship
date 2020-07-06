@@ -11,6 +11,8 @@ import java.util.Map;
 public class FirebaseEventUtil {
 
     private FirebaseAnalytics mObjFirebaseAnalytics;
+
+    private static boolean enableLogger = false;
     Bundle bundle;
 
     public FirebaseEventUtil(Context context) {
@@ -21,38 +23,39 @@ public class FirebaseEventUtil {
 
     public void logEvent(String pStrEventName, Map<String,String> detailsList) {
 
-        try {
-
-
-
-            for (Map.Entry<String,String> eventDetails: detailsList.entrySet()){
-                Log.e("EventDetails",eventDetails.getKey()+ " ====" +eventDetails.getValue());
-                if(isNumeric( eventDetails.getValue())) {
-                    int lIntVal = convertToNumber(eventDetails.getValue());
-                    if(lIntVal!=-1){
-                        bundle.putInt(eventDetails.getKey(),lIntVal);
+        if(enableLogger){
+            try {
+                for (Map.Entry<String,String> eventDetails: detailsList.entrySet()){
+                    Log.e("EventDetails",eventDetails.getKey()+ " ====" +eventDetails.getValue());
+                    if(isNumeric( eventDetails.getValue())) {
+                        int lIntVal = convertToNumber(eventDetails.getValue());
+                        if(lIntVal!=-1){
+                            bundle.putInt(eventDetails.getKey(),lIntVal);
+                        }
+                        else {
+                            bundle.putString(eventDetails.getKey(), eventDetails.getValue());
+                        }
                     }
                     else {
                         bundle.putString(eventDetails.getKey(), eventDetails.getValue());
                     }
                 }
-                else {
-                    bundle.putString(eventDetails.getKey(), eventDetails.getValue());
-                }
+
+                mObjFirebaseAnalytics.logEvent(pStrEventName, bundle);
+
+                mObjFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
+
+                mObjFirebaseAnalytics.setMinimumSessionDuration(20000);
+
+                mObjFirebaseAnalytics.setSessionTimeoutDuration(500);
+
+            }catch (Exception e){
+                e.printStackTrace();
+
             }
-
-            mObjFirebaseAnalytics.logEvent(pStrEventName, bundle);
-
-            mObjFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
-
-            mObjFirebaseAnalytics.setMinimumSessionDuration(20000);
-
-            mObjFirebaseAnalytics.setSessionTimeoutDuration(500);
-
-        }catch (Exception e){
-
-
         }
+
+
     }
 
     private int convertToNumber(String pValue){

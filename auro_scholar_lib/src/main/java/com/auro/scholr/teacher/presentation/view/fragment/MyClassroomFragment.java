@@ -97,8 +97,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         super.onAttach(context);
 
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (binding != null) {
@@ -114,15 +112,12 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         setRetainInstance(true);
         return binding.getRoot();
     }
-
     public void setAdapter(List<MyClassRoomStudentResModel> resModelList) {
         binding.studentList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.studentList.setHasFixedSize(true);
         leaderBoardAdapter = new MyClassroomAdapter(getActivity(), resModelList, this);
         binding.studentList.setAdapter(leaderBoardAdapter);
     }
-
-
     @Override
     protected void init() {
         HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_DASHBOARD_FRAGMENT);
@@ -143,7 +138,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
 
     }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,11 +149,9 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         // Create a callbackManager to handle the login responses.
         callbackManager = CallbackManager.Factory.create();
     }
-
     private void setDataOnUi() {
 
     }
-
     private void monthSpinner() {
         String date = "";
         if (myClassRoomResModel != null && myClassRoomResModel.getTeacherResModel() != null && !TextUtil.isEmpty(myClassRoomResModel.getTeacherResModel().getRegistrationDate())) {
@@ -198,18 +190,10 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
 
     }
-
-
-    private void setLanguageText(String text) {
-        // binding.toolbarLayout.langEng.setText(text);
-    }
-
-
     @Override
     protected void setToolbar() {
         /*Do code here*/
     }
-
     @Override
     protected void setListener() {
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
@@ -221,14 +205,10 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         binding.whatsapp.setOnClickListener(this);
         binding.share.setOnClickListener(this);
     }
-
-
     @Override
     protected int getLayout() {
         return R.layout.teacher_my_classroom_layout;
     }
-
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -238,15 +218,11 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
 
     }
-
-
     @Override
     public void onResume() {
         super.onResume();
 
     }
-
-
     @Override
     public void commonEventListner(CommonDataModel commonDataModel) {
         switch (commonDataModel.getClickType()) {
@@ -265,7 +241,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                 break;
         }
     }
-
     private void reloadFragment() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         if (Build.VERSION.SDK_INT >= 26) {
@@ -273,19 +248,15 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         }
         ft.detach(this).attach(this).commit();
     }
-
-
     @Override
     public void onStop() {
         super.onStop();
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
 
     }
-
     @Override
     public void onClick(View v) {
         String completeLink = AuroApp.getAppContext().getResources().getString(R.string.teacher_share_msg);
@@ -307,7 +278,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             shareWithFriends(completeLink);
         }
     }
-
     private void observeServiceResponse() {
 
         viewModel.serviceLiveData().observeForever(responseApi -> {
@@ -356,7 +326,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
         });
     }
-
     private void handleProgress(int status, String message) {
         switch (status) {
             case 0:
@@ -389,12 +358,9 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         }
 
     }
-
     private void showSnackbarError(String message) {
         ViewUtil.showSnackBar(binding.getRoot(), message);
     }
-
-
     public void shareWithFriends(String link) {
         logeventparam.put(getResources().getString(R.string.log_link_teacher),link);
         mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
@@ -406,8 +372,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         AuroApp.getAppContext().startActivity(shareIntent);
     }
-
-
     private void sendWhatsapp(String message) {
         logeventparam.put(getResources().getString(R.string.log_whatapplink_teacher),message);
         mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
@@ -421,7 +385,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             startActivity(sendIntent);
         }
     }
-
     private void shareAppLinkViaFacebook(String urlToShare) {
         try {
             logeventparam.put(getResources().getString(R.string.log_facebook_teacher),urlToShare);
