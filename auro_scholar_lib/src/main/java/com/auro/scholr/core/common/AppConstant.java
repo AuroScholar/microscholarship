@@ -60,6 +60,7 @@ public interface AppConstant {
         String IS_KYC_UPLOADED = "is_kyc_uploaded";
         String IS_KYC_VERIFIED = "is_kyc_verified";
         String IS_PAYMENT_LASTMONTH = "is_payment_lastmonth";
+        String IS_EMAIL_VERIFIED = "email_verified";
     }
 
 
@@ -212,6 +213,6 @@ public interface AppConstant {
     }
 
     interface Source {
-        String QUIZ_DASHBOARD_FRAGMENT="QUIZ_DASHBOARD_FRAGMENT";
+        String QUIZ_DASHBOARD_FRAGMENT = "QUIZ_DASHBOARD_FRAGMENT";
     }
 }

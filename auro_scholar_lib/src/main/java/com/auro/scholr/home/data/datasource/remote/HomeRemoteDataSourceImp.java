@@ -50,6 +50,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
             params.put(AppConstant.DashBoardParams.REGISTRATION_SOURCE, model.getRegitrationSource());
             params.put(AppConstant.DashBoardParams.SHARE_TYPE, model.getShareType());
             params.put(AppConstant.DashBoardParams.SHARE_IDENTITY, model.getShareIdentity());
+            params.put(AppConstant.DashBoardParams.IS_EMAIL_VERIFIED, "" + model.isEmailVerified());
             AppLogger.e("HomeRemoteDataSourceImp", "Calling  Scholar SDK");
             return homeRemoteApi.getDashboardData(params);
         }
