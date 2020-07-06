@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,8 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.TeacherMyClassroomLayoutBinding;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.teacher.data.model.common.MonthDataModel;
@@ -318,7 +321,13 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == Status.GET_TEACHER_DASHBOARD_API) {
-                        displayTutofacebook();
+
+                        boolean getTutorial = AppPref.INSTANCE.getBooleanTutorial(getResources().getString(R.string.pref_tutorial));
+                        if (getTutorial) {
+                            AppPref.INSTANCE.setBooleanTutorial(getResources().getString(R.string.pref_tutorial),false);
+                            displayTutofacebook();
+                        }
+
                         handleProgress(1, "");
                         myClassRoomResModel = (MyClassRoomResModel) responseApi.data;
                         AppUtil.myClassRoomResModel = myClassRoomResModel;
@@ -451,6 +460,10 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
         queue =  new FancyShowCaseQueue();
 
+        int[] viewLocation = new int[2];
+        binding.socialShareLayout.getLocationOnScreen(viewLocation);
+
+
         btnfacebook = new FancyShowCaseView.Builder(getActivity())
                 .focusOn(binding.socialShareLayout)
                 .focusShape(FocusShape.ROUNDED_RECTANGLE)
@@ -490,16 +503,26 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         TextView link = view.findViewById(R.id.descFb);
         TextView profile = view.findViewById(R.id.tutorial_profile);
         TextView kyc =view.findViewById(R.id.tutorial_kyc);
+        LinearLayout layoutinvite = view.findViewById(R.id.llayoutinvite);
+        LinearLayout layoutprofile = view.findViewById(R.id.layoutProfile);
+        LinearLayout layoutkyc = view.findViewById(R.id.layoutkyc);
         if (fancyShowCaseView == btnfacebook) {
             link.setVisibility(View.VISIBLE);
+            layoutinvite.setVisibility(View.VISIBLE);
             link.setText(getResources().getString(R.string.tutorial_link));
         }else if(fancyShowCaseView == btnprofile){
             link.setVisibility(View.GONE);
             profile.setVisibility(View.VISIBLE);
+            layoutprofile.setVisibility(View.VISIBLE);
+            layoutinvite.setVisibility(View.GONE);
             profile.setText(getResources().getString(R.string.tutorial_profile));
         }else if(fancyShowCaseView == btnKycapp){
             link.setVisibility(View.GONE);
             profile.setVisibility(View.GONE);
+            layoutprofile.setVisibility(View.VISIBLE);
+            layoutprofile.setVisibility(View.GONE);
+            layoutinvite.setVisibility(View.GONE);
+            layoutkyc.setVisibility(View.VISIBLE);
             kyc.setVisibility(View.VISIBLE);
             kyc.setText(getResources().getString(R.string.tutorial_kyc));
         }

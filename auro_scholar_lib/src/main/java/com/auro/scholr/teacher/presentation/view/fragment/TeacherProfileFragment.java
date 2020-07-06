@@ -2,6 +2,7 @@ package com.auro.scholr.teacher.presentation.view.fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -284,7 +285,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                         handleProgress(1);
                         logparam.put(getResources().getString(R.string.log_save_profile_api_teacher),"true");
                         firebaseEventUtil.logEvent(getResources().getString(R.string.log_save_profile_teacher),logparam);
-                        showSnackbarError(getString(R.string.saved));
+                        showSnackbarError(getString(R.string.saved), Color.parseColor("#4bd964"));
                     } else if (responseApi.apiTypeStatus == Status.GET_PROFILE_TEACHER_API) {
                         MyProfileResModel teacherResModel = (MyProfileResModel) responseApi.data;
 
@@ -340,6 +341,9 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
 
     private void showSnackbarError(String message) {
         ViewUtil.showSnackBar(binding.getRoot(), message);
+    }
+    private void showSnackbarError(String message,int color) {
+        ViewUtil.showSnackBar(binding.getRoot(), message,color);
     }
 
     private void stateSpinner(String state) {

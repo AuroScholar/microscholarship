@@ -68,6 +68,14 @@ public enum AppPref {
         sharedPreferenceEditor.putString(key, value).apply();
     }
 
+    public void setBooleanTutorial(String key,boolean tutorial){
+        sharedPreferenceEditor = AuroApp.getAppContext().getSharedPreferences(PreferenceName, Context.MODE_PRIVATE).edit();
+        sharedPreferenceEditor.putBoolean(key, tutorial).apply();
+    }
+    public boolean getBooleanTutorial(String key){
+        sharedPreferences = AuroApp.getAppContext().getSharedPreferences(PreferenceName, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(key, true);
+    }
 
     public String getPrefStringValueNotNull(String key) {
 

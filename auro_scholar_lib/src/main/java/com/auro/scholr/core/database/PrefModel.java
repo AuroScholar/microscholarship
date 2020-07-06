@@ -11,6 +11,7 @@ public class PrefModel implements Serializable {
 
     private String userKYCProfilePhotoPath;
     private String userLanguage;
+
     private AssignmentReqModel assignmentReqModel;
     private boolean tooltipStatus;
     private List<AssignmentReqModel> listAzureImageList = new ArrayList<>();
@@ -30,6 +31,8 @@ public class PrefModel implements Serializable {
     public void setUserLanguage(String userLanguage) {
         this.userLanguage = userLanguage;
     }
+
+
 
     public String getUserKYCProfilePhotoPath() {
         return userKYCProfilePhotoPath;
