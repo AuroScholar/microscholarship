@@ -111,6 +111,17 @@ public class ViewUtil {
         snackView = ErrorSnackbar.showSnackbar(rootLayout, snackTitle);
     }
 
+    public static void showSnackBar(View rootLayout, String snackTitle,int color) {
+
+        if (rootLayout == null) {
+            return;
+        }
+        if (rootLayout.getParent() == null) {
+            return ;
+        }
+        snackView = ErrorSnackbar.showSnackbar(rootLayout, snackTitle,color);
+    }
+
     public static void dismissSnackBar() {
         if (snackView != null) {
             snackView.setVisibility(View.GONE);
@@ -243,6 +254,7 @@ public class ViewUtil {
             AppPref.INSTANCE.setPref(prefModel);
         }
     }
+
 
 
 }

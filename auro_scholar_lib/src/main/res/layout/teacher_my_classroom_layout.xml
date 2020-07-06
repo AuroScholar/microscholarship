@@ -63,51 +63,68 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.auro.scholr.core.util.uiwidget.RPTextView
-                        android:id="@+id/txt_invite_student"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:text="Invite Students With"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12sdp"
-                        app:Font="Poppins-SemiBold.ttf"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_myclassroom" />
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/social_share_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:orientation="horizontal"
+                        android:paddingRight="@dimen/_20sdp"
+                        android:paddingLeft="@dimen/_20sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_invite_student">
+                        app:layout_constraintTop_toBottomOf="@+id/txt_myclassroom">
 
-                        <ImageView
-                            android:id="@+id/facebook"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:background="@drawable/ic_auro_facebook" />
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/txt_invite_student"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:text="Invite Students With"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            app:Font="Poppins-SemiBold.ttf"
+                            app:layout_constraintBottom_toTopOf="@+id/lllinks"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageView
-                            android:id="@+id/whatsapp"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:layout_marginStart="@dimen/_25sdp"
-                            android:layout_marginEnd="@dimen/_25sdp"
-                            android:background="@drawable/ic_iconswhatsapps" />
+                        <LinearLayout
+                            android:id="@+id/lllinks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent">
 
-                        <ImageView
-                            android:id="@+id/share"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:background="@drawable/share_button_bg"
-                            android:padding="@dimen/_5sdp"
-                            android:src="@drawable/ic_auro_share" />
-                    </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/facebook"
+                                android:layout_width="@dimen/_25sdp"
+                                android:layout_height="@dimen/_25sdp"
+                                android:background="@drawable/ic_auro_facebook" />
+
+                            <ImageView
+                                android:id="@+id/whatsapp"
+                                android:layout_width="@dimen/_25sdp"
+                                android:layout_height="@dimen/_25sdp"
+                                android:layout_marginStart="@dimen/_25sdp"
+                                android:layout_marginEnd="@dimen/_25sdp"
+                                android:background="@drawable/ic_iconswhatsapps" />
+
+                            <ImageView
+                                android:id="@+id/share"
+                                android:layout_width="@dimen/_25sdp"
+                                android:layout_height="@dimen/_25sdp"
+                                android:background="@drawable/share_button_bg"
+                                android:padding="@dimen/_5sdp"
+                                android:src="@drawable/ic_auro_share" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/parent_layout_two"
@@ -194,6 +211,8 @@
                 android:id="@+id/errorLayout"
                 layout="@layout/error_layout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer_my_classroom"

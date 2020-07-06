@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:clickable="false"
+    android:layout_height="match_parent"
+    tools:background="#000000">
+    <LinearLayout
+        android:id="@+id/llayoutinvite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        app:layout_constraintVertical_bias="0.59000003">
+
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+            android:id="@+id/desfbTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:gravity="center"
+            app:Font="Poppins-Bold.ttf"
+            android:visibility="visible"
+            android:text="@string/invite_your_Student"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp"
+
+            />
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+            android:id="@+id/descFb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            app:Font="Poppins-Regular.ttf"
+            android:visibility="gone"
+            android:text="@string/tutorial_link"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp"
+            />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layoutProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8">
+
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+            android:id="@+id/tutorial_profileTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            app:Font="Poppins-Bold.ttf"
+            android:visibility="visible"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:text="@string/teacher_profile"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp" />
+
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+            android:id="@+id/tutorial_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:text="@string/tutorial_profile"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:textSize="@dimen/_15sdp"
+            app:Font="Poppins-Regular.ttf" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layoutkyc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8" >
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+            android:id="@+id/tutorial_kycTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            app:Font="Poppins-Bold.ttf"
+            android:visibility="visible"
+            android:gravity="center"
+            android:text="@string/kyc_verification"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp" />
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+            android:id="@+id/tutorial_kyc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:text="@string/tutorial_kyc"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp"
+            app:Font="Poppins-Regular.ttf"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
