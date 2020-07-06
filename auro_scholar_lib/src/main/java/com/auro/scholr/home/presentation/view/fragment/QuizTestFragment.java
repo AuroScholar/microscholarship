@@ -36,6 +36,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.auro.scholr.R;
@@ -221,7 +222,8 @@ public class QuizTestFragment extends BaseFragment {
     }
 
     public void openQuizHomeFragment() {
-        getActivity().getSupportFragmentManager().popBackStack();
+        getActivity().getSupportFragmentManager().popBackStack();//old code//refrence https://stackoverflow.com/questions/53566847/popbackstack-causing-java-lang-illegalstateexception-can-not-perform-this-actio
+       // getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     public void openDemographicFragment() {
@@ -527,9 +529,9 @@ public class QuizTestFragment extends BaseFragment {
 
     private void openDialog() {
         CustomDialogModel customDialogModel = new CustomDialogModel();
-        customDialogModel.setContext(getActivity());
+        customDialogModel.setContext(getContext());//bug report on 06/07/2020
         customDialogModel.setTitle("Quiz Instructions");
-        customDialogModel.setContent(getActivity().getResources().getString(R.string.bullted_list));
+        customDialogModel.setContent(this.getResources().getString(R.string.bullted_list));
         customDialogModel.setTwoButtonRequired(false);
         customDialog = new CustomDialog(customDialogModel);
         // Window window = customDialog.getWindow();

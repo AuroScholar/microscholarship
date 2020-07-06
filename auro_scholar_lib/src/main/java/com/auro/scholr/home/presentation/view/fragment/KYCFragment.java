@@ -364,7 +364,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             binding.btUploadAll.setEnabled(false);
             binding.progressBar.setVisibility(View.VISIBLE);
         } else if (status == 1) {
-            binding.btUploadAll.setText(getString(R.string.upload));
+            binding.btUploadAll.setText(this.getResources().getString(R.string.upload));
             binding.btUploadAll.setEnabled(true);
             binding.progressBar.setVisibility(View.GONE);
             if (kycViewModel.homeUseCase.checkUploadButtonStatus(kycDocumentDatamodelArrayList)) {
