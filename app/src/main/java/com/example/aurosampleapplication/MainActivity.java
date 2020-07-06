@@ -231,6 +231,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        ViewUtil.showSnackBar(binding.getRoot(), "Press again to close Auro Scholar app");
+        ViewUtil.showSnackBar(binding.getRoot(), "Press again to close app");
     }
 }

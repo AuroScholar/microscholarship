@@ -218,7 +218,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
     private void dismissApplication() {
         if (backPress == 0) {
             backPress++;
-            ViewUtil.showSnackBar(binding.naviagtionContent.homeContainer, "Press again to close Auro Scholar app");
+            ViewUtil.showSnackBar(binding.naviagtionContent.homeContainer, "Press again to close the app");
         } else {
             finish();
           //  finishAffinity();
