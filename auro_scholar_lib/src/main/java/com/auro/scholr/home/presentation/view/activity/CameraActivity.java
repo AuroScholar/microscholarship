@@ -421,7 +421,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             File mypath = new File(uri.getPath());
             FileOutputStream fos = new FileOutputStream(mypath);
             // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 70, fos);
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.close();
             return mypath.getAbsolutePath();
         } catch (Exception e) {

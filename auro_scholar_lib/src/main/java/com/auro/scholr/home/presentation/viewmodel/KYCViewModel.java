@@ -1,5 +1,6 @@
 package com.auro.scholr.home.presentation.viewmodel;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 import androidx.lifecycle.LiveData;
@@ -45,16 +46,16 @@ public class KYCViewModel extends ViewModel {
 
     public KYCViewModel(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
         this.homeUseCase = homeUseCase;
-        this.homeDbUseCase=homeDbUseCase;
-        this.homeRemoteUseCase=homeRemoteUseCase;
+        this.homeDbUseCase = homeDbUseCase;
+        this.homeRemoteUseCase = homeRemoteUseCase;
     }
 
 
     public void uploadProfileImage(List<KYCDocumentDatamodel> list, KYCInputModel kycInputModel) {
 
         Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
-            if(hasInternet) {
-                callUploadImageApi(list,kycInputModel);
+            if (hasInternet) {
+                callUploadImageApi(list, kycInputModel);
 
             } else {
 
@@ -67,19 +68,19 @@ public class KYCViewModel extends ViewModel {
     }
 
 
-
     private CompositeDisposable getCompositeDisposable() {
         if (compositeDisposable == null) {
             compositeDisposable = new CompositeDisposable();
         }
         return compositeDisposable;
     }
-    private void callUploadImageApi(List<KYCDocumentDatamodel> list,  KYCInputModel kycInputModel) {
 
-        getCompositeDisposable().add(homeRemoteUseCase.uploadProfileImage(list,kycInputModel).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).doOnSubscribe(new Consumer<Disposable>() {
+    private void callUploadImageApi(List<KYCDocumentDatamodel> list, KYCInputModel kycInputModel) {
+
+        getCompositeDisposable().add(homeRemoteUseCase.uploadProfileImage(list, kycInputModel).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).doOnSubscribe(new Consumer<Disposable>() {
             @Override
             public void accept(Disposable __) throws Exception {
-                serviceLiveData.setValue(ResponseApi.loading(null));
+                serviceLiveData.setValue(ResponseApi.loading(Status.UPLOAD_PROFILE_IMAGE));
             }
         })
                 .subscribe(
@@ -117,18 +118,53 @@ public class KYCViewModel extends ViewModel {
         return byteBuff.toByteArray();
     }
 
+    public long  bytesIntoHumanReadable(long bytes) {
+        long kilobyte = 1024;
+        long megabyte = kilobyte * 1024;
+        long gigabyte = megabyte * 1024;
+        long terabyte = gigabyte * 1024;
 
-    public void sendAzureImageData(AssignmentReqModel model){
-        Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet ->{
-            if(hasInternet){
+        return (bytes / megabyte);
+
+/*
+        if ((bytes >= 0) && (bytes < kilobyte)) {
+            return bytes + " B";
+
+        } else if ((bytes >= kilobyte) && (bytes < megabyte)) {
+            return (bytes / kilobyte) + " KB";
+
+        } else if ((bytes >= megabyte) && (bytes < gigabyte)) {
+            return (bytes / megabyte) + " MB";
+
+        } else if ((bytes >= gigabyte) && (bytes < terabyte)) {
+            return (bytes / gigabyte) + " GB";
+
+        } else if (bytes >= terabyte) {
+            return (bytes / terabyte) + " TB";
+
+        } else {
+            return bytes + " Bytes";
+        }*/
+    }
+    public static byte[] encodeToBase64(Bitmap image,int quality) {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, quality, byteArrayOS);
+        byte[] byteArray = byteArrayOS.toByteArray();
+        return byteArray;
+    }
+
+    public void sendAzureImageData(AssignmentReqModel model) {
+        Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
+            if (hasInternet) {
                 azureRequestApi(model);
-            }else{
+            } else {
                 // serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET,AuroApp.getAppContext().getString(R.string.internet_check),Status.NO_INTERNET));
             }
         });
         getCompositeDisposable().add(disposable);
     }
-    private  void azureRequestApi(AssignmentReqModel model){
+
+    private void azureRequestApi(AssignmentReqModel model) {
         getCompositeDisposable().add(homeRemoteUseCase.getAzureData(model).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(new Consumer<Disposable>() {
@@ -154,6 +190,7 @@ public class KYCViewModel extends ViewModel {
     private void defaultError() {
         serviceLiveData.setValue(new ResponseApi(Status.FAIL, AuroApp.getAppContext().getResources().getString(R.string.default_error), null));
     }
+
     public LiveData<ResponseApi> serviceLiveData() {
 
         return serviceLiveData;

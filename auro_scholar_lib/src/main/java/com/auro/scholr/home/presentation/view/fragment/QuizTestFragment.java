@@ -148,7 +148,7 @@ public class QuizTestFragment extends BaseFragment {
 
     @Override
     protected void init() {
-
+        setKeyListner();
         setListener();
         if (dashboardResModel != null && quizResModel != null) {
             assignmentReqModel = quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);

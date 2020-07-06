@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -47,6 +49,8 @@ import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 
+import com.auro.scholr.util.alert_dialog.CustomDialogModel;
+import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 import com.auro.scholr.util.cropper.CropImages;
 import com.auro.scholr.util.cropper.CropImageViews;
 
@@ -56,6 +60,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -80,6 +85,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     private boolean uploadBtnStatus;
     Resources resources;
     KYCInputModel kycInputModel = new KYCInputModel();
+    CustomProgressDialog customProgressDialog;
+
 
     /*Face Image Params*/
     List<AssignmentReqModel> faceModelList;
@@ -155,7 +162,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         /*Do code here*/
         binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
-        binding.btUploadAll.setOnClickListener(this);
+        //  binding.btUploadAll.setOnClickListener(this);
         binding.walletInfo.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
         if (kycViewModel != null && kycViewModel.serviceLiveData().hasObservers()) {
@@ -297,9 +304,21 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             kycDocumentDatamodelArrayList.get(pos).setDocumentURi(Uri.parse(path));
             File file = new File(kycDocumentDatamodelArrayList.get(pos).getDocumentURi().getPath());
             InputStream is = AuroApp.getAppContext().getApplicationContext().getContentResolver().openInputStream(Uri.fromFile(file));
-            kycDocumentDatamodelArrayList.get(pos).setImageBytes(kycViewModel.getBytes(is));
 
+
+            Bitmap picBitmap = BitmapFactory.decodeFile(path);
+            byte[] bytes = kycViewModel.encodeToBase64(picBitmap, 100);
+            long mb = kycViewModel.bytesIntoHumanReadable(bytes.length);
+            if (mb > 1.5) {
+                AppLogger.e("chhonker", "size of the image greater than 1.5 mb -" + mb);
+                kycDocumentDatamodelArrayList.get(pos).setImageBytes(kycViewModel.encodeToBase64(picBitmap, 50));
+                AppLogger.e("chhonker", "size of the image greater than 1.5 mb after conversion -" + kycViewModel.bytesIntoHumanReadable(kycDocumentDatamodelArrayList.get(pos).getImageBytes().length));
+            } else {
+                AppLogger.e("chhonker", "size of the image less 1.5 mb -" + mb);
+                kycDocumentDatamodelArrayList.get(pos).setImageBytes(bytes);
+            }
             kyCuploadAdapter.updateList(kycDocumentDatamodelArrayList);
+            uploadAllDocApi();
         } catch (Exception e) {
             /*Do code here when error occur*/
         }
@@ -320,11 +339,16 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         kycViewModel.serviceLiveData().observeForever(responseApi -> {
             switch (responseApi.status) {
                 case LOADING:
-                    progressBarHandling(0);
+                    if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
+                        openProgressDialog();
+                    } else {
+                        progressBarHandling(0);
+                    }
                     break;
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
+                        closeDialog();
                         KYCResListModel kycResListModel = (KYCResListModel) responseApi.data;
                         if (!kycResListModel.isError()) {
                             updateListonResponse(kycResListModel);
@@ -343,15 +367,23 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 case NO_INTERNET:
                 case AUTH_FAIL:
                 case FAIL_400:
-                    showError((String) responseApi.data);
-                    progressBarHandling(1);
-                    updateFaceListInPref();
+                    if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
+                        updateDialogUi();
+                    } else {
+                        showError((String) responseApi.data);
+                        progressBarHandling(1);
+                        updateFaceListInPref();
+                    }
                     break;
 
                 default:
-                    showError((String) responseApi.data);
-                    progressBarHandling(1);
-                    updateFaceListInPref();
+                    if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
+                        updateDialogUi();
+                    } else {
+                        showError((String) responseApi.data);
+                        progressBarHandling(1);
+                        updateFaceListInPref();
+                    }
                     break;
             }
 
@@ -370,7 +402,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             if (kycViewModel.homeUseCase.checkUploadButtonStatus(kycDocumentDatamodelArrayList)) {
                 binding.buttonUploadLayout.setVisibility(View.INVISIBLE);
             } else {
-                binding.buttonUploadLayout.setVisibility(View.VISIBLE);
+                binding.buttonUploadLayout.setVisibility(View.INVISIBLE);
             }
         }
 
@@ -596,11 +628,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     private void updateFaceListInPref() {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (prefModel != null) {
+        if (prefModel != null && !TextUtil.checkListIsEmpty(faceModelList)) {
             List<AssignmentReqModel> newList = new ArrayList<>();
             for (AssignmentReqModel model : faceModelList) {
-
-
                 if (model != null && !model.isUploaded()) {
                     newList.add(model);
                 }
@@ -625,4 +655,44 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         });
     }
 
+    private void openProgressDialog() {
+        if (customProgressDialog != null && customProgressDialog.isShowing()) {
+            return;
+        }
+        CustomDialogModel customDialogModel = new CustomDialogModel();
+        customDialogModel.setContext(getActivity());
+        customDialogModel.setTitle("Uploading...");
+        customDialogModel.setTwoButtonRequired(true);
+        customProgressDialog = new CustomProgressDialog(customDialogModel);
+        Objects.requireNonNull(customProgressDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        customProgressDialog.setCancelable(false);
+        customProgressDialog.setCallcack(new CustomProgressDialog.ButtonClickCallback() {
+            @Override
+            public void retryCallback() {
+                uploadAllDocApi();
+                customProgressDialog.updateUI(1);
+            }
+
+            @Override
+            public void closeCallback() {
+                kycDocumentDatamodelArrayList.get(pos).setDocumentFileName(AuroApp.getAppContext().getResources().getString(R.string.no_file_chosen));
+                kyCuploadAdapter.updateList(kycDocumentDatamodelArrayList);
+            }
+        });
+        customProgressDialog.show();
+    }
+
+
+    public void updateDialogUi() {
+        if (customProgressDialog != null) {
+            customProgressDialog.updateUI(0);
+        }
+
+    }
+
+    public void closeDialog() {
+        if (customProgressDialog != null) {
+            customProgressDialog.dismiss();
+        }
+    }
 }

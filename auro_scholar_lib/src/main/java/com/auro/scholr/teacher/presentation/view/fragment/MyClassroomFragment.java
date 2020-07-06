@@ -267,7 +267,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         } else {
             completeLink = completeLink + " https://bit.ly/3b1puWr";
         }
-
         if (v.getId() == R.id.whatsapp) {
             sendWhatsapp(completeLink);
         } else if (v.getId() == R.id.facebook) {

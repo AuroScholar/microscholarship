@@ -191,7 +191,14 @@
     <string name="saved">The changes were saved successfully</string>
     <string name="successfully_send">Successfully Send!!</string>
 
+    <string name="bullted_list">
+          \u25CF  Please read the all instructions carefully,
+       \n \u25CF Question bank is powered by Cambridge.
+        \n \u25CF Quiz contains the 10 questions.
+        \n \u25CF Please read each and every question carefully.
+        \n \u25CF Camera  will be only used for fraud control purpose.
 
+    </string>
 
   <!--  <string name="text1_random">जितना ज़्यादा उतना अच्छा</string>
     <string name="text2_random_chalange_your_friends">प्रश्नोत्तरी लेने के लिए अपने दोस्तों को चुनौती!</string>
@@ -226,8 +233,8 @@
     </string-array>
 
     <string name="teacher_share_msg">Hi, I have just referred you to get Scholarship  on Scholr App! \nTake quiz and get Scholarship Certificate every month. \nDownload App - https://bit.ly/3b1puWr</string>
-    <string name="invite_friend_refrral">Ek Vishesh Nimantran! Scholr App par mujhase juden, doston ko challenge karein aur roz Scholarship &amp; Certificates paayein!\n Click to Install App - ></string>
     <string name="challenge_msg">just challenged you in a quiz! Can you beat their score?</string>
+    <string name="invite_friend_refrral">Ek Vishesh Nimantran! Scholr App par mujhase juden, doston ko challenge karein aur roz Scholarship &amp; Certificates paayein!\n Click to Install App - ></string>
 
 
 </resources>

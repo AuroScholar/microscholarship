@@ -105,6 +105,7 @@
        \n \u25CF Question bank is powered by Cambridge.
         \n \u25CF Quiz contains the 10 questions.
         \n \u25CF Please read each and every question carefully.
+        \n \u25CF Camera  will be only used for fraud control purpose.
 
     </string>
 
@@ -197,9 +198,8 @@
     <string name="share_msg">Hey!\nI have just got Scholarship Cash on Scholr App, you can too!\nJust take a 10 min quiz and win.\nStart now - https://bit.ly/3en7pnQ</string>
     <string name="information">Information</string>
     <string name="friends_ke_bina_kya_fun">Friends ke bina kya fun!</string>
-
     <string name="teacher_share_msg">Hi, I have just referred you to get Scholarship  on Scholr App! \nTake quiz and get Scholarship Certificate every month. \nDownload App -</string>
-    <string name="invite_friend_refrral">Ek Vishesh Nimantran! Scholr App par mujhase juden, doston ko challenge karein aur roz Scholarship &amp; Certificates paayein!\n Click to Install App - ></string>
+    <string name="invite_friend_refrral">Hi! An exclusive invite just for you! Join me on scholr App, challenge friends and get scholarship &amp; Certificates everyday! \n Click to accept my invitation &amp; Install App - ></string>
     <string name="challenge_msg">just challenged you in a quiz! Can you beat their score?</string>
     <string name="logout">Logout</string>
     <string name="saved">The changes were saved successfully</string>
