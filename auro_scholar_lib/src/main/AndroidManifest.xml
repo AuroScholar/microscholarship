@@ -40,9 +40,9 @@
 
 
 
-        <provider android:authorities="com.facebook.app.FacebookContentProvider1614821145461747"
+   <!--     <provider android:authorities="com.facebook.app.FacebookContentProvider1614821145461747"
             android:name="com.facebook.FacebookContentProvider"
-            android:exported="true"/>
+            android:exported="true"/>-->
         <!--
  <meta-data
              android:name="com.google.android.geo.API_KEY"
