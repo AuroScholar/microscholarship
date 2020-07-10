@@ -12,7 +12,7 @@ public class FirebaseEventUtil {
 
     private FirebaseAnalytics mObjFirebaseAnalytics;
 
-    private static boolean enableLogger = false;
+    private static boolean enableFirebaseLogger = true;
     Bundle bundle;
 
     public FirebaseEventUtil(Context context) {
@@ -23,7 +23,7 @@ public class FirebaseEventUtil {
 
     public void logEvent(String pStrEventName, Map<String,String> detailsList) {
 
-        if(enableLogger){
+        if(enableFirebaseLogger){
             try {
                 for (Map.Entry<String,String> eventDetails: detailsList.entrySet()){
                     Log.e("EventDetails",eventDetails.getKey()+ " ====" +eventDetails.getValue());
@@ -91,4 +91,9 @@ public class FirebaseEventUtil {
         }
         return  result;
     }
+
+    public void setUserProperTy(String pStrEventName,String value) {
+        mObjFirebaseAnalytics.setUserProperty(pStrEventName, value);
+    }
+
 }

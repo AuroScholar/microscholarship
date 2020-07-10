@@ -47,12 +47,14 @@ import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.firebase.FirebaseEvent;
 import com.auro.scholr.util.firebase.FirebaseEventUtil;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 
 import java.util.ArrayList;
@@ -264,10 +266,12 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             completeLink = completeLink + AuroApp.getAuroScholarModel().getReferralLink();
             logeventparam.put(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"true");
             mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
+            mFirebaseAnalytics.setUserProperTy(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"true");
         } else {
             completeLink = completeLink + " https://bit.ly/3b1puWr";
             logeventparam.put(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"false");
             mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
+            mFirebaseAnalytics.setUserProperTy(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"false");
         }
         if (v.getId() == R.id.whatsapp) {
             sendWhatsapp(completeLink);
