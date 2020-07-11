@@ -149,6 +149,7 @@
         </RelativeLayout>
 
         <View
+            android:id="@+id/viewLine"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:layout_marginStart="@dimen/_20sdp"
