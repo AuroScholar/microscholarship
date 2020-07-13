@@ -25,6 +25,7 @@ import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
     @Inject
     @Named("CongratulationsDialog")
     ViewModelFactory viewModelFactory;
-    DialogCongratulationsBinding binding;
+    DialogCongratulations2Binding binding;
     CongratulationsDialogViewModel viewModel;
     Context mcontext;
 
@@ -70,6 +71,7 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
     protected void init() {
         binding.btnShare.setOnClickListener(this);
         binding.icClose.setOnClickListener(this);
+        Glide.with(this).load(R.raw.spracle).into(binding.backgroundSprincle);
 
     }
 
@@ -85,7 +87,7 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
 
     @Override
     protected int getLayout() {
-        return R.layout.dialog_congratulations;
+        return R.layout.dialog_congratulations_2;
     }
 
     @Override
