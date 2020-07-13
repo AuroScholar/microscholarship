@@ -465,7 +465,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             }
 
         } else if (v.getId() == R.id.privacy_policy) {
-            openFragment(new PrivacyPolicyFragment());
+           openFragment(new PrivacyPolicyFragment());
+
+           // openCongratulationsDialog();
         } else if (v.getId() == R.id.lang_eng) {
             CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -703,11 +705,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void openErrorDialog() {
         CustomDialogModel customDialogModel = new CustomDialogModel();
-        customDialogModel.setContext(getActivity());
+        customDialogModel.setContext(AuroApp.getAppContext());
         customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
         customDialogModel.setContent("Your grade is upgraded from 10 to 12");
         customDialogModel.setTwoButtonRequired(true);
-        customDialog = new CustomDialog(customDialogModel);
+        customDialog = new CustomDialog(AuroApp.getAppContext(),customDialogModel);
         customDialog.setSecondBtnTxt("Ok");
         customDialog.setSecondCallcack(new CustomDialog.SecondCallcack() {
             @Override

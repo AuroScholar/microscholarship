@@ -17,6 +17,7 @@ import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseDialog;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.databinding.DialogCongratulations2Binding;
 import com.auro.scholr.databinding.DialogCongratulationsBinding;
 import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewModel;
 import com.auro.scholr.home.presentation.viewmodel.InviteFriendViewModel;

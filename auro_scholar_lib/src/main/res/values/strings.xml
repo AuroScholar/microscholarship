@@ -238,6 +238,7 @@
     <string name="retake_quiz">Retake Quiz</string>
     <string name="auro_scholar_wallet">You have got ₹50 Scholarship in your\nAuro Scholar Wallet!</string>
     <string name="share_with_friends">Share with friends</string>
+    <string name="congratulation_new">Congratulations</string>
 
     <string-array name="classes">
         <item>1st</item>

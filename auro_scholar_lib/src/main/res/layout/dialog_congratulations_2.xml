@@ -44,26 +44,39 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:background="@drawable/border_selector_white_upper"
-
                     app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="0.28"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-
-                    <com.auro.scholr.core.util.uiwidget.RPTextView
+                    <ImageView
+                        android:id="@+id/imageView2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:src="@drawable/ic_desgin_back"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <com.auro.scholr.core.util.uiwidget.RPTextView
+                        android:id="@+id/RPTextView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
                         android:gravity="center"
-                        android:text="@string/congratulations"
+                        android:text="@string/congratulation_new"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_15sdp"
                         app:Font="Poppins-Bold.ttf"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -112,7 +125,7 @@
                         <LinearLayout
                             android:id="@+id/llyour_score"
                             android:layout_width="@dimen/_150sdp"
-                            android:layout_height="@dimen/_50sdp"
+                            android:layout_height="@dimen/_45sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             android:orientation="vertical"
                             android:layout_marginTop="@dimen/_10sdp"
@@ -125,18 +138,20 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_3sdp"
                                 android:text="You Have Scored"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_12sdp"
                                 app:Font="Poppins-SemiBold.ttf"/>
                             <com.auro.scholr.core.util.uiwidget.RPTextView
-                                android:id="@+id/RPTextView"
+                                android:id="@+id/txtScore"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:text="90%"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginBottom="@dimen/_2sdp"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_20sdp"
                                 app:Font="Poppins-Bold.ttf"/>
@@ -146,7 +161,6 @@
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/text_round_bg"
                             android:gravity="center"
                             android:paddingLeft="@dimen/_15sdp"
                             android:paddingTop="@dimen/_5sdp"
@@ -172,7 +186,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
                         <com.auro.scholr.core.util.uiwidget.RPTextView
-                            android:id="@+id/RPTextView7"
+                            android:id="@+id/txtRetakeQuiz"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:background="@drawable/button_retake_blue"
@@ -191,18 +205,15 @@
                             bind:layout_editor_absoluteY="0dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/RPTextView6"
+                            app:layout_constraintEnd_toStartOf="@+id/txtStartQuiz"
                             app:layout_constraintHorizontal_bias="0.5"/>
-
-
                         <com.auro.scholr.core.util.uiwidget.RPTextView
-                            android:id="@+id/RPTextView6"
+                            android:id="@+id/txtStartQuiz"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/start_quiz"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginRight="@dimen/_15sdp"
-                            android:background="@drawable/ic_newquiz"
+                            android:background="@drawable/start_quiz"
                             android:layout_marginLeft="@dimen/_15sdp"
                             android:textColor="@color/white"
                             app:Font="Poppins-Regular.ttf"
@@ -210,11 +221,12 @@
                             android:textSize="@dimen/_10sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/RPTextView7"
+                            app:layout_constraintStart_toEndOf="@+id/txtRetakeQuiz"
                             app:layout_constraintTop_toTopOf="parent"
                             />
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/btnShare"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/share_with_friends"
@@ -231,7 +243,7 @@
                             android:drawableRight="@drawable/ic_share_green"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/RPTextView6" />
+                            app:layout_constraintTop_toBottomOf="@+id/txtStartQuiz" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -244,7 +256,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
-            android:id="@+id/close_button"
+            android:id="@+id/icClose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/close_button"
@@ -255,9 +267,9 @@
 
         <ImageView
             android:id="@+id/close_button_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_prize_2"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/champ"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout6"
             app:layout_constraintStart_toStartOf="@+id/constraintLayout6"
