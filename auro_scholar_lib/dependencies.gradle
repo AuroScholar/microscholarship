@@ -41,9 +41,9 @@ ext {
             dagger           :         "com.google.dagger:dagger:${dagger}",
             daggerCompiler   :         "com.google.dagger:dagger-compiler:${dagger}",
             phoneNum         :         "com.googlecode.libphonenumber:libphonenumber:${phoneNum}",
-          /*  map              :         "com.google.android.gms:play-services-maps:${googleVersion}",
+             map              :         "com.google.android.gms:play-services-maps:${googleVersion}",
             location         :         "com.google.android.gms:play-services-location:${googleVersion}",
-            places           :         "com.google.android.gms:play-services-places:${googleVersion}",
+           /* places           :         "com.google.android.gms:play-services-places:${googleVersion}",
             phoneSms         :         "com.google.android.gms:play-services-auth-api-phone:${googleVersion}",*/
     ]
 

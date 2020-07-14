@@ -190,6 +190,8 @@
     <string name="sure_to_logout">Are you sure you want to logout?</string>
     <string name="saved">The changes were saved successfully</string>
     <string name="successfully_send">Successfully Send!!</string>
+    <string name="address_not_found">Address not found</string>
+
 
     <string name="bullted_list">
           \u25CF  Please read the all instructions carefully,

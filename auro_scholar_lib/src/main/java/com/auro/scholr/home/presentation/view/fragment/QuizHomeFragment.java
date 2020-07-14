@@ -375,7 +375,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     public void openQuizTestFragment(DashboardResModel dashboardResModel) {
         Bundle bundle = new Bundle();
-
         QuizTestFragment quizTestFragment = new QuizTestFragment();
         bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
         bundle.putParcelable(AppConstant.QUIZ_RES_MODEL, quizResModel);
@@ -465,7 +464,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             }
 
         } else if (v.getId() == R.id.privacy_policy) {
-            openFragment(new PrivacyPolicyFragment());
+            //
+            //
+           // openFragment(new PrivacyPolicyFragment());
+            openDemographicFragment();
         } else if (v.getId() == R.id.lang_eng) {
             CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -770,4 +772,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.customUiSnackbar.btInvite.setTextSize(randomElement.getButtonSize());
     }
 
+
+    public void openDemographicFragment() {
+        Bundle bundle = new Bundle();
+        DemographicFragment demographicFragment = new DemographicFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        demographicFragment.setArguments(bundle);
+        openFragment(demographicFragment);
+    }
 }

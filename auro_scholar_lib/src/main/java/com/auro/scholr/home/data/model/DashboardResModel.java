@@ -17,7 +17,7 @@ public class DashboardResModel implements Parcelable {
 
     @SerializedName("error")
     @Expose
-    private boolean error ;
+    private boolean error;
 
 
     @SerializedName("phonenumber")
@@ -149,6 +149,14 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private String approved_scholarship_money;
 
+    @SerializedName("latitude")
+    @Expose
+    private String latitude;
+
+    @SerializedName("longitude")
+    @Expose
+    private String longitude;
+
 
     protected DashboardResModel(Parcel in) {
         status = in.readString();
@@ -186,6 +194,8 @@ public class DashboardResModel implements Parcelable {
         unapproved_scholarship_money = in.readString();
         disapproved_scholarship_money = in.readString();
         approved_scholarship_money = in.readString();
+        latitude = in.readString();
+        longitude = in.readString();
     }
 
     @Override
@@ -225,6 +235,8 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(unapproved_scholarship_money);
         dest.writeString(disapproved_scholarship_money);
         dest.writeString(approved_scholarship_money);
+        dest.writeString(latitude);
+        dest.writeString(longitude);
     }
 
     @Override
@@ -522,5 +534,21 @@ public class DashboardResModel implements Parcelable {
 
     public void setUnapproved_scholarship_money(String unapproved_scholarship_money) {
         this.unapproved_scholarship_money = unapproved_scholarship_money;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }

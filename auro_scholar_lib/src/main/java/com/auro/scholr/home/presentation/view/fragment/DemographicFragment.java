@@ -1,9 +1,16 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.TestLooperManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,17 +40,29 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.alert_dialog.CustomDialogModel;
+import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
+import com.auro.scholr.util.permission.LocationHandler;
+import com.auro.scholr.util.permission.LocationModel;
+import com.auro.scholr.util.permission.LocationUtil;
+import com.auro.scholr.util.permission.PermissionHandler;
+import com.auro.scholr.util.permission.PermissionUtil;
+import com.auro.scholr.util.permission.Permissions;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
+import static com.auro.scholr.util.permission.LocationHandler.REQUEST_CHECK_SETTINGS_GPS;
 
 
 public class DemographicFragment extends BaseFragment implements CommonCallBackListner, View.OnClickListener {
@@ -52,6 +71,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     @Named("DemographicFragment")
     ViewModelFactory viewModelFactory;
 
+    String TAG = "DemographicFragment";
 
     DemographicFragmentLayoutBinding binding;
     DemographicViewModel demographicViewModel;
@@ -62,6 +82,8 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     List<String> languageLines;
     DashboardResModel dashboardResModel;
     Resources resources;
+    boolean isLocationFine;
+    CustomProgressDialog customProgressDialog;
 
     DemographicResModel demographicResModel = new DemographicResModel();
 
@@ -90,18 +112,47 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         // Spinner Drop down Gender
         genderLines = Arrays.asList(getResources().getStringArray(R.array.genderlist));
         spinnermethodcall(genderLines, binding.SpinnerGender);
+        for (int i = 0; i < genderLines.size(); i++) {
+            String gender = genderLines.get(i);
+            if (!TextUtil.isEmpty(dashboardResModel.getGender()) && gender.equalsIgnoreCase(dashboardResModel.getGender())) {
+                binding.SpinnerGender.setSelection(i);
+                break;
+            }
+        }
 
         // Spinner Drop down schooltype
         schooltypeLines = Arrays.asList(getResources().getStringArray(R.array.schooltypelist));
         spinnermethodcall(schooltypeLines, binding.SpinnerSchoolType);
+        for (int i = 0; i < schooltypeLines.size(); i++) {
+            String school = schooltypeLines.get(i);
+            if (!TextUtil.isEmpty(dashboardResModel.getSchool_type()) && school.equalsIgnoreCase(dashboardResModel.getSchool_type())) {
+                binding.SpinnerSchoolType.setSelection(i);
+                break;
+            }
+        }
 
         // Spinner Drop down boardlist
         boardLines = Arrays.asList(getResources().getStringArray(R.array.boardlist));
         spinnermethodcall(boardLines, binding.SpinnerBoard);
+        for (int i = 0; i < boardLines.size(); i++) {
+            String board = boardLines.get(i);
+            if (!TextUtil.isEmpty(dashboardResModel.getBoard_type()) && board.equalsIgnoreCase(dashboardResModel.getBoard_type())) {
+                binding.SpinnerBoard.setSelection(i);
+                break;
+            }
+        }
 
         // Spinner Drop down language
         languageLines = Arrays.asList(getResources().getStringArray(R.array.languagelist));
         spinnermethodcall(languageLines, binding.SpinnerLanguageMedium);
+        for (int i = 0; i < languageLines.size(); i++) {
+            String lang = languageLines.get(i);
+            if (!TextUtil.isEmpty(dashboardResModel.getLanguage()) && lang.equalsIgnoreCase(dashboardResModel.getLanguage())) {
+                binding.SpinnerLanguageMedium.setSelection(i);
+                break;
+            }
+        }
+
 
         if (getArguments() != null && dashboardResModel != null) {
             demographicResModel.setPhonenumber(dashboardResModel.getPhonenumber());
@@ -120,7 +171,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         } else {
             setLanguageText(AppConstant.ENGLISH);
         }
-
+        //askPermission();
     }
 
     private void setLanguageText(String text) {
@@ -212,7 +263,6 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null) {
             dashboardResModel = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
-
         }
         init();
         setToolbar();
@@ -329,6 +379,87 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
             ft.setReorderingAllowed(false);
         }
         ft.detach(this).attach(this).commit();
+    }
+
+    private void askPermission() {
+        String rationale = "Please give location permission for provide you the better service.";
+        Permissions.Options options = new Permissions.Options()
+                .setRationaleDialogTitle("Info")
+                .setSettingsDialogTitle("Warning");
+        Permissions.check(getActivity(), PermissionUtil.mLocationPermission, rationale, options, new PermissionHandler() {
+            @Override
+            public void onGranted() {
+                getCurrentLocation();
+                AppLogger.e(TAG, "Location Permission Granted");
+            }
+
+            @Override
+            public void onDenied(Context context, ArrayList<String> deniedPermissions) {
+                // permission denied, block the feature.
+                //getActivity().getSupportFragmentManager().popBackStack();
+                AppLogger.e(TAG, "Location Permission Denied");
+
+            }
+        });
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CHECK_SETTINGS_GPS) {
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    AppLogger.e(TAG, "GPS on Allow");
+                    getCurrentLocation();
+                    break;
+                case Activity.RESULT_CANCELED:
+                    AppLogger.e(TAG, "GPS on Denied");
+                    break;
+                default:
+                    // do nothing here
+                    break;
+
+            }
+
+        }
+    }
+
+    public void getCurrentLocation() {
+        LocationHandler locationHandlerUpdate = new LocationHandler();
+        locationHandlerUpdate.setUpGoogleClient(getActivity());
+        if (LocationUtil.isGPSEnabled(getActivity())) {
+            callServiceWhenLocationReceived();
+        }
+    }
+
+    private void callServiceWhenLocationReceived() {
+        LocationModel locationModel = LocationUtil.getLocationData();
+        openProgressDialog();
+        if (locationModel != null && locationModel.getLatitude() != null && !locationModel.getLatitude().isEmpty()) {
+            AppLogger.e(TAG, "Location Found");
+            if (customProgressDialog != null) {
+                customProgressDialog.dismiss();
+            }
+        } else {
+            Handler handler = new Handler();
+            handler.postDelayed(this::callServiceWhenLocationReceived, 2000);
+        }
+    }
+
+    private void openProgressDialog() {
+        if (customProgressDialog != null && customProgressDialog.isShowing()) {
+            return;
+        }
+        CustomDialogModel customDialogModel = new CustomDialogModel();
+        customDialogModel.setContext(getActivity());
+        customDialogModel.setTitle("Fetching Your Location...");
+        customDialogModel.setTwoButtonRequired(true);
+        customProgressDialog = new CustomProgressDialog(customDialogModel);
+        Objects.requireNonNull(customProgressDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        customProgressDialog.setCancelable(false);
+        customProgressDialog.show();
+        customProgressDialog.updateDataUi(0);
     }
 
 }

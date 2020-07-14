@@ -26,6 +26,7 @@ public interface AppConstant {
     String QUIZ_RES_MODEL = "QUIZ_TEST_MODEL";
     String AURO_DATA_MODEL = "AURO_DATA_MODEL";
     String MOBILE_NUMBER = "mobile_no";
+    String LOCATION_DATA = "location_data";
 
     int CAMERA_REQUEST_CODE = 007;
     String FAILED = "failed";
