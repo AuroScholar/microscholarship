@@ -19,9 +19,9 @@
             android:id="@+id/constraintLayout6"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_90sdp"
-            android:layout_marginRight="@dimen/_30sdp"
+            android:layout_marginRight="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_90sdp"
             android:clickable="false"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -151,14 +151,13 @@
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_12sdp"
                                 app:Font="Poppins-SemiBold.ttf"/>
-                            <com.auro.scholr.core.util.uiwidget.RPTextView
-                                android:id="@+id/txtScore"
+                            <com.robinhood.ticker.TickerView
+                                android:id="@+id/tickerView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:text="90%"
-
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_20sdp"
                                 app:Font="Poppins-Bold.ttf"/>
@@ -264,8 +263,8 @@
 
         <ImageView
             android:id="@+id/icClose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/close_button"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout6"
