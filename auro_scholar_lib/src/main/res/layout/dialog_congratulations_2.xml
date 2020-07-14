@@ -157,10 +157,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:text="90%"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_20sdp"
-                                app:Font="Poppins-Bold.ttf"/>
+                                app:Font="Poppins-Bold.ttf"
+                                app:ticker_animationDuration="1500"
+                               />
                         </LinearLayout>
 
 
@@ -219,7 +220,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginRight="@dimen/_15sdp"
-                            android:background="@drawable/start_quiz"
+                            android:background="@drawable/next_quiz"
                             android:layout_marginLeft="@dimen/_15sdp"
                             android:textColor="@color/white"
                             app:Font="Poppins-Regular.ttf"
