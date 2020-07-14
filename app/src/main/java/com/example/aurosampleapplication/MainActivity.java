@@ -167,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setMobileNumber("8700808003");
         inputModel.setStudentClass("11");
         inputModel.setRegitrationSource("AuroScholr");
+        inputModel.setReferralLink("");
         inputModel.setActivity(this);
         inputModel.setFragmentContainerUiId(R.id.home_container);
         openFragment(AuroScholar.startAuroSDK(inputModel));

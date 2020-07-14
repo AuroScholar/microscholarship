@@ -466,8 +466,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else if (v.getId() == R.id.privacy_policy) {
             //
             //
-           // openFragment(new PrivacyPolicyFragment());
-            openDemographicFragment();
+            openFragment(new PrivacyPolicyFragment());
+           // openDemographicFragment();
         } else if (v.getId() == R.id.lang_eng) {
             CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();

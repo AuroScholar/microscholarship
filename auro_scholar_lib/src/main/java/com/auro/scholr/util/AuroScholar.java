@@ -19,8 +19,8 @@ public class AuroScholar {
 
     public static Fragment openAuroDashboardFragment(AuroScholarDataModel auroScholarDataModel) {
         if (auroScholarDataModel != null) {
-            String input=auroScholarDataModel.getMobileNumber() +"\n" +auroScholarDataModel.getScholrId() +"\n" +auroScholarDataModel.isEmailVerified() +"\n" +
-                    auroScholarDataModel.getRegitrationSource() +"\n" +auroScholarDataModel.getReferralLink();
+            String input = auroScholarDataModel.getMobileNumber() + "\n" + auroScholarDataModel.getScholrId() + "\n" + auroScholarDataModel.isEmailVerified() + "\n" +
+                    auroScholarDataModel.getRegitrationSource() + "\n" + auroScholarDataModel.getReferralLink();
             AppLogger.e("Auro scholar input data", input);
         }
         if (TextUtil.isEmpty(auroScholarDataModel.getShareIdentity())) {
@@ -56,6 +56,7 @@ public class AuroScholar {
         auroScholarDataModel.setRegitrationSource(inputModel.getRegitrationSource());
         auroScholarDataModel.setActivity(inputModel.getActivity());
         auroScholarDataModel.setFragmentContainerUiId(inputModel.getFragmentContainerUiId());
+        auroScholarDataModel.setReferralLink(inputModel.getReferralLink());
         AuroApp.setAuroModel(auroScholarDataModel);
         QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
         return quizHomeFragment;
@@ -64,8 +65,8 @@ public class AuroScholar {
 
     public static void startTeacherSDK(AuroScholarDataModel auroScholarDataModel) {
         if (auroScholarDataModel != null) {
-            String input=auroScholarDataModel.getMobileNumber() +"\n" +auroScholarDataModel.getScholrId() +"\n" +auroScholarDataModel.isEmailVerified() +"\n" +
-                    auroScholarDataModel.getRegitrationSource() +"\n" +auroScholarDataModel.getReferralLink();
+            String input = auroScholarDataModel.getMobileNumber() + "\n" + auroScholarDataModel.getScholrId() + "\n" + auroScholarDataModel.isEmailVerified() + "\n" +
+                    auroScholarDataModel.getRegitrationSource() + "\n" + auroScholarDataModel.getReferralLink();
             AppLogger.e("Auro scholar input data", input);
         }
         if (TextUtil.isEmpty(auroScholarDataModel.getShareIdentity())) {

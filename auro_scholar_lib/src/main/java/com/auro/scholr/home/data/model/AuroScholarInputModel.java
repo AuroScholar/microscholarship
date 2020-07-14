@@ -11,6 +11,7 @@ public class AuroScholarInputModel implements Parcelable {
     int fragmentContainerUiId;
     String studentClass;
     String regitrationSource="";
+    String referralLink="";
 
 
 
@@ -23,7 +24,7 @@ public class AuroScholarInputModel implements Parcelable {
         fragmentContainerUiId = in.readInt();
         studentClass = in.readString();
         regitrationSource = in.readString();
-
+        referralLink = in.readString();
     }
 
     @Override
@@ -32,6 +33,7 @@ public class AuroScholarInputModel implements Parcelable {
         dest.writeInt(fragmentContainerUiId);
         dest.writeString(studentClass);
         dest.writeString(regitrationSource);
+        dest.writeString(referralLink);
     }
 
     @Override
@@ -51,7 +53,13 @@ public class AuroScholarInputModel implements Parcelable {
         }
     };
 
+    public String getReferralLink() {
+        return referralLink;
+    }
 
+    public void setReferralLink(String referralLink) {
+        this.referralLink = referralLink;
+    }
 
     public String getStudentClass() {
         return studentClass;
