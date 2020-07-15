@@ -124,13 +124,6 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
         dismiss();
         mcontext.startActivity(shareIntent);
     }
-    private String generateChars(Random random, String list, int numDigits) {
-        final char[] result = new char[numDigits];
-        for (int i = 0; i < numDigits; i++) {
-            result[i] = list.charAt(random.nextInt(list.length()));
-        }
-        return new String(result);
-    }
 
 
 }
