@@ -47,6 +47,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
+import java.util.List;
+
 public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
     FriendsBoardItemLayoutBinding layoutBinding;
 
@@ -56,7 +58,13 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    public void bindUser(FriendsLeaderBoardModel model, int position, CommonCallBackListner commonCallBackListner) {
+    public void bindUser(FriendsLeaderBoardModel model, List<FriendsLeaderBoardModel> list, int position, CommonCallBackListner commonCallBackListner) {
+        if(list.size()-1 == position){
+            layoutBinding.viewLine.setVisibility(View.GONE);
+        }else{
+            layoutBinding.viewLine.setVisibility(View.VISIBLE);
+        }
+
         if (!TextUtil.isEmpty(model.getStudentName())) {
             layoutBinding.nameText.setText(model.getStudentName());
         } else if (!TextUtil.isEmpty(model.getMobileNo())) {

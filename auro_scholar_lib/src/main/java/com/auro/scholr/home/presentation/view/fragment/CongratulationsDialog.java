@@ -17,6 +17,7 @@ import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseDialog;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.databinding.DialogCongratulations2Binding;
 import com.auro.scholr.databinding.DialogCongratulationsBinding;
 import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewModel;
 import com.auro.scholr.home.presentation.viewmodel.InviteFriendViewModel;
@@ -24,8 +25,13 @@ import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
+import com.bumptech.glide.Glide;
+import com.robinhood.ticker.TickerUtils;
+import com.robinhood.ticker.TickerView;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,9 +42,10 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
     @Inject
     @Named("CongratulationsDialog")
     ViewModelFactory viewModelFactory;
-    DialogCongratulationsBinding binding;
+    DialogCongratulations2Binding binding;
     CongratulationsDialogViewModel viewModel;
     Context mcontext;
+
 
 
     private static final String TAG = CongratulationsDialog.class.getSimpleName();
@@ -69,6 +76,17 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
     protected void init() {
         binding.btnShare.setOnClickListener(this);
         binding.icClose.setOnClickListener(this);
+        Glide.with(this).load(R.raw.spracle).into(binding.backgroundSprincle);
+
+        // create random object
+        Random randomno = new Random();
+        binding.tickerView.setPreferredScrollingDirection(TickerView.ScrollingDirection.DOWN);
+        binding.tickerView.setCharacterLists(TickerUtils.provideNumberList());
+        for(int i=1 ;i<=50;i++){
+           binding.tickerView.setText(i+"%");
+        }
+
+
 
     }
 
@@ -84,7 +102,7 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
 
     @Override
     protected int getLayout() {
-        return R.layout.dialog_congratulations;
+        return R.layout.dialog_congratulations_2;
     }
 
     @Override
@@ -107,6 +125,13 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         dismiss();
         mcontext.startActivity(shareIntent);
+    }
+    private String generateChars(Random random, String list, int numDigits) {
+        final char[] result = new char[numDigits];
+        for (int i = 0; i < numDigits; i++) {
+            result[i] = list.charAt(random.nextInt(list.length()));
+        }
+        return new String(result);
     }
 
 

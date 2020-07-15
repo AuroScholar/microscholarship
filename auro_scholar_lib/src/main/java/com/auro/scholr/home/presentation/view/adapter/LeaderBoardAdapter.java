@@ -63,12 +63,13 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter {
         switch (viewType) {
 
             case AppConstant.FriendsLeaderBoard.LEADERBOARD_TYPE:
-                ((LeaderBoardItemViewHolder) holder).bindUser(list.get(position), position,commonCallBackListner);
+                ((LeaderBoardItemViewHolder) holder).bindUser(list.get(position),list, position,commonCallBackListner);
                 break;
 
 
             case AppConstant.FriendsLeaderBoard.LEADERBOARD_INVITE_TYPE:
-                ((InviteItemViewHolder) holder).bindUser(list.get(position), position);
+
+                ((InviteItemViewHolder) holder).bindUser(list.get(position) ,position);
                 break;
 
 

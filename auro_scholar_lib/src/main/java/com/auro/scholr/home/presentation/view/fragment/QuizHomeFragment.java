@@ -104,14 +104,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     CustomDialog customDialog;
     List<RandomInviteFriendsDataModel> list;
     FirebaseEventUtil firebaseEventUtil;
-    Map<String,String> logparam;
+    Map<String, String> logparam;
 
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
-
 
 
     @Override
@@ -169,9 +168,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
     }
-
-
-
 
 
     @Override
@@ -396,8 +392,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     String path = data.getStringExtra(AppConstant.PROFILE_IMAGE_PATH);
                     azureImage(path);
                     openQuizTestFragment(dashboardResModel);
-                    logparam.put(getResources().getString(R.string.log_start_quiz),"true");
-                    firebaseEventUtil.logEvent(getResources().getString(R.string.log_quiz_home_fragment_student),logparam);
+                    logparam.put(getResources().getString(R.string.log_start_quiz), "true");
+                    firebaseEventUtil.logEvent(getResources().getString(R.string.log_quiz_home_fragment_student), logparam);
                     // loadImageFromStorage(path);
                 } catch (Exception e) {
 
@@ -455,8 +451,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         if (v.getId() == R.id.wallet_bal_text) {
             // openFragment(new TeacherProfileFragment());
             closeToolTip();
-            logparam.put(getResources().getString(R.string.log_click_add_kyc_student),"true");
-            firebaseEventUtil.logEvent(getResources().getString(R.string.log_start_quiz),logparam);
+            logparam.put(getResources().getString(R.string.log_click_add_kyc_student), "true");
+            firebaseEventUtil.logEvent(getResources().getString(R.string.log_start_quiz), logparam);
             if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
             } else {
@@ -464,10 +460,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             }
 
         } else if (v.getId() == R.id.privacy_policy) {
-            //
-            //
+
             openFragment(new PrivacyPolicyFragment());
-           // openDemographicFragment();
+            // openDemographicFragment();
+            //openFragment(new PrivacyPolicyFragment());
+            openCongratulationsDialog();
         } else if (v.getId() == R.id.lang_eng) {
             CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -682,10 +679,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 if (dashboardResModel != null && !TextUtil.checkListIsEmpty(dashboardResModel.getQuiz())) {
                     for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
                         if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 8) {
-                            prefModel.setAssignmentReqModel(null);
-                            AppPref.INSTANCE.setPref(prefModel);
+
                             openCongratulationsDialog();
                         }
+                        prefModel.setAssignmentReqModel(null);
+                        AppPref.INSTANCE.setPref(prefModel);
+
                     }
                 }
 
@@ -695,21 +694,20 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void openChat() {
         Uri uri = Uri.parse("https://wa.me/919667480783");
-        logparam.put(getResources().getString(R.string.log_click_on_whatapp_student),"true");
-        firebaseEventUtil.logEvent(getResources().getString(R.string.log_quiz_home_fragment_student),logparam);
+        logparam.put(getResources().getString(R.string.log_click_on_whatapp_student), "true");
+        firebaseEventUtil.logEvent(getResources().getString(R.string.log_quiz_home_fragment_student), logparam);
         Intent i = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(Intent.createChooser(i, ""));
     }
 
 
-
     private void openErrorDialog() {
         CustomDialogModel customDialogModel = new CustomDialogModel();
-        customDialogModel.setContext(getActivity());
+        customDialogModel.setContext(AuroApp.getAppContext());
         customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
         customDialogModel.setContent("Your grade is upgraded from 10 to 12");
         customDialogModel.setTwoButtonRequired(true);
-        customDialog = new CustomDialog(customDialogModel);
+        customDialog = new CustomDialog(AuroApp.getAppContext(), customDialogModel);
         customDialog.setSecondBtnTxt("Ok");
         customDialog.setSecondCallcack(new CustomDialog.SecondCallcack() {
             @Override
@@ -727,28 +725,29 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         customDialog.show();
 
     }
-    public void randomlistforsnackbar(){
-        RandomInviteFriendsDataModel  model = new RandomInviteFriendsDataModel(
+
+    public void randomlistforsnackbar() {
+        RandomInviteFriendsDataModel model = new RandomInviteFriendsDataModel(
                 resources.getString(R.string.text1_random),
                 resources.getDimension(R.dimen._4sdp),
                 resources.getString(R.string.button1_random),
                 resources.getDimension(R.dimen._3sdp));
-        RandomInviteFriendsDataModel  model2 = new RandomInviteFriendsDataModel(
+        RandomInviteFriendsDataModel model2 = new RandomInviteFriendsDataModel(
                 resources.getString(R.string.text2_random_chalange_your_friends),
                 resources.getDimension(R.dimen._3sdp),
                 resources.getString(R.string.button1_random),
                 resources.getDimension(R.dimen._3sdp));
-        RandomInviteFriendsDataModel  model3 = new RandomInviteFriendsDataModel(
+        RandomInviteFriendsDataModel model3 = new RandomInviteFriendsDataModel(
                 resources.getString(R.string.text3_random_double_the),
                 resources.getDimension(R.dimen._3sdp),
                 resources.getString(R.string.button2_random),
                 resources.getDimension(R.dimen._3sdp));
-        RandomInviteFriendsDataModel  model4 = new RandomInviteFriendsDataModel(
+        RandomInviteFriendsDataModel model4 = new RandomInviteFriendsDataModel(
                 resources.getString(R.string.text4_random_learning),
                 resources.getDimension(R.dimen._3sdp),
                 resources.getString(R.string.button2_random),
                 resources.getDimension(R.dimen._3sdp));
-        RandomInviteFriendsDataModel  model5 = new RandomInviteFriendsDataModel(
+        RandomInviteFriendsDataModel model5 = new RandomInviteFriendsDataModel(
                 resources.getString(R.string.text5_random_multiply),
                 resources.getDimension(R.dimen._3sdp),
                 resources.getString(R.string.button1_random),
@@ -763,7 +762,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
         pickRandom();
     }
-    public void pickRandom(){
+
+    public void pickRandom() {
         Random rand = new Random();
         RandomInviteFriendsDataModel randomElement = list.get(rand.nextInt(list.size()));
         binding.customUiSnackbar.kycMsg.setText(randomElement.getTextTitle());

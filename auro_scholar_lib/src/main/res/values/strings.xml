@@ -235,8 +235,13 @@
     <string name="tutorial_kyc">Please click here to upload your\nKYC details</string>
     <string name="invite_your_Student">Invite Your Students</string>
     <string name="pref_tutorial">tutorial</string>
+
     <string name="address_not_found">Address not found</string>
 
+    <string name="retake_quiz">Retake Quiz</string>
+    <string name="auro_scholar_wallet">You have got ₹50 Scholarship in your\nAuro Scholar Wallet!</string>
+    <string name="share_with_friends">Share with friends</string>
+    <string name="congratulation_new">Congratulations</string>
 
     <string-array name="classes">
         <item>1st</item>
