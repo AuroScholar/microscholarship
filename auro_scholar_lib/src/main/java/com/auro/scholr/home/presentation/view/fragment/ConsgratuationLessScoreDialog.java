@@ -3,7 +3,6 @@ package com.auro.scholr.home.presentation.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,39 +17,33 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseDialog;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.databinding.DialogCongratulations2Binding;
-import com.auro.scholr.databinding.DialogCongratulationsBinding;
+import com.auro.scholr.databinding.DialogLessScoreCongratulationsBinding;
 import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewModel;
-import com.auro.scholr.home.presentation.viewmodel.InviteFriendViewModel;
-import com.auro.scholr.util.ViewUtil;
-import com.auro.scholr.util.permission.PermissionHandler;
-import com.auro.scholr.util.permission.PermissionUtil;
-import com.auro.scholr.util.permission.Permissions;
 import com.bumptech.glide.Glide;
+import com.google.android.material.shape.CornerFamily;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
 
-import java.util.ArrayList;
 import java.util.Random;
-
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-public class CongratulationsDialog extends BaseDialog implements View.OnClickListener {
+public class ConsgratuationLessScoreDialog extends BaseDialog implements View.OnClickListener {
 
 
     @Inject
     @Named("CongratulationsDialog")
     ViewModelFactory viewModelFactory;
-    DialogCongratulations2Binding binding;
+    DialogLessScoreCongratulationsBinding binding;
     CongratulationsDialogViewModel viewModel;
     Context mcontext;
 
 
 
-    private static final String TAG = CongratulationsDialog.class.getSimpleName();
+    private static final String TAG = ConsgratuationLessScoreDialog.class.getSimpleName();
 
-    public CongratulationsDialog(Context mcontext) {
+    public ConsgratuationLessScoreDialog(Context mcontext) {
         this.mcontext = mcontext;
 
     }
@@ -74,16 +67,17 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
 
     @Override
     protected void init() {
-        binding.btnShare.setOnClickListener(this);
+
         binding.icClose.setOnClickListener(this);
         binding.txtStartQuiz.setOnClickListener(this);
         binding.txtRetakeQuiz.setOnClickListener(this);
-
-
-        Glide.with(this).load(R.raw.spracle).into(binding.backgroundSprincle);
-        // create random object
-        Random randomno = new Random();
         binding.tickerView.setPreferredScrollingDirection(TickerView.ScrollingDirection.DOWN);
+        float radius = getResources().getDimension(R.dimen._10sdp);
+        binding.imgtryagain.setShapeAppearanceModel(binding.imgtryagain.getShapeAppearanceModel()
+                .toBuilder()
+                .setTopRightCorner(CornerFamily.ROUNDED,radius)
+                .setTopLeftCorner(CornerFamily.ROUNDED,radius)
+                .build());
         binding.tickerView.setCharacterLists(TickerUtils.provideNumberList());
         for(int i=1 ;i<=50;i++){
            binding.tickerView.setText(i+"%");
@@ -102,21 +96,25 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
 
     @Override
     protected int getLayout() {
-        return R.layout.dialog_congratulations_2;
+        return R.layout.dialog_less_score_congratulations;
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.btnShare) {
+   /*     if (id == R.id.btnShare) {
+
             shareWithFriends();
-        } else if (id == R.id.icClose) {
+
+        } else */
+       if (id == R.id.icClose) {
             dismiss();
         }else if(id == R.id.txtRetakeQuiz){
+
         }else if(id == R.id.txtStartQuiz){
+
         }
     }
-
     public void shareWithFriends() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);

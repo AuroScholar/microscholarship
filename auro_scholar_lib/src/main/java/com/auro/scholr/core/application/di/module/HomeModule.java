@@ -156,4 +156,11 @@ public class HomeModule {
     ViewModelFactory provideTransactionsFragmentViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
     }
+
+    /*@Provides
+    @Singleton
+    @Named("ConsgratuationsLessScoreDialog")
+    ViewModelFactory provideConsgratuationsLessScoreDialogViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }*/
 }
