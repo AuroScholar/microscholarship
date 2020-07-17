@@ -198,6 +198,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/button_retake_blue"
                             android:gravity="center"
+                            android:visibility="gone"
                             android:paddingLeft="@dimen/_21sdp"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingRight="@dimen/_20sdp"
@@ -216,7 +217,7 @@
                             app:layout_constraintHorizontal_bias="0.5"/>
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/txtStartQuiz"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginRight="@dimen/_15sdp"

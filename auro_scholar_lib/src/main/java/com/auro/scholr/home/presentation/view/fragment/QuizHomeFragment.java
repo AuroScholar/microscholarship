@@ -37,7 +37,6 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
-import com.auro.scholr.core.common.SdkCallBack;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
@@ -51,11 +50,6 @@ import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
-import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
-import com.auro.scholr.teacher.presentation.view.fragment.SelectYourMessageDialogFragment;
-import com.auro.scholr.teacher.presentation.view.fragment.TeacherKycFragment;
-import com.auro.scholr.teacher.presentation.view.fragment.TeacherProfileFragment;
-import com.auro.scholr.teacher.presentation.view.fragment.TeacherSaveDetailFragment;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
@@ -65,7 +59,6 @@ import com.auro.scholr.util.firebase.FirebaseEventUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
-import com.google.gson.Gson;
 
 import com.bumptech.glide.Glide;
 
@@ -463,8 +456,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             openFragment(new PrivacyPolicyFragment());
             // openDemographicFragment();
             //openFragment(new PrivacyPolicyFragment());
-           // openCongratulationsDialog();
-           // openCongratulationsLessScoreDialog();
+            //openCongratulationsDialog(quizResModel, assignmentReqModel);
+            // openCongratulationsLessScoreDialog();
         } else if (v.getId() == R.id.lang_eng) {
             CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -538,16 +531,22 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void commonEventListner(CommonDataModel commonDataModel) {
-        if (commonDataModel.getClickType() == Status.START_QUIZ_BUTON) {
-            quizResModel = (QuizResModel) commonDataModel.getObject();
-            askPermission();
-        } else if (commonDataModel.getClickType() == Status.FRIEND_LEADER_BOARD_CLICK) {
+        switch (commonDataModel.getClickType()) {
+            case NEXT_QUIZ_CLICK:
+                quizResModel = (QuizResModel) commonDataModel.getObject();
+                askPermission();
+                break;
 
+            case START_QUIZ_BUTON:
+                quizResModel = (QuizResModel) commonDataModel.getObject();
+                askPermission();
+                break;
+
+            case FRIEND_LEADER_BOARD_CLICK:
+
+                break;
         }
-//todo just test
-      /* CongratulationsDialog  congratulationsDialog = new CongratulationsDialog(getContext());
-        congratulationsDialog.setCancelable(true);
-        openFragmentDialog(congratulationsDialog);*/
+
     }
 
     public void getSpannableString() {
@@ -666,10 +665,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
-    private void openCongratulationsDialog() {
-        CongratulationsDialog congratulationsDialog = new CongratulationsDialog(getContext());
+    private void openCongratulationsDialog(DashboardResModel dashboardResModel, AssignmentReqModel assignmentReqModel) {
+        CongratulationsDialog congratulationsDialog = new CongratulationsDialog(getContext(), dashboardResModel, assignmentReqModel, this);
         openFragmentDialog(congratulationsDialog);
     }
+
     private void openCongratulationsLessScoreDialog() {
         ConsgratuationLessScoreDialog congratulationsDialog = new ConsgratuationLessScoreDialog(getContext());
         openFragmentDialog(congratulationsDialog);
@@ -681,15 +681,17 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             AssignmentReqModel assignmentReqModel = prefModel.getAssignmentReqModel();
             if (!TextUtil.isEmpty(assignmentReqModel.getExam_name()) && !TextUtil.isEmpty(assignmentReqModel.getQuiz_attempt())) {
                 if (dashboardResModel != null && !TextUtil.checkListIsEmpty(dashboardResModel.getQuiz())) {
-                    for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
+                    openCongratulationsDialog(dashboardResModel, assignmentReqModel);
+                    prefModel.setAssignmentReqModel(null);
+                    AppPref.INSTANCE.setPref(prefModel);
+                   /* for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
                         if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 8) {
-
-                            openCongratulationsDialog();
+                            openCongratulationsDialog(dashboardResModel, assignmentReqModel);
                         }
                         prefModel.setAssignmentReqModel(null);
                         AppPref.INSTANCE.setPref(prefModel);
 
-                    }
+                    }*/
                 }
 
             }
