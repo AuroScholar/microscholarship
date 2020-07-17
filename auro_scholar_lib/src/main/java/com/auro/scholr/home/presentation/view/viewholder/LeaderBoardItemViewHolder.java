@@ -1,51 +1,30 @@
 package com.auro.scholr.home.presentation.view.viewholder;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.auro.scholr.R;
-import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.util.uiwidget.RPTextView;
 import com.auro.scholr.databinding.FriendsBoardItemLayoutBinding;
+import com.auro.scholr.databinding.QuizItemLayoutBinding;
 import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ImageUtil;
 import com.auro.scholr.util.TextUtil;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 
-import android.graphics.Bitmap;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
-import com.auro.scholr.databinding.FriendsBoardItemLayoutBinding;
-import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
 
@@ -59,10 +38,19 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
 
 
     public void bindUser(FriendsLeaderBoardModel model, List<FriendsLeaderBoardModel> list, int position, CommonCallBackListner commonCallBackListner) {
-        if(list.size()-1 == position){
+        if (list.size() - 1 == position) {
             layoutBinding.viewLine.setVisibility(View.GONE);
-        }else{
+        } else {
             layoutBinding.viewLine.setVisibility(View.VISIBLE);
+        }
+
+        if (model.isChallengedYou()) {
+            layoutBinding.parentLayout.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.blue_color));
+            startAnimationQuizButton(layoutBinding.parentLayout);
+            layoutBinding.inviteText.setText(AuroApp.getAppContext().getResources().getString(R.string.accept));
+        } else {
+            layoutBinding.inviteText.setText(AuroApp.getAppContext().getResources().getString(R.string.challenge));
+            layoutBinding.parentLayout.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.white));
         }
 
         if (!TextUtil.isEmpty(model.getStudentName())) {
@@ -96,8 +84,14 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
         layoutBinding.inviteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (commonCallBackListner != null) {
-                    commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.SEND_INVITE_CLICK, model));
+                if (layoutBinding.inviteText.getText().toString().equalsIgnoreCase(AuroApp.getAppContext().getResources().getString(R.string.challenge))) {
+                    if (commonCallBackListner != null) {
+                        commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.SEND_INVITE_CLICK, model));
+                    }
+                } else {
+                    if (commonCallBackListner != null) {
+                        commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.ACCEPT_INVITE_CLICK, model));
+                    }
                 }
             }
         });
@@ -121,4 +115,62 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
 
         textview.setText(builder, TextView.BufferType.SPANNABLE);
     }
+
+    private void startAnimationQuizButton(ConstraintLayout binding) {
+        //Animation on button
+        Animation anim = AnimationUtils.loadAnimation(AuroApp.getAppContext(), R.anim.fadein);
+
+        anim.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+                startAnimationFadeOutButton(binding);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onAnimationStart(Animation arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+        });
+        binding.startAnimation(anim);
+
+    }
+
+
+    private void startAnimationFadeOutButton(ConstraintLayout binding) {
+        //Animation on button
+        Animation anim = AnimationUtils.loadAnimation(AuroApp.getAppContext(), R.anim.fadeout);
+
+        anim.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+                startAnimationQuizButton(binding);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onAnimationStart(Animation arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+        });
+        binding.startAnimation(anim);
+    }
+
+
 }

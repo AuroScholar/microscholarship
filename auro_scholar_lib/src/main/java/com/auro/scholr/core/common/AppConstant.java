@@ -211,6 +211,8 @@ public interface AppConstant {
         String RECEIVER_MOBILE_NUMBER = "receiver_mobile_no";
         String NOTIFICATION_TITLE = "notification_title";
         String NOTIFICATION_MESSAGE = "notification_message";
+        String CHALLENGE_BY = "challenge_by";
+        String CHALLENGE_TO = "challenge_to";
     }
 
     interface Source {

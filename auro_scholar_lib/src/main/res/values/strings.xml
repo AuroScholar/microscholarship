@@ -244,6 +244,8 @@
     <string name="congratulation_new">Congratulations</string>
     <string name="next_quiz">Next Quiz</string>
     <string name="impossible">It always seems impossible until it’s done.</string>
+    <string name="accept">Accept</string>
+    <string name="challenge">Challenge</string>
 
     <string-array name="classes">
         <item>1st</item>

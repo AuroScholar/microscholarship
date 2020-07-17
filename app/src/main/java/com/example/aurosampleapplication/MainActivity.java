@@ -161,11 +161,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AuroScholar.startTeacherSDK(auroScholarDataModel);
         //   openFragment(AuroScholar.startAuroSDK(inputModel));
     }
-
+/*inputModel.setMobileNumber("8700808003");
+        inputModel.setStudentClass("11");*/
     private void openGenricSDK() {
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
-        inputModel.setMobileNumber("8700808003");
-        inputModel.setStudentClass("11");
+        inputModel.setMobileNumber("7503600686");
+        inputModel.setStudentClass("6");
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setReferralLink("");
         inputModel.setActivity(this);

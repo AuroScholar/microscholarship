@@ -10,6 +10,7 @@ import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AssignmentResModel;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AzureResModel;
+import com.auro.scholr.home.data.model.ChallengeAccepResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.FriendListResDataModel;
@@ -33,6 +34,7 @@ import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_200;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_400;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_401;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_FAIL;
+import static com.auro.scholr.core.common.Status.ACCEPT_INVITE_CLICK;
 import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
 import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
@@ -67,6 +69,22 @@ public class HomeRemoteUseCase extends NetworkUseCase {
             }
         });
     }
+
+    public Single<ResponseApi> acceptInviteApi(SendInviteNotificationReqModel reqModel) {
+        return dashboardRemoteData.sendInviteNotificationApi(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+                    return handleResponse(response, Status.ACCEPT_INVITE_CLICK);
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
 
     public Single<ResponseApi> inviteFriendListApi() {
 
@@ -230,8 +248,10 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         } else if (status == SEND_INVITE_API) {
             TeacherResModel teacherResModel1 = new Gson().fromJson(response.body(), TeacherResModel.class);
             return ResponseApi.success(teacherResModel1, status);
+        } else if (status == ACCEPT_INVITE_CLICK) {
+            ChallengeAccepResModel resModel = new Gson().fromJson(response.body(), ChallengeAccepResModel.class);
+            return ResponseApi.success(resModel, status);
         }
-
 
 
         return ResponseApi.fail(null, status);

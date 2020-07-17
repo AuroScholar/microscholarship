@@ -73,4 +73,8 @@ public interface HomeRemoteApi {
     @FormUrlEncoded
     Single<Response<JsonObject>> sendInviteNotificationApi(@FieldMap Map<String, String> params);
 
+    @POST(URLConstant.ACCEPT_STUDENT_INVITE)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> acceptInviteApi(@FieldMap Map<String, String> params);
+
 }

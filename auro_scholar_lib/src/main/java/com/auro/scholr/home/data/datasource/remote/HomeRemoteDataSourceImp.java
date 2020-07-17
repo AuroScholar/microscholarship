@@ -134,4 +134,13 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         params.put(AppConstant.AssignmentApiParams.EXAMLANG, assignmentReqModel.getExamlang());
         return homeRemoteApi.getAssignmentId(params);
     }
+
+
+    @Override
+    public Single<Response<JsonObject>> acceptInviteApi(SendInviteNotificationReqModel reqModel) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.SendInviteNotificationApiParam.CHALLENGE_BY, reqModel.getSender_mobile_no());
+        params.put(AppConstant.SendInviteNotificationApiParam.CHALLENGE_TO, reqModel.getReceiver_mobile_no());
+        return homeRemoteApi.sendInviteNotificationApi(params);
+    }
 }
