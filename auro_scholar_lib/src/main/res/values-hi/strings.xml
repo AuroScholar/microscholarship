@@ -240,5 +240,17 @@
     <string name="next_quiz">Next Quiz</string>
     <string name="impossible">It always seems impossible until it’s done.</string>
     <string name="challenge">Challenge</string>
+    <string name="taking_private_tutions">निजी ट्युशन लेना ?</string>
+    <string name="taking_type">टेंशन टाइप</string>
+    <string-array name="privateTutionList">
+        <item>No</item>
+        <item>YES</item>
+    </string-array>
 
+    <string-array name="privateTypeList">
+        <item>Please Select Tution Type</item>
+        <item>Group</item>
+        <item>Personal</item>
+        <item>Home</item>
+    </string-array>
 </resources>

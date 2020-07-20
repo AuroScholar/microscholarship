@@ -1,7 +1,6 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -10,7 +9,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.TestLooperManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,17 +29,14 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
-import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.DemographicFragmentLayoutBinding;
-import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
 import com.auro.scholr.util.AppLogger;
-import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
@@ -80,6 +75,8 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     List<String> schooltypeLines;
     List<String> boardLines;
     List<String> languageLines;
+    List<String> privateTutionList;
+    List<String> privateTutionTypeList;
     DashboardResModel dashboardResModel;
     Resources resources;
     boolean isLocationFine;
@@ -149,6 +146,29 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
             String lang = languageLines.get(i);
             if (!TextUtil.isEmpty(dashboardResModel.getLanguage()) && lang.equalsIgnoreCase(dashboardResModel.getLanguage())) {
                 binding.SpinnerLanguageMedium.setSelection(i);
+                break;
+            }
+        }
+
+        // Spinner Drop down tution
+        privateTutionList = Arrays.asList(getResources().getStringArray(R.array.privateTutionList));
+        spinnermethodcall(privateTutionList, binding.spinnerPrivateTution);
+        for (int i = 0; i < privateTutionList.size(); i++) {
+            String lang = privateTutionList.get(i);
+            if (!TextUtil.isEmpty(dashboardResModel.getLanguage()) && lang.equalsIgnoreCase(dashboardResModel.getLanguage())) {
+                // binding.spinnerPrivateTution.setSelection(i);
+                break;
+            }
+        }
+
+
+        // Spinner Drop down tution  Type
+        privateTutionTypeList = Arrays.asList(getResources().getStringArray(R.array.privateTypeList));
+        spinnermethodcall(privateTutionTypeList, binding.spinnerPrivateType);
+        for (int i = 0; i < privateTutionTypeList.size(); i++) {
+            String lang = privateTutionTypeList.get(i);
+            if (!TextUtil.isEmpty(dashboardResModel.getLanguage()) && lang.equalsIgnoreCase(dashboardResModel.getLanguage())) {
+                // binding.spinnerPrivateType.setSelection(i);
                 break;
             }
         }
@@ -241,6 +261,28 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 demographicResModel.setBoard_type(binding.SpinnerBoard.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+
+        binding.spinnerPrivateTution.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                String value = binding.spinnerPrivateTution.getSelectedItem().toString();
+                if (value.equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+                    binding.spinnerPrivateType.setVisibility(View.VISIBLE);
+                    binding.tvPrivateType.setVisibility(View.VISIBLE);
+                    binding.privateTypeArrow.setVisibility(View.VISIBLE);
+                } else {
+                    binding.spinnerPrivateType.setVisibility(View.GONE);
+                    binding.tvPrivateType.setVisibility(View.GONE);
+                    binding.privateTypeArrow.setVisibility(View.GONE);
+                }
             }
 
             @Override

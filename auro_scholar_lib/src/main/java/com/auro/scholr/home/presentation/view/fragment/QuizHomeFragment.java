@@ -451,9 +451,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             }
 
         } else if (v.getId() == R.id.privacy_policy) {
-            openFragment(new PrivacyPolicyFragment());
-            // openDemographicFragment();
             //openFragment(new PrivacyPolicyFragment());
+             openDemographicFragment();
             //openCongratulationsDialog(quizResModel, assignmentReqModel);
             // openCongratulationsLessScoreDialog();
         } else if (v.getId() == R.id.lang_eng) {

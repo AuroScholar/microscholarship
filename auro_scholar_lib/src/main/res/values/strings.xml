@@ -95,6 +95,18 @@
         <item>English</item>
         <item>Other</item>
     </string-array>
+    <string-array name="privateTutionList">
+        <item>No</item>
+        <item>YES</item>
+    </string-array>
+
+    <string-array name="privateTypeList">
+        <item>Please Select Tution Type</item>
+        <item>Group</item>
+        <item>Personal</item>
+        <item>Home</item>
+    </string-array>
+
     <string name="congratulations">Congratulations!</string>
     <string name="successfully">You have got ₹50 Scholarship Cash.\n share with your friends!</string>
     <string name="share_with">Share With Friends</string>
@@ -246,6 +258,8 @@
     <string name="impossible">It always seems impossible until it’s done.</string>
     <string name="accept">Accept</string>
     <string name="challenge">Challenge</string>
+    <string name="taking_private_tutions">Taking Private Tutions ?</string>
+    <string name="taking_type">Taking Type</string>
 
     <string-array name="classes">
         <item>1st</item>
