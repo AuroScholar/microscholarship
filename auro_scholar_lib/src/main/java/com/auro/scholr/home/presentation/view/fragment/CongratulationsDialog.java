@@ -80,7 +80,10 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
         binding.txtRetakeQuiz.setOnClickListener(this);
 
 
-        Glide.with(this).load(R.raw.spracle).into(binding.backgroundSprincle);
+        Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprincle11);
+        Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprincle12);
+        Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprinclel21);
+        Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprinclel22);
         // create random object
         Random randomno = new Random();
         binding.tickerView.setPreferredScrollingDirection(TickerView.ScrollingDirection.DOWN);

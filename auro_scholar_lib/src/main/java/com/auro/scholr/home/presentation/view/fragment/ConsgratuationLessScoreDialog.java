@@ -101,19 +101,12 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
 
     @Override
     public void onClick(View view) {
-        int id = view.getId();
-   /*     if (id == R.id.btnShare) {
-
-            shareWithFriends();
-
-        } else */
-       if (id == R.id.icClose) {
-            dismiss();
-        }else if(id == R.id.txtRetakeQuiz){
-
-        }else if(id == R.id.txtStartQuiz){
-
-        }
+           int id = view.getId();
+           if (id == R.id.icClose) {
+                dismiss();
+            }else if(id == R.id.txtRetakeQuiz){
+            }else if(id == R.id.txtStartQuiz){
+            }
     }
     public void shareWithFriends() {
         Intent sendIntent = new Intent();
