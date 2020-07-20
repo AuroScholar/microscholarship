@@ -139,7 +139,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-
                 <com.auro.scholr.core.util.uiwidget.RPTextView
                     android:id="@+id/invite_text"
                     android:layout_width="wrap_content"

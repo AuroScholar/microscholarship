@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    /*    auroScholarDataModel.setMobileNumber("7503600686");
+    /*  auroScholarDataModel.setMobileNumber("7503600686");
         auroScholarDataModel.setScholrId("880426");
         auroScholarDataModel.setStudentClass("6");*/
 
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setStudentClass("11");*/
     private void openGenricSDK() {
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
-        inputModel.setMobileNumber("7503600686");
+        inputModel.setMobileNumber("7503600601");
         inputModel.setStudentClass("6");
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setReferralLink("");

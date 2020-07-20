@@ -31,6 +31,10 @@ public class FriendsLeaderBoardModel {
     private boolean challengedYou;
 
 
+    @SerializedName("sent_text")
+    @Expose
+    private String sentText;
+
 
     boolean progress;
 
@@ -123,5 +127,13 @@ public class FriendsLeaderBoardModel {
 
     public void setChallengeCount(int challengeCount) {
         this.challengeCount = challengeCount;
+    }
+
+    public String getSentText() {
+        return sentText;
+    }
+
+    public void setSentText(String sentText) {
+        this.sentText = sentText;
     }
 }

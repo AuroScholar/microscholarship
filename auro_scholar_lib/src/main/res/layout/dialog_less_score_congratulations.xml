@@ -168,7 +168,7 @@
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingRight="@dimen/_15sdp"
                             android:paddingBottom="@dimen/_5sdp"
-                            android:text="@string/auro_scholar_wallet"
+                            android:text="You are almost there! Let's  make the scholarship happen!"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_5sdp"
@@ -192,13 +192,14 @@
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/txtRetakeQuiz"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/_120sdp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_15sdp"
                             android:background="@drawable/button_retake_blue"
                             android:gravity="center"
                             android:paddingLeft="@dimen/_21sdp"
                             android:paddingTop="@dimen/_10sdp"
+                            android:visibility="visible"
                             android:layout_marginBottom="@dimen/_15sdp"
                             android:paddingRight="@dimen/_20sdp"
                             android:paddingBottom="@dimen/_10sdp"
@@ -215,7 +216,7 @@
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/txtStartQuiz"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/_120sdp"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/_15sdp"
                             android:layout_marginLeft="@dimen/_15sdp"

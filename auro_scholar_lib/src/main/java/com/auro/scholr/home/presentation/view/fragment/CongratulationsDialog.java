@@ -48,6 +48,7 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
     DashboardResModel dashboardResModel;
     AssignmentReqModel assignmentReqModel;
     CommonCallBackListner commonCallBackListner;
+    int marks;
 
 
     private static final String TAG = CongratulationsDialog.class.getSimpleName();
@@ -89,7 +90,17 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
         Random randomno = new Random();
         binding.tickerView.setPreferredScrollingDirection(TickerView.ScrollingDirection.DOWN);
         binding.tickerView.setCharacterLists(TickerUtils.provideNumberList());
-        for (int i = 1; i <= 50; i++) {
+        for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
+            if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 1) {
+                {
+                    marks = quizResModel.getScorepoints() * 10;
+                }
+                break;
+            }
+        }
+
+
+        for (int i = 1; i <= marks; i++) {
             binding.tickerView.setText(i + "%");
         }
     }
@@ -142,9 +153,8 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
 
 
     private void makeQuiz() {
-
         for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
-            if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 8) {
+            if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 1) {
                 {
                     if (!checkAllQuizAreFinishedOrNot()) {
                         if (quizResModel.getNumber() == 3) {
@@ -154,6 +164,8 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
                             } else if (dashboardResModel.getQuiz().get(1).getAttempt() < 3) {
                                 //go to the quiz two
                                 sendClickCallBack(dashboardResModel.getQuiz().get(1));
+                            } else if (quizResModel.getAttempt() < 3) {
+                                sendClickCallBack(dashboardResModel.getQuiz().get(2));
                             }
 
                         } else if (quizResModel.getNumber() == 2) {
@@ -163,6 +175,8 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
                             } else if (dashboardResModel.getQuiz().get(0).getAttempt() < 3) {
                                 //go to the quiz one
                                 sendClickCallBack(dashboardResModel.getQuiz().get(0));
+                            } else if (quizResModel.getAttempt() < 3) {
+                                sendClickCallBack(dashboardResModel.getQuiz().get(1));
                             }
 
                         } else if (quizResModel.getNumber() == 1) {
@@ -172,6 +186,8 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
                             } else if (dashboardResModel.getQuiz().get(2).getAttempt() < 3) {
                                 //go to the quiz three
                                 sendClickCallBack(dashboardResModel.getQuiz().get(2));
+                            } else if (quizResModel.getAttempt() < 3) {
+                                sendClickCallBack(dashboardResModel.getQuiz().get(0));
                             }
                         }
 
@@ -197,7 +213,7 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
 
     private void sendClickCallBack(QuizResModel quizResModel) {
         if (commonCallBackListner != null) {
-            commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(0,Status.NEXT_QUIZ_CLICK,quizResModel));
+            commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(0, Status.NEXT_QUIZ_CLICK, quizResModel));
         }
     }
 

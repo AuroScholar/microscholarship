@@ -30,6 +30,8 @@ import java.util.List;
 
 public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
     FriendsBoardItemLayoutBinding layoutBinding;
+    Animation startAnimation;
+    Animation endanimation;
 
     public LeaderBoardItemViewHolder(@NonNull FriendsBoardItemLayoutBinding layoutBinding) {
         super(layoutBinding.getRoot());
@@ -45,10 +47,22 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
         }
 
         if (model.isChallengedYou()) {
+            if (!TextUtil.isEmpty(model.getSentText()) && model.getSentText().equalsIgnoreCase(AuroApp.getAppContext().getString(R.string.accept))) {
+                layoutBinding.sentTxt.setText("Accepted");
+            }
+            layoutBinding.challengeText.setVisibility(View.VISIBLE);
             layoutBinding.parentLayout.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.blue_color));
-            startAnimationQuizButton(layoutBinding.parentLayout);
+           // startAnimationQuizButton(layoutBinding.parentLayout);
             layoutBinding.inviteText.setText(AuroApp.getAppContext().getResources().getString(R.string.accept));
         } else {
+            if (startAnimation != null) {
+                startAnimation.cancel();
+            }
+
+            if (endanimation != null) {
+                endanimation.cancel();
+            }
+            layoutBinding.challengeText.setVisibility(View.GONE);
             layoutBinding.inviteText.setText(AuroApp.getAppContext().getResources().getString(R.string.challenge));
             layoutBinding.parentLayout.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.white));
         }
@@ -118,9 +132,9 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
 
     private void startAnimationQuizButton(ConstraintLayout binding) {
         //Animation on button
-        Animation anim = AnimationUtils.loadAnimation(AuroApp.getAppContext(), R.anim.fadein);
+        startAnimation = AnimationUtils.loadAnimation(AuroApp.getAppContext(), R.anim.fadein);
 
-        anim.setAnimationListener(new Animation.AnimationListener() {
+        startAnimation.setAnimationListener(new Animation.AnimationListener() {
 
             @Override
             public void onAnimationEnd(Animation arg0) {
@@ -140,16 +154,16 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
             }
 
         });
-        binding.startAnimation(anim);
+        binding.startAnimation(startAnimation);
 
     }
 
 
     private void startAnimationFadeOutButton(ConstraintLayout binding) {
         //Animation on button
-        Animation anim = AnimationUtils.loadAnimation(AuroApp.getAppContext(), R.anim.fadeout);
+        endanimation = AnimationUtils.loadAnimation(AuroApp.getAppContext(), R.anim.fadeout);
 
-        anim.setAnimationListener(new Animation.AnimationListener() {
+        endanimation.setAnimationListener(new Animation.AnimationListener() {
 
             @Override
             public void onAnimationEnd(Animation arg0) {
@@ -169,7 +183,7 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
             }
 
         });
-        binding.startAnimation(anim);
+        binding.startAnimation(endanimation);
     }
 
 

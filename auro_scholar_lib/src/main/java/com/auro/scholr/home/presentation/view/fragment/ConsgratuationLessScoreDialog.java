@@ -16,9 +16,16 @@ import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseDialog;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.core.common.CommonCallBackListner;
+import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.DialogCongratulations2Binding;
 import com.auro.scholr.databinding.DialogLessScoreCongratulationsBinding;
+import com.auro.scholr.home.data.model.AssignmentReqModel;
+import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewModel;
+import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.ConversionUtil;
 import com.bumptech.glide.Glide;
 import com.google.android.material.shape.CornerFamily;
 import com.robinhood.ticker.TickerUtils;
@@ -38,13 +45,20 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
     DialogLessScoreCongratulationsBinding binding;
     CongratulationsDialogViewModel viewModel;
     Context mcontext;
-
+    CommonCallBackListner commonCallBackListner;
+    DashboardResModel dashboardResModel;
+    AssignmentReqModel assignmentReqModel;
+    int marks;
+    int finishedTestPos;
 
 
     private static final String TAG = ConsgratuationLessScoreDialog.class.getSimpleName();
 
-    public ConsgratuationLessScoreDialog(Context mcontext) {
+    public ConsgratuationLessScoreDialog(Context mcontext, CommonCallBackListner commonCallBackListner, DashboardResModel dashboardResModel, AssignmentReqModel assignmentReqModel) {
         this.mcontext = mcontext;
+        this.commonCallBackListner = commonCallBackListner;
+        this.dashboardResModel = dashboardResModel;
+        this.assignmentReqModel = assignmentReqModel;
 
     }
 
@@ -75,12 +89,23 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
         float radius = getResources().getDimension(R.dimen._10sdp);
         binding.imgtryagain.setShapeAppearanceModel(binding.imgtryagain.getShapeAppearanceModel()
                 .toBuilder()
-                .setTopRightCorner(CornerFamily.ROUNDED,radius)
-                .setTopLeftCorner(CornerFamily.ROUNDED,radius)
+                .setTopRightCorner(CornerFamily.ROUNDED, radius)
+                .setTopLeftCorner(CornerFamily.ROUNDED, radius)
                 .build());
         binding.tickerView.setCharacterLists(TickerUtils.provideNumberList());
-        for(int i=1 ;i<=50;i++){
-           binding.tickerView.setText(i+"%");
+        finishedTestPos = ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getExam_name());
+        marks = dashboardResModel.getQuiz().get(finishedTestPos-1).getScorepoints();
+        marks = marks * 10;
+        for (int i = 1; i <= marks; i++) {
+            binding.tickerView.setText(i + "%");
+        }
+
+        if (ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getQuiz_attempt()) < 3) {
+            binding.txtRetakeQuiz.setVisibility(View.VISIBLE);
+            binding.txtStartQuiz.setVisibility(View.GONE);
+        } else {
+            binding.txtRetakeQuiz.setVisibility(View.GONE);
+            binding.txtStartQuiz.setVisibility(View.VISIBLE);
         }
     }
 
@@ -107,14 +132,15 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
             shareWithFriends();
 
         } else */
-       if (id == R.id.icClose) {
+        if (id == R.id.icClose) {
             dismiss();
-        }else if(id == R.id.txtRetakeQuiz){
-
-        }else if(id == R.id.txtStartQuiz){
-
+        } else if (id == R.id.txtRetakeQuiz) {
+            sendClickCallBack(dashboardResModel.getQuiz().get(finishedTestPos-1));
+        } else if (id == R.id.txtStartQuiz) {
+            makeQuiz();
         }
     }
+
     public void shareWithFriends() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
@@ -123,6 +149,65 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         dismiss();
         mcontext.startActivity(shareIntent);
+    }
+
+    private void makeQuiz() {
+        for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
+            if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 1) {
+                {
+                    if (!checkAllQuizAreFinishedOrNot()) {
+                        if (quizResModel.getNumber() == 3) {
+                            if (dashboardResModel.getQuiz().get(0).getAttempt() < 3) {
+                                //go to the quiz one
+                                sendClickCallBack(dashboardResModel.getQuiz().get(0));
+                            } else if (dashboardResModel.getQuiz().get(1).getAttempt() < 3) {
+                                //go to the quiz two
+                                sendClickCallBack(dashboardResModel.getQuiz().get(1));
+                            }
+                        } else if (quizResModel.getNumber() == 2) {
+                            if (dashboardResModel.getQuiz().get(2).getAttempt() < 3) {
+                                //go to the quiz three
+                                sendClickCallBack(dashboardResModel.getQuiz().get(2));
+                            } else if (dashboardResModel.getQuiz().get(0).getAttempt() < 3) {
+                                //go to the quiz one
+                                sendClickCallBack(dashboardResModel.getQuiz().get(0));
+                            }
+
+                        } else if (quizResModel.getNumber() == 1) {
+                            if (dashboardResModel.getQuiz().get(1).getAttempt() < 3) {
+                                //go to the quiz Two
+                                sendClickCallBack(dashboardResModel.getQuiz().get(1));
+                            } else if (dashboardResModel.getQuiz().get(2).getAttempt() < 3) {
+                                //go to the quiz three
+                                sendClickCallBack(dashboardResModel.getQuiz().get(2));
+                            }
+                        }
+
+                    }
+
+                }
+            }
+
+        }
+    }
+
+
+    private boolean checkAllQuizAreFinishedOrNot() {
+        int totalAttempt = 0;
+        for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
+            totalAttempt = quizResModel.getAttempt() + totalAttempt;
+        }
+        if (totalAttempt == 9) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void sendClickCallBack(QuizResModel quizResModel) {
+        if (commonCallBackListner != null) {
+            commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(0, Status.NEXT_QUIZ_CLICK, quizResModel));
+        }
     }
 
 

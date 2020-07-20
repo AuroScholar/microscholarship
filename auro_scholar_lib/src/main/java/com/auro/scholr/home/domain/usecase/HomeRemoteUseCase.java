@@ -71,7 +71,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
     }
 
     public Single<ResponseApi> acceptInviteApi(SendInviteNotificationReqModel reqModel) {
-        return dashboardRemoteData.sendInviteNotificationApi(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+        return dashboardRemoteData.acceptInviteApi(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
             @Override
             public ResponseApi apply(Response<JsonObject> response) throws Exception {
 

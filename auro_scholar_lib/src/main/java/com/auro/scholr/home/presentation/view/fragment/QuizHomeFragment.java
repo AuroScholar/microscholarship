@@ -241,8 +241,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     public void onStop() {
         super.onStop();
         CustomSnackBar.INSTANCE.dismissCartSnackbar();
-
-
     }
 
     @Override
@@ -670,8 +668,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         openFragmentDialog(congratulationsDialog);
     }
 
-    private void openCongratulationsLessScoreDialog() {
-        ConsgratuationLessScoreDialog congratulationsDialog = new ConsgratuationLessScoreDialog(getContext());
+    private void openCongratulationsLessScoreDialog(DashboardResModel dashboardResModel, AssignmentReqModel assignmentReqModel) {
+        ConsgratuationLessScoreDialog congratulationsDialog = new ConsgratuationLessScoreDialog(getContext(), this, dashboardResModel, assignmentReqModel);
         openFragmentDialog(congratulationsDialog);
     }
 
@@ -681,17 +679,20 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             AssignmentReqModel assignmentReqModel = prefModel.getAssignmentReqModel();
             if (!TextUtil.isEmpty(assignmentReqModel.getExam_name()) && !TextUtil.isEmpty(assignmentReqModel.getQuiz_attempt())) {
                 if (dashboardResModel != null && !TextUtil.checkListIsEmpty(dashboardResModel.getQuiz())) {
-                    openCongratulationsDialog(dashboardResModel, assignmentReqModel);
+                    /*openCongratulationsDialog(dashboardResModel, assignmentReqModel);
                     prefModel.setAssignmentReqModel(null);
-                    AppPref.INSTANCE.setPref(prefModel);
-                   /* for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
+                    AppPref.INSTANCE.setPref(prefModel);*/
+                    for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
                         if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 8) {
                             openCongratulationsDialog(dashboardResModel, assignmentReqModel);
+                            break;
+                        } else {
+                            openCongratulationsLessScoreDialog(dashboardResModel, assignmentReqModel);
+                            break;
                         }
-                        prefModel.setAssignmentReqModel(null);
-                        AppPref.INSTANCE.setPref(prefModel);
-
-                    }*/
+                    }
+                    prefModel.setAssignmentReqModel(null);
+                    AppPref.INSTANCE.setPref(prefModel);
                 }
 
             }

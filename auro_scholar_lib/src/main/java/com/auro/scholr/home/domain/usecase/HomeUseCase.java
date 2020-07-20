@@ -417,5 +417,17 @@ public class HomeUseCase {
         return "0";
     }
 
+    public boolean checkAllQuizAreFinishedOrNot(DashboardResModel dashboardResModel) {
+        int totalAttempt = 0;
+        for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
+            totalAttempt = quizResModel.getAttempt() + totalAttempt;
+        }
+        if (totalAttempt == 9) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }
