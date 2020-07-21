@@ -9,6 +9,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
 
+import java.lang.reflect.Field;
 import java.net.NetworkInterface;
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +21,7 @@ public class DeviceUtil {
                 Settings.Secure.ANDROID_ID);
     }
 
-    public static String getManufacturer(Context context){
+    public static String getManufacturer( ){
 
         return  Build.MANUFACTURER;
 
@@ -31,7 +32,7 @@ public class DeviceUtil {
         return  Build.VERSION.RELEASE;
     }
 
-    public static String getModelName(Context context){
+    public static String getModelName( ){
 
         String manufacturer = Build.MANUFACTURER;
         String model = Build.MODEL;
@@ -39,6 +40,22 @@ public class DeviceUtil {
             return capitalize(model);
         }
         return capitalize(manufacturer) + " " + model;
+    }
+
+    public static String getVersionName() {
+        Field[] fields = Build.VERSION_CODES.class.getFields();
+        String codeName = "UNKNOWN";
+        for (Field field : fields) {
+            try {
+                if (field.getInt(Build.VERSION_CODES.class) == Build.VERSION.SDK_INT) {
+                    codeName = field.getName();
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return codeName;
     }
 
     public static boolean isTimeAutomatic(Context c) {

@@ -122,6 +122,13 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         params.put(AppConstant.DemographicType.BOARD_TYPE, demographicResModel.getBoard_type());
         params.put(AppConstant.DemographicType.SCHOOL_TYPE, demographicResModel.getSchool_type());
         params.put(AppConstant.DemographicType.LANGUAGE, demographicResModel.getLanguage());
+        params.put(AppConstant.DemographicType.LATITUDE,demographicResModel.getLatitude());
+        params.put(AppConstant.DemographicType.LONGITUDE,demographicResModel.getLongitude());
+        params.put(AppConstant.DemographicType.MOBILE_MODEL,demographicResModel.getMobileModel());
+        params.put(AppConstant.DemographicType.MOBILE_MANUFACTURER,demographicResModel.getManufacturer());
+        params.put(AppConstant.DemographicType.MOBILE_VERSION,demographicResModel.getMobileVersion());
+        params.put(AppConstant.DemographicType.IS_PRIVATE_TUTION,demographicResModel.getIsPrivateTution());
+        params.put(AppConstant.DemographicType.PRIVATE_TUTION_TYPE,demographicResModel.getPrivateTutionType());
         return homeRemoteApi.postDemographicData(params);
     }
 

@@ -7,6 +7,7 @@ import android.util.SparseArray;
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.common.ValidationModel;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
@@ -151,21 +152,29 @@ public class HomeUseCase {
     }
 
 
-    public String validateDemographic(DemographicResModel demographicResModel) {
+    public ValidationModel validateDemographic(DemographicResModel demographicResModel) {
         if (demographicResModel.getGender().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_GENDER)) {
-            return AppConstant.SpinnerType.PLEASE_SELECT_GENDER;
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_GENDER);
         }
         if (demographicResModel.getSchool_type().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_SCHOOL)) {
-            return AppConstant.SpinnerType.PLEASE_SELECT_SCHOOL;
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_SCHOOL);
         }
         if (demographicResModel.getBoard_type().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_BOARD)) {
-            return AppConstant.SpinnerType.PLEASE_SELECT_BOARD;
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_BOARD);
         }
         if (demographicResModel.getLanguage().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_LANGUAGE_MEDIUM)) {
-            return AppConstant.SpinnerType.PLEASE_SELECT_LANGUAGE_MEDIUM;
-        } else {
-            return "";
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_LANGUAGE_MEDIUM);
         }
+
+        if (demographicResModel.getIsPrivateTution().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+            if(demographicResModel.getPrivateTutionType().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_PRIVATE_TUTION)) {
+                return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_PRIVATE_TUTION);
+            }
+        }
+
+
+        return new ValidationModel(true, AppConstant.SpinnerType.PLEASE_SELECT_LANGUAGE_MEDIUM);
+
     }
 
     public boolean checkKycStatus(DashboardResModel dashboardResModel) {

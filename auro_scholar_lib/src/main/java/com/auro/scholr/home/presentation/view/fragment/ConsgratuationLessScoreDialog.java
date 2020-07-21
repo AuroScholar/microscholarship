@@ -126,6 +126,7 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
 
     @Override
     public void onClick(View view) {
+
         int id = view.getId();
    /*     if (id == R.id.btnShare) {
 
@@ -136,9 +137,12 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
             dismiss();
         } else if (id == R.id.txtRetakeQuiz) {
             sendClickCallBack(dashboardResModel.getQuiz().get(finishedTestPos-1));
+            dismiss();
         } else if (id == R.id.txtStartQuiz) {
             makeQuiz();
+            dismiss();
         }
+
     }
 
     public void shareWithFriends() {

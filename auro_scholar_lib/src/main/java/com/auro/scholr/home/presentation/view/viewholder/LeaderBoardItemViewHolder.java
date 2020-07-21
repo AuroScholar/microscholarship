@@ -51,8 +51,8 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
                 layoutBinding.sentTxt.setText("Accepted");
             }
             layoutBinding.challengeText.setVisibility(View.VISIBLE);
-            layoutBinding.parentLayout.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.blue_color));
-           // startAnimationQuizButton(layoutBinding.parentLayout);
+            layoutBinding.parentLayout.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.yellowdark));
+            startAnimationQuizButton(layoutBinding.parentLayout);
             layoutBinding.inviteText.setText(AuroApp.getAppContext().getResources().getString(R.string.accept));
         } else {
             if (startAnimation != null) {

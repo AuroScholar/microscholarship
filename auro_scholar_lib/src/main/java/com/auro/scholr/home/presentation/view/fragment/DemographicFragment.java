@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.common.ValidationModel;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.DemographicFragmentLayoutBinding;
@@ -37,6 +39,7 @@ import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.DeviceUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
@@ -105,6 +108,10 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     @Override
     protected void init() {
         binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
+        setKeyListner();
+        if (TextUtil.isEmpty(dashboardResModel.getLatitude()) && TextUtil.isEmpty(dashboardResModel.getLongitude())) {
+            askPermission();
+        }
 
         // Spinner Drop down Gender
         genderLines = Arrays.asList(getResources().getStringArray(R.array.genderlist));
@@ -177,6 +184,10 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         if (getArguments() != null && dashboardResModel != null) {
             demographicResModel.setPhonenumber(dashboardResModel.getPhonenumber());
         }
+
+        demographicResModel.setMobileModel(DeviceUtil.getModelName());
+        demographicResModel.setMobileVersion(DeviceUtil.getVersionName());
+        demographicResModel.setManufacturer(DeviceUtil.getManufacturer());
 
         if (demographicViewModel != null && demographicViewModel.serviceLiveData().hasObservers()) {
             demographicViewModel.serviceLiveData().removeObservers(this);
@@ -274,6 +285,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 String value = binding.spinnerPrivateTution.getSelectedItem().toString();
+                demographicResModel.setPrivateTutionType(binding.spinnerPrivateTution.getSelectedItem().toString());
                 if (value.equalsIgnoreCase(AppConstant.DocumentType.YES)) {
                     binding.spinnerPrivateType.setVisibility(View.VISIBLE);
                     binding.tvPrivateType.setVisibility(View.VISIBLE);
@@ -282,7 +294,20 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
                     binding.spinnerPrivateType.setVisibility(View.GONE);
                     binding.tvPrivateType.setVisibility(View.GONE);
                     binding.privateTypeArrow.setVisibility(View.GONE);
+                    demographicResModel.setPrivateTutionType("");
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        binding.spinnerPrivateType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                demographicResModel.setPrivateTutionType(binding.spinnerPrivateType.getSelectedItem().toString());
             }
 
             @Override
@@ -388,11 +413,11 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.submitbutton) {
-            String validation = demographicViewModel.homeUseCase.validateDemographic(demographicResModel);
-            if (TextUtil.isEmpty(validation)) {
+            ValidationModel validation = demographicViewModel.homeUseCase.validateDemographic(demographicResModel);
+            if (validation.isStatus()) {
                 demographicViewModel.getDemographicData(demographicResModel);
             } else {
-                showSnackbarError(validation);
+                showSnackbarError(validation.getMessage());
             }
         } else if (v.getId() == R.id.lang_eng) {
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -483,6 +508,8 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
             if (customProgressDialog != null) {
                 customProgressDialog.dismiss();
             }
+            demographicResModel.setLatitude(locationModel.getLatitude());
+            demographicResModel.setLongitude(locationModel.getLongitude());
         } else {
             Handler handler = new Handler();
             handler.postDelayed(this::callServiceWhenLocationReceived, 2000);
@@ -504,4 +531,18 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         customProgressDialog.updateDataUi(0);
     }
 
+    private void setKeyListner() {
+        this.getView().setFocusableInTouchMode(true);
+        this.getView().requestFocus();
+        this.getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    getActivity().getSupportFragmentManager().popBackStack();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
 }

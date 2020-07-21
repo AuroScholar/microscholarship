@@ -50,6 +50,7 @@ import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
+import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
@@ -452,9 +453,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
         } else if (v.getId() == R.id.privacy_policy) {
             //openFragment(new PrivacyPolicyFragment());
-             openDemographicFragment();
-            //openCongratulationsDialog(quizResModel, assignmentReqModel);
-            // openCongratulationsLessScoreDialog();
+            openDemographicFragment();
         } else if (v.getId() == R.id.lang_eng) {
             CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -678,25 +677,22 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             AssignmentReqModel assignmentReqModel = prefModel.getAssignmentReqModel();
             if (!TextUtil.isEmpty(assignmentReqModel.getExam_name()) && !TextUtil.isEmpty(assignmentReqModel.getQuiz_attempt())) {
                 if (dashboardResModel != null && !TextUtil.checkListIsEmpty(dashboardResModel.getQuiz())) {
-                    /*openCongratulationsDialog(dashboardResModel, assignmentReqModel);
-                    prefModel.setAssignmentReqModel(null);
-                    AppPref.INSTANCE.setPref(prefModel);*/
-                    for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
-                        if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 8) {
-                            openCongratulationsDialog(dashboardResModel, assignmentReqModel);
-                            break;
-                        } else {
-                            openCongratulationsLessScoreDialog(dashboardResModel, assignmentReqModel);
-                            break;
-                        }
+                    int finishedTestPos = ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getExam_name());
+                    QuizResModel quizResModel = dashboardResModel.getQuiz().get(finishedTestPos - 1);
+                    if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 8) {
+                        openCongratulationsDialog(dashboardResModel, assignmentReqModel);
+                    } else {
+                        openCongratulationsLessScoreDialog(dashboardResModel, assignmentReqModel);
                     }
-                    prefModel.setAssignmentReqModel(null);
-                    AppPref.INSTANCE.setPref(prefModel);
                 }
-
+                prefModel.setAssignmentReqModel(null);
+                AppPref.INSTANCE.setPref(prefModel);
             }
+
         }
     }
+
+
 
     private void openChat() {
         Uri uri = Uri.parse("https://wa.me/919667480783");

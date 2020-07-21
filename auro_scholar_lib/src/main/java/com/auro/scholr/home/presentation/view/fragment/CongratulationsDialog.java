@@ -25,6 +25,7 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewModel;
 import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.TextUtil;
 import com.bumptech.glide.Glide;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
@@ -85,7 +86,10 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
         binding.txtRetakeQuiz.setOnClickListener(this);
 
 
-        Glide.with(this).load(R.raw.spracle).into(binding.backgroundSprincle);
+        Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprincle11);
+        Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprincle12);
+        Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprinclel21);
+        Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprinclel22);
         // create random object
         Random randomno = new Random();
         binding.tickerView.setPreferredScrollingDirection(TickerView.ScrollingDirection.DOWN);
@@ -102,6 +106,13 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
 
         for (int i = 1; i <= marks; i++) {
             binding.tickerView.setText(i + "%");
+        }
+
+        if (!TextUtil.isEmpty(dashboardResModel.getStudent_name())) {
+            binding.RPTextView4.setVisibility(View.VISIBLE);
+            binding.RPTextView4.setText(dashboardResModel.getStudent_name());
+        } else {
+            binding.RPTextView4.setVisibility(View.GONE);
         }
     }
 
@@ -125,11 +136,13 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
         int id = view.getId();
         if (id == R.id.btnShare) {
             shareWithFriends();
+            dismiss();
         } else if (id == R.id.icClose) {
             dismiss();
         } else if (id == R.id.txtRetakeQuiz) {
         } else if (id == R.id.txtStartQuiz) {
             makeQuiz();
+            dismiss();
         }
     }
 

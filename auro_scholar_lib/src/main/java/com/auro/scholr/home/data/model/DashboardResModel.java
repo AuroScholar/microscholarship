@@ -158,6 +158,27 @@ public class DashboardResModel implements Parcelable {
     private String longitude;
 
 
+    @SerializedName("mobile_model")
+    @Expose
+    String mobileModel;
+
+    @SerializedName("mobile_manufacturer")
+    @Expose
+    String manufacturer;
+
+    @SerializedName("mobile_version")
+    @Expose
+    String mobileVersion;
+
+    @SerializedName("is_private_tution")
+    @Expose
+    String isPrivateTution;
+
+    @SerializedName("private_tution_type")
+    @Expose
+    String privateTutionType;
+
+
     protected DashboardResModel(Parcel in) {
         status = in.readString();
         error = in.readByte() != 0;
@@ -196,6 +217,11 @@ public class DashboardResModel implements Parcelable {
         approved_scholarship_money = in.readString();
         latitude = in.readString();
         longitude = in.readString();
+        mobileModel = in.readString();
+        manufacturer = in.readString();
+        mobileVersion = in.readString();
+        isPrivateTution = in.readString();
+        privateTutionType = in.readString();
     }
 
     @Override
@@ -237,6 +263,11 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(approved_scholarship_money);
         dest.writeString(latitude);
         dest.writeString(longitude);
+        dest.writeString(mobileModel);
+        dest.writeString(manufacturer);
+        dest.writeString(mobileVersion);
+        dest.writeString(isPrivateTution);
+        dest.writeString(privateTutionType);
     }
 
     @Override
@@ -255,6 +286,46 @@ public class DashboardResModel implements Parcelable {
             return new DashboardResModel[size];
         }
     };
+
+    public String getMobileModel() {
+        return mobileModel;
+    }
+
+    public void setMobileModel(String mobileModel) {
+        this.mobileModel = mobileModel;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getMobileVersion() {
+        return mobileVersion;
+    }
+
+    public void setMobileVersion(String mobileVersion) {
+        this.mobileVersion = mobileVersion;
+    }
+
+    public String getIsPrivateTution() {
+        return isPrivateTution;
+    }
+
+    public void setIsPrivateTution(String isPrivateTution) {
+        this.isPrivateTution = isPrivateTution;
+    }
+
+    public String getPrivateTutionType() {
+        return privateTutionType;
+    }
+
+    public void setPrivateTutionType(String privateTutionType) {
+        this.privateTutionType = privateTutionType;
+    }
 
     public boolean isError() {
         return error;
