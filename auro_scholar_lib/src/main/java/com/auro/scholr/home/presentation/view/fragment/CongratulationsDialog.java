@@ -18,18 +18,10 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseDialog;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.databinding.DialogCongratulations2Binding;
-import com.auro.scholr.databinding.DialogCongratulationsBinding;
 import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewModel;
-import com.auro.scholr.home.presentation.viewmodel.InviteFriendViewModel;
-import com.auro.scholr.util.ViewUtil;
-import com.auro.scholr.util.permission.PermissionHandler;
-import com.auro.scholr.util.permission.PermissionUtil;
-import com.auro.scholr.util.permission.Permissions;
 import com.bumptech.glide.Glide;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
-
-import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -81,9 +73,7 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
 
 
         Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprincle11);
-        Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprincle12);
-        Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprinclel21);
-        Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprinclel22);
+
         // create random object
         Random randomno = new Random();
         binding.tickerView.setPreferredScrollingDirection(TickerView.ScrollingDirection.DOWN);
