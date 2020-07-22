@@ -31,6 +31,12 @@ import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
 
 import java.util.List;
+
+import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewModel;
+import com.bumptech.glide.Glide;
+import com.robinhood.ticker.TickerUtils;
+import com.robinhood.ticker.TickerView;
+
 import java.util.Random;
 
 
@@ -87,9 +93,7 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
 
 
         Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprincle11);
-        Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprincle12);
-        Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprinclel21);
-        Glide.with(this).load(R.raw.confetti_4).into(binding.backgroundSprinclel22);
+
         // create random object
         Random randomno = new Random();
         binding.tickerView.setPreferredScrollingDirection(TickerView.ScrollingDirection.DOWN);
@@ -113,6 +117,10 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
             binding.RPTextView4.setText(dashboardResModel.getStudent_name());
         } else {
             binding.RPTextView4.setVisibility(View.GONE);
+        }
+
+        if (checkAllQuizAreFinishedOrNot()) {
+            binding.txtStartQuiz.setVisibility(View.GONE);
         }
     }
 

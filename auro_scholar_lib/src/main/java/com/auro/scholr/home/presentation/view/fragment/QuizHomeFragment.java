@@ -272,7 +272,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
-                        setPrefForTestig();
+                        //setPrefForTestig();
                         if (!dashboardResModel.isError()) {
                             checkStatusforCongratulationDialog();
                             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
@@ -696,6 +696,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void setPrefForTestig()
     {
+        dashboardResModel.getQuiz().get(2).setScorepoints(4);
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null ) {
             AssignmentReqModel assignmentReqModel =new AssignmentReqModel();

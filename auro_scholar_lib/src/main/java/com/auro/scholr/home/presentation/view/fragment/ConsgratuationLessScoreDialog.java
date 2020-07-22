@@ -107,6 +107,10 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
             binding.txtRetakeQuiz.setVisibility(View.GONE);
             binding.txtStartQuiz.setVisibility(View.VISIBLE);
         }
+
+        if (checkAllQuizAreFinishedOrNot()) {
+            binding.txtStartQuiz.setVisibility(View.GONE);
+        }
     }
 
     @Override
