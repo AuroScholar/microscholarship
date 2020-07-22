@@ -16,12 +16,20 @@ import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ImageUtil;
 import com.auro.scholr.util.TextUtil;
 
+import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 
 import com.auro.scholr.core.application.AuroApp;
@@ -32,6 +40,7 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
     FriendsBoardItemLayoutBinding layoutBinding;
     Animation startAnimation;
     Animation endanimation;
+    public int runColor;
 
     public LeaderBoardItemViewHolder(@NonNull FriendsBoardItemLayoutBinding layoutBinding) {
         super(layoutBinding.getRoot());
@@ -52,7 +61,7 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
             }
             layoutBinding.challengeText.setVisibility(View.VISIBLE);
             layoutBinding.parentLayout.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.yellowdark));
-            startAnimationQuizButton(layoutBinding.parentLayout);
+            changeViewColor(layoutBinding.parentLayout);
             layoutBinding.inviteText.setText(AuroApp.getAppContext().getResources().getString(R.string.accept));
         } else {
             if (startAnimation != null) {
@@ -130,61 +139,36 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
         textview.setText(builder, TextView.BufferType.SPANNABLE);
     }
 
-    private void startAnimationQuizButton(ConstraintLayout binding) {
-        //Animation on button
-        startAnimation = AnimationUtils.loadAnimation(AuroApp.getAppContext(), R.anim.fadein);
 
-        startAnimation.setAnimationListener(new Animation.AnimationListener() {
+    private void changeViewColor(View view) {
+        // Load initial and final colors.
+        final int initialColor = AuroApp.getAppContext().getResources().getColor(R.color.orange);
+        final int finalColor = AuroApp.getAppContext().getResources().getColor(R.color.white);
 
+        ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onAnimationEnd(Animation arg0) {
-                startAnimationFadeOutButton(binding);
+            public void onAnimationUpdate(ValueAnimator animation) {
+                // Use animation position to blend colors.
+                float position = animation.getAnimatedFraction();
+                int blended = blendColors(initialColor, finalColor, position);
+
+                // Apply blended color to the view.
+                view.setBackgroundColor(blended);
             }
-
-            @Override
-            public void onAnimationRepeat(Animation arg0) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onAnimationStart(Animation arg0) {
-                // TODO Auto-generated method stub
-
-            }
-
         });
-        binding.startAnimation(startAnimation);
-
+        anim.setRepeatMode(ValueAnimator.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+        anim.setDuration(500).start();
     }
 
+    private int blendColors(int from, int to, float ratio) {
+        final float inverseRatio = 1f - ratio;
 
-    private void startAnimationFadeOutButton(ConstraintLayout binding) {
-        //Animation on button
-        endanimation = AnimationUtils.loadAnimation(AuroApp.getAppContext(), R.anim.fadeout);
+        final float r = Color.red(to) * ratio + Color.red(from) * inverseRatio;
+        final float g = Color.green(to) * ratio + Color.green(from) * inverseRatio;
+        final float b = Color.blue(to) * ratio + Color.blue(from) * inverseRatio;
 
-        endanimation.setAnimationListener(new Animation.AnimationListener() {
-
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-                startAnimationQuizButton(binding);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation arg0) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onAnimationStart(Animation arg0) {
-                // TODO Auto-generated method stub
-
-            }
-
-        });
-        binding.startAnimation(endanimation);
+        return Color.rgb((int) r, (int) g, (int) b);
     }
-
-
 }

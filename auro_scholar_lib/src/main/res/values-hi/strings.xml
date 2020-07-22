@@ -242,6 +242,7 @@
     <string name="challenge">Challenge</string>
     <string name="taking_private_tutions">निजी ट्युशन लेना ?</string>
     <string name="taking_type">टेंशन टाइप</string>
+    <string name="challenged_you">Challenged You</string>
     <string-array name="privateTutionList">
         <item>No</item>
         <item>YES</item>

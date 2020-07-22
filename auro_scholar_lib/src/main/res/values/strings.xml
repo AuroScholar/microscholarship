@@ -260,6 +260,7 @@
     <string name="challenge">Challenge</string>
     <string name="taking_private_tutions">Taking Private Tutions ?</string>
     <string name="taking_type">Taking Type</string>
+    <string name="challenged_you">Challenged You</string>
 
     <string-array name="classes">
         <item>1st</item>

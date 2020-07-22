@@ -272,6 +272,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
+                        setPrefForTestig();
                         if (!dashboardResModel.isError()) {
                             checkStatusforCongratulationDialog();
                             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
@@ -692,6 +693,20 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
+
+    private void setPrefForTestig()
+    {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null ) {
+            AssignmentReqModel assignmentReqModel =new AssignmentReqModel();
+            assignmentReqModel.setRegistration_id(dashboardResModel.getAuroid());
+            assignmentReqModel.setExam_name(""+dashboardResModel.getQuiz().get(2).getNumber());
+            assignmentReqModel.setQuiz_attempt(""+dashboardResModel.getQuiz().get(2).getAttempt());
+            assignmentReqModel.setExamlang("E");
+            prefModel.setAssignmentReqModel(assignmentReqModel);
+            AppPref.INSTANCE.setPref(prefModel);
+        }
+    }
 
 
     private void openChat() {

@@ -1,6 +1,8 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -508,6 +510,8 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
                     break;
                 }
             }
+        } else {
+            openAlerDialog();
         }
         if (quizResModel != null) {
             askPermission();
@@ -595,6 +599,31 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     public void openCameraPhotoFragment() {
         Intent intent = new Intent(getActivity(), CameraActivity.class);
         startActivityForResult(intent, AppConstant.CAMERA_REQUEST_CODE);
+    }
+
+    public void openAlerDialog() {
+        AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                getActivity());
+
+// Setting Dialog Title
+        alertDialog2.setTitle("Info");
+
+// Setting Dialog Message
+        alertDialog2.setMessage("You have taken all your quizzes for the month. \nPractise more and come back next month.");
+
+// Setting Icon to Dialog
+        // alertDialog2.setIcon(R.drawable.);
+        alertDialog2.setNegativeButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Write your code here to execute after dialog
+                        ViewUtil.showToast("You clicked on NO");
+                        dialog.cancel();
+                    }
+                });
+
+// Showing Alert Dialog
+        alertDialog2.show();
     }
 
 }
