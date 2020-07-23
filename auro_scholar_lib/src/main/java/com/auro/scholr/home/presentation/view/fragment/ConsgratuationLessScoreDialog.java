@@ -28,6 +28,7 @@ import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
 import com.bumptech.glide.Glide;
 import com.google.android.material.shape.CornerFamily;
+import com.google.gson.Gson;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
 
@@ -81,10 +82,7 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
 
     @Override
     protected void init() {
-
-        binding.icClose.setOnClickListener(this);
-        binding.txtStartQuiz.setOnClickListener(this);
-        binding.txtRetakeQuiz.setOnClickListener(this);
+        setListener();
         binding.tickerView.setPreferredScrollingDirection(TickerView.ScrollingDirection.DOWN);
         float radius = getResources().getDimension(R.dimen._10sdp);
         binding.imgtryagain.setShapeAppearanceModel(binding.imgtryagain.getShapeAppearanceModel()
@@ -94,7 +92,7 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
                 .build());
         binding.tickerView.setCharacterLists(TickerUtils.provideNumberList());
         finishedTestPos = ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getExam_name());
-        marks = dashboardResModel.getQuiz().get(finishedTestPos-1).getScorepoints();
+        marks = dashboardResModel.getQuiz().get(finishedTestPos - 1).getScorepoints();
         marks = marks * 10;
         for (int i = 1; i <= marks; i++) {
             binding.tickerView.setText(i + "%");
@@ -102,14 +100,14 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
 
         if (ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getQuiz_attempt()) < 3) {
             binding.txtRetakeQuiz.setVisibility(View.VISIBLE);
-            binding.txtStartQuiz.setVisibility(View.GONE);
+            binding.btntutor.setVisibility(View.GONE);
         } else {
             binding.txtRetakeQuiz.setVisibility(View.GONE);
-            binding.txtStartQuiz.setVisibility(View.VISIBLE);
+            binding.btntutor.setVisibility(View.VISIBLE);
         }
 
         if (checkAllQuizAreFinishedOrNot()) {
-            binding.txtStartQuiz.setVisibility(View.GONE);
+            binding.btntutor.setVisibility(View.VISIBLE);
         }
     }
 
@@ -120,7 +118,11 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
 
     @Override
     protected void setListener() {
-
+        binding.icClose.setOnClickListener(this);
+        binding.txtStartQuiz.setOnClickListener(this);
+        binding.txtRetakeQuiz.setOnClickListener(this);
+        binding.btntutor.setOnClickListener(this);
+        binding.btnShare.setOnClickListener(this);
     }
 
     @Override
@@ -130,21 +132,22 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
 
     @Override
     public void onClick(View view) {
-
         int id = view.getId();
-   /*     if (id == R.id.btnShare) {
-
+        if (id == R.id.btnShare) {
             shareWithFriends();
-
-        } else */
-        if (id == R.id.icClose) {
+            dismiss();
+        } else if (id == R.id.icClose) {
             dismiss();
         } else if (id == R.id.txtRetakeQuiz) {
-            sendClickCallBack(dashboardResModel.getQuiz().get(finishedTestPos-1));
+            sendClickCallBack(dashboardResModel.getQuiz().get(finishedTestPos - 1));
             dismiss();
         } else if (id == R.id.txtStartQuiz) {
             makeQuiz();
             dismiss();
+        } else if (id == R.id.btntutor) {
+            if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
+                AuroApp.getAuroScholarModel().getSdkcallback().commonCallback(Status.BOOK_TUTOR_SESSION_CLICK, "");
+            }
         }
 
     }

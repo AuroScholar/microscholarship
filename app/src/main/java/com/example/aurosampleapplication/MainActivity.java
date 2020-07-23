@@ -21,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.SdkCallBack;
+import com.auro.scholr.core.common.Status;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
 import com.auro.scholr.util.AppLogger;
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.bt_sdk:
                 openGenricSDK();
-               // openScholarSpecificSdk();
+                // openScholarSpecificSdk();
                 hideKeyboard(this);
 
 
@@ -127,6 +128,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void logOut() {
                 AppLogger.e("Chhonker", "Logout");
             }
+
+            @Override
+            public void commonCallback(Status status,Object o) {
+                switch (status) {
+                    case BOOK_TUTOR_SESSION_CLICK:
+                        /*write your code here*/
+                        AppLogger.e("Chhonker", "commonCallback");
+                        break;
+                }
+            }
+
         });
 
         openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
@@ -155,14 +167,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void logOut() {
                 AppLogger.e("Chhonker", "Logout");
             }
+
+            @Override
+            public void commonCallback(Status status,Object o) {
+                switch (status) {
+                    case BOOK_TUTOR_SESSION_CLICK:
+   /*write your code here*/
+                        AppLogger.e("Chhonker", "commonCallback");
+                        break;
+                }
+            }
         });
 
 
         AuroScholar.startTeacherSDK(auroScholarDataModel);
         //   openFragment(AuroScholar.startAuroSDK(inputModel));
     }
-/*inputModel.setMobileNumber("8700808003");
-        inputModel.setStudentClass("11");*/
+
+    /*inputModel.setMobileNumber("8700808003");
+            inputModel.setStudentClass("11");*/
     private void openGenricSDK() {
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
         inputModel.setMobileNumber("7503600686");

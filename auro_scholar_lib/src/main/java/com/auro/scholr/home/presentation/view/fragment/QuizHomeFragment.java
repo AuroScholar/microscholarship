@@ -235,7 +235,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else {
             setLangOnUi(AppConstant.ENGLISH);
         }
-
     }
 
     @Override
@@ -455,6 +454,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else if (v.getId() == R.id.privacy_policy) {
             //openFragment(new PrivacyPolicyFragment());
             openDemographicFragment();
+           //openFragment(new PrivacyPolicyFragment());
+           // openCongratulationsDialog();
         } else if (v.getId() == R.id.lang_eng) {
             CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -694,7 +695,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
 
-    private void setPrefForTestig()
+    private void setPrefForTesting()
     {
         dashboardResModel.getQuiz().get(2).setScorepoints(4);
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();

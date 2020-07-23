@@ -225,8 +225,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/txtRetakeQuiz"
-                            app:layout_constraintTop_toTopOf="parent"
-                            />
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/btnShare"

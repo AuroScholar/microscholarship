@@ -113,6 +113,13 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
             askPermission();
         }
 
+        if (!TextUtil.isEmpty(dashboardResModel.getIsPrivateTution())) {
+            demographicResModel.setIsPrivateTution(dashboardResModel.getIsPrivateTution());
+        } else {
+            demographicResModel.setIsPrivateTution(AppConstant.DocumentType.NO);
+            dashboardResModel.setIsPrivateTution(AppConstant.DocumentType.NO);
+        }
+
         // Spinner Drop down Gender
         genderLines = Arrays.asList(getResources().getStringArray(R.array.genderlist));
         spinnermethodcall(genderLines, binding.SpinnerGender);
@@ -161,9 +168,9 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         privateTutionList = Arrays.asList(getResources().getStringArray(R.array.privateTutionList));
         spinnermethodcall(privateTutionList, binding.spinnerPrivateTution);
         for (int i = 0; i < privateTutionList.size(); i++) {
-            String lang = privateTutionList.get(i);
-            if (!TextUtil.isEmpty(dashboardResModel.getLanguage()) && lang.equalsIgnoreCase(dashboardResModel.getLanguage())) {
-                // binding.spinnerPrivateTution.setSelection(i);
+            String s = privateTutionList.get(i);
+            if (!TextUtil.isEmpty(dashboardResModel.getIsPrivateTution()) && s.equalsIgnoreCase(dashboardResModel.getIsPrivateTution())) {
+                binding.spinnerPrivateTution.setSelection(i);
                 break;
             }
         }
@@ -174,8 +181,8 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         spinnermethodcall(privateTutionTypeList, binding.spinnerPrivateType);
         for (int i = 0; i < privateTutionTypeList.size(); i++) {
             String lang = privateTutionTypeList.get(i);
-            if (!TextUtil.isEmpty(dashboardResModel.getLanguage()) && lang.equalsIgnoreCase(dashboardResModel.getLanguage())) {
-                // binding.spinnerPrivateType.setSelection(i);
+            if (!TextUtil.isEmpty(dashboardResModel.getPrivateTutionType()) && lang.equalsIgnoreCase(dashboardResModel.getPrivateTutionType())) {
+                binding.spinnerPrivateType.setSelection(i);
                 break;
             }
         }
@@ -285,7 +292,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 String value = binding.spinnerPrivateTution.getSelectedItem().toString();
-                demographicResModel.setPrivateTutionType(binding.spinnerPrivateTution.getSelectedItem().toString());
+                demographicResModel.setIsPrivateTution(binding.spinnerPrivateTution.getSelectedItem().toString());
                 if (value.equalsIgnoreCase(AppConstant.DocumentType.YES)) {
                     binding.spinnerPrivateType.setVisibility(View.VISIBLE);
                     binding.tvPrivateType.setVisibility(View.VISIBLE);
