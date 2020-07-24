@@ -249,7 +249,7 @@ public class QuizTestFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+       // getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setListener();
     }
 
@@ -358,9 +358,9 @@ public class QuizTestFragment extends BaseFragment {
             super.onPageStarted(view, url, favicon);
             AppLogger.e("chhonker onPageStarted", url);
             if (!TextUtil.isEmpty(url)) {
-                if (url.equalsIgnoreCase("http://auroscholar.com/index.php") ||
-                        url.equalsIgnoreCase("http://auroscholar.com/demographics.php")
-                        || url.equalsIgnoreCase("http://auroscholar.com/dashboard.php")) {
+                if (url.equalsIgnoreCase("https://auroscholar.com/index.php") ||
+                        url.contains("demographics")
+                        || url.contains("dashboard")) {
                     cancelDialogAfterSubmittingTest();
                 }
             }

@@ -167,13 +167,13 @@ public class HomeUseCase {
         }
 
         if (demographicResModel.getIsPrivateTution().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
-            if (demographicResModel.getPrivateTutionType().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_PRIVATE_TUTION)) {
+            if (demographicResModel.getPrivateTutionType().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_PRIVATE_TUTION) || TextUtil.isEmpty(demographicResModel.getPrivateTutionType())) {
                 return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_PRIVATE_TUTION);
             }
         }
 
 
-        return new ValidationModel(true, AppConstant.SpinnerType.PLEASE_SELECT_LANGUAGE_MEDIUM);
+        return new ValidationModel(true, "");
 
     }
 

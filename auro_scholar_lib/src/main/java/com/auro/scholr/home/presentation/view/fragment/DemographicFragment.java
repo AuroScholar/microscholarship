@@ -118,6 +118,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         } else {
             demographicResModel.setIsPrivateTution(AppConstant.DocumentType.NO);
             dashboardResModel.setIsPrivateTution(AppConstant.DocumentType.NO);
+            demographicResModel.setPrivateTutionType("");
         }
 
         // Spinner Drop down Gender
@@ -314,7 +315,12 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         binding.spinnerPrivateType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                demographicResModel.setPrivateTutionType(binding.spinnerPrivateType.getSelectedItem().toString());
+                String value = binding.spinnerPrivateType.getSelectedItem().toString();
+                if (value.equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_PRIVATE_TUTION)) {
+                    demographicResModel.setPrivateTutionType("");
+                } else {
+                    demographicResModel.setPrivateTutionType(binding.spinnerPrivateType.getSelectedItem().toString());
+                }
             }
 
             @Override

@@ -617,7 +617,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Write your code here to execute after dialog
-                        ViewUtil.showToast("You clicked on NO");
+                       // ViewUtil.showToast("You clicked on NO");
                         dialog.cancel();
                     }
                 });

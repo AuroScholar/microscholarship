@@ -16,6 +16,7 @@ import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseDialog;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.DialogCongratulations2Binding;
@@ -26,6 +27,7 @@ import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewModel;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
+import com.auro.scholr.util.TextUtil;
 import com.bumptech.glide.Glide;
 import com.google.android.material.shape.CornerFamily;
 import com.google.gson.Gson;
@@ -103,10 +105,19 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
             binding.btntutor.setVisibility(View.GONE);
         } else {
             binding.txtRetakeQuiz.setVisibility(View.GONE);
-            binding.btntutor.setVisibility(View.VISIBLE);
+            binding.btntutor.setVisibility(View.GONE);
         }
 
-        if (checkAllQuizAreFinishedOrNot()) {
+       /* if (checkAllQuizAreFinishedOrNot()) {
+            binding.btnShare.setVisibility(View.VISIBLE);
+        }*/
+
+        binding.btnShare.setVisibility(View.VISIBLE);
+
+
+
+
+        if (!TextUtil.isEmpty(dashboardResModel.getLeadQualified()) && dashboardResModel.getLeadQualified().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
             binding.btntutor.setVisibility(View.VISIBLE);
         }
     }

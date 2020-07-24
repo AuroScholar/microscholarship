@@ -452,10 +452,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             }
 
         } else if (v.getId() == R.id.privacy_policy) {
-            //openFragment(new PrivacyPolicyFragment());
-            openDemographicFragment();
-           //openFragment(new PrivacyPolicyFragment());
-           // openCongratulationsDialog();
+            openFragment(new PrivacyPolicyFragment());
+            //openDemographicFragment();
         } else if (v.getId() == R.id.lang_eng) {
             CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -695,15 +693,14 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
 
-    private void setPrefForTesting()
-    {
+    private void setPrefForTesting() {
         dashboardResModel.getQuiz().get(2).setScorepoints(4);
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (prefModel != null ) {
-            AssignmentReqModel assignmentReqModel =new AssignmentReqModel();
+        if (prefModel != null) {
+            AssignmentReqModel assignmentReqModel = new AssignmentReqModel();
             assignmentReqModel.setRegistration_id(dashboardResModel.getAuroid());
-            assignmentReqModel.setExam_name(""+dashboardResModel.getQuiz().get(2).getNumber());
-            assignmentReqModel.setQuiz_attempt(""+dashboardResModel.getQuiz().get(2).getAttempt());
+            assignmentReqModel.setExam_name("" + dashboardResModel.getQuiz().get(2).getNumber());
+            assignmentReqModel.setQuiz_attempt("" + dashboardResModel.getQuiz().get(2).getAttempt());
             assignmentReqModel.setExamlang("E");
             prefModel.setAssignmentReqModel(assignmentReqModel);
             AppPref.INSTANCE.setPref(prefModel);

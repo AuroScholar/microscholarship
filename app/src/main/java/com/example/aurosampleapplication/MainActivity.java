@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String secret = "5d41402abc4b2a76b9719d911017c592";
         String tt = new Cryptor().HMAC_SHA256(secret, jsonString);
         //  AppLogger.e("chhonker",tt);
-        printDeviceInfo();
+        //printDeviceInfo();
     }
 
     public static void printHashKey(Context pContext) {
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             inputModel.setStudentClass("11");*/
     private void openGenricSDK() {
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
-        inputModel.setMobileNumber("7503600686");
+        inputModel.setMobileNumber("7503600604");
         inputModel.setStudentClass("6");
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setReferralLink("");
