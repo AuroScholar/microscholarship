@@ -51,7 +51,7 @@ public class UtilsModule {
     OkHttpClient getRequestHeader(HttpLoggingInterceptor httpLoggingInterceptor) {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(httpLoggingInterceptor);
+       // httpClient.addInterceptor(httpLoggingInterceptor);
 
         httpClient.addInterceptor(chain -> {
             Request original = chain.request();
