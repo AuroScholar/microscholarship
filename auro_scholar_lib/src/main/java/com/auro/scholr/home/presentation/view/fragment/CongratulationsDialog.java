@@ -155,9 +155,16 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
     }
 
     public void shareWithFriends() {
+        String completeLink = AuroApp.getAppContext().getResources().getString(R.string.invite_friend_refrral);
+        if (AuroApp.getAuroScholarModel() != null && !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getReferralLink())) {
+            completeLink = completeLink + " " + AuroApp.getAuroScholarModel().getReferralLink();
+        } else {
+            completeLink = completeLink + " https://bit.ly/3b1puWr";
+        }
+
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, mcontext.getResources().getString(R.string.share_msg));
+        sendIntent.putExtra(Intent.EXTRA_TEXT, completeLink);
         sendIntent.setType("text/plain");
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         dismiss();

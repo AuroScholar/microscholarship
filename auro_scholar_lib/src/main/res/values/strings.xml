@@ -104,7 +104,7 @@
         <item>Please Select Tution Type</item>
         <item>Group</item>
         <item>Personal</item>
-        <item>Home</item>
+        <item>Online</item>
     </string-array>
 
     <string name="congratulations">Congratulations!</string>
@@ -259,7 +259,7 @@
     <string name="accept">Accept</string>
     <string name="challenge">Challenge</string>
     <string name="taking_private_tutions">Taking Private Tutions ?</string>
-    <string name="taking_type">Taking Type</string>
+    <string name="taking_type">Tution Type</string>
     <string name="challenged_you">Challenged You</string>
     <string name="book_free_tutoring_session">Book Free Tutoring Session</string>
 
