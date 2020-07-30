@@ -48,6 +48,7 @@ import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.RandomInviteFriendsDataModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
+import com.auro.scholr.home.presentation.view.adapter.QuizItemNewAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.util.ConversionUtil;
@@ -271,7 +272,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
-                       // setPrefForTesting();
+                        // setPrefForTesting();
                         if (!dashboardResModel.isError()) {
                             checkStatusforCongratulationDialog();
                             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
@@ -354,7 +355,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         if (isAdded()) {
             //   quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
             quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + quizViewModel.homeUseCase.getWalletBalance(dashboardResModel));
-            setQuizListAdapter(dashboardResModel.getQuiz());
+         //   setQuizListAdapter(dashboardResModel.getQuiz());
+            setQuizListNewAdapter();
             setQuizWonListAdapter(dashboardResModel.getQuiz());
             getSpannableString();
         }
@@ -452,8 +454,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             }
 
         } else if (v.getId() == R.id.privacy_policy) {
-            openFragment(new PrivacyPolicyFragment());
-            //openDemographicFragment();
+
+            //openFragment(new PrivacyPolicyFragment());
+
+            openQuizHomeNewFragment();
         } else if (v.getId() == R.id.lang_eng) {
             CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -671,6 +675,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         openFragmentDialog(congratulationsDialog);
     }
 
+    private void openQuizHomeNewFragment() {
+        QuizHomeNewFragment openhomenewfragment = new QuizHomeNewFragment();
+        openFragment(openhomenewfragment);
+    }
+
     public void checkStatusforCongratulationDialog() {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null && prefModel.getAssignmentReqModel() != null) {
@@ -796,4 +805,14 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         demographicFragment.setArguments(bundle);
         openFragment(demographicFragment);
     }
+
+
+    private void setQuizListNewAdapter() {
+        binding.quizTypeList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.quizTypeList.setHasFixedSize(true);
+        QuizItemNewAdapter quizItemAdapter = new QuizItemNewAdapter(this.getContext(), quizViewModel.homeUseCase.makeDummyList());
+        binding.quizTypeList.setAdapter(quizItemAdapter);
+
+    }
+
 }

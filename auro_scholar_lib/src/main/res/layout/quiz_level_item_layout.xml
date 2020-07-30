@@ -20,7 +20,8 @@
         <ImageView
             android:id="@+id/wallet_icon"
             android:layout_width="@dimen/_12sdp"
-            android:layout_height="@dimen/_15sdp"
+            android:visibility="gone"
+            android:layout_height="@dimen/_14sdp"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="@dimen/_18sdp"
             android:src="@drawable/ic_wallet_item"
@@ -57,7 +58,7 @@
 
             <View
                 android:layout_width="@dimen/_1sdp"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/black" />
 
@@ -78,6 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/_1sdp"
             app:layout_constraintStart_toEndOf="@+id/level_one" />
 
         <include
@@ -85,6 +87,7 @@
             layout="@layout/quiz_progress_item_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_1sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/level_two" />
 
@@ -93,6 +96,7 @@
             layout="@layout/quiz_progress_item_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_1sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/level_three" />
 

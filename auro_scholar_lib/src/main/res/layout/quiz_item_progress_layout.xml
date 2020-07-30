@@ -12,10 +12,10 @@
             android:id="@+id/pb"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="@dimen/_2sdp"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_height="@dimen/_50sdp"
             android:layout_gravity="center_horizontal"
             android:max="100"
-            android:progress="50"
+            android:progress="100"
             android:progressDrawable="@drawable/progress_drawable"
             app:layout_constraintStart_toEndOf="@+id/wallet_layout"
             app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +26,7 @@
             android:layout_height="@dimen/_10sdp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/blue_circle"
-            android:tint="@color/light_grey" />
+            android:tint="@color/blue_color" />
 
 
     </LinearLayout>

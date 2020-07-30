@@ -18,6 +18,7 @@ import com.auro.scholr.home.presentation.view.fragment.KYCFragment;
 import com.auro.scholr.home.presentation.view.fragment.KYCViewFragment;
 import com.auro.scholr.home.presentation.view.fragment.PrivacyPolicyFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
+import com.auro.scholr.home.presentation.view.fragment.QuizHomeNewFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizTestFragment;
 import com.auro.scholr.home.presentation.view.fragment.ScholarShipFragment;
 import com.auro.scholr.home.presentation.view.fragment.TransactionsFragment;
@@ -90,4 +91,5 @@ public interface AppComponent {
 
     void doInjection(ConsgratuationLessScoreDialog dialog);
 
+    void doInjection(QuizHomeNewFragment fragment);
 }

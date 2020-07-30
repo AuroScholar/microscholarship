@@ -157,10 +157,11 @@ public class HomeModule {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
     }
 
-    /*@Provides
+    @Provides
     @Singleton
-    @Named("ConsgratuationsLessScoreDialog")
-    ViewModelFactory provideConsgratuationsLessScoreDialogViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+    @Named("QuizHomeNewFragment")
+    ViewModelFactory provideQuizViewNewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
-    }*/
+    }
+
 }

@@ -19,6 +19,8 @@ import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.MonthlyScholarShipModel;
 import com.auro.scholr.home.data.model.QuizResModel;
+import com.auro.scholr.home.data.model.newDashboardModel.ChapterResModel;
+import com.auro.scholr.home.data.model.newDashboardModel.QuizTestDataModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
@@ -436,6 +438,63 @@ public class HomeUseCase {
             return false;
         }
     }
+    public List<QuizTestDataModel> makeDummyList() {
+        List<QuizTestDataModel> list = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            if (i == 0) {
+                list.add(makeQuizTestModel("Maths", 50));
+            }
+            if (i == 1) {
+                list.add(makeQuizTestModel("Science", 70));
+            }
+            if (i == 2) {
+                list.add(makeQuizTestModel("English", 10));
+            }
+            if (i == 3) {
+                list.add(makeQuizTestModel("Physics", 30));
+            }
+            if (i == 4) {
+                list.add(makeQuizTestModel("Social Science", 60));
+            }
+        }
+        return list;
+    }
 
+    private QuizTestDataModel makeQuizTestModel(String subjectName, int percentage) {
+        QuizTestDataModel quizTestDataModel = new QuizTestDataModel();
+        quizTestDataModel.setSubject(subjectName);
+        quizTestDataModel.setScorePercentage(percentage);
+        quizTestDataModel.setChapter(makeChapterList());
+        return quizTestDataModel;
+    }
+
+    private List<ChapterResModel> makeChapterList() {
+        List<ChapterResModel> chapterResModelList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            if (i == 0) {
+                chapterResModelList.add(chapterModel(1, 1, 50, "Polynomials", 6));
+            }
+            if (i == 1) {
+                chapterResModelList.add(chapterModel(2, 2, 50, "Natural Numbers", 10));
+            }
+            if (i == 2) {
+                chapterResModelList.add(chapterModel(2, 3, 50, "Prime Numbers", 6));
+            }
+            if (i == 3) {
+                chapterResModelList.add(chapterModel(3, 4, 50, "Odd Numbers", 10));
+            }
+        }
+        return chapterResModelList;
+    }
+
+    private ChapterResModel chapterModel(int attmept, int quizNumer, int amount, String name, int points) {
+        ChapterResModel chapterResModel = new ChapterResModel();
+        chapterResModel.setAttempt(attmept);
+        chapterResModel.setNumber(quizNumer);
+        chapterResModel.setScholarshipamount(amount);
+        chapterResModel.setName(name);
+        chapterResModel.setTotalpoints(points);
+        return chapterResModel;
+    }
 
 }
