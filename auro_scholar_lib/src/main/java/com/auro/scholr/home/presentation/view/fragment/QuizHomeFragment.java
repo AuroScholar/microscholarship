@@ -469,6 +469,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
             openCongratulationsLessScoreDialog();
            // openCongratulationsDialog();
+            openQuizHomeNewFragment();
         } else if (v.getId() == R.id.lang_eng) {
             CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -677,6 +678,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     private void openCongratulationsLessScoreDialog() {
         ConsgratuationLessScoreDialog congratulationsDialog = new ConsgratuationLessScoreDialog(getContext());
         openFragmentDialog(congratulationsDialog);
+    }
+    private void openQuizHomeNewFragment(){
+        QuizHomeNewFragment openhomenewfragment = new QuizHomeNewFragment();
+        openFragment(openhomenewfragment);
     }
 
     public void checkStatusforCongratulationDialog() {
