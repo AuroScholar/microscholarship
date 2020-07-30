@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.auro.scholr.home.presentation.viewmodel.HomeViewModel" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/wallet_icon"
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/_18sdp"
+            android:src="@drawable/ic_wallet_item"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <LinearLayout
+            android:id="@+id/wallet_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wallet_icon">
+
+
+            <View
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/black" />
+
+            <com.auro.scholr.core.util.uiwidget.RPTextView
+                android:id="@+id/privacy_policy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="Rs.50"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                app:Font="Poppins-Regular.ttf" />
+
+            <View
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/black" />
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/level_one"
+            layout="@layout/quiz_item_progress_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintStart_toEndOf="@+id/wallet_layout"
+            app:layout_constraintTop_toBottomOf="@+id/wallet_icon" />
+
+        <include
+            android:id="@+id/level_two"
+            layout="@layout/quiz_progress_item_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/level_one" />
+
+        <include
+            android:id="@+id/level_three"
+            layout="@layout/quiz_progress_item_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/level_two" />
+
+        <include
+            android:id="@+id/level_four"
+            layout="@layout/quiz_progress_item_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/level_three" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

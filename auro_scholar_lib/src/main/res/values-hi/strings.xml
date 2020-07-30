@@ -244,6 +244,7 @@
     <string name="taking_type">टेंशन टाइप</string>
     <string name="challenged_you">Challenged You</string>
     <string name="book_free_tutoring_session">Book Free Tutoring Session</string>
+    <string name="retake">Retake</string>
     <string-array name="privateTutionList">
         <item>No</item>
         <item>YES</item>
