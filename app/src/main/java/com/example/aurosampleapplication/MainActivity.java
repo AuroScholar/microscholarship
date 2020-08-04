@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-                openGenricSDK();
-                // openScholarSpecificSdk();
+              //  openGenricSDK();
+                 openScholarSpecificSdk();
                 hideKeyboard(this);
 
 
@@ -112,8 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setRegitrationSource(null);
         auroScholarDataModel.setShareType(null);
         auroScholarDataModel.setShareIdentity(null);
-        auroScholarDataModel.setActivity(this);
-
+        auroScholarDataModel.setActivity(null);
         auroScholarDataModel.setSdkFragmentType(AppConstant.FragmentType.QUIZ_DASHBOARD);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         auroScholarDataModel.setEmailVerified(true);
@@ -140,8 +139,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-
-        openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
+        AuroScholar.openAuroDashboardFragment(auroScholarDataModel);
+      //  openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
     }
 
     private void openTeacherSDK() {

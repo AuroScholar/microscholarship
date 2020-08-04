@@ -32,19 +32,17 @@ public class AuroApp {
 
     public static AppComponent getAppComponent() {
         if (appComponent == null) {
-            intialiseSdk(auroScholarDataModel.getActivity());
+            intialiseSdk(getAuroScholarModel().getActivity());
         }
         return appComponent;
     }
 
     public static Activity getAppContext() {
-
         return context;
     }
 
 
     public static int getFragmentContainerUiId() {
-
         return fragmentContainerUiId;
     }
 
@@ -62,7 +60,6 @@ public class AuroApp {
                 .appModule(new AppModule(context))
                 .utilsModule(new UtilsModule())
                 .build();
-
         appComponent.injectAppContext(context);
     }
 
