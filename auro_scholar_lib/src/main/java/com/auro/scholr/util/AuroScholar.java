@@ -18,10 +18,10 @@ import com.google.gson.GsonBuilder;
 public class AuroScholar {
 
     public static Fragment openAuroDashboardFragment(AuroScholarDataModel auroScholarDataModel) {
-        if (auroScholarDataModel != null && auroScholarDataModel.getActivity() == null) {
+      /*  if (auroScholarDataModel != null && auroScholarDataModel.getActivity() == null) {
             AppLogger.e("Auro scholar sdk not initialise", "error");
             return null;
-        }
+        }*/
         if (auroScholarDataModel != null) {
             String input = auroScholarDataModel.getMobileNumber() + "\n" + auroScholarDataModel.getScholrId() + "\n" + auroScholarDataModel.isEmailVerified() + "\n" +
                     auroScholarDataModel.getRegitrationSource() + "\n" + auroScholarDataModel.getReferralLink();

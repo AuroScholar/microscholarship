@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setRegitrationSource(null);
         auroScholarDataModel.setShareType(null);
         auroScholarDataModel.setShareIdentity(null);
-        auroScholarDataModel.setActivity(null);
+        auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setSdkFragmentType(AppConstant.FragmentType.QUIZ_DASHBOARD);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         auroScholarDataModel.setEmailVerified(true);
@@ -139,8 +139,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-        AuroScholar.openAuroDashboardFragment(auroScholarDataModel);
-      //  openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
+        //AuroScholar.openAuroDashboardFragment(auroScholarDataModel);
+       openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
     }
 
     private void openTeacherSDK() {
