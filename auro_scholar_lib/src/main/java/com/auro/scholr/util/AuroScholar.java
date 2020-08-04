@@ -18,10 +18,10 @@ import com.google.gson.GsonBuilder;
 public class AuroScholar {
 
     public static Fragment openAuroDashboardFragment(AuroScholarDataModel auroScholarDataModel) {
-      /*  if (auroScholarDataModel != null && auroScholarDataModel.getActivity() == null) {
+        if (auroScholarDataModel == null || auroScholarDataModel.getActivity() == null) {
             AppLogger.e("Auro scholar sdk not initialise", "error");
             return null;
-        }*/
+        }
         if (auroScholarDataModel != null) {
             String input = auroScholarDataModel.getMobileNumber() + "\n" + auroScholarDataModel.getScholrId() + "\n" + auroScholarDataModel.isEmailVerified() + "\n" +
                     auroScholarDataModel.getRegitrationSource() + "\n" + auroScholarDataModel.getReferralLink();
@@ -39,10 +39,13 @@ public class AuroScholar {
         }
         AuroApp.setAuroModel(auroScholarDataModel);
 
-
         if (AuroApp.getAuroScholarModel() != null) {
             switch (AuroApp.getAuroScholarModel().getSdkFragmentType()) {
                 case AppConstant.FragmentType.FRIENDS_LEADER_BOARD:
+                    if (auroScholarDataModel == null || auroScholarDataModel.getActivity() == null) {
+                        AppLogger.e("Auro scholar sdk not initialise 2", "error");
+                        return null;
+                    }
                     return new FriendsLeaderBoardFragment();
                 default:
                     return new QuizHomeFragment();
