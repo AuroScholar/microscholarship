@@ -187,6 +187,7 @@ public interface AppConstant {
         String QUIZ_ATTEMPT = "quiz_attempt";
         String EKLAVVYA_EXAM_ID = "eklavvya_exam_id";
         String EXAM_FACE_IMG = "exam_face_img";
+        String SUBJECT="subject";
     }
 
 

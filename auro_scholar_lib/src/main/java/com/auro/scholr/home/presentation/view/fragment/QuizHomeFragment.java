@@ -37,7 +37,6 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
-import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
@@ -355,9 +354,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         if (isAdded()) {
             //   quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
             quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + quizViewModel.homeUseCase.getWalletBalance(dashboardResModel));
-         //   setQuizListAdapter(dashboardResModel.getQuiz());
+            //   setQuizListAdapter(dashboardResModel.getQuiz());
             setQuizListNewAdapter();
-            setQuizWonListAdapter(dashboardResModel.getQuiz());
+            //setQuizWonListAdapter(dashboardResModel.getSubjectResModelList());
             getSpannableString();
         }
 
@@ -407,6 +406,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             assignmentReqModel = quizViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
             assignmentReqModel.setImageBytes(quizViewModel.getBytes(is));
             assignmentReqModel.setEklavvya_exam_id("");
+            assignmentReqModel.setSubject(quizResModel.getSubjectName());
             quizViewModel.getAzureRequestData(assignmentReqModel);
         } catch (Exception e) {
             /*Do code here when error occur*/
@@ -455,9 +455,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
         } else if (v.getId() == R.id.privacy_policy) {
 
-            //openFragment(new PrivacyPolicyFragment());
+            openFragment(new PrivacyPolicyFragment());
 
-            openQuizHomeNewFragment();
+           // openQuizHomeNewFragment();
         } else if (v.getId() == R.id.lang_eng) {
             CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -681,13 +681,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
     public void checkStatusforCongratulationDialog() {
-        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+      /*  PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null && prefModel.getAssignmentReqModel() != null) {
             AssignmentReqModel assignmentReqModel = prefModel.getAssignmentReqModel();
             if (!TextUtil.isEmpty(assignmentReqModel.getExam_name()) && !TextUtil.isEmpty(assignmentReqModel.getQuiz_attempt())) {
-                if (dashboardResModel != null && !TextUtil.checkListIsEmpty(dashboardResModel.getQuiz())) {
+                if (dashboardResModel != null && !TextUtil.checkListIsEmpty(dashboardResModel.getSubjectResModelList())) {
                     int finishedTestPos = ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getExam_name());
-                    QuizResModel quizResModel = dashboardResModel.getQuiz().get(finishedTestPos - 1);
+                    QuizResModel quizResModel = dashboardResModel.getSubjectResModelList().get(finishedTestPos - 1);
                     if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 8) {
                         openCongratulationsDialog(dashboardResModel, assignmentReqModel);
                     } else {
@@ -698,24 +698,24 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 AppPref.INSTANCE.setPref(prefModel);
             }
 
-        }
+        }*/
     }
 
 
-    private void setPrefForTesting() {
-        dashboardResModel.getQuiz().get(2).setScorepoints(4);
+  /*  private void setPrefForTesting() {
+        dashboardResModel.getSubjectResModelList().get(2).setScorepoints(4);
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null) {
             AssignmentReqModel assignmentReqModel = new AssignmentReqModel();
             assignmentReqModel.setRegistration_id(dashboardResModel.getAuroid());
-            assignmentReqModel.setExam_name("" + dashboardResModel.getQuiz().get(2).getNumber());
-            assignmentReqModel.setQuiz_attempt("" + dashboardResModel.getQuiz().get(2).getAttempt());
+            assignmentReqModel.setExam_name("" + dashboardResModel.getSubjectResModelList().get(2).getNumber());
+            assignmentReqModel.setQuiz_attempt("" + dashboardResModel.getSubjectResModelList().get(2).getAttempt());
             assignmentReqModel.setExamlang("E");
             prefModel.setAssignmentReqModel(assignmentReqModel);
             AppPref.INSTANCE.setPref(prefModel);
         }
     }
-
+*/
 
     private void openChat() {
         Uri uri = Uri.parse("https://wa.me/919667480783");
@@ -806,11 +806,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         openFragment(demographicFragment);
     }
 
-
     private void setQuizListNewAdapter() {
         binding.quizTypeList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.quizTypeList.setHasFixedSize(true);
-        QuizItemNewAdapter quizItemAdapter = new QuizItemNewAdapter(this.getContext(), quizViewModel.homeUseCase.makeDummyList());
+        QuizItemNewAdapter quizItemAdapter = new QuizItemNewAdapter(this.getContext(), dashboardResModel.getSubjectResModelList(),this);
         binding.quizTypeList.setAdapter(quizItemAdapter);
 
     }

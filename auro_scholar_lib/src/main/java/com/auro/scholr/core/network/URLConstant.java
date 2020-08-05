@@ -7,17 +7,21 @@ public interface URLConstant {
    // String BASE_URL = "http://demo.auroscholar.com/api/";  // SIT
 
 
-    String DASHBOARD_API = BASE_URL + "dashboard.php";
+   // String DASHBOARD_API = BASE_URL + "dashboard.php";
+
+    String DASHBOARD_API = BASE_URL + "dashboard_multiple.php";
 
     String DASHBOARD_SDK_API = BASE_URL + "dashboard_sdk.php";
 
     String DEMOGRAPHIC_API = BASE_URL + "demographics.php";
 
-    String AZURE_API = BASE_URL + "faceimg.php";
+   // String AZURE_API = BASE_URL + "faceimg.php";
 
+    String AZURE_API = BASE_URL + "faceimg_multiple.php";
 
     String UPLOAD_IMAGE_URL = BASE_URL + "kyc.php";
-    String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction.php ";
+   // String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction.php ";
+    String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction_multiple.php";
     String TEST_URL = "https://assessment.eklavvya.com/exam/StartExam?";
     String PRIVACY_POLICY = "https://auroscholar.com/privacy_policy.php";
 

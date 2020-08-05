@@ -61,6 +61,7 @@ public interface HomeRemoteApi {
             @Part(AppConstant.AzureApiParams.EKLAVVYA_EXAM_ID) RequestBody exam_id,
             @Part(AppConstant.AzureApiParams.EXAM_NAME) RequestBody exam_name,
             @Part(AppConstant.AzureApiParams.QUIZ_ATTEMPT) RequestBody quiz_attempt,
+            @Part(AppConstant.AzureApiParams.SUBJECT) RequestBody subject,
             @Part MultipartBody.Part exam_face_img);
 
 

@@ -32,7 +32,6 @@ import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.FriendsLeoboardLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
-import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.ChallengeAccepResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.FriendListResDataModel;
@@ -49,7 +48,6 @@ import com.auro.scholr.util.firebase.FirebaseEventUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
-import com.google.gson.Gson;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -218,7 +216,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
                     } else if (responseApi.apiTypeStatus == ACCEPT_INVITE_CLICK) {
                         ChallengeAccepResModel accepResModel = (ChallengeAccepResModel) responseApi.data;
                         updateData(false, accepResModel.getError());
-                        sendToNextQuiz();
+                      //  sendToNextQuiz();
                     } else if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         dashboardResModel = (DashboardResModel) responseApi.data;
                     } else if (responseApi.apiTypeStatus == AZURE_API) {
@@ -499,13 +497,14 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         });
     }
 
+/*
     private void sendToNextQuiz() {
         if (dashboardResModel == null) {
             return;
         }
         if (!viewModel.homeUseCase.checkAllQuizAreFinishedOrNot(dashboardResModel)) {
-            for (int i = 0; i < dashboardResModel.getQuiz().size(); i++) {
-                quizResModel = dashboardResModel.getQuiz().get(i);
+            for (int i = 0; i < dashboardResModel.getSubjectResModelList().size(); i++) {
+                quizResModel = dashboardResModel.getSubjectResModelList().get(i);
                 if (quizResModel.getAttempt() < 3) {
                     break;
                 }
@@ -517,6 +516,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
             askPermission();
         }
     }
+*/
 
 
     public void setImageInPref(AssignmentReqModel assignmentReqModel) {

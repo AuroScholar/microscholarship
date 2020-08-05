@@ -15,10 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
+import com.auro.scholr.core.common.CommonCallBackListner;
+import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.QuizItemLayout2Binding;
 import com.auro.scholr.databinding.QuizLevelItemLayoutBinding;
+import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.newDashboardModel.ChapterResModel;
 import com.auro.scholr.home.data.model.newDashboardModel.QuizTestDataModel;
+import com.auro.scholr.util.AppUtil;
 
 import java.util.List;
 import java.util.Timer;
@@ -27,13 +31,17 @@ import java.util.TimerTask;
 
 public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapterAdapter.ViewHolder> {
 
-    List<ChapterResModel> list;
+    List<QuizResModel> list;
     Context mContext;
+    CommonCallBackListner commonCallBackListner;
+    String subject;
 
 
-    public QuizItemChapterAdapter(Context context, List<ChapterResModel> list) {
+    public QuizItemChapterAdapter(Context context, List<QuizResModel> list, CommonCallBackListner commonCallBackListner, String subject) {
         mContext = context;
         this.list = list;
+        this.commonCallBackListner = commonCallBackListner;
+        this.subject = subject;
     }
 
     @NonNull
@@ -64,14 +72,14 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
             this.binding = binding;
         }
 
-        void setData(ChapterResModel model, int position) {
+        void setData(QuizResModel model, int position) {
+            setClickListner(binding, position);
+
             if (position == 0) {
                 binding.walletIcon.setVisibility(View.VISIBLE);
             } else {
                 binding.walletIcon.setVisibility(View.GONE);
             }
-
-
             /*for level two*/
             binding.levelTwo.layoutScore.setVisibility(View.GONE);
             binding.levelTwo.retakeLayout.setVisibility(View.GONE);
@@ -90,8 +98,10 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
             binding.levelFour.layoutScore.setVisibility(View.GONE);
             if (model.getTotalpoints() >= 8) {
                 binding.levelFour.retakeLayout.setVisibility(View.GONE);
+                binding.levelFour.nextQuizLayout.setVisibility(View.VISIBLE);
             } else {
                 binding.levelFour.retakeLayout.setVisibility(View.VISIBLE);
+                binding.levelFour.nextQuizLayout.setVisibility(View.GONE);
             }
 
             binding.levelFour.txtTopic.setVisibility(View.GONE);
@@ -136,5 +146,28 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
 
         }
 
+        private void setClickListner(QuizLevelItemLayoutBinding binding, int position) {
+            binding.levelFour.nextQuizLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (commonCallBackListner != null) {
+                        list.get(position).setSubjectName(subject);
+                        commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, list.get(position)));
+                    }
+                }
+            });
+
+            binding.levelThree.retakeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (commonCallBackListner != null) {
+                        list.get(position).setSubjectName(subject);
+                        commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, list.get(position)));
+                    }
+                }
+            });
+        }
+
     }
+
 }

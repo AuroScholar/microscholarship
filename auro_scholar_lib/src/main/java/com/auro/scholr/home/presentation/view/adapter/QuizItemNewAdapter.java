@@ -15,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
+import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.databinding.QuizItemLayout2Binding;
+import com.auro.scholr.home.data.model.SubjectResModel;
 import com.auro.scholr.home.data.model.newDashboardModel.QuizNewDashboardModel;
 import com.auro.scholr.home.data.model.newDashboardModel.QuizTestDataModel;
 
@@ -26,12 +28,14 @@ import java.util.TimerTask;
 
 public class QuizItemNewAdapter extends RecyclerView.Adapter<QuizItemNewAdapter.ViewHolder> {
 
-    List<QuizTestDataModel> list;
+    List<SubjectResModel> list;
     Context mContext;
+    CommonCallBackListner commonCallBackListner;
 
-    public QuizItemNewAdapter(Context context, List<QuizTestDataModel> list) {
+    public QuizItemNewAdapter(Context context, List<SubjectResModel> list, CommonCallBackListner commonCallBackListner) {
         mContext = context;
         this.list = list;
+        this.commonCallBackListner = commonCallBackListner;
     }
 
     @NonNull
@@ -54,25 +58,24 @@ public class QuizItemNewAdapter extends RecyclerView.Adapter<QuizItemNewAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         QuizItemLayout2Binding binding;
-        int count = 1;
+        int count = 0;
 
         public ViewHolder(QuizItemLayout2Binding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
-        void setData(QuizTestDataModel model, int position) {
-            binding.txtAmount.setText("50");
+        void setData(SubjectResModel model, int position) {
+            binding.txtAmount.setText("" + model.getQuizWonAmount());
             binding.subjectTitle.setText(model.getSubject());
-            binding.progressBar.setProgress(model.getScorePercentage());
-
+            binding.progressBar.setProgress(model.getQuizWonAmount());
             setChapterListAdapter(model);
         }
 
-        private void setChapterListAdapter(QuizTestDataModel model) {
+        private void setChapterListAdapter(SubjectResModel model) {
             binding.subjectsChapterRecyclerview.setLayoutManager(new LinearLayoutManager(AuroApp.getAppContext()));
             binding.subjectsChapterRecyclerview.setHasFixedSize(true);
-            QuizItemChapterAdapter quizItemAdapter = new QuizItemChapterAdapter(mContext, model.getChapter());
+            QuizItemChapterAdapter quizItemAdapter = new QuizItemChapterAdapter(mContext, model.getChapter(),commonCallBackListner,model.getSubject());
             binding.subjectsChapterRecyclerview.setAdapter(quizItemAdapter);
             binding.view2.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -84,7 +87,7 @@ public class QuizItemNewAdapter extends RecyclerView.Adapter<QuizItemNewAdapter.
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
-                    if (count == model.getScorePercentage()) {
+                    if (count == model.getQuizWonAmount()) {
                         timer.cancel();
                     } else {
                         binding.progressBar.setProgress(count);

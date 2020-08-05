@@ -140,7 +140,7 @@ public class QuizHomeNewFragment extends BaseFragment implements View.OnClickLis
     private void setQuizListAdapter() {
         binding.quizTypeList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.quizTypeList.setHasFixedSize(true);
-        quizItemAdapter = new QuizItemNewAdapter(this.getContext(), makeDummyList());
+       // quizItemAdapter = new QuizItemNewAdapter(this.getContext(), makeDummyList());
         binding.quizTypeList.setAdapter(quizItemAdapter);
 
     }

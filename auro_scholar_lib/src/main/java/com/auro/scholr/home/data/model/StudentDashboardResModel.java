@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class DashboardResModel implements Parcelable {
+public class StudentDashboardResModel implements Parcelable {
 
     @SerializedName("status")
     @Expose
@@ -88,7 +88,7 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private String subjectName;
 
-    @SerializedName("month")
+    @SerializedName("Month")
     @Expose
     private String month;
 
@@ -104,10 +104,9 @@ public class DashboardResModel implements Parcelable {
     @SerializedName("schoolid")
     @Expose
     private String schoolid;
-
     @SerializedName("quiz")
     @Expose
-    private List<SubjectResModel> subjectResModelList = null;
+    private List<QuizResModel> quiz = null;
 
     @SerializedName("modify")
     @Expose
@@ -183,8 +182,7 @@ public class DashboardResModel implements Parcelable {
     @Expose
     String leadQualified;
 
-
-    protected DashboardResModel(Parcel in) {
+    protected StudentDashboardResModel(Parcel in) {
         status = in.readString();
         error = in.readByte() != 0;
         phonenumber = in.readString();
@@ -209,7 +207,7 @@ public class DashboardResModel implements Parcelable {
         idback = in.readString();
         photo = in.readString();
         schoolid = in.readString();
-        subjectResModelList = in.createTypedArrayList(SubjectResModel.CREATOR);
+        quiz = in.createTypedArrayList(QuizResModel.CREATOR);
         modify = in.readByte() != 0;
         message = in.readString();
         is_kyc_uploaded = in.readString();
@@ -256,7 +254,7 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(idback);
         dest.writeString(photo);
         dest.writeString(schoolid);
-        dest.writeTypedList(subjectResModelList);
+        dest.writeTypedList(quiz);
         dest.writeByte((byte) (modify ? 1 : 0));
         dest.writeString(message);
         dest.writeString(is_kyc_uploaded);
@@ -282,15 +280,15 @@ public class DashboardResModel implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DashboardResModel> CREATOR = new Creator<DashboardResModel>() {
+    public static final Creator<StudentDashboardResModel> CREATOR = new Creator<StudentDashboardResModel>() {
         @Override
-        public DashboardResModel createFromParcel(Parcel in) {
-            return new DashboardResModel(in);
+        public StudentDashboardResModel createFromParcel(Parcel in) {
+            return new StudentDashboardResModel(in);
         }
 
         @Override
-        public DashboardResModel[] newArray(int size) {
-            return new DashboardResModel[size];
+        public StudentDashboardResModel[] newArray(int size) {
+            return new StudentDashboardResModel[size];
         }
     };
 
@@ -558,12 +556,12 @@ public class DashboardResModel implements Parcelable {
         this.schoolid = schoolid;
     }
 
-    public List<SubjectResModel> getSubjectResModelList() {
-        return subjectResModelList;
+    public List<QuizResModel> getQuiz() {
+        return quiz;
     }
 
-    public void setSubjectResModelList(List<SubjectResModel> subjectResModelList) {
-        this.subjectResModelList = subjectResModelList;
+    public void setQuiz(List<QuizResModel> quiz) {
+        this.quiz = quiz;
     }
 
     public boolean isModify() {

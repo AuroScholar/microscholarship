@@ -19,7 +19,6 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
-import com.auro.scholr.databinding.DialogCongratulations2Binding;
 import com.auro.scholr.databinding.DialogLessScoreCongratulationsBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
@@ -28,13 +27,9 @@ import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewMode
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
-import com.bumptech.glide.Glide;
 import com.google.android.material.shape.CornerFamily;
-import com.google.gson.Gson;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
-
-import java.util.Random;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -94,7 +89,7 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
                 .build());
         binding.tickerView.setCharacterLists(TickerUtils.provideNumberList());
         finishedTestPos = ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getExam_name());
-        marks = dashboardResModel.getQuiz().get(finishedTestPos - 1).getScorepoints();
+      //  marks = dashboardResModel.getSubjectResModelList().get(finishedTestPos - 1).getScorepoints();
         marks = marks * 10;
         for (int i = 1; i <= marks; i++) {
             binding.tickerView.setText(i + "%");
@@ -150,10 +145,10 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
         } else if (id == R.id.icClose) {
             dismiss();
         } else if (id == R.id.txtRetakeQuiz) {
-            sendClickCallBack(dashboardResModel.getQuiz().get(finishedTestPos - 1));
+            //sendClickCallBack(dashboardResModel.getSubjectResModelList().get(finishedTestPos - 1));
             dismiss();
         } else if (id == R.id.txtStartQuiz) {
-            makeQuiz();
+            //makeQuiz();
             dismiss();
         } else if (id == R.id.btntutor) {
             if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
@@ -173,35 +168,35 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
         mcontext.startActivity(shareIntent);
     }
 
-    private void makeQuiz() {
-        for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
+  /*  private void makeQuiz() {
+        for (QuizResModel quizResModel : dashboardResModel.getSubjectResModelList()) {
             if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 1) {
                 {
                     if (!checkAllQuizAreFinishedOrNot()) {
                         if (quizResModel.getNumber() == 3) {
-                            if (dashboardResModel.getQuiz().get(0).getAttempt() < 3) {
+                            if (dashboardResModel.getSubjectResModelList().get(0).getAttempt() < 3) {
                                 //go to the quiz one
-                                sendClickCallBack(dashboardResModel.getQuiz().get(0));
-                            } else if (dashboardResModel.getQuiz().get(1).getAttempt() < 3) {
+                                sendClickCallBack(dashboardResModel.getSubjectResModelList().get(0));
+                            } else if (dashboardResModel.getSubjectResModelList().get(1).getAttempt() < 3) {
                                 //go to the quiz two
-                                sendClickCallBack(dashboardResModel.getQuiz().get(1));
+                                sendClickCallBack(dashboardResModel.getSubjectResModelList().get(1));
                             }
                         } else if (quizResModel.getNumber() == 2) {
-                            if (dashboardResModel.getQuiz().get(2).getAttempt() < 3) {
+                            if (dashboardResModel.getSubjectResModelList().get(2).getAttempt() < 3) {
                                 //go to the quiz three
-                                sendClickCallBack(dashboardResModel.getQuiz().get(2));
-                            } else if (dashboardResModel.getQuiz().get(0).getAttempt() < 3) {
+                                sendClickCallBack(dashboardResModel.getSubjectResModelList().get(2));
+                            } else if (dashboardResModel.getSubjectResModelList().get(0).getAttempt() < 3) {
                                 //go to the quiz one
-                                sendClickCallBack(dashboardResModel.getQuiz().get(0));
+                                sendClickCallBack(dashboardResModel.getSubjectResModelList().get(0));
                             }
 
                         } else if (quizResModel.getNumber() == 1) {
-                            if (dashboardResModel.getQuiz().get(1).getAttempt() < 3) {
+                            if (dashboardResModel.getSubjectResModelList().get(1).getAttempt() < 3) {
                                 //go to the quiz Two
-                                sendClickCallBack(dashboardResModel.getQuiz().get(1));
-                            } else if (dashboardResModel.getQuiz().get(2).getAttempt() < 3) {
+                                sendClickCallBack(dashboardResModel.getSubjectResModelList().get(1));
+                            } else if (dashboardResModel.getSubjectResModelList().get(2).getAttempt() < 3) {
                                 //go to the quiz three
-                                sendClickCallBack(dashboardResModel.getQuiz().get(2));
+                                sendClickCallBack(dashboardResModel.getSubjectResModelList().get(2));
                             }
                         }
 
@@ -216,7 +211,7 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
 
     private boolean checkAllQuizAreFinishedOrNot() {
         int totalAttempt = 0;
-        for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
+        for (QuizResModel quizResModel : dashboardResModel.getSubjectResModelList()) {
             totalAttempt = quizResModel.getAttempt() + totalAttempt;
         }
         if (totalAttempt == 9) {
@@ -224,7 +219,7 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
         } else {
             return false;
         }
-    }
+    }*/
 
     private void sendClickCallBack(QuizResModel quizResModel) {
         if (commonCallBackListner != null) {

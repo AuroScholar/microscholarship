@@ -24,7 +24,8 @@
             android:layout_height="@dimen/_14sdp"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="@dimen/_18sdp"
-            android:src="@drawable/ic_wallet_item"
+            android:layout_marginLeft="@dimen/_18sdp"
+            app:srcCompat="@drawable/ic_wallet_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wallet_icon">
@@ -70,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
             app:layout_constraintStart_toEndOf="@+id/wallet_layout"
             app:layout_constraintTop_toBottomOf="@+id/wallet_icon" />
 

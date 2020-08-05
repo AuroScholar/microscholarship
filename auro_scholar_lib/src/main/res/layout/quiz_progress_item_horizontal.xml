@@ -7,14 +7,41 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+
+        <!--For Retake Layout-->
+        <RelativeLayout
+            android:id="@+id/next_quiz_layout"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/ic_invite_button"
+            android:visibility="gone">
+
+            <com.auro.scholr.core.util.uiwidget.RPTextView
+                android:id="@+id/next_quiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/start"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8sdp"
+                app:Font="Poppins-Bold.ttf" />
+
+        </RelativeLayout>
+
+
         <!--For Retake Layout-->
         <RelativeLayout
             android:id="@+id/retake_layout"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_25sdp"
             android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginLeft="@dimen/_12sdp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:background="@drawable/rectangle_backs"
+            android:background="@drawable/button_retake_blue"
             android:visibility="gone">
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
@@ -36,8 +63,9 @@
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_25sdp"
             android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginLeft="@dimen/_6sdp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:background="@drawable/score_count"
+            android:background="@drawable/score_bg"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -73,6 +101,7 @@
             android:layout_width="@dimen/_50sdp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginLeft="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             android:text="Topic"
             android:textSize="@dimen/_8sdp"
@@ -107,8 +136,6 @@
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/blue_circle"
                 android:tint="@color/light_grey" />
-
-
         </LinearLayout>
     </LinearLayout>
 

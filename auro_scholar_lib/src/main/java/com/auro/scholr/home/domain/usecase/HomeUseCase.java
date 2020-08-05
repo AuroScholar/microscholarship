@@ -428,15 +428,16 @@ public class HomeUseCase {
     }
 
     public boolean checkAllQuizAreFinishedOrNot(DashboardResModel dashboardResModel) {
-        int totalAttempt = 0;
-        for (QuizResModel quizResModel : dashboardResModel.getQuiz()) {
+       /* int totalAttempt = 0;
+        for (QuizResModel quizResModel : dashboardResModel.getSubjectResModelList()) {
             totalAttempt = quizResModel.getAttempt() + totalAttempt;
         }
         if (totalAttempt == 9) {
             return true;
         } else {
             return false;
-        }
+        }*/
+       return false;
     }
     public List<QuizTestDataModel> makeDummyList() {
         List<QuizTestDataModel> list = new ArrayList<>();
