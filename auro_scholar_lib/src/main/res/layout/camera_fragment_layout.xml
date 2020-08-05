@@ -37,23 +37,23 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_300sdp"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_60sdp"
             android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:background="@drawable/qr_square_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toBottomOf="@+id/flash_container">
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                app:Font="Poppins-Regular.ttf"
-                android:textSize="@dimen/_12sdp"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:text="@string/please_put_your_face_inside_the_box"/>
+                android:text="@string/please_put_your_face_inside_the_box"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                app:Font="Poppins-Regular.ttf" />
         </RelativeLayout>
 
 
@@ -111,8 +111,8 @@
         <!-- Flash Toggle -->
         <RelativeLayout
             android:id="@+id/flash_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_toLeftOf="@+id/switch_orientation_container"
@@ -149,8 +149,8 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:background="@drawable/circle_white"
                 android:padding="@dimen/_2sdp">
 
