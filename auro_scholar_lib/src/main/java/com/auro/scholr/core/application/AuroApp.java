@@ -32,7 +32,10 @@ public class AuroApp {
 
     public static AppComponent getAppComponent() {
         if (appComponent == null) {
-            intialiseSdk(getAuroScholarModel().getActivity());
+            if(getAuroScholarModel() != null){
+                intialiseSdk(getAuroScholarModel().getActivity());
+            }
+
         }
         return appComponent;
     }
