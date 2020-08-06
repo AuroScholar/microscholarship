@@ -14,6 +14,7 @@ public class AssignmentReqModel implements Parcelable {
     byte[] imageBytes;
     boolean isUploaded;
     String subject;
+    int subjectPos;
 
     protected AssignmentReqModel(Parcel in) {
         registration_id = in.readString();
@@ -24,6 +25,7 @@ public class AssignmentReqModel implements Parcelable {
         imageBytes = in.createByteArray();
         isUploaded = in.readByte() != 0;
         subject = in.readString();
+        subjectPos = in.readInt();
     }
 
     @Override
@@ -36,6 +38,7 @@ public class AssignmentReqModel implements Parcelable {
         dest.writeByteArray(imageBytes);
         dest.writeByte((byte) (isUploaded ? 1 : 0));
         dest.writeString(subject);
+        dest.writeInt(subjectPos);
     }
 
     @Override
@@ -54,6 +57,14 @@ public class AssignmentReqModel implements Parcelable {
             return new AssignmentReqModel[size];
         }
     };
+
+    public int getSubjectPos() {
+        return subjectPos;
+    }
+
+    public void setSubjectPos(int subjectPos) {
+        this.subjectPos = subjectPos;
+    }
 
     public String getSubject() {
         return subject;

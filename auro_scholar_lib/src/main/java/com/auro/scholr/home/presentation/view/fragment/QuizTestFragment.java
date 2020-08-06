@@ -223,7 +223,7 @@ public class QuizTestFragment extends BaseFragment {
 
     public void openQuizHomeFragment() {
         getActivity().getSupportFragmentManager().popBackStack();//old code//refrence https://stackoverflow.com/questions/53566847/popbackstack-causing-java-lang-illegalstateexception-can-not-perform-this-actio
-       // getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        // getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     public void openDemographicFragment() {
@@ -328,6 +328,7 @@ public class QuizTestFragment extends BaseFragment {
         }
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null) {
+            assignmentReqModel.setSubjectPos(quizResModel.getSubjectPos());
             prefModel.setAssignmentReqModel(assignmentReqModel);
             AppPref.INSTANCE.setPref(prefModel);
         }
@@ -539,11 +540,11 @@ public class QuizTestFragment extends BaseFragment {
         customDialogModel.setTitle("Quiz Instructions");
         customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.bullted_list));
         customDialogModel.setTwoButtonRequired(false);
-        if(getContext() != null) {
+        if (getContext() != null) {
             customDialog = new CustomDialog(getContext(), customDialogModel);
 
-        // Window window = customDialog.getWindow();
-        // window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            // Window window = customDialog.getWindow();
+            // window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(customDialog.getWindow().getAttributes());
             lp.width = WindowManager.LayoutParams.MATCH_PARENT;

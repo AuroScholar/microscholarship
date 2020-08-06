@@ -3,6 +3,8 @@ package com.auro.scholr.home.presentation.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -45,11 +47,14 @@ import com.auro.scholr.home.data.model.CustomSnackBarModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.RandomInviteFriendsDataModel;
+import com.auro.scholr.home.data.model.SubjectResModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemNewAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
+import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
@@ -400,13 +405,18 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void azureImage(String path) {
         try {
-            Log.d(TAG, "Image Path" + path);
-            File file = new File(path);
-            InputStream is = AuroApp.getAppContext().getApplicationContext().getContentResolver().openInputStream(Uri.fromFile(file));
+            AppLogger.d(TAG, "Image Path" + path);
             assignmentReqModel = quizViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
-            assignmentReqModel.setImageBytes(quizViewModel.getBytes(is));
             assignmentReqModel.setEklavvya_exam_id("");
             assignmentReqModel.setSubject(quizResModel.getSubjectName());
+            Bitmap picBitmap = BitmapFactory.decodeFile(path);
+            byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
+            long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
+            if (mb > 1.5) {
+                assignmentReqModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
+            } else {
+                assignmentReqModel.setImageBytes(bytes);
+            }
             quizViewModel.getAzureRequestData(assignmentReqModel);
         } catch (Exception e) {
             /*Do code here when error occur*/
@@ -457,7 +467,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
             openFragment(new PrivacyPolicyFragment());
 
-           // openQuizHomeNewFragment();
+            // openQuizHomeNewFragment();
         } else if (v.getId() == R.id.lang_eng) {
             CustomSnackBar.INSTANCE.dismissCartSnackbar();
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -681,13 +691,14 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
     public void checkStatusforCongratulationDialog() {
-      /*  PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null && prefModel.getAssignmentReqModel() != null) {
             AssignmentReqModel assignmentReqModel = prefModel.getAssignmentReqModel();
             if (!TextUtil.isEmpty(assignmentReqModel.getExam_name()) && !TextUtil.isEmpty(assignmentReqModel.getQuiz_attempt())) {
                 if (dashboardResModel != null && !TextUtil.checkListIsEmpty(dashboardResModel.getSubjectResModelList())) {
+                    SubjectResModel subjectResModel = dashboardResModel.getSubjectResModelList().get(assignmentReqModel.getSubjectPos());
                     int finishedTestPos = ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getExam_name());
-                    QuizResModel quizResModel = dashboardResModel.getSubjectResModelList().get(finishedTestPos - 1);
+                    QuizResModel quizResModel = subjectResModel.getChapter().get(finishedTestPos - 1);
                     if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 8) {
                         openCongratulationsDialog(dashboardResModel, assignmentReqModel);
                     } else {
@@ -698,7 +709,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 AppPref.INSTANCE.setPref(prefModel);
             }
 
-        }*/
+        }
     }
 
 
@@ -809,7 +820,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     private void setQuizListNewAdapter() {
         binding.quizTypeList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.quizTypeList.setHasFixedSize(true);
-        QuizItemNewAdapter quizItemAdapter = new QuizItemNewAdapter(this.getContext(), dashboardResModel.getSubjectResModelList(),this);
+        QuizItemNewAdapter quizItemAdapter = new QuizItemNewAdapter(this.getContext(), dashboardResModel.getSubjectResModelList(), this);
         binding.quizTypeList.setAdapter(quizItemAdapter);
 
     }

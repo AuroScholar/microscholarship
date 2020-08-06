@@ -19,6 +19,7 @@ import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.MonthlyScholarShipModel;
 import com.auro.scholr.home.data.model.QuizResModel;
+import com.auro.scholr.home.data.model.SubjectResModel;
 import com.auro.scholr.home.data.model.newDashboardModel.ChapterResModel;
 import com.auro.scholr.home.data.model.newDashboardModel.QuizTestDataModel;
 import com.auro.scholr.util.AppLogger;
@@ -144,6 +145,7 @@ public class HomeUseCase {
         assignmentReqModel.setExam_name(String.valueOf(quizResModel.getNumber()));
         assignmentReqModel.setQuiz_attempt(String.valueOf((quizResModel.getAttempt() + 1)));
         assignmentReqModel.setRegistration_id(dashboardResModel.getAuroid());
+        assignmentReqModel.setSubject(quizResModel.getSubjectName());
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
             assignmentReqModel.setExamlang("E");
@@ -428,17 +430,20 @@ public class HomeUseCase {
     }
 
     public boolean checkAllQuizAreFinishedOrNot(DashboardResModel dashboardResModel) {
-       /* int totalAttempt = 0;
-        for (QuizResModel quizResModel : dashboardResModel.getSubjectResModelList()) {
-            totalAttempt = quizResModel.getAttempt() + totalAttempt;
+        int totalAttempt = 0;
+        for (SubjectResModel subjectResModel : dashboardResModel.getSubjectResModelList()) {
+            for (QuizResModel quizResModel : subjectResModel.getChapter()) {
+                totalAttempt = quizResModel.getAttempt() + totalAttempt;
+            }
         }
-        if (totalAttempt == 9) {
+        if (totalAttempt == 60) {
             return true;
         } else {
             return false;
-        }*/
-       return false;
+        }
+
     }
+
     public List<QuizTestDataModel> makeDummyList() {
         List<QuizTestDataModel> list = new ArrayList<>();
         for (int i = 0; i < 5; i++) {

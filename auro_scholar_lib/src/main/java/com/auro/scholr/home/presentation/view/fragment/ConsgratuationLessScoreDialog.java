@@ -23,6 +23,7 @@ import com.auro.scholr.databinding.DialogLessScoreCongratulationsBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
+import com.auro.scholr.home.data.model.SubjectResModel;
 import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewModel;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
@@ -48,6 +49,8 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
     AssignmentReqModel assignmentReqModel;
     int marks;
     int finishedTestPos;
+    SubjectResModel subjectResModel;
+    QuizResModel quizResModel;
 
 
     private static final String TAG = ConsgratuationLessScoreDialog.class.getSimpleName();
@@ -88,9 +91,10 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
                 .setTopLeftCorner(CornerFamily.ROUNDED, radius)
                 .build());
         binding.tickerView.setCharacterLists(TickerUtils.provideNumberList());
+        subjectResModel = dashboardResModel.getSubjectResModelList().get(assignmentReqModel.getSubjectPos());
         finishedTestPos = ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getExam_name());
-      //  marks = dashboardResModel.getSubjectResModelList().get(finishedTestPos - 1).getScorepoints();
-        marks = marks * 10;
+        quizResModel = subjectResModel.getChapter().get(finishedTestPos - 1);
+        marks = quizResModel.getScorepoints() * 10;
         for (int i = 1; i <= marks; i++) {
             binding.tickerView.setText(i + "%");
         }
@@ -103,13 +107,13 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
             binding.btntutor.setVisibility(View.GONE);
         }
 
-       /* if (checkAllQuizAreFinishedOrNot()) {
-            binding.btnShare.setVisibility(View.VISIBLE);
-        }*/
+        if (checkAllQuizAreFinishedOrNot()) {
+            binding.txtStartQuiz.setVisibility(View.VISIBLE);
+            binding.txtRetakeQuiz.setVisibility(View.GONE);
+            binding.btntutor.setVisibility(View.GONE);
+        }
 
         binding.btnShare.setVisibility(View.VISIBLE);
-
-
 
 
         if (!TextUtil.isEmpty(dashboardResModel.getLeadQualified()) && dashboardResModel.getLeadQualified().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
@@ -145,10 +149,10 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
         } else if (id == R.id.icClose) {
             dismiss();
         } else if (id == R.id.txtRetakeQuiz) {
-            //sendClickCallBack(dashboardResModel.getSubjectResModelList().get(finishedTestPos - 1));
+            sendClickCallBack(subjectResModel.getChapter().get(finishedTestPos - 1));
             dismiss();
         } else if (id == R.id.txtStartQuiz) {
-            //makeQuiz();
+            makeQuiz();
             dismiss();
         } else if (id == R.id.btntutor) {
             if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
@@ -168,58 +172,28 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
         mcontext.startActivity(shareIntent);
     }
 
-  /*  private void makeQuiz() {
-        for (QuizResModel quizResModel : dashboardResModel.getSubjectResModelList()) {
-            if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 1) {
-                {
-                    if (!checkAllQuizAreFinishedOrNot()) {
-                        if (quizResModel.getNumber() == 3) {
-                            if (dashboardResModel.getSubjectResModelList().get(0).getAttempt() < 3) {
-                                //go to the quiz one
-                                sendClickCallBack(dashboardResModel.getSubjectResModelList().get(0));
-                            } else if (dashboardResModel.getSubjectResModelList().get(1).getAttempt() < 3) {
-                                //go to the quiz two
-                                sendClickCallBack(dashboardResModel.getSubjectResModelList().get(1));
-                            }
-                        } else if (quizResModel.getNumber() == 2) {
-                            if (dashboardResModel.getSubjectResModelList().get(2).getAttempt() < 3) {
-                                //go to the quiz three
-                                sendClickCallBack(dashboardResModel.getSubjectResModelList().get(2));
-                            } else if (dashboardResModel.getSubjectResModelList().get(0).getAttempt() < 3) {
-                                //go to the quiz one
-                                sendClickCallBack(dashboardResModel.getSubjectResModelList().get(0));
-                            }
-
-                        } else if (quizResModel.getNumber() == 1) {
-                            if (dashboardResModel.getSubjectResModelList().get(1).getAttempt() < 3) {
-                                //go to the quiz Two
-                                sendClickCallBack(dashboardResModel.getSubjectResModelList().get(1));
-                            } else if (dashboardResModel.getSubjectResModelList().get(2).getAttempt() < 3) {
-                                //go to the quiz three
-                                sendClickCallBack(dashboardResModel.getSubjectResModelList().get(2));
-                            }
-                        }
-
-                    }
-
-                }
-            }
-
+    private void makeQuiz() {
+        if (finishedTestPos == 1 && subjectResModel.getChapter().get(1).getAttempt() < 3) {
+            sendClickCallBack(subjectResModel.getChapter().get(1));
+        } else if (finishedTestPos == 2 && subjectResModel.getChapter().get(2).getAttempt() < 3) {
+            sendClickCallBack(subjectResModel.getChapter().get(2));
+        } else if (finishedTestPos == 3 && subjectResModel.getChapter().get(3).getAttempt() < 3) {
+            sendClickCallBack(subjectResModel.getChapter().get(3));
+        } else if (finishedTestPos == 4 && subjectResModel.getChapter().get(0).getAttempt() < 3) {
+            sendClickCallBack(subjectResModel.getChapter().get(0));
         }
     }
 
-
     private boolean checkAllQuizAreFinishedOrNot() {
         int totalAttempt = 0;
-        for (QuizResModel quizResModel : dashboardResModel.getSubjectResModelList()) {
+        for (QuizResModel quizResModel : subjectResModel.getChapter()) {
             totalAttempt = quizResModel.getAttempt() + totalAttempt;
         }
-        if (totalAttempt == 9) {
+        if (totalAttempt == 12) {
             return true;
-        } else {
-            return false;
         }
-    }*/
+        return false;
+    }
 
     private void sendClickCallBack(QuizResModel quizResModel) {
         if (commonCallBackListner != null) {

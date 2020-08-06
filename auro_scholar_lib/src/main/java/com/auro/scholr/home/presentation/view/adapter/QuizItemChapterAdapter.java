@@ -22,6 +22,7 @@ import com.auro.scholr.databinding.QuizLevelItemLayoutBinding;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.newDashboardModel.ChapterResModel;
 import com.auro.scholr.home.data.model.newDashboardModel.QuizTestDataModel;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
 
 import java.util.List;
@@ -34,14 +35,14 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
     List<QuizResModel> list;
     Context mContext;
     CommonCallBackListner commonCallBackListner;
-    String subject;
+    int subjectPos;
 
 
-    public QuizItemChapterAdapter(Context context, List<QuizResModel> list, CommonCallBackListner commonCallBackListner, String subject) {
+    public QuizItemChapterAdapter(Context context, List<QuizResModel> list, CommonCallBackListner commonCallBackListner, int subjectPos) {
         mContext = context;
         this.list = list;
         this.commonCallBackListner = commonCallBackListner;
-        this.subject = subject;
+        this.subjectPos = subjectPos;
     }
 
     @NonNull
@@ -65,7 +66,7 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
     public class ViewHolder extends RecyclerView.ViewHolder {
         QuizLevelItemLayoutBinding binding;
         int count = 0;
-        int progressCount = 1;
+        int progressCount = 0;
 
         public ViewHolder(QuizLevelItemLayoutBinding binding) {
             super(binding.getRoot());
@@ -73,8 +74,8 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
         }
 
         void setData(QuizResModel model, int position) {
+            AppLogger.e("chhonker", "subject name-" + model.getSubjectName() + "-Pos-" + position + "-attmept-" + model.getAttempt() + "-chaptername-" + model.getName());
             setClickListner(binding, position);
-
             if (position == 0) {
                 binding.walletIcon.setVisibility(View.VISIBLE);
             } else {
@@ -91,59 +92,87 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
             binding.levelThree.layoutScore.setVisibility(View.VISIBLE);
             binding.levelThree.retakeLayout.setVisibility(View.GONE);
             binding.levelThree.txtTopic.setVisibility(View.GONE);
-            binding.levelThree.txtScorePoints.setText("" + model.getTotalpoints());
+            binding.levelThree.txtScorePoints.setText("" + model.getScorepoints());
 
             /*for level four*/
             binding.levelFour.txtTopic.setVisibility(View.GONE);
             binding.levelFour.layoutScore.setVisibility(View.GONE);
-            if (model.getTotalpoints() >= 8) {
-                binding.levelFour.retakeLayout.setVisibility(View.GONE);
-                binding.levelFour.nextQuizLayout.setVisibility(View.VISIBLE);
-            } else {
+            if (model.getScorepoints() >= 1 && model.getScorepoints() < 8) {
                 binding.levelFour.retakeLayout.setVisibility(View.VISIBLE);
                 binding.levelFour.nextQuizLayout.setVisibility(View.GONE);
+            } else {
+                binding.levelFour.retakeLayout.setVisibility(View.GONE);
+                binding.levelFour.nextQuizLayout.setVisibility(View.VISIBLE);
             }
 
             binding.levelFour.txtTopic.setVisibility(View.GONE);
-
             count = 0;
-            Timer timer = new Timer();
+
+            if (model.getAttempt() == 1) {
+                binding.levelTwo.pb.setProgress(100);
+                binding.levelTwo.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
+            } else {
+                binding.levelTwo.pb.setProgress(0);
+                binding.levelTwo.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.light_grey), PorterDuff.Mode.SRC_IN);
+
+            }
+
+            if (model.getAttempt() == 2) {
+                binding.levelThree.pb.setProgress(100);
+                binding.levelThree.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
+            } else {
+                binding.levelThree.pb.setProgress(0);
+                binding.levelThree.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.light_grey), PorterDuff.Mode.SRC_IN);
+            }
+
+            if (model.getAttempt() == 3) {
+                binding.levelFour.pb.setProgress(100);
+                binding.levelFour.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
+                binding.levelThree.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.light_grey), PorterDuff.Mode.SRC_IN);
+
+            } else {
+                binding.levelFour.pb.setProgress(0);
+            }
+          /* Timer timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
                     Handler handler = new Handler(Looper.getMainLooper());
                     handler.post(new Runnable() {
                         public void run() {
-                            if (count == model.getAttempt()) {
-                                timer.cancel();
-                            } else {
-                                if (progressCount == 100) {
-                                    if (count == 0) {
-                                        binding.levelTwo.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
-                                    } else if (count == 1) {
-                                        binding.levelThree.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
-                                    } else if (count == 2) {
-                                        binding.levelFour.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
-                                    }
-                                    count++;
-                                    progressCount = 0;
-                                } else {
-                                    progressCount++;
-                                    if (count == 0) {
-                                        binding.levelTwo.pb.setProgress(progressCount);
-                                    } else if (count == 1) {
-                                        binding.levelThree.pb.setProgress(progressCount);
-                                    } else if (count == 2) {
-                                        binding.levelFour.pb.setProgress(progressCount);
-                                    }
-                                }
-                            }
+                            progressHandling(timer, model);
                         }
                     });
                 }
-            }, 0, 10);
+            }, 0, 10);*/
 
+        }
 
+        private void progressHandling(Timer timer, QuizResModel model) {
+            if (count == model.getAttempt()) {
+                timer.cancel();
+            } else {
+                if (progressCount == 100) {
+                    if (count == 0) {
+                        binding.levelTwo.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
+                    } else if (count == 1) {
+                        binding.levelThree.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
+                    } else if (count == 2) {
+                        binding.levelFour.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
+                    }
+                    count++;
+                    progressCount = 0;
+                } else {
+                    progressCount++;
+                    if (count == 0) {
+                        binding.levelTwo.pb.setProgress(progressCount);
+                    } else if (count == 1) {
+                        binding.levelThree.pb.setProgress(progressCount);
+                    } else if (count == 2) {
+                        binding.levelFour.pb.setProgress(progressCount);
+                    }
+                }
+            }
         }
 
         private void setClickListner(QuizLevelItemLayoutBinding binding, int position) {
@@ -151,7 +180,7 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
                 @Override
                 public void onClick(View v) {
                     if (commonCallBackListner != null) {
-                        list.get(position).setSubjectName(subject);
+                        list.get(position).setSubjectPos(subjectPos);
                         commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, list.get(position)));
                     }
                 }
@@ -161,7 +190,7 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
                 @Override
                 public void onClick(View v) {
                     if (commonCallBackListner != null) {
-                        list.get(position).setSubjectName(subject);
+                        list.get(position).setSubjectPos(subjectPos);
                         commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, list.get(position)));
                     }
                 }

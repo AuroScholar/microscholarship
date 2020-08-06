@@ -69,13 +69,13 @@ public class QuizItemNewAdapter extends RecyclerView.Adapter<QuizItemNewAdapter.
             binding.txtAmount.setText("" + model.getQuizWonAmount());
             binding.subjectTitle.setText(model.getSubject());
             binding.progressBar.setProgress(model.getQuizWonAmount());
-            setChapterListAdapter(model);
+            setChapterListAdapter(model,position);
         }
 
-        private void setChapterListAdapter(SubjectResModel model) {
+        private void setChapterListAdapter(SubjectResModel model, int position) {
             binding.subjectsChapterRecyclerview.setLayoutManager(new LinearLayoutManager(AuroApp.getAppContext()));
             binding.subjectsChapterRecyclerview.setHasFixedSize(true);
-            QuizItemChapterAdapter quizItemAdapter = new QuizItemChapterAdapter(mContext, model.getChapter(),commonCallBackListner,model.getSubject());
+            QuizItemChapterAdapter quizItemAdapter = new QuizItemChapterAdapter(mContext, model.getChapter(),commonCallBackListner,position);
             binding.subjectsChapterRecyclerview.setAdapter(quizItemAdapter);
             binding.view2.setOnClickListener(new View.OnClickListener() {
                 @Override

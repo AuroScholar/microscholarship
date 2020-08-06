@@ -37,6 +37,7 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.FriendListResDataModel;
 import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
 import com.auro.scholr.home.data.model.QuizResModel;
+import com.auro.scholr.home.data.model.SubjectResModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
@@ -216,7 +217,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
                     } else if (responseApi.apiTypeStatus == ACCEPT_INVITE_CLICK) {
                         ChallengeAccepResModel accepResModel = (ChallengeAccepResModel) responseApi.data;
                         updateData(false, accepResModel.getError());
-                      //  sendToNextQuiz();
+                        sendToNextQuiz();
                     } else if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         dashboardResModel = (DashboardResModel) responseApi.data;
                     } else if (responseApi.apiTypeStatus == AZURE_API) {
@@ -497,16 +498,17 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         });
     }
 
-/*
+
     private void sendToNextQuiz() {
         if (dashboardResModel == null) {
             return;
         }
         if (!viewModel.homeUseCase.checkAllQuizAreFinishedOrNot(dashboardResModel)) {
-            for (int i = 0; i < dashboardResModel.getSubjectResModelList().size(); i++) {
-                quizResModel = dashboardResModel.getSubjectResModelList().get(i);
-                if (quizResModel.getAttempt() < 3) {
-                    break;
+            for (SubjectResModel subjectResModel : dashboardResModel.getSubjectResModelList()) {
+                for (QuizResModel quizResModel : subjectResModel.getChapter()) {
+                    if (quizResModel.getAttempt() < 3) {
+                        this.quizResModel = quizResModel;
+                    }
                 }
             }
         } else {
@@ -516,7 +518,6 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
             askPermission();
         }
     }
-*/
 
 
     public void setImageInPref(AssignmentReqModel assignmentReqModel) {
@@ -617,7 +618,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Write your code here to execute after dialog
-                       // ViewUtil.showToast("You clicked on NO");
+                        // ViewUtil.showToast("You clicked on NO");
                         dialog.cancel();
                     }
                 });

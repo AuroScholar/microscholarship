@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.TypedValue;
 
@@ -19,6 +20,7 @@ import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Locale;
 
 public class AppUtil {
@@ -92,5 +94,20 @@ public class AppUtil {
         context.startActivity(intent);
     }
 
+    public static byte[] encodeToBase64(Bitmap image, int quality) {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, quality, byteArrayOS);
+        byte[] byteArray = byteArrayOS.toByteArray();
+        return byteArray;
+    }
+
+    public static long  bytesIntoHumanReadable(long bytes) {
+        long kilobyte = 1024;
+        long megabyte = kilobyte * 1024;
+        long gigabyte = megabyte * 1024;
+        long terabyte = gigabyte * 1024;
+
+        return (bytes / megabyte);
+    }
 
 }

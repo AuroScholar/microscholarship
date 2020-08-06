@@ -37,9 +37,14 @@ public class QuizResModel implements Parcelable {
     @Expose
     private boolean wonStatus;
 
-    @SerializedName("subjectName")
+    @SerializedName("subject")
     @Expose
     private String subjectName;
+
+
+    @SerializedName("subjectPos")
+    @Expose
+    private int subjectPos;
 
     protected QuizResModel(Parcel in) {
         if (in.readByte() == 0) {
@@ -67,6 +72,7 @@ public class QuizResModel implements Parcelable {
         status = in.readString();
         wonStatus = in.readByte() != 0;
         subjectName = in.readString();
+        subjectPos = in.readInt();
     }
 
     @Override
@@ -100,6 +106,7 @@ public class QuizResModel implements Parcelable {
         dest.writeString(status);
         dest.writeByte((byte) (wonStatus ? 1 : 0));
         dest.writeString(subjectName);
+        dest.writeInt(subjectPos);
     }
 
     @Override
@@ -195,4 +202,11 @@ public class QuizResModel implements Parcelable {
         this.status = status;
     }
 
+    public int getSubjectPos() {
+        return subjectPos;
+    }
+
+    public void setSubjectPos(int subjectPos) {
+        this.subjectPos = subjectPos;
+    }
 }
