@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,6 +45,8 @@ import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.teacher.data.model.response.TeacherResModel;
+import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.firebase.FirebaseEventUtil;
@@ -553,12 +557,19 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
 
     private void azureImage(String path) {
         try {
-            Log.d(TAG, "Image Path" + path);
-            File file = new File(path);
-            InputStream is = AuroApp.getAppContext().getApplicationContext().getContentResolver().openInputStream(Uri.fromFile(file));
-            assignmentReqModel = viewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
-            assignmentReqModel.setImageBytes(viewModel.getBytes(is));
+            AppLogger.d(TAG, "Image Path" + path);
+            assignmentReqModel =  viewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
             assignmentReqModel.setEklavvya_exam_id("");
+            assignmentReqModel.setSubject(quizResModel.getSubjectName());
+            Bitmap picBitmap = BitmapFactory.decodeFile(path);
+            byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
+            long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
+            if (mb > 1.5) {
+                assignmentReqModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
+            } else {
+                assignmentReqModel.setImageBytes(bytes);
+            }
+
             viewModel.getAzureRequestData(assignmentReqModel);
         } catch (Exception e) {
             /*Do code here when error occur*/
