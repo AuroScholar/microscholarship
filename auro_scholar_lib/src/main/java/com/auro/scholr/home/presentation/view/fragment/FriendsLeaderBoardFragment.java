@@ -508,11 +508,14 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
             return;
         }
         if (!viewModel.homeUseCase.checkAllQuizAreFinishedOrNot(dashboardResModel)) {
-            for (SubjectResModel subjectResModel : dashboardResModel.getSubjectResModelList()) {
+            for (int i = 0; i < dashboardResModel.getSubjectResModelList().size(); i++) {
+                SubjectResModel subjectResModel = dashboardResModel.getSubjectResModelList().get(i);
                 for (QuizResModel quizResModel : subjectResModel.getChapter()) {
                     if (quizResModel.getAttempt() < 3) {
+                        quizResModel.setSubjectPos(i);
                         this.quizResModel = quizResModel;
                     }
+                    break;
                 }
             }
         } else {
@@ -558,7 +561,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     private void azureImage(String path) {
         try {
             AppLogger.d(TAG, "Image Path" + path);
-            assignmentReqModel =  viewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
+            assignmentReqModel = viewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
             assignmentReqModel.setEklavvya_exam_id("");
             assignmentReqModel.setSubject(quizResModel.getSubjectName());
             Bitmap picBitmap = BitmapFactory.decodeFile(path);

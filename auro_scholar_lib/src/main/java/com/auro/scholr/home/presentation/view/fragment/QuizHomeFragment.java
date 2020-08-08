@@ -67,6 +67,7 @@ import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.InputStream;
@@ -417,7 +418,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             } else {
                 assignmentReqModel.setImageBytes(bytes);
             }
-          //  quizViewModel.getAzureRequestData(assignmentReqModel);
+            //  quizViewModel.getAzureRequestData(assignmentReqModel);
         } catch (Exception e) {
             /*Do code here when error occur*/
         }
@@ -699,6 +700,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     SubjectResModel subjectResModel = dashboardResModel.getSubjectResModelList().get(assignmentReqModel.getSubjectPos());
                     int finishedTestPos = ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getExam_name());
                     QuizResModel quizResModel = subjectResModel.getChapter().get(finishedTestPos - 1);
+                    Gson gson = new Gson();
+                    String json = gson.toJson(quizResModel);
+                    String jso2 = gson.toJson(assignmentReqModel);
+                    AppLogger.e("chhonker quizresponse", json);
+                    AppLogger.e("chhonker assignment", jso2);
                     if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && quizResModel.getScorepoints() >= 8) {
                         openCongratulationsDialog(dashboardResModel, assignmentReqModel);
                     } else {

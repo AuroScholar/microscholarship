@@ -95,7 +95,7 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
         finishedTestPos = ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getExam_name());
         quizResModel = subjectResModel.getChapter().get(finishedTestPos - 1);
         marks = quizResModel.getScorepoints() * 10;
-        for (int i = 1; i <= marks; i++) {
+        for (int i = 0; i <= marks; i++) {
             binding.tickerView.setText(i + "%");
         }
 
@@ -173,14 +173,14 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
     }
 
     private void makeQuiz() {
-        if (finishedTestPos == 1 && subjectResModel.getChapter().get(1).getAttempt() < 3) {
-            sendClickCallBack(subjectResModel.getChapter().get(1));
-        } else if (finishedTestPos == 2 && subjectResModel.getChapter().get(2).getAttempt() < 3) {
-            sendClickCallBack(subjectResModel.getChapter().get(2));
-        } else if (finishedTestPos == 3 && subjectResModel.getChapter().get(3).getAttempt() < 3) {
-            sendClickCallBack(subjectResModel.getChapter().get(3));
-        } else if (finishedTestPos == 4 && subjectResModel.getChapter().get(0).getAttempt() < 3) {
-            sendClickCallBack(subjectResModel.getChapter().get(0));
+        int lastPos = finishedTestPos - 1;
+        for (int i = 0; i < subjectResModel.getChapter().size(); i++) {
+            if (i != lastPos) {
+                if (subjectResModel.getChapter().get(i).getAttempt() < 3) {
+                    sendClickCallBack(subjectResModel.getChapter().get(i));
+                    break;
+                }
+            }
         }
     }
 

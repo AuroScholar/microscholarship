@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-               // openGenricSDK();
-                 openScholarSpecificSdk();
+                openGenricSDK();
+                 //openScholarSpecificSdk();
                 hideKeyboard(this);
 
 
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             inputModel.setStudentClass("11");*/
     private void openGenricSDK() {
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
-        inputModel.setMobileNumber("7503600604");
+        inputModel.setMobileNumber("8178307851");
         inputModel.setStudentClass("6");
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setReferralLink("");

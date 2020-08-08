@@ -166,14 +166,14 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
 
 
     private void makeQuiz() {
-        if (finishedTestPos == 1 && subjectResModel.getChapter().get(1).getAttempt() < 3) {
-            sendClickCallBack(subjectResModel.getChapter().get(1));
-        } else if (finishedTestPos == 2 && subjectResModel.getChapter().get(2).getAttempt() < 3) {
-            sendClickCallBack(subjectResModel.getChapter().get(2));
-        } else if (finishedTestPos == 3 && subjectResModel.getChapter().get(3).getAttempt() < 3) {
-            sendClickCallBack(subjectResModel.getChapter().get(3));
-        } else if (finishedTestPos == 4 && subjectResModel.getChapter().get(0).getAttempt() < 3) {
-            sendClickCallBack(subjectResModel.getChapter().get(0));
+        int lastPos = finishedTestPos - 1;
+        for (int i = 0; i < subjectResModel.getChapter().size(); i++) {
+            if (i != lastPos) {
+                if (subjectResModel.getChapter().get(i).getAttempt() < 3) {
+                    sendClickCallBack(subjectResModel.getChapter().get(i));
+                    break;
+                }
+            }
         }
     }
 

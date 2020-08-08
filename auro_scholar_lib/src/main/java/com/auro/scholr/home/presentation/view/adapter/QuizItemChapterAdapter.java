@@ -118,7 +118,9 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
             }
 
             if (model.getAttempt() == 2) {
+                binding.levelTwo.pb.setProgress(100);
                 binding.levelThree.pb.setProgress(100);
+                binding.levelTwo.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
                 binding.levelThree.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
             } else {
                 binding.levelThree.pb.setProgress(0);
@@ -126,9 +128,14 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
             }
 
             if (model.getAttempt() == 3) {
+                binding.levelTwo.pb.setProgress(100);
+                binding.levelThree.pb.setProgress(100);
                 binding.levelFour.pb.setProgress(100);
+                binding.levelFour.retakeLayout.setVisibility(View.GONE);
+                binding.levelFour.nextQuizLayout.setVisibility(View.GONE);
+                binding.levelTwo.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
+                binding.levelThree.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
                 binding.levelFour.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
-                binding.levelThree.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.light_grey), PorterDuff.Mode.SRC_IN);
 
             } else {
                 binding.levelFour.pb.setProgress(0);
@@ -180,17 +187,17 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
                 @Override
                 public void onClick(View v) {
                     if (commonCallBackListner != null) {
-                        list.get(position).setSubjectPos(subjectPos);
+                       // list.get(position).setSubjectPos(subjectPos);
                         commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, list.get(position)));
                     }
                 }
             });
 
-            binding.levelThree.retakeLayout.setOnClickListener(new View.OnClickListener() {
+            binding.levelFour.retakeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (commonCallBackListner != null) {
-                        list.get(position).setSubjectPos(subjectPos);
+                       // list.get(position).setSubjectPos(subjectPos);
                         commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, list.get(position)));
                     }
                 }

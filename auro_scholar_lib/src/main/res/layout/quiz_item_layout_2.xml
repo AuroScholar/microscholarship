@@ -71,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_90sdp"
                     android:indeterminate="false"
-                    android:max="200"
+                    android:max="100"
                     android:progressDrawable="@drawable/progress_bar"
                     android:secondaryProgress="0"
                     app:layout_constraintBottom_toBottomOf="parent"

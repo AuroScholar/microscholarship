@@ -43,12 +43,12 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout4"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/_170sdp"
                     app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="0.33"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/imgtryagain"
@@ -56,25 +56,9 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/try_again"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <com.auro.scholr.core.util.uiwidget.RPTextView
-                        android:id="@+id/RPTextView6"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/congratulation_new"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_15sdp"
-                        android:visibility="gone"
-                        app:Font="Poppins-Bold.ttf"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -92,10 +76,9 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayout8"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         app:layout_constraintBottom_toTopOf="@+id/constraintLayout7"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHeight_percent="1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -116,9 +99,9 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginRight="@dimen/_40sdp"
                             android:gravity="center"
-                            android:paddingLeft="@dimen/_15sdp"
+                            android:paddingLeft="@dimen/_5sdp"
                             android:paddingTop="@dimen/_3sdp"
-                            android:paddingRight="@dimen/_15sdp"
+                            android:paddingRight="@dimen/_5sdp"
                             android:paddingBottom="@dimen/_5sdp"
                             android:text="@string/impossible"
                             android:textColor="@color/black"
@@ -167,17 +150,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginBottom="@dimen/_5sdp"
                             android:gravity="center"
                             android:paddingLeft="@dimen/_15sdp"
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingRight="@dimen/_15sdp"
-                            android:paddingBottom="@dimen/_5sdp"
                             android:text="You are almost there! Let's  make the scholarship happen!"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_10sdp"
                             app:Font="Poppins-Regular.ttf"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/llyour_score" />
@@ -186,7 +166,7 @@
                     <LinearLayout
                         android:id="@+id/constraintLayout7"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_30sdp"
                         android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
