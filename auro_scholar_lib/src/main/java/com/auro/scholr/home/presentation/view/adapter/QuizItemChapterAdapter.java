@@ -140,6 +140,16 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
             } else {
                 binding.levelFour.pb.setProgress(0);
             }
+
+            if (position == 1 && list.get(0).getAttempt() == 0) {
+                binding.levelFour.nextQuizLayout.setVisibility(View.GONE);
+            } else if (position == 2 && list.get(1).getAttempt() == 0) {
+                binding.levelFour.nextQuizLayout.setVisibility(View.GONE);
+            }
+            if (list.size() - 1 == position) {
+                binding.viewLeftTwo.setVisibility(View.GONE);
+            }
+
           /* Timer timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
@@ -187,7 +197,7 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
                 @Override
                 public void onClick(View v) {
                     if (commonCallBackListner != null) {
-                       // list.get(position).setSubjectPos(subjectPos);
+                        // list.get(position).setSubjectPos(subjectPos);
                         commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, list.get(position)));
                     }
                 }
@@ -197,7 +207,7 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
                 @Override
                 public void onClick(View v) {
                     if (commonCallBackListner != null) {
-                       // list.get(position).setSubjectPos(subjectPos);
+                        // list.get(position).setSubjectPos(subjectPos);
                         commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, list.get(position)));
                     }
                 }

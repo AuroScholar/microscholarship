@@ -254,6 +254,7 @@
                 android:src="@drawable/ic_iconswhatsapps"
                 app:backgroundTint="@color/ufo_green"
                 app:layout_anchor="@id/scrollview"
+                android:visibility="gone"
                 app:layout_anchorGravity="end|bottom|right"
                 app:layout_behavior="com.codepath.floatingactionbuttontest.ScrollAwareFABBehavior"
                 app:layout_constraintBottom_toBottomOf="parent"

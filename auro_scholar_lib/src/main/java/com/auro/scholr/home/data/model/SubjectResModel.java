@@ -24,12 +24,16 @@ public class SubjectResModel implements Parcelable {
     @Expose
     private int quizWonAmount;
 
+    @SerializedName("quizOpen")
+    @Expose
+    private boolean quizOpen;
 
     protected SubjectResModel(Parcel in) {
         subject = in.readString();
         description = in.readString();
         chapter = in.createTypedArrayList(QuizResModel.CREATOR);
         quizWonAmount = in.readInt();
+        quizOpen = in.readByte() != 0;
     }
 
     @Override
@@ -38,6 +42,7 @@ public class SubjectResModel implements Parcelable {
         dest.writeString(description);
         dest.writeTypedList(chapter);
         dest.writeInt(quizWonAmount);
+        dest.writeByte((byte) (quizOpen ? 1 : 0));
     }
 
     @Override
@@ -56,6 +61,14 @@ public class SubjectResModel implements Parcelable {
             return new SubjectResModel[size];
         }
     };
+
+    public boolean isQuizOpen() {
+        return quizOpen;
+    }
+
+    public void setQuizOpen(boolean quizOpen) {
+        this.quizOpen = quizOpen;
+    }
 
     public String getSubject() {
         return subject;

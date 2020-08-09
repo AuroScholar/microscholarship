@@ -21,6 +21,7 @@ import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.SubjectResModel;
 import com.auro.scholr.home.data.model.newDashboardModel.QuizNewDashboardModel;
 import com.auro.scholr.home.data.model.newDashboardModel.QuizTestDataModel;
+import com.auro.scholr.util.AppLogger;
 
 import java.util.List;
 import java.util.Timer;
@@ -82,12 +83,28 @@ public class QuizItemNewAdapter extends RecyclerView.Adapter<QuizItemNewAdapter.
             for (QuizResModel quizResModel : model.getChapter()) {
                 quizResModel.setSubjectPos(position);
             }
+            expand(binding.subjectsChapterRecyclerview, 1000, model.isQuizOpen());
             QuizItemChapterAdapter quizItemAdapter = new QuizItemChapterAdapter(mContext, model.getChapter(), commonCallBackListner, position);
             binding.subjectsChapterRecyclerview.setAdapter(quizItemAdapter);
             binding.view2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    expand(binding.subjectsChapterRecyclerview, 1000);
+
+                    int value = binding.subjectsChapterRecyclerview.getVisibility();
+                    if (value == 0) {
+                        list.get(position).setQuizOpen(false);
+                        expand(binding.subjectsChapterRecyclerview, 1000, false);
+                    } else {
+                        list.get(position).setQuizOpen(true);
+                        expand(binding.subjectsChapterRecyclerview, 1000, true);
+                    }
+                    for (int i = 0; i < list.size(); i++) {
+                        if (position != i) {
+                            list.get(i).setQuizOpen(false);
+                        }
+                    }
+                    notifyDataSetChanged();
+
                 }
             });
             Timer timer = new Timer();
@@ -119,8 +136,9 @@ public class QuizItemNewAdapter extends RecyclerView.Adapter<QuizItemNewAdapter.
             }, 0, 10);
         }
 
-        public void expand(final View v, int duration) {
-            final boolean expand = v.getVisibility() != View.VISIBLE;
+        public void expand(final View v, int duration, boolean expand) {
+            // final boolean expand = v.getVisibility() != View.VISIBLE;
+            AppLogger.e("chhonker", "view visibility" + expand);
             if (expand) {
                 binding.downArrowIcon.setRotation(180);
             } else {

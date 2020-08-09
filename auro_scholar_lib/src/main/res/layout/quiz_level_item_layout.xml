@@ -43,7 +43,7 @@
 
             <View
                 android:layout_width="@dimen/_1sdp"
-                android:layout_height="@dimen/_10sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/black" />
 
@@ -59,8 +59,9 @@
                 app:Font="Poppins-Regular.ttf" />
 
             <View
+                android:id="@+id/view_left_two"
                 android:layout_width="@dimen/_1sdp"
-                android:layout_height="@dimen/_35sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/black" />
 
