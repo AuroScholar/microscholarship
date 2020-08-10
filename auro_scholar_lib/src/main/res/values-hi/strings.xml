@@ -241,7 +241,7 @@
     <string name="impossible">It always seems impossible until it’s done.</string>
     <string name="challenge">Challenge</string>
     <string name="taking_private_tutions">निजी ट्युशन लेना ?</string>
-    <string name="taking_type">टेंशन टाइप</string>
+    <string name="taking_type">ट्युशन टाइप</string>
     <string name="challenged_you">Challenged You</string>
     <string name="book_free_tutoring_session">Book Free Tutoring Session</string>
     <string name="retake">Retake</string>
@@ -255,6 +255,6 @@
         <item>Please Select Tution Type</item>
         <item>Group</item>
         <item>Personal</item>
-        <item>Home</item>
+        <item>Online</item>
     </string-array>
 </resources>

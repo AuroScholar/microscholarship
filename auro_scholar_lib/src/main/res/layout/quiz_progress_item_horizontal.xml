@@ -41,7 +41,8 @@
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginLeft="@dimen/_12sdp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:background="@drawable/button_retake_blue"
+            android:backgroundTint="@color/blue_color"
+            android:background="@drawable/ic_invite_button"
             android:visibility="gone">
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
@@ -104,8 +105,8 @@
             android:layout_marginLeft="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             android:text="Topic"
-            android:textSize="@dimen/_8sdp"
             android:textColor="@color/black"
+            android:textSize="@dimen/_8sdp"
             android:visibility="visible"
             app:Font="Poppins-Regular.ttf"
             app:layout_constraintBottom_toTopOf="@+id/level_two"

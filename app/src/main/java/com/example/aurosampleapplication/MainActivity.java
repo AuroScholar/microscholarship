@@ -79,8 +79,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 openGenricSDK();
                  //openScholarSpecificSdk();
                 hideKeyboard(this);
-
-
                 break;
             case R.id.bt_open:
                 openTeacherSDK();
@@ -113,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareType(null);
         auroScholarDataModel.setShareIdentity(null);
         auroScholarDataModel.setActivity(this);
-
         auroScholarDataModel.setSdkFragmentType(AppConstant.FragmentType.QUIZ_DASHBOARD);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         auroScholarDataModel.setEmailVerified(true);
@@ -140,8 +137,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-
-        openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
+        //AuroScholar.openAuroDashboardFragment(auroScholarDataModel);
+       openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
     }
 
     private void openTeacherSDK() {
