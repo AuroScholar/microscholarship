@@ -7,7 +7,7 @@
             android:pivotX="50%"
             android:pivotY="50%" >
             <shape
-                android:innerRadiusRatio="3.0"
+                android:innerRadiusRatio="3.1"
                 android:shape="ring"
                 android:thickness="@dimen/_13sdp"
                 android:thicknessRatio="25.0" >
@@ -25,7 +25,7 @@
             android:pivotX="50%"
             android:pivotY="50%" >
             <shape
-                android:innerRadiusRatio="3.0"
+                android:innerRadiusRatio="3.1"
                 android:shape="ring"
                 android:thickness="@dimen/_13sdp"
                 android:thicknessRatio="25.0" >

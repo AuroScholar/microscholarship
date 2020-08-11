@@ -20,14 +20,14 @@
         <ImageView
             android:id="@+id/wallet_icon"
             android:layout_width="@dimen/_12sdp"
-            android:visibility="gone"
             android:layout_height="@dimen/_14sdp"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="@dimen/_18sdp"
             android:layout_marginLeft="@dimen/_18sdp"
-            app:srcCompat="@drawable/ic_wallet_item"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_wallet_item" />
 
 
         <LinearLayout
@@ -47,16 +47,39 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@color/black" />
 
-            <com.auro.scholr.core.util.uiwidget.RPTextView
-                android:id="@+id/privacy_policy"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:text="Rs.50"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                app:Font="Poppins-Regular.ttf" />
+                android:layout_height="@dimen/_20sdp"
+                android:orientation="horizontal">
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/txt_rs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom"
+                    android:gravity="center_horizontal"
+                    android:text="@string/rs"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11sdp"
+                     />
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_toRightOf="@id/txt_rs"
+                    android:gravity="center_horizontal"
+                    android:text="50"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold"
+                  />
+            </RelativeLayout>
+
 
             <View
                 android:id="@+id/view_left_two"
@@ -82,8 +105,8 @@
             layout="@layout/quiz_progress_item_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="@dimen/_1sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/level_one" />
 
         <include

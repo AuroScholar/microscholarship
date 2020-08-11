@@ -9,12 +9,12 @@
             name="CongratulationsDialogViewModel"
             type="com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/background_camera_bottom_bar"
-        android:clickable="true"
-        android:layout_height="match_parent">
-
+        android:clickable="true">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,12 +57,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:src="@drawable/ic_desgin_back"
                         android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_desgin_back" />
 
 
                     <com.auro.scholr.core.util.uiwidget.RPTextView
@@ -125,14 +125,15 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <LinearLayout
                             android:id="@+id/llyour_score"
                             android:layout_width="@dimen/_150sdp"
                             android:layout_height="@dimen/_50sdp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:orientation="vertical"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:background="@drawable/score_count"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/RPTextView4">
 
@@ -140,12 +141,13 @@
                                 android:id="@+id/RPTextView5"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
                                 android:layout_marginTop="@dimen/_3sdp"
+                                android:gravity="center"
                                 android:text="You Have Scored"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_12sdp"
-                                app:Font="Poppins-SemiBold.ttf"/>
+                                app:Font="Poppins-SemiBold.ttf" />
+
                             <com.robinhood.ticker.TickerView
                                 android:id="@+id/tickerView"
                                 android:layout_width="wrap_content"
@@ -155,8 +157,7 @@
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_20sdp"
                                 app:Font="Poppins-Bold.ttf"
-                                app:ticker_animationDuration="1500"
-                               />
+                                app:ticker_animationDuration="1500" />
                         </LinearLayout>
 
 
@@ -187,62 +188,66 @@
                         app:layout_constraintHeight_percent="0.4"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
+
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/txtRetakeQuiz"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
                             android:background="@drawable/button_retake_blue"
                             android:gravity="center"
-                            android:visibility="gone"
                             android:paddingLeft="@dimen/_21sdp"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingRight="@dimen/_20sdp"
                             android:paddingBottom="@dimen/_9sdp"
                             android:text="@string/retake_quiz"
-                            android:layout_marginLeft="@dimen/_15sdp"
-                            android:layout_marginTop="@dimen/_15sdp"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_10sdp"
+                            android:visibility="gone"
                             app:Font="Poppins-Regular.ttf"
-                            bind:layout_editor_absoluteX="0dp"
-                            bind:layout_editor_absoluteY="0dp"
+                            app:layout_constraintEnd_toStartOf="@+id/txtStartQuiz"
+                            app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/txtStartQuiz"
-                            app:layout_constraintHorizontal_bias="0.5"/>
+                            bind:layout_editor_absoluteX="0dp"
+                            bind:layout_editor_absoluteY="0dp" />
+
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/txtStartQuiz"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginRight="@dimen/_15sdp"
-                            android:background="@drawable/next_quiz"
-                            android:layout_marginLeft="@dimen/_15sdp"
-                            android:textColor="@color/white"
-                            app:Font="Poppins-Regular.ttf"
+                            android:background="@drawable/dialog_next_bg"
                             android:gravity="center"
-                            android:textSize="@dimen/_10sdp"
+                            android:text="@string/next_quiz"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold"
+                            app:Font="Poppins-Regular.ttf"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/txtRetakeQuiz"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/btnShare"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/share_with_friends"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             android:background="@drawable/button_retake_blue"
-                            android:textColor="@color/white"
-                            app:Font="Poppins-Regular.ttf"
-                            android:paddingLeft="@dimen/_15sdp"
-                            android:paddingRight="@dimen/_15sdp"
-                            android:paddingTop="@dimen/_9sdp"
-                            android:paddingBottom="@dimen/_9sdp"
-                            android:textSize="@dimen/_10sdp"
-                            android:drawablePadding="@dimen/_10sdp"
                             android:drawableRight="@drawable/ic_share_green"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:paddingLeft="@dimen/_15sdp"
+                            android:paddingTop="@dimen/_9sdp"
+                            android:paddingRight="@dimen/_15sdp"
+                            android:paddingBottom="@dimen/_9sdp"
+                            android:text="@string/share_with_friends"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10sdp"
+                            app:Font="Poppins-Regular.ttf"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/txtStartQuiz" />
@@ -266,8 +271,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/icClose"

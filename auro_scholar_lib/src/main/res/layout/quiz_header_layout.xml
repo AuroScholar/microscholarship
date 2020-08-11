@@ -15,9 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="@dimen/_5sdp"
-            app:cardElevation="@dimen/_5sdp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_8sdp"
+            app:cardElevation="@dimen/_5sdp"
             app:cardUseCompatPadding="true"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -69,6 +69,7 @@
             android:text="@string/question_bank_powered_by_cambridge"
             android:textColor="@color/auro_dark_blue"
             android:textSize="@dimen/_12sdp"
+            android:visibility="gone"
             app:Font="Poppins-Regular.ttf"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

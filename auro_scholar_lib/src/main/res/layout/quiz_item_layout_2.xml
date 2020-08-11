@@ -6,13 +6,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/off_white"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/off_white"
+            android:background="@color/white"
             android:orientation="horizontal"
             android:weightSum="2">
 
@@ -23,8 +23,8 @@
                 android:layout_weight="1.4">
 
                 <RelativeLayout
-                    android:layout_width="@dimen/_70sdp"
-                    android:layout_height="@dimen/_70sdp"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
                     android:background="@drawable/middle_progress"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="@+id/progressBar"
@@ -83,6 +83,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/title_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

@@ -89,24 +89,18 @@ public class QuizItemNewAdapter extends RecyclerView.Adapter<QuizItemNewAdapter.
             binding.view2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    int value = binding.subjectsChapterRecyclerview.getVisibility();
-                    if (value == 0) {
-                        list.get(position).setQuizOpen(false);
-                        expand(binding.subjectsChapterRecyclerview, 1000, false);
-                    } else {
-                        list.get(position).setQuizOpen(true);
-                        expand(binding.subjectsChapterRecyclerview, 1000, true);
-                    }
-                    for (int i = 0; i < list.size(); i++) {
-                        if (position != i) {
-                            list.get(i).setQuizOpen(false);
-                        }
-                    }
-                    notifyDataSetChanged();
-
+                    callOnClick(position);
                 }
             });
+
+            binding.titleLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callOnClick(position);
+                }
+            });
+
+
             Timer timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
@@ -134,6 +128,24 @@ public class QuizItemNewAdapter extends RecyclerView.Adapter<QuizItemNewAdapter.
 
 
             }, 0, 10);
+        }
+
+
+        private void callOnClick(int position) {
+            int value = binding.subjectsChapterRecyclerview.getVisibility();
+            if (value == 0) {
+                list.get(position).setQuizOpen(false);
+                expand(binding.subjectsChapterRecyclerview, 1000, false);
+            } else {
+                list.get(position).setQuizOpen(true);
+                expand(binding.subjectsChapterRecyclerview, 1000, true);
+            }
+            for (int i = 0; i < list.size(); i++) {
+                if (position != i) {
+                    list.get(i).setQuizOpen(false);
+                }
+            }
+            notifyDataSetChanged();
         }
 
         public void expand(final View v, int duration, boolean expand) {
