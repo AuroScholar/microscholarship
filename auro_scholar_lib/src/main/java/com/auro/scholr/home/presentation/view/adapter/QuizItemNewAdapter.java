@@ -76,12 +76,21 @@ public class QuizItemNewAdapter extends RecyclerView.Adapter<QuizItemNewAdapter.
         }
 
         private void setChapterListAdapter(SubjectResModel model, int position) {
-
-
+            int mainProgress = 0;
             binding.subjectsChapterRecyclerview.setLayoutManager(new LinearLayoutManager(AuroApp.getAppContext()));
             binding.subjectsChapterRecyclerview.setHasFixedSize(true);
             for (QuizResModel quizResModel : model.getChapter()) {
                 quizResModel.setSubjectPos(position);
+                if (quizResModel.getAttempt() > 0) {
+                    mainProgress++;
+                }
+            }
+            if (mainProgress == 1) {
+                binding.parentProgress.setProgress(33);
+            } else if (mainProgress == 2) {
+                binding.parentProgress.setProgress(66);
+            } else if (mainProgress == 3) {
+                binding.parentProgress.setProgress(100);
             }
             expand(binding.subjectsChapterRecyclerview, 1000, model.isQuizOpen());
             QuizItemChapterAdapter quizItemAdapter = new QuizItemChapterAdapter(mContext, model.getChapter(), commonCallBackListner, position);

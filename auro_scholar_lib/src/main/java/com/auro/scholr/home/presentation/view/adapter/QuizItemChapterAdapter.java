@@ -92,7 +92,11 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
             binding.levelThree.layoutScore.setVisibility(View.VISIBLE);
             binding.levelThree.retakeLayout.setVisibility(View.GONE);
             binding.levelThree.txtTopic.setVisibility(View.GONE);
-            binding.levelThree.txtScorePoints.setText("" + model.getScorepoints());
+            if (model.getScorepoints() < 10) {
+                binding.levelThree.txtScorePoints.setText("0" + model.getScorepoints());
+            } else {
+                binding.levelThree.txtScorePoints.setText("" + model.getScorepoints());
+            }
 
             /*for level four*/
             binding.levelFour.txtTopic.setVisibility(View.GONE);
@@ -140,10 +144,15 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
             } else {
                 binding.levelFour.pb.setProgress(0);
             }
-
+            binding.childLayout.setAlpha(1);
+            binding.icLockImg.setVisibility(View.GONE);
             if (position == 1 && list.get(0).getAttempt() == 0) {
+                binding.childLayout.setAlpha(0.25f);
+                binding.icLockImg.setVisibility(View.VISIBLE);
                 binding.levelFour.nextQuizLayout.setVisibility(View.GONE);
             } else if (position == 2 && list.get(1).getAttempt() == 0) {
+                binding.childLayout.setAlpha(0.25f);
+                binding.icLockImg.setVisibility(View.VISIBLE);
                 binding.levelFour.nextQuizLayout.setVisibility(View.GONE);
             }
             if (list.size() - 1 == position) {
