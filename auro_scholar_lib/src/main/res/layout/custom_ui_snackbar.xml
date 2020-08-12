@@ -68,7 +68,7 @@
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginRight="@dimen/_15sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:background="@drawable/circle_blue"
+                android:background="@drawable/circle_auro_blue"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +79,7 @@
                     android:layout_height="@dimen/_20sdp"
                     android:layout_centerInParent="true"
 
-                    android:background="@drawable/circle_arrow" />
+                    android:background="@drawable/circle_auro_arrow" />
 
 
             </RelativeLayout>
