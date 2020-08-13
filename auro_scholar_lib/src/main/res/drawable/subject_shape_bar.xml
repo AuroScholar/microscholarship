@@ -32,11 +32,23 @@
 
     </item>
 
-
     <item android:id="@android:id/progress">
-        <scale
-            android:drawable="@drawable/subjects_progress_bar"
-            android:scaleWidth="98%" />
-    </item>
+        <clip>
+            <shape>
+                <corners
+                    android:topLeftRadius="0dp"
+                    android:topRightRadius="25dp"
+                    android:bottomLeftRadius="0dp"
+                    android:bottomRightRadius="25dp" />
+                <gradient
+                    android:angle="0"
+                    android:endColor="#6FFEEB"
+                    android:startColor="#45F2C9" />
 
+                <stroke
+                    android:width="6dip"
+                    android:color="@android:color/transparent"/>
+            </shape>
+        </clip>
+    </item>
 </layer-list>
