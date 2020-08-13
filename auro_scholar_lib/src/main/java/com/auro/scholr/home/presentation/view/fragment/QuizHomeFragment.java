@@ -232,11 +232,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void setDataOnUI() {
         binding.toolbarLayout.backArrow.setVisibility(View.GONE);
-        AppLogger.e("chhonker",DateUtil.getMonthName());
+        AppLogger.e("chhonker", DateUtil.getMonthName());
         if (!TextUtil.isEmpty(DateUtil.getMonthName())) {
             binding.getScholarshipText.setText(DateUtil.getMonthName() + " " + getActivity().getResources().getString(R.string.scholarship));
         }
-      //  binding.getScholarshipText.setText(resources.getText(R.string.get_scholarship));
+        //  binding.getScholarshipText.setText(resources.getText(R.string.get_scholarship));
         binding.headerTopParent.cambridgeHeading.setText(resources.getString(R.string.question_bank_powered_by_cambridge));
         randomlistforsnackbar();
 
@@ -282,7 +282,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
-                       // setPrefForTesting();
+                        // setPrefForTesting();
                         if (!dashboardResModel.isError()) {
                             checkStatusforCongratulationDialog();
                             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
@@ -340,7 +340,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else if (value == 1) {
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.VISIBLE);
-            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.VISIBLE);
+            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.GONE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
             binding.shimmerViewQuiz.stopShimmer();
         } else {
