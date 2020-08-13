@@ -264,4 +264,13 @@ public class DateUtil {
         int year = calendar.get(Calendar.YEAR);
         return year;
     }
+
+    public static String getMonthName() {
+        String lang = ViewUtil.getLanguage();
+       // Locale locale = new Locale(lang);
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM", new Locale(lang));
+        String month_name = month_date.format(cal.getTime());
+        return month_name;
+    }
 }

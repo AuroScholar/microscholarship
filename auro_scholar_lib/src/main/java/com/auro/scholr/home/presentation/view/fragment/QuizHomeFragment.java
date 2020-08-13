@@ -56,6 +56,7 @@ import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
+import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
@@ -231,7 +232,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void setDataOnUI() {
         binding.toolbarLayout.backArrow.setVisibility(View.GONE);
-        binding.getScholarshipText.setText(resources.getText(R.string.get_scholarship));
+        AppLogger.e("chhonker",DateUtil.getMonthName());
+        if (!TextUtil.isEmpty(DateUtil.getMonthName())) {
+            binding.getScholarshipText.setText(DateUtil.getMonthName() + " " + getActivity().getResources().getString(R.string.scholarship));
+        }
+      //  binding.getScholarshipText.setText(resources.getText(R.string.get_scholarship));
         binding.headerTopParent.cambridgeHeading.setText(resources.getString(R.string.question_bank_powered_by_cambridge));
         randomlistforsnackbar();
 
@@ -277,7 +282,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
-                        // setPrefForTesting();
+                       // setPrefForTesting();
                         if (!dashboardResModel.isError()) {
                             checkStatusforCongratulationDialog();
                             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
@@ -719,20 +724,20 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
 
-  /*  private void setPrefForTesting() {
-        dashboardResModel.getSubjectResModelList().get(2).setScorepoints(4);
+    private void setPrefForTesting() {
+        dashboardResModel.getSubjectResModelList().get(0).getChapter().get(0).setScorepoints(6);
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null) {
             AssignmentReqModel assignmentReqModel = new AssignmentReqModel();
             assignmentReqModel.setRegistration_id(dashboardResModel.getAuroid());
-            assignmentReqModel.setExam_name("" + dashboardResModel.getSubjectResModelList().get(2).getNumber());
-            assignmentReqModel.setQuiz_attempt("" + dashboardResModel.getSubjectResModelList().get(2).getAttempt());
+            assignmentReqModel.setExam_name("" + dashboardResModel.getSubjectResModelList().get(0).getChapter().get(0).getNumber());
+            assignmentReqModel.setQuiz_attempt("" + dashboardResModel.getSubjectResModelList().get(0).getChapter().get(0).getAttempt());
             assignmentReqModel.setExamlang("E");
             prefModel.setAssignmentReqModel(assignmentReqModel);
             AppPref.INSTANCE.setPref(prefModel);
         }
     }
-*/
+
 
     private void openChat() {
         Uri uri = Uri.parse("https://wa.me/919667480783");
