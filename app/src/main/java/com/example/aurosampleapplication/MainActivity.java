@@ -17,6 +17,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 
 import com.auro.scholr.core.common.AppConstant;
@@ -33,6 +34,7 @@ import com.example.aurosampleapplication.databinding.ActivityMainBinding;
 import java.lang.reflect.Field;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.regex.Pattern;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -76,12 +78,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-                openGenricSDK();
+                if(!Pattern.matches("[a-zA-Z]+",  binding.mobileNumber.getText().toString())&&
+                        binding.mobileNumber.getText().length() > 9 && binding.mobileNumber.getText().length() <= 10  && binding.mobileNumber.getText().toString() !=  null ){
+                    openGenricSDK();
+                }else{
+                    Toast.makeText(this, "Please Enter valid mobile number", Toast.LENGTH_SHORT).show();
+                }
+
                  //openScholarSpecificSdk();
                 hideKeyboard(this);
                 break;
             case R.id.bt_open:
-                openTeacherSDK();
+                if(!Pattern.matches("[a-zA-Z]+",  binding.mobileNumber.getText().toString()) &&
+                        binding.mobileNumber.getText().length() > 9 && binding.mobileNumber.getText().length() <= 10 && binding.mobileNumber.getText().toString() != null  ) {
+                    openTeacherSDK();
+                }else{
+                    Toast.makeText(this, "Please Enter valid mobile number", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
         }
@@ -143,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openTeacherSDK() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber("7503600686");
+        auroScholarDataModel.setMobileNumber(binding.mobileNumber.getText().toString());//7503600686
         auroScholarDataModel.setStudentClass("6");
         auroScholarDataModel.setScholrId("880426");
         auroScholarDataModel.setRegitrationSource("AuroScholr");
@@ -185,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             inputModel.setStudentClass("11");*/
     private void openGenricSDK() {
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
-        inputModel.setMobileNumber("7503600601");
+        inputModel.setMobileNumber(binding.mobileNumber.getText().toString());//7503600601
         inputModel.setStudentClass("6");
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setReferralLink("");
