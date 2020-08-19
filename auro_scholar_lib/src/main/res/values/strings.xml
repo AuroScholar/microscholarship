@@ -95,6 +95,18 @@
         <item>English</item>
         <item>Other</item>
     </string-array>
+    <string-array name="privateTutionList">
+        <item>No</item>
+        <item>YES</item>
+    </string-array>
+
+    <string-array name="privateTypeList">
+        <item>Please Select Tution Type</item>
+        <item>Group</item>
+        <item>Personal</item>
+        <item>Online</item>
+    </string-array>
+
     <string name="congratulations">Congratulations!</string>
     <string name="successfully">You have got ₹50 Scholarship Cash.\n share with your friends!</string>
     <string name="share_with">Share With Friends</string>
@@ -235,8 +247,23 @@
     <string name="tutorial_kyc">Please click here to upload your\nKYC details</string>
     <string name="invite_your_Student">Invite Your Students</string>
     <string name="pref_tutorial">tutorial</string>
+
     <string name="address_not_found">Address not found</string>
 
+    <string name="retake_quiz">Retake Quiz</string>
+    <string name="auro_scholar_wallet">You have got ₹50 Scholarship in your\nAuro Scholar Wallet!</string>
+    <string name="share_with_friends">Share with friends</string>
+    <string name="congratulation_new">Congratulations</string>
+    <string name="next_quiz">Next Quiz</string>
+    <string name="impossible">It always seems impossible until it’s done.</string>
+    <string name="accept">Accept</string>
+    <string name="challenge">Challenge</string>
+    <string name="taking_private_tutions">Taking Private Tutions ?</string>
+    <string name="taking_type">Tution Type</string>
+    <string name="challenged_you">Challenged You</string>
+    <string name="book_free_tutoring_session">Book Free Tutoring Session</string>
+    <string name="retake">Retake</string>
+    <string name="auro_start">Start</string>
 
     <string-array name="classes">
         <item>1st</item>

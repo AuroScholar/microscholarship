@@ -12,6 +12,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.List;
+
 public class InviteItemViewHolder extends RecyclerView.ViewHolder {
     FriendsInviteItemLayoutBinding binding;
 
@@ -21,8 +23,10 @@ public class InviteItemViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    public void bindUser(FriendsLeaderBoardModel model, int position) {
+    public void bindUser(FriendsLeaderBoardModel model,int position) {
         int reminder = position % 2;
+
+
         if (reminder == 0) {
             binding.parentLayout.setBackgroundColor(binding.parentLayout.getContext().getColor(R.color.white));
             binding.checkbox.setChecked(true);

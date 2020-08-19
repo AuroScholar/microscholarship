@@ -30,10 +30,9 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
     FirstCallcack firstCallcack;
 
 
-    public CustomDialog(CustomDialogModel customDialogModel) {
-
-        super(customDialogModel.getContext());
-        this.context = customDialogModel.getContext();
+    public CustomDialog(Context context,CustomDialogModel customDialogModel) {
+        super(context);
+        this.context = context;
         this.msg = customDialogModel.getContent();
         this.tittle = customDialogModel.getTitle();
         this.istwoBtnRequired = customDialogModel.isTwoButtonRequired();

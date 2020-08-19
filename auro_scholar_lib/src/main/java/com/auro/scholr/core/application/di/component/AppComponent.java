@@ -9,6 +9,7 @@ import com.auro.scholr.core.application.di.module.TeacherModule;
 import com.auro.scholr.core.application.di.module.UtilsModule;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.fragment.CongratulationsDialog;
+import com.auro.scholr.home.presentation.view.fragment.ConsgratuationLessScoreDialog;
 import com.auro.scholr.home.presentation.view.fragment.DemographicFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsInviteBoardFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardFragment;
@@ -17,10 +18,10 @@ import com.auro.scholr.home.presentation.view.fragment.KYCFragment;
 import com.auro.scholr.home.presentation.view.fragment.KYCViewFragment;
 import com.auro.scholr.home.presentation.view.fragment.PrivacyPolicyFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
+import com.auro.scholr.home.presentation.view.fragment.QuizHomeNewFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizTestFragment;
 import com.auro.scholr.home.presentation.view.fragment.ScholarShipFragment;
 import com.auro.scholr.home.presentation.view.fragment.TransactionsFragment;
-import com.auro.scholr.payment.domain.PaymentUseCase;
 import com.auro.scholr.payment.presentation.view.fragment.BankFragment;
 import com.auro.scholr.payment.presentation.view.fragment.PaytmFragment;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
@@ -88,4 +89,7 @@ public interface AppComponent {
 
     void doInjection(TeacherProfileFragment fragment);
 
+    void doInjection(ConsgratuationLessScoreDialog dialog);
+
+    void doInjection(QuizHomeNewFragment fragment);
 }

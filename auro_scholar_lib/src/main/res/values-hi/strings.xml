@@ -237,6 +237,24 @@
     <string name="teacher_share_msg">Hi, I have just referred you to get Scholarship  on Scholr App! \nTake quiz and get Scholarship Certificate every month. \nDownload App - https://bit.ly/3b1puWr</string>
     <string name="challenge_msg">just challenged you in a quiz! Can you beat their score?</string>
     <string name="invite_friend_refrral">Ek Vishesh Nimantran! Scholr App par mujhase juden, doston ko challenge karein aur roz Scholarship &amp; Certificates paayein!\n Click to Install App - ></string>
+    <string name="next_quiz">Next Quiz</string>
+    <string name="impossible">It always seems impossible until it’s done.</string>
+    <string name="challenge">Challenge</string>
+    <string name="taking_private_tutions">निजी ट्युशन लेना ?</string>
+    <string name="taking_type">ट्युशन टाइप</string>
+    <string name="challenged_you">Challenged You</string>
+    <string name="book_free_tutoring_session">Book Free Tutoring Session</string>
+    <string name="retake">Retake</string>
+    <string name="auro_start">Start</string>
+    <string-array name="privateTutionList">
+        <item>No</item>
+        <item>YES</item>
+    </string-array>
 
-
+    <string-array name="privateTypeList">
+        <item>Please Select Tution Type</item>
+        <item>Group</item>
+        <item>Personal</item>
+        <item>Online</item>
+    </string-array>
 </resources>

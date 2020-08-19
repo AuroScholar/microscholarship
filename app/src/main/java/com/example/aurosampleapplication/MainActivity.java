@@ -17,10 +17,12 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.SdkCallBack;
+import com.auro.scholr.core.common.Status;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
 import com.auro.scholr.util.AppLogger;
@@ -32,6 +34,7 @@ import com.example.aurosampleapplication.databinding.ActivityMainBinding;
 import java.lang.reflect.Field;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.regex.Pattern;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String secret = "5d41402abc4b2a76b9719d911017c592";
         String tt = new Cryptor().HMAC_SHA256(secret, jsonString);
         //  AppLogger.e("chhonker",tt);
-        printDeviceInfo();
+        //printDeviceInfo();
     }
 
     public static void printHashKey(Context pContext) {
@@ -75,14 +78,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-                openGenricSDK();
-               // openScholarSpecificSdk();
+                if(!Pattern.matches("[a-zA-Z]+",  binding.mobileNumber.getText().toString())&&
+                        binding.mobileNumber.getText().length() > 9 && binding.mobileNumber.getText().length() <= 10  && binding.mobileNumber.getText().toString() !=  null ){
+                    openGenricSDK();
+                }else{
+                    Toast.makeText(this, "Please Enter valid mobile number", Toast.LENGTH_SHORT).show();
+                }
+
+                 //openScholarSpecificSdk();
                 hideKeyboard(this);
-
-
                 break;
             case R.id.bt_open:
-                openTeacherSDK();
+                if(!Pattern.matches("[a-zA-Z]+",  binding.mobileNumber.getText().toString()) &&
+                        binding.mobileNumber.getText().length() > 9 && binding.mobileNumber.getText().length() <= 10 && binding.mobileNumber.getText().toString() != null  ) {
+                    openTeacherSDK();
+                }else{
+                    Toast.makeText(this, "Please Enter valid mobile number", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
         }
@@ -99,20 +111,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    /*    auroScholarDataModel.setMobileNumber("7503600686");
+    /*  auroScholarDataModel.setMobileNumber("7503600686");
         auroScholarDataModel.setScholrId("880426");
         auroScholarDataModel.setStudentClass("6");*/
 
     private void openScholarSpecificSdk() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
         auroScholarDataModel.setMobileNumber("7503600686");
-        auroScholarDataModel.setStudentClass("10");
+        auroScholarDataModel.setStudentClass("6");
         auroScholarDataModel.setScholrId("880426");
         auroScholarDataModel.setRegitrationSource(null);
         auroScholarDataModel.setShareType(null);
         auroScholarDataModel.setShareIdentity(null);
         auroScholarDataModel.setActivity(this);
-
         auroScholarDataModel.setSdkFragmentType(AppConstant.FragmentType.QUIZ_DASHBOARD);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         auroScholarDataModel.setEmailVerified(true);
@@ -127,14 +138,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void logOut() {
                 AppLogger.e("Chhonker", "Logout");
             }
-        });
 
-        openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
+            @Override
+            public void commonCallback(Status status,Object o) {
+                switch (status) {
+                    case BOOK_TUTOR_SESSION_CLICK:
+                        /*write your code here*/
+                        AppLogger.e("Chhonker", "commonCallback");
+                        break;
+                }
+            }
+
+        });
+        //AuroScholar.openAuroDashboardFragment(auroScholarDataModel);
+       openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
     }
 
     private void openTeacherSDK() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber("7503600686");
+        auroScholarDataModel.setMobileNumber(binding.mobileNumber.getText().toString());//7503600686
         auroScholarDataModel.setStudentClass("6");
         auroScholarDataModel.setScholrId("880426");
         auroScholarDataModel.setRegitrationSource("AuroScholr");
@@ -155,6 +177,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void logOut() {
                 AppLogger.e("Chhonker", "Logout");
             }
+
+            @Override
+            public void commonCallback(Status status,Object o) {
+                switch (status) {
+                    case BOOK_TUTOR_SESSION_CLICK:
+   /*write your code here*/
+                        AppLogger.e("Chhonker", "commonCallback");
+                        break;
+                }
+            }
         });
 
 
@@ -162,10 +194,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //   openFragment(AuroScholar.startAuroSDK(inputModel));
     }
 
+    /*inputModel.setMobileNumber("8700808003");
+            inputModel.setStudentClass("11");*/
     private void openGenricSDK() {
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
-        inputModel.setMobileNumber("8700808003");
-        inputModel.setStudentClass("11");
+        inputModel.setMobileNumber(binding.mobileNumber.getText().toString());//7503600601
+        inputModel.setStudentClass("6");
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setReferralLink("");
         inputModel.setActivity(this);

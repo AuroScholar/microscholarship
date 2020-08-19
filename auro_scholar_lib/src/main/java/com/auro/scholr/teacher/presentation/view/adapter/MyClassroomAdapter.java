@@ -60,7 +60,13 @@ public class MyClassroomAdapter extends RecyclerView.Adapter<MyClassroomAdapter.
             this.binding = binding;
         }
 
-        public void setData(MyClassRoomStudentResModel model, int position) {
+        public void setData(List<MyClassRoomStudentResModel> mValues,MyClassRoomStudentResModel model, int position) {
+
+            if(mValues.size()-1 == position){
+                binding.viewLine.setVisibility(View.GONE);
+            }else{
+                binding.viewLine.setVisibility(View.VISIBLE);
+            }
             if (model != null && !TextUtil.isEmpty(model.getSudentName())) {
                 binding.nameText.setText(model.getSudentName());
             } else {
@@ -107,7 +113,7 @@ public class MyClassroomAdapter extends RecyclerView.Adapter<MyClassroomAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder Vholder, int position) {
-        Vholder.setData(mValues.get(position), position);
+        Vholder.setData(mValues,mValues.get(position), position);
 
 
     }

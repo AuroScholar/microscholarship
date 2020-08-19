@@ -223,7 +223,7 @@ public class QuizTestFragment extends BaseFragment {
 
     public void openQuizHomeFragment() {
         getActivity().getSupportFragmentManager().popBackStack();//old code//refrence https://stackoverflow.com/questions/53566847/popbackstack-causing-java-lang-illegalstateexception-can-not-perform-this-actio
-       // getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        // getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     public void openDemographicFragment() {
@@ -252,6 +252,12 @@ public class QuizTestFragment extends BaseFragment {
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setListener();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
 
     @SuppressLint("JavascriptInterface")
     private void loadWeb(String webUrl) {
@@ -322,6 +328,7 @@ public class QuizTestFragment extends BaseFragment {
         }
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null) {
+            assignmentReqModel.setSubjectPos(quizResModel.getSubjectPos());
             prefModel.setAssignmentReqModel(assignmentReqModel);
             AppPref.INSTANCE.setPref(prefModel);
         }
@@ -352,9 +359,9 @@ public class QuizTestFragment extends BaseFragment {
             super.onPageStarted(view, url, favicon);
             AppLogger.e("chhonker onPageStarted", url);
             if (!TextUtil.isEmpty(url)) {
-                if (url.equalsIgnoreCase("http://auroscholar.com/index.php") ||
-                        url.equalsIgnoreCase("http://auroscholar.com/demographics.php")
-                        || url.equalsIgnoreCase("http://auroscholar.com/dashboard.php")) {
+                if (url.equalsIgnoreCase("https://auroscholar.com/index.php") ||
+                        url.contains("demographics")
+                        || url.contains("dashboard")) {
                     cancelDialogAfterSubmittingTest();
                 }
             }
@@ -529,21 +536,24 @@ public class QuizTestFragment extends BaseFragment {
 
     private void openDialog() {
         CustomDialogModel customDialogModel = new CustomDialogModel();
-        customDialogModel.setContext(getContext());//bug report on 06/07/2020
+        customDialogModel.setContext(getActivity());//bug report on 06/07/2020
         customDialogModel.setTitle("Quiz Instructions");
-        customDialogModel.setContent(this.getResources().getString(R.string.bullted_list));
+        customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.bullted_list));
         customDialogModel.setTwoButtonRequired(false);
-        customDialog = new CustomDialog(customDialogModel);
-        // Window window = customDialog.getWindow();
-        // window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(customDialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        customDialog.getWindow().setAttributes(lp);
-        Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        customDialog.setCancelable(false);
-        customDialog.show();
+        if (getContext() != null) {
+            customDialog = new CustomDialog(getContext(), customDialogModel);
+
+            // Window window = customDialog.getWindow();
+            // window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(customDialog.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            customDialog.getWindow().setAttributes(lp);
+            Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            customDialog.setCancelable(false);
+            customDialog.show();
+        }
 
     }
 

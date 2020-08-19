@@ -30,6 +30,7 @@ public interface HomeRepo {
 
         Single<Response<JsonObject>> sendInviteNotificationApi(SendInviteNotificationReqModel reqModel);
 
+        Single<Response<JsonObject>> acceptInviteApi(SendInviteNotificationReqModel reqModel);
 
 
 

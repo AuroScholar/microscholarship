@@ -29,7 +29,7 @@
 
     </item>
 
-    <item android:drawable="@drawable/camera_icon"
+    <item android:drawable="@drawable/camera_auro_icon"
         android:left="14dp"
         android:right="14dp"
         android:bottom="17dp"

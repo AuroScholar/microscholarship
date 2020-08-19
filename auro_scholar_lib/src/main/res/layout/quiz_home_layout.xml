@@ -15,12 +15,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/off_white">
+        android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/off_white">
+            android:background="@color/white">
 
 
             <include
@@ -152,9 +152,9 @@
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginStart="@dimen/_2sdp"
                                 android:layout_marginTop="@dimen/_2sdp"
-                                android:text="@string/get_scholarship"
+                                android:text="August Scholarship"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/_25sdp"
+                                android:textSize="@dimen/_22sdp"
                                 android:textStyle="normal"
                                 app:Font="Poppins-SemiBold.ttf"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -254,6 +254,7 @@
                 android:src="@drawable/ic_iconswhatsapps"
                 app:backgroundTint="@color/ufo_green"
                 app:layout_anchor="@id/scrollview"
+                android:visibility="gone"
                 app:layout_anchorGravity="end|bottom|right"
                 app:layout_behavior="com.codepath.floatingactionbuttontest.ScrollAwareFABBehavior"
                 app:layout_constraintBottom_toBottomOf="parent"

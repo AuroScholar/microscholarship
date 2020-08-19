@@ -1,7 +1,6 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -10,7 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.TestLooperManager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,17 +30,16 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
-import com.auro.scholr.core.common.FragmentUtil;
+import com.auro.scholr.core.common.ValidationModel;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.DemographicFragmentLayoutBinding;
-import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
 import com.auro.scholr.util.AppLogger;
-import com.auro.scholr.util.AuroScholar;
+import com.auro.scholr.util.DeviceUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
@@ -80,6 +78,8 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     List<String> schooltypeLines;
     List<String> boardLines;
     List<String> languageLines;
+    List<String> privateTutionList;
+    List<String> privateTutionTypeList;
     DashboardResModel dashboardResModel;
     Resources resources;
     boolean isLocationFine;
@@ -108,6 +108,18 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     @Override
     protected void init() {
         binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
+        setKeyListner();
+        if (TextUtil.isEmpty(dashboardResModel.getLatitude()) && TextUtil.isEmpty(dashboardResModel.getLongitude())) {
+            askPermission();
+        }
+
+        if (!TextUtil.isEmpty(dashboardResModel.getIsPrivateTution())) {
+            demographicResModel.setIsPrivateTution(dashboardResModel.getIsPrivateTution());
+        } else {
+            demographicResModel.setIsPrivateTution(AppConstant.DocumentType.NO);
+            dashboardResModel.setIsPrivateTution(AppConstant.DocumentType.NO);
+            demographicResModel.setPrivateTutionType("");
+        }
 
         // Spinner Drop down Gender
         genderLines = Arrays.asList(getResources().getStringArray(R.array.genderlist));
@@ -153,10 +165,37 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
             }
         }
 
+        // Spinner Drop down tution
+        privateTutionList = Arrays.asList(getResources().getStringArray(R.array.privateTutionList));
+        spinnermethodcall(privateTutionList, binding.spinnerPrivateTution);
+        for (int i = 0; i < privateTutionList.size(); i++) {
+            String s = privateTutionList.get(i);
+            if (!TextUtil.isEmpty(dashboardResModel.getIsPrivateTution()) && s.equalsIgnoreCase(dashboardResModel.getIsPrivateTution())) {
+                binding.spinnerPrivateTution.setSelection(i);
+                break;
+            }
+        }
+
+
+        // Spinner Drop down tution  Type
+        privateTutionTypeList = Arrays.asList(getResources().getStringArray(R.array.privateTypeList));
+        spinnermethodcall(privateTutionTypeList, binding.spinnerPrivateType);
+        for (int i = 0; i < privateTutionTypeList.size(); i++) {
+            String lang = privateTutionTypeList.get(i);
+            if (!TextUtil.isEmpty(dashboardResModel.getPrivateTutionType()) && lang.equalsIgnoreCase(dashboardResModel.getPrivateTutionType())) {
+                binding.spinnerPrivateType.setSelection(i);
+                break;
+            }
+        }
+
 
         if (getArguments() != null && dashboardResModel != null) {
             demographicResModel.setPhonenumber(dashboardResModel.getPhonenumber());
         }
+
+        demographicResModel.setMobileModel(DeviceUtil.getModelName());
+        demographicResModel.setMobileVersion(DeviceUtil.getVersionName());
+        demographicResModel.setManufacturer(DeviceUtil.getManufacturer());
 
         if (demographicViewModel != null && demographicViewModel.serviceLiveData().hasObservers()) {
             demographicViewModel.serviceLiveData().removeObservers(this);
@@ -241,6 +280,47 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 demographicResModel.setBoard_type(binding.SpinnerBoard.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+
+        binding.spinnerPrivateTution.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                String value = binding.spinnerPrivateTution.getSelectedItem().toString();
+                demographicResModel.setIsPrivateTution(binding.spinnerPrivateTution.getSelectedItem().toString());
+                if (value.equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+                    binding.spinnerPrivateType.setVisibility(View.VISIBLE);
+                    binding.tvPrivateType.setVisibility(View.VISIBLE);
+                    binding.privateTypeArrow.setVisibility(View.VISIBLE);
+                } else {
+                    binding.spinnerPrivateType.setVisibility(View.GONE);
+                    binding.tvPrivateType.setVisibility(View.GONE);
+                    binding.privateTypeArrow.setVisibility(View.GONE);
+                    demographicResModel.setPrivateTutionType("");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        binding.spinnerPrivateType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                String value = binding.spinnerPrivateType.getSelectedItem().toString();
+                if (value.equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_PRIVATE_TUTION)) {
+                    demographicResModel.setPrivateTutionType("");
+                } else {
+                    demographicResModel.setPrivateTutionType(binding.spinnerPrivateType.getSelectedItem().toString());
+                }
             }
 
             @Override
@@ -346,11 +426,11 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.submitbutton) {
-            String validation = demographicViewModel.homeUseCase.validateDemographic(demographicResModel);
-            if (TextUtil.isEmpty(validation)) {
+            ValidationModel validation = demographicViewModel.homeUseCase.validateDemographic(demographicResModel);
+            if (validation.isStatus()) {
                 demographicViewModel.getDemographicData(demographicResModel);
             } else {
-                showSnackbarError(validation);
+                showSnackbarError(validation.getMessage());
             }
         } else if (v.getId() == R.id.lang_eng) {
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -441,6 +521,8 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
             if (customProgressDialog != null) {
                 customProgressDialog.dismiss();
             }
+            demographicResModel.setLatitude(locationModel.getLatitude());
+            demographicResModel.setLongitude(locationModel.getLongitude());
         } else {
             Handler handler = new Handler();
             handler.postDelayed(this::callServiceWhenLocationReceived, 2000);
@@ -462,4 +544,18 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         customProgressDialog.updateDataUi(0);
     }
 
+    private void setKeyListner() {
+        this.getView().setFocusableInTouchMode(true);
+        this.getView().requestFocus();
+        this.getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    getActivity().getSupportFragmentManager().popBackStack();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
 }

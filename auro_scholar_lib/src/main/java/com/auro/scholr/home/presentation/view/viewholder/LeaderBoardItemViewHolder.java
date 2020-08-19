@@ -1,54 +1,46 @@
 package com.auro.scholr.home.presentation.view.viewholder;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.auro.scholr.R;
-import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.util.uiwidget.RPTextView;
 import com.auro.scholr.databinding.FriendsBoardItemLayoutBinding;
+import com.auro.scholr.databinding.QuizItemLayoutBinding;
 import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ImageUtil;
 import com.auro.scholr.util.TextUtil;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 
-import android.graphics.Bitmap;
+import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
-import com.auro.scholr.databinding.FriendsBoardItemLayoutBinding;
-import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
+
+import java.util.List;
 
 public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
     FriendsBoardItemLayoutBinding layoutBinding;
+    Animation startAnimation;
+    Animation endanimation;
+    public int runColor;
 
     public LeaderBoardItemViewHolder(@NonNull FriendsBoardItemLayoutBinding layoutBinding) {
         super(layoutBinding.getRoot());
@@ -56,7 +48,34 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    public void bindUser(FriendsLeaderBoardModel model, int position, CommonCallBackListner commonCallBackListner) {
+    public void bindUser(FriendsLeaderBoardModel model, List<FriendsLeaderBoardModel> list, int position, CommonCallBackListner commonCallBackListner) {
+        if (list.size() - 1 == position) {
+            layoutBinding.viewLine.setVisibility(View.GONE);
+        } else {
+            layoutBinding.viewLine.setVisibility(View.VISIBLE);
+        }
+
+        if (model.isChallengedYou()) {
+            if (!TextUtil.isEmpty(model.getSentText()) && model.getSentText().equalsIgnoreCase(AuroApp.getAppContext().getString(R.string.accept))) {
+                layoutBinding.sentTxt.setText("Accepted");
+            }
+            layoutBinding.challengeText.setVisibility(View.VISIBLE);
+            layoutBinding.parentLayout.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.yellowdark));
+            changeViewColor(layoutBinding.parentLayout);
+            layoutBinding.inviteText.setText(AuroApp.getAppContext().getResources().getString(R.string.accept));
+        } else {
+            if (startAnimation != null) {
+                startAnimation.cancel();
+            }
+
+            if (endanimation != null) {
+                endanimation.cancel();
+            }
+            layoutBinding.challengeText.setVisibility(View.GONE);
+            layoutBinding.inviteText.setText(AuroApp.getAppContext().getResources().getString(R.string.challenge));
+            layoutBinding.parentLayout.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.white));
+        }
+
         if (!TextUtil.isEmpty(model.getStudentName())) {
             layoutBinding.nameText.setText(model.getStudentName());
         } else if (!TextUtil.isEmpty(model.getMobileNo())) {
@@ -88,8 +107,14 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
         layoutBinding.inviteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (commonCallBackListner != null) {
-                    commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.SEND_INVITE_CLICK, model));
+                if (layoutBinding.inviteText.getText().toString().equalsIgnoreCase(AuroApp.getAppContext().getResources().getString(R.string.challenge))) {
+                    if (commonCallBackListner != null) {
+                        commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.SEND_INVITE_CLICK, model));
+                    }
+                } else {
+                    if (commonCallBackListner != null) {
+                        commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.ACCEPT_INVITE_CLICK, model));
+                    }
                 }
             }
         });
@@ -112,5 +137,38 @@ public class LeaderBoardItemViewHolder extends RecyclerView.ViewHolder {
         builder.append(span2);
 
         textview.setText(builder, TextView.BufferType.SPANNABLE);
+    }
+
+
+    private void changeViewColor(View view) {
+        // Load initial and final colors.
+        final int initialColor = AuroApp.getAppContext().getResources().getColor(R.color.orange);
+        final int finalColor = AuroApp.getAppContext().getResources().getColor(R.color.white);
+
+        ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                // Use animation position to blend colors.
+                float position = animation.getAnimatedFraction();
+                int blended = blendColors(initialColor, finalColor, position);
+
+                // Apply blended color to the view.
+                view.setBackgroundColor(blended);
+            }
+        });
+        anim.setRepeatMode(ValueAnimator.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+        anim.setDuration(500).start();
+    }
+
+    private int blendColors(int from, int to, float ratio) {
+        final float inverseRatio = 1f - ratio;
+
+        final float r = Color.red(to) * ratio + Color.red(from) * inverseRatio;
+        final float g = Color.green(to) * ratio + Color.green(from) * inverseRatio;
+        final float b = Color.blue(to) * ratio + Color.blue(from) * inverseRatio;
+
+        return Color.rgb((int) r, (int) g, (int) b);
     }
 }

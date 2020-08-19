@@ -7,6 +7,7 @@ import android.util.SparseArray;
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.common.ValidationModel;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
@@ -18,6 +19,9 @@ import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.MonthlyScholarShipModel;
 import com.auro.scholr.home.data.model.QuizResModel;
+import com.auro.scholr.home.data.model.SubjectResModel;
+import com.auro.scholr.home.data.model.newDashboardModel.ChapterResModel;
+import com.auro.scholr.home.data.model.newDashboardModel.QuizTestDataModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
@@ -141,6 +145,7 @@ public class HomeUseCase {
         assignmentReqModel.setExam_name(String.valueOf(quizResModel.getNumber()));
         assignmentReqModel.setQuiz_attempt(String.valueOf((quizResModel.getAttempt() + 1)));
         assignmentReqModel.setRegistration_id(dashboardResModel.getAuroid());
+        assignmentReqModel.setSubject(quizResModel.getSubjectName());
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
             assignmentReqModel.setExamlang("E");
@@ -151,21 +156,29 @@ public class HomeUseCase {
     }
 
 
-    public String validateDemographic(DemographicResModel demographicResModel) {
+    public ValidationModel validateDemographic(DemographicResModel demographicResModel) {
         if (demographicResModel.getGender().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_GENDER)) {
-            return AppConstant.SpinnerType.PLEASE_SELECT_GENDER;
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_GENDER);
         }
         if (demographicResModel.getSchool_type().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_SCHOOL)) {
-            return AppConstant.SpinnerType.PLEASE_SELECT_SCHOOL;
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_SCHOOL);
         }
         if (demographicResModel.getBoard_type().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_BOARD)) {
-            return AppConstant.SpinnerType.PLEASE_SELECT_BOARD;
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_BOARD);
         }
         if (demographicResModel.getLanguage().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_LANGUAGE_MEDIUM)) {
-            return AppConstant.SpinnerType.PLEASE_SELECT_LANGUAGE_MEDIUM;
-        } else {
-            return "";
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_LANGUAGE_MEDIUM);
         }
+
+        if (demographicResModel.getIsPrivateTution().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+            if (demographicResModel.getPrivateTutionType().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_PRIVATE_TUTION) || TextUtil.isEmpty(demographicResModel.getPrivateTutionType())) {
+                return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_PRIVATE_TUTION);
+            }
+        }
+
+
+        return new ValidationModel(true, "");
+
     }
 
     public boolean checkKycStatus(DashboardResModel dashboardResModel) {
@@ -179,10 +192,9 @@ public class HomeUseCase {
 
     public boolean checkDemographicStatus(DashboardResModel dashboardResModel) {
         if (dashboardResModel != null && !TextUtil.isEmpty(dashboardResModel.getGender()) && !TextUtil.isEmpty(dashboardResModel.getSchool_type()) &&
-                !TextUtil.isEmpty(dashboardResModel.getBoard_type()) && !TextUtil.isEmpty(dashboardResModel.getLanguage())) {
+                !TextUtil.isEmpty(dashboardResModel.getBoard_type()) && !TextUtil.isEmpty(dashboardResModel.getLanguage()) && !TextUtil.isEmpty(dashboardResModel.getIsPrivateTution()) && !TextUtil.isEmpty(dashboardResModel.getPrivateTutionType())) {
             return true;
         }
-
         return false;
     }
 
@@ -417,5 +429,78 @@ public class HomeUseCase {
         return "0";
     }
 
+    public boolean checkAllQuizAreFinishedOrNot(DashboardResModel dashboardResModel) {
+        int totalAttempt = 0;
+        for (SubjectResModel subjectResModel : dashboardResModel.getSubjectResModelList()) {
+            for (QuizResModel quizResModel : subjectResModel.getChapter()) {
+                totalAttempt = quizResModel.getAttempt() + totalAttempt;
+            }
+        }
+        if (totalAttempt == 60) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public List<QuizTestDataModel> makeDummyList() {
+        List<QuizTestDataModel> list = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            if (i == 0) {
+                list.add(makeQuizTestModel("Maths", 50));
+            }
+            if (i == 1) {
+                list.add(makeQuizTestModel("Science", 70));
+            }
+            if (i == 2) {
+                list.add(makeQuizTestModel("English", 10));
+            }
+            if (i == 3) {
+                list.add(makeQuizTestModel("Physics", 30));
+            }
+            if (i == 4) {
+                list.add(makeQuizTestModel("Social Science", 60));
+            }
+        }
+        return list;
+    }
+
+    private QuizTestDataModel makeQuizTestModel(String subjectName, int percentage) {
+        QuizTestDataModel quizTestDataModel = new QuizTestDataModel();
+        quizTestDataModel.setSubject(subjectName);
+        quizTestDataModel.setScorePercentage(percentage);
+        quizTestDataModel.setChapter(makeChapterList());
+        return quizTestDataModel;
+    }
+
+    private List<ChapterResModel> makeChapterList() {
+        List<ChapterResModel> chapterResModelList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            if (i == 0) {
+                chapterResModelList.add(chapterModel(1, 1, 50, "Polynomials", 6));
+            }
+            if (i == 1) {
+                chapterResModelList.add(chapterModel(2, 2, 50, "Natural Numbers", 10));
+            }
+            if (i == 2) {
+                chapterResModelList.add(chapterModel(2, 3, 50, "Prime Numbers", 6));
+            }
+            if (i == 3) {
+                chapterResModelList.add(chapterModel(3, 4, 50, "Odd Numbers", 10));
+            }
+        }
+        return chapterResModelList;
+    }
+
+    private ChapterResModel chapterModel(int attmept, int quizNumer, int amount, String name, int points) {
+        ChapterResModel chapterResModel = new ChapterResModel();
+        chapterResModel.setAttempt(attmept);
+        chapterResModel.setNumber(quizNumer);
+        chapterResModel.setScholarshipamount(amount);
+        chapterResModel.setName(name);
+        chapterResModel.setTotalpoints(points);
+        return chapterResModel;
+    }
 
 }

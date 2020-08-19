@@ -88,7 +88,7 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private String subjectName;
 
-    @SerializedName("Month")
+    @SerializedName("month")
     @Expose
     private String month;
 
@@ -104,9 +104,10 @@ public class DashboardResModel implements Parcelable {
     @SerializedName("schoolid")
     @Expose
     private String schoolid;
+
     @SerializedName("quiz")
     @Expose
-    private List<QuizResModel> quiz = null;
+    private List<SubjectResModel> subjectResModelList = null;
 
     @SerializedName("modify")
     @Expose
@@ -158,6 +159,31 @@ public class DashboardResModel implements Parcelable {
     private String longitude;
 
 
+    @SerializedName("mobile_model")
+    @Expose
+    String mobileModel;
+
+    @SerializedName("mobile_manufacturer")
+    @Expose
+    String manufacturer;
+
+    @SerializedName("mobile_version")
+    @Expose
+    String mobileVersion;
+
+    @SerializedName("is_private_tution")
+    @Expose
+    String isPrivateTution;
+
+    @SerializedName("private_tution_type")
+    @Expose
+    String privateTutionType;
+
+    @SerializedName("lead_qualified")
+    @Expose
+    String leadQualified;
+
+
     protected DashboardResModel(Parcel in) {
         status = in.readString();
         error = in.readByte() != 0;
@@ -183,7 +209,7 @@ public class DashboardResModel implements Parcelable {
         idback = in.readString();
         photo = in.readString();
         schoolid = in.readString();
-        quiz = in.createTypedArrayList(QuizResModel.CREATOR);
+        subjectResModelList = in.createTypedArrayList(SubjectResModel.CREATOR);
         modify = in.readByte() != 0;
         message = in.readString();
         is_kyc_uploaded = in.readString();
@@ -196,6 +222,12 @@ public class DashboardResModel implements Parcelable {
         approved_scholarship_money = in.readString();
         latitude = in.readString();
         longitude = in.readString();
+        mobileModel = in.readString();
+        manufacturer = in.readString();
+        mobileVersion = in.readString();
+        isPrivateTution = in.readString();
+        privateTutionType = in.readString();
+        leadQualified = in.readString();
     }
 
     @Override
@@ -224,7 +256,7 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(idback);
         dest.writeString(photo);
         dest.writeString(schoolid);
-        dest.writeTypedList(quiz);
+        dest.writeTypedList(subjectResModelList);
         dest.writeByte((byte) (modify ? 1 : 0));
         dest.writeString(message);
         dest.writeString(is_kyc_uploaded);
@@ -237,6 +269,12 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(approved_scholarship_money);
         dest.writeString(latitude);
         dest.writeString(longitude);
+        dest.writeString(mobileModel);
+        dest.writeString(manufacturer);
+        dest.writeString(mobileVersion);
+        dest.writeString(isPrivateTution);
+        dest.writeString(privateTutionType);
+        dest.writeString(leadQualified);
     }
 
     @Override
@@ -255,6 +293,54 @@ public class DashboardResModel implements Parcelable {
             return new DashboardResModel[size];
         }
     };
+
+    public String getLeadQualified() {
+        return leadQualified;
+    }
+
+    public void setLeadQualified(String leadQualified) {
+        this.leadQualified = leadQualified;
+    }
+
+    public String getMobileModel() {
+        return mobileModel;
+    }
+
+    public void setMobileModel(String mobileModel) {
+        this.mobileModel = mobileModel;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getMobileVersion() {
+        return mobileVersion;
+    }
+
+    public void setMobileVersion(String mobileVersion) {
+        this.mobileVersion = mobileVersion;
+    }
+
+    public String getIsPrivateTution() {
+        return isPrivateTution;
+    }
+
+    public void setIsPrivateTution(String isPrivateTution) {
+        this.isPrivateTution = isPrivateTution;
+    }
+
+    public String getPrivateTutionType() {
+        return privateTutionType;
+    }
+
+    public void setPrivateTutionType(String privateTutionType) {
+        this.privateTutionType = privateTutionType;
+    }
 
     public boolean isError() {
         return error;
@@ -472,12 +558,12 @@ public class DashboardResModel implements Parcelable {
         this.schoolid = schoolid;
     }
 
-    public List<QuizResModel> getQuiz() {
-        return quiz;
+    public List<SubjectResModel> getSubjectResModelList() {
+        return subjectResModelList;
     }
 
-    public void setQuiz(List<QuizResModel> quiz) {
-        this.quiz = quiz;
+    public void setSubjectResModelList(List<SubjectResModel> subjectResModelList) {
+        this.subjectResModelList = subjectResModelList;
     }
 
     public boolean isModify() {

@@ -22,6 +22,20 @@ public class FriendsLeaderBoardModel {
     @Expose
     private String imagePath;
 
+    @SerializedName("challenge_count")
+    @Expose
+    private int challengeCount;
+
+    @SerializedName("challenged_you")
+    @Expose
+    private boolean challengedYou;
+
+
+    @SerializedName("sent_text")
+    @Expose
+    private String sentText;
+
+
     boolean progress;
 
     boolean sent;
@@ -99,4 +113,27 @@ public class FriendsLeaderBoardModel {
     }
 
 
+    public boolean isChallengedYou() {
+        return challengedYou;
+    }
+
+    public void setChallengedYou(boolean challengedYou) {
+        this.challengedYou = challengedYou;
+    }
+
+    public int getChallengeCount() {
+        return challengeCount;
+    }
+
+    public void setChallengeCount(int challengeCount) {
+        this.challengeCount = challengeCount;
+    }
+
+    public String getSentText() {
+        return sentText;
+    }
+
+    public void setSentText(String sentText) {
+        this.sentText = sentText;
+    }
 }

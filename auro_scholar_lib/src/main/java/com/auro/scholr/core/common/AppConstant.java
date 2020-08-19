@@ -138,6 +138,13 @@ public interface AppConstant {
         String SCHOOL_TYPE = "school_type";
         String BOARD_TYPE = "board_type";
         String LANGUAGE = "language";
+        String LATITUDE = "latitude";
+        String LONGITUDE = "longitude";
+        String MOBILE_MODEL = "mobile_model";
+        String MOBILE_MANUFACTURER = "mobile_manufacturer";
+        String MOBILE_VERSION = "mobile_version";
+        String IS_PRIVATE_TUTION = "is_private_tution";
+        String PRIVATE_TUTION_TYPE = "private_tution_type";
     }
 
     interface FragmentType {
@@ -163,6 +170,7 @@ public interface AppConstant {
         String PLEASE_SELECT_LANGUAGE_MEDIUM = "Please Select Language Medium";
         String PLEASE_SELECT_BOARD = "Please Select Board";
         String PLEASE_SELECT_SCHOOL = "Please Select School";
+        String PLEASE_SELECT_PRIVATE_TUTION = "Please Select Tution Type";
     }
 
 
@@ -179,6 +187,7 @@ public interface AppConstant {
         String QUIZ_ATTEMPT = "quiz_attempt";
         String EKLAVVYA_EXAM_ID = "eklavvya_exam_id";
         String EXAM_FACE_IMG = "exam_face_img";
+        String SUBJECT="subject";
     }
 
 
@@ -211,6 +220,8 @@ public interface AppConstant {
         String RECEIVER_MOBILE_NUMBER = "receiver_mobile_no";
         String NOTIFICATION_TITLE = "notification_title";
         String NOTIFICATION_MESSAGE = "notification_message";
+        String CHALLENGE_BY = "challenge_by";
+        String CHALLENGE_TO = "challenge_to";
     }
 
     interface Source {

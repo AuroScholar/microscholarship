@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@android:id/progress">
+        <rotate
+            android:fromDegrees="270"
+            android:toDegrees="270"
+            android:pivotX="50%"
+            android:pivotY="50%" >
+            <shape
+                android:innerRadiusRatio="3.1"
+                android:shape="ring"
+                android:thickness="@dimen/_13sdp"
+                android:thicknessRatio="25.0" >
+                <gradient
+                    android:type="linear"
+                    android:startColor="#FBBD62"
+                    android:endColor="#FE7546" />
+            </shape>
+        </rotate>
+    </item>
+    <item android:id="@android:id/secondaryProgress">
+        <rotate
+            android:fromDegrees="270"
+            android:toDegrees="270"
+            android:pivotX="50%"
+            android:pivotY="50%" >
+            <shape
+                android:innerRadiusRatio="3.1"
+                android:shape="ring"
+                android:thickness="@dimen/_13sdp"
+                android:thicknessRatio="25.0" >
+                <gradient
+                    android:type="linear"
+                    android:startColor="#FBBD62"
+                    android:endColor="#FE7546"  />
+            </shape>
+        </rotate>
+    </item>
+</layer-list>
+    <!--
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:id="@android:id/background">
+        <shape
+            android:shape="ring"
+            android:innerRadius="30dp"
+            android:thickness="15dp"
+            android:useLevel="false">
+
+            <solid android:color="@color/white" />
+        </shape>
+    </item>
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape
+                android:shape="ring"
+                android:innerRadius="30dp"
+                android:thickness="15dp"
+                android:useLevel="false">
+                <solid android:color="@color/colorPrimary" />
+                <gradient
+                    android:type="linear"
+                    android:startColor="#FBBD62"
+                    android:endColor="#FE7546" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>-->

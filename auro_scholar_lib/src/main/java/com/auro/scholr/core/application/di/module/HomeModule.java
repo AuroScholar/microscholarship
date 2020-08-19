@@ -156,4 +156,12 @@ public class HomeModule {
     ViewModelFactory provideTransactionsFragmentViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
     }
+
+    @Provides
+    @Singleton
+    @Named("QuizHomeNewFragment")
+    ViewModelFactory provideQuizViewNewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
+
 }
