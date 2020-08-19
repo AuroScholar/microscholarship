@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
@@ -87,7 +88,7 @@ import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 
 
-public class QuizHomeFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner {
+public class QuizHomeFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     @Named("QuizHomeFragment")
@@ -168,6 +169,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         openToolTip();
 
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
+        binding.swipeRefreshLayout.setOnRefreshListener(this);
     }
 
 
@@ -273,6 +275,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
                 case LOADING:
                     //For ProgressBar
+
                     if (!isStateRestore) {
                         handleProgress(0, "");
                     }
@@ -423,7 +426,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             } else {
                 assignmentReqModel.setImageBytes(bytes);
             }
-              quizViewModel.getAzureRequestData(assignmentReqModel);
+            quizViewModel.getAzureRequestData(assignmentReqModel);
         } catch (Exception e) {
             /*Do code here when error occur*/
         }
@@ -836,4 +839,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     }
 
+    @Override
+    public void onRefresh() {
+        quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
+
+    }
 }
