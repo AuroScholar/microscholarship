@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -107,6 +108,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         kycViewModel = ViewModelProviders.of(this, viewModelFactory).get(KYCViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setKycViewModel(kycViewModel);
+
+
         setRetainInstance(true);
         return binding.getRoot();
     }
@@ -125,6 +128,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         if (getArguments() != null) {
             dashboardResModel = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
         }
+
         setDataOnUi();
 
     }
@@ -136,6 +140,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 // binding.walletBalText.setText(AuroApp.getAppContext().getResources().getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
                 binding.walletBalText.setText(AuroApp.getAppContext().getResources().getString(R.string.rs) + " " + kycViewModel.homeUseCase.getWalletBalance(dashboardResModel));
             }
+
         }
         binding.cambridgeHeading.cambridgeHeading.setTextColor(getResources().getColor(R.color.white));
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
@@ -484,6 +489,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
         } else if (v.getId() == R.id.bt_transfer_money) {
+
             openFragment(new SendMoneyFragment());
         } else if (v.getId() == R.id.wallet_info) {
             openTransactionFragment();
@@ -571,6 +577,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
        /* dashboardResModel.setIs_kyc_uploaded("Yes");
         dashboardResModel.setIs_kyc_verified("Rejected");
         dashboardResModel.setIs_payment_lastmonth("Yes");*/
+
+
+
         if (dashboardResModel == null) {
             return;
         }
@@ -596,6 +605,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                     binding.stepThree.tickSign.setVisibility(View.GONE);
                     binding.stepThree.btTransferMoney.setVisibility(View.VISIBLE);
                     binding.stepThree.btTransferMoney.setOnClickListener(this);
+
                 }
             } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.REJECTED)) {
                 binding.stepTwo.textVerifyMsg.setText(R.string.declined);
@@ -606,6 +616,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
                 binding.stepThree.textTransferMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.auro_dark_blue));
                 binding.stepThree.textTransferMsg.setText(R.string.you_will_see_transfer);
+
                 binding.stepThree.btTransferMoney.setVisibility(View.GONE);
                 binding.stepThree.tickSign.setVisibility(View.GONE);
 

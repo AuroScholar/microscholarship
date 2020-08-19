@@ -1,8 +1,8 @@
 package com.auro.scholr.payment.data.datasource.remote;
 
 import com.auro.scholr.core.common.AppConstant;
-import com.auro.scholr.home.data.datasource.remote.HomeRemoteApi;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
+import com.auro.scholr.payment.data.model.request.PaytmWithdrawalReqModel;
 import com.auro.scholr.payment.data.repository.PaymentRepo;
 import com.google.gson.JsonObject;
 
@@ -32,4 +32,16 @@ public class PaymentRemoteDataSourceImp implements PaymentRepo.PaymentRemoteData
     }
 
 
+
+    @Override
+    public Single<Response<JsonObject>> paytmWithdrawalApi(PaytmWithdrawalReqModel reqModel) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.paytmApiParam.RECEIVER_MOBILE_NUMBER, reqModel.getMobileNumber());
+        params.put(AppConstant.paytmApiParam.RECEIVER_UPI_ADDRESS, reqModel.getUpiAddress());
+        params.put(AppConstant.paytmApiParam.DISBURSEMENT_MONTH, reqModel.getDisbursementMonth());
+        params.put(AppConstant.paytmApiParam.DISBURSEMENT, reqModel.getDisbursement());
+        params.put(AppConstant.paytmApiParam.BANKACCOUNTNO, reqModel.getBankAccount());
+        params.put(AppConstant.paytmApiParam.IFSCCODE, reqModel.getIfscCode());
+        return paymentRemoteApi.paytmWithdrawalApi(params);
+    }
 }

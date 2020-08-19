@@ -52,6 +52,7 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
     SendMoneyFragmentLayoutBinding binding;
     SendMoneyViewModel viewModel;
     ViewPagerAdapter viewPagerAdapter;
+    DashboardResModel dashboardResModel;
 
     @Override
     public void onAttach(Context context) {
@@ -71,9 +72,12 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
 
     @Override
     protected void init() {
-        initialiseTabs();
-        binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
 
+        binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
+        if (getArguments() != null) {
+            dashboardResModel = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
+        }
+        initialiseTabs();
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
             setLanguageText(AppConstant.HINDI);
@@ -120,7 +124,7 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
 
     public void setViewPagerAdapter() {
         viewPagerAdapter = new ViewPagerAdapter(getActivity(), getActivity().getSupportFragmentManager(),
-                binding.dineHomeTabs.getTabCount());
+                binding.dineHomeTabs.getTabCount(), dashboardResModel);
         binding.viewPager.setAdapter(viewPagerAdapter);
         binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.dineHomeTabs));
     }

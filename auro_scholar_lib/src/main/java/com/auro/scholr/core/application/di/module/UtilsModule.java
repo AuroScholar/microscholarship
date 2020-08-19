@@ -51,7 +51,7 @@ public class UtilsModule {
     OkHttpClient getRequestHeader(HttpLoggingInterceptor httpLoggingInterceptor) {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-       // httpClient.addInterceptor(httpLoggingInterceptor);
+        httpClient.addInterceptor(httpLoggingInterceptor);
         httpClient.addInterceptor(chain -> {
             Request original = chain.request();
             Request request = original.newBuilder()
@@ -64,9 +64,9 @@ public class UtilsModule {
                     .build();
             return chain.proceed(request);
         })
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS);
+                .connectTimeout(180, TimeUnit.SECONDS)
+                .writeTimeout(180, TimeUnit.SECONDS)
+                .readTimeout(180, TimeUnit.SECONDS);
 
 
         return httpClient.build();

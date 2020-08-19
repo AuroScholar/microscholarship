@@ -227,4 +227,33 @@ public interface AppConstant {
     interface Source {
         String QUIZ_DASHBOARD_FRAGMENT = "QUIZ_DASHBOARD_FRAGMENT";
     }
+
+    interface paytmApiParam{
+        String RECEIVER_MOBILE_NUMBER = "mobile_no";
+        String RECEIVER_UPI_ADDRESS = "upiaddress";
+        String DISBURSEMENT_MONTH = "disbursement_month";
+        String DISBURSEMENT  = "disbursement";
+        String BANKACCOUNTNO = "bankaccountno";
+        String IFSCCODE = "ifccode";
+
+    }
+    interface ifscCode{
+        String EMPTYSTRING ="Please Enter IFSC Code";
+        String VALISDIFSCCODE = "Please Enter valid IFSC Code";
+        String VALID = "";
+    }
+
+    interface  bankAccountNumber{
+        String EMPTYSTRING = "Please Enter Bank Account Number";
+        String VALIDACCOUNTNUMBER ="Plase Enter Valid Account Number";
+        String VALIDCONFIRMACCOUNTNUMBER ="Plase Enter Valid Confirm Account Number";
+        String VALID = "";
+        String BANKACCOUNTMATCH = "Account Number Mismatch";
+    }
+
+    interface  phoneNumber{
+        String EMPTYSTRING = "Please Enter Phone Number";
+        String VALIDPHONENUMBER ="Plase Enter Valid Phone Number";
+        String VALID = "";
+    }
 }

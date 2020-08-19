@@ -78,4 +78,5 @@ public interface HomeRemoteApi {
     @FormUrlEncoded
     Single<Response<JsonObject>> acceptInviteApi(@FieldMap Map<String, String> params);
 
+
 }

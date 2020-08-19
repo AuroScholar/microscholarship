@@ -88,16 +88,7 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ic_lock_img"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_marginStart="@dimen/_9sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:src="@drawable/ic_quiz_lock"
-            android:visibility="visible"
-            app:layout_constraintStart_toEndOf="@+id/wallet_layout"
-            app:layout_constraintTop_toBottomOf="@+id/wallet_icon" />
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/childLayout"
@@ -147,6 +138,16 @@
                     app:layout_constraintStart_toEndOf="@+id/level_three" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/ic_lock_img"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_9sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:src="@drawable/ic_quiz_lock"
+            android:visibility="visible"
+            app:layout_constraintStart_toEndOf="@+id/wallet_layout"
+            app:layout_constraintTop_toBottomOf="@+id/wallet_icon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
