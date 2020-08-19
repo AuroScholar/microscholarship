@@ -423,7 +423,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             } else {
                 assignmentReqModel.setImageBytes(bytes);
             }
-            //  quizViewModel.getAzureRequestData(assignmentReqModel);
+              quizViewModel.getAzureRequestData(assignmentReqModel);
         } catch (Exception e) {
             /*Do code here when error occur*/
         }
