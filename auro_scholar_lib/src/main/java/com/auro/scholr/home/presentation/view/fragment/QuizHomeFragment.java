@@ -286,7 +286,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
-                         //setPrefForTesting();
+                        //setPrefForTesting();
                         if (!dashboardResModel.isError()) {
                             checkStatusforCongratulationDialog();
                             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
@@ -347,7 +347,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else if (value == 1) {
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.VISIBLE);
-            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.GONE);
+            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.VISIBLE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
             binding.shimmerViewQuiz.stopShimmer();
         } else {
@@ -840,7 +840,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.quizTypeList.setHasFixedSize(true);
         QuizItemNewAdapter quizItemAdapter = new QuizItemNewAdapter(this.getContext(), dashboardResModel.getSubjectResModelList(), this);
         binding.quizTypeList.setAdapter(quizItemAdapter);
-
     }
 
     @Override
@@ -848,4 +847,17 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
 
     }
+
+/*
+    private void setDummyImagePath()
+    {
+        Bitmap picBitmap = BitmapFactory.decodeFile(R.drawable.auro_blue_strip);
+        byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
+        long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
+        if (mb > 1.5) {
+            assignmentReqModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
+        } else {
+            assignmentReqModel.setImageBytes(bytes);
+        }
+    }*/
 }
