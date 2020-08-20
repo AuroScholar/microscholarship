@@ -282,10 +282,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     break;
 
                 case SUCCESS:
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
-                        // setPrefForTesting();
+                         //setPrefForTesting();
                         if (!dashboardResModel.isError()) {
                             checkStatusforCongratulationDialog();
                             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
@@ -306,6 +307,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 case NO_INTERNET:
 //On fail
                     handleProgress(2, (String) responseApi.data);
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     break;
 
                 case AUTH_FAIL:
@@ -317,10 +319,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         setImageInPref(assignmentReqModel);
                         // openQuizTestFragment(dashboardResModel);
                     }
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     break;
 
 
                 default:
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     Log.d(TAG, "observeServiceResponse: default");
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(2, (String) responseApi.data);
