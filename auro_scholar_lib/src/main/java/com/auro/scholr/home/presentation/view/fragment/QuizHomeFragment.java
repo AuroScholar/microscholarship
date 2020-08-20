@@ -1,5 +1,6 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -14,20 +15,27 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,6 +50,7 @@ import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
+import com.auro.scholr.core.util.uiwidget.OnSwipeTouchListener;
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.CustomSnackBarModel;
@@ -50,9 +59,11 @@ import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.RandomInviteFriendsDataModel;
 import com.auro.scholr.home.data.model.SubjectResModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
+import com.auro.scholr.home.presentation.view.adapter.DrawerItemCustomAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemNewAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
+import com.auro.scholr.home.presentation.viewmodel.DataModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
@@ -107,6 +118,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     List<RandomInviteFriendsDataModel> list;
     FirebaseEventUtil firebaseEventUtil;
     Map<String, String> logparam;
+    ActionBarDrawerToggle mDrawerToggle;
+
 
 
     @Override
@@ -167,6 +180,23 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         }
         Glide.with(this).load(R.raw.anima).into(binding.customUiSnackbar.gifview);
         openToolTip();
+
+        //PRADEEP
+        DataModel[] drawerItem = new DataModel[3];
+
+        drawerItem[0] = new DataModel(R.drawable.connect, "Connect");
+        drawerItem[1] = new DataModel(R.drawable.fixtures, "Fixtures");
+        drawerItem[2] = new DataModel(R.drawable.table, "Table");
+
+
+        DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(getContext(), R.layout.list_view_item_row, drawerItem);
+        binding.leftDrawer.setAdapter(adapter);
+        binding.leftDrawer.setOnItemClickListener(new DrawerItemClickListener());
+      //  mDrawerLayout = (DrawerLayout)rootView.findViewById(R.id.drawer_layout);
+        binding.drawerLayout.setDrawerListener(mDrawerToggle);
+        swipe();
+
+        //PRADEEP
 
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
         binding.swipeRefreshLayout.setOnRefreshListener(this);
@@ -843,5 +873,76 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     public void onRefresh() {
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
 
+    }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            selectItem(position);
+        }
+    }
+
+    private void selectItem(int position) {
+
+        Fragment fragment = null;
+
+        switch (position) {
+            case 0:
+                fragment = new ConnectFragment();
+                break;
+            case 1:
+                fragment = new FixturesFragment();
+                break;
+            case 2:
+                fragment = new TableFragment();
+                break;
+
+            default:
+                break;
+        }
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            binding.leftDrawer.setItemChecked(position, true);
+            binding.leftDrawer.setSelection(position);
+            //  setTitle(mNavigationDrawerItemTitles[position]);
+            binding.drawerLayout.closeDrawer(binding.leftDrawer);
+
+        } else {
+            Log.e("MainFragment", "Error in creating fragment");
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    public void swipe(){
+        binding.drawerLayout.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
+
+
+            @Override
+            public void onSwipeRight() {
+                super.onSwipeRight();
+                 binding.drawerLayout.openDrawer(Gravity.LEFT);
+                //Toast.makeText(getActivity(), "onSwipeRight", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSwipeLeft() {
+                super.onSwipeLeft();
+                 binding.drawerLayout.closeDrawer(Gravity.RIGHT);
+               // Toast.makeText(getActivity(), "onSwipeLeft", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

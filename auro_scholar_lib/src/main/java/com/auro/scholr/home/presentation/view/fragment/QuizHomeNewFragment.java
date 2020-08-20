@@ -1,12 +1,23 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -17,11 +28,14 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
+import com.auro.scholr.core.util.uiwidget.OnSwipeTouchListener;
 import com.auro.scholr.databinding.FragmentQuizHomeNewBinding;
 import com.auro.scholr.home.data.model.newDashboardModel.ChapterResModel;
 import com.auro.scholr.home.data.model.newDashboardModel.QuizNewDashboardModel;
 import com.auro.scholr.home.data.model.newDashboardModel.QuizTestDataModel;
+import com.auro.scholr.home.presentation.view.adapter.DrawerItemCustomAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemNewAdapter;
+import com.auro.scholr.home.presentation.viewmodel.DataModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewNewModel;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
@@ -51,9 +65,13 @@ public class QuizHomeNewFragment extends BaseFragment implements View.OnClickLis
     QuizViewNewModel quizViewNewModel;
     QuizItemNewAdapter quizItemAdapter;
 
+
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
 
 
     public QuizHomeNewFragment() {
@@ -203,4 +221,5 @@ public class QuizHomeNewFragment extends BaseFragment implements View.OnClickLis
         chapterResModel.setTotalpoints(points);
         return chapterResModel;
     }
+
 }
