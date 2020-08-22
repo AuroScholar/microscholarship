@@ -3,8 +3,8 @@ package com.auro.scholr.core.network;
 
 public interface URLConstant {
 
-     //String BASE_URL = "https://auroscholar.com/api/"; // PRODUCTION
-  String BASE_URL = "http://demo.auroscholar.com/api/";  // SIT
+    //String BASE_URL = "https://auroscholar.com/api/"; // PRODUCTION
+    String BASE_URL = "http://demo.auroscholar.com/api/";  // SIT
 
 
    // String DASHBOARD_API = BASE_URL + "dashboard.php";
@@ -39,7 +39,10 @@ public interface URLConstant {
 
     String ACCEPT_STUDENT_INVITE = BASE_URL + "student_challenge_accepted.php";
 
-    String PAYTM_API = BASE_URL + "paytm.php";
+    String PAYTM_API = BASE_URL + "paytm_wallet_transfer.php";
 
+    String PAYTM_UPI_TRANSFER = BASE_URL + "paytm_upi_transfer.php";
+
+    String  PAYTM_ACCOUNT_TRANSFRER = BASE_URL + "paytm_account_transfer.php";
 
 }

@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -31,6 +32,7 @@ import com.auro.scholr.databinding.SendMoneyFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.home.presentation.view.fragment.KYCViewFragment;
 import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
 import com.auro.scholr.payment.presentation.view.adapter.ViewPagerAdapter;
 import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
@@ -123,8 +125,7 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
 
 
     public void setViewPagerAdapter() {
-        viewPagerAdapter = new ViewPagerAdapter(getActivity(), getActivity().getSupportFragmentManager(),
-                binding.dineHomeTabs.getTabCount(), dashboardResModel);
+        viewPagerAdapter = new ViewPagerAdapter(getActivity(), getChildFragmentManager(), binding.dineHomeTabs.getTabCount(), dashboardResModel);
         binding.viewPager.setAdapter(viewPagerAdapter);
         binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.dineHomeTabs));
     }
@@ -218,10 +219,12 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
 
     @Override
     public void onClick(View v) {
-
+        if(v.getId() == R.id.back_arrow){
+           // getActivity().getSupportFragmentManager().popBackStack();
+            openKycMoneyFragment();
+        }
 
     }
-
 
     private void reloadFragment() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -230,5 +233,25 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
         }
         ft.detach(this).attach(this).commit();
     }
+    public void openKycMoneyFragment( ) {
+        getActivity().getSupportFragmentManager().popBackStack();
+        Bundle bundle = new Bundle();
+        KYCViewFragment sendMoneyFragment = new KYCViewFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        sendMoneyFragment.setArguments(bundle);
+        openFragment(sendMoneyFragment);
+    }
+
+    private void openFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(AuroApp.getFragmentContainerUiId(), fragment, KYCViewFragment.class
+                        .getSimpleName())
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
+
+    }
+
 
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,8 +30,11 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalReqModel;
 import com.auro.scholr.payment.data.model.response.PaytmResModel;
 import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
+import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
+import com.auro.scholr.util.alert_dialog.CustomPaymentTranferDialog;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 
 import java.util.Objects;
@@ -75,7 +79,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         if (getArguments() != null) {
             mdashboard = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
         }
-        binding.walletBalText.setText("₹"+mdashboard.getWalletbalance()+".00");
+        binding.walletBalText.setText("₹"+mdashboard.getApproved_scholarship_money()+".00");
 
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
             viewModel.serviceLiveData().removeObservers(this);
@@ -155,12 +159,12 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
             if(validation.isStatus()){
                 //!Pattern.matches("[a-zA-Z]+",  phonenumber.toString())&& phonenumber.length() > 9 && phonenumber.length() <= 10  && phonenumber.toString() !=  null
                 PaytmWithdrawalReqModel reqModel = new PaytmWithdrawalReqModel();
-                reqModel.setMobileNumber(AuroApp.getAuroScholarModel().getMobileNumber());
-                reqModel.setUpiAddress("test@upi.com");
-                reqModel.setDisbursementMonth("202017");
-                reqModel.setDisbursement("50");
-                reqModel.setBankAccount("00000");
-                reqModel.setIfscCode("33445566");
+                reqModel.setMobileno(AuroApp.getAuroScholarModel().getMobileNumber());
+                reqModel.setDisbursementmonth(DateUtil.getcurrentYearMothsNumber());
+                reqModel.setDisbursement(mdashboard.getWalletbalance());
+                reqModel.setPurpose("OTHERS");
+                reqModel.setBeneficiarymobileno(AuroApp.getAuroScholarModel().getMobileNumber());
+                reqModel.setBeneficiaryname("");
                 viewModel.paytmWithdrawal(reqModel);
             }else{
                 showSnackbarError(validation.getMessage());
@@ -184,7 +188,9 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
                     if (responseApi.apiTypeStatus == PAYTM_WITHDRAWAL) {
                         closeDialog();
                         PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
+                        mpaytm.getResponse().replaceAll("\\\\", "");
 
+                        openPaymentDialog(mpaytm.getResponse());
                     }
 
                     break;
@@ -193,9 +199,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
                 case AUTH_FAIL:
                 case FAIL_400:
 // When Authrization is fail
-
                     break;
-
 
                 default:
                     Log.d(TAG, "observeServiceResponse: default");
@@ -225,6 +229,34 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         }
     }
 
+    private void openPaymentDialog(String message) {
+        CustomDialogModel customDialogModel = new CustomDialogModel();
+        customDialogModel.setContext(AuroApp.getAppContext());
+        customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
+        customDialogModel.setContent(message);
+        customDialogModel.setTwoButtonRequired(true);
+        CustomPaymentTranferDialog customDialog = new CustomPaymentTranferDialog(AuroApp.getAppContext(), customDialogModel);
+        customDialog.setSecondBtnTxt("Ok");
+        customDialog.setSecondCallcack(new CustomDialog.SecondCallcack() {
+            @Override
+            public void clickYesCallback() {
 
+                if(message.contains("Request accepted")){
+                    getActivity().getSupportFragmentManager().popBackStack();
+                    customDialog.dismiss();
+                }else{
+                    customDialog.dismiss();
+                }
+            }
+        });
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(customDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        customDialog.getWindow().setAttributes(lp);
+        Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        customDialog.setCancelable(false);
+        customDialog.show();
 
+    }
 }

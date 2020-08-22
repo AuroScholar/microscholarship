@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,19 +27,25 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.ValidationModel;
 import com.auro.scholr.databinding.BankFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.payment.data.model.request.PaytmWithdrawalByBankAccountReqModel;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalReqModel;
 import com.auro.scholr.payment.data.model.response.PaytmResModel;
 import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
+import com.auro.scholr.util.alert_dialog.CustomPaymentTranferDialog;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 
+import java.util.Date;
 import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import static com.auro.scholr.core.common.Status.PAYTM_ACCOUNT_WITHDRAWAL;
 import static com.auro.scholr.core.common.Status.PAYTM_WITHDRAWAL;
 
 
@@ -79,7 +86,7 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
             mdashboard = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
         }
 
-        binding.walletBalText.setText("₹"+mdashboard.getWalletbalance()+".00");
+        binding.walletBalText.setText("₹"+mdashboard.getApproved_scholarship_money()+".00");
 
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
             viewModel.serviceLiveData().removeObservers(this);
@@ -154,17 +161,18 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
         String accountnumber = binding.accountNumber.getText().toString();
         String confirmaccountnumber = binding.confirmAccountNumber.getText().toString();
         String ifscCode = binding.ifscCode.getText().toString();
+
         ValidationModel bankAccountvalidation = viewModel.paymentUseCase.isValidBankAccountNumber(accountnumber,ifscCode,confirmaccountnumber);
 
         if(bankAccountvalidation.isStatus()){
-            PaytmWithdrawalReqModel reqModel = new PaytmWithdrawalReqModel();
-            reqModel.setMobileNumber(AuroApp.getAuroScholarModel().getMobileNumber());
-            reqModel.setUpiAddress("test@upi.com");
-            reqModel.setDisbursementMonth("202017");
-            reqModel.setDisbursement("50");
-            reqModel.setBankAccount("00000");
-            reqModel.setIfscCode("33445566");
-            viewModel.paytmWithdrawal(reqModel);
+            PaytmWithdrawalByBankAccountReqModel reqModel = new PaytmWithdrawalByBankAccountReqModel();
+            reqModel.setMobileNo(AuroApp.getAuroScholarModel().getMobileNumber());
+            reqModel.setDisbursementMonth(DateUtil.getcurrentYearMothsNumber());
+            reqModel.setDisbursement(mdashboard.getWalletbalance());
+            reqModel.setBankaccountno(confirmaccountnumber);
+            reqModel.setIfsccode(ifscCode);
+            reqModel.setPurpose("OTHERS");
+            viewModel.paytmWithdrawalByAccount(reqModel);
         }else{
             showSnackbarError(bankAccountvalidation.getMessage());
         }
@@ -188,9 +196,12 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
                     break;
 
                 case SUCCESS:
-                    if (responseApi.apiTypeStatus == PAYTM_WITHDRAWAL) {
+                    if (responseApi.apiTypeStatus == PAYTM_ACCOUNT_WITHDRAWAL) {
                         closeDialog();
                         PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
+                        mpaytm.getResponse().replaceAll("\\\\", "");
+                        openPaymentDialog(mpaytm.getResponse());
+
 
                     }
 
@@ -231,6 +242,36 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
         if (customProgressDialog != null) {
             customProgressDialog.dismiss();
         }
+    }
+    private void openPaymentDialog(String message) {
+        CustomDialogModel customDialogModel = new CustomDialogModel();
+        customDialogModel.setContext(AuroApp.getAppContext());
+        customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
+        customDialogModel.setContent(message);
+        customDialogModel.setTwoButtonRequired(true);
+        CustomPaymentTranferDialog customDialog = new CustomPaymentTranferDialog(AuroApp.getAppContext(), customDialogModel);
+        customDialog.setSecondBtnTxt("Ok");
+        customDialog.setSecondCallcack(new CustomDialog.SecondCallcack() {
+            @Override
+            public void clickYesCallback() {
+
+                if(message.contains("Request accepted")){
+                    getActivity().getSupportFragmentManager().popBackStack();
+                    customDialog.dismiss();
+                }else{
+                    customDialog.dismiss();
+                }
+            }
+        });
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(customDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        customDialog.getWindow().setAttributes(lp);
+        Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        customDialog.setCancelable(false);
+        customDialog.show();
+
     }
 
 }

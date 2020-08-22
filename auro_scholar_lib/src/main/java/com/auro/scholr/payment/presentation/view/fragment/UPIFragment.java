@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,11 +28,15 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Upipsp;
 import com.auro.scholr.databinding.UpiFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.payment.data.model.request.PaytmWithdrawalByUPIReqModel;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalReqModel;
 import com.auro.scholr.payment.data.model.response.PaytmResModel;
 import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
+import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
+import com.auro.scholr.util.alert_dialog.CustomPaymentTranferDialog;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 
 import java.util.ArrayList;
@@ -41,6 +47,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import static com.auro.scholr.core.common.Status.PAYTM_UPI_WITHDRAWAL;
 import static com.auro.scholr.core.common.Status.PAYTM_WITHDRAWAL;
 
 
@@ -76,7 +83,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
         if (getArguments() != null) {
             mdashboard = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
         }
-        binding.walletBalText.setText("₹"+mdashboard.getWalletbalance()+".00");
+        binding.walletBalText.setText("₹"+mdashboard.getApproved_scholarship_money()+".00");
 
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
             viewModel.serviceLiveData().removeObservers(this);
@@ -159,14 +166,13 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
         int sepPos = upiId.indexOf(separator);
         boolean isPsp = pipstring.contains(upiId.substring(sepPos + separator.length()));
         if(isPsp){
-            PaytmWithdrawalReqModel reqModel = new PaytmWithdrawalReqModel();
-            reqModel.setMobileNumber(AuroApp.getAuroScholarModel().getMobileNumber());
-            reqModel.setUpiAddress(upiId);
-            reqModel.setDisbursementMonth("202018");
-            reqModel.setDisbursement("50");
-            reqModel.setBankAccount("00000");
-            reqModel.setIfscCode("33445566");
-            viewModel.paytmWithdrawal(reqModel);
+            PaytmWithdrawalByUPIReqModel reqModel = new PaytmWithdrawalByUPIReqModel();
+            reqModel.setMobileNo(AuroApp.getAuroScholarModel().getMobileNumber());
+            reqModel.setUpiaddress(upiId);
+            reqModel.setDisbursementMonth(DateUtil.getcurrentYearMothsNumber());
+            reqModel.setDisbursement(mdashboard.getWalletbalance());
+            reqModel.setPurpose("OTHERS");
+            viewModel.paytmWithdrawalByUPI(reqModel);
         }else{
             ViewUtil.showSnackBar(binding.getRoot(), "PSP is not registered");
         }
@@ -187,9 +193,24 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
                     break;
 
                 case SUCCESS:
-                    if (responseApi.apiTypeStatus == PAYTM_WITHDRAWAL) {
+                    if (responseApi.apiTypeStatus == PAYTM_UPI_WITHDRAWAL) {
                         closeDialog();
                         PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
+                        mpaytm.getResponse().replaceAll("\\\\", "");
+
+                        openPaymentDialog(mpaytm.getResponse());
+
+                        if (!mpaytm.isError()) {
+                            Toast.makeText(getActivity(), "PaytmUpi", Toast.LENGTH_SHORT).show();
+                            //checkStatusforCongratulationDialog();
+                           /* if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
+                                handleProgress(2, dashboardResModel.getMessage());
+                            } else {
+                                setDataOnUi(dashboardResModel);
+                            }*/
+                        } else {
+                          //  handleProgress(2, dashboardResModel.getMessage());
+                        }
 
                     }
 
@@ -230,6 +251,39 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
         if (customProgressDialog != null) {
             customProgressDialog.dismiss();
         }
+    }
+
+    private void openPaymentDialog(String message) {
+        CustomDialogModel customDialogModel = new CustomDialogModel();
+        customDialogModel.setContext(AuroApp.getAppContext());
+        customDialogModel.setContent(message);
+
+        customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
+        customDialogModel.setTwoButtonRequired(true);
+        CustomPaymentTranferDialog customDialog = new CustomPaymentTranferDialog(AuroApp.getAppContext(), customDialogModel);
+        customDialog.setSecondBtnTxt("Ok");
+        customDialog.setSecondCallcack(new CustomDialog.SecondCallcack() {
+            @Override
+            public void clickYesCallback() {
+
+                if(message.contains("Request accepted")){
+                    getActivity().getSupportFragmentManager().popBackStack();
+                    customDialog.dismiss();
+                }else{
+                    customDialog.dismiss();
+                }
+
+            }
+        });
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(customDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        customDialog.getWindow().setAttributes(lp);
+        Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        customDialog.setCancelable(false);
+        customDialog.show();
+
     }
 
 }

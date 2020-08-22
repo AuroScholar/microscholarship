@@ -65,5 +65,6 @@ public enum Upipsp {
     barodapay,
     idfcbank,
     upi,
-    paytm
+    paytm,
+
 }

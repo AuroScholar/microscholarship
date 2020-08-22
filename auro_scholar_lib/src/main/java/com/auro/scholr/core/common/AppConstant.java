@@ -102,6 +102,7 @@ public interface AppConstant {
         String DD_MMM = "dd-MMM";
         String DD_MMMM_YYYY = "dd MMMM yyyy"; // 02 August 2019
         String dd_MMM_yyyy = "dd MMM, yyyy"; // 02 August 2019
+        String YYYYMM = "yyyymm";
     }
 
     interface DocumentType {
@@ -230,13 +231,30 @@ public interface AppConstant {
 
     interface paytmApiParam{
         String RECEIVER_MOBILE_NUMBER = "mobile_no";
-        String RECEIVER_UPI_ADDRESS = "upiaddress";
-        String DISBURSEMENT_MONTH = "disbursement_month";
-        String DISBURSEMENT  = "disbursement";
-        String BANKACCOUNTNO = "bankaccountno";
-        String IFSCCODE = "ifccode";
+        String RECEIVER_DISBURSEMENT_MONTH = "disbursement_month";
+        String RECEIVER_DISBURSEMENT = "disbursement";
+        String RECEIVER_PURPOSE = "purpose";
+        String BENEFICIARY_MOBILE_NUMBER ="beneficiarymobileno";
+        String BENEFICIARY_NAME ="beneficiaryname";
 
     }
+
+    interface paytmAccountTransferParam{
+        String RECEIVER_MOBILE_NUMBER = "mobile_no";
+        String RECEIVER_DISBURSEMENT_MONTH = "disbursement_month";
+        String RECEIVER_DISBURSEMENT = "disbursement";
+        String RECEIVER_PURPOSE = "purpose";
+        String RECEIVER_BANKACCOUNT_NO = "bankaccountno";
+        String RECEIVER_IFSCCODE = "ifsccode";
+    }
+    interface paytmUPITransfer{
+        String RECEIVER_MOBILE_NUMBER = "mobile_no";
+        String RECEIVER_UPI_ADDRESS = "upiaddress";
+        String RECEIVER_DISBURSEMENT_MONTH = "disbursement_month";
+        String RECEIVER_DISBURSEMENT = "disbursement";
+        String RECEIVER_PURPOSE = "purpose";
+    }
+
     interface ifscCode{
         String EMPTYSTRING ="Please Enter IFSC Code";
         String VALISDIFSCCODE = "Please Enter valid IFSC Code";

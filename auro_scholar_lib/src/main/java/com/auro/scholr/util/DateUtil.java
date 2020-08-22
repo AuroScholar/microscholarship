@@ -51,6 +51,17 @@ public class DateUtil {
         return formatDate;
     }
 
+    public static String getcurrentYearMothsNumber() {
+        Date a = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(a);
+        int year = calendar.get(Calendar.YEAR);
+        int months = calendar.get(Calendar.MONTH);
+        String yearandmonth = String.valueOf(year)+String.valueOf(months+1);
+        return yearandmonth;
+    }
+
+
     private static String getCurrentFormatDate(SimpleDateFormat returnSdf) {
 
         String formatDate = null;

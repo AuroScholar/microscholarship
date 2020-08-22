@@ -1,35 +1,27 @@
 package com.auro.scholr.payment.data.model.request;
 
 public class PaytmWithdrawalReqModel {
-    String mobileNumber;
-    String upiAddress;
-    String disbursementMonth;
+    String mobileno;
+    String disbursementmonth;
     String disbursement;
-    String bankAccount;
-    String ifscCode;
+    String purpose;
+    String beneficiarymobileno;
+    String beneficiaryname;
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    public String getMobileno() {
+        return mobileno;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setMobileno(String mobileno) {
+        this.mobileno = mobileno;
     }
 
-    public String getUpiAddress() {
-        return upiAddress;
+    public String getDisbursementmonth() {
+        return disbursementmonth;
     }
 
-    public void setUpiAddress(String upiAddress) {
-        this.upiAddress = upiAddress;
-    }
-
-    public String getDisbursementMonth() {
-        return disbursementMonth;
-    }
-
-    public void setDisbursementMonth(String disbursementMonth) {
-        this.disbursementMonth = disbursementMonth;
+    public void setDisbursementmonth(String disbursementmonth) {
+        this.disbursementmonth = disbursementmonth;
     }
 
     public String getDisbursement() {
@@ -40,19 +32,27 @@ public class PaytmWithdrawalReqModel {
         this.disbursement = disbursement;
     }
 
-    public String getBankAccount() {
-        return bankAccount;
+    public String getPurpose() {
+        return purpose;
     }
 
-    public void setBankAccount(String bankAccount) {
-        this.bankAccount = bankAccount;
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
     }
 
-    public String getIfscCode() {
-        return ifscCode;
+    public String getBeneficiarymobileno() {
+        return beneficiarymobileno;
     }
 
-    public void setIfscCode(String ifscCode) {
-        this.ifscCode = ifscCode;
+    public void setBeneficiarymobileno(String beneficiarymobileno) {
+        this.beneficiarymobileno = beneficiarymobileno;
+    }
+
+    public String getBeneficiaryname() {
+        return beneficiaryname;
+    }
+
+    public void setBeneficiaryname(String beneficiaryname) {
+        this.beneficiaryname = beneficiaryname;
     }
 }

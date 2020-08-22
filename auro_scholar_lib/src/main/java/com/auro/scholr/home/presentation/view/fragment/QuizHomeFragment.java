@@ -61,6 +61,7 @@ import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
+import com.auro.scholr.util.alert_dialog.CustomPaymentTranferDialog;
 import com.auro.scholr.util.alert_dialog.CustomSnackBar;
 import com.auro.scholr.util.firebase.FirebaseEventUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
@@ -131,6 +132,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
         }
         setRetainInstance(true);
+
+
         return binding.getRoot();
     }
 
@@ -835,5 +838,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.quizTypeList.setAdapter(quizItemAdapter);
 
     }
+
 
 }

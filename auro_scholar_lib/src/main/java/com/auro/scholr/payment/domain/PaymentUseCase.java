@@ -99,9 +99,11 @@ public class PaymentUseCase {
 
             return new ValidationModel(false, AppConstant.phoneNumber.VALIDPHONENUMBER);
         }
-        if(!Pattern.matches(regex,  phonenumber.toString())){
+/*
+        if(Pattern.matches(regex,  phonenumber.toString())){
             return new ValidationModel(false, AppConstant.phoneNumber.VALIDPHONENUMBER);
         }
+*/
 
         // Return if the string
         // matched the ReGex

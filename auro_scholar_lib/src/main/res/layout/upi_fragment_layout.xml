@@ -105,6 +105,7 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:backgroundTint="@color/dark_magenta"
                         android:textSize="@dimen/_15sdp"
+                        android:hint="@string/enter_the_upi_address"
                         android:inputType="textEmailAddress"
                         app:Font="Poppins-Regular.ttf"
                         app:backgroundTint="@color/dark_magenta"

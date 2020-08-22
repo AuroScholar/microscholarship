@@ -12,7 +12,7 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.payment.presentation.view.fragment.BankFragment;
 import com.auro.scholr.payment.presentation.view.fragment.PaytmFragment;
-import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
+
 import com.auro.scholr.payment.presentation.view.fragment.UPIFragment;
 import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
 
