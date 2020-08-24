@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +88,7 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
             setLanguageText(AppConstant.ENGLISH);
         }
 
+        setKeyListner();
     }
 
     public void initialiseTabs() {
@@ -219,9 +221,9 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.back_arrow){
-           // getActivity().getSupportFragmentManager().popBackStack();
-            openKycMoneyFragment();
+        if (v.getId() == R.id.back_arrow) {
+            getActivity().getSupportFragmentManager().popBackStack();
+            //openKycMoneyFragment();
         }
 
     }
@@ -233,7 +235,8 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
         }
         ft.detach(this).attach(this).commit();
     }
-    public void openKycMoneyFragment( ) {
+
+    public void openKycMoneyFragment() {
         getActivity().getSupportFragmentManager().popBackStack();
         Bundle bundle = new Bundle();
         KYCViewFragment sendMoneyFragment = new KYCViewFragment();
@@ -253,5 +256,23 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
 
     }
 
+    private void setKeyListner() {
+        this.getView().setFocusableInTouchMode(true);
+        this.getView().requestFocus();
+        this.getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    getActivity().getSupportFragmentManager().popBackStack();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
 
+    public void backButton() {
+        getActivity().getSupportFragmentManager().popBackStack();
+        getActivity().getSupportFragmentManager().popBackStack();
+    }
 }

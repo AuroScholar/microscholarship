@@ -47,6 +47,7 @@ import com.auro.scholr.home.presentation.view.adapter.KYCuploadAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 
@@ -489,7 +490,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
         } else if (v.getId() == R.id.bt_transfer_money) {
-
             openSendMoneyFragment();
         } else if (v.getId() == R.id.wallet_info) {
             openTransactionFragment();
@@ -558,7 +558,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     }
 
     private void openFragment(Fragment fragment) {
-        getActivity().getSupportFragmentManager().popBackStack();
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
@@ -604,17 +603,18 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
                 binding.stepTwo.textVerifyMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
-                if (!TextUtil.isEmpty(dashboardResModel.getIs_payment_lastmonth()) && dashboardResModel.getIs_payment_lastmonth().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+                int approvedMoney = ConversionUtil.INSTANCE.convertStringToInteger(dashboardResModel.getApproved_scholarship_money());
+                if (approvedMoney < 1) {
                     binding.stepThree.textTransferMsg.setText(R.string.successfully_transfered);
                     binding.stepThree.textTransferMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
-                    binding.stepThree.tickSign.setVisibility(View.VISIBLE);
+                    binding.stepThree.tickSign.setVisibility(View.GONE);
+                    binding.stepThree.btTransferMoney.setVisibility(View.GONE);
                 } else {
                     binding.stepThree.textTransferMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
                     binding.stepThree.textTransferMsg.setText(R.string.call_our_customercare);
-                    binding.stepThree.tickSign.setVisibility(View.GONE);
+                    binding.stepThree.tickSign.setVisibility(View.VISIBLE);
                     binding.stepThree.btTransferMoney.setVisibility(View.VISIBLE);
                     binding.stepThree.btTransferMoney.setOnClickListener(this);
-
                 }
             } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.REJECTED)) {
                 binding.stepTwo.textVerifyMsg.setText(R.string.declined);

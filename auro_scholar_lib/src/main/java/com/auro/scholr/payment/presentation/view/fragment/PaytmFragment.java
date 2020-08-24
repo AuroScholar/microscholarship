@@ -24,6 +24,7 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.common.ValidationModel;
 import com.auro.scholr.databinding.PaytmFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
@@ -79,7 +80,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         if (getArguments() != null) {
             mdashboard = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
         }
-        binding.walletBalText.setText("₹"+mdashboard.getApproved_scholarship_money()+".00");
+        binding.walletBalText.setText("₹" + mdashboard.getApproved_scholarship_money() + ".00");
 
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
             viewModel.serviceLiveData().removeObservers(this);
@@ -138,7 +139,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.send_button){
+        if (v.getId() == R.id.send_button) {
             paytmwithdrawalAmountApi();
         }
 
@@ -152,23 +153,24 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         }
         ft.detach(this).attach(this).commit();
     }
+
     private void paytmwithdrawalAmountApi() {
         String phonenumber = binding.numberEdittext.getText().toString();
 
         ValidationModel validation = viewModel.paymentUseCase.isVlaidPhoneNumber(phonenumber);
-            if(validation.isStatus()){
-                //!Pattern.matches("[a-zA-Z]+",  phonenumber.toString())&& phonenumber.length() > 9 && phonenumber.length() <= 10  && phonenumber.toString() !=  null
-                PaytmWithdrawalReqModel reqModel = new PaytmWithdrawalReqModel();
-                reqModel.setMobileno(AuroApp.getAuroScholarModel().getMobileNumber());
-                reqModel.setDisbursementmonth(DateUtil.getcurrentYearMothsNumber());
-                reqModel.setDisbursement(mdashboard.getWalletbalance());
-                reqModel.setPurpose("OTHERS");
-                reqModel.setBeneficiarymobileno(AuroApp.getAuroScholarModel().getMobileNumber());
-                reqModel.setBeneficiaryname("");
-                viewModel.paytmWithdrawal(reqModel);
-            }else{
-                showSnackbarError(validation.getMessage());
-            }
+        if (validation.isStatus()) {
+            //!Pattern.matches("[a-zA-Z]+",  phonenumber.toString())&& phonenumber.length() > 9 && phonenumber.length() <= 10  && phonenumber.toString() !=  null
+            PaytmWithdrawalReqModel reqModel = new PaytmWithdrawalReqModel();
+            reqModel.setMobileno(AuroApp.getAuroScholarModel().getMobileNumber());
+            reqModel.setDisbursementmonth(DateUtil.getcurrentYearMothsNumber());
+            reqModel.setDisbursement(mdashboard.getApproved_scholarship_money());
+            reqModel.setPurpose("OTHERS");
+            reqModel.setBeneficiarymobileno(AuroApp.getAuroScholarModel().getMobileNumber());
+            reqModel.setBeneficiaryname("");
+            viewModel.paytmWithdrawal(reqModel);
+        } else {
+            showSnackbarError(validation.getMessage());
+        }
     }
 
     private void observeServiceResponse() {
@@ -189,13 +191,17 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
                         closeDialog();
                         PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
                         mpaytm.getResponse().replaceAll("\\\\", "");
-
                         openPaymentDialog(mpaytm.getResponse());
                     }
 
                     break;
 
                 case NO_INTERNET:
+                    if (responseApi.apiTypeStatus == Status.PAYTM_WITHDRAWAL) {
+                        //handleProgress(1);
+                        showSnackbarError("No Connection");
+                    }
+
                 case AUTH_FAIL:
                 case FAIL_400:
 // When Authrization is fail
@@ -209,6 +215,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
 
         });
     }
+
     private void openProgressDialog() {
         if (customProgressDialog != null && customProgressDialog.isShowing()) {
             return;
@@ -223,6 +230,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         customProgressDialog.show();
         customProgressDialog.updateDataUi(0);
     }
+
     public void closeDialog() {
         if (customProgressDialog != null) {
             customProgressDialog.dismiss();
@@ -241,10 +249,10 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
             @Override
             public void clickYesCallback() {
 
-                if(message.contains("Request accepted")){
-                    getActivity().getSupportFragmentManager().popBackStack();
+                if (message.contains("Request accepted")) {
+                    ((SendMoneyFragment) getParentFragment()).backButton();
                     customDialog.dismiss();
-                }else{
+                } else {
                     customDialog.dismiss();
                 }
             }
@@ -259,4 +267,6 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         customDialog.show();
 
     }
+
+
 }

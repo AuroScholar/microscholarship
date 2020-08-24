@@ -24,6 +24,7 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.common.ValidationModel;
 import com.auro.scholr.databinding.BankFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
@@ -168,7 +169,7 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
             PaytmWithdrawalByBankAccountReqModel reqModel = new PaytmWithdrawalByBankAccountReqModel();
             reqModel.setMobileNo(AuroApp.getAuroScholarModel().getMobileNumber());
             reqModel.setDisbursementMonth(DateUtil.getcurrentYearMothsNumber());
-            reqModel.setDisbursement(mdashboard.getWalletbalance());
+            reqModel.setDisbursement(mdashboard.getApproved_scholarship_money());
             reqModel.setBankaccountno(confirmaccountnumber);
             reqModel.setIfsccode(ifscCode);
             reqModel.setPurpose("OTHERS");
@@ -208,6 +209,11 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
                     break;
 
                 case NO_INTERNET:
+
+                    if (responseApi.apiTypeStatus == Status.PAYTM_ACCOUNT_WITHDRAWAL) {
+                        //handleProgress(1);
+                        showSnackbarError("No Connection");
+                    }
                 case AUTH_FAIL:
                 case FAIL_400:
 // When Authrization is fail
@@ -256,6 +262,7 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
             public void clickYesCallback() {
 
                 if(message.contains("Request accepted")){
+                    getActivity().getSupportFragmentManager().popBackStack();
                     getActivity().getSupportFragmentManager().popBackStack();
                     customDialog.dismiss();
                 }else{

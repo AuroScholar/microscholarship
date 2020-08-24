@@ -91,7 +91,7 @@ public class PaymentUseCase {
 
         // If the string is empty
         // return false
-        if (phonenumber == null) {
+        if (phonenumber.isEmpty()) {
             return new ValidationModel(false, AppConstant.phoneNumber.EMPTYSTRING);
         }
 
