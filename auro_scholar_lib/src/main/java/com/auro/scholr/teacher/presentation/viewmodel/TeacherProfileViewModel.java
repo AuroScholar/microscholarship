@@ -1,9 +1,5 @@
 package com.auro.scholr.teacher.presentation.viewmodel;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.ResponseApi;
@@ -19,6 +15,9 @@ import com.auro.scholr.util.TextUtil;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -84,6 +83,7 @@ public class TeacherProfileViewModel extends ViewModel {
                                 }));
 
     }
+
 
 
     public void updateTeacherProfileData(TeacherReqModel reqModel) {

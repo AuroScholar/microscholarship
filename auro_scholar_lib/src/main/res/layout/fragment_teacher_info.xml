@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="teacherInfoViewModel"
+            type="com.auro.scholr.teacher.presentation.viewmodel.TeacherInfoViewModel" />
+
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".teacher.presentation.view.fragment.TeacherInfoFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/mask_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/parent_layout_one"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+
+                <include
+                    android:id="@+id/header_top_parent"
+                    layout="@layout/quiz_header_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:overScrollMode="never"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/header_top_parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+
+
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/RPTextView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_30sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:layout_marginRight="@dimen/_15sdp"
+                            android:gravity="left"
+                            android:text="@string/teacher_info_title"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_20sdp"
+                            app:Font="Poppins-Bold.ttf"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/rlpayment" />
+
+                        <FrameLayout
+                          android:id="@+id/viewYouTube"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          app:layout_constraintTop_toBottomOf="@+id/RPTextView2"
+                          android:layout_marginBottom="40dp">
+
+                            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                              android:id="@+id/youtube_player_view"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_margin="16dp"
+                              app:enableAutomaticInitialization="false" />
+
+<!--                            <androidx.appcompat.widget.AppCompatImageButton-->
+<!--                              android:id="@+id/bt_play"-->
+<!--                              android:layout_width="75dp"-->
+<!--                              android:layout_height="75dp"-->
+<!--                              android:layout_gravity="center"-->
+<!--                              android:layout_marginLeft="5dp"-->
+<!--                              android:layout_marginTop="0dp"-->
+<!--                              android:background="@drawable/youtube" />-->
+
+                        </FrameLayout>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/parent_layout_two"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_13sdp"
+                            android:layout_marginTop="@dimen/_30sdp"
+                            android:layout_marginRight="@dimen/_13sdp"
+                            app:cardCornerRadius="@dimen/_8sdp"
+                            app:cardUseCompatPadding="true"
+                            app:layout_constraintTop_toBottomOf="@id/viewYouTube">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_8sdp">
+
+
+                                <RelativeLayout
+                                  android:id="@+id/viewTop"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  app:layout_constraintTop_toTopOf="parent">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                      android:id="@+id/iv_circle_top"
+                                      android:layout_width="24dp"
+                                      android:layout_height="24dp"
+                                      android:layout_marginLeft="48dp"
+                                      android:layout_alignParentTop="true"
+                                      android:layout_centerVertical="true"
+                                      app:srcCompat="@drawable/is_active"
+                                      android:background="@drawable/progress_top"
+                                      android:padding="4dp" />
+                                </RelativeLayout>
+
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rvDoucumentUpload"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    android:overScrollMode="never"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/viewTop" />
+
+                                <RelativeLayout
+                                    android:id="@+id/button_layout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_40sdp"
+                                    android:layout_marginLeft="@dimen/_20sdp"
+                                    android:layout_marginTop="@dimen/_20sdp"
+                                    android:layout_marginRight="@dimen/_20sdp"
+                                    android:visibility="gone"
+                                    android:background="@drawable/rectangle_backs"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/rvDoucumentUpload">
+
+                                    <com.auro.scholr.core.util.uiwidget.RPTextView
+                                        android:id="@+id/button"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_40sdp"
+                                        android:layout_centerInParent="true"
+                                        android:gravity="center"
+                                        android:paddingTop="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_10sdp"
+                                        android:text="@string/upload"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_12sdp"
+                                        app:Font="Poppins-Bold.ttf" />
+
+                                    <ProgressBar
+                                        android:id="@+id/progressBar"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:layout_gravity="center"
+                                        android:elevation="@dimen/_2sdp"
+                                        android:indeterminateDrawable="@drawable/circular_progress_white"
+                                        android:innerRadiusRatio="3"
+                                        android:paddingStart="@dimen/_20sdp"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingEnd="@dimen/_20sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:visibility="gone" />
+
+
+                                </RelativeLayout>
+
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.core.widget.NestedScrollView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

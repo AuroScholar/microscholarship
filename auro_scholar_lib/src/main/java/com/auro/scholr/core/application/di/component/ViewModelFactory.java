@@ -1,9 +1,6 @@
 package com.auro.scholr.core.application.di.component;
 
 
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-
 import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
@@ -26,10 +23,15 @@ import com.auro.scholr.teacher.domain.TeacherDbUseCase;
 import com.auro.scholr.teacher.domain.TeacherRemoteUseCase;
 import com.auro.scholr.teacher.domain.TeacherUseCase;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
+import com.auro.scholr.teacher.presentation.viewmodel.SelectYourAppointmentDialogModel;
 import com.auro.scholr.teacher.presentation.viewmodel.SelectYourMessageDialogModel;
+import com.auro.scholr.teacher.presentation.viewmodel.TeacherInfoViewModel;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherKycViewModel;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherProfileViewModel;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherSaveDetailViewModel;
+
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
@@ -88,7 +90,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
             return (T) new KYCViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
-        } else if (modelClass.isAssignableFrom(ScholarShipViewModel.class)) {
+        }
+        else if (modelClass.isAssignableFrom(ScholarShipViewModel.class)) {
 
             return (T) new ScholarShipViewModel(homeUseCase, homeDbUseCase, homeRemoteUseCase);
 
@@ -126,6 +129,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }else if (modelClass.isAssignableFrom(TeacherKycViewModel.class)) {
 
             return (T) new TeacherKycViewModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
+        } else if (modelClass.isAssignableFrom(TeacherInfoViewModel.class)) {
+
+            return (T) new TeacherInfoViewModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
         }else if (modelClass.isAssignableFrom(TeacherSaveDetailViewModel.class)) {
 
             return (T) new TeacherSaveDetailViewModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
@@ -135,6 +141,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }else if (modelClass.isAssignableFrom(TeacherProfileViewModel.class)) {
 
             return (T) new TeacherProfileViewModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
+        } else if (modelClass.isAssignableFrom(SelectYourAppointmentDialogModel.class)) {
+
+            return (T) new SelectYourAppointmentDialogModel(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

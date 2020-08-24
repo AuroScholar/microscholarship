@@ -189,6 +189,7 @@ public interface AppConstant {
 
     interface SENDING_DATA {
         String STUDENT_DATA = "STUDENT_DATA";
+        String APPOINTMENT_DATA = "APPOINTMENT_DATA";
     }
 
     interface SdkFragmentType {

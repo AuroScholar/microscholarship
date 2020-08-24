@@ -20,13 +20,17 @@ public interface TeacherRepo {
 
         Single<Response<JsonObject>> getTeacherDashboardApi(String mobileNumber);
 
+        Single<Response<JsonObject>> getTeacherProgressApi(String mobileNumber);
+
         Single<Response<JsonObject>> getProfileTeacherApi(String mobileNumber);
 
         Single<Response<JsonObject>> uploadTeacherKYC(List<KYCDocumentDatamodel> list);
 
         Single<Response<JsonObject>> sendInviteNotificationApi(SendInviteNotificationReqModel reqModel);
 
+        Single<Response<JsonObject>> getZohoAppointments();
 
+        Single<Response<JsonObject>> bookZohoAppointments(String from_time, String name, String email, String phone_number);
     }
 
 
