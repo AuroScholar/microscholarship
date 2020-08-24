@@ -30,6 +30,7 @@ import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import java.util.Objects;
 
 import androidx.annotation.Nullable;
@@ -105,15 +106,17 @@ public class TeacherInfoFragment extends BaseFragment implements CommonCallBackL
     private void openProgressDialog() {
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(getActivity());
-        customDialogModel.setTitle("Getting Webinar Slots");
-       // customDialogModel.setContent(getActivity().getResources().getString(R.string.bullted_list));
+        customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.getting_webinar_slots));
+        // customDialogModel.setContent(getActivity().getResources().getString(R.string.bullted_list));
         customDialogModel.setTwoButtonRequired(false);
         customProgressDialog = new CustomProgressDialog(customDialogModel);
         Objects.requireNonNull(customProgressDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        customProgressDialog.setTitle("");
         customProgressDialog.setCancelable(false);
         customProgressDialog.show();
-       // customProgressDialog.updateDataUi(0);
+        customProgressDialog.setProgressDialogText(AuroApp.getAppContext().getResources().getString(R.string.getting_webinar_slots));
+
+
+        // customProgressDialog.updateDataUi(0);
     }
 
     private void observeServiceResponse() {
