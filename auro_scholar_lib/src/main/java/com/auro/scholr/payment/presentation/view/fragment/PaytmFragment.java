@@ -165,7 +165,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
             reqModel.setDisbursementmonth(DateUtil.getcurrentYearMothsNumber());
             reqModel.setDisbursement(mdashboard.getApproved_scholarship_money());
             reqModel.setPurpose("OTHERS");
-            reqModel.setBeneficiarymobileno(AuroApp.getAuroScholarModel().getMobileNumber());
+            reqModel.setBeneficiarymobileno(phonenumber);
             reqModel.setBeneficiaryname("");
             viewModel.paytmWithdrawal(reqModel);
         } else {
@@ -197,19 +197,20 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
                     break;
 
                 case NO_INTERNET:
-                    if (responseApi.apiTypeStatus == Status.PAYTM_WITHDRAWAL) {
-                        //handleProgress(1);
-                        showSnackbarError("No Connection");
-                    }
+                    closeDialog();
+                    showSnackbarError((String) responseApi.data);
+                    break;
 
                 case AUTH_FAIL:
                 case FAIL_400:
 // When Authrization is fail
+                    closeDialog();
+                    showSnackbarError((String) responseApi.data);
                     break;
 
                 default:
-                    Log.d(TAG, "observeServiceResponse: default");
-
+                    closeDialog();
+                    showSnackbarError((String) responseApi.data);
                     break;
             }
 

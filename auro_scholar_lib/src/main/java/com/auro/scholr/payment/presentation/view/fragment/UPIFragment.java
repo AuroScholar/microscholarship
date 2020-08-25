@@ -218,21 +218,20 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
                     break;
 
                 case NO_INTERNET:
-                    if (responseApi.apiTypeStatus == Status.PAYTM_UPI_WITHDRAWAL) {
-                        //handleProgress(1);
-                        showSnackbarError("No Connection");
-                    }
+                    closeDialog();
+                    showSnackbarError((String) responseApi.data);
+                    break;
 
                 case AUTH_FAIL:
                 case FAIL_400:
-// When Authrization is fail
-
+                    closeDialog();
+                    showSnackbarError((String) responseApi.data);
                     break;
 
 
                 default:
-                    Log.d(TAG, "observeServiceResponse: default");
-
+                    closeDialog();
+                    showSnackbarError((String) responseApi.data);
                     break;
             }
 

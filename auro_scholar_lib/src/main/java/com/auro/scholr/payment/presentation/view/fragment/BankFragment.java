@@ -210,20 +210,21 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
 
                 case NO_INTERNET:
 
-                    if (responseApi.apiTypeStatus == Status.PAYTM_ACCOUNT_WITHDRAWAL) {
-                        //handleProgress(1);
-                        showSnackbarError("No Connection");
-                    }
-                case AUTH_FAIL:
-                case FAIL_400:
-// When Authrization is fail
+                    closeDialog();
+                    showSnackbarError((String) responseApi.data);
 
                     break;
+                case AUTH_FAIL:
+                case FAIL_400:
 
+                    closeDialog();
+                    showSnackbarError((String) responseApi.data);
+                    break;
 
                 default:
                     Log.d(TAG, "observeServiceResponse: default");
-
+                    closeDialog();
+                    showSnackbarError((String) responseApi.data);
                     break;
             }
 
