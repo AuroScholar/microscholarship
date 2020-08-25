@@ -242,7 +242,11 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(AuroApp.getAppContext());
         customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
-        customDialogModel.setContent(message);
+        if (message.contains("DE_002")) {
+            customDialogModel.setContent("Request accepted");
+        } else {
+            customDialogModel.setContent("Try After SomeTime");
+        }
         customDialogModel.setTwoButtonRequired(true);
         CustomPaymentTranferDialog customDialog = new CustomPaymentTranferDialog(AuroApp.getAppContext(), customDialogModel);
         customDialog.setSecondBtnTxt("Ok");
@@ -250,7 +254,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
             @Override
             public void clickYesCallback() {
 
-                if (message.contains("Request accepted")) {
+                if (message.contains("DE_002")) {
                     ((SendMoneyFragment) getParentFragment()).backButton();
                     customDialog.dismiss();
                 } else {

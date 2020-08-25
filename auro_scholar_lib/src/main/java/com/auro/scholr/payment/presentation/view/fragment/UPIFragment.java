@@ -202,7 +202,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
                         openPaymentDialog(mpaytm.getResponse());
 
                         if (!mpaytm.isError()) {
-                            Toast.makeText(getActivity(), "PaytmUpi", Toast.LENGTH_SHORT).show();
+
                             //checkStatusforCongratulationDialog();
                            /* if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
                                 handleProgress(2, dashboardResModel.getMessage());
@@ -261,8 +261,12 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
     private void openPaymentDialog(String message) {
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(AuroApp.getAppContext());
-        customDialogModel.setContent(message);
-
+        //customDialogModel.setContent(message);
+        if (message.contains("DE_002")) {
+            customDialogModel.setContent("Request accepted");
+        } else {
+            customDialogModel.setContent("Try After SomeTime");
+        }
         customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
         customDialogModel.setTwoButtonRequired(true);
         CustomPaymentTranferDialog customDialog = new CustomPaymentTranferDialog(AuroApp.getAppContext(), customDialogModel);
@@ -271,9 +275,8 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
             @Override
             public void clickYesCallback() {
 
-                if(message.contains("Request accepted")){
-                    getActivity().getSupportFragmentManager().popBackStack();
-                    getActivity().getSupportFragmentManager().popBackStack();
+                if(message.contains("DE_002")){
+                    ((SendMoneyFragment) getParentFragment()).backButton();
                     customDialog.dismiss();
                 }else{
                     customDialog.dismiss();
