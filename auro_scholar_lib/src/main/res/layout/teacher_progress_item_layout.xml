@@ -76,17 +76,40 @@
         android:textStyle="bold" />
 
 
-      <com.auro.scholr.core.util.uiwidget.RPTextView
-        android:id="@+id/tvProgressTitle"
+      <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#181818"
+        android:orientation="vertical"
         android:layout_gravity="center"
         android:gravity="left"
         android:layout_marginTop="-8dp"
-        android:layout_marginStart="8dp"
-        app:Font="Poppins-Medium.ttf"
-        android:textSize="16dp" />
+        android:layout_marginStart="8dp">
+
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+          android:id="@+id/tvProgressTitle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="#181818"
+          app:Font="Poppins-Medium.ttf"
+          android:textSize="16dp" />
+
+        <LinearLayout
+          android:id="@+id/viewBook"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="@drawable/rounded_corner_fb"
+          android:backgroundTint="#43C70D">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            android:padding="@dimen/_4sdp"
+            android:text="Book Seat" />
+        </LinearLayout>
+      </LinearLayout>
+
 
     </LinearLayout>
 

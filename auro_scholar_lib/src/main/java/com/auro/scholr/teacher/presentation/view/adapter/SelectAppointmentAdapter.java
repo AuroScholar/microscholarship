@@ -6,10 +6,12 @@ import android.view.ViewGroup;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.SelectAppointmentItemLayoutBinding;
 import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.DateUtil;
 
 import java.util.List;
 
@@ -64,12 +66,13 @@ public class SelectAppointmentAdapter extends RecyclerView.Adapter {
         }
 
         public void bindUser(String model, int position, CommonCallBackListner commonCallBackListner) {
-            binding.msgText.setText(model);
+
+            binding.msgText.setText(DateUtil.convertDateFormat(AppConstant.DateFormats.DD_MMM_HH_MM_AA, AppConstant.DateFormats.DD_MM_YY_HH_MM, model));
 
             if (checkedPosition == getAdapterPosition()) {
-                binding.msgText.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.colorPrimary));
+                binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_auro_check));
             } else {
-                binding.msgText.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.grey_color));
+                binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.circle_outline));
 
             }
 
@@ -79,7 +82,7 @@ public class SelectAppointmentAdapter extends RecyclerView.Adapter {
 
                     if (commonCallBackListner != null) {
 
-                        binding.msgText.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.colorPrimary));
+                        binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_auro_check));
                         if (checkedPosition != getAdapterPosition()) {
                             notifyItemChanged(checkedPosition);
                             checkedPosition = getAdapterPosition();

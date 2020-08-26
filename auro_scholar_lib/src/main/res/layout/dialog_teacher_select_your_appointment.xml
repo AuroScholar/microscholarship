@@ -49,8 +49,8 @@
           android:gravity="center"
           android:text="@string/choose_your_slot"
           android:textColor="@color/black"
-          android:textSize="@dimen/_15sdp"
-          app:Font="Poppins-Regular.ttf"
+          android:textSize="@dimen/_20sdp"
+          app:Font="Poppins-Bold.ttf"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent" />

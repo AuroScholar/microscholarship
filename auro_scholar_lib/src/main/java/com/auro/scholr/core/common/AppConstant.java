@@ -102,6 +102,8 @@ public interface AppConstant {
         String DD_MMM = "dd-MMM";
         String DD_MMMM_YYYY = "dd MMMM yyyy"; // 02 August 2019
         String dd_MMM_yyyy = "dd MMM, yyyy"; // 02 August 2019
+        String DD_MM_YY_HH_MM = "dd-MM-yy HH:mm";  // 01-11-2019
+        String DD_MMM_HH_MM_AA = "dd MMM, hh:mm aa";
     }
 
     interface DocumentType {
