@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
@@ -26,7 +28,9 @@ import com.auro.scholr.core.common.Status;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.AuroScholar;
+import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.encryption.Cryptor;
 import com.example.aurosampleapplication.databinding.ActivityMainBinding;
@@ -78,21 +82,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sdk:
-                if(!Pattern.matches("[a-zA-Z]+",  binding.mobileNumber.getText().toString())&&
-                        binding.mobileNumber.getText().length() > 9 && binding.mobileNumber.getText().length() <= 10  && binding.mobileNumber.getText().toString() !=  null ){
-                    openGenricSDK();
-                }else{
+                String mobileNumber = binding.mobileNumber.getText().toString();
+                String student_class = binding.userClass.getText().toString();
+                if (TextUtil.isEmpty(mobileNumber) && mobileNumber.length() != 10) {
                     Toast.makeText(this, "Please Enter valid mobile number", Toast.LENGTH_SHORT).show();
+                } else if (TextUtil.isEmpty(student_class)) {
+                    Toast.makeText(this, "Please Enter class", Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    openGenricSDK(mobileNumber,student_class);
                 }
 
-                 //openScholarSpecificSdk();
+                //openScholarSpecificSdk();
                 hideKeyboard(this);
                 break;
             case R.id.bt_open:
-                if(!Pattern.matches("[a-zA-Z]+",  binding.mobileNumber.getText().toString()) &&
-                        binding.mobileNumber.getText().length() > 9 && binding.mobileNumber.getText().length() <= 10 && binding.mobileNumber.getText().toString() != null  ) {
+                if (!Pattern.matches("[a-zA-Z]+", binding.mobileNumber.getText().toString()) &&
+                        binding.mobileNumber.getText().length() > 9 && binding.mobileNumber.getText().length() <= 10 && binding.mobileNumber.getText().toString() != null) {
                     openTeacherSDK();
-                }else{
+                } else {
                     Toast.makeText(this, "Please Enter valid mobile number", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -140,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             @Override
-            public void commonCallback(Status status,Object o) {
+            public void commonCallback(Status status, Object o) {
                 switch (status) {
                     case BOOK_TUTOR_SESSION_CLICK:
                         /*write your code here*/
@@ -151,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         });
         //AuroScholar.openAuroDashboardFragment(auroScholarDataModel);
-       openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
+        openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
     }
 
     private void openTeacherSDK() {
@@ -179,10 +187,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             @Override
-            public void commonCallback(Status status,Object o) {
+            public void commonCallback(Status status, Object o) {
                 switch (status) {
                     case BOOK_TUTOR_SESSION_CLICK:
-   /*write your code here*/
+                        /*write your code here*/
                         AppLogger.e("Chhonker", "commonCallback");
                         break;
                 }
@@ -196,10 +204,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /*inputModel.setMobileNumber("8700808003");
             inputModel.setStudentClass("11");*/
-    private void openGenricSDK() {
+    private void openGenricSDK(String mobileNumber, String student_class) {
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
-        inputModel.setMobileNumber(binding.mobileNumber.getText().toString());//7503600601
-        inputModel.setStudentClass("6");
+        inputModel.setMobileNumber(mobileNumber);//7503600601
+        inputModel.setStudentClass(student_class);
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setReferralLink("");
         inputModel.setActivity(this);
@@ -268,4 +276,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onBackPressed();
       //  ViewUtil.showSnackBar(binding.getRoot(), "Press again to close app");
     }
+    private void setDummyImagePath() {
+        Bitmap compressedImageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.chandan_image_two);
+        compressedImageBitmap=getResizedBitmap(compressedImageBitmap,500);
+        byte[] bytes = AppUtil.encodeToBase64(compressedImageBitmap, 100);
+        long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
+        Log.e("chhonker", "Image size-" + mb);
+     //   binding.image.setImageBitmap(compressedImageBitmap);
+
+    }
+
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+
 }

@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
@@ -61,7 +62,6 @@ import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
-import com.auro.scholr.util.alert_dialog.CustomPaymentTranferDialog;
 import com.auro.scholr.util.alert_dialog.CustomSnackBar;
 import com.auro.scholr.util.firebase.FirebaseEventUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
@@ -88,7 +88,7 @@ import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 
 
-public class QuizHomeFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner {
+public class QuizHomeFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     @Named("QuizHomeFragment")
@@ -132,8 +132,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
         }
         setRetainInstance(true);
-
-
         return binding.getRoot();
     }
 
@@ -171,6 +169,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         openToolTip();
 
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
+        binding.swipeRefreshLayout.setOnRefreshListener(this);
     }
 
 
@@ -276,16 +275,18 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
                 case LOADING:
                     //For ProgressBar
+
                     if (!isStateRestore) {
                         handleProgress(0, "");
                     }
                     break;
 
                 case SUCCESS:
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
-                        // setPrefForTesting();
+                        //setPrefForTesting();
                         if (!dashboardResModel.isError()) {
                             checkStatusforCongratulationDialog();
                             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
@@ -306,6 +307,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 case NO_INTERNET:
 //On fail
                     handleProgress(2, (String) responseApi.data);
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     break;
 
                 case AUTH_FAIL:
@@ -317,10 +319,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         setImageInPref(assignmentReqModel);
                         // openQuizTestFragment(dashboardResModel);
                     }
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     break;
 
 
                 default:
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     Log.d(TAG, "observeServiceResponse: default");
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(2, (String) responseApi.data);
@@ -343,7 +347,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else if (value == 1) {
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.VISIBLE);
-            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.GONE);
+            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.VISIBLE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
             binding.shimmerViewQuiz.stopShimmer();
         } else {
@@ -426,7 +430,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             } else {
                 assignmentReqModel.setImageBytes(bytes);
             }
-              quizViewModel.getAzureRequestData(assignmentReqModel);
+            quizViewModel.getAzureRequestData(assignmentReqModel);
         } catch (Exception e) {
             /*Do code here when error occur*/
         }
@@ -836,8 +840,24 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.quizTypeList.setHasFixedSize(true);
         QuizItemNewAdapter quizItemAdapter = new QuizItemNewAdapter(this.getContext(), dashboardResModel.getSubjectResModelList(), this);
         binding.quizTypeList.setAdapter(quizItemAdapter);
+    }
+
+    @Override
+    public void onRefresh() {
+        quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
 
     }
 
-
+/*
+    private void setDummyImagePath()
+    {
+        Bitmap picBitmap = BitmapFactory.decodeFile(R.drawable.auro_blue_strip);
+        byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
+        long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
+        if (mb > 1.5) {
+            assignmentReqModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
+        } else {
+            assignmentReqModel.setImageBytes(bytes);
+        }
+    }*/
 }
