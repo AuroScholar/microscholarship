@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.common.PaytmError;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.common.ValidationModel;
 import com.auro.scholr.databinding.PaytmFragmentLayoutBinding;
@@ -38,6 +40,8 @@ import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.alert_dialog.CustomPaymentTranferDialog;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -100,6 +104,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
     @Override
     protected void setListener() {
         binding.sendButton.setOnClickListener(this);
+        setKeyListner();
     }
 
 
@@ -242,10 +247,17 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(AuroApp.getAppContext());
         customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
-        if (message.contains("DE_002")) {
-            customDialogModel.setContent("Request accepted");
+        if (message.contains(AppConstant.PaytmResponseCode.DE_002)) {
+            customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.requested_accepted));
         } else {
-            customDialogModel.setContent("Try After SomeTime");
+            customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.payment_failed_error_msg));
+            HashMap<String, String> stringStringHashMap = PaytmError.initMapping();
+            for (Map.Entry<String, String> entry : stringStringHashMap.entrySet()) {
+                String key = entry.getKey();
+                if (message.contains(key)) {
+                    customDialogModel.setContent(entry.getValue());
+                }
+            }
         }
         customDialogModel.setTwoButtonRequired(true);
         CustomPaymentTranferDialog customDialog = new CustomPaymentTranferDialog(AuroApp.getAppContext(), customDialogModel);
@@ -258,6 +270,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
                     ((SendMoneyFragment) getParentFragment()).backButton();
                     customDialog.dismiss();
                 } else {
+
                     customDialog.dismiss();
                 }
             }
@@ -272,6 +285,19 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         customDialog.show();
 
     }
-
+    private void setKeyListner() {
+        this.getView().setFocusableInTouchMode(true);
+        this.getView().requestFocus();
+        this.getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    ((SendMoneyFragment)getParentFragment()).onBackPressed();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
 
 }

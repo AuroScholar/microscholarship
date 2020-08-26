@@ -265,6 +265,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        ViewUtil.showSnackBar(binding.getRoot(), "Press again to close app");
+        super.onBackPressed();
+      //  ViewUtil.showSnackBar(binding.getRoot(), "Press again to close app");
     }
 }

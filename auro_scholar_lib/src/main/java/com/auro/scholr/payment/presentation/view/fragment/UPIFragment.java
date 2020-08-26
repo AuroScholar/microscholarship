@@ -5,7 +5,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,7 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.common.PaytmError;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.common.Upipsp;
 import com.auro.scholr.databinding.UpiFragmentLayoutBinding;
@@ -42,7 +45,9 @@ import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -84,7 +89,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
         if (getArguments() != null) {
             mdashboard = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
         }
-        binding.walletBalText.setText("₹"+mdashboard.getApproved_scholarship_money()+".00");
+        binding.walletBalText.setText("₹" + mdashboard.getApproved_scholarship_money() + ".00");
 
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
             viewModel.serviceLiveData().removeObservers(this);
@@ -102,6 +107,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
 
     @Override
     protected void setListener() {
+        setKeyListner();
     }
 
     @Override
@@ -141,7 +147,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
     @Override
     public void onClick(View v) {
 
-        if(v.getId() == R.id.send_button){
+        if (v.getId() == R.id.send_button) {
             paytmwithdrawalAmountApi();
         }
     }
@@ -157,16 +163,17 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
 
     private void paytmwithdrawalAmountApi() {
 
-        List<Upipsp>  pips = Arrays.asList(Upipsp.values());
+        List<Upipsp> pips = Arrays.asList(Upipsp.values());
+
         List<String> pipstring = new ArrayList<>();
-        for(Upipsp pipslist :pips){
+        for (Upipsp pipslist : pips) {
             pipstring.add(pipslist.name());
         }
         String upiId = binding.numberEdittext.getText().toString();
-        String separator ="@";
+        String separator = "@";
         int sepPos = upiId.indexOf(separator);
         boolean isPsp = pipstring.contains(upiId.substring(sepPos + separator.length()));
-        if(isPsp){
+        if (isPsp) {
             PaytmWithdrawalByUPIReqModel reqModel = new PaytmWithdrawalByUPIReqModel();
             reqModel.setMobileNo(AuroApp.getAuroScholarModel().getMobileNumber());
             reqModel.setUpiaddress(upiId);
@@ -174,7 +181,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
             reqModel.setDisbursement(mdashboard.getApproved_scholarship_money());
             reqModel.setPurpose("OTHERS");
             viewModel.paytmWithdrawalByUPI(reqModel);
-        }else{
+        } else {
             ViewUtil.showSnackBar(binding.getRoot(), "PSP is not registered");
         }
 
@@ -210,7 +217,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
                                 setDataOnUi(dashboardResModel);
                             }*/
                         } else {
-                          //  handleProgress(2, dashboardResModel.getMessage());
+                            //  handleProgress(2, dashboardResModel.getMessage());
                         }
 
                     }
@@ -252,6 +259,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
         customProgressDialog.show();
         customProgressDialog.updateDataUi(0);
     }
+
     public void closeDialog() {
         if (customProgressDialog != null) {
             customProgressDialog.dismiss();
@@ -262,23 +270,30 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(AuroApp.getAppContext());
         //customDialogModel.setContent(message);
-        if (message.contains("DE_002")) {
-            customDialogModel.setContent("Request accepted");
+        if (message.contains(AppConstant.PaytmResponseCode.DE_002)) {
+            customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.requested_accepted));
         } else {
-            customDialogModel.setContent("Try After SomeTime");
+            customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.payment_failed_error_msg));
+            HashMap<String, String> stringStringHashMap = PaytmError.initMapping();
+            for (Map.Entry<String, String> entry : stringStringHashMap.entrySet()) {
+                String key = entry.getKey();
+                if (message.contains(key)) {
+                    customDialogModel.setContent(entry.getValue());
+                }
+            }
         }
         customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
         customDialogModel.setTwoButtonRequired(true);
         CustomPaymentTranferDialog customDialog = new CustomPaymentTranferDialog(AuroApp.getAppContext(), customDialogModel);
-        customDialog.setSecondBtnTxt("Ok");
+        customDialog.setSecondBtnTxt(AuroApp.getAppContext().getResources().getString(R.string.ok));
         customDialog.setSecondCallcack(new CustomDialog.SecondCallcack() {
             @Override
             public void clickYesCallback() {
 
-                if(message.contains("DE_002")){
+                if (message.contains(AppConstant.PaytmResponseCode.DE_002)) {
                     ((SendMoneyFragment) getParentFragment()).backButton();
                     customDialog.dismiss();
-                }else{
+                } else {
                     customDialog.dismiss();
                 }
 
@@ -293,6 +308,20 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
         customDialog.setCancelable(false);
         customDialog.show();
 
+    }
+    private void setKeyListner() {
+        this.getView().setFocusableInTouchMode(true);
+        this.getView().requestFocus();
+        this.getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    ((SendMoneyFragment)getParentFragment()).onBackPressed();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
 }

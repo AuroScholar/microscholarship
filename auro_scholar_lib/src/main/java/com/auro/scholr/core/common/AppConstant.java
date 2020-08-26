@@ -188,7 +188,7 @@ public interface AppConstant {
         String QUIZ_ATTEMPT = "quiz_attempt";
         String EKLAVVYA_EXAM_ID = "eklavvya_exam_id";
         String EXAM_FACE_IMG = "exam_face_img";
-        String SUBJECT="subject";
+        String SUBJECT = "subject";
     }
 
 
@@ -229,17 +229,17 @@ public interface AppConstant {
         String QUIZ_DASHBOARD_FRAGMENT = "QUIZ_DASHBOARD_FRAGMENT";
     }
 
-    interface paytmApiParam{
+    interface paytmApiParam {
         String RECEIVER_MOBILE_NUMBER = "mobile_no";
         String RECEIVER_DISBURSEMENT_MONTH = "disbursement_month";
         String RECEIVER_DISBURSEMENT = "disbursement";
         String RECEIVER_PURPOSE = "purpose";
-        String BENEFICIARY_MOBILE_NUMBER ="beneficiarymobileno";
-        String BENEFICIARY_NAME ="beneficiaryname";
+        String BENEFICIARY_MOBILE_NUMBER = "beneficiarymobileno";
+        String BENEFICIARY_NAME = "beneficiaryname";
 
     }
 
-    interface paytmAccountTransferParam{
+    interface paytmAccountTransferParam {
         String RECEIVER_MOBILE_NUMBER = "mobile_no";
         String RECEIVER_DISBURSEMENT_MONTH = "disbursement_month";
         String RECEIVER_DISBURSEMENT = "disbursement";
@@ -247,7 +247,8 @@ public interface AppConstant {
         String RECEIVER_BANKACCOUNT_NO = "bankaccountno";
         String RECEIVER_IFSCCODE = "ifsccode";
     }
-    interface paytmUPITransfer{
+
+    interface paytmUPITransfer {
         String RECEIVER_MOBILE_NUMBER = "mobile_no";
         String RECEIVER_UPI_ADDRESS = "upiaddress";
         String RECEIVER_DISBURSEMENT_MONTH = "disbursement_month";
@@ -255,23 +256,27 @@ public interface AppConstant {
         String RECEIVER_PURPOSE = "purpose";
     }
 
-    interface ifscCode{
-        String EMPTYSTRING ="Please Enter IFSC Code";
+    interface ifscCode {
+        String EMPTYSTRING = "Please Enter IFSC Code";
         String VALISDIFSCCODE = "Please Enter valid IFSC Code";
         String VALID = "";
     }
 
-    interface  bankAccountNumber{
+    interface bankAccountNumber {
         String EMPTYSTRING = "Please Enter Bank Account Number";
-        String VALIDACCOUNTNUMBER ="Plase Enter Valid Account Number";
-        String VALIDCONFIRMACCOUNTNUMBER ="Plase Enter Valid Confirm Account Number";
+        String VALIDACCOUNTNUMBER = "Plase Enter Valid Account Number";
+        String VALIDCONFIRMACCOUNTNUMBER = "Plase Enter Valid Confirm Account Number";
         String VALID = "";
         String BANKACCOUNTMATCH = "Account Number Mismatch";
     }
 
-    interface  phoneNumber{
+    interface phoneNumber {
         String EMPTYSTRING = "Please Enter Phone Number";
-        String VALIDPHONENUMBER ="Plase Enter Valid Phone Number";
+        String VALIDPHONENUMBER = "Plase Enter Valid Phone Number";
         String VALID = "";
+    }
+
+    interface PaytmResponseCode {
+        String DE_002 = "DE_002";
     }
 }

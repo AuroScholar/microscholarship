@@ -246,6 +246,8 @@
     <string name="book_free_tutoring_session">Book Free Tutoring Session</string>
     <string name="retake">Retake</string>
     <string name="auro_start">Start</string>
+    <string name="payment_failed_error_msg">Payment Request Failed!. Please Try After SomeTime</string>
+    <string name="requested_accepted">Request accepted</string>
     <string-array name="privateTutionList">
         <item>No</item>
         <item>YES</item>
@@ -257,4 +259,5 @@
         <item>Personal</item>
         <item>Online</item>
     </string-array>
+    <string name="ok">OK</string>
 </resources>

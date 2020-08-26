@@ -88,8 +88,9 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
             setLanguageText(AppConstant.ENGLISH);
         }
 
-        setKeyListner();
+
     }
+
 
     public void initialiseTabs() {
         for (int i = 0; i < getTabList().size(); i++) {
@@ -206,6 +207,7 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
     @Override
     public void onResume() {
         super.onResume();
+        setKeyListner();
     }
 
 
@@ -263,12 +265,17 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    getActivity().getSupportFragmentManager().popBackStack();
+                    onBackPressed();
                     return true;
                 }
                 return false;
             }
         });
+    }
+
+
+    public void onBackPressed() {
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 
     public void backButton() {

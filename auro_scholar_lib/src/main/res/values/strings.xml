@@ -291,5 +291,8 @@
     
     <string name="enter_the_paytm_number">Enter the Paytm Number</string>
     <string name="enter_the_upi_address">Enter the UPI Address</string>
+    <string name="payment_failed_error_msg">Payment Request Failed!. Please Try After SomeTime</string>
+    <string name="requested_accepted">Request accepted</string>
+    <string name="ok">OK</string>
 
 </resources>
