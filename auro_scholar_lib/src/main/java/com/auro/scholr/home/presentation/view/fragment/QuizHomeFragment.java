@@ -100,7 +100,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     DashboardResModel dashboardResModel;
     QuizResModel quizResModel;
     QuizWonAdapter quizWonAdapter;
-    Resources resources;
+   // Resources resources;
     boolean isStateRestore;
     AssignmentReqModel assignmentReqModel;
     CustomDialog customDialog;
@@ -126,7 +126,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         quizViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setQuizViewModel(quizViewModel);
-
+       // resources = ViewUtil.getCustomResource(getActivity());
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null && TextUtil.isEmpty(prefModel.getUserLanguage())) {
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
@@ -226,7 +226,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
-        resources = ViewUtil.getCustomResource(getActivity());
+        // resources = ViewUtil.getCustomResource(getActivity());
         init();
         setListener();
         setDataOnUI();
@@ -239,7 +239,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             binding.getScholarshipText.setText(DateUtil.getMonthName() + " " + getActivity().getResources().getString(R.string.scholarship));
         }
         //  binding.getScholarshipText.setText(resources.getText(R.string.get_scholarship));
-        binding.headerTopParent.cambridgeHeading.setText(resources.getString(R.string.question_bank_powered_by_cambridge));
+        binding.headerTopParent.cambridgeHeading.setText(AuroApp.getAppContext().getResources().getString(R.string.question_bank_powered_by_cambridge));
         randomlistforsnackbar();
 
         String lang = ViewUtil.getLanguage();
@@ -264,7 +264,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void setLanguage(String language) {
         ViewUtil.setLanguage(language);
-        resources = ViewUtil.getCustomResource(getActivity());
+        // resources = ViewUtil.getCustomResource(getActivity());
     }
 
     private void observeServiceResponse() {
@@ -575,7 +575,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     public void getSpannableString() {
         SpannableStringBuilder builder = new SpannableStringBuilder();
 
-        SpannableStringBuilder span1 = new SpannableStringBuilder(resources.getString(R.string.score_and_get));
+        SpannableStringBuilder span1 = new SpannableStringBuilder(AuroApp.getAppContext().getResources().getString(R.string.score_and_get));
         ForegroundColorSpan color1 = new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.auro_grey_color));
         span1.setSpan(color1, 0, span1.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         builder.append(span1);
@@ -586,7 +586,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         span2.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, span2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.append(span2);
 
-        SpannableStringBuilder span3 = new SpannableStringBuilder(resources.getString(R.string.for_each_quiz));
+        SpannableStringBuilder span3 = new SpannableStringBuilder(AuroApp.getAppContext().getResources().getString(R.string.for_each_quiz));
         ForegroundColorSpan color3 = new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.auro_grey_color));
         span3.setSpan(color3, 0, span3.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         builder.append(span3);
@@ -782,30 +782,30 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     public void randomlistforsnackbar() {
         RandomInviteFriendsDataModel model = new RandomInviteFriendsDataModel(
-                resources.getString(R.string.text1_random),
-                resources.getDimension(R.dimen._4sdp),
-                resources.getString(R.string.button1_random),
-                resources.getDimension(R.dimen._3sdp));
+                AuroApp.getAppContext().getResources().getString(R.string.text1_random),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._4sdp),
+                AuroApp.getAppContext().getResources().getString(R.string.button1_random),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp));
         RandomInviteFriendsDataModel model2 = new RandomInviteFriendsDataModel(
-                resources.getString(R.string.text2_random_chalange_your_friends),
-                resources.getDimension(R.dimen._3sdp),
-                resources.getString(R.string.button1_random),
-                resources.getDimension(R.dimen._3sdp));
+                AuroApp.getAppContext().getResources().getString(R.string.text2_random_chalange_your_friends),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp),
+                AuroApp.getAppContext().getResources().getString(R.string.button1_random),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp));
         RandomInviteFriendsDataModel model3 = new RandomInviteFriendsDataModel(
-                resources.getString(R.string.text3_random_double_the),
-                resources.getDimension(R.dimen._3sdp),
-                resources.getString(R.string.button2_random),
-                resources.getDimension(R.dimen._3sdp));
+                AuroApp.getAppContext().getResources().getString(R.string.text3_random_double_the),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp),
+                AuroApp.getAppContext().getResources().getString(R.string.button2_random),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp));
         RandomInviteFriendsDataModel model4 = new RandomInviteFriendsDataModel(
-                resources.getString(R.string.text4_random_learning),
-                resources.getDimension(R.dimen._3sdp),
-                resources.getString(R.string.button2_random),
-                resources.getDimension(R.dimen._3sdp));
+                AuroApp.getAppContext().getResources().getString(R.string.text4_random_learning),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp),
+                AuroApp.getAppContext().getResources().getString(R.string.button2_random),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp));
         RandomInviteFriendsDataModel model5 = new RandomInviteFriendsDataModel(
-                resources.getString(R.string.text5_random_multiply),
-                resources.getDimension(R.dimen._3sdp),
-                resources.getString(R.string.button1_random),
-                resources.getDimension(R.dimen._3sdp));
+                AuroApp.getAppContext().getResources().getString(R.string.text5_random_multiply),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp),
+                AuroApp.getAppContext().getResources().getString(R.string.button1_random),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp));
 
         list = new ArrayList<>();
         list.add(model);

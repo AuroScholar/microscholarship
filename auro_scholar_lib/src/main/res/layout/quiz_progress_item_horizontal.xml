@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_score_points"
                     android:gravity="center"
-                    android:text="Score"
+                    android:text="@string/score"
                     android:layout_marginTop="@dimen/_minus5sdp"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/white"
