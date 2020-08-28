@@ -204,7 +204,7 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
     public void onResume() {
         super.onResume();
         HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_KYC_FRAGMENT);
-        resources = ViewUtil.getCustomResource(getActivity());
+       // resources = ViewUtil.getCustomResource(getActivity());
         init();
         setDataOnUI();
     }

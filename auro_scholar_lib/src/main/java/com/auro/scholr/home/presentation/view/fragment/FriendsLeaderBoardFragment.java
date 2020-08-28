@@ -365,11 +365,11 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
             String text = binding.toolbarLayout.langEng.getText().toString();
             if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase(AppConstant.HINDI)) {
                 ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
-                resources = ViewUtil.getCustomResource(getActivity());
+               // resources = ViewUtil.getCustomResource(getActivity());
                 setLanguageText(AppConstant.ENGLISH);
             } else {
                 ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
-                resources = ViewUtil.getCustomResource(getActivity());
+               // resources = ViewUtil.getCustomResource(getActivity());
                 setLanguageText(AppConstant.HINDI);
             }
             reloadFragment();

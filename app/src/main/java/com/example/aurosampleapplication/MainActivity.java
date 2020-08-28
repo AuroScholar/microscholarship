@@ -11,11 +11,15 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.content.res.AssetManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -38,6 +42,7 @@ import com.example.aurosampleapplication.databinding.ActivityMainBinding;
 import java.lang.reflect.Field;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 
@@ -49,6 +54,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Locale locale = new Locale("en");
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.btSdk.setOnClickListener(this);
         binding.btOpen.setOnClickListener(this);
@@ -60,7 +71,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String tt = new Cryptor().HMAC_SHA256(secret, jsonString);
         //  AppLogger.e("chhonker",tt);
         //printDeviceInfo();
+
+
+      /*  Locale locale = new Locale("hi");
+        Resources standardResources = this.getResources();
+        AssetManager assets = standardResources.getAssets();
+        DisplayMetrics metrics = standardResources.getDisplayMetrics();
+        Configuration config = new Configuration(standardResources.getConfiguration());
+        config.locale = locale;
+        Resources res = new Resources(assets, metrics, config);*/
+
+        /**/
+
+
     }
+
+
 
     public static void printHashKey(Context pContext) {
         try {
