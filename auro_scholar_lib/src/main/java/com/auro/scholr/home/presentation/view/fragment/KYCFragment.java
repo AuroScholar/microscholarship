@@ -479,7 +479,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             String text = binding.toolbarLayout.langEng.getText().toString();
             if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase(AppConstant.HINDI)) {
                 ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
-             //   resources = ViewUtil.getCustomResource(getActivity());
+                //   resources = ViewUtil.getCustomResource(getActivity());
                 setLanguageText(AppConstant.ENGLISH);
             } else {
                 ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
@@ -490,14 +490,22 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
         } else if (v.getId() == R.id.bt_transfer_money) {
-            openSendMoneyFragment();
+            // openSendMoneyFragment();
+            callNumber();
         } else if (v.getId() == R.id.wallet_info) {
             openTransactionFragment();
         }
 
     }
 
-    public void openSendMoneyFragment( ) {
+
+    public void callNumber() {
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:9667480783"));
+        startActivity(callIntent);
+    }
+
+    public void openSendMoneyFragment() {
         Bundle bundle = new Bundle();
         SendMoneyFragment sendMoneyFragment = new SendMoneyFragment();
         bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
@@ -585,7 +593,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
        /* dashboardResModel.setIs_kyc_uploaded("Yes");
         dashboardResModel.setIs_kyc_verified("Rejected");
         dashboardResModel.setIs_payment_lastmonth("Yes");*/
-
 
 
         if (dashboardResModel == null) {
