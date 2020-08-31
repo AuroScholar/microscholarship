@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
@@ -87,7 +88,7 @@ import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 
 
-public class QuizHomeFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner {
+public class QuizHomeFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     @Named("QuizHomeFragment")
@@ -99,7 +100,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     DashboardResModel dashboardResModel;
     QuizResModel quizResModel;
     QuizWonAdapter quizWonAdapter;
-    Resources resources;
+   // Resources resources;
     boolean isStateRestore;
     AssignmentReqModel assignmentReqModel;
     CustomDialog customDialog;
@@ -125,7 +126,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         quizViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setQuizViewModel(quizViewModel);
-
+       // resources = ViewUtil.getCustomResource(getActivity());
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null && TextUtil.isEmpty(prefModel.getUserLanguage())) {
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
@@ -168,6 +169,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         openToolTip();
 
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
+        binding.swipeRefreshLayout.setOnRefreshListener(this);
     }
 
 
@@ -224,7 +226,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
-        resources = ViewUtil.getCustomResource(getActivity());
+        // resources = ViewUtil.getCustomResource(getActivity());
         init();
         setListener();
         setDataOnUI();
@@ -237,7 +239,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             binding.getScholarshipText.setText(DateUtil.getMonthName() + " " + getActivity().getResources().getString(R.string.scholarship));
         }
         //  binding.getScholarshipText.setText(resources.getText(R.string.get_scholarship));
-        binding.headerTopParent.cambridgeHeading.setText(resources.getString(R.string.question_bank_powered_by_cambridge));
+        binding.headerTopParent.cambridgeHeading.setText(AuroApp.getAppContext().getResources().getString(R.string.question_bank_powered_by_cambridge));
         randomlistforsnackbar();
 
         String lang = ViewUtil.getLanguage();
@@ -262,7 +264,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void setLanguage(String language) {
         ViewUtil.setLanguage(language);
-        resources = ViewUtil.getCustomResource(getActivity());
+        // resources = ViewUtil.getCustomResource(getActivity());
     }
 
     private void observeServiceResponse() {
@@ -273,16 +275,18 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
                 case LOADING:
                     //For ProgressBar
+
                     if (!isStateRestore) {
                         handleProgress(0, "");
                     }
                     break;
 
                 case SUCCESS:
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
-                        // setPrefForTesting();
+                        //setPrefForTesting();
                         if (!dashboardResModel.isError()) {
                             checkStatusforCongratulationDialog();
                             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
@@ -303,6 +307,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 case NO_INTERNET:
 //On fail
                     handleProgress(2, (String) responseApi.data);
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     break;
 
                 case AUTH_FAIL:
@@ -314,10 +319,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         setImageInPref(assignmentReqModel);
                         // openQuizTestFragment(dashboardResModel);
                     }
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     break;
 
 
                 default:
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     Log.d(TAG, "observeServiceResponse: default");
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(2, (String) responseApi.data);
@@ -340,7 +347,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else if (value == 1) {
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.VISIBLE);
-            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.GONE);
+            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.VISIBLE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
             binding.shimmerViewQuiz.stopShimmer();
         } else {
@@ -423,7 +430,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             } else {
                 assignmentReqModel.setImageBytes(bytes);
             }
-              quizViewModel.getAzureRequestData(assignmentReqModel);
+            quizViewModel.getAzureRequestData(assignmentReqModel);
         } catch (Exception e) {
             /*Do code here when error occur*/
         }
@@ -568,7 +575,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     public void getSpannableString() {
         SpannableStringBuilder builder = new SpannableStringBuilder();
 
-        SpannableStringBuilder span1 = new SpannableStringBuilder(resources.getString(R.string.score_and_get));
+        SpannableStringBuilder span1 = new SpannableStringBuilder(AuroApp.getAppContext().getResources().getString(R.string.score_and_get));
         ForegroundColorSpan color1 = new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.auro_grey_color));
         span1.setSpan(color1, 0, span1.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         builder.append(span1);
@@ -579,7 +586,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         span2.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, span2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.append(span2);
 
-        SpannableStringBuilder span3 = new SpannableStringBuilder(resources.getString(R.string.for_each_quiz));
+        SpannableStringBuilder span3 = new SpannableStringBuilder(AuroApp.getAppContext().getResources().getString(R.string.for_each_quiz));
         ForegroundColorSpan color3 = new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.auro_grey_color));
         span3.setSpan(color3, 0, span3.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         builder.append(span3);
@@ -775,30 +782,30 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     public void randomlistforsnackbar() {
         RandomInviteFriendsDataModel model = new RandomInviteFriendsDataModel(
-                resources.getString(R.string.text1_random),
-                resources.getDimension(R.dimen._4sdp),
-                resources.getString(R.string.button1_random),
-                resources.getDimension(R.dimen._3sdp));
+                AuroApp.getAppContext().getResources().getString(R.string.text1_random),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._4sdp),
+                AuroApp.getAppContext().getResources().getString(R.string.button1_random),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp));
         RandomInviteFriendsDataModel model2 = new RandomInviteFriendsDataModel(
-                resources.getString(R.string.text2_random_chalange_your_friends),
-                resources.getDimension(R.dimen._3sdp),
-                resources.getString(R.string.button1_random),
-                resources.getDimension(R.dimen._3sdp));
+                AuroApp.getAppContext().getResources().getString(R.string.text2_random_chalange_your_friends),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp),
+                AuroApp.getAppContext().getResources().getString(R.string.button1_random),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp));
         RandomInviteFriendsDataModel model3 = new RandomInviteFriendsDataModel(
-                resources.getString(R.string.text3_random_double_the),
-                resources.getDimension(R.dimen._3sdp),
-                resources.getString(R.string.button2_random),
-                resources.getDimension(R.dimen._3sdp));
+                AuroApp.getAppContext().getResources().getString(R.string.text3_random_double_the),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp),
+                AuroApp.getAppContext().getResources().getString(R.string.button2_random),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp));
         RandomInviteFriendsDataModel model4 = new RandomInviteFriendsDataModel(
-                resources.getString(R.string.text4_random_learning),
-                resources.getDimension(R.dimen._3sdp),
-                resources.getString(R.string.button2_random),
-                resources.getDimension(R.dimen._3sdp));
+                AuroApp.getAppContext().getResources().getString(R.string.text4_random_learning),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp),
+                AuroApp.getAppContext().getResources().getString(R.string.button2_random),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp));
         RandomInviteFriendsDataModel model5 = new RandomInviteFriendsDataModel(
-                resources.getString(R.string.text5_random_multiply),
-                resources.getDimension(R.dimen._3sdp),
-                resources.getString(R.string.button1_random),
-                resources.getDimension(R.dimen._3sdp));
+                AuroApp.getAppContext().getResources().getString(R.string.text5_random_multiply),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp),
+                AuroApp.getAppContext().getResources().getString(R.string.button1_random),
+                AuroApp.getAppContext().getResources().getDimension(R.dimen._3sdp));
 
         list = new ArrayList<>();
         list.add(model);
@@ -833,7 +840,24 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.quizTypeList.setHasFixedSize(true);
         QuizItemNewAdapter quizItemAdapter = new QuizItemNewAdapter(this.getContext(), dashboardResModel.getSubjectResModelList(), this);
         binding.quizTypeList.setAdapter(quizItemAdapter);
+    }
+
+    @Override
+    public void onRefresh() {
+        quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
 
     }
 
+/*
+    private void setDummyImagePath()
+    {
+        Bitmap picBitmap = BitmapFactory.decodeFile(R.drawable.auro_blue_strip);
+        byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
+        long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
+        if (mb > 1.5) {
+            assignmentReqModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
+        } else {
+            assignmentReqModel.setImageBytes(bytes);
+        }
+    }*/
 }

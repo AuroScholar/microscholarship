@@ -1,12 +1,12 @@
 <resources>
 
-    <!--App-->
+   <!-- &lt;!&ndash;App&ndash;&gt;
     <string name="app_name">AuroScholr</string>
     <string name="internet_check">ओह, कोई इंटरनेट नहीं मिला। कृपया अपना कनेक्शन जांचें या फिर से प्रयास करें।</string>
     <string name="default_error">कनेक्ट करने में असमर्थ। कृपया कुछ देर बाद प्रयास करें।</string>
     <string name="no_data_found">कोई डेटा उपलब्ध नहीं है</string>
 
-    <!--Crop image string -->
+    &lt;!&ndash;Crop image string &ndash;&gt;
     <string name="crop_image_activity_title"></string>
     <string name="crop_image_menu_rotate_left">Rotate counter clockwise</string>
     <string name="crop_image_menu_rotate_right">Rotate</string>
@@ -28,12 +28,12 @@
     <string name="wining_price">पुरस्कार जीतना:</string>
     <string name="start_quiz">प्रश्नोत्तरी शुरू करें</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    &lt;!&ndash; TODO: Remove or change this placeholder text &ndash;&gt;
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="retry">पुन: प्रयास करें</string>
     <string name="id_proof_front_side">आईडी प्रूफ सामने की ओर</string>
     <string name="title_activity_camera">CameraActivity</string>
-    <!-- Strings used for fragments for navigation -->
+    &lt;!&ndash; Strings used for fragments for navigation &ndash;&gt;
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
@@ -202,13 +202,13 @@
 
     </string>
 
-  <!--  <string name="text1_random">जितना ज़्यादा उतना अच्छा</string>
+  &lt;!&ndash;  <string name="text1_random">जितना ज़्यादा उतना अच्छा</string>
     <string name="text2_random_chalange_your_friends">प्रश्नोत्तरी लेने के लिए अपने दोस्तों को चुनौती!</string>
     <string name="text3_random_double_the">मज़ा दोगुना। पुरस्कार दोगुना करें।</string>
     <string name="text4_random_learning">सीखना मजेदार है, लेकिन साथ में सीखना और भी फायदेमंद है!</string>
     <string name="text5_random_multiply">अपने पुरस्कारों को गुणा करें और अपने दुखों को विभाजित करें!</string>
     <string name="button1_random">Invite Your Friends</string>
-    <string name="button2_random">Challenge Your Friends</string>-->
+    <string name="button2_random">Challenge Your Friends</string>&ndash;&gt;
 
     <string-array name="classes">
         <item>1st</item>
@@ -237,15 +237,19 @@
     <string name="teacher_share_msg">Hi, I have just referred you to get Scholarship  on Scholr App! \nTake quiz and get Scholarship Certificate every month. \nDownload App - https://bit.ly/3b1puWr</string>
     <string name="challenge_msg">just challenged you in a quiz! Can you beat their score?</string>
     <string name="invite_friend_refrral">Ek Vishesh Nimantran! Scholr App par mujhase juden, doston ko challenge karein aur roz Scholarship &amp; Certificates paayein!\n Click to Install App - ></string>
-    <string name="next_quiz">Next Quiz</string>
-    <string name="impossible">It always seems impossible until it’s done.</string>
-    <string name="challenge">Challenge</string>
+    <string name="next_quiz">अगला प्रश्नोत्तरी</string>
+    <string name="impossible">यह हमेशा असंभव सा लगता है जब तक कि पूरा न हो जाय।</string>
+    <string name="challenge">चुनौती</string>
     <string name="taking_private_tutions">निजी ट्युशन लेना ?</string>
     <string name="taking_type">ट्युशन टाइप</string>
-    <string name="challenged_you">Challenged You</string>
-    <string name="book_free_tutoring_session">Book Free Tutoring Session</string>
-    <string name="retake">Retake</string>
-    <string name="auro_start">Start</string>
+    <string name="payment_failed_error_msg">Payment Request Failed!. Please Try After SomeTime</string>
+    <string name="requested_accepted">Request accepted</string>
+
+    <string name="challenged_you">आपको चुनौती दी</string>
+    <string name="book_free_tutoring_session">बुक फ्री ट्यूशन सत्र</string>
+    <string name="retake">फिर से लेना</string>
+    <string name="auro_start">शुरू</string>
+    <string name="accept">स्वीकार करना</string>
     <string-array name="privateTutionList">
         <item>No</item>
         <item>YES</item>
@@ -257,4 +261,5 @@
         <item>Personal</item>
         <item>Online</item>
     </string-array>
+    <string name="ok">OK</string>-->
 </resources>
