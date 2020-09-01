@@ -125,5 +125,42 @@
             android:visibility="gone"
             />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutinfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8">
+
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+            android:id="@+id/tutorial_infoTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lines="2"
+            android:text="@string/tutorial_video_info"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp"
+            android:visibility="visible"
+            app:Font="Poppins-Bold.ttf" />
+
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+            android:id="@+id/tutorial_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:text="@string/on_step_info"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp"
+            android:visibility="gone"
+            app:Font="Poppins-Regular.ttf" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
