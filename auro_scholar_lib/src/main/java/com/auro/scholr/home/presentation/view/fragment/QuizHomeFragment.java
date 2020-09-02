@@ -159,6 +159,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         firebaseEventUtil = new FirebaseEventUtil(getContext());
         logparam = new HashMap<>();
 
+        logparam.put(getResources().getString(R.string.log_start_quiz), "true");
+        firebaseEventUtil.logEvent(getResources().getString(R.string.log_quiz_home_fragment_student), logparam);
+
         if (quizViewModel != null && quizViewModel.serviceLiveData().hasObservers()) {
             quizViewModel.serviceLiveData().removeObservers(this);
 
@@ -403,8 +406,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     String path = data.getStringExtra(AppConstant.PROFILE_IMAGE_PATH);
                     azureImage(path);
                     openQuizTestFragment(dashboardResModel);
-                    logparam.put(getResources().getString(R.string.log_start_quiz), "true");
-                    firebaseEventUtil.logEvent(getResources().getString(R.string.log_quiz_home_fragment_student), logparam);
+
                     // loadImageFromStorage(path);
                 } catch (Exception e) {
 

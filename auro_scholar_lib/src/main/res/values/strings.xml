@@ -234,7 +234,7 @@
     <string name="log_whatapplink_teacher">whatapplink_teacher</string>
     <string name="log_link_teacher">link_teacher</string>
     <string name="log_click_on_whatapp_student">click_on_whatapp_student</string>
-    <string name="log_quiz_home_fragment_student">quiz_home_fragment_student</string>
+    <string name="log_quiz_home_fragment_student">Total_Subject_Page_Student</string>
     <string name="log_start_quiz">start_quiz_student</string>
     <string name="log_click_add_kyc_student">click_add_kyc_student</string>
     <string name="log_friend_leader_board_student">friend_leader_board_student</string>

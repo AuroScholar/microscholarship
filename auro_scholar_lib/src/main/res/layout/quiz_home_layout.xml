@@ -153,16 +153,19 @@
 
                                 <com.auro.scholr.core.util.uiwidget.RPTextView
                                     android:id="@+id/get_scholarship_text"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_marginStart="@dimen/_2sdp"
                                     android:layout_marginTop="@dimen/_2sdp"
-                                    android:text="August Scholarship"
+                                    android:inputType="textMultiLine"
+                                    android:text="September Scholarship"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/_22sdp"
+                                    android:textSize="@dimen/_18sdp"
                                     android:textStyle="normal"
+                                    android:layout_marginRight="@dimen/_5sdp"
                                     app:Font="Poppins-SemiBold.ttf"
+                                    app:layout_constraintEnd_toStartOf="@+id/wallet_bal_text"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
