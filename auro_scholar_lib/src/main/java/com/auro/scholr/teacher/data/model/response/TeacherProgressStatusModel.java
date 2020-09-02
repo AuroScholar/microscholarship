@@ -11,6 +11,9 @@ public class TeacherProgressStatusModel {
     @SerializedName("status")
     @Expose
     private Boolean status;
+    @SerializedName("canaddwebinar")
+    @Expose
+    private Boolean canaddwebinar;
 
     public String getTitle() {
         return title;
@@ -28,4 +31,11 @@ public class TeacherProgressStatusModel {
         this.status = status;
     }
 
+    public Boolean getCanaddwebinar() {
+        return canaddwebinar;
+    }
+
+    public void setCanaddwebinar(Boolean canaddwebinar) {
+        this.canaddwebinar = canaddwebinar;
+    }
 }

@@ -71,7 +71,7 @@ public class TeacherProgressViewHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
-        if (position == 3) {
+        if (model.get(position).getCanaddwebinar() != null && model.get(position).getCanaddwebinar().booleanValue() )  {
            binding.viewBook.setVisibility(View.VISIBLE);
         }else{
             binding.viewBook.setVisibility(View.GONE);
