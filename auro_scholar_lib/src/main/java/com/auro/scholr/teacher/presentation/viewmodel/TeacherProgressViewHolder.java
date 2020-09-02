@@ -64,7 +64,7 @@ public class TeacherProgressViewHolder extends RecyclerView.ViewHolder {
         binding.viewLinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(position==3){
+                if(model.get(position).getCanaddwebinar() != null && model.get(position).getCanaddwebinar().booleanValue()){
                     if (commonCallBackListner != null) {
                         commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.WEBINAR_CLICK, model));
                     }
