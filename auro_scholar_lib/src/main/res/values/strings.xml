@@ -50,7 +50,7 @@
     <string name="new_quiz_will_be_available_next_month">New quiz will be available next month!</string>
     <string name="document_all_four_error_msg">Please select the all four document first</string>
     <string name="question_bank_powered_by_cambridge">Question bank powered by Cambridge</string>
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_auro">Privacy Policy</string>
     <string name="permission_error_msg">For taking the quiz camera permission is must.</string>
     <string name="permission_contact_error_msg">For taking the quiz contact permission is must.</string>
     <string name="complete_the_previous_quiz_to_unlock">Complete the previous quiz to unlock</string>
