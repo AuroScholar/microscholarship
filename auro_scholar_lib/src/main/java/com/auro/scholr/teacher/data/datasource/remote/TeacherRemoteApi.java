@@ -52,10 +52,10 @@ public interface TeacherRemoteApi {
     @FormUrlEncoded
     Single<Response<JsonObject>> sendInviteNotificationApi(@FieldMap Map<String, String> params);
 
-    @GET(URLConstant.ZOHO_APPOINTMENT)
+    @GET(URLConstant.GET_ZOHO_APPOINTMENT)
     Single<Response<JsonObject>> getZohoAppointments();
 
-    @POST(URLConstant.ZOHO_APPOINTMENT)
+    @POST(URLConstant.BOOK_ZOHO_APPOINTMENT)
     @FormUrlEncoded
     Single<Response<JsonObject>> bookZohoAppointments(@Field("from_time") String from_time, @Field("name") String name, @Field("email") String email, @Field("phone_number") String phone_number);
 }
