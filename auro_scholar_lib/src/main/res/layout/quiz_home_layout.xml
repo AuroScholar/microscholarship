@@ -263,7 +263,7 @@
                 android:background="@color/ufo_green"
                 android:contentDescription="@string/submit"
                 android:src="@drawable/ic_iconswhatsapps"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:backgroundTint="@color/ufo_green"
                 app:layout_anchor="@id/swipe_refresh_layout"
                 app:layout_anchorGravity="end|bottom|right"
