@@ -50,7 +50,7 @@
     <string name="new_quiz_will_be_available_next_month">New quiz will be available next month!</string>
     <string name="document_all_four_error_msg">Please select the all four document first</string>
     <string name="question_bank_powered_by_cambridge">Question bank powered by Cambridge</string>
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_auro">Privacy Policy</string>
     <string name="permission_error_msg">For taking the quiz camera permission is must.</string>
     <string name="permission_contact_error_msg">For taking the quiz contact permission is must.</string>
     <string name="complete_the_previous_quiz_to_unlock">Complete the previous quiz to unlock</string>
@@ -95,6 +95,18 @@
         <item>English</item>
         <item>Other</item>
     </string-array>
+    <string-array name="privateTutionList">
+        <item>No</item>
+        <item>YES</item>
+    </string-array>
+
+    <string-array name="privateTypeList">
+        <item>Please Select Tution Type</item>
+        <item>Group</item>
+        <item>Personal</item>
+        <item>Online</item>
+    </string-array>
+
     <string name="congratulations">Congratulations!</string>
     <string name="successfully">You have got ₹50 Scholarship Cash.\n share with your friends!</string>
     <string name="share_with">Share With Friends</string>
@@ -223,7 +235,7 @@
     <string name="log_whatapplink_teacher">whatapplink_teacher</string>
     <string name="log_link_teacher">link_teacher</string>
     <string name="log_click_on_whatapp_student">click_on_whatapp_student</string>
-    <string name="log_quiz_home_fragment_student">quiz_home_fragment_student</string>
+    <string name="log_quiz_home_fragment_student">Total_Subject_Page_Student</string>
     <string name="log_start_quiz">start_quiz_student</string>
     <string name="log_click_add_kyc_student">click_add_kyc_student</string>
     <string name="log_friend_leader_board_student">friend_leader_board_student</string>
@@ -236,6 +248,7 @@
     <string name="tutorial_kyc">Please click here to upload your\nKYC details</string>
     <string name="invite_your_Student">Invite Your Students</string>
     <string name="pref_tutorial">tutorial</string>
+
     <string name="address_not_found">Address not found</string>
     <string name="choose_your_slot">Choose Your Slot</string>
     <string name="book_my_seat">Book My Seat</string>
@@ -244,6 +257,20 @@
     <string name="tutorial_video_info">Tutorial video</string>
     <string name="on_step_info">Steps to be become an AuroScholar Teacher</string>
 
+    <string name="retake_quiz">Retake Quiz</string>
+    <string name="auro_scholar_wallet">You have got ₹50 Scholarship in your\nAuro Scholar Wallet!</string>
+    <string name="share_with_friends">Share with friends</string>
+    <string name="congratulation_new">Congratulations</string>
+    <string name="next_quiz">Next Quiz</string>
+    <string name="impossible">It always seems impossible until it’s done.</string>
+    <string name="accept">Accept</string>
+    <string name="challenge">Challenge</string>
+    <string name="taking_private_tutions">Taking Private Tutions ?</string>
+    <string name="taking_type">Tution Type</string>
+    <string name="challenged_you">Challenged You</string>
+    <string name="book_free_tutoring_session">Book Free Tutoring Session</string>
+    <string name="retake">Retake</string>
+    <string name="auro_start">Start</string>
 
     <string-array name="classes">
         <item>1st</item>
@@ -268,6 +295,12 @@
         <item>Hindi</item>
         <item>Other</item>
     </string-array>
+    
+    <string name="enter_the_paytm_number">Enter the Paytm Number</string>
+    <string name="enter_the_upi_address">Enter the UPI Address</string>
+    <string name="payment_failed_error_msg">Payment Request Failed!. Please Try After SomeTime</string>
+    <string name="requested_accepted">Request accepted</string>
+    <string name="ok">OK</string>
 
 
 </resources>

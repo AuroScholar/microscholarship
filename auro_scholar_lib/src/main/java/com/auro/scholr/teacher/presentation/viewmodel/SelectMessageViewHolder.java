@@ -28,7 +28,7 @@ public class SelectMessageViewHolder extends RecyclerView.ViewHolder {
         if (model.isCheck()) {
             binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_auro_check));
         } else {
-            binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.circle_outline));
+            binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.circle_auro_outline));
 
         }
         binding.llayout1.setOnClickListener(new View.OnClickListener() {

@@ -167,7 +167,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             binding.monthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                     if (leaderBoardAdapter != null && myClassRoomResModel != null && !TextUtil.checkListIsEmpty(myClassRoomResModel.getTeacherResModel().getStudentResModels())) {
                         leaderBoardAdapter.updateList(viewModel.teacherUseCase.makeStudentList(myClassRoomResModel.getTeacherResModel().getStudentResModels(), monthDataModelList.get(position).getMonthNumber(), monthDataModelList.get(position).getYear()));
                     }
@@ -181,7 +180,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             int year = DateUtil.getcurrentYearNumber();
             int month = DateUtil.getcurrentMonthNumber();
             if (month != 0) {
-                month = month - 1;
+                //month = month - 1;
             }
             for (int i = 0; i < monthDataModelList.size(); i++) {
                 MonthDataModel model = monthDataModelList.get(i);

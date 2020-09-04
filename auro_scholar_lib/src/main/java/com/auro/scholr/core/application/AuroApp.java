@@ -2,6 +2,7 @@ package com.auro.scholr.core.application;
 
 
 import android.app.Activity;
+import android.content.Context;
 
 
 import com.auro.scholr.core.application.di.component.AppComponent;
@@ -22,6 +23,7 @@ public class AuroApp {
     public static Activity context;
     public static AuroScholarDataModel auroScholarDataModel;
     public static int fragmentContainerUiId = 0;
+    Context t;
 
 
     public static AuroScholarDataModel getAuroScholarModel() {
@@ -30,19 +32,17 @@ public class AuroApp {
 
     public static AppComponent getAppComponent() {
         if (appComponent == null) {
-            intialiseSdk(auroScholarDataModel.getActivity());
+            intialiseSdk(getAuroScholarModel().getActivity());
         }
         return appComponent;
     }
 
     public static Activity getAppContext() {
-
         return context;
     }
 
 
     public static int getFragmentContainerUiId() {
-
         return fragmentContainerUiId;
     }
 
@@ -60,7 +60,6 @@ public class AuroApp {
                 .appModule(new AppModule(context))
                 .utilsModule(new UtilsModule())
                 .build();
-
         appComponent.injectAppContext(context);
     }
 

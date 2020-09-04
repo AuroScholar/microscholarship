@@ -33,7 +33,7 @@ public class UtilsModule {
 
     @Provides
     @Singleton
-    HttpLoggingInterceptor provideInterceptor(){
+    HttpLoggingInterceptor provideInterceptor() {
         return new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     }
 
@@ -52,6 +52,7 @@ public class UtilsModule {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(httpLoggingInterceptor);
+
         httpClient.addInterceptor(chain -> {
             Request original = chain.request();
             Request request = original.newBuilder()

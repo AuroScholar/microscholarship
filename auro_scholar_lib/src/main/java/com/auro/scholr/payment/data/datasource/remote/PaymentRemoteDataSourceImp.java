@@ -1,8 +1,10 @@
 package com.auro.scholr.payment.data.datasource.remote;
 
 import com.auro.scholr.core.common.AppConstant;
-import com.auro.scholr.home.data.datasource.remote.HomeRemoteApi;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
+import com.auro.scholr.payment.data.model.request.PaytmWithdrawalByBankAccountReqModel;
+import com.auro.scholr.payment.data.model.request.PaytmWithdrawalByUPIReqModel;
+import com.auro.scholr.payment.data.model.request.PaytmWithdrawalReqModel;
 import com.auro.scholr.payment.data.repository.PaymentRepo;
 import com.google.gson.JsonObject;
 
@@ -32,4 +34,39 @@ public class PaymentRemoteDataSourceImp implements PaymentRepo.PaymentRemoteData
     }
 
 
+
+    @Override
+    public Single<Response<JsonObject>> paytmWithdrawalApi(PaytmWithdrawalReqModel reqModel) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.paytmApiParam.RECEIVER_MOBILE_NUMBER, reqModel.getMobileno());
+        params.put(AppConstant.paytmApiParam.RECEIVER_DISBURSEMENT_MONTH, reqModel.getDisbursementmonth());
+        params.put(AppConstant.paytmApiParam.RECEIVER_DISBURSEMENT, reqModel.getDisbursement());
+        params.put(AppConstant.paytmApiParam.RECEIVER_PURPOSE, reqModel.getPurpose());
+        params.put(AppConstant.paytmApiParam.BENEFICIARY_MOBILE_NUMBER, reqModel.getBeneficiarymobileno());
+        params.put(AppConstant.paytmApiParam.BENEFICIARY_NAME, reqModel.getBeneficiaryname());
+        return paymentRemoteApi.paytmWithdrawalApi(params);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> paytmWithdrawalByUpiApi(PaytmWithdrawalByUPIReqModel reqModel) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.paytmUPITransfer.RECEIVER_MOBILE_NUMBER, reqModel.getMobileNo());
+        params.put(AppConstant.paytmUPITransfer.RECEIVER_UPI_ADDRESS, reqModel.getUpiaddress());
+        params.put(AppConstant.paytmUPITransfer.RECEIVER_DISBURSEMENT_MONTH, reqModel.getDisbursementMonth());
+        params.put(AppConstant.paytmUPITransfer.RECEIVER_DISBURSEMENT, reqModel.getDisbursement());
+        params.put(AppConstant.paytmUPITransfer.RECEIVER_PURPOSE, reqModel.getPurpose());
+        return paymentRemoteApi.paytmUpiTransferApi(params);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> paytmWithdrawalByAccountApi(PaytmWithdrawalByBankAccountReqModel reqModel) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.paytmAccountTransferParam.RECEIVER_MOBILE_NUMBER, reqModel.getMobileNo());
+        params.put(AppConstant.paytmAccountTransferParam.RECEIVER_DISBURSEMENT_MONTH, reqModel.getDisbursementMonth());
+        params.put(AppConstant.paytmAccountTransferParam.RECEIVER_DISBURSEMENT, reqModel.getDisbursement());
+        params.put(AppConstant.paytmAccountTransferParam.RECEIVER_PURPOSE, reqModel.getPurpose());
+        params.put(AppConstant.paytmAccountTransferParam.RECEIVER_BANKACCOUNT_NO, reqModel.getBankaccountno());
+        params.put(AppConstant.paytmAccountTransferParam.RECEIVER_IFSCCODE, reqModel.getIfsccode());
+        return paymentRemoteApi.paytmAccountTransferApi(params);
+    }
 }

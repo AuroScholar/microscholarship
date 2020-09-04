@@ -37,6 +37,7 @@ import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.presentation.view.adapter.KYCViewDocAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
+import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 
@@ -106,6 +107,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
 
         binding.btUploadAll.setVisibility(View.GONE);
         binding.btModifyAll.setVisibility(View.VISIBLE);
+
         setDataOnUi();
     }
 
@@ -195,11 +197,11 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             String text = binding.toolbarLayout.langEng.getText().toString();
             if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase(AppConstant.HINDI)) {
                 ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
-                resources = ViewUtil.getCustomResource(getActivity());
+               // resources = ViewUtil.getCustomResource(getActivity());
                 setLanguageText(AppConstant.ENGLISH);
             } else {
                 ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
-                resources = ViewUtil.getCustomResource(getActivity());
+                //resources = ViewUtil.getCustomResource(getActivity());
                 setLanguageText(AppConstant.HINDI);
             }
             reloadFragment();
@@ -207,10 +209,20 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             getActivity().getSupportFragmentManager().popBackStack();
         } else if (v.getId() == R.id.bt_transfer_money) {
             //openFragment(new SendMoneyFragment());
-            callNumber();
+           // callNumber();
+            openSendMoneyFragment();
         } else if (v.getId() == R.id.wallet_info) {
             openTransactionFragment();
         }
+    }
+
+    public void openSendMoneyFragment( ) {
+       // getActivity().getSupportFragmentManager().popBackStack();
+        Bundle bundle = new Bundle();
+        SendMoneyFragment sendMoneyFragment = new SendMoneyFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        sendMoneyFragment.setArguments(bundle);
+        openFragment(sendMoneyFragment);
     }
 
 
@@ -282,14 +294,18 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
                 binding.stepTwo.textVerifyMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
-                if (dashboardResModel.getIs_payment_lastmonth().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+                int approvedMoney = ConversionUtil.INSTANCE.convertStringToInteger(dashboardResModel.getApproved_scholarship_money());
+                if (approvedMoney < 1) {
                     binding.stepThree.textTransferMsg.setText(R.string.successfully_transfered);
                     binding.stepThree.textTransferMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
-                    binding.stepThree.tickSign.setVisibility(View.VISIBLE);
+                    binding.stepThree.tickSign.setVisibility(View.GONE);
+                    binding.stepThree.textTransferMsg.setVisibility(View.VISIBLE);
+                    binding.stepThree.btTransferMoney.setVisibility(View.GONE);
                 } else {
                     binding.stepThree.textTransferMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
                     binding.stepThree.textTransferMsg.setText(R.string.call_our_customercare);
-                    binding.stepThree.tickSign.setVisibility(View.GONE);
+                    binding.stepThree.textTransferMsg.setVisibility(View.GONE);
+                    binding.stepThree.tickSign.setVisibility(View.VISIBLE);
                     binding.stepThree.btTransferMoney.setVisibility(View.VISIBLE);
                     binding.stepThree.btTransferMoney.setOnClickListener(this);
                 }

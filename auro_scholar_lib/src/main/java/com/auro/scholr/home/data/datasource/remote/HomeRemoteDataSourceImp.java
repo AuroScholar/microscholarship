@@ -65,9 +65,10 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         RequestBody exam_id = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getEklavvya_exam_id());
         RequestBody exam_name = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getExam_name());
         RequestBody quiz_attempt = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getQuiz_attempt());
+        RequestBody subject = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getSubject());
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), azureReqModel.getImageBytes());
         MultipartBody.Part student_photo = MultipartBody.Part.createFormData("exam_face_img", "image.jpg", requestFile);
-        return homeRemoteApi.getAzureApiData(registration_id, exam_id, exam_name, quiz_attempt, student_photo);
+        return homeRemoteApi.getAzureApiData(registration_id, exam_id, exam_name, quiz_attempt, subject, student_photo);
     }
 
     @Override
@@ -122,6 +123,13 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         params.put(AppConstant.DemographicType.BOARD_TYPE, demographicResModel.getBoard_type());
         params.put(AppConstant.DemographicType.SCHOOL_TYPE, demographicResModel.getSchool_type());
         params.put(AppConstant.DemographicType.LANGUAGE, demographicResModel.getLanguage());
+        params.put(AppConstant.DemographicType.LATITUDE, demographicResModel.getLatitude());
+        params.put(AppConstant.DemographicType.LONGITUDE, demographicResModel.getLongitude());
+        params.put(AppConstant.DemographicType.MOBILE_MODEL, demographicResModel.getMobileModel());
+        params.put(AppConstant.DemographicType.MOBILE_MANUFACTURER, demographicResModel.getManufacturer());
+        params.put(AppConstant.DemographicType.MOBILE_VERSION, demographicResModel.getMobileVersion());
+        params.put(AppConstant.DemographicType.IS_PRIVATE_TUTION, demographicResModel.getIsPrivateTution());
+        params.put(AppConstant.DemographicType.PRIVATE_TUTION_TYPE, demographicResModel.getPrivateTutionType());
         return homeRemoteApi.postDemographicData(params);
     }
 
@@ -132,6 +140,18 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         params.put(AppConstant.AssignmentApiParams.EXAM_NAME, assignmentReqModel.getExam_name());
         params.put(AppConstant.AssignmentApiParams.QUIZ_ATTEMPT, assignmentReqModel.getQuiz_attempt());
         params.put(AppConstant.AssignmentApiParams.EXAMLANG, assignmentReqModel.getExamlang());
+        params.put(AppConstant.AzureApiParams.SUBJECT, assignmentReqModel.getSubject());
         return homeRemoteApi.getAssignmentId(params);
     }
+
+
+    @Override
+    public Single<Response<JsonObject>> acceptInviteApi(SendInviteNotificationReqModel reqModel) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.SendInviteNotificationApiParam.CHALLENGE_BY, reqModel.getSender_mobile_no());
+        params.put(AppConstant.SendInviteNotificationApiParam.CHALLENGE_TO, reqModel.getReceiver_mobile_no());
+        return homeRemoteApi.acceptInviteApi(params);
+    }
+
+
 }

@@ -35,6 +35,32 @@
             android:visibility="visible" />
 
 
+        <EditText
+            android:id="@+id/mobile_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_35sdp"
+            android:layout_marginRight="@dimen/_35sdp"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:hint="Please Enter Your Mobile Number"
+            android:layout_below="@+id/bt_open"/>
+
+        <EditText
+            android:id="@+id/user_class"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_35sdp"
+            android:layout_marginRight="@dimen/_35sdp"
+            android:inputType="phone"
+            android:maxLength="2"
+            android:hint="Please Enter class"
+            android:layout_below="@+id/mobile_number"/>
+
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/home_container"
             android:layout_width="match_parent"

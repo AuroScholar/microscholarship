@@ -47,6 +47,17 @@ public class DateUtil {
         return formatDate;
     }
 
+    public static String getcurrentYearMothsNumber() {
+        Date a = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(a);
+        int year = calendar.get(Calendar.YEAR);
+        int months = calendar.get(Calendar.MONTH);
+        String yearandmonth = String.valueOf(year)+String.valueOf(months+1);
+        return yearandmonth;
+    }
+
+
     private static String getCurrentFormatDate(SimpleDateFormat returnSdf) {
 
         String formatDate = null;
@@ -264,5 +275,14 @@ public class DateUtil {
         calendar.setTime(a);
         int year = calendar.get(Calendar.YEAR);
         return year;
+    }
+
+    public static String getMonthName() {
+        String lang = ViewUtil.getLanguage();
+       // Locale locale = new Locale(lang);
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM", new Locale("en"));
+        String month_name = month_date.format(cal.getTime());
+        return month_name;
     }
 }
