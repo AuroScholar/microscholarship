@@ -5,7 +5,7 @@ public interface URLConstant {
     String BASE_URL = "https://auroscholar.com/api/"; // PRODUCTION
     //String BASE_URL = "http://demo.auroscholar.com/api/";  // SIT
 
-    String ZOHO_BASE_URL = "https://auroscholar.com/api/";
+   // String ZOHO_BASE_URL = "https://auroscholar.com/api/";
 
    // String DASHBOARD_API = BASE_URL + "dashboard.php";
 
@@ -39,9 +39,9 @@ public interface URLConstant {
 
     String SEND_NOTIFICATION_API = BASE_URL + "push_notification.php";
 
-    String GET_ZOHO_APPOINTMENT = ZOHO_BASE_URL + "get_zoho_slot.php";
+    String GET_ZOHO_APPOINTMENT = BASE_URL + "get_zoho_slot.php";
 
-    String BOOK_ZOHO_APPOINTMENT = ZOHO_BASE_URL + "book_zoho_slot.php";
+    String BOOK_ZOHO_APPOINTMENT = BASE_URL + "book_zoho_slot.php";
     String ACCEPT_STUDENT_INVITE = BASE_URL + "student_challenge_accepted.php";
 
     String PAYTM_API = BASE_URL + "paytm_wallet_transfer.php";
