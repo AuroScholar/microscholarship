@@ -266,7 +266,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
             @Override
             public void clickYesCallback() {
 
-                if (message.contains("DE_002")) {
+                if (message.contains(AppConstant.PaytmResponseCode.DE_002)) {
                     ((SendMoneyFragment) getParentFragment()).backButton();
                     customDialog.dismiss();
                 } else {
