@@ -132,6 +132,7 @@ public class TeacherInfoFragment extends BaseFragment implements CommonCallBackL
 
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == Status.GET_TEACHER_PROGRESS_API) {
+                        binding.parentLayoutTwo.setVisibility(View.VISIBLE);
                         TeacherProgressModel teacherProgressModel = (TeacherProgressModel) responseApi.data;
                         binding.rvDoucumentUpload.setLayoutManager(new LinearLayoutManager(getActivity()));
                         binding.rvDoucumentUpload.setHasFixedSize(true);
