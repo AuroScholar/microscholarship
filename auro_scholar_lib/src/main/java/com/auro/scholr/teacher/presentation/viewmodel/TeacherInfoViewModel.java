@@ -38,7 +38,7 @@ public class TeacherInfoViewModel extends ViewModel {
                 getTeacherProgressApi(mobileNumber);
             } else {
                 // please check your internet
-                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.GET_TEACHER_PROGRESS_API));
             }
 
         });
@@ -48,32 +48,45 @@ public class TeacherInfoViewModel extends ViewModel {
     }
 
     public void getZohoAppointment() {
-        getCompositeDisposable()
-                .add(teacherRemoteUseCase.getZohoAppointments()
-                             .subscribeOn(Schedulers.io())
-                             .observeOn(AndroidSchedulers.mainThread())
-                             .doOnSubscribe(new Consumer<Disposable>() {
-                                 @Override
-                                 public void accept(Disposable __) throws Exception {
-                                     /*Do code here*/
-                                     serviceLiveData.setValue(ResponseApi.loading(Status.GET_ZOHO_APPOINTMENT));
-                                 }
-                             })
-                             .subscribe(
-                                     new Consumer<ResponseApi>() {
-                                         @Override
-                                         public void accept(ResponseApi responseApi) throws Exception {
-                                             serviceLiveData.setValue(responseApi);
-                                         }
-                                     },
 
-                                     new Consumer<Throwable>() {
+        Disposable disposable = teacherRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
+            if (hasInternet) {
+                getCompositeDisposable()
+                        .add(teacherRemoteUseCase.getZohoAppointments()
+                                     .subscribeOn(Schedulers.io())
+                                     .observeOn(AndroidSchedulers.mainThread())
+                                     .doOnSubscribe(new Consumer<Disposable>() {
                                          @Override
-                                         public void accept(Throwable throwable) throws Exception {
-                                             defaultError();
+                                         public void accept(Disposable __) throws Exception {
+                                             /*Do code here*/
+                                             serviceLiveData.setValue(ResponseApi.loading(Status.GET_ZOHO_APPOINTMENT));
                                          }
-                                     }
-                             ));
+                                     })
+                                     .subscribe(
+                                             new Consumer<ResponseApi>() {
+                                                 @Override
+                                                 public void accept(ResponseApi responseApi) throws Exception {
+                                                     serviceLiveData.setValue(responseApi);
+                                                 }
+                                             },
+
+                                             new Consumer<Throwable>() {
+                                                 @Override
+                                                 public void accept(Throwable throwable) throws Exception {
+                                                     defaultError();
+                                                 }
+                                             }
+                                     ));
+            } else {
+                // please check your internet
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.GET_ZOHO_APPOINTMENT));
+            }
+
+        });
+
+        getCompositeDisposable().add(disposable);
+
+
 
     }
 

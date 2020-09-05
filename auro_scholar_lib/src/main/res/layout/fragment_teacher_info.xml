@@ -97,7 +97,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 app:showFullScreenButton="false"
-                app:enableAutomaticInitialization="false" />
+                app:videoId="TzJs0vVW6J8"
+                app:enableAutomaticInitialization="true" />
 
               <!--                            <androidx.appcompat.widget.AppCompatImageButton-->
               <!--                              android:id="@+id/bt_play"-->

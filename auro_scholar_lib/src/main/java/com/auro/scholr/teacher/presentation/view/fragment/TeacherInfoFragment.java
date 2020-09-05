@@ -170,6 +170,7 @@ public class TeacherInfoFragment extends BaseFragment implements CommonCallBackL
                         if (customProgressDialog != null) {
                             customProgressDialog.dismiss();
                         }
+                        showSnackbarError((String) responseApi.data);
                     }
 
                     break;
@@ -189,6 +190,8 @@ public class TeacherInfoFragment extends BaseFragment implements CommonCallBackL
 
         });
     }
+
+
 
     public void handleProgress(int status) {
         switch (status) {
