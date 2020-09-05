@@ -253,7 +253,7 @@
     <string name="choose_your_slot">Choose Your Slot</string>
     <string name="book_my_seat">Book My Seat</string>
     <string name="select_single_slot">Select at least single slot.</string>
-    <string name="getting_webinar_slots">Getting Webinar Slots</string>
+    <string name="getting_webinar_slots">Getting Webinar\nSlots</string>
     <string name="tutorial_video_info">Tutorial video</string>
     <string name="on_step_info">Steps to be become an AuroScholar Teacher</string>
 
