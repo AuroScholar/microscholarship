@@ -72,7 +72,7 @@
                 android:paddingTop="@dimen/_4sdp"
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_4sdp"
-                android:text="@string/tranfer_money"
+                android:text="@string/call"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp"
                 android:visibility="gone"
