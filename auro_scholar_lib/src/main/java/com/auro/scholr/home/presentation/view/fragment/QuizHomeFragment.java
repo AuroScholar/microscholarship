@@ -346,12 +346,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.GONE);
             binding.shimmerViewQuiz.setVisibility(View.VISIBLE);
-
             binding.shimmerViewQuiz.startShimmer();
         } else if (value == 1) {
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.VISIBLE);
-            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.VISIBLE);
+            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.GONE);
             binding.fab.setVisibility(View.VISIBLE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
             binding.shimmerViewQuiz.stopShimmer();
