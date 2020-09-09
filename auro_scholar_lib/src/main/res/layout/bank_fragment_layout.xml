@@ -12,12 +12,13 @@
 
 
     </data>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/off_white"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/_20sdp"
-        android:background="@color/off_white"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:text="Wallet"
                 android:textColor="@color/dark_magenta"
@@ -60,13 +62,13 @@
 
                     <ImageView
                         android:id="@+id/paytm_icon"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:background="@drawable/ic_bank"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_40sdp"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_height="@dimen/_40sdp"/>
+                        android:background="@drawable/ic_bank"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                     <com.auro.scholr.core.util.uiwidget.RPTextView
@@ -75,6 +77,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginLeft="@dimen/_15sdp"
                         android:text="\u20B9 0.00"
                         android:textColor="@color/dark_magenta"
                         android:textSize="@dimen/_22sdp"
@@ -89,6 +92,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginLeft="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:text="Transfer to Bank account"
                         android:textColor="@color/dark_magenta"
@@ -102,17 +106,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
-                        android:layout_marginEnd="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
                         android:backgroundTint="@color/dark_magenta"
-                        android:textSize="@dimen/_12sdp"
-                        android:inputType="phone"
-                        app:Font="Poppins-Regular.ttf"
                         android:hint="Enter the account number"
+                        android:inputType="phone"
+                        android:textSize="@dimen/_12sdp"
+                        app:Font="Poppins-Regular.ttf"
                         app:backgroundTint="@color/dark_magenta"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/editTextHead"/>
+                        app:layout_constraintTop_toBottomOf="@+id/editTextHead" />
 
 
                     <com.auro.scholr.core.util.uiwidget.RPEditText
@@ -120,34 +124,34 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
-                        android:layout_marginEnd="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
                         android:backgroundTint="@color/dark_magenta"
-                        android:textSize="@dimen/_12sdp"
-                        android:inputType="phone"
                         android:hint="Confirm the account number"
+                        android:inputType="phone"
+                        android:textSize="@dimen/_12sdp"
                         app:Font="Poppins-Regular.ttf"
                         app:backgroundTint="@color/dark_magenta"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/account_number"/>
+                        app:layout_constraintTop_toBottomOf="@+id/account_number" />
 
                     <com.auro.scholr.core.util.uiwidget.RPEditText
                         android:id="@+id/ifsc_code"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
-                        android:layout_marginEnd="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
                         android:backgroundTint="@color/dark_magenta"
-                        android:textSize="@dimen/_12sdp"
-                        android:inputType="text"
                         android:hint="IFSC Code"
+                        android:inputType="text"
+                        android:textSize="@dimen/_12sdp"
                         app:Font="Poppins-Regular.ttf"
                         app:backgroundTint="@color/dark_magenta"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/confirm_account_number"/>
+                        app:layout_constraintTop_toBottomOf="@+id/confirm_account_number" />
 
                     <ImageView
                         android:id="@+id/send_button"
@@ -164,7 +168,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

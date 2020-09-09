@@ -247,6 +247,7 @@
                                 android:gravity="center"
                                 android:paddingLeft="@dimen/_20sdp"
                                 android:paddingEnd="@dimen/_20sdp"
+                                android:paddingRight="@dimen/_20sdp"
                                 android:text="@string/share_with_friends"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"

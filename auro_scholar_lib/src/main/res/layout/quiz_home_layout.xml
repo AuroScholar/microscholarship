@@ -157,6 +157,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_marginStart="@dimen/_2sdp"
+                                    android:layout_marginLeft="@dimen/_2sdp"
                                     android:layout_marginTop="@dimen/_2sdp"
                                     android:inputType="textMultiLine"
                                     android:text="September Scholarship"
@@ -175,6 +176,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_marginStart="@dimen/_2sdp"
+                                    android:layout_marginLeft="@dimen/_2sdp"
                                     android:text="@string/score_msg"
                                     android:textColor="@color/auro_grey_color"
                                     android:textSize="@dimen/_10sdp"
@@ -225,6 +227,7 @@
                                 android:layout_width="@dimen/_90sdp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
                                 android:layout_marginTop="@dimen/_40sdp"
                                 android:visibility="visible">
 
@@ -263,7 +266,7 @@
                 android:layout_margin="@dimen/_15sdp"
                 android:background="@color/ufo_green"
                 android:contentDescription="@string/submit"
-                android:src="@drawable/ic_iconswhatsapps"
+                app:srcCompat="@drawable/ic_iconswhatsapps"
                 android:visibility="gone"
                 app:backgroundTint="@color/ufo_green"
                 app:layout_anchor="@id/swipe_refresh_layout"

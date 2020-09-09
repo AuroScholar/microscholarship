@@ -28,11 +28,11 @@ public class InviteItemViewHolder extends RecyclerView.ViewHolder {
 
 
         if (reminder == 0) {
-            binding.parentLayout.setBackgroundColor(binding.parentLayout.getContext().getColor(R.color.white));
+            binding.parentLayout.setBackgroundColor(binding.parentLayout.getContext().getResources().getColor(R.color.white));
             binding.checkbox.setChecked(true);
         } else {
             binding.checkbox.setChecked(false);
-            binding.parentLayout.setBackgroundColor(binding.parentLayout.getContext().getColor(R.color.item_bg_color));
+            binding.parentLayout.setBackgroundColor(binding.parentLayout.getContext().getResources().getColor(R.color.item_bg_color));
         }
         binding.nameText.setText(model.getStudentName());
         Glide.with(binding.profileImage.getContext())

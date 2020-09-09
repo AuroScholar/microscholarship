@@ -93,7 +93,9 @@ public class ScholarShipFragment extends Fragment {
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setPluginState(WebSettings.PluginState.ON);
-        webSettings.setMediaPlaybackRequiresUserGesture(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            webSettings.setMediaPlaybackRequiresUserGesture(false);
+        }
         binding.webView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
 
         webSettings.setAllowFileAccess(true);
@@ -225,7 +227,9 @@ public class ScholarShipFragment extends Fragment {
             mUploadMessage = null;
         }
       else {
-            binding.webView.evaluateJavascript("grantedPermission();", null);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                binding.webView.evaluateJavascript("grantedPermission();", null);
+            }
         }
     }
 
@@ -247,7 +251,10 @@ public class ScholarShipFragment extends Fragment {
 
         @Override
         public void onPermissionRequest(final PermissionRequest request) {
-            String[] requestedResources = request.getResources();
+            String[] requestedResources = new String[0];
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                requestedResources = request.getResources();
+            }
             ArrayList<String> permissions = new ArrayList<>();
             ArrayList<String> grantedPermissions = new ArrayList<String>();
             for (int i = 0; i < requestedResources.length; i++) {
@@ -271,11 +278,15 @@ public class ScholarShipFragment extends Fragment {
             }
 
             if (grantedPermissions.isEmpty()) {
-                request.deny();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    request.deny();
+                }
             } else {
                 String[] grantedPermissionsArray = new String[grantedPermissions.size()];
                 grantedPermissionsArray = grantedPermissions.toArray(grantedPermissionsArray);
-                request.grant(grantedPermissionsArray);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    request.grant(grantedPermissionsArray);
+                }
             }
         }
 

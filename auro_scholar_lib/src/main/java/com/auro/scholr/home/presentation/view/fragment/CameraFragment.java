@@ -348,11 +348,11 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
                         params = camera.getParameters();
                         if (!isFlash) {
                             params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-                            binding.flashToggle.setImageDrawable(getActivity().getDrawable(R.drawable.ic_flash_on_black));
+                            binding.flashToggle.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_flash_on_black));
                             isFlash = true;
                         } else {
                             params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-                            binding.flashToggle.setImageDrawable(getActivity().getDrawable(R.drawable.ic_flash_off_black));
+                            binding.flashToggle.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_flash_off_black));
                             isFlash = false;
                         }
                         camera.setParameters(params);

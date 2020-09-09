@@ -103,6 +103,7 @@
                             android:layout_gravity="center"
                             android:layout_margin="@dimen/_5sdp"
                             android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:background="@color/blue_color"
                             android:gravity="center"

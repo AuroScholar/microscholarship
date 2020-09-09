@@ -59,7 +59,7 @@
                 android:layout_height="@dimen/_20sdp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:src="@drawable/ic_auro_upload" />
+                app:srcCompat="@drawable/ic_auro_upload" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
