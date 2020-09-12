@@ -192,7 +192,7 @@ public class HomeUseCase {
 
     public boolean checkDemographicStatus(DashboardResModel dashboardResModel) {
         if (dashboardResModel != null && !TextUtil.isEmpty(dashboardResModel.getGender()) && !TextUtil.isEmpty(dashboardResModel.getSchool_type()) &&
-                !TextUtil.isEmpty(dashboardResModel.getBoard_type()) && !TextUtil.isEmpty(dashboardResModel.getLanguage()) && !TextUtil.isEmpty(dashboardResModel.getIsPrivateTution()) && !TextUtil.isEmpty(dashboardResModel.getPrivateTutionType())) {
+                !TextUtil.isEmpty(dashboardResModel.getBoard_type()) && !TextUtil.isEmpty(dashboardResModel.getLanguage()) && !TextUtil.isEmpty(dashboardResModel.getIsPrivateTution())) {
             return true;
         }
         return false;

@@ -27,7 +27,9 @@ import com.auro.scholr.payment.presentation.view.fragment.PaytmFragment;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.payment.presentation.view.fragment.UPIFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.SelectYourAppointmentDialogFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.SelectYourMessageDialogFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.TeacherInfoFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherKycFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherProfileFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherSaveDetailFragment;
@@ -83,11 +85,15 @@ public interface AppComponent {
 
     void doInjection(TeacherKycFragment fragment);
 
+    void doInjection(TeacherInfoFragment fragment);
+
     void doInjection(TeacherSaveDetailFragment fragment);
 
     void doInjection(SelectYourMessageDialogFragment dialog);
 
     void doInjection(TeacherProfileFragment fragment);
+
+    void doInjection(SelectYourAppointmentDialogFragment dialog);
 
     void doInjection(ConsgratuationLessScoreDialog dialog);
 

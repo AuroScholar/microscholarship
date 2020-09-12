@@ -31,7 +31,8 @@ public enum PaytmError {
     DE_015("DE_015", "Purpose not valid."),
     DE_016("DE_016", "Month not valid."),
     DE_017("DE_017", "Year not valid."),
-    DE_040("DE_040","Duplicate order id.");
+    DE_040("DE_040","Duplicate order id."),
+    DE_041("DE_041","Unable to process your request. Please try after some time");
 
 
     private final String value;

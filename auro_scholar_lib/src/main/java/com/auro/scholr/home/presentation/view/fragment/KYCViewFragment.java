@@ -208,8 +208,8 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
         } else if (v.getId() == R.id.bt_transfer_money) {
-            callNumber();
-           // openSendMoneyFragment();
+            //callNumber();
+            openSendMoneyFragment();
         } else if (v.getId() == R.id.wallet_info) {
             openTransactionFragment();
         }

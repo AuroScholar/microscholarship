@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="selectYourAppointmentDialogModel"
+      type="com.auro.scholr.teacher.presentation.viewmodel.SelectYourAppointmentDialogModel" />
+
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".teacher.presentation.view.fragment.SelectYourAppointmentDialogFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/constraintLayout3"
+      android:layout_width="@dimen/_280sdp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/border_selector_white"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+          android:id="@+id/txtSelect"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:text="@string/choose_your_slot"
+          android:textColor="@color/black"
+          android:textSize="@dimen/_20sdp"
+          app:Font="Poppins-Bold.ttf"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rvselect_message"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/txtSelect" />
+
+        <RelativeLayout
+          android:id="@+id/viewEmail"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          android:layout_margin="8dp"
+          app:layout_constraintTop_toBottomOf="@+id/rvselect_message">
+          <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email Address"
+            android:layout_toLeftOf="@+id/ivEmail"/>
+          <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivEmail"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_email_info"/>
+        </RelativeLayout>
+
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+          android:id="@+id/tvNoSlot"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:layout_margin="@dimen/_16sdp"
+          android:gravity="center"
+          android:text="No webinars are scheduled for this week, please try again later."
+          android:textColor="@color/colorPrimary"
+          android:textSize="@dimen/_16sdp"
+          android:visibility="gone"
+          app:Font="Poppins-Regular.ttf"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/viewEmail" />
+
+
+        <RelativeLayout
+          android:id="@+id/viewBook"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/_40sdp"
+          android:layout_marginLeft="@dimen/_20sdp"
+          android:layout_marginTop="@dimen/_20sdp"
+          android:layout_marginRight="@dimen/_20sdp"
+          android:background="@drawable/rectangle_backs"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.493"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/tvNoSlot">
+
+          <com.auro.scholr.core.util.uiwidget.RPTextView
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:text="@string/book_my_seat"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            app:Font="Poppins-Bold.ttf" />
+
+          <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:elevation="@dimen/_2sdp"
+            android:indeterminateDrawable="@drawable/circular_progress_white"
+            android:innerRadiusRatio="3"
+            android:paddingStart="@dimen/_20sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_20sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:visibility="gone" />
+
+
+        </RelativeLayout>
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+      android:id="@+id/close_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/close_button"
+
+      app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.97"
+      app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
+      app:layout_constraintTop_toTopOf="@+id/constraintLayout3" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

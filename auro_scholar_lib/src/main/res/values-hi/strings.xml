@@ -182,6 +182,7 @@
     <string name="uplaod">UPLOAD</string>
     <string name="save_changes">SAVE CHANGES</string>
     <string name="kyc_verification">KYC Verification</string>
+    <string name="teacher_info_title">Become an Auro Teacher</string>
 
     <string name="share_msg">Hey!\nI have just got Scholarship Cash on Scholr App, you can too!\nJust take a 10 min quiz and win.\nStart now - https://bit.ly/3en7pnQ</string>
     <string name="information">Information</string>
@@ -244,6 +245,7 @@
     <string name="taking_type">ट्युशन टाइप</string>
     <string name="payment_failed_error_msg">Payment Request Failed!. Please Try After SomeTime</string>
     <string name="requested_accepted">Request accepted</string>
+    <string name="getting_webinar_slots">Getting Webinar Slots</string>
 
     <string name="challenged_you">आपको चुनौती दी</string>
     <string name="book_free_tutoring_session">बुक फ्री ट्यूशन सत्र</string>

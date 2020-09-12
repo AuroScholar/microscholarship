@@ -490,8 +490,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
         } else if (v.getId() == R.id.bt_transfer_money) {
-            // openSendMoneyFragment();
-            callNumber();
+             openSendMoneyFragment();
+            //callNumber();
         } else if (v.getId() == R.id.wallet_info) {
             openTransactionFragment();
         }

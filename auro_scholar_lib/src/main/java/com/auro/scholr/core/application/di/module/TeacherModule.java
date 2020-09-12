@@ -1,13 +1,6 @@
 package com.auro.scholr.core.application.di.module;
 
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
-import com.auro.scholr.home.data.datasource.database.HomeDbDataSourceImp;
-import com.auro.scholr.home.data.datasource.remote.HomeRemoteApi;
-import com.auro.scholr.home.data.datasource.remote.HomeRemoteDataSourceImp;
-import com.auro.scholr.home.data.repository.HomeRepo;
-import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
-import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
-import com.auro.scholr.home.domain.usecase.HomeUseCase;
 import com.auro.scholr.teacher.data.datasource.database.TeacherDbDataSourceImp;
 import com.auro.scholr.teacher.data.datasource.remote.TeacherRemoteApi;
 import com.auro.scholr.teacher.data.datasource.remote.TeacherRemoteDataSourceImp;
@@ -84,6 +77,13 @@ public class TeacherModule {
 
     @Provides
     @Singleton
+    @Named("TeacherInfoFragment")
+    ViewModelFactory provideTeacherInfoFragmentViewModelFactory(TeacherUseCase teacherUseCase, TeacherDbUseCase teacherDbUseCase, TeacherRemoteUseCase teacherRemoteUseCase) {
+        return new ViewModelFactory(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
+    }
+
+    @Provides
+    @Singleton
     @Named("TeacherSaveDetailFragment")
     ViewModelFactory provideTeacherSaveDetailViewModelFactory(TeacherUseCase teacherUseCase, TeacherDbUseCase teacherDbUseCase, TeacherRemoteUseCase teacherRemoteUseCase) {
         return new ViewModelFactory(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
@@ -103,5 +103,11 @@ public class TeacherModule {
         return new ViewModelFactory(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
     }
 
+    @Provides
+    @Singleton
+    @Named("SelectYourAppointmentDialogFragment")
+    ViewModelFactory provideSelectYourAppointmentDialogModelFactory(TeacherUseCase teacherUseCase, TeacherDbUseCase teacherDbUseCase, TeacherRemoteUseCase teacherRemoteUseCase) {
+        return new ViewModelFactory(teacherUseCase, teacherDbUseCase, teacherRemoteUseCase);
+    }
 
 }

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+      android:id="@+id/viewLinear"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="horizontal"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <TextView
+        android:id="@+id/tvProgressNoOdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle_outline_progress"
+        android:textColor="#076190"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="36dp"
+        android:textStyle="bold" />
+
+      <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/iv_upper_line"
+          android:layout_width="8dp"
+          android:layout_height="match_parent"
+          android:layout_below="@+id/iv_circle_top"
+          android:layout_centerHorizontal="true"
+          android:paddingLeft="2dp"
+          android:paddingRight="2dp"
+          android:background="@drawable/teacher_progress_line"
+          android:layout_above="@+id/iv_circle"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/iv_circle"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          android:layout_alignParentBottom="true"
+          android:layout_centerVertical="true"
+          android:layout_centerHorizontal="true"
+          android:layout_marginEnd="8dp"
+          android:layout_marginTop="-2dp"
+          android:background="@drawable/teacher_progress_link"
+          android:padding="4dp" />
+
+
+      </RelativeLayout>
+
+      <TextView
+        android:id="@+id/tvProgressNoEven"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle_outline_progress"
+        android:textColor="#076190"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="36dp"
+        android:textStyle="bold" />
+
+
+      <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="left"
+        android:layout_marginTop="-8dp"
+        android:layout_marginStart="8dp">
+
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+          android:id="@+id/tvProgressTitle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="#181818"
+          app:Font="Poppins-Medium.ttf"
+          android:textSize="16dp" />
+
+        <LinearLayout
+          android:id="@+id/viewBook"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="@drawable/rounded_corner_fb"
+          android:backgroundTint="#43C70D">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            android:padding="@dimen/_4sdp"
+            android:text="Book Seat" />
+        </LinearLayout>
+      </LinearLayout>
+
+
+    </LinearLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

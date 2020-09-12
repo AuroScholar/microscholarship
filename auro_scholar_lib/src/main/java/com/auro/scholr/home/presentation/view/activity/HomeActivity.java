@@ -16,14 +16,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
+import com.auro.scholr.core.application.base_component.BaseActivity;
+import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.FragmentUtil;
@@ -31,24 +27,25 @@ import com.auro.scholr.core.common.OnItemClickListener;
 import com.auro.scholr.databinding.ActivityDashboardBinding;
 import com.auro.scholr.home.data.datasource.remote.HomeRemoteApi;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
-import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
-import com.auro.scholr.home.presentation.view.fragment.ScholarShipFragment;
 import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
-
-import com.auro.scholr.core.application.base_component.BaseActivity;
-import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.TeacherInfoFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherKycFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherProfileFragment;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.ViewUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 public class HomeActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -73,6 +70,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
     public static final int TEACHER_KYC_FRAGMENT = 05;
     public static final int TEACHER_DASHBOARD_FRAGMENT = 06;
     public static final int TEACHER_PROFILE_FRAGMENT = 07;
+    public static final int TEACHER_INFO_FRAGMENT = 8;
 
     String memberType;
     CommonCallBackListner commonCallBackListner;
@@ -187,6 +185,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
         switch (LISTING_ACTIVE_FRAGMENT) {
             case TEACHER_DASHBOARD_FRAGMENT:
             case TEACHER_KYC_FRAGMENT:
+            case TEACHER_INFO_FRAGMENT:
             case TEACHER_PROFILE_FRAGMENT:
                 dismissApplication();
                 break;
@@ -253,6 +252,9 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
         } else if (menuItem.getItemId() == R.id.action_kyc) {
             openFragment(new TeacherKycFragment());
             selectNavigationMenu(2);
+        } else if (menuItem.getItemId() == R.id.action_info) {
+            openFragment(new TeacherInfoFragment());
+            selectNavigationMenu(3);
         }
 
         return false;

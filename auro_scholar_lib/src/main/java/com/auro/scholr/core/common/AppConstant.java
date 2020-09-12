@@ -102,6 +102,8 @@ public interface AppConstant {
         String DD_MMM = "dd-MMM";
         String DD_MMMM_YYYY = "dd MMMM yyyy"; // 02 August 2019
         String dd_MMM_yyyy = "dd MMM, yyyy"; // 02 August 2019
+        String DD_MM_YY_HH_MM = "dd-MM-yy HH:mm";  // 01-11-2019
+        String DD_MMM_HH_MM_AA = "dd MMM, hh:mm aa";
         String YYYYMM = "yyyymm";
     }
 
@@ -199,6 +201,7 @@ public interface AppConstant {
 
     interface SENDING_DATA {
         String STUDENT_DATA = "STUDENT_DATA";
+        String APPOINTMENT_DATA = "APPOINTMENT_DATA";
     }
 
     interface SdkFragmentType {

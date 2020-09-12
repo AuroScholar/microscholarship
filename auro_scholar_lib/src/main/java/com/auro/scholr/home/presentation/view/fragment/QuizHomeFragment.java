@@ -159,6 +159,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         firebaseEventUtil = new FirebaseEventUtil(getContext());
         logparam = new HashMap<>();
 
+        logparam.put(getResources().getString(R.string.log_start_quiz), "true");
+        firebaseEventUtil.logEvent(getResources().getString(R.string.log_quiz_home_fragment_student), logparam);
+
         if (quizViewModel != null && quizViewModel.serviceLiveData().hasObservers()) {
             quizViewModel.serviceLiveData().removeObservers(this);
 
@@ -343,11 +346,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.GONE);
             binding.shimmerViewQuiz.setVisibility(View.VISIBLE);
+
             binding.shimmerViewQuiz.startShimmer();
         } else if (value == 1) {
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.VISIBLE);
             binding.customUiSnackbar.inviteParentLayout.setVisibility(View.VISIBLE);
+            binding.fab.setVisibility(View.VISIBLE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
             binding.shimmerViewQuiz.stopShimmer();
         } else {
@@ -357,6 +362,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             binding.shimmerViewQuiz.stopShimmer();
             binding.errorLayout.textError.setText(message);
             binding.customUiSnackbar.inviteParentLayout.setVisibility(View.GONE);
+            binding.fab.setVisibility(View.GONE);
             binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -403,8 +409,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     String path = data.getStringExtra(AppConstant.PROFILE_IMAGE_PATH);
                     azureImage(path);
                     openQuizTestFragment(dashboardResModel);
-                    logparam.put(getResources().getString(R.string.log_start_quiz), "true");
-                    firebaseEventUtil.logEvent(getResources().getString(R.string.log_quiz_home_fragment_student), logparam);
+
                     // loadImageFromStorage(path);
                 } catch (Exception e) {
 

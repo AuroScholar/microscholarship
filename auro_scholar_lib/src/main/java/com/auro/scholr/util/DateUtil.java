@@ -5,13 +5,9 @@ import com.auro.scholr.core.common.AppConstant;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Locale;
 
 public class DateUtil {
@@ -113,6 +109,11 @@ public class DateUtil {
                 break;
 
             case AppConstant.DateFormats.dd_MMM_yyyy:
+
+                formatDate = getStringFormatDate(date, comingSdf, returnSdf);
+
+                break;
+            case AppConstant.DateFormats.DD_MMM_HH_MM_AA:
 
                 formatDate = getStringFormatDate(date, comingSdf, returnSdf);
 

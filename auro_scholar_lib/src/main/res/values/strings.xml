@@ -50,7 +50,7 @@
     <string name="new_quiz_will_be_available_next_month">New quiz will be available next month!</string>
     <string name="document_all_four_error_msg">Please select the all four document first</string>
     <string name="question_bank_powered_by_cambridge">Question bank powered by Cambridge</string>
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_auro">Privacy Policy</string>
     <string name="permission_error_msg">For taking the quiz camera permission is must.</string>
     <string name="permission_contact_error_msg">For taking the quiz contact permission is must.</string>
     <string name="complete_the_previous_quiz_to_unlock">Complete the previous quiz to unlock</string>
@@ -206,6 +206,7 @@
     <string name="uplaod">UPLOAD</string>
     <string name="save_changes">SAVE CHANGES</string>
     <string name="kyc_verification">KYC Verification</string>
+    <string name="teacher_info_title">Become an Auro Teacher</string>
 
     <string name="share_msg">Hey!\nI have just got Scholarship Cash on Scholr App, you can too!\nJust take a 10 min quiz and win.\nStart now - https://bit.ly/3en7pnQ</string>
     <string name="information">Information</string>
@@ -234,7 +235,7 @@
     <string name="log_whatapplink_teacher">whatapplink_teacher</string>
     <string name="log_link_teacher">link_teacher</string>
     <string name="log_click_on_whatapp_student">click_on_whatapp_student</string>
-    <string name="log_quiz_home_fragment_student">quiz_home_fragment_student</string>
+    <string name="log_quiz_home_fragment_student">Total_Subject_Page_Student</string>
     <string name="log_start_quiz">start_quiz_student</string>
     <string name="log_click_add_kyc_student">click_add_kyc_student</string>
     <string name="log_friend_leader_board_student">friend_leader_board_student</string>
@@ -249,6 +250,12 @@
     <string name="pref_tutorial">tutorial</string>
 
     <string name="address_not_found">Address not found</string>
+    <string name="choose_your_slot">Choose Your Slot</string>
+    <string name="book_my_seat">Book My Seat</string>
+    <string name="select_single_slot">Select at least single slot.</string>
+    <string name="getting_webinar_slots">Getting Webinar\nSlots</string>
+    <string name="tutorial_video_info">Tutorial video</string>
+    <string name="on_step_info">Steps to be become an AuroScholar Teacher</string>
 
     <string name="retake_quiz">Retake Quiz</string>
     <string name="auro_scholar_wallet">You have got ₹50 Scholarship in your\nAuro Scholar Wallet!</string>
@@ -294,5 +301,6 @@
     <string name="payment_failed_error_msg">Payment Request Failed!. Please Try After SomeTime</string>
     <string name="requested_accepted">Request accepted</string>
     <string name="ok">OK</string>
+
 
 </resources>
