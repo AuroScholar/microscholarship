@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,20 +147,32 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
             }
             binding.childLayout.setAlpha(1);
             binding.icLockImg.setVisibility(View.GONE);
-            if (position == 1 && list.get(0).getAttempt() == 0) {
-                binding.childLayout.setAlpha(0.25f);
-                binding.icLockImg.setVisibility(View.VISIBLE);
-                binding.levelFour.nextQuizLayout.setVisibility(View.GONE);
-            } else if (position == 2 && list.get(1).getAttempt() == 0) {
-                binding.childLayout.setAlpha(0.25f);
-                binding.icLockImg.setVisibility(View.VISIBLE);
-                binding.levelFour.nextQuizLayout.setVisibility(View.GONE);
-            }
-            if (list.size() - 1 == position) {
-                binding.viewLeftTwo.setVisibility(View.GONE);
+            for (int i = 1; i < list.size(); i++) {
+                if (position == i && (list.get(i - 1).getAttempt() == 0)) {
+                    binding.childLayout.setAlpha(0.25f);
+                    binding.icLockImg.setVisibility(View.VISIBLE);
+                    binding.levelFour.nextQuizLayout.setVisibility(View.GONE);
+                } else {
+                    binding.viewLeftTwo.setVisibility(View.GONE);
+                }
+
             }
 
-          /* Timer timer = new Timer();
+          /*
+           if (position == 1 && list.get(0).getAttempt() == 0) {
+                    binding.childLayout.setAlpha(0.25f);
+                    binding.icLockImg.setVisibility(View.VISIBLE);
+                    binding.levelFour.nextQuizLayout.setVisibility(View.GONE);
+                } else if (position == 2 && list.get(1).getAttempt() == 0) {
+                    binding.childLayout.setAlpha(0.25f);
+                    binding.icLockImg.setVisibility(View.VISIBLE);
+                    binding.levelFour.nextQuizLayout.setVisibility(View.GONE);
+                }
+                if (list.size() - 1 == position) {
+                    binding.viewLeftTwo.setVisibility(View.GONE);
+                }
+
+          Timer timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {

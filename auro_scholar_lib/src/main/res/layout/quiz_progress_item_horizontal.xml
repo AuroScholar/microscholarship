@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_score_points"
                     android:gravity="center"
-                    android:text="Score"
+                    android:text="@string/score"
                     android:layout_marginTop="@dimen/_minus5sdp"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/white"
@@ -115,6 +115,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_8sdp"
             android:visibility="visible"
+            android:maxLines="4"
             app:Font="Poppins-Regular.ttf"
             app:layout_constraintBottom_toTopOf="@+id/level_two"
             app:layout_constraintStart_toEndOf="@+id/level_one" />

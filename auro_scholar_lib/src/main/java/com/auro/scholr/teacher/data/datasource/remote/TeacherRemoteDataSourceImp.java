@@ -50,6 +50,13 @@ public class TeacherRemoteDataSourceImp implements TeacherRepo.TeacherRemoteData
     }
 
     @Override
+    public Single<Response<JsonObject>> getTeacherProgressApi(String mobileNumber) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.MOBILE_NUMBER, mobileNumber);
+        return teacherRemoteApi.getTeacherProgressApi(params);
+    }
+
+    @Override
     public Single<Response<JsonObject>> getProfileTeacherApi(String mobileNumber) {
         Map<String, String> params = new HashMap<String, String>();
         params.put(AppConstant.MOBILE_NUMBER, mobileNumber);
@@ -81,5 +88,14 @@ public class TeacherRemoteDataSourceImp implements TeacherRepo.TeacherRemoteData
         return teacherRemoteApi.sendInviteNotificationApi(params);
     }
 
+    @Override
+    public Single<Response<JsonObject>> getZohoAppointments() {
+        return teacherRemoteApi.getZohoAppointments();
+    }
+
+    @Override
+    public Single<Response<JsonObject>> bookZohoAppointments(String from_time, String name, String email, String phone_number) {
+        return teacherRemoteApi.bookZohoAppointments(from_time,name,email,phone_number);
+    }
 
 }

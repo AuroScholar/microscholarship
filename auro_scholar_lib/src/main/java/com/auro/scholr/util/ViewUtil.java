@@ -228,12 +228,12 @@ public class ViewUtil {
     }
 
     public static Resources getCustomResource( Activity activity) {
-        Locale locale = new Locale(getLanguage());
+       // Locale locale = new Locale(getLanguage());
         Resources standardResources = activity.getResources();
         AssetManager assets = standardResources.getAssets();
         DisplayMetrics metrics = standardResources.getDisplayMetrics();
         Configuration config = new Configuration(standardResources.getConfiguration());
-        config.locale = locale;
+        config.locale =Locale.getDefault();
         Resources res = new Resources(assets, metrics, config);
         return res;
     }

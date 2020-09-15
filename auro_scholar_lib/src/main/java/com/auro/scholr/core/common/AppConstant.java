@@ -102,6 +102,9 @@ public interface AppConstant {
         String DD_MMM = "dd-MMM";
         String DD_MMMM_YYYY = "dd MMMM yyyy"; // 02 August 2019
         String dd_MMM_yyyy = "dd MMM, yyyy"; // 02 August 2019
+        String DD_MM_YY_HH_MM = "dd-MM-yy HH:mm";  // 01-11-2019
+        String DD_MMM_HH_MM_AA = "dd MMM, hh:mm aa";
+        String YYYYMM = "yyyymm";
     }
 
     interface DocumentType {
@@ -187,7 +190,7 @@ public interface AppConstant {
         String QUIZ_ATTEMPT = "quiz_attempt";
         String EKLAVVYA_EXAM_ID = "eklavvya_exam_id";
         String EXAM_FACE_IMG = "exam_face_img";
-        String SUBJECT="subject";
+        String SUBJECT = "subject";
     }
 
 
@@ -198,6 +201,7 @@ public interface AppConstant {
 
     interface SENDING_DATA {
         String STUDENT_DATA = "STUDENT_DATA";
+        String APPOINTMENT_DATA = "APPOINTMENT_DATA";
     }
 
     interface SdkFragmentType {
@@ -226,5 +230,56 @@ public interface AppConstant {
 
     interface Source {
         String QUIZ_DASHBOARD_FRAGMENT = "QUIZ_DASHBOARD_FRAGMENT";
+    }
+
+    interface paytmApiParam {
+        String RECEIVER_MOBILE_NUMBER = "mobile_no";
+        String RECEIVER_DISBURSEMENT_MONTH = "disbursement_month";
+        String RECEIVER_DISBURSEMENT = "disbursement";
+        String RECEIVER_PURPOSE = "purpose";
+        String BENEFICIARY_MOBILE_NUMBER = "beneficiarymobileno";
+        String BENEFICIARY_NAME = "beneficiaryname";
+
+    }
+
+    interface paytmAccountTransferParam {
+        String RECEIVER_MOBILE_NUMBER = "mobile_no";
+        String RECEIVER_DISBURSEMENT_MONTH = "disbursement_month";
+        String RECEIVER_DISBURSEMENT = "disbursement";
+        String RECEIVER_PURPOSE = "purpose";
+        String RECEIVER_BANKACCOUNT_NO = "bankaccountno";
+        String RECEIVER_IFSCCODE = "ifsccode";
+    }
+
+    interface paytmUPITransfer {
+        String RECEIVER_MOBILE_NUMBER = "mobile_no";
+        String RECEIVER_UPI_ADDRESS = "upiaddress";
+        String RECEIVER_DISBURSEMENT_MONTH = "disbursement_month";
+        String RECEIVER_DISBURSEMENT = "disbursement";
+        String RECEIVER_PURPOSE = "purpose";
+    }
+
+    interface ifscCode {
+        String EMPTYSTRING = "Please Enter IFSC Code";
+        String VALISDIFSCCODE = "Please Enter valid IFSC Code";
+        String VALID = "";
+    }
+
+    interface bankAccountNumber {
+        String EMPTYSTRING = "Please Enter Bank Account Number";
+        String VALIDACCOUNTNUMBER = "Plase Enter Valid Account Number";
+        String VALIDCONFIRMACCOUNTNUMBER = "Plase Enter Valid Confirm Account Number";
+        String VALID = "";
+        String BANKACCOUNTMATCH = "Account Number Mismatch";
+    }
+
+    interface phoneNumber {
+        String EMPTYSTRING = "Please Enter Phone Number";
+        String VALIDPHONENUMBER = "Plase Enter Valid Phone Number";
+        String VALID = "";
+    }
+
+    interface PaytmResponseCode {
+        String DE_002 = "DE_002";
     }
 }

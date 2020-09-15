@@ -23,5 +23,18 @@ public interface PaymentRemoteApi {
     @FormUrlEncoded
     Single<Response<JsonObject>> getDashboardData(@FieldMap Map<String, String> params);
 
+    @POST(URLConstant.PAYTM_API)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> paytmWithdrawalApi(@FieldMap Map<String,String> params);
+
+    @POST(URLConstant.PAYTM_UPI_TRANSFER)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> paytmUpiTransferApi(@FieldMap Map<String,String> params);
+
+    @POST(URLConstant.PAYTM_ACCOUNT_TRANSFRER)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> paytmAccountTransferApi(@FieldMap Map<String,String> params);
+
+
 
 }

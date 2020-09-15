@@ -92,6 +92,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     BottomNavigationView toolbar;
     FancyShowCaseView btnprofile;
     FancyShowCaseView btnKycapp;
+    FancyShowCaseView btnInfotutorial;
 
 
     @Override
@@ -459,18 +460,31 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                     }
                 })
                 .build();
+        btnInfotutorial = new FancyShowCaseView.Builder(getActivity())
+                .focusOn(toolbar.findViewById(R.id.action_info))
+                .focusShape(FocusShape.CIRCLE)
+                .customView(R.layout.tutorial_my_class_facebook_layout, new OnViewInflateListener() {
+                    @Override
+                    public void onViewInflated(View view) {
+                        setAnimatedContent(view, btnInfotutorial);
+                    }
+                })
+                .build();
         queue.add(btnfacebook);
         queue.add(btnprofile);
         queue.add(btnKycapp);
+        queue.add(btnInfotutorial);
         queue.show();
     }
     public void setAnimatedContent(View view,FancyShowCaseView fancyShowCaseView){
         TextView link = view.findViewById(R.id.descFb);
         TextView profile = view.findViewById(R.id.tutorial_profile);
         TextView kyc =view.findViewById(R.id.tutorial_kyc);
+        TextView info = view.findViewById(R.id.tutorial_info);
         LinearLayout layoutinvite = view.findViewById(R.id.llayoutinvite);
         LinearLayout layoutprofile = view.findViewById(R.id.layoutProfile);
         LinearLayout layoutkyc = view.findViewById(R.id.layoutkyc);
+        LinearLayout layoutinfo = view.findViewById(R.id.layoutinfo);
         if (fancyShowCaseView == btnfacebook) {
             link.setVisibility(View.VISIBLE);
             layoutinvite.setVisibility(View.VISIBLE);
@@ -490,6 +504,16 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             layoutkyc.setVisibility(View.VISIBLE);
             kyc.setVisibility(View.VISIBLE);
             kyc.setText(getResources().getString(R.string.tutorial_kyc));
+        }else if(fancyShowCaseView == btnInfotutorial){
+            link.setVisibility(View.GONE);
+            profile.setVisibility(View.GONE);
+            layoutprofile.setVisibility(View.GONE);
+            layoutprofile.setVisibility(View.GONE);
+            layoutinvite.setVisibility(View.GONE);
+            layoutkyc.setVisibility(View.GONE);
+            info.setVisibility(View.VISIBLE);
+            layoutinfo.setVisibility(View.VISIBLE);
+            info.setText(getResources().getString(R.string.on_step_info));
         }
 
     }
