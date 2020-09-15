@@ -301,6 +301,9 @@
     <string name="payment_failed_error_msg">Payment Request Failed!. Please Try After SomeTime</string>
     <string name="requested_accepted">Request accepted</string>
     <string name="ok">OK</string>
+    <string name="navigation_header">Navigation header</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Close</string>
 
 
 </resources>

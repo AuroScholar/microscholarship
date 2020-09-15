@@ -3,6 +3,7 @@ package com.auro.scholr.home.presentation.view.fragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,8 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -80,6 +84,7 @@ import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -99,7 +104,7 @@ import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 
 
-public class QuizHomeFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner, SwipeRefreshLayout.OnRefreshListener {
+public class QuizHomeFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner, SwipeRefreshLayout.OnRefreshListener, NavigationView.OnNavigationItemSelectedListener {
 
     @Inject
     @Named("QuizHomeFragment")
@@ -184,21 +189,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         Glide.with(this).load(R.raw.anima).into(binding.customUiSnackbar.gifview);
         openToolTip();
 
-        //PRADEEP
-        DataModel[] drawerItem = new DataModel[3];
+        //navigation drawerToggle
+        mDrawerToggle = new ActionBarDrawerToggle(
+                getActivity(), binding.drawerLayout, R.string.drawer_open,R.string.drawer_close);
 
-        drawerItem[0] = new DataModel(R.drawable.connect, "Connect");
-        drawerItem[1] = new DataModel(R.drawable.fixtures, "Fixtures");
-        drawerItem[2] = new DataModel(R.drawable.table, "Table");
-
-
-        DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(getContext(), R.layout.list_view_item_row, drawerItem);
-        binding.leftDrawer.setAdapter(adapter);
-        binding.leftDrawer.setOnItemClickListener(new DrawerItemClickListener());
-      //  mDrawerLayout = (DrawerLayout)rootView.findViewById(R.id.drawer_layout);
-        binding.drawerLayout.setDrawerListener(mDrawerToggle);
-        swipe();
-
+        // Where do I put this?
+        mDrawerToggle.syncState();
         //PRADEEP
 
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
@@ -219,6 +215,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.toolbarLayout.langEng.setOnClickListener(this);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.customUiSnackbar.btInvite.setOnClickListener(this);
+        binding.navView.setNavigationItemSelectedListener(this);
+        binding.navView.setItemIconTintList(null);
         binding.customUiSnackbar.inviteParentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -266,7 +264,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void setDataOnUI() {
-        binding.toolbarLayout.backArrow.setVisibility(View.GONE);
+        binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
         AppLogger.e("chhonker", DateUtil.getMonthName());
         if (!TextUtil.isEmpty(DateUtil.getMonthName())) {
             binding.getScholarshipText.setText(DateUtil.getMonthName() + " " + getActivity().getResources().getString(R.string.scholarship));
@@ -530,7 +528,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else if (v.getId() == R.id.bt_upload_all) {
             openFriendLeaderBoardFragment();
         } else if (v.getId() == R.id.back_arrow) {
-            getActivity().getSupportFragmentManager().popBackStack();
+           // getActivity().getSupportFragmentManager().popBackStack();
+            //pradeep wait
+            binding.drawerLayout.openDrawer(Gravity.LEFT);
         } else if (v.getId() == R.id.bt_invite) {
             openFriendLeaderBoardFragment();
         } else if (v.getId() == R.id.fab) {
@@ -883,45 +883,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     }
 
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-            selectItem(position);
-        }
-    }
-
-    private void selectItem(int position) {
-
-        Fragment fragment = null;
-
-        switch (position) {
-            case 0:
-                fragment = new ConnectFragment();
-                break;
-            case 1:
-                fragment = new FixturesFragment();
-                break;
-            case 2:
-                fragment = new TableFragment();
-                break;
-
-            default:
-                break;
-        }
-
-        if (fragment != null) {
-            FragmentManager fragmentManager = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-            binding.leftDrawer.setItemChecked(position, true);
-            binding.leftDrawer.setSelection(position);
-            //  setTitle(mNavigationDrawerItemTitles[position]);
-            binding.drawerLayout.closeDrawer(binding.leftDrawer);
-
-        } else {
-            Log.e("MainFragment", "Error in creating fragment");
-        }
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -930,41 +895,43 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    public void swipe(){
-        binding.drawerLayout.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
+        switch (item.getItemId()) {
 
 
-            @Override
-            public void onSwipeRight() {
-                super.onSwipeRight();
-                 binding.drawerLayout.openDrawer(Gravity.LEFT);
-                //Toast.makeText(getActivity(), "onSwipeRight", Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onSwipeLeft() {
-                super.onSwipeLeft();
-                 binding.drawerLayout.closeDrawer(Gravity.RIGHT);
-               // Toast.makeText(getActivity(), "onSwipeLeft", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-/*
-    private void setDummyImagePath()
-    {
-        Bitmap picBitmap = BitmapFactory.decodeFile(R.drawable.auro_blue_strip);
-        byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
-        long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
-        if (mb > 1.5) {
-            assignmentReqModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
-        } else {
-            assignmentReqModel.setImageBytes(bytes);
+            default:
+                return super.onOptionsItemSelected(item);
         }
-    }*/
+       // return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.nav_kyc) {
+            if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+                openKYCViewFragment(dashboardResModel);
+            } else {
+                openKYCFragment(dashboardResModel);
+            }
+        } else if (id == R.id.nav_friends_leaderboard) {
+            openFriendLeaderBoardFragment();
+        } else if (id == R.id.nav_payment_info) {
+            openTransactionFragment();
+        } else if (id == R.id.nav_privacy) {
+            openFragment(new PrivacyPolicyFragment());
+        }
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+
+    }
+    private void openTransactionFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        TransactionsFragment fragment = new TransactionsFragment();
+        fragment.setArguments(bundle);
+        openFragment(fragment);
+    }
+
 }
