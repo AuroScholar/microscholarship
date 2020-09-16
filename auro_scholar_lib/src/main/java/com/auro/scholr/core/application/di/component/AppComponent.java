@@ -12,7 +12,9 @@ import com.auro.scholr.home.presentation.view.fragment.CongratulationsDialog;
 import com.auro.scholr.home.presentation.view.fragment.ConsgratuationLessScoreDialog;
 import com.auro.scholr.home.presentation.view.fragment.DemographicFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsInviteBoardFragment;
+import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardAddFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardFragment;
+import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardListFragment;
 import com.auro.scholr.home.presentation.view.fragment.InviteFriendDialog;
 import com.auro.scholr.home.presentation.view.fragment.KYCFragment;
 import com.auro.scholr.home.presentation.view.fragment.KYCViewFragment;
@@ -76,6 +78,10 @@ public interface AppComponent {
     void doInjection(FriendsInviteBoardFragment friendsInviteBoardFragment);
 
     void doInjection(FriendsLeaderBoardFragment friendsLeaderBoardFragment);
+
+    void doInjection(FriendsLeaderBoardAddFragment friendsLeaderBoardAddFragment);
+
+    void doInjection(FriendsLeaderBoardListFragment friendsLeaderBoardListFragment);
 
     void doInjection(InviteFriendDialog inviteFriendDialog);
 

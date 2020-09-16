@@ -5,9 +5,9 @@ public interface URLConstant {
     String BASE_URL = "https://auroscholar.com/api/"; // PRODUCTION
     //String BASE_URL = "http://demo.auroscholar.com/api/";  // SIT
 
-   // String ZOHO_BASE_URL = "https://auroscholar.com/api/";
+    // String ZOHO_BASE_URL = "https://auroscholar.com/api/";
 
-   // String DASHBOARD_API = BASE_URL + "dashboard.php";
+    // String DASHBOARD_API = BASE_URL + "dashboard.php";
 
     String DASHBOARD_API = BASE_URL + "dashboard_multiple.php";
 
@@ -15,12 +15,12 @@ public interface URLConstant {
 
     String DEMOGRAPHIC_API = BASE_URL + "demographics.php";
 
-   // String AZURE_API = BASE_URL + "faceimg.php";
+    // String AZURE_API = BASE_URL + "faceimg.php";
 
     String AZURE_API = BASE_URL + "faceimg_multiple.php";
 
     String UPLOAD_IMAGE_URL = BASE_URL + "kyc.php";
-   // String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction.php ";
+    // String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction.php ";
     String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction_multiple.php";
     String TEST_URL = "https://assessment.eklavvya.com/exam/StartExam?";
     String PRIVACY_POLICY = "https://auroscholar.com/privacy_policy.php";
@@ -48,6 +48,14 @@ public interface URLConstant {
 
     String PAYTM_UPI_TRANSFER = BASE_URL + "paytm_upi_transfer.php";
 
-    String  PAYTM_ACCOUNT_TRANSFRER = BASE_URL + "paytm_account_transfer.php";
+    String PAYTM_ACCOUNT_TRANSFRER = BASE_URL + "paytm_account_transfer.php";
+
+    String FIND_FRIEND_API = BASE_URL + "find_friend.php";
+
+    String SEND_FRIEND_REQUEST_API = BASE_URL + "friend_request.php";
+
+    String FRIEND_REQUEST_LIST_API = BASE_URL + "friend_request_list.php";
+
+    String FRIEND_ACCEPT_API = BASE_URL + "friend_accepted.php";
 
 }
