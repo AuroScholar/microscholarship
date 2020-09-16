@@ -100,7 +100,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     DashboardResModel dashboardResModel;
     QuizResModel quizResModel;
     QuizWonAdapter quizWonAdapter;
-   // Resources resources;
+    // Resources resources;
     boolean isStateRestore;
     AssignmentReqModel assignmentReqModel;
     CustomDialog customDialog;
@@ -126,7 +126,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         quizViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setQuizViewModel(quizViewModel);
-       // resources = ViewUtil.getCustomResource(getActivity());
+        // resources = ViewUtil.getCustomResource(getActivity());
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null && TextUtil.isEmpty(prefModel.getUserLanguage())) {
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
@@ -289,6 +289,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(1, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
+                        AppUtil.setDashboardResModelToPref(dashboardResModel);
                         //setPrefForTesting();
                         if (!dashboardResModel.isError()) {
                             checkStatusforCongratulationDialog();
@@ -865,4 +866,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             assignmentReqModel.setImageBytes(bytes);
         }
     }*/
+
+
 }

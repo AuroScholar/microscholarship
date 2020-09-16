@@ -16,6 +16,9 @@ import androidx.annotation.NonNull;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
+import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 
 import org.json.JSONObject;
@@ -101,7 +104,7 @@ public class AppUtil {
         return byteArray;
     }
 
-    public static long  bytesIntoHumanReadable(long bytes) {
+    public static long bytesIntoHumanReadable(long bytes) {
         long kilobyte = 1024;
         long megabyte = kilobyte * 1024;
         long gigabyte = megabyte * 1024;
@@ -109,5 +112,15 @@ public class AppUtil {
 
         return (bytes / megabyte);
     }
+
+
+    public static void setDashboardResModelToPref(DashboardResModel dashboardResModel) {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        prefModel.setDashboardResModel(dashboardResModel);
+        AppPref.INSTANCE.setPref(prefModel);
+
+
+    }
+
 
 }
