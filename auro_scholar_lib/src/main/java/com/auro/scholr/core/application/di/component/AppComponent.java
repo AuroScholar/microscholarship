@@ -11,6 +11,7 @@ import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.fragment.CongratulationsDialog;
 import com.auro.scholr.home.presentation.view.fragment.ConsgratuationLessScoreDialog;
 import com.auro.scholr.home.presentation.view.fragment.DemographicFragment;
+import com.auro.scholr.home.presentation.view.fragment.FriendRequestListDialogFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsInviteBoardFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardAddFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardFragment;
@@ -104,4 +105,6 @@ public interface AppComponent {
     void doInjection(ConsgratuationLessScoreDialog dialog);
 
     void doInjection(QuizHomeNewFragment fragment);
+
+    void doInjection(FriendRequestListDialogFragment fragment);
 }

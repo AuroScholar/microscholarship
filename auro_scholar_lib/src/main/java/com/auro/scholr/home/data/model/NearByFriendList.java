@@ -13,6 +13,9 @@ public class NearByFriendList {
     @Expose
     @SerializedName("error")
     private boolean error;
+    @Expose
+    @SerializedName("message")
+    private String message;
 
     public List<Student> getStudent() {
         return student;
@@ -41,6 +44,14 @@ public class NearByFriendList {
     @Expose
     @SerializedName("status")
     private String status;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public static class Student {
         @Expose

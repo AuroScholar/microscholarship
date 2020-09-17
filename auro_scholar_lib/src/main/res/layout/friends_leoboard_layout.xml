@@ -74,7 +74,7 @@
               <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/friend_bg_img_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_200sdp"
+                android:layout_height="@dimen/_210sdp"
                 android:background="@drawable/friend_background"
                 app:layout_constraintTop_toTopOf="parent">
 

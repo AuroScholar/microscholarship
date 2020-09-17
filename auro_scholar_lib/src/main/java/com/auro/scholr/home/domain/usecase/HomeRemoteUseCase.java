@@ -148,9 +148,9 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         });
     }
 
-    public Single<ResponseApi> friendRequestListApi(int requested_by_id) {
+    public Single<ResponseApi> friendRequestListApi(int requested_user_id) {
 
-        return dashboardRemoteData.friendRequestListApi(requested_by_id).map(new Function<Response<JsonObject>, ResponseApi>() {
+        return dashboardRemoteData.friendRequestListApi(requested_user_id).map(new Function<Response<JsonObject>, ResponseApi>() {
             @Override
             public ResponseApi apply(Response<JsonObject> response) throws Exception {
 
@@ -166,9 +166,9 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         });
     }
 
-    public Single<ResponseApi> acceptInviteApi(int friend_request_id, String request_status) {
+    public Single<ResponseApi> friendAcceptApi(int friend_request_id, String request_status) {
 
-        return dashboardRemoteData.acceptInviteApi(friend_request_id,request_status).map(new Function<Response<JsonObject>, ResponseApi>() {
+        return dashboardRemoteData.friendAcceptApi(friend_request_id,request_status).map(new Function<Response<JsonObject>, ResponseApi>() {
             @Override
             public ResponseApi apply(Response<JsonObject> response) throws Exception {
 

@@ -48,6 +48,8 @@ public enum Status {
     SEND_INVITE_API,
     SEND_INVITE_CLICK,
     WEBINAR_CLICK,
+    REQUEST_ACCEPT,
+    REQUEST_DECLINE,
 
 
     NEXT_QUIZ_CLICK,

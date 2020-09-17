@@ -38,7 +38,7 @@ public interface HomeRepo {
 
         Single<Response<JsonObject>> friendRequestListApi(int requested_by_id);
 
-        Single<Response<JsonObject>> acceptInviteApi(int friend_request_id, String request_status);
+        Single<Response<JsonObject>> friendAcceptApi(int friend_request_id, String request_status);
 
     }
 

@@ -58,6 +58,7 @@
               android:textColor="@color/grey_color"
               android:textSize="@dimen/_12sdp"
               android:textStyle="normal"
+              android:visibility="gone"
               app:Font="Poppins-Regular.ttf" />
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
@@ -84,7 +85,8 @@
               android:id="@+id/tvAccept"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_margin="4dp"
+              android:layout_margin="8dp"
+              app:Font="Poppins-SemiBold.ttf"
               android:textColor="@color/colorPrimary"
               android:text="Accept"
               />
@@ -93,7 +95,8 @@
               android:id="@+id/tvDecline"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_margin="4dp"
+              android:layout_margin="8dp"
+              app:Font="Poppins-SemiBold.ttf"
               android:textColor="@color/black"
               android:text="Ignore" />
         </LinearLayout>

@@ -158,16 +158,16 @@ public class FriendsLeaderShipViewModel extends ViewModel {
             if (hasInternet) {
                 sendFriendRequestApi(requested_by_id,requested_user_id);
             } else {
-                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.FIND_FRIEND_DATA));
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.SEND_FRIENDS_REQUEST));
             }
         });
         getCompositeDisposable().add(disposable);
     }
 
-    public void friendRequestListData(int requested_by_id) {
+    public void friendRequestListData(int requested_user_id) {
         Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
             if (hasInternet) {
-                friendRequestListApi(requested_by_id);
+                friendRequestListApi(requested_user_id);
             } else {
                 serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.FIND_FRIEND_DATA));
             }
@@ -175,12 +175,12 @@ public class FriendsLeaderShipViewModel extends ViewModel {
         getCompositeDisposable().add(disposable);
     }
 
-    public void acceptInviteData(int friend_request_id, String request_status) {
+    public void friendAcceptData(int friend_request_id, String request_status) {
         Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
             if (hasInternet) {
-                acceptInviteApi(friend_request_id,request_status);
+                friendAcceptApi(friend_request_id,request_status);
             } else {
-                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.FIND_FRIEND_DATA));
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.ACCEPT_INVITE_REQUEST));
             }
         });
         getCompositeDisposable().add(disposable);
@@ -259,13 +259,13 @@ public class FriendsLeaderShipViewModel extends ViewModel {
                                              ));
     }
 
-    private void friendRequestListApi(int requested_by_id) {
-        getCompositeDisposable().add(homeRemoteUseCase.friendRequestListApi(requested_by_id).subscribeOn(Schedulers.io())
+    private void friendRequestListApi(int requested_user_id) {
+        getCompositeDisposable().add(homeRemoteUseCase.friendRequestListApi(requested_user_id).subscribeOn(Schedulers.io())
                                              .observeOn(AndroidSchedulers.mainThread())
                                              .doOnSubscribe(new Consumer<Disposable>() {
                                                  @Override
                                                  public void accept(Disposable disposable) throws Exception {
-                                                     serviceLiveData.setValue(ResponseApi.loading(Status.SEND_FRIENDS_REQUEST));
+                                                     serviceLiveData.setValue(ResponseApi.loading(Status.FRIENDS_REQUEST_LIST));
                                                  }
                                              })
                                              .subscribe(
@@ -284,13 +284,13 @@ public class FriendsLeaderShipViewModel extends ViewModel {
                                              ));
     }
 
-    private void acceptInviteApi(int friend_request_id, String request_status){
-        getCompositeDisposable().add(homeRemoteUseCase.acceptInviteApi(friend_request_id,request_status).subscribeOn(Schedulers.io())
+    private void friendAcceptApi(int friend_request_id, String request_status){
+        getCompositeDisposable().add(homeRemoteUseCase.friendAcceptApi(friend_request_id,request_status).subscribeOn(Schedulers.io())
                                              .observeOn(AndroidSchedulers.mainThread())
                                              .doOnSubscribe(new Consumer<Disposable>() {
                                                  @Override
                                                  public void accept(Disposable disposable) throws Exception {
-                                                     serviceLiveData.setValue(ResponseApi.loading(Status.SEND_FRIENDS_REQUEST));
+                                                     serviceLiveData.setValue(ResponseApi.loading(Status.ACCEPT_INVITE_REQUEST));
                                                  }
                                              })
                                              .subscribe(

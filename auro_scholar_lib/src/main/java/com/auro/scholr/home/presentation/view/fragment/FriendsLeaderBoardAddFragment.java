@@ -25,6 +25,7 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.FriendsLeoboardAddLayoutBinding;
+import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.NearByFriendList;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
 import com.auro.scholr.util.AppLogger;
@@ -63,6 +64,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import static com.auro.scholr.core.common.Status.FIND_FRIEND_DATA;
+import static com.auro.scholr.core.common.Status.SEND_FRIENDS_REQUEST;
 import static com.auro.scholr.util.permission.LocationHandler.REQUEST_CHECK_SETTINGS_GPS;
 
 public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner, GoogleMap.OnCameraIdleListener {
@@ -175,6 +177,10 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
                             handleProgress(1, "");
 
                         }
+                    }
+                    if (responseApi.apiTypeStatus == SEND_FRIENDS_REQUEST) {
+                        resModel = (NearByFriendList) responseApi.data;
+                        showSnackbarError(resModel.getMessage());
                     }
                     break;
 
@@ -418,6 +424,11 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
                         binding.inviteButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+                                DashboardResModel dashboardResModel = prefModel.getDashboardResModel();
+                                if(dashboardResModel!=null){
+                                    viewModel.sendFriendRequestData(Integer.valueOf(dashboardResModel.getAuroid()), studentDetails.getRegistration_id());
+                                }
                                // viewModel.sendFriendRequestData(Pref,studentDetails.getRegistration_id());
                             }
                         });

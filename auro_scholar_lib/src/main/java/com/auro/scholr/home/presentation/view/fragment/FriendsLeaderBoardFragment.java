@@ -21,6 +21,7 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.FriendsLeoboardLayoutBinding;
+import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.FriendRequestList;
 import com.auro.scholr.home.presentation.view.adapter.LeaderBoardViewPagerAdapter;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
@@ -96,7 +97,12 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
 
         initialiseTabs();
 
-        viewModel.friendRequestListData(14);
+
+        DashboardResModel dashboardResModel = prefModel.getDashboardResModel();
+        if (dashboardResModel != null) {
+            viewModel.friendRequestListData(Integer.valueOf(dashboardResModel.getAuroid()));
+        }
+
 
     }
 
@@ -302,6 +308,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
             if (friendRequestList != null && friendRequestList.getFriends() != null && friendRequestList.getFriends().size()>0) {
                 FriendRequestListDialogFragment bottomSheetFragment = new FriendRequestListDialogFragment(friendRequestList);
                 bottomSheetFragment.show(getParentFragmentManager(), bottomSheetFragment.getTag());
+               
             }
             else{
                 showSnackbarError("No friend request");

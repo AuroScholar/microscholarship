@@ -144,6 +144,13 @@ public class HomeModule {
 
     @Provides
     @Singleton
+    @Named("FriendRequestListDialogFragment")
+    ViewModelFactory provideFriendRequestListDialogFragmentViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
+
+    @Provides
+    @Singleton
     @Named("FriendsInviteBoardFragment")
     ViewModelFactory provideFriendsInviteViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);

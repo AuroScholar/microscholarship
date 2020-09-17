@@ -170,18 +170,18 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
     }
 
     @Override
-    public Single<Response<JsonObject>> friendRequestListApi(int requested_by_id) {
+    public Single<Response<JsonObject>> friendRequestListApi(int requested_user_id) {
         Map<String, Integer> params = new HashMap<String, Integer>();
-        params.put("requested_by_id", requested_by_id);
+        params.put("requested_user_id", requested_user_id);
         return homeRemoteApi.friendRequestListApi(params);
     }
 
     @Override
-    public Single<Response<JsonObject>> acceptInviteApi(int friend_request_id, String request_status) {
+    public Single<Response<JsonObject>> friendAcceptApi(int friend_request_id, String request_status) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("friend_request_id", String.valueOf(friend_request_id));
         params.put("request_status", request_status);
-        return homeRemoteApi.acceptInviteApi(params);
+        return homeRemoteApi.friendAcceptApi(params);
     }
 
 }

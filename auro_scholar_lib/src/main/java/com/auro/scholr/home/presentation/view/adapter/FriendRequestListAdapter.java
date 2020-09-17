@@ -59,7 +59,7 @@ public class FriendRequestListAdapter extends RecyclerView.Adapter<FriendRequest
 
                             if (commonCallBackListner != null) {
                                 // list.get(position).setSubjectPos(subjectPos);
-                                commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, resModel.getRegistration_id()));
+                                commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(Integer.valueOf(resModel.getFriend_request_id()), Status.REQUEST_ACCEPT, resModel.getRegistration_id()));
                             }
 
                 }
@@ -70,7 +70,7 @@ public class FriendRequestListAdapter extends RecyclerView.Adapter<FriendRequest
 
                     if (commonCallBackListner != null) {
                         // list.get(position).setSubjectPos(subjectPos);
-                        commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.START_QUIZ_BUTON, resModel.getRegistration_id()));
+                        commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(Integer.valueOf(resModel.getFriend_request_id()), Status.REQUEST_DECLINE, resModel.getRegistration_id()));
                     }
 
                 }
