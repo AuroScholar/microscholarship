@@ -422,17 +422,17 @@ public class ScholarShipFragment extends Fragment {
         if (value == 0) {
             binding.errorConstraint.setVisibility(View.GONE);
             binding.shimmerViewQuiz.setVisibility(View.VISIBLE);
-            binding.shimmerViewQuiz.startShimmer();
+            binding.shimmerViewQuiz.startShimmerAnimation();
         } else if (value == 1) {
             binding.errorConstraint.setVisibility(View.GONE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
             binding.webView.setVisibility(View.VISIBLE);
-            binding.shimmerViewQuiz.stopShimmer();
+            binding.shimmerViewQuiz.stopShimmerAnimation();
         } else {
             binding.errorConstraint.setVisibility(View.VISIBLE);
             binding.webView.setVisibility(View.GONE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
-            binding.shimmerViewQuiz.stopShimmer();
+            binding.shimmerViewQuiz.stopShimmerAnimation();
             binding.errorLayout.textError.setText(getString(R.string.internet_check));
             binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                 @Override

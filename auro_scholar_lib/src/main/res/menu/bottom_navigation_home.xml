@@ -16,7 +16,6 @@
         android:enabled="true"
         android:title="My Classroom"
         android:icon="@drawable/ic_dashboard"
-
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_kyc"

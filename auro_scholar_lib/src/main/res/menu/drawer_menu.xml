@@ -11,7 +11,7 @@
             android:id="@+id/nav_friends_leaderboard"
             android:icon="@drawable/ic_friends"
             android:checkable="false"
-            android:title="Friends LeaderBoard" />
+            android:title="Friends Leader Board" />
         <item
             android:id="@+id/nav_payment_info"
             android:icon="@drawable/ic_payment_info"
