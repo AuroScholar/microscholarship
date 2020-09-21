@@ -90,9 +90,9 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
     GoogleMap mMap;
     Marker googleMarker;
     List<Marker> markersList = new ArrayList<>();
-    float zoomLevel = 12.0f;
+    float zoomLevel = 15.0f;
     LatLng mapPosotion;
-    double radius = 1000;
+    double radius = 10;
     double latitude = 0L, longitude = 0L;
 
     @Override
@@ -324,7 +324,10 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
 
     @Override
     public void onCameraIdle() {
-        radius = getMapVisibleRadius(mMap.getProjection().getVisibleRegion());
+        if(mMap!=null) {
+            radius = getMapVisibleRadius(mMap.getProjection().getVisibleRegion());
+            viewModel.findFriendData(mapPosotion.latitude, mapPosotion.longitude, radius);
+        }
     }
 
     private class MapReady implements OnMapReadyCallback {
@@ -346,17 +349,23 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
             mMap = googleMap;
             //           loadDoctorsonMaps();
             mMap.setOnCameraIdleListener(FriendsLeaderBoardAddFragment.this);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            mMap.getUiSettings().setZoomControlsEnabled(true);
+            mMap.getUiSettings().setAllGesturesEnabled(true);
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(zoomLevel));
+
+
 //            mMap.setOnCameraMoveStartedListener(DoctorSearchMapFragment.this);
 //            mMap.setOnCameraMoveListener(DoctorSearchMapFragment.this);
 //            mMap.setOnCameraMoveCanceledListener(DoctorSearchMapFragment.this);
 
             if (mMap != null && latitude != 0) {
                 LatLng sydney = new LatLng(latitude, longitude);
-                View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
+                //View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
                 mMap.addMarker(new MarkerOptions()
                                        .position(sydney)
-                                       .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker))));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                                       .icon(BitmapDescriptorFactory.fromResource(R.drawable.my_location)));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel));
 
                 viewModel.findFriendData(latitude, longitude, radius);
             }
@@ -438,10 +447,10 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
                 i++;
             }
         }
-        if (markersList != null && !markersList.isEmpty()) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markersList.get(0).getPosition(), zoomLevel));
-            markersList.get(0).showInfoWindow();
-        }
+//        if (markersList != null && !markersList.isEmpty()) {
+//            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markersList.get(0).getPosition(), zoomLevel));
+//            markersList.get(0).showInfoWindow();
+//        }
 
     }
 

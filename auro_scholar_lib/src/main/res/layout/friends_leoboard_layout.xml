@@ -31,7 +31,7 @@
       android:background="@color/off_white">
 
 
-      <androidx.core.widget.NestedScrollView
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
@@ -227,7 +227,7 @@
 
 
         </LinearLayout>
-      </androidx.core.widget.NestedScrollView>
+      </LinearLayout>
 
 
       <androidx.constraintlayout.widget.ConstraintLayout
