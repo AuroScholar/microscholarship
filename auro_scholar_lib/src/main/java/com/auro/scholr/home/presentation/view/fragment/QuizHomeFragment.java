@@ -1,7 +1,9 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -12,6 +14,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -125,13 +128,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     Map<String, String> logparam;
     ActionBarDrawerToggle mDrawerToggle;
 
-
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -168,7 +168,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     }
 
-
     @Override
     protected void init() {
         if (getArguments() != null) {
@@ -201,12 +200,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.swipeRefreshLayout.setOnRefreshListener(this);
     }
 
-
     @Override
     protected void setToolbar() {
         /*Do code here*/
     }
-
 
     @Override
     protected void setListener() {
@@ -226,12 +223,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.fab.setOnClickListener(this);
     }
 
-
     @Override
     protected int getLayout() {
         return R.layout.quiz_home_layout;
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -242,7 +237,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         //checkJson();
     }
 
-
     private void openSnackBar() {
         CustomSnackBarModel customSnackBarModel = new CustomSnackBarModel();
         customSnackBarModel.setView(binding.getRoot());
@@ -252,7 +246,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         CustomSnackBar.INSTANCE.showCartSnackbar(customSnackBarModel);
 
     }
-
 
     @Override
     public void onResume() {
@@ -401,13 +394,14 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     }
 
-
     private void setDataOnUi(DashboardResModel dashboardResModel) {
         if (isAdded()) {
             //   quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
             quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + quizViewModel.homeUseCase.getWalletBalance(dashboardResModel));
             //   setQuizListAdapter(dashboardResModel.getQuiz());
             setQuizListNewAdapter();
+
+            setUpGradeClass();
             //setQuizWonListAdapter(dashboardResModel.getSubjectResModelList());
             getSpannableString();
         }
@@ -468,7 +462,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             /*Do code here when error occur*/
         }
     }
-
 
     public void openKYCFragment(DashboardResModel dashboardResModel) {
         Bundle bundle = new Bundle();
@@ -545,7 +538,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
-
     private void openFriendLeaderBoardFragment() {
         FriendsLeaderBoardFragment fragment = new FriendsLeaderBoardFragment();
         openFragment(fragment);
@@ -558,7 +550,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         }
         ft.detach(this).attach(this).commit();
     }
-
 
     private void setLangOnUi(String lang) {
         binding.toolbarLayout.langEng.setText(lang);
@@ -585,7 +576,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             }
         });
     }
-
 
     @Override
     public void commonEventListner(CommonDataModel commonDataModel) {
@@ -648,7 +638,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     }
 
-
     private void startAnimationFromBottom() {
         //Animation on button
         Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.down_to_top_slide);
@@ -702,7 +691,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         });
         binding.rltooltipe.startAnimation(anim);
     }
-
 
     public void openToolTip() {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
@@ -765,7 +753,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
-
     private void setPrefForTesting() {
         dashboardResModel.getSubjectResModelList().get(0).getChapter().get(0).setScorepoints(6);
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
@@ -780,7 +767,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
-
     private void openChat() {
         Uri uri = Uri.parse("https://wa.me/919667480783");
         logparam.put(getResources().getString(R.string.log_click_on_whatapp_student), "true");
@@ -789,21 +775,29 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         startActivity(Intent.createChooser(i, ""));
     }
 
-
     private void openErrorDialog() {
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(AuroApp.getAppContext());
         customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
-        customDialogModel.setContent("Your grade is upgraded from 10 to 12");
+        customDialogModel.setContent(dashboardResModel.getUpgradeResModel().getMessage());
         customDialogModel.setTwoButtonRequired(true);
         customDialog = new CustomDialog(AuroApp.getAppContext(), customDialogModel);
-        customDialog.setSecondBtnTxt("Ok");
+        customDialog.setSecondBtnTxt("Yes");
+        customDialog.setFirstBtnTxt("No");
+        customDialog.setFirstCallcack(new CustomDialog.FirstCallcack() {
+            @Override
+            public void clickNoCallback() {
+                customDialog.dismiss();
+            }
+        });
+
         customDialog.setSecondCallcack(new CustomDialog.SecondCallcack() {
             @Override
             public void clickYesCallback() {
                 customDialog.dismiss();
             }
         });
+
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(customDialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -860,7 +854,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.customUiSnackbar.btInvite.setText(randomElement.getButtonTitle());
         binding.customUiSnackbar.btInvite.setTextSize(randomElement.getButtonSize());
     }
-
 
     public void openDemographicFragment() {
         Bundle bundle = new Bundle();
@@ -932,6 +925,29 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         TransactionsFragment fragment = new TransactionsFragment();
         fragment.setArguments(bundle);
         openFragment(fragment);
+    }
+
+    public void setUpGradeClass(){
+        if(dashboardResModel.getUpgradeResModel().isStatus()){
+            openErrorDialog();
+        }else{
+           // alertDialog(dashboardResModel.getUpgradeResModel().getMessage());
+        }
+    }
+    public void alertDialog(String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        // Set the alert dialog yes button click listener
+        builder.setMessage(message);
+        builder.setPositiveButton(Html.fromHtml("<font color='#00A1DB'>OK</font>"), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        // Display the alert dialog on interface
+        dialog.show();
     }
 
 }

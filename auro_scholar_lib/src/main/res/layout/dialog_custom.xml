@@ -23,9 +23,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-               >
-
+                android:layout_height="wrap_content">
 
                 <com.auro.scholr.core.util.uiwidget.RPTextView
                     android:id="@+id/tv_title"
@@ -42,8 +40,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-
 
                 <com.auro.scholr.core.util.uiwidget.RPTextView
                     android:id="@+id/tv_message"

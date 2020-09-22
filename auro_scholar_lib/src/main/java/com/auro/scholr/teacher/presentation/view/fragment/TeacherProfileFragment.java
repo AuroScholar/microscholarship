@@ -233,14 +233,6 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                 // Display the alert dialog on interface
                 dialog.show();
 
-
-
-               /* if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
-                    AuroApp.getAuroScholarModel().getSdkcallback().logOut();
-                    AppUtil.myClassRoomResModel = null;
-                }*/
-                //  openFragment(new TeacherKycFragment());
-                //  ((HomeActivity) getActivity()).selectNavigationMenu(2);
             }
         });
         binding.button.setOnClickListener(new View.OnClickListener() {

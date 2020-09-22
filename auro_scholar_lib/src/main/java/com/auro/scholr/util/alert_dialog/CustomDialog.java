@@ -89,7 +89,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
 
         if (istwoBtnRequired) {
             binding.btnYes.setVisibility(View.VISIBLE);
-            binding.btnNo.setVisibility(View.GONE);
+            binding.btnNo.setVisibility(View.VISIBLE);
             binding.btnYes.setText(secondBtnTxt);
             binding.btnNo.setText(firstBtnTxt);
             binding.btnYes.setOnClickListener(this);
