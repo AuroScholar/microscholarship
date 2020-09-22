@@ -64,7 +64,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
 
                 } else {
 
-                    return responseFail(null);
+                    return responseFail(Status.SEND_INVITE_API);
                 }
             }
         });
@@ -79,7 +79,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
                     return handleResponse(response, Status.ACCEPT_INVITE_CLICK);
                 } else {
 
-                    return responseFail(null);
+                    return responseFail(Status.ACCEPT_INVITE_CLICK);
                 }
             }
         });
@@ -98,7 +98,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
 
                 } else {
 
-                    return responseFail(null);
+                    return responseFail(Status.INVITE_FRIENDS_LIST);
                 }
             }
         });
@@ -116,7 +116,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
 
                 } else {
 
-                    return responseFail(null);
+                    return responseFail(Status.UPLOAD_PROFILE_IMAGE);
                 }
             }
         });
@@ -133,7 +133,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
                     return handleResponse(response, AZURE_API);
 
                 } else {
-                    return responseFail(null);
+                    return responseFail(AZURE_API);
                 }
 
             }
@@ -151,7 +151,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
 
                 } else {
 
-                    return responseFail(null);
+                    return responseFail(DASHBOARD_API);
                 }
             }
         });

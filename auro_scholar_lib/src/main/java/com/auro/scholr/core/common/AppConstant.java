@@ -62,6 +62,7 @@ public interface AppConstant {
         String IS_KYC_VERIFIED = "is_kyc_verified";
         String IS_PAYMENT_LASTMONTH = "is_payment_lastmonth";
         String IS_EMAIL_VERIFIED = "email_verified";
+        String PARTNER_SOURCE="partner_source";
     }
 
 
