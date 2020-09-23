@@ -11,7 +11,9 @@ public interface URLConstant {
 
     String DASHBOARD_API = BASE_URL + "dashboard_multiple.php";
 
-    String DASHBOARD_SDK_API = BASE_URL + "dashboard_sdk_multiple.php";
+   // String DASHBOARD_SDK_API = BASE_URL + "dashboard_sdk_multiple.php";
+
+    String DASHBOARD_SDK_API = BASE_URL + "dashboard_sdk_partner.php";
 
     String DEMOGRAPHIC_API = BASE_URL + "demographics.php";
 

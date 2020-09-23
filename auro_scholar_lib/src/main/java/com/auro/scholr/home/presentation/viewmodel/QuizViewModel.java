@@ -25,6 +25,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.auro.scholr.core.common.Status.AZURE_API;
+import static com.auro.scholr.core.common.Status.DASHBOARD_API;
+
 
 public class QuizViewModel extends ViewModel {
 
@@ -87,7 +90,7 @@ public class QuizViewModel extends ViewModel {
                                 new Consumer<Throwable>() {
                                     @Override
                                     public void accept(Throwable throwable) throws Exception {
-                                        defaultError();
+                                        defaultError(AZURE_API);
                                     }
                                 }));
     }
@@ -116,12 +119,12 @@ public class QuizViewModel extends ViewModel {
                                 new Consumer<Throwable>() {
                                     @Override
                                     public void accept(Throwable throwable) throws Exception {
-                                        defaultError();                                    }
+                                        defaultError(DASHBOARD_API);                                    }
                                 }));
 
     }
-    private void defaultError() {
-        serviceLiveData.setValue(new ResponseApi(Status.FAIL, AuroApp.getAppContext().getResources().getString(R.string.default_error), null));
+    private void defaultError(Status status) {
+        serviceLiveData.setValue(new ResponseApi(Status.FAIL, AuroApp.getAppContext().getResources().getString(R.string.default_error), status));
     }
 
 

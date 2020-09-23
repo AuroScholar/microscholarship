@@ -41,6 +41,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
             params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
             params.put(AppConstant.DashBoardParams.STUDENT_CLASS, model.getStudentClass());
             params.put(AppConstant.DashBoardParams.REGISTRATION_SOURCE, model.getRegitrationSource());
+            params.put(AppConstant.DashBoardParams.PARTNER_SOURCE,model.getPartnerSource());
             AppLogger.e("HomeRemoteDataSourceImp", "Calling  Generic SDK");
             return homeRemoteApi.getDashboardSDKData(params);
         } else {
@@ -51,6 +52,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
             params.put(AppConstant.DashBoardParams.SHARE_TYPE, model.getShareType());
             params.put(AppConstant.DashBoardParams.SHARE_IDENTITY, model.getShareIdentity());
             params.put(AppConstant.DashBoardParams.IS_EMAIL_VERIFIED, "" + model.isEmailVerified());
+            params.put(AppConstant.DashBoardParams.PARTNER_SOURCE,model.getPartnerSource());
             AppLogger.e("HomeRemoteDataSourceImp", "Calling  Scholar SDK");
             return homeRemoteApi.getDashboardData(params);
         }

@@ -299,7 +299,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
                 case LOADING:
                     //For ProgressBar
-
                     if (!isStateRestore) {
                         handleProgress(0, "");
                     }
