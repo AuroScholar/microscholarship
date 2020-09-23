@@ -41,6 +41,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -119,7 +120,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     DashboardResModel dashboardResModel;
     QuizResModel quizResModel;
     QuizWonAdapter quizWonAdapter;
-   // Resources resources;
+    // Resources resources;
     boolean isStateRestore;
     AssignmentReqModel assignmentReqModel;
     CustomDialog customDialog;
@@ -144,7 +145,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         quizViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setQuizViewModel(quizViewModel);
-       // resources = ViewUtil.getCustomResource(getActivity());
+        // resources = ViewUtil.getCustomResource(getActivity());
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null && TextUtil.isEmpty(prefModel.getUserLanguage())) {
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
@@ -190,12 +191,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
         //navigation drawerToggle
         mDrawerToggle = new ActionBarDrawerToggle(
-                getActivity(), binding.drawerLayout, R.string.drawer_open,R.string.drawer_close);
+                getActivity(), binding.drawerLayout, R.string.drawer_open, R.string.drawer_close);
 
         // Where do I put this?
         mDrawerToggle.syncState();
         //PRADEEP
-
+        lockDrawerMenu();
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
         binding.swipeRefreshLayout.setOnRefreshListener(this);
     }
@@ -311,6 +312,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         dashboardResModel = (DashboardResModel) responseApi.data;
                         //setPrefForTesting();
                         if (!dashboardResModel.isError()) {
+                            unLockDrawerMenu();
                             checkStatusforCongratulationDialog();
                             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
                                 handleProgress(2, dashboardResModel.getMessage());
@@ -520,7 +522,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else if (v.getId() == R.id.bt_upload_all) {
             openFriendLeaderBoardFragment();
         } else if (v.getId() == R.id.back_arrow) {
-           // getActivity().getSupportFragmentManager().popBackStack();
+            // getActivity().getSupportFragmentManager().popBackStack();
             //pradeep wait
             binding.drawerLayout.openDrawer(Gravity.LEFT);
         } else if (v.getId() == R.id.bt_invite) {
@@ -890,11 +892,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         switch (item.getItemId()) {
 
 
-
             default:
                 return super.onOptionsItemSelected(item);
         }
-       // return super.onOptionsItemSelected(item);
+        // return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -918,6 +919,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         return true;
 
     }
+
     private void openTransactionFragment() {
         Bundle bundle = new Bundle();
         bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
@@ -926,14 +928,15 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         openFragment(fragment);
     }
 
-    public void setUpGradeClass(){
-        if(dashboardResModel.getUpgradeResModel().isStatus()){
+    public void setUpGradeClass() {
+        if (dashboardResModel.getUpgradeResModel().isStatus()) {
             openErrorDialog();
-        }else{
-           // alertDialog(dashboardResModel.getUpgradeResModel().getMessage());
+        } else {
+            // alertDialog(dashboardResModel.getUpgradeResModel().getMessage());
         }
     }
-    public void alertDialog(String message){
+
+    public void alertDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         // Set the alert dialog yes button click listener
         builder.setMessage(message);
@@ -948,5 +951,17 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         // Display the alert dialog on interface
         dialog.show();
     }
+
+
+    public void lockDrawerMenu() {
+        binding.toolbarLayout.backArrow.setEnabled(false);
+        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    public void unLockDrawerMenu() {
+        binding.toolbarLayout.backArrow.setEnabled(true);
+        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
 
 }
