@@ -2,8 +2,10 @@ package com.auro.scholr.home.presentation.view.fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,6 +17,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -54,6 +57,7 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
@@ -75,7 +79,7 @@ import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
  * Created by varun
  */
 @SuppressLint("SetJavaScriptEnabled")
-public class QuizTestFragment extends BaseFragment {
+public class QuizTestFragment extends BaseFragment implements View.OnClickListener {
     public static final String TAG = "QuizTestFragment";
 
     @Inject
@@ -288,6 +292,21 @@ public class QuizTestFragment extends BaseFragment {
         webView.loadUrl(webUrl);
 
     }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.back_arrow){
+
+           // getActivity().getSupportFragmentManager().popBackStack();
+            alertDialogForQuitQuiz();
+
+        }
+    }
+
+    public void onBackPressed() {
+        getActivity().getSupportFragmentManager().popBackStack();
+    }
+
 
 
     class MyJavaScriptInterface {
@@ -571,16 +590,51 @@ public class QuizTestFragment extends BaseFragment {
 
     private void setKeyListner() {
         this.getView().setFocusableInTouchMode(true);
+        binding.toolbarLayout.backArrow.setOnClickListener(this);
         this.getView().requestFocus();
         this.getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    getActivity().getSupportFragmentManager().popBackStack();
+                  //  getActivity().getSupportFragmentManager().popBackStack();
+                    alertDialogForQuitQuiz();
                     return true;
                 }
                 return false;
             }
         });
+    }
+
+    public void alertDialogForQuitQuiz(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Are you sure you want to quit the quiz ?");
+
+        // Set the alert dialog yes button click listener
+        builder.setPositiveButton(Html.fromHtml("<font color='#00A1DB'>YES</font>"), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do something when user clicked the Yes button
+                // Set the TextView visibility GONE
+                // tv.setVisibility(View.GONE);
+
+                getActivity().getSupportFragmentManager().popBackStack();
+
+            }
+        });
+
+        // Set the alert dialog no button click listener
+        builder.setNegativeButton(Html.fromHtml("<font color='#00A1DB'>NO</font>"), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do something when No button clicked
+                dialog.dismiss();
+                     /*   Toast.makeText(getApplicationContext(),
+                                "No Button Clicked",Toast.LENGTH_SHORT).show();*/
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        // Display the alert dialog on interface
+        dialog.show();
     }
 }
