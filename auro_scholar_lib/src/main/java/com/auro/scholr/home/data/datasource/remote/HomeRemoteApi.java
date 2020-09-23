@@ -79,4 +79,9 @@ public interface HomeRemoteApi {
     Single<Response<JsonObject>> acceptInviteApi(@FieldMap Map<String, String> params);
 
 
+    @POST(URLConstant.GRADE_UPGRADE)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> gradeUpgrade(@FieldMap Map<String, String> params);
+
+
 }

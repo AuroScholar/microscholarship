@@ -39,6 +39,7 @@ import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
 import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
+import static com.auro.scholr.core.common.Status.GRADE_UPGRADE;
 import static com.auro.scholr.core.common.Status.INVITE_FRIENDS_LIST;
 import static com.auro.scholr.core.common.Status.SEND_INVITE_API;
 
@@ -194,6 +195,22 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         });
     }
 
+
+    public Single<ResponseApi> upgradeStudentGrade(AuroScholarDataModel model) {
+
+        return dashboardRemoteData.upgradeClass(model).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+                    return handleResponse(response, GRADE_UPGRADE);
+                } else {
+                    return responseFail(GRADE_UPGRADE);
+                }
+            }
+        });
+    }
+
     private ResponseApi handleResponse(Response<JsonObject> response, Status apiTypeStatus) {
 
         switch (response.code()) {
@@ -251,6 +268,9 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         } else if (status == ACCEPT_INVITE_CLICK) {
             ChallengeAccepResModel resModel = new Gson().fromJson(response.body(), ChallengeAccepResModel.class);
             return ResponseApi.success(resModel, status);
+        } else if (status == GRADE_UPGRADE) {
+            DashboardResModel dashboardResModel = gson.fromJson(response.body(), DashboardResModel.class);
+            return ResponseApi.success(dashboardResModel, status);
         }
 
 

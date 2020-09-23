@@ -116,7 +116,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(this, "Please Enter class", Toast.LENGTH_SHORT).show();
                 }else
                 {
-                    openGenricSDK(mobileNumber,student_class);
+                   // openGenricSDK(mobileNumber,student_class);
+                    openScholarSpecificSdk(mobileNumber,student_class);
                 }
 
                 //openScholarSpecificSdk();
@@ -149,15 +150,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setScholrId("880426");
         auroScholarDataModel.setStudentClass("6");*/
 
-    private void openScholarSpecificSdk() {
+    private void openScholarSpecificSdk(String mobileNumber, String student_class) {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber("7503600686");
-        auroScholarDataModel.setStudentClass("6");
+        auroScholarDataModel.setMobileNumber(mobileNumber);
+        auroScholarDataModel.setStudentClass(student_class);
         auroScholarDataModel.setScholrId("880426");
         auroScholarDataModel.setRegitrationSource(null);
         auroScholarDataModel.setShareType(null);
         auroScholarDataModel.setShareIdentity(null);
         auroScholarDataModel.setActivity(this);
+        auroScholarDataModel.setPartnerSource("IDREMDvF4g");
         auroScholarDataModel.setSdkFragmentType(AppConstant.FragmentType.QUIZ_DASHBOARD);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         auroScholarDataModel.setEmailVerified(true);
@@ -236,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setStudentClass(student_class);
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setReferralLink("");
+        inputModel.setPartnerSource("IDREMDvF4g");
         inputModel.setActivity(this);
         inputModel.setFragmentContainerUiId(R.id.home_container);
         openFragment(AuroScholar.startAuroSDK(inputModel));

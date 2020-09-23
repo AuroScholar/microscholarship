@@ -32,7 +32,7 @@ public interface HomeRepo {
 
         Single<Response<JsonObject>> acceptInviteApi(SendInviteNotificationReqModel reqModel);
 
-
+        Single<Response<JsonObject>> upgradeClass(AuroScholarDataModel model);
 
     }
 

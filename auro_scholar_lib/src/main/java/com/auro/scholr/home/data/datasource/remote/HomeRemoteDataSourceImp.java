@@ -155,5 +155,13 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         return homeRemoteApi.acceptInviteApi(params);
     }
 
+    @Override
+    public Single<Response<JsonObject>> upgradeClass(AuroScholarDataModel model) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
+        params.put(AppConstant.DashBoardParams.STUDENT_CLASS, model.getStudentClass());
+        return homeRemoteApi.gradeUpgrade(params);
+    }
+
 
 }

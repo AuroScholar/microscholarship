@@ -56,11 +56,13 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.core.util.uiwidget.OnSwipeTouchListener;
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
+import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.CustomSnackBarModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
@@ -106,6 +108,7 @@ import javax.inject.Named;
 import static android.app.Activity.RESULT_OK;
 import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
+import static com.auro.scholr.core.common.Status.GRADE_UPGRADE;
 
 
 public class QuizHomeFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner, SwipeRefreshLayout.OnRefreshListener, NavigationView.OnNavigationItemSelectedListener {
@@ -306,31 +309,30 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     break;
 
                 case SUCCESS:
-                    binding.swipeRefreshLayout.setRefreshing(false);
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
-                        handleProgress(1, "");
-                        dashboardResModel = (DashboardResModel) responseApi.data;
-                        //setPrefForTesting();
-                        if (!dashboardResModel.isError()) {
-                            unLockDrawerMenu();
-                            checkStatusforCongratulationDialog();
-                            if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
-                                handleProgress(2, dashboardResModel.getMessage());
-                            } else {
-                                setDataOnUi(dashboardResModel);
-                            }
-                        } else {
-                            handleProgress(2, dashboardResModel.getMessage());
-                        }
-
+                        onApiSuccess(responseApi);
                     } else if (responseApi.apiTypeStatus == AZURE_API) {
                         // openQuizTestFragment(dashboardResModel);
+                    } else if (responseApi.apiTypeStatus == GRADE_UPGRADE) {
+                        DashboardResModel dashboardResModel = (DashboardResModel) responseApi.data;
+                        if (!dashboardResModel.isError()) {
+                            if (customDialog != null) {
+                                customDialog.dismiss();
+                                quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
+                            }
+                        } else {
+                            if (customDialog != null) {
+                                customDialog.updateUI(0);
+                            }
+                        }
                     }
-
                     break;
 
                 case NO_INTERNET:
 //On fail
+                    if (customDialog != null) {
+                        customDialog.dismiss();
+                    }
                     handleProgress(2, (String) responseApi.data);
                     binding.swipeRefreshLayout.setRefreshing(false);
                     break;
@@ -338,6 +340,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 case AUTH_FAIL:
                 case FAIL_400:
 // When Authrization is fail
+                    if (customDialog != null) {
+                        customDialog.dismiss();
+                    }
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(2, (String) responseApi.data);
                     } else {
@@ -346,9 +351,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                     }
                     binding.swipeRefreshLayout.setRefreshing(false);
                     break;
-
-
                 default:
+                    if (customDialog != null) {
+                        customDialog.dismiss();
+                    }
                     binding.swipeRefreshLayout.setRefreshing(false);
                     Log.d(TAG, "observeServiceResponse: default");
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
@@ -401,8 +407,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + quizViewModel.homeUseCase.getWalletBalance(dashboardResModel));
             //   setQuizListAdapter(dashboardResModel.getQuiz());
             setQuizListNewAdapter();
-
-            setUpGradeClass();
             //setQuizWonListAdapter(dashboardResModel.getSubjectResModelList());
             getSpannableString();
         }
@@ -780,7 +784,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(AuroApp.getAppContext());
         customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
-        customDialogModel.setContent(dashboardResModel.getUpgradeResModel().getMessage());
+        customDialogModel.setContent(dashboardResModel.getMessage());
         customDialogModel.setTwoButtonRequired(true);
         customDialog = new CustomDialog(AuroApp.getAppContext(), customDialogModel);
         customDialog.setSecondBtnTxt("Yes");
@@ -788,6 +792,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         customDialog.setFirstCallcack(new CustomDialog.FirstCallcack() {
             @Override
             public void clickNoCallback() {
+
                 customDialog.dismiss();
             }
         });
@@ -795,7 +800,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         customDialog.setSecondCallcack(new CustomDialog.SecondCallcack() {
             @Override
             public void clickYesCallback() {
-                customDialog.dismiss();
+                //   customDialog.dismiss();
+                customDialog.updateUI(1);
+                callClassUpgradeApi();
             }
         });
 
@@ -928,13 +935,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         openFragment(fragment);
     }
 
-    public void setUpGradeClass() {
-        if (dashboardResModel.getUpgradeResModel().isStatus()) {
-            openErrorDialog();
-        } else {
-            // alertDialog(dashboardResModel.getUpgradeResModel().getMessage());
-        }
-    }
 
     public void alertDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -963,5 +963,33 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
+
+    private void onApiSuccess(ResponseApi responseApi) {
+        binding.swipeRefreshLayout.setRefreshing(false);
+
+        handleProgress(1, "");
+        dashboardResModel = (DashboardResModel) responseApi.data;
+        //setPrefForTesting();
+        if (!dashboardResModel.isError()) {
+            unLockDrawerMenu();
+            checkStatusforCongratulationDialog();
+            if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
+                handleProgress(2, dashboardResModel.getMessage());
+            } else {
+                setDataOnUi(dashboardResModel);
+            }
+        } else {
+            handleProgress(2, dashboardResModel.getMessage());
+            if (dashboardResModel.getMessage().contains("grade")) {
+                openErrorDialog();
+            }
+        }
+
+
+    }
+
+    private void callClassUpgradeApi() {
+        quizViewModel.gradeUpgrade(AuroApp.getAuroScholarModel());
+    }
 
 }

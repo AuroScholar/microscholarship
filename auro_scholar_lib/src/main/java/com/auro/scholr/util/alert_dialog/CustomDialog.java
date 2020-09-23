@@ -30,7 +30,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
     FirstCallcack firstCallcack;
 
 
-    public CustomDialog(Context context,CustomDialogModel customDialogModel) {
+    public CustomDialog(Context context, CustomDialogModel customDialogModel) {
         super(context);
         this.context = context;
         this.msg = customDialogModel.getContent();
@@ -129,5 +129,19 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
 
     public interface FirstCallcack {
         void clickNoCallback();
+    }
+
+    public void updateUI(int status) {
+        switch (status) {
+            case 0:
+                binding.linLayBtn.setVisibility(View.VISIBLE);
+                binding.progressBar.setVisibility(View.GONE);
+                break;
+
+            case 1:
+                binding.linLayBtn.setVisibility(View.GONE);
+                binding.progressBar.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 }
