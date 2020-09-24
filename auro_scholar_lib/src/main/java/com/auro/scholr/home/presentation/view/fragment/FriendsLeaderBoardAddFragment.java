@@ -92,7 +92,7 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
     List<Marker> markersList = new ArrayList<>();
     float zoomLevel = 15.0f;
     LatLng mapPosotion;
-    double radius = 10;
+    double radius = 5;
     double latitude = 0L, longitude = 0L;
 
     @Override
@@ -210,7 +210,13 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
                 break;
 
             case 1:
-                    loadStudentonMaps();
+                if (resModel.getStudent() != null && resModel.getStudent().size() < 11) {
+                    radius += 5;
+                }
+                else{
+                    radius = 5;
+                }
+                loadStudentonMaps();
                 break;
 
             case 2:
@@ -324,8 +330,10 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
 
     @Override
     public void onCameraIdle() {
-        if(mMap!=null) {
-            radius = getMapVisibleRadius(mMap.getProjection().getVisibleRegion());
+        if (mMap != null) {
+//            radius = getMapVisibleRadius(mMap.getProjection().getVisibleRegion());
+            getMapVisibleRadius(mMap.getProjection().getVisibleRegion());
+            radius=5;
             viewModel.findFriendData(mapPosotion.latitude, mapPosotion.longitude, radius);
         }
     }
@@ -353,7 +361,6 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
             mMap.getUiSettings().setZoomControlsEnabled(true);
             mMap.getUiSettings().setAllGesturesEnabled(true);
             mMap.animateCamera(CameraUpdateFactory.zoomTo(zoomLevel));
-
 
 //            mMap.setOnCameraMoveStartedListener(DoctorSearchMapFragment.this);
 //            mMap.setOnCameraMoveListener(DoctorSearchMapFragment.this);
@@ -386,12 +393,18 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
     private void loadStudentonMaps() {
         LatLng studentLocation;
 
-        if(getActivity()!=null && isAdded()) {
+        if (getActivity() != null && isAdded()) {
             View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
 
             int i = 0;
             markersList.clear();
             mMap.clear();
+
+
+            mMap.addMarker(new MarkerOptions()
+                                   .position(mapPosotion)
+                                   .icon(BitmapDescriptorFactory.fromResource(R.drawable.my_location)));
+//            mMap.moveCamera(CameraUpdateFactory.newLatLng(mapPosotion));
 
             for (NearByFriendList.Student studentData : resModel.getStudent()) {
                 if (!studentData.getLattitude().isEmpty() && !studentData.getLongitude().isEmpty()) {
