@@ -2,18 +2,18 @@ package com.auro.scholr.core.network;
 
 public interface URLConstant {
 
-    //String BASE_URL = "https://auroscholar.com/api/"; // PRODUCTION
-    String BASE_URL = "http://demo.auroscholar.com/api/";  // SIT
+    String BASE_URL = "https://auroscholar.com/api/"; // PRODUCTION
+  //  String BASE_URL = "http://demo.auroscholar.com/api/";  // SIT
 
     // String ZOHO_BASE_URL = "https://auroscholar.com/api/";
 
     // String DASHBOARD_API = BASE_URL + "dashboard.php";
 
-    // String DASHBOARD_API = BASE_URL + "dashboard_multiple.php";dashboard_partner.php
+     String DASHBOARD_API = BASE_URL + "dashboard_multiple.php";
 
-    // String DASHBOARD_SDK_API = BASE_URL + "dashboard_sdk_multiple.php";
-    String DASHBOARD_API = BASE_URL + "dashboard_partner.php";
-    String DASHBOARD_SDK_API = BASE_URL + "dashboard_sdk_partner.php";
+     String DASHBOARD_SDK_API = BASE_URL + "dashboard_sdk_multiple.php";
+   // String DASHBOARD_API = BASE_URL + "dashboard_partner.php";
+    //String DASHBOARD_SDK_API = BASE_URL + "dashboard_sdk_partner.php";
 
     String DEMOGRAPHIC_API = BASE_URL + "demographics.php";
 
