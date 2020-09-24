@@ -386,34 +386,35 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
     private void loadStudentonMaps() {
         LatLng studentLocation;
 
-        View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
+        if(getActivity()!=null && isAdded()) {
+            View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
 
-        int i = 0;
-        markersList.clear();
-        mMap.clear();
+            int i = 0;
+            markersList.clear();
+            mMap.clear();
 
-        for (NearByFriendList.Student studentData : resModel.getStudent()) {
-            if (!studentData.getLattitude().isEmpty() && !studentData.getLongitude().isEmpty()) {
-                TextView numTxt = marker.findViewById(R.id.num_txt);
-                numTxt.setText(studentData.getStudent_name());
-                studentLocation = new LatLng(Double.parseDouble(studentData.getLattitude()), Double.parseDouble(studentData.getLongitude()));
-                googleMarker = mMap.addMarker(new MarkerOptions()
-                                                      .position(studentLocation)
-                                                      .draggable(true)
-                                                      .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker)))
-                );
-                googleMarker.setTag(i);
+            for (NearByFriendList.Student studentData : resModel.getStudent()) {
+                if (!studentData.getLattitude().isEmpty() && !studentData.getLongitude().isEmpty()) {
+                    TextView numTxt = marker.findViewById(R.id.num_txt);
+                    numTxt.setText(studentData.getStudent_name());
+                    studentLocation = new LatLng(Double.parseDouble(studentData.getLattitude()), Double.parseDouble(studentData.getLongitude()));
+                    googleMarker = mMap.addMarker(new MarkerOptions()
+                                                          .position(studentLocation)
+                                                          .draggable(true)
+                                                          .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker)))
+                    );
+                    googleMarker.setTag(i);
 
-                markersList.add(googleMarker);
+                    markersList.add(googleMarker);
 
-                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                    @Override
-                    public boolean onMarkerClick(Marker marker) {
-                        binding.parentLayout.setVisibility(View.VISIBLE);
-                        if (marker.getTag() == null) {
-                            return false;
-                        }
-                        NearByFriendList.Student studentDetails = resModel.getStudent().get((Integer) marker.getTag());
+                    mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                        @Override
+                        public boolean onMarkerClick(Marker marker) {
+                            binding.parentLayout.setVisibility(View.VISIBLE);
+                            if (marker.getTag() == null) {
+                                return false;
+                            }
+                            NearByFriendList.Student studentDetails = resModel.getStudent().get((Integer) marker.getTag());
 //                        String patLat = "", patLng = "";
 //                        patLat = doctorDetails.getLatitude();
 //                        patLng = doctorDetails.getLongitude();
@@ -426,31 +427,32 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
 //                            rv_DoctorsSearchList.smoothScrollToPosition((Integer) marker.getTag());
 //                        }
 
-                        ImageUtil.loadCircleImage(binding.profileImage,studentDetails.getStudent_photo());
-                        binding.nameText.setText(studentDetails.getStudent_name());
-                        binding.distance.setText(studentDetails.getDistance()+" KM");
+                            ImageUtil.loadCircleImage(binding.profileImage, studentDetails.getStudent_photo());
+                            binding.nameText.setText(studentDetails.getStudent_name());
+                            binding.distance.setText(studentDetails.getDistance() + " KM");
 
-                        binding.inviteButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-                                DashboardResModel dashboardResModel = prefModel.getDashboardResModel();
-                                if(dashboardResModel!=null){
-                                    viewModel.sendFriendRequestData(Integer.valueOf(dashboardResModel.getAuroid()), studentDetails.getRegistration_id());
+                            binding.inviteButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+                                    DashboardResModel dashboardResModel = prefModel.getDashboardResModel();
+                                    if (dashboardResModel != null) {
+                                        viewModel.sendFriendRequestData(Integer.valueOf(dashboardResModel.getAuroid()), studentDetails.getRegistration_id());
+                                    }
+                                    // viewModel.sendFriendRequestData(Pref,studentDetails.getRegistration_id());
                                 }
-                               // viewModel.sendFriendRequestData(Pref,studentDetails.getRegistration_id());
-                            }
-                        });
-                        return false;
-                    }
-                });
-                i++;
+                            });
+                            return false;
+                        }
+                    });
+                    i++;
+                }
             }
-        }
 //        if (markersList != null && !markersList.isEmpty()) {
 //            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markersList.get(0).getPosition(), zoomLevel));
 //            markersList.get(0).showInfoWindow();
 //        }
+        }
 
     }
 
