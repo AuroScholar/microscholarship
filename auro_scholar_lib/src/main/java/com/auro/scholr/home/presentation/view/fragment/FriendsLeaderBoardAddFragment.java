@@ -67,7 +67,7 @@ import static com.auro.scholr.core.common.Status.FIND_FRIEND_DATA;
 import static com.auro.scholr.core.common.Status.SEND_FRIENDS_REQUEST;
 import static com.auro.scholr.util.permission.LocationHandler.REQUEST_CHECK_SETTINGS_GPS;
 
-public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner, GoogleMap.OnCameraIdleListener {
+public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner, GoogleMap.OnCameraIdleListener, GoogleMap.OnCameraMoveListener {
 
     @Inject
     @Named("FriendsLeaderBoardAddFragment")
@@ -338,6 +338,18 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
         }
     }
 
+    @Override
+    public void onCameraMove() {
+        if (mMap != null) {
+//            radius = getMapVisibleRadius(mMap.getProjection().getVisibleRegion());
+//            mMap.clear();
+//            mMap.addMarker(new MarkerOptions()
+//                                   .position(mapPosotion)
+//                                   .icon(BitmapDescriptorFactory.fromResource(R.drawable.my_location)));
+
+        }
+    }
+
     private class MapReady implements OnMapReadyCallback {
 
         Context mContext;
@@ -369,9 +381,9 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
             if (mMap != null && latitude != 0) {
                 LatLng sydney = new LatLng(latitude, longitude);
                 //View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
-                mMap.addMarker(new MarkerOptions()
-                                       .position(sydney)
-                                       .icon(BitmapDescriptorFactory.fromResource(R.drawable.my_location)));
+//                mMap.addMarker(new MarkerOptions()
+//                                       .position(sydney)
+//                                       .icon(BitmapDescriptorFactory.fromResource(R.drawable.my_location)));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel));
 
                 viewModel.findFriendData(latitude, longitude, radius);
@@ -400,10 +412,9 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
             markersList.clear();
             mMap.clear();
 
-
-            mMap.addMarker(new MarkerOptions()
-                                   .position(mapPosotion)
-                                   .icon(BitmapDescriptorFactory.fromResource(R.drawable.my_location)));
+//            mMap.addMarker(new MarkerOptions()
+//                                   .position(mapPosotion)
+//                                   .icon(BitmapDescriptorFactory.fromResource(R.drawable.my_location)));
 //            mMap.moveCamera(CameraUpdateFactory.newLatLng(mapPosotion));
 
             for (NearByFriendList.Student studentData : resModel.getStudent()) {
