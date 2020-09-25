@@ -8,7 +8,6 @@ import com.auro.scholr.home.data.repository.HomeRepo;
 import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
-import com.auro.scholr.home.presentation.view.fragment.FriendsInviteBoardFragment;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -126,6 +125,27 @@ public class HomeModule {
     @Singleton
     @Named("FriendsLeaderBoardFragment")
     ViewModelFactory provideFriendsLeaderBoardFragmentViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
+
+    @Provides
+    @Singleton
+    @Named("FriendsLeaderBoardListFragment")
+    ViewModelFactory provideFriendsLeaderBoardListFragmentViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
+
+    @Provides
+    @Singleton
+    @Named("FriendsLeaderBoardAddFragment")
+    ViewModelFactory provideFriendsLeaderBoardAddFragmentViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
+
+    @Provides
+    @Singleton
+    @Named("FriendRequestListDialogFragment")
+    ViewModelFactory provideFriendRequestListDialogFragmentViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
     }
 

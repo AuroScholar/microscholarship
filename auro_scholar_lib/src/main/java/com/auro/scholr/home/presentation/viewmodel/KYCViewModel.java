@@ -98,7 +98,7 @@ public class KYCViewModel extends ViewModel {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
 
-                                serviceLiveData.setValue(new ResponseApi(Status.FAIL, AuroApp.getAppContext().getResources().getString(R.string.default_error), null));
+                                serviceLiveData.setValue(new ResponseApi(Status.FAIL, AuroApp.getAppContext().getResources().getString(R.string.default_error), UPLOAD_PROFILE_IMAGE));
                             }
                         }));
 

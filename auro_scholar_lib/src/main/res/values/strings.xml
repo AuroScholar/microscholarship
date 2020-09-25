@@ -271,6 +271,7 @@
     <string name="book_free_tutoring_session">Book Free Tutoring Session</string>
     <string name="retake">Retake</string>
     <string name="auro_start">Start</string>
+    <string name="add_friend">Add Friend</string>
 
     <string-array name="classes">
         <item>1st</item>
