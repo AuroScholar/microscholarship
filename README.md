@@ -21,7 +21,8 @@ Step 1 : Add the dependency in your app/build.gradle(:app)
 
 ```swift
 dependencies {
-	        implementation 'com.github.AuroScholar:microscholarship:-version'
+	          implementation 'com.github.AuroScholar:microscholarship:1.1.60'
+
 	}	
 ```
 
@@ -100,8 +101,7 @@ Step 6 : Add these lines in activity in onActivityResult( ) Method.
 ```swift
 
 @Override
-protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent
-data) {
+protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
  super.onActivityResult(requestCode, resultCode, data);
  //must param to get the acitivity
  for (Fragment fragment : getSupportFragmentManager().getFragments()) {
