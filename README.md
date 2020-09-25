@@ -90,7 +90,7 @@ inputModel.setStudentClass("put student class here"); //Mandatory
 inputModel.setReferralLink("Put here branch or any other referral Link");
 inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
 //This method returns a Fragment Instance
-Fragment frag= openFragment(AuroScholar.startAuroSDK(inputModel));
+Fragment frag= AuroScholar.startAuroSDK(inputModel);
 
 ```
 Step 6 : Add these lines in activity in onActivityResult( ) Method.
