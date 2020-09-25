@@ -19,35 +19,47 @@
 Step 1 : Add the dependency in your app/build.gradle(:app)
 ----
 
+```swift
 dependencies {
 	        implementation 'com.github.AuroScholar:microscholarship:-version'
-	}
+	}	
+```
+
   
 Step 2 : Enable the databinding and add compileOptions in your app/build.gradle(:app) .
 ----
 
-android {
+```swift
 
-compileOptions {
- sourceCompatibility = '1.8'
- targetCompatibility = '1.8'
- }
- dataBinding {
- enabled = true
- }
-}
+	android {
+ 		compileOptions {
+ 			sourceCompatibility = '1.8'
+ 			targetCompatibility = '1.8'
+ 		}
+ 		dataBinding {
+ 			enabled = true
+ 		}
+	}
+
+```
 Step 3 : Add the JitPack repository in your root build.gradle at the end of repositories and then use authToken and username.
 ----
 
+```swift
+
 allprojects {
 		repositories {
-			...
 			maven { url 'https://jitpack.io' }
 		}
 	}
+	
+```
+
   
 Step 4 : Add google gms service dependency in your build.gradle(Application).
 ----
+
+```swift
 
  repositories {
  maven { url 'https://jitpack.io' }
@@ -62,8 +74,12 @@ Step 4 : Add google gms service dependency in your build.gradle(Application).
  }
 }
 
+```
+
+
 Step 5 : For open then AuroScholar Fragment or Start the Auro Scholar sdk
 ----
+```swift
 
 AuroScholarInputModel inputModel= new AuroScholarInputModel();
 // Important Params
@@ -75,7 +91,13 @@ inputModel.setReferralLink("Put here branch or any other referral Link");
 inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
 //This method returns a Fragment Instance
 Fragment frag= openFragment(AuroScholar.startAuroSDK(inputModel));
+
+```
 Step 6 : Add these lines in activity in onActivityResult( ) Method.
+----
+
+```swift
+
 @Override
 protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent
 data) {
@@ -85,6 +107,9 @@ data) {
  fragment.onActivityResult(requestCode, resultCode, data);
  }
 }
+
+```
+
 
 ### Visit Our WebSite
 https://auroscholar.com/
