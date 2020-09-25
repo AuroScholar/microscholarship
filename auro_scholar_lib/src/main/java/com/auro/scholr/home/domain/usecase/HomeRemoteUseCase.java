@@ -6,6 +6,7 @@ import com.auro.scholr.core.common.NetworkUtil;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.network.NetworkUseCase;
+import com.auro.scholr.home.data.model.AcceptInviteRequest;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AssignmentResModel;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
@@ -14,9 +15,11 @@ import com.auro.scholr.home.data.model.ChallengeAccepResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.FriendListResDataModel;
+import com.auro.scholr.home.data.model.FriendRequestList;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResListModel;
+import com.auro.scholr.home.data.model.NearByFriendList;
 import com.auro.scholr.home.data.repository.HomeRepo;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.teacher.data.model.response.TeacherResModel;
@@ -35,12 +38,16 @@ import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_400;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_401;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_FAIL;
 import static com.auro.scholr.core.common.Status.ACCEPT_INVITE_CLICK;
+import static com.auro.scholr.core.common.Status.ACCEPT_INVITE_REQUEST;
 import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
 import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
 import static com.auro.scholr.core.common.Status.GRADE_UPGRADE;
+import static com.auro.scholr.core.common.Status.FIND_FRIEND_DATA;
+import static com.auro.scholr.core.common.Status.FRIENDS_REQUEST_LIST;
 import static com.auro.scholr.core.common.Status.INVITE_FRIENDS_LIST;
+import static com.auro.scholr.core.common.Status.SEND_FRIENDS_REQUEST;
 import static com.auro.scholr.core.common.Status.SEND_INVITE_API;
 
 public class HomeRemoteUseCase extends NetworkUseCase {
@@ -86,6 +93,23 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         });
     }
 
+    public Single<ResponseApi> findFriendApi(double lat, double longt, double radius) {
+        return dashboardRemoteData.findFriendApi(lat, longt, radius).
+
+                map(new Function<Response<JsonObject>, ResponseApi>() {
+                    @Override
+                    public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                        if (response != null) {
+                            return handleResponse(response, Status.FIND_FRIEND_DATA);
+                        } else {
+
+                            return responseFail(null);
+                        }
+                    }
+                });
+    }
+
 
     public Single<ResponseApi> inviteFriendListApi() {
 
@@ -100,6 +124,60 @@ public class HomeRemoteUseCase extends NetworkUseCase {
                 } else {
 
                     return responseFail(Status.INVITE_FRIENDS_LIST);
+                }
+            }
+        });
+    }
+
+    public Single<ResponseApi> sendFriendRequestApi(int requested_by_id, int requested_user_id) {
+
+        return dashboardRemoteData.sendFriendRequestApi(requested_by_id, requested_user_id).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+
+                    return handleResponse(response, Status.SEND_FRIENDS_REQUEST);
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
+    public Single<ResponseApi> friendRequestListApi(int requested_user_id) {
+
+        return dashboardRemoteData.friendRequestListApi(requested_user_id).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+
+                    return handleResponse(response, Status.FRIENDS_REQUEST_LIST);
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
+    public Single<ResponseApi> friendAcceptApi(int friend_request_id, String request_status) {
+
+        return dashboardRemoteData.friendAcceptApi(friend_request_id, request_status).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+
+                    return handleResponse(response, Status.ACCEPT_INVITE_REQUEST);
+
+                } else {
+
+                    return responseFail(null);
                 }
             }
         });
@@ -271,6 +349,18 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         } else if (status == GRADE_UPGRADE) {
             DashboardResModel dashboardResModel = gson.fromJson(response.body(), DashboardResModel.class);
             return ResponseApi.success(dashboardResModel, status);
+        } else if (status == FIND_FRIEND_DATA) {
+            NearByFriendList nearByFriendList = new Gson().fromJson(response.body(), NearByFriendList.class);
+            return ResponseApi.success(nearByFriendList, status);
+        } else if (status == SEND_FRIENDS_REQUEST) {
+            NearByFriendList nearByFriendList = new Gson().fromJson(response.body(), NearByFriendList.class);
+            return ResponseApi.success(nearByFriendList, status);
+        } else if (status == FRIENDS_REQUEST_LIST) {
+            FriendRequestList friendRequestList = new Gson().fromJson(response.body(), FriendRequestList.class);
+            return ResponseApi.success(friendRequestList, status);
+        } else if (status == ACCEPT_INVITE_REQUEST) {
+            AcceptInviteRequest acceptInviteRequest = new Gson().fromJson(response.body(), AcceptInviteRequest.class);
+            return ResponseApi.success(acceptInviteRequest, status);
         }
 
 

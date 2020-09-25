@@ -2,6 +2,7 @@ package com.auro.scholr.core.database;
 
 
 import com.auro.scholr.home.data.model.AssignmentReqModel;
+import com.auro.scholr.home.data.model.DashboardResModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ public class PrefModel implements Serializable {
 
     private String userKYCProfilePhotoPath;
     private String userLanguage;
+
+    private DashboardResModel dashboardResModel;
 
     private AssignmentReqModel assignmentReqModel;
     private boolean tooltipStatus;
@@ -57,5 +60,13 @@ public class PrefModel implements Serializable {
 
     public void setTooltipStatus(boolean tooltipStatus) {
         this.tooltipStatus = tooltipStatus;
+    }
+
+    public DashboardResModel getDashboardResModel() {
+        return dashboardResModel;
+    }
+
+    public void setDashboardResModel(DashboardResModel dashboardResModel) {
+        this.dashboardResModel = dashboardResModel;
     }
 }

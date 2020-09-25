@@ -2,8 +2,13 @@ package com.auro.scholr.core.network;
 
 public interface URLConstant {
 
+
     String BASE_URL = "https://auroscholar.com/api/"; // PRODUCTION
   //  String BASE_URL = "http://demo.auroscholar.com/api/";  // SIT
+
+    //String BASE_URL = "https://auroscholar.com/api/"; // PRODUCTION
+    // String BASE_URL = "http://demo.auroscholar.com/api/";  // SIT
+    // String BASE_URL = "http://demo.auroscholar.com/api/";  // SIT
 
     // String ZOHO_BASE_URL = "https://auroscholar.com/api/";
 
@@ -46,6 +51,7 @@ public interface URLConstant {
     String GET_ZOHO_APPOINTMENT = BASE_URL + "get_zoho_slot.php";
 
     String BOOK_ZOHO_APPOINTMENT = BASE_URL + "book_zoho_slot.php";
+
     String ACCEPT_STUDENT_INVITE = BASE_URL + "student_challenge_accepted.php";
 
     String PAYTM_API = BASE_URL + "paytm_wallet_transfer.php";
@@ -53,5 +59,13 @@ public interface URLConstant {
     String PAYTM_UPI_TRANSFER = BASE_URL + "paytm_upi_transfer.php";
 
     String PAYTM_ACCOUNT_TRANSFRER = BASE_URL + "paytm_account_transfer.php";
+
+    String FIND_FRIEND_API = BASE_URL + "find_friend.php";
+
+    String SEND_FRIEND_REQUEST_API = BASE_URL + "friend_request.php";
+
+    String FRIEND_REQUEST_LIST_API = BASE_URL + "friend_request_list.php";
+
+    String FRIEND_ACCEPT_API = BASE_URL + "friend_accepted.php";
 
 }

@@ -144,6 +144,7 @@ public interface AppConstant {
         String LANGUAGE = "language";
         String LATITUDE = "latitude";
         String LONGITUDE = "longitude";
+        String RADIUS = "radius";
         String MOBILE_MODEL = "mobile_model";
         String MOBILE_MANUFACTURER = "mobile_manufacturer";
         String MOBILE_VERSION = "mobile_version";

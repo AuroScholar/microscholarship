@@ -1,13 +1,6 @@
 package com.auro.scholr.core.application.di.module;
 
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
-import com.auro.scholr.home.data.datasource.database.HomeDbDataSourceImp;
-import com.auro.scholr.home.data.datasource.remote.HomeRemoteApi;
-import com.auro.scholr.home.data.datasource.remote.HomeRemoteDataSourceImp;
-import com.auro.scholr.home.data.repository.HomeRepo;
-import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
-import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
-import com.auro.scholr.home.domain.usecase.HomeUseCase;
 import com.auro.scholr.payment.data.datasource.remote.PaymentRemoteApi;
 import com.auro.scholr.payment.data.datasource.remote.PaymentRemoteDataSourceImp;
 import com.auro.scholr.payment.data.repository.PaymentRepo;
@@ -83,6 +76,4 @@ public class PaymentModule {
     ViewModelFactory provideUPIFragmentViewModelFactory(PaymentUseCase paymentUseCase, PaymentRemoteUseCase paymentRemoteUseCase) {
         return new ViewModelFactory(paymentUseCase, paymentRemoteUseCase);
     }
-
-
 }

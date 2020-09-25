@@ -315,6 +315,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         // openQuizTestFragment(dashboardResModel);
                     } else if (responseApi.apiTypeStatus == GRADE_UPGRADE) {
                         DashboardResModel dashboardResModel = (DashboardResModel) responseApi.data;
+                        handleProgress(1, "");
+                        dashboardResModel = (DashboardResModel) responseApi.data;
+                        //setPrefForTesting();
                         if (!dashboardResModel.isError()) {
                             if (customDialog != null) {
                                 customDialog.dismiss();
@@ -969,6 +972,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
         handleProgress(1, "");
         dashboardResModel = (DashboardResModel) responseApi.data;
+        AppUtil.setDashboardResModelToPref(dashboardResModel);
         //setPrefForTesting();
         if (!dashboardResModel.isError()) {
             unLockDrawerMenu();
@@ -991,5 +995,5 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     private void callClassUpgradeApi() {
         quizViewModel.gradeUpgrade(AuroApp.getAuroScholarModel());
     }
-
 }
+
