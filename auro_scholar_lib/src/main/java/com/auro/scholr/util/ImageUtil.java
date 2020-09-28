@@ -9,15 +9,10 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
-import android.net.Uri;
 import android.os.Environment;
 import android.widget.ImageView;
 
-import androidx.annotation.Nullable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
-import androidx.databinding.BindingAdapter;
-
+import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -27,11 +22,14 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.auro.scholr.R;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+
+import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 public class ImageUtil {
 
@@ -244,6 +242,8 @@ public class ImageUtil {
         Glide.with(imageView.getContext())
                 .asBitmap()
                 .load(imagePath)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .listener(new RequestListener<Bitmap>() {
                               @Override
                               public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Bitmap> target, boolean b) {

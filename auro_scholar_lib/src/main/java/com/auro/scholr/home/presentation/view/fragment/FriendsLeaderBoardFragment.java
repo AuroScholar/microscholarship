@@ -94,14 +94,18 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         if (AuroApp.getAuroScholarModel() != null) {
             AuroApp.getAuroScholarModel().setSdkFragmentType(AppConstant.FragmentType.QUIZ_DASHBOARD);
         }
-
         initialiseTabs();
+       loadData();
+
+
+    }
+
+    public void loadData(){
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         DashboardResModel dashboardResModel = prefModel.getDashboardResModel();
         if (dashboardResModel != null) {
             viewModel.friendRequestListData(Integer.valueOf(dashboardResModel.getAuroid()));
         }
-
-
     }
 
     private void setDataUi() {
@@ -304,7 +308,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     public void onClick(View v) {
         if (v.getId() == R.id.tvShowFriendRequests) {
             if (friendRequestList != null && friendRequestList.getFriends() != null && friendRequestList.getFriends().size()>0) {
-                FriendRequestListDialogFragment bottomSheetFragment = new FriendRequestListDialogFragment(friendRequestList);
+                FriendRequestListDialogFragment bottomSheetFragment = new FriendRequestListDialogFragment(this,friendRequestList);
                 bottomSheetFragment.show(getParentFragmentManager(), bottomSheetFragment.getTag());
                
             }
