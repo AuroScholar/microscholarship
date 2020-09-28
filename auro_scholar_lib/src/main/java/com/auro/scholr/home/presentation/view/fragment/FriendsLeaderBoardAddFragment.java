@@ -406,7 +406,7 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
         LatLng studentLocation;
 
         if (getActivity() != null && isAdded()) {
-            View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
+            View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.auro_custom_marker_layout, null);
 
             int i = 0;
             markersList.clear();
@@ -539,7 +539,7 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
 
             LatLng sydney = new LatLng(latitude, longitude);
 
-            View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
+            View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.auro_custom_marker_layout, null);
 
             if (mMap != null) {
                 mMap.addMarker(new MarkerOptions()
