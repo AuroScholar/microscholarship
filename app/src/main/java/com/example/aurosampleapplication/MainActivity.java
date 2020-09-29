@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }else
                 {
                    // openGenricSDK(mobileNumber,student_class);
-                    openScholarSpecificSdk(mobileNumber,student_class);
+                    openGenricSDK(mobileNumber,student_class);
                 }
 
                 //openScholarSpecificSdk();
