@@ -179,7 +179,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     private void handleProgress(int i, String msg) {
         switch (i) {
             case 0:
-
+                binding.tvRequestCount.setVisibility(View.GONE);
                 break;
 
             case 1:

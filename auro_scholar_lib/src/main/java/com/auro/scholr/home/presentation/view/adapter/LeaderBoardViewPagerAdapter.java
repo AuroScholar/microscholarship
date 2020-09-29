@@ -16,7 +16,7 @@ public class LeaderBoardViewPagerAdapter extends FragmentPagerAdapter {
 
 
     public LeaderBoardViewPagerAdapter(Context c, FragmentManager fm, int totalTabs) {
-        super(fm);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         context = c;
         this.totalTabs = totalTabs;
 
