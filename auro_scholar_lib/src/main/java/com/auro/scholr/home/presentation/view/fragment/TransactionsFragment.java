@@ -30,6 +30,8 @@ import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
 import com.auro.scholr.home.presentation.view.adapter.MontlyWiseAdapter;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
 import com.auro.scholr.home.presentation.viewmodel.TransactionsViewModel;
+import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
+import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 
@@ -137,6 +139,8 @@ public class TransactionsFragment extends BaseFragment implements View.OnClickLi
             getActivity().getSupportFragmentManager().popBackStack();
         } else if (v.getId() == R.id.lang_eng) {
             changeLanguage();
+        } else if (v.getId() == R.id.bt_transfer_money) {
+            openSendMoneyFragment();
         }
     }
 
@@ -145,11 +149,11 @@ public class TransactionsFragment extends BaseFragment implements View.OnClickLi
         String text = binding.toolbarLayout.langEng.getText().toString();
         if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase(AppConstant.HINDI)) {
             ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
-          //  resources = ViewUtil.getCustomResource(getActivity());
+            //  resources = ViewUtil.getCustomResource(getActivity());
             setLanguageText(AppConstant.ENGLISH);
         } else {
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
-          //  resources = ViewUtil.getCustomResource(getActivity());
+            //  resources = ViewUtil.getCustomResource(getActivity());
             setLanguageText(AppConstant.HINDI);
         }
         reloadFragment();
@@ -186,6 +190,14 @@ public class TransactionsFragment extends BaseFragment implements View.OnClickLi
         } else {
             binding.amountTrajection.txtAmountVerification.setText(rs + "0");
         }
+
+        int approvedValue = ConversionUtil.INSTANCE.convertStringToInteger(dashboardResModel.getApproved_scholarship_money());
+        if (approvedValue > 0) {
+            binding.amountTrajection.btTransferMoney.setOnClickListener(this);
+            binding.amountTrajection.btTransferMoney.setVisibility(View.VISIBLE);
+        } else {
+            binding.amountTrajection.btTransferMoney.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -207,5 +219,25 @@ public class TransactionsFragment extends BaseFragment implements View.OnClickLi
                 return false;
             }
         });
+    }
+
+
+    public void openSendMoneyFragment() {
+        Bundle bundle = new Bundle();
+        SendMoneyFragment sendMoneyFragment = new SendMoneyFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        sendMoneyFragment.setArguments(bundle);
+        openFragment(sendMoneyFragment);
+    }
+
+    private void openFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(AuroApp.getFragmentContainerUiId(), fragment, TransactionsFragment.class
+                        .getSimpleName())
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
+
     }
 }

@@ -238,7 +238,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setStudentClass(student_class);
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setReferralLink("");
-        inputModel.setPartnerSource("IDREMDvF4g");
+       // inputModel.setPartnerSource("IDREMDvF4g");// Demo
+        inputModel.setPartnerSource("SCHO34kyd8");//Live
         inputModel.setActivity(this);
         inputModel.setFragmentContainerUiId(R.id.home_container);
         openFragment(AuroScholar.startAuroSDK(inputModel));
