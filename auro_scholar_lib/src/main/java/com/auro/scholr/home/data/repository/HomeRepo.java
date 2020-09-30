@@ -36,7 +36,7 @@ public interface HomeRepo {
 
         Single<Response<JsonObject>> findFriendApi(double lat, double longt, double radius);
 
-        Single<Response<JsonObject>> sendFriendRequestApi(int requested_by_id, int requested_user_id);
+        Single<Response<JsonObject>> sendFriendRequestApi(int requested_by_id, int requested_user_id, String requested_by_phone, String requested_user_phone);
 
         Single<Response<JsonObject>> friendRequestListApi(int requested_by_id);
 

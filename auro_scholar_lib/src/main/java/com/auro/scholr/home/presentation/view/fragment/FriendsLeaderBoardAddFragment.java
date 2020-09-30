@@ -468,7 +468,7 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
                                     PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
                                     DashboardResModel dashboardResModel = prefModel.getDashboardResModel();
                                     if (dashboardResModel != null) {
-                                        viewModel.sendFriendRequestData(Integer.valueOf(dashboardResModel.getAuroid()), studentDetails.getRegistration_id());
+                                        viewModel.sendFriendRequestData(Integer.valueOf(dashboardResModel.getAuroid()), studentDetails.getRegistration_id(), dashboardResModel.getPhonenumber(), studentDetails.getMobile_no());
                                     }
                                     // viewModel.sendFriendRequestData(Pref,studentDetails.getRegistration_id());
                                 }

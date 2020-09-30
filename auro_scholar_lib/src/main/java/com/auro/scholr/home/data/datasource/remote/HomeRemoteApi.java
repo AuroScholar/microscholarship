@@ -81,7 +81,7 @@ public interface HomeRemoteApi {
 
     @POST(URLConstant.SEND_FRIEND_REQUEST_API)
     @FormUrlEncoded
-    Single<Response<JsonObject>> sendFriendRequestApi(@FieldMap Map<String, Integer> params);
+    Single<Response<JsonObject>> sendFriendRequestApi(@FieldMap Map<String, Object> params);
 
     @POST(URLConstant.FRIEND_REQUEST_LIST_API)
     @FormUrlEncoded
