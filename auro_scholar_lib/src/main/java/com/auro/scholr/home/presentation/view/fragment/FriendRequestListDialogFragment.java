@@ -117,7 +117,7 @@ public class FriendRequestListDialogFragment extends BottomSheetDialogFragment i
                         if (acceptInviteRequest.isError()) {
                             handleProgress(1, acceptInviteRequest.getMessage());
                         } else if (acceptInviteRequest.getStatus().equalsIgnoreCase("success")) {
-                            handleProgress(1, "Friend request sent successfully");
+                            handleProgress(1, "Friend request accepted.");
                             if (friendsLeaderBoardFragment != null) {
                                 friendsLeaderBoardFragment.loadData();
                             }
