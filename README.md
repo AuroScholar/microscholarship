@@ -21,7 +21,7 @@ Step 1 : Add the dependency in your app/build.gradle(:app)
 
 ```swift
 dependencies {
-	          implementation 'com.github.AuroScholar:microscholarship:1.1.60'
+	          implementation 'com.github.AuroScholar:microscholarship:1.1.66'
 
 	}	
 ```
@@ -86,7 +86,7 @@ AuroScholarInputModel inputModel= new AuroScholarInputModel();
 // Important Params
 inputModel.setMobileNumber("mobile number here"); //Mandatory
 inputModel.setActivity(Activity Context Here); //Mandatory
-inputModel.setFragmentContainerUiId(Container id Here); //Mandatory
+inputModel.setFragmentContainerUiId(Container id Here); //Mandatory Example :- R.id.containerId
 inputModel.setStudentClass("put student class here"); //Mandatory
 inputModel.setReferralLink("Put here branch or any other referral Link");
 inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
