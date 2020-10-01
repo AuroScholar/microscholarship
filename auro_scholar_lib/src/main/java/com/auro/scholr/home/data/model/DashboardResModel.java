@@ -19,7 +19,6 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private boolean error;
 
-
     @SerializedName("phonenumber")
     @Expose
     private String phonenumber;
@@ -184,6 +183,10 @@ public class DashboardResModel implements Parcelable {
     String leadQualified;
 
 
+    @SerializedName("feature")
+    @Expose
+    int feature;
+
     protected DashboardResModel(Parcel in) {
         status = in.readString();
         error = in.readByte() != 0;
@@ -228,6 +231,7 @@ public class DashboardResModel implements Parcelable {
         isPrivateTution = in.readString();
         privateTutionType = in.readString();
         leadQualified = in.readString();
+        feature = in.readInt();
     }
 
     @Override
@@ -275,6 +279,7 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(isPrivateTution);
         dest.writeString(privateTutionType);
         dest.writeString(leadQualified);
+        dest.writeInt(feature);
     }
 
     @Override
@@ -293,6 +298,14 @@ public class DashboardResModel implements Parcelable {
             return new DashboardResModel[size];
         }
     };
+
+    public int getFeature() {
+        return feature;
+    }
+
+    public void setFeature(int feature) {
+        this.feature = feature;
+    }
 
     public String getLeadQualified() {
         return leadQualified;

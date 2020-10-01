@@ -111,8 +111,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(this, "Please Enter class", Toast.LENGTH_SHORT).show();
                 }else
                 {
-                   // openGenricSDK(mobileNumber,student_class);
                     openGenricSDK(mobileNumber,student_class);
+                    //openScholarSpecificSdk(mobileNumber,student_class);
                 }
 
                 //openScholarSpecificSdk();
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareType(null);
         auroScholarDataModel.setShareIdentity(null);
         auroScholarDataModel.setActivity(this);
-        auroScholarDataModel.setPartnerSource("SCHO34kyd8");
+        auroScholarDataModel.setPartnerSource("OKIEcVf5I9");
         auroScholarDataModel.setSdkFragmentType(AppConstant.FragmentType.QUIZ_DASHBOARD);
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         auroScholarDataModel.setEmailVerified(true);
@@ -233,8 +233,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setStudentClass(student_class);
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setReferralLink("");
-       // inputModel.setPartnerSource("IDREMDvF4g");// Demo
-        inputModel.setPartnerSource("SCHO34kyd8");//Live
+        //inputModel.setPartnerSource("IDREMDvF4g");// Demo with leaderboard
+        //inputModel.setPartnerSource("OKIEcVf5I9");// Demo when no leaderboard wants
+        inputModel.setPartnerSource("SCHO34kyd8");//Live with leaderboard
+       // inputModel.setPartnerSource("SELFH6UACk");//Live without leaderboard
         inputModel.setActivity(this);
         inputModel.setFragmentContainerUiId(R.id.home_container);
         openFragment(AuroScholar.startAuroSDK(inputModel));

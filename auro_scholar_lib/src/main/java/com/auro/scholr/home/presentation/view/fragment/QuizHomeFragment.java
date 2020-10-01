@@ -377,12 +377,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.GONE);
             binding.shimmerViewQuiz.setVisibility(View.VISIBLE);
-
             binding.shimmerViewQuiz.startShimmerAnimation();
         } else if (value == 1) {
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.VISIBLE);
-            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.VISIBLE);
+            checkForFriendsLeaderBoard();
             binding.fab.setVisibility(View.VISIBLE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
             binding.shimmerViewQuiz.stopShimmerAnimation();
@@ -402,6 +401,16 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             });
         }
 
+    }
+
+    private void checkForFriendsLeaderBoard() {
+        if (dashboardResModel.getFeature() == 0) {
+            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.VISIBLE);
+            binding.navView.getMenu().findItem(R.id.nav_friends_leaderboard).setVisible(true);
+        } else {
+            binding.customUiSnackbar.inviteParentLayout.setVisibility(View.GONE);
+            binding.navView.getMenu().findItem(R.id.nav_friends_leaderboard).setVisible(false);
+        }
     }
 
     private void setDataOnUi(DashboardResModel dashboardResModel) {
@@ -968,10 +977,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
 
     private void onApiSuccess(ResponseApi responseApi) {
-        binding.swipeRefreshLayout.setRefreshing(false);
-
-        handleProgress(1, "");
         dashboardResModel = (DashboardResModel) responseApi.data;
+        binding.swipeRefreshLayout.setRefreshing(false);
+        handleProgress(1, "");
         AppUtil.setDashboardResModelToPref(dashboardResModel);
         //setPrefForTesting();
         if (!dashboardResModel.isError()) {
