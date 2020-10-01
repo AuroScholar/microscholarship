@@ -92,7 +92,15 @@ inputModel.setReferralLink("Put here branch or any other referral Link");
 inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
 inputModel.setPartnerSource("Your Id here"); // This id provided by Auro Scholar to the partner.
 //This method returns a Fragment Instance
-Fragment frag= AuroScholar.startAuroSDK(inputModel);
+Fragment fragment= AuroScholar.startAuroSDK(inputModel);
+
+  ((AppCompatActivity) (this)).getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.home_container, fragment, SampleFragment.class
+                        .getSimpleName())
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
 
 ```
 Step 6 : Add these lines in activity in onActivityResult( ) Method.
