@@ -442,7 +442,7 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
                         @Override
                         public boolean onMarkerClick(Marker marker) {
                             binding.parentLayout.setVisibility(View.VISIBLE);
-                            if (marker.getTag() == null) {
+                            if (marker.getTag() == null || resModel.getStudent()==null || resModel.getStudent().size() ==0 ) {
                                 return false;
                             }
                             NearByFriendList.Student studentDetails = resModel.getStudent().get((Integer) marker.getTag());
