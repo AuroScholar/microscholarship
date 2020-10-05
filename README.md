@@ -1,45 +1,121 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+## AuroScholar MicroScholarship Android  library
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+![alt text](./AuroSholar.png "AuroScholar Logo")
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+### Requirements
+- JDK 8
+- Latest Android SDK tools
+- Latest Android platform tools
+- Android SDK 21 or newer
+- AndroidX
 
----
+### Configure
+- ./keystore.properties
+- Firebase - google-services.json
 
-## Edit a file
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+### Auro Scholar SDK Implementation Steps 
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+Step 1 : Add the dependency in your app/build.gradle(:app)
+----
 
----
+```swift
+dependencies {
+	          implementation 'com.github.AuroScholar:microscholarship:1.1.60'
 
-## Create a file
+	}	
+```
 
-Next, you’ll add a new file to this repository.
+  
+Step 2 : Enable the databinding and add compileOptions in your app/build.gradle(:app) .
+----
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+```swift
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+	android {
+ 		compileOptions {
+ 			sourceCompatibility = '1.8'
+ 			targetCompatibility = '1.8'
+ 		}
+ 		dataBinding {
+ 			enabled = true
+ 		}
+	}
 
----
+```
+Step 3 : Add the JitPack repository in your root build.gradle at the end of repositories and then use authToken and username.
+----
 
-## Clone a repository
+```swift
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
+allprojects {
+		repositories {
+			maven { url 'https://jitpack.io' }
+		}
+	}
+	
+```
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
+  
+Step 4 : Add google gms service dependency in your build.gradle(Application).
+----
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+```swift
+
+ repositories {
+ maven { url 'https://jitpack.io' }
+ google()
+ jcenter()
+
+ }
+
+ dependencies {
+ classpath 'com.android.tools.build:gradle:3.6.2'
+ classpath 'com.google.gms:google-services:+'
+ }
+}
+
+```
+
+
+Step 5 : For open then AuroScholar Fragment or Start the Auro Scholar sdk
+----
+```swift
+
+AuroScholarInputModel inputModel= new AuroScholarInputModel();
+// Important Params
+inputModel.setMobileNumber("mobile number here"); //Mandatory
+inputModel.setActivity(Activity Context Here); //Mandatory
+inputModel.setFragmentContainerUiId(Container id Here); //Mandatory
+inputModel.setStudentClass("put student class here"); //Mandatory
+inputModel.setReferralLink("Put here branch or any other referral Link");
+inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
+inputModel.setPartnerSource("Your Id here"); // This id provided by Auro Scholar to the partner.
+//This method returns a Fragment Instance
+Fragment frag= AuroScholar.startAuroSDK(inputModel);
+
+```
+Step 6 : Add these lines in activity in onActivityResult( ) Method.
+----
+
+```swift
+
+@Override
+protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+ super.onActivityResult(requestCode, resultCode, data);
+ //must param to get the acitivity
+ for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+ fragment.onActivityResult(requestCode, resultCode, data);
+ }
+}
+
+```
+
+
+### Visit Our WebSite
+https://auroscholar.com/
+
+## AuroScholar MicroScholarship
+
+Auro Scholar is the world's 1st Micro Scholarship program aimed at encouraging Indian students to improve their learning continuously by authenticating their learning levels (through Mobile Quizzes) &amp; identity (through Mobile Wallets), thereby creating mass incentives to learn.  At Auro Scholar platform, students can take curriculum aligned 10-min Mobile Quizzes at their preferred place and time. If you score 80% in a Quiz, you can get a scholarship of up to Rs 1000 every month! Students who score less than 80% can study and retake the Quizzes to win scholarships.  Auro Scholar is an initiative of Sri Aurobindo Society, Puducherry, which has a 60+ year legacy and 300+ centres around the world. The Society has a deep focus on Education Transformation, in addition to multiple other social objectives.
+

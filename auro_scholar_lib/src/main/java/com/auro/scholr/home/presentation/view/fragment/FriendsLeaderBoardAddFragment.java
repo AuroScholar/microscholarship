@@ -1,8 +1,10 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -60,6 +62,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -212,8 +215,7 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
             case 1:
                 if (resModel.getStudent() != null && resModel.getStudent().size() < 11) {
                     radius += 5;
-                }
-                else{
+                } else {
                     radius = 5;
                 }
                 loadStudentonMaps();
@@ -333,7 +335,7 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
         if (mMap != null) {
 //            radius = getMapVisibleRadius(mMap.getProjection().getVisibleRegion());
             getMapVisibleRadius(mMap.getProjection().getVisibleRegion());
-            radius=5;
+            radius = 5;
             viewModel.findFriendData(mapPosotion.latitude, mapPosotion.longitude, radius);
         }
     }
@@ -373,6 +375,11 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
             mMap.getUiSettings().setZoomControlsEnabled(true);
             mMap.getUiSettings().setAllGesturesEnabled(true);
             mMap.animateCamera(CameraUpdateFactory.zoomTo(zoomLevel));
+            if (!(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+                // TODO: Consider calling
+                mMap.setMyLocationEnabled(true);
+            }
+
 
 //            mMap.setOnCameraMoveStartedListener(DoctorSearchMapFragment.this);
 //            mMap.setOnCameraMoveListener(DoctorSearchMapFragment.this);
@@ -406,7 +413,7 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
         LatLng studentLocation;
 
         if (getActivity() != null && isAdded()) {
-            View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
+            View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.auro_custom_marker_layout, null);
 
             int i = 0;
             markersList.clear();
@@ -461,7 +468,7 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
                                     PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
                                     DashboardResModel dashboardResModel = prefModel.getDashboardResModel();
                                     if (dashboardResModel != null) {
-                                        viewModel.sendFriendRequestData(Integer.valueOf(dashboardResModel.getAuroid()), studentDetails.getRegistration_id());
+                                        viewModel.sendFriendRequestData(Integer.valueOf(dashboardResModel.getAuroid()), studentDetails.getRegistration_id(), dashboardResModel.getPhonenumber(), studentDetails.getMobile_no());
                                     }
                                     // viewModel.sendFriendRequestData(Pref,studentDetails.getRegistration_id());
                                 }
@@ -534,12 +541,16 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
     private void callServiceWhenLocationReceived() {
         LocationModel locationModel = LocationUtil.getLocationData();
         if (locationModel != null && locationModel.getLatitude() != null) {
+            if (mMap!=null && !(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+                // TODO: Consider calling
+                mMap.setMyLocationEnabled(true);
+            }
             latitude = Double.parseDouble(locationModel.getLatitude());
             longitude = Double.parseDouble(locationModel.getLongitude());
 
             LatLng sydney = new LatLng(latitude, longitude);
 
-            View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
+            View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.auro_custom_marker_layout, null);
 
             if (mMap != null) {
                 mMap.addMarker(new MarkerOptions()

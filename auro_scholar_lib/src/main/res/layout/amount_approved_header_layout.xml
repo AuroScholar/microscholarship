@@ -102,7 +102,6 @@
                     android:layout_height="@dimen/_90sdp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-
                     android:background="@color/color_dim_grey"/>
 
             </RelativeLayout>
@@ -138,6 +137,24 @@
                     android:textSize="@dimen/_16sdp"
                     android:textStyle="bold"
                     app:Font="Poppins-SemiBold.ttf" />
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/bt_transfer_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/button_curved_orange"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/tranfer_money"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_8sdp"
+                    android:visibility="visible"
+                    app:Font="Poppins-Regular.ttf"
+                    app:layout_constraintStart_toEndOf="@+id/serial_number"
+                    app:layout_constraintTop_toBottomOf="@+id/text_transfer_msg" />
 
             </LinearLayout>
 

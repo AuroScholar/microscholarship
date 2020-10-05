@@ -44,8 +44,11 @@ public class FriendRequestListDialogFragment extends BottomSheetDialogFragment i
 
     FriendsLeaderShipViewModel viewModel;
 
-    public FriendRequestListDialogFragment(FriendRequestList friendRequestList) {
+    FriendsLeaderBoardFragment friendsLeaderBoardFragment;
+
+    public FriendRequestListDialogFragment(FriendsLeaderBoardFragment friendsLeaderBoardFragment, FriendRequestList friendRequestList) {
         this.friendRequestList = friendRequestList;
+        this.friendsLeaderBoardFragment = friendsLeaderBoardFragment;
     }
 
     @Override
@@ -111,10 +114,13 @@ public class FriendRequestListDialogFragment extends BottomSheetDialogFragment i
                     if (responseApi.apiTypeStatus == ACCEPT_INVITE_REQUEST) {
                         AcceptInviteRequest acceptInviteRequest = (AcceptInviteRequest) responseApi.data;
 
-                        if(acceptInviteRequest.isError()) {
+                        if (acceptInviteRequest.isError()) {
                             handleProgress(1, acceptInviteRequest.getMessage());
-                        }else if (acceptInviteRequest.getStatus().equalsIgnoreCase("success")){
-                            handleProgress(1, "Friend request sent successfully");
+                        } else if (acceptInviteRequest.getStatus().equalsIgnoreCase("success")) {
+                            handleProgress(1, "Friend request accepted.");
+                            if (friendsLeaderBoardFragment != null) {
+                                friendsLeaderBoardFragment.loadData();
+                            }
                         }
 
                     }
@@ -146,7 +152,7 @@ public class FriendRequestListDialogFragment extends BottomSheetDialogFragment i
                 break;
 
             case 1:
-                Toast.makeText(getActivity(),msg,Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
                 dismiss();
                 break;
 

@@ -123,9 +123,6 @@ public class FriendsLeaderBoardListFragment extends BaseFragment implements View
 
         setDataUi();
 
-        if (!isStateRestore) {
-            viewModel.getFriendsListData();
-        }
         viewModel.getDashBoardData(AuroApp.getAuroScholarModel());
 
     }
@@ -323,6 +320,7 @@ public class FriendsLeaderBoardListFragment extends BaseFragment implements View
     public void onResume() {
         super.onResume();
         setKeyListner();
+        viewModel.getFriendsListData();
     }
 
 

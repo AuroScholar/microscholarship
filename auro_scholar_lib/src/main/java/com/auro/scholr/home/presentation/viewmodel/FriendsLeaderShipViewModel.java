@@ -153,10 +153,10 @@ public class FriendsLeaderShipViewModel extends ViewModel {
         getCompositeDisposable().add(disposable);
     }
 
-    public void sendFriendRequestData(int requested_by_id, int requested_user_id) {
+    public void sendFriendRequestData(int requested_by_id, int requested_user_id, String requested_by_phone, String requested_user_phone) {
         Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
             if (hasInternet) {
-                sendFriendRequestApi(requested_by_id,requested_user_id);
+                sendFriendRequestApi(requested_by_id,requested_user_id,requested_by_phone,requested_user_phone);
             } else {
                 serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.SEND_FRIENDS_REQUEST));
             }
@@ -234,8 +234,8 @@ public class FriendsLeaderShipViewModel extends ViewModel {
                                              ));
     }
 
-    private void sendFriendRequestApi(int requested_by_id, int requested_user_id) {
-        getCompositeDisposable().add(homeRemoteUseCase.sendFriendRequestApi(  requested_by_id,  requested_user_id).subscribeOn(Schedulers.io())
+    private void sendFriendRequestApi(int requested_by_id, int requested_user_id, String requested_by_phone, String requested_user_phone) {
+        getCompositeDisposable().add(homeRemoteUseCase.sendFriendRequestApi(  requested_by_id,  requested_user_id,requested_by_phone,requested_user_phone).subscribeOn(Schedulers.io())
                                              .observeOn(AndroidSchedulers.mainThread())
                                              .doOnSubscribe(new Consumer<Disposable>() {
                                                  @Override

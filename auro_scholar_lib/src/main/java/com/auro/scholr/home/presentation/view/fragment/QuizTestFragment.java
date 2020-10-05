@@ -595,8 +595,9 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
         this.getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                  //  getActivity().getSupportFragmentManager().popBackStack();
+
+                if( keyCode == KeyEvent.KEYCODE_BACK && event.getAction()== KeyEvent.ACTION_DOWN)
+                {
                     alertDialogForQuitQuiz();
                     return true;
                 }
@@ -606,7 +607,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
     }
 
     public void alertDialogForQuitQuiz(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Are you sure you want to quit the quiz ?");
 
         // Set the alert dialog yes button click listener
@@ -616,9 +617,8 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
                 // Do something when user clicked the Yes button
                 // Set the TextView visibility GONE
                 // tv.setVisibility(View.GONE);
-                dialog.dismiss();
                 getActivity().getSupportFragmentManager().popBackStack();
-
+                dialog.dismiss();
             }
         });
         // Set the alert dialog no button click listener

@@ -1,30 +1,21 @@
 package com.example.aurosampleapplication;
 
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.content.res.AssetManager;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-
 
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.SdkCallBack;
@@ -35,7 +26,6 @@ import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.TextUtil;
-import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.encryption.Cryptor;
 import com.example.aurosampleapplication.databinding.ActivityMainBinding;
 
@@ -44,6 +34,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 import java.util.regex.Pattern;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -63,16 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.btSdk.setOnClickListener(this);
         binding.btOpen.setOnClickListener(this);
-        // binding.enterNumber.setText("8178307851");
         binding.btSdk.setVisibility(View.VISIBLE);
-        // printHashKey(this);
-        String jsonString = "{\"userid\":\"9999999999\",\"mode\":\"W\"}";
-        String secret = "5d41402abc4b2a76b9719d911017c592";
-        String tt = new Cryptor().HMAC_SHA256(secret, jsonString);
-        //  AppLogger.e("chhonker",tt);
         //printDeviceInfo();
-
-
       /*  Locale locale = new Locale("hi");
         Resources standardResources = this.getResources();
         AssetManager assets = standardResources.getAssets();
@@ -80,10 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Configuration config = new Configuration(standardResources.getConfiguration());
         config.locale = locale;
         Resources res = new Resources(assets, metrics, config);*/
-
         /**/
-
-
     }
 
 
@@ -116,11 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(this, "Please Enter class", Toast.LENGTH_SHORT).show();
                 }else
                 {
-                   // openGenricSDK(mobileNumber,student_class);
-                    openScholarSpecificSdk(mobileNumber,student_class);
+                    openGenricSDK(mobileNumber,student_class);
                 }
 
-                //openScholarSpecificSdk();
                 hideKeyboard(this);
                 break;
             case R.id.bt_open:
@@ -135,60 +117,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
-    public static void hideKeyboard(Context context) {
-        if (context == null) {
-            return;
-        }
-        View view = ((AppCompatActivity) context).getCurrentFocus();
-        if (view != null) {
-            ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-    }
-
-    /*  auroScholarDataModel.setMobileNumber("7503600686");
-        auroScholarDataModel.setScholrId("880426");
-        auroScholarDataModel.setStudentClass("6");*/
-
-    private void openScholarSpecificSdk(String mobileNumber, String student_class) {
-        AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber(mobileNumber);
-        auroScholarDataModel.setStudentClass(student_class);
-        auroScholarDataModel.setScholrId("880426");
-        auroScholarDataModel.setRegitrationSource(null);
-        auroScholarDataModel.setShareType(null);
-        auroScholarDataModel.setShareIdentity(null);
-        auroScholarDataModel.setActivity(this);
-        auroScholarDataModel.setPartnerSource("SCHO34kyd8");
-        auroScholarDataModel.setSdkFragmentType(AppConstant.FragmentType.QUIZ_DASHBOARD);
-        auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
-        auroScholarDataModel.setEmailVerified(true);
-        auroScholarDataModel.setSdkcallback(new SdkCallBack() {
-            @Override
-            public void callBack(String message) {
-                /*Api response here*/
-                AppLogger.e("Chhonker", "callback ---" + message);
-            }
-
-            @Override
-            public void logOut() {
-                AppLogger.e("Chhonker", "Logout");
-            }
-
-            @Override
-            public void commonCallback(Status status, Object o) {
-                switch (status) {
-                    case BOOK_TUTOR_SESSION_CLICK:
-                        /*write your code here*/
-                        AppLogger.e("Chhonker", "commonCallback");
-                        break;
-                }
-            }
-
-        });
-        //AuroScholar.openAuroDashboardFragment(auroScholarDataModel);
-        openFragment(AuroScholar.openAuroDashboardFragment(auroScholarDataModel));
-    }
 
     private void openTeacherSDK() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
@@ -230,15 +158,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //   openFragment(AuroScholar.startAuroSDK(inputModel));
     }
 
-    /*inputModel.setMobileNumber("8700808003");
-            inputModel.setStudentClass("11");*/
+
+    public static void hideKeyboard(Context context) {
+        if (context == null) {
+            return;
+        }
+        View view = ((AppCompatActivity) context).getCurrentFocus();
+        if (view != null) {
+            ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+
+
     private void openGenricSDK(String mobileNumber, String student_class) {
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
         inputModel.setMobileNumber(mobileNumber);//7503600601
         inputModel.setStudentClass(student_class);
         inputModel.setRegitrationSource("AuroScholr");
         inputModel.setReferralLink("");
-        inputModel.setPartnerSource("IDREMDvF4g");
+        inputModel.setPartnerSource("XXXXXXX"); //this id is provided by auroscholar for valid partner
         inputModel.setActivity(this);
         inputModel.setFragmentContainerUiId(R.id.home_container);
         openFragment(AuroScholar.startAuroSDK(inputModel));
