@@ -10,7 +10,6 @@ import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.util.AppLogger;
-import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
 import com.google.gson.JsonObject;
@@ -155,5 +154,42 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         return homeRemoteApi.acceptInviteApi(params);
     }
 
+    @Override
+    public Single<Response<JsonObject>> upgradeClass(AuroScholarDataModel model) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
+        params.put(AppConstant.DashBoardParams.STUDENT_CLASS, model.getStudentClass());
+        return homeRemoteApi.gradeUpgrade(params);
+    }
 
+    public Single<Response<JsonObject>> findFriendApi(double lat, double longt, double radius) {
+        Map<String, Double> params = new HashMap<String, Double>();
+        params.put(AppConstant.DemographicType.LATITUDE, lat);
+        params.put(AppConstant.DemographicType.LONGITUDE, longt);
+        params.put(AppConstant.DemographicType.RADIUS, radius);
+        return homeRemoteApi.findFriendApi(params);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> sendFriendRequestApi(int requested_by_id, int requested_user_id) {
+        Map<String, Integer> params = new HashMap<String, Integer>();
+        params.put("requested_by_id", requested_by_id);
+        params.put("requested_user_id", requested_user_id);
+        return homeRemoteApi.sendFriendRequestApi(params);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> friendRequestListApi(int requested_user_id) {
+        Map<String, Integer> params = new HashMap<String, Integer>();
+        params.put("requested_user_id", requested_user_id);
+        return homeRemoteApi.friendRequestListApi(params);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> friendAcceptApi(int friend_request_id, String request_status) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("friend_request_id", String.valueOf(friend_request_id));
+        params.put("request_status", request_status);
+        return homeRemoteApi.friendAcceptApi(params);
+    }
 }

@@ -616,12 +616,11 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
                 // Do something when user clicked the Yes button
                 // Set the TextView visibility GONE
                 // tv.setVisibility(View.GONE);
-
+                dialog.dismiss();
                 getActivity().getSupportFragmentManager().popBackStack();
 
             }
         });
-
         // Set the alert dialog no button click listener
         builder.setNegativeButton(Html.fromHtml("<font color='#00A1DB'>NO</font>"), new DialogInterface.OnClickListener() {
             @Override
@@ -632,7 +631,6 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
                                 "No Button Clicked",Toast.LENGTH_SHORT).show();*/
             }
         });
-
         AlertDialog dialog = builder.create();
         // Display the alert dialog on interface
         dialog.show();

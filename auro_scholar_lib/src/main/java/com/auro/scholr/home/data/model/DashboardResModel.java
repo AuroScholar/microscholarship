@@ -113,7 +113,7 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private boolean modify;
 
-    @SerializedName("Message")
+    @SerializedName("message")
     @Expose
     private String message;
 

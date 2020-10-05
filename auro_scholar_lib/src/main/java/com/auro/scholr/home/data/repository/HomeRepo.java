@@ -32,7 +32,15 @@ public interface HomeRepo {
 
         Single<Response<JsonObject>> acceptInviteApi(SendInviteNotificationReqModel reqModel);
 
+        Single<Response<JsonObject>> upgradeClass(AuroScholarDataModel model);
 
+        Single<Response<JsonObject>> findFriendApi(double lat, double longt, double radius);
+
+        Single<Response<JsonObject>> sendFriendRequestApi(int requested_by_id, int requested_user_id);
+
+        Single<Response<JsonObject>> friendRequestListApi(int requested_by_id);
+
+        Single<Response<JsonObject>> friendAcceptApi(int friend_request_id, String request_status);
 
     }
 
