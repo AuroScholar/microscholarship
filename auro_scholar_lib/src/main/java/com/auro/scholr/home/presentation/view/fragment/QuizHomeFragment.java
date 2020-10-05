@@ -291,6 +291,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void setLanguage(String language) {
+
         ViewUtil.setLanguage(language);
         // resources = ViewUtil.getCustomResource(getActivity());
     }

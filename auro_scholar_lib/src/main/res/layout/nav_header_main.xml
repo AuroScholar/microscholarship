@@ -10,8 +10,7 @@
     android:paddingLeft="@dimen/_16sdp"
     android:paddingTop="@dimen/_16sdp"
     android:paddingRight="@dimen/_16sdp"
-    android:paddingBottom="@dimen/_16sdp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:paddingBottom="@dimen/_16sdp">
 
     <ImageView
         android:id="@+id/imageView"

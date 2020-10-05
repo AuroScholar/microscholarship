@@ -110,17 +110,17 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         AuroApp.getAppComponent().doInjection(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MyClassroomViewModel.class);
         binding.setLifecycleOwner(this);
-
-
         setRetainInstance(true);
         return binding.getRoot();
     }
+
     public void setAdapter(List<MyClassRoomStudentResModel> resModelList) {
         binding.studentList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.studentList.setHasFixedSize(true);
         leaderBoardAdapter = new MyClassroomAdapter(getActivity(), resModelList, this);
         binding.studentList.setAdapter(leaderBoardAdapter);
     }
+
     @Override
     protected void init() {
         HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_DASHBOARD_FRAGMENT);
@@ -141,6 +141,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
 
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,9 +153,11 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         // Create a callbackManager to handle the login responses.
         callbackManager = CallbackManager.Factory.create();
     }
+
     private void setDataOnUi() {
 
     }
+
     private void monthSpinner() {
         String date = "";
         if (myClassRoomResModel != null && myClassRoomResModel.getTeacherResModel() != null && !TextUtil.isEmpty(myClassRoomResModel.getTeacherResModel().getRegistrationDate())) {
@@ -192,10 +195,12 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
 
     }
+
     @Override
     protected void setToolbar() {
         /*Do code here*/
     }
+
     @Override
     protected void setListener() {
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
