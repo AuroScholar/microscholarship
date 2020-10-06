@@ -132,5 +132,5 @@ Auro Scholar is the world's 1st Micro Scholarship program aimed at encouraging I
 
 © AuroScholar
 
-Licebsed under the [MIT License](LICENSE).
+Licensed under the [MIT License](LICENSE).
 
