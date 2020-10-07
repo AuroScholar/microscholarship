@@ -1,6 +1,6 @@
 ext {
 
-    MIN_SDK_VERSION = 21
+    MIN_SDK_VERSION = 16
     COMPILE_SDK_VERSION = 28
     TARGET_SDK_VERSION = 28
 
@@ -71,7 +71,7 @@ ext {
     otherDependencies = [
             glide            :         'com.github.bumptech.glide:glide:4.9.0',
             glideCompiler    :         'com.github.bumptech.glide:compiler:4.9.0',
-            shimmer          :         'com.facebook.shimmer:shimmer:0.1.0',
+            shimmer          :         'com.facebook.shimmer:shimmer:0.4.0',
     ]
 
 

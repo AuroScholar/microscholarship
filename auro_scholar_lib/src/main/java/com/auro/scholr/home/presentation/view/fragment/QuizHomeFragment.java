@@ -378,19 +378,19 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.GONE);
             binding.shimmerViewQuiz.setVisibility(View.VISIBLE);
-            binding.shimmerViewQuiz.startShimmerAnimation();
+            binding.shimmerViewQuiz.startShimmer();
         } else if (value == 1) {
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.VISIBLE);
             checkForFriendsLeaderBoard();
             binding.fab.setVisibility(View.VISIBLE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
-            binding.shimmerViewQuiz.stopShimmerAnimation();
+            binding.shimmerViewQuiz.stopShimmer();
         } else {
             binding.errorConstraint.setVisibility(View.VISIBLE);
             binding.mainParentLayout.setVisibility(View.GONE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
-            binding.shimmerViewQuiz.stopShimmerAnimation();
+            binding.shimmerViewQuiz.stopShimmer();
             binding.errorLayout.textError.setText(message);
             binding.customUiSnackbar.inviteParentLayout.setVisibility(View.GONE);
             binding.fab.setVisibility(View.GONE);

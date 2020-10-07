@@ -340,21 +340,21 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                 binding.parentLayout.setVisibility(View.GONE);
                 binding.errorConstraint.setVisibility(View.GONE);
                 binding.shimmerMyClassroom.setVisibility(View.VISIBLE);
-                binding.shimmerMyClassroom.startShimmerAnimation();
+                binding.shimmerMyClassroom.startShimmer();
                 break;
 
             case 1:
                 binding.parentLayout.setVisibility(View.VISIBLE);
                 binding.errorConstraint.setVisibility(View.GONE);
                 binding.shimmerMyClassroom.setVisibility(View.GONE);
-                binding.shimmerMyClassroom.stopShimmerAnimation();
+                binding.shimmerMyClassroom.stopShimmer();
                 break;
 
             case 2:
                 binding.errorConstraint.setVisibility(View.VISIBLE);
                 binding.parentLayout.setVisibility(View.GONE);
                 binding.shimmerMyClassroom.setVisibility(View.GONE);
-                binding.shimmerMyClassroom.stopShimmerAnimation();
+                binding.shimmerMyClassroom.stopShimmer();
                 binding.errorLayout.textError.setText(message);
                 binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                     @Override
