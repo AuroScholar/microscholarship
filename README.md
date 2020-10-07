@@ -21,7 +21,7 @@ Step 1 : Add the dependency in your app/build.gradle(:app)
 
 ```swift
 dependencies {
-	          implementation 'com.github.AuroScholar:microscholarship:1.1.60'
+	          implementation 'com.github.AuroScholar:microscholarship:1.1.66'
 
 	}	
 ```
@@ -86,13 +86,21 @@ AuroScholarInputModel inputModel= new AuroScholarInputModel();
 // Important Params
 inputModel.setMobileNumber("mobile number here"); //Mandatory
 inputModel.setActivity(Activity Context Here); //Mandatory
-inputModel.setFragmentContainerUiId(Container id Here); //Mandatory
+inputModel.setFragmentContainerUiId(Container id Here); //Mandatory Example :- R.id.containerId
 inputModel.setStudentClass("put student class here"); //Mandatory
 inputModel.setReferralLink("Put here branch or any other referral Link");
 inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
 inputModel.setPartnerSource("Your Id here"); // This id provided by Auro Scholar to the partner.
 //This method returns a Fragment Instance
-Fragment frag= AuroScholar.startAuroSDK(inputModel);
+Fragment fragment= AuroScholar.startAuroSDK(inputModel);
+
+  ((AppCompatActivity) (this)).getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.home_container, fragment, SampleFragment.class
+                        .getSimpleName())
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
 
 ```
 Step 6 : Add these lines in activity in onActivityResult( ) Method.
@@ -118,4 +126,11 @@ https://auroscholar.com/
 ## AuroScholar MicroScholarship
 
 Auro Scholar is the world's 1st Micro Scholarship program aimed at encouraging Indian students to improve their learning continuously by authenticating their learning levels (through Mobile Quizzes) &amp; identity (through Mobile Wallets), thereby creating mass incentives to learn.  At Auro Scholar platform, students can take curriculum aligned 10-min Mobile Quizzes at their preferred place and time. If you score 80% in a Quiz, you can get a scholarship of up to Rs 1000 every month! Students who score less than 80% can study and retake the Quizzes to win scholarships.  Auro Scholar is an initiative of Sri Aurobindo Society, Puducherry, which has a 60+ year legacy and 300+ centres around the world. The Society has a deep focus on Education Transformation, in addition to multiple other social objectives.
+
+
+## License & copyright
+
+© 2019 AuroScholar
+
+Licensed under the [MIT License](LICENSE).
 
