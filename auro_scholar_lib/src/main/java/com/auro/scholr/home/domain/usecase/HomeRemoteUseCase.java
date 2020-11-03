@@ -317,8 +317,8 @@ public class HomeRemoteUseCase extends NetworkUseCase {
 
     @Override
     public ResponseApi response200(Response<JsonObject> response, Status status) {
+        String jsonString = new Gson().toJson(response.body());
         if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
-            String jsonString = new Gson().toJson(response.body());
             AuroApp.getAuroScholarModel().getSdkcallback().callBack(jsonString);
         }
 

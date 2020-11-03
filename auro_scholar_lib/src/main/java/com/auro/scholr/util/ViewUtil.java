@@ -233,7 +233,7 @@ public class ViewUtil {
         AssetManager assets = standardResources.getAssets();
         DisplayMetrics metrics = standardResources.getDisplayMetrics();
         Configuration config = new Configuration(standardResources.getConfiguration());
-        config.locale =Locale.getDefault();
+        config.locale =new Locale(getLanguage());
         Resources res = new Resources(assets, metrics, config);
         return res;
     }
