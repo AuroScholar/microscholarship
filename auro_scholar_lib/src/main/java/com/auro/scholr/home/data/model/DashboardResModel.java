@@ -187,6 +187,10 @@ public class DashboardResModel implements Parcelable {
     @Expose
     int feature;
 
+    @SerializedName("user_partner_id")
+    @Expose
+    String userPartnerId;
+
     protected DashboardResModel(Parcel in) {
         status = in.readString();
         error = in.readByte() != 0;
@@ -232,6 +236,7 @@ public class DashboardResModel implements Parcelable {
         privateTutionType = in.readString();
         leadQualified = in.readString();
         feature = in.readInt();
+        userPartnerId = in.readString();
     }
 
     @Override
@@ -280,6 +285,8 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(privateTutionType);
         dest.writeString(leadQualified);
         dest.writeInt(feature);
+        dest.writeString(userPartnerId);
+
     }
 
     @Override
@@ -649,5 +656,13 @@ public class DashboardResModel implements Parcelable {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public String getUserPartnerId() {
+        return userPartnerId;
+    }
+
+    public void setUserPartnerId(String userPartnerId) {
+        this.userPartnerId = userPartnerId;
     }
 }

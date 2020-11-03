@@ -41,6 +41,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
             params.put(AppConstant.DashBoardParams.STUDENT_CLASS, model.getStudentClass());
             params.put(AppConstant.DashBoardParams.REGISTRATION_SOURCE, model.getRegitrationSource());
             params.put(AppConstant.DashBoardParams.PARTNER_SOURCE,model.getPartnerSource());
+            params.put(AppConstant.DashBoardParams.USER_PARTNER_ID,model.getUserPartnerid());
             AppLogger.e("HomeRemoteDataSourceImp", "Calling  Generic SDK");
             return homeRemoteApi.getDashboardSDKData(params);
         } else {

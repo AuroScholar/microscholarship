@@ -199,7 +199,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage(getString(R.string.sure_to_logout));
+                builder.setMessage(getActivity().getResources().getString(R.string.sure_to_logout));
 
                 // Set the alert dialog yes button click listener
                 builder.setPositiveButton(Html.fromHtml("<font color='#00A1DB'>YES</font>"), new DialogInterface.OnClickListener() {
@@ -238,8 +238,8 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logparam.put(getResources().getString(R.string.log_save_profile_btn_teacher),"true");
-                firebaseEventUtil.logEvent(getResources().getString(R.string.log_save_profile_teacher),logparam);
+                logparam.put(getActivity().getResources().getString(R.string.log_save_profile_btn_teacher),"true");
+                firebaseEventUtil.logEvent(getActivity().getResources().getString(R.string.log_save_profile_teacher),logparam);
                 callSaveTeacherProfileApi();
             }
         });
@@ -270,9 +270,9 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == Status.UPDATE_TEACHER_PROFILE_API) {
                         handleProgress(1);
-                        logparam.put(getResources().getString(R.string.log_save_profile_api_teacher),"true");
-                        firebaseEventUtil.logEvent(getResources().getString(R.string.log_save_profile_teacher),logparam);
-                        showSnackbarError(getString(R.string.saved), Color.parseColor("#4bd964"));
+                        logparam.put(getActivity().getResources().getString(R.string.log_save_profile_api_teacher),"true");
+                        firebaseEventUtil.logEvent(getActivity().getResources().getString(R.string.log_save_profile_teacher),logparam);
+                        showSnackbarError(getActivity().getString(R.string.saved), Color.parseColor("#4bd964"));
                     } else if (responseApi.apiTypeStatus == Status.GET_PROFILE_TEACHER_API) {
                         MyProfileResModel teacherResModel = (MyProfileResModel) responseApi.data;
 
@@ -318,7 +318,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
 
                 default:
                     handleProgress(1);
-                    showSnackbarError(getString(R.string.default_error));
+                    showSnackbarError(getActivity().getResources().getString(R.string.default_error));
                     break;
             }
 

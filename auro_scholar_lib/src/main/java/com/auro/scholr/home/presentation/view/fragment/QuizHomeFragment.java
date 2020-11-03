@@ -181,8 +181,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         firebaseEventUtil = new FirebaseEventUtil(getContext());
         logparam = new HashMap<>();
 
-        logparam.put(getResources().getString(R.string.log_start_quiz), "true");
-        firebaseEventUtil.logEvent(getResources().getString(R.string.log_quiz_home_fragment_student), logparam);
+        logparam.put(getActivity().getResources().getString(R.string.log_start_quiz), "true");
+        firebaseEventUtil.logEvent(getActivity().getResources().getString(R.string.log_quiz_home_fragment_student), logparam);
 
         if (quizViewModel != null && quizViewModel.serviceLiveData().hasObservers()) {
             quizViewModel.serviceLiveData().removeObservers(this);
@@ -418,7 +418,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     private void setDataOnUi(DashboardResModel dashboardResModel) {
         if (isAdded()) {
             //   quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + dashboardResModel.getWalletbalance());
-            quizViewModel.walletBalance.setValue(getString(R.string.rs) + " " + quizViewModel.homeUseCase.getWalletBalance(dashboardResModel));
+            quizViewModel.walletBalance.setValue(getActivity().getResources().getString(R.string.rs) + " " + quizViewModel.homeUseCase.getWalletBalance(dashboardResModel));
             //   setQuizListAdapter(dashboardResModel.getQuiz());
             setQuizListNewAdapter();
             //setQuizWonListAdapter(dashboardResModel.getSubjectResModelList());
@@ -513,8 +513,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         if (v.getId() == R.id.wallet_bal_text) {
             // openFragment(new TeacherProfileFragment());
             closeToolTip();
-            logparam.put(getResources().getString(R.string.log_click_add_kyc_student), "true");
-            firebaseEventUtil.logEvent(getResources().getString(R.string.log_start_quiz), logparam);
+            logparam.put(getActivity().getResources().getString(R.string.log_click_add_kyc_student), "true");
+            firebaseEventUtil.logEvent(getActivity().getResources().getString(R.string.log_start_quiz), logparam);
             if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
                 openKYCViewFragment(dashboardResModel);
             } else {

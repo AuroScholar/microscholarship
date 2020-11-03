@@ -402,7 +402,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             binding.btUploadAll.setEnabled(false);
             binding.progressBar.setVisibility(View.VISIBLE);
         } else if (status == 1) {
-            binding.btUploadAll.setText(this.getResources().getString(R.string.upload));
+            binding.btUploadAll.setText(getActivity().getResources().getString(R.string.upload));
             binding.btUploadAll.setEnabled(true);
             binding.progressBar.setVisibility(View.GONE);
             if (kycViewModel.homeUseCase.checkUploadButtonStatus(kycDocumentDatamodelArrayList)) {
@@ -473,7 +473,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 uploadBtnStatus = true;
                 uploadAllDocApi();
             } else {
-                ViewUtil.showSnackBar(binding.getRoot(), getString(R.string.document_all_four_error_msg));
+                ViewUtil.showSnackBar(binding.getRoot(), getActivity().getResources().getString(R.string.document_all_four_error_msg));
             }
         } else if (v.getId() == R.id.lang_eng) {
             String text = binding.toolbarLayout.langEng.getText().toString();
@@ -603,7 +603,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             binding.stepOne.textUploadDocumentMsg.setText(R.string.document_uploaded);
             binding.stepOne.textUploadDocumentMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
             if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.IN_PROCESS)) {
-                binding.stepTwo.textVerifyMsg.setText(getString(R.string.verification_is_in_process));
+                binding.stepTwo.textVerifyMsg.setText(getActivity().getResources().getString(R.string.verification_is_in_process));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
             } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
                 binding.stepTwo.textVerifyMsg.setText(R.string.document_verified);

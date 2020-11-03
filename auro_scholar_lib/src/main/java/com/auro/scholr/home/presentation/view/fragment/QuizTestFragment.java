@@ -184,12 +184,12 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
                     }
                     break;
                 case NO_INTERNET:
-                    handleProgress(2, getActivity().getString(R.string.internet_check));
+                    handleProgress(2, getActivity().getResources().getString(R.string.internet_check));
                     break;
                 case AUTH_FAIL:
                 case FAIL_400:
                 default:
-                    handleProgress(2, getActivity().getString(R.string.default_error));
+                    handleProgress(2, getActivity().getResources().getString(R.string.default_error));
                     break;
             }
         });

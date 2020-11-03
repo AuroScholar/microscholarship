@@ -83,14 +83,14 @@ public class LocationUtil {
                         return getFullAddress(address);
                     }
                 } else {
-                    return AuroApp.getAppContext().getString(R.string.address_not_found);
+                    return AuroApp.getAppContext().getResources().getString(R.string.address_not_found);
                 }
 
             } catch (IOException e) {
-                return AuroApp.getAppContext().getString(R.string.address_not_found);
+                return AuroApp.getAppContext().getResources().getString(R.string.address_not_found);
             }
         }
-        return AuroApp.getAppContext().getString(R.string.address_not_found);
+        return AuroApp.getAppContext().getResources().getString(R.string.address_not_found);
     }
 
 
@@ -128,7 +128,7 @@ public class LocationUtil {
             if (sb.toString() != null && !sb.toString().isEmpty()) {
                 return sb.toString();
             } else {
-                return AuroApp.getAppContext().getString(R.string.address_not_found);
+                return AuroApp.getAppContext().getResources().getString(R.string.address_not_found);
 
             }
         }
@@ -151,7 +151,7 @@ public class LocationUtil {
             }
 
         }
-        return AuroApp.getAppContext().getString(R.string.address_not_found);
+        return AuroApp.getAppContext().getResources().getString(R.string.address_not_found);
 
     }
 

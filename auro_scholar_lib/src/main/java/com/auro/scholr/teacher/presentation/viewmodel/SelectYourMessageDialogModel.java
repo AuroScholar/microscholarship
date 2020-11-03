@@ -42,7 +42,7 @@ public class SelectYourMessageDialogModel extends ViewModel {
                 sendInviteApi(reqModel);
             } else {
                 // please check your internet
-                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getResources().getString(R.string.internet_check), Status.NO_INTERNET));
             }
 
         });

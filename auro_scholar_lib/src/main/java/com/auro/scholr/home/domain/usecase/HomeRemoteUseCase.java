@@ -376,7 +376,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
     public ResponseApi responseFail400(Response<JsonObject> response, Status status) {
         try {
             String errorJson = response.errorBody().string();
-            String errorMessage = AppUtil.errorMessageHandler(AuroApp.getAppContext().getString(R.string.default_error), errorJson);
+            String errorMessage = AppUtil.errorMessageHandler(AuroApp.getAppContext().getResources().getString(R.string.default_error), errorJson);
             return ResponseApi.fail400(errorMessage, null);
         } catch (Exception e) {
             return ResponseApi.fail(AuroApp.getAppContext().getResources().getString(R.string.default_error), status);
@@ -386,7 +386,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
 
     @Override
     public ResponseApi responseFail(Status status) {
-        return ResponseApi.fail(AuroApp.getAppContext().getString(R.string.default_error), status);
+        return ResponseApi.fail(AuroApp.getAppContext().getResources().getString(R.string.default_error), status);
     }
 
 }

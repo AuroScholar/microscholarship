@@ -29,6 +29,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.auro.scholr.core.common.Status.UPLOAD_PROFILE_IMAGE;
@@ -176,12 +177,16 @@ public class KYCViewModel extends ViewModel {
                 .subscribe(new Consumer<ResponseApi>() {
                                @Override
                                public void accept(ResponseApi responseApi) throws Exception {
+
                                    serviceLiveData.setValue(responseApi);
                                }
                            },
                         new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
+                                if (!tryOnError(throwable)) {
+                                    RxJavaPlugins.onError(throwable);
+                                }
                                 defaultError();
                             }
                         }));
@@ -189,6 +194,12 @@ public class KYCViewModel extends ViewModel {
 
     private void defaultError() {
         serviceLiveData.setValue(new ResponseApi(Status.FAIL, AuroApp.getAppContext().getResources().getString(R.string.default_error), null));
+    }
+    public boolean tryOnError(Throwable t) {
+        if (t == null) {
+            t = new NullPointerException("onError called with null. Null values are generally not allowed in 2.x operators and sources.");
+        }
+        return false;
     }
 
     public LiveData<ResponseApi> serviceLiveData() {

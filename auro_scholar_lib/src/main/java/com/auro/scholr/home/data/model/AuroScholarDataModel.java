@@ -18,6 +18,7 @@ public class AuroScholarDataModel implements Parcelable {
     String shareType = "";
     String shareIdentity = "";
     String referralLink = "";
+    String userPartnerid = "";
     SdkCallBack sdkcallback;
     String partnerSource="";
     int sdkType;
@@ -33,6 +34,7 @@ public class AuroScholarDataModel implements Parcelable {
         shareType = in.readString();
         shareIdentity = in.readString();
         referralLink = in.readString();
+        userPartnerid = in.readString();
         partnerSource = in.readString();
         sdkType = in.readInt();
         sdkFragmentType = in.readInt();
@@ -49,6 +51,7 @@ public class AuroScholarDataModel implements Parcelable {
         dest.writeString(shareType);
         dest.writeString(shareIdentity);
         dest.writeString(referralLink);
+        dest.writeString(userPartnerid);
         dest.writeString(partnerSource);
         dest.writeInt(sdkType);
         dest.writeInt(sdkFragmentType);
@@ -189,5 +192,11 @@ public class AuroScholarDataModel implements Parcelable {
         this.fragmentContainerUiId = fragmentContainerUiId;
     }
 
+    public String getUserPartnerid() {
+        return userPartnerid;
+    }
 
+    public void setUserPartnerid(String userPartnerid) {
+        this.userPartnerid = userPartnerid;
+    }
 }
