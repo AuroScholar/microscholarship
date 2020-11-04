@@ -3,8 +3,8 @@ package com.auro.scholr.core.network;
 public interface URLConstant {
 
 
-    //String BASE_URL = "https://auroscholar.com/api/"; // PRODUCTION/UAT
-    String BASE_URL = "http://demo.auroscholar.com/api/";  // Dev /SIT
+    String BASE_URL = "https://auroscholar.com/api/"; // PRODUCTION/UAT
+    //String BASE_URL = "http://demo.auroscholar.com/api/";  // Dev /SIT
 
     // String DASHBOARD_API = BASE_URL + "dashboard.php";
 
