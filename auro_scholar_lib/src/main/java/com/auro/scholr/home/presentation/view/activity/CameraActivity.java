@@ -111,6 +111,9 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         HomeActivity.setListingActiveFragment(HomeActivity.DEMOGRAPHIC_FRAGMENT);
         if (hasFrontCamera()) {
             cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
+            binding.flashContainer.setVisibility(View.GONE);
+        }else{
+            binding.flashContainer.setVisibility(View.VISIBLE);
         }
         setListener();
 
@@ -190,7 +193,9 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onStop() {
         super.onStop();
+        Log.i("Cycle","onStop");
         stopCamera();
+
     }
 
     private void stopCamera() {
@@ -242,9 +247,11 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     private void changeCamera() {
         if (cameraID == Camera.CameraInfo.CAMERA_FACING_BACK) {
             cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
-            binding.flashToggle.setImageDrawable(this.getDrawable(R.drawable.ic_flash_off_black));
+            binding.flashToggle.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_flash_off_black));
+            binding.flashContainer.setVisibility(View.GONE);
         } else {
             cameraID = Camera.CameraInfo.CAMERA_FACING_BACK;
+            binding.flashContainer.setVisibility(View.VISIBLE);
         }
         binding.faceOverlay.clear();
         mCameraSource.release();
@@ -455,11 +462,11 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
 
 
     private void flashIsAvailable() {
-        boolean hasFlash = this.getPackageManager()
-                .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
         if (hasFlash && cameraID == 0) {
             changeFlashStatus();
         }
+
     }
 
 
@@ -475,11 +482,11 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
                         params = camera.getParameters();
                         if (!isFlash) {
                             params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-                            binding.flashToggle.setImageDrawable(this.getDrawable(R.drawable.ic_flash_on_black));
+                            binding.flashToggle.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_flash_on_black));
                             isFlash = true;
                         } else {
                             params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-                            binding.flashToggle.setImageDrawable(this.getDrawable(R.drawable.ic_flash_off_black));
+                            binding.flashToggle.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_flash_off_black));
                             isFlash = false;
                         }
                         camera.setParameters(params);
@@ -497,8 +504,20 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.i("Cycle","onDestroy");
         releaseCamera();
+
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("Cycle","onPause");
+        if(isFlash){
+            params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+        }
+    }
+
 
     @Override
     protected void setListener() {

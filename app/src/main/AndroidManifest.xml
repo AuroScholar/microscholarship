@@ -24,7 +24,8 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:allowBackup,android:icon,android:roundIcon">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode = "stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

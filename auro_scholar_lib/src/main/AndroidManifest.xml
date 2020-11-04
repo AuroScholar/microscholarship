@@ -29,9 +29,12 @@
         <activity
             android:name=".home.presentation.view.activity.CameraActivity"
             android:label="@string/title_activity_camera"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".util.permission.PermissionsActivity" />
-        <activity android:name=".home.presentation.view.activity.HomeActivity" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode = "stateAlwaysHidden"/>
+        <activity android:name=".util.permission.PermissionsActivity"
+            android:windowSoftInputMode = "stateAlwaysHidden"/>
+        <activity android:name=".home.presentation.view.activity.HomeActivity"
+            android:windowSoftInputMode = "stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
