@@ -491,7 +491,10 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
                             binding.flashToggle.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_flash_off_black));
                             isFlash = false;
                         }
-                        camera.setParameters(params);
+                        if(params == null){
+                            camera.setParameters(params);
+                        }
+
                     }
 
                 } catch (IllegalAccessException e) {
