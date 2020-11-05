@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setMobileNumber(mobileNumber);//7503600601
         inputModel.setStudentClass(student_class);
         inputModel.setRegitrationSource("AuroScholr");
-        inputModel.setReferralLink("");
+        inputModel.setReferralLink("https://rb.gy/np9uh5");
         inputModel.setPartnerSource("AURO3VE4j7"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setUserPartnerId("TestUserpartnerId");
         inputModel.setActivity(this);
