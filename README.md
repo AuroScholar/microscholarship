@@ -91,6 +91,7 @@ inputModel.setStudentClass("put student class here"); //Mandatory
 inputModel.setReferralLink("Put here branch or any other referral Link");
 inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
 inputModel.setPartnerSource("Your Id here"); // This id provided by Auro Scholar to the partner.
+inputModel.setUserPartnerId("TestUserpartnerId");
 //This method returns a Fragment Instance
 Fragment fragment= AuroScholar.startAuroSDK(inputModel);
 
