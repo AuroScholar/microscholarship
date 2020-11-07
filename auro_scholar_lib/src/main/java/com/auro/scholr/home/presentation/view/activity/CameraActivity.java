@@ -493,6 +493,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
                         }
                         if(params == null){
                             camera.setParameters(params);
+                        }else if( params != null){
+                            camera.setParameters(params);
                         }
 
                     }
