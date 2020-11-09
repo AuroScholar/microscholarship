@@ -14,6 +14,7 @@ import com.auro.scholr.home.data.model.AzureResModel;
 import com.auro.scholr.home.data.model.ChallengeAccepResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
+import com.auro.scholr.home.data.model.DynamiclinkResModel;
 import com.auro.scholr.home.data.model.FriendListResDataModel;
 import com.auro.scholr.home.data.model.FriendRequestList;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
@@ -43,6 +44,7 @@ import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
 import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
+import static com.auro.scholr.core.common.Status.DYNAMIC_LINK_API;
 import static com.auro.scholr.core.common.Status.GRADE_UPGRADE;
 import static com.auro.scholr.core.common.Status.FIND_FRIEND_DATA;
 import static com.auro.scholr.core.common.Status.FRIENDS_REQUEST_LIST;
@@ -289,6 +291,21 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         });
     }
 
+    public Single<ResponseApi> getDynamicDataApi(DynamiclinkResModel model) {
+
+        return dashboardRemoteData.getDynamicDataApi(model).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+                    return handleResponse(response, DYNAMIC_LINK_API);
+                } else {
+                    return responseFail(DYNAMIC_LINK_API);
+                }
+            }
+        });
+    }
+
     private ResponseApi handleResponse(Response<JsonObject> response, Status apiTypeStatus) {
 
         switch (response.code()) {
@@ -361,6 +378,9 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         } else if (status == ACCEPT_INVITE_REQUEST) {
             AcceptInviteRequest acceptInviteRequest = new Gson().fromJson(response.body(), AcceptInviteRequest.class);
             return ResponseApi.success(acceptInviteRequest, status);
+        } else if(status ==  DYNAMIC_LINK_API){
+            DynamiclinkResModel dynamiclinkResModel = new Gson().fromJson(response.body(),DynamiclinkResModel.class);
+            return ResponseApi.success(dynamiclinkResModel,status);
         }
 
 

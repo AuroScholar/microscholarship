@@ -62,4 +62,6 @@ public interface URLConstant {
 
     String FRIEND_ACCEPT_API = BASE_URL + "friend_accepted.php";
 
+    String REFFERAL_API  = BASE_URL + "reffer.php";
+
 }
