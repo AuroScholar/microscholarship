@@ -151,7 +151,7 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
         if (AuroApp.getAuroScholarModel() != null && !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getReferralLink())) {
             completeLink = completeLink + " " + AuroApp.getAuroScholarModel().getReferralLink();
         } else {
-            completeLink = completeLink + " https://bit.ly/3b1puWr";
+            completeLink = completeLink + " https://rb.gy/np9uh5";
         }
 
         Intent sendIntent = new Intent();

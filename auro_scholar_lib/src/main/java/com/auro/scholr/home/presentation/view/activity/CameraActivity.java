@@ -111,7 +111,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         HomeActivity.setListingActiveFragment(HomeActivity.DEMOGRAPHIC_FRAGMENT);
         if (hasFrontCamera()) {
             cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
-           // binding.flashContainer.setVisibility(View.GONE);
+            // binding.flashContainer.setVisibility(View.GONE);
         }/*else{
             binding.flashContainer.setVisibility(View.VISIBLE);
         }*/
@@ -193,7 +193,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i("Cycle","onStop");
+        Log.i("Cycle", "onStop");
         stopCamera();
 
     }
@@ -248,10 +248,10 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         if (cameraID == Camera.CameraInfo.CAMERA_FACING_BACK) {
             cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
             binding.flashToggle.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_flash_off_black));
-           // binding.flashContainer.setVisibility(View.GONE);
+            // binding.flashContainer.setVisibility(View.GONE);
         } else {
             cameraID = Camera.CameraInfo.CAMERA_FACING_BACK;
-           // binding.flashContainer.setVisibility(View.VISIBLE);
+            // binding.flashContainer.setVisibility(View.VISIBLE);
         }
         binding.faceOverlay.clear();
         mCameraSource.release();
@@ -278,9 +278,9 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
 
         @Override
         public void onNewItem(int faceId, Face item) {
-
             faceOverlayGraphics.setId(faceId);
             status = true;
+            binding.stillshot.setEnabled(true);
 
         }
 
@@ -301,6 +301,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         public void onDone() {
             mOverlay.remove(faceOverlayGraphics);
             status = false;
+            binding.stillshot.setEnabled(false);
 
         }
     }
@@ -465,7 +466,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
         if (hasFlash && cameraID == 0) {
             changeFlashStatus();
-        }else if(hasFlash && cameraID == 1){
+        } else if (hasFlash && cameraID == 1) {
             changeFlashStatus();
         }
 
@@ -491,7 +492,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
                             binding.flashToggle.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_flash_off_black));
                             isFlash = false;
                         }
-                        if(params == null){
+                        if (params == null) {
                             camera.setParameters(params);
                         }else if( params != null){
                             camera.setParameters(params);
@@ -511,7 +512,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("Cycle","onDestroy");
+        Log.i("Cycle", "onDestroy");
         releaseCamera();
 
     }
@@ -519,8 +520,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i("Cycle","onPause");
-        if(isFlash){
+        Log.i("Cycle", "onPause");
+        if (isFlash) {
             params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
         }
     }

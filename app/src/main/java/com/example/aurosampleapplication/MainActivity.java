@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     public static void printHashKey(Context pContext) {
         try {
             PackageInfo info = pContext.getPackageManager().getPackageInfo(pContext.getPackageName(), PackageManager.GET_SIGNATURES);
@@ -100,9 +99,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(this, "Please Enter valid mobile number", Toast.LENGTH_SHORT).show();
                 } else if (TextUtil.isEmpty(student_class)) {
                     Toast.makeText(this, "Please Enter class", Toast.LENGTH_SHORT).show();
-                }else
-                {
-                    openGenricSDK(mobileNumber,student_class);
+                } else {
+                    openGenricSDK(mobileNumber, student_class);
                 }
 
                 hideKeyboard(this);
@@ -172,13 +170,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     private void openGenricSDK(String mobileNumber, String student_class) {
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
         inputModel.setMobileNumber(mobileNumber);//7503600601
         inputModel.setStudentClass(student_class);
         inputModel.setRegitrationSource("AuroScholr");
-        inputModel.setReferralLink("");
+        inputModel.setReferralLink("https://rb.gy/np9uh5");
         inputModel.setPartnerSource("AURO3VE4j7"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setUserPartnerId("TestUserpartnerId");
         inputModel.setActivity(this);
@@ -245,15 +242,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-      //  ViewUtil.showSnackBar(binding.getRoot(), "Press again to close app");
+        //  ViewUtil.showSnackBar(binding.getRoot(), "Press again to close app");
     }
+
     private void setDummyImagePath() {
         Bitmap compressedImageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.chandan_image_two);
-        compressedImageBitmap=getResizedBitmap(compressedImageBitmap,500);
+        compressedImageBitmap = getResizedBitmap(compressedImageBitmap, 500);
         byte[] bytes = AppUtil.encodeToBase64(compressedImageBitmap, 100);
         long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
         Log.e("chhonker", "Image size-" + mb);
-     //   binding.image.setImageBitmap(compressedImageBitmap);
+        //   binding.image.setImageBitmap(compressedImageBitmap);
 
     }
 
@@ -261,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int width = image.getWidth();
         int height = image.getHeight();
 
-        float bitmapRatio = (float)width / (float) height;
+        float bitmapRatio = (float) width / (float) height;
         if (bitmapRatio > 1) {
             width = maxSize;
             height = (int) (width / bitmapRatio);
