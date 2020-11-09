@@ -82,25 +82,40 @@ Step 5 : For open then AuroScholar Fragment or Start the Auro Scholar sdk
 ----
 ```swift
 
-AuroScholarInputModel inputModel= new AuroScholarInputModel();
-// Important Params
-inputModel.setMobileNumber("mobile number here"); //Mandatory
-inputModel.setActivity(Activity Context Here); //Mandatory
-inputModel.setFragmentContainerUiId(Container id Here); //Mandatory Example :- R.id.containerId
-inputModel.setStudentClass("put student class here"); //Mandatory
-inputModel.setReferralLink("Put here branch or any other referral Link");
-inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
-inputModel.setPartnerSource("Your Id here"); // This id provided by Auro Scholar to the partner.
-//This method returns a Fragment Instance
-Fragment fragment= AuroScholar.startAuroSDK(inputModel);
 
-  ((AppCompatActivity) (this)).getSupportFragmentManager()
-                .beginTransaction()
-                .setReorderingAllowed(true)
-                .replace(R.id.home_container, fragment, SampleFragment.class
-                        .getSimpleName())
-                .addToBackStack(null)
-                .commitAllowingStateLoss();
+
+  AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
+        auroScholarDataModel.setMobileNumber("mobile number here");//Mandatory
+        auroScholarDataModel.setRegitrationSource("AuroScholr");
+        auroScholarDataModel.setShareType("teacher");
+        auroScholarDataModel.setActivity(Activity Context Here);//Mandatory
+        auroScholarDataModel.setReferralLink("");
+        auroScholarDataModel.setEmailVerified(true);
+        auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
+        auroScholarDataModel.setSdkcallback(new SdkCallBack() {
+            @Override
+            public void callBack(String message) {
+                /*Api response here*/
+              
+            }
+
+            @Override
+            public void logOut() {
+               //for logout
+            }
+
+            @Override
+            public void commonCallback(Status status, Object o) {
+                switch (status) {
+                    case BOOK_TUTOR_SESSION_CLICK:
+                        /*write your code here*/
+                        break;
+                }
+            }
+        });
+
+
+        AuroScholar.startTeacherSDK(auroScholarDataModel);
 
 ```
 Step 6 : Add these lines in activity in onActivityResult( ) Method.
