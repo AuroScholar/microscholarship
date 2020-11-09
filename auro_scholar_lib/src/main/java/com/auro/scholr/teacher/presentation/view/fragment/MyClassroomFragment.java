@@ -273,7 +273,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
             mFirebaseAnalytics.setUserProperTy(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"true");
         } else {
-            completeLink = completeLink + " https://bit.ly/3b1puWr";
+            completeLink = completeLink + " https://rb.gy/np9uh5";
             logeventparam.put(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"false");
             mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
             mFirebaseAnalytics.setUserProperTy(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"false");
@@ -413,8 +413,8 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                     break;
                 } else {
                     ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                            .setQuote(urlToShare.replace("- https://bit.ly/3b1puWr", ""))
-                            .setContentUrl(Uri.parse(" https://bit.ly/3b1puWr"))
+                            .setQuote(urlToShare.replace("-  https://rb.gy/np9uh5", ""))
+                            .setContentUrl(Uri.parse("  https://rb.gy/np9uh5"))
                             .build();
 
                     if (ShareDialog.canShow(ShareLinkContent.class)) {

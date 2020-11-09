@@ -3,6 +3,7 @@ package com.auro.scholr.core.database;
 
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.home.data.model.DynamiclinkResModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,6 +19,9 @@ public class PrefModel implements Serializable {
     private AssignmentReqModel assignmentReqModel;
     private boolean tooltipStatus;
     private List<AssignmentReqModel> listAzureImageList = new ArrayList<>();
+
+    private DynamiclinkResModel dynamiclinkResModel;
+
 
     public AssignmentReqModel getAssignmentReqModel() {
         return assignmentReqModel;
@@ -68,5 +72,13 @@ public class PrefModel implements Serializable {
 
     public void setDashboardResModel(DashboardResModel dashboardResModel) {
         this.dashboardResModel = dashboardResModel;
+    }
+
+    public DynamiclinkResModel getDynamiclinkResModel() {
+        return dynamiclinkResModel;
+    }
+
+    public void setDynamiclinkResModel(DynamiclinkResModel dynamiclinkResModel) {
+        this.dynamiclinkResModel = dynamiclinkResModel;
     }
 }

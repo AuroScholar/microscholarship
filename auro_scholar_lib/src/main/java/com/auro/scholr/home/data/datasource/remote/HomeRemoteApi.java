@@ -96,5 +96,8 @@ public interface HomeRemoteApi {
     @FormUrlEncoded
     Single<Response<JsonObject>> gradeUpgrade(@FieldMap Map<String, String> params);
 
+    @POST(URLConstant.REFFERAL_API)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> getRefferalapi(@FieldMap Map<String,String> params);
 
 }

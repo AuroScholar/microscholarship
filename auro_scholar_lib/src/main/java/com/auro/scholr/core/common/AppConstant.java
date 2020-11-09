@@ -232,7 +232,10 @@ public interface AppConstant {
     }
 
     interface Source {
+        String NEW_USER_DASHBOARD = "NEW_USER_DASHBOARD";
+        String DASHBOARD_NAVIGATION = "DASHBOARD_NAVIGATION";
         String QUIZ_DASHBOARD_FRAGMENT = "QUIZ_DASHBOARD_FRAGMENT";
+        String TEACHER_APP_AURO = "TEACHER_APP_AURO";
     }
 
     interface paytmApiParam {
@@ -284,5 +287,17 @@ public interface AppConstant {
 
     interface PaytmResponseCode {
         String DE_002 = "DE_002";
+    }
+    interface RefferalApiCode {
+        String REFFERAL_MOBILENO = "refferal_mobileno";
+        String REFFER_MOBILENO = "reffer_mobileno";
+        String SOURCE = "source";
+        String NAVIGATION_TO = "navigation_to";
+    }
+    interface NavigateToScreen {
+        String STUDENT_DASHBOARD = "STUDENT_DASHBOARD";
+        String FRIENDS_LEADERBOARD = "FRIENDS_LEADERBOARD";
+        String TEACHER_DASHBOARD = "TEACHER_DASHBOARD";
+        String STUDENT_KYC = "STUDENT_KYC";
     }
 }

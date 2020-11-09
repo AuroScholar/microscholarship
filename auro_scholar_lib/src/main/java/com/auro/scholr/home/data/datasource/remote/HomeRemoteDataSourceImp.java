@@ -5,6 +5,7 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
+import com.auro.scholr.home.data.model.DynamiclinkResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
@@ -194,5 +195,15 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         params.put("friend_request_id", String.valueOf(friend_request_id));
         params.put("request_status", request_status);
         return homeRemoteApi.friendAcceptApi(params);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> getDynamicDataApi(DynamiclinkResModel model) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.RefferalApiCode.REFFERAL_MOBILENO, model.getRefferalMobileno());
+        params.put(AppConstant.RefferalApiCode.REFFER_MOBILENO, model.getRefferMobileno());
+        params.put(AppConstant.RefferalApiCode.SOURCE, model.getSource());
+        params.put(AppConstant.RefferalApiCode.NAVIGATION_TO, model.getNavigationTo());
+        return homeRemoteApi.getRefferalapi(params);
     }
 }
