@@ -1,4 +1,4 @@
-## AuroScholar MicroScholarship Android  library
+# AuroScholar MicroScholarship Android  library
 
 ![alt text](./AuroSholar.png "AuroScholar Logo")
 
@@ -14,7 +14,7 @@
 - Firebase - google-services.json
 
 
-### Auro Scholar SDK Implementation Steps 
+### Auro Scholar SDK Implementation Steps
 
 Step 1 : Add the dependency in your app/build.gradle(:app)
 ----
@@ -23,10 +23,10 @@ Step 1 : Add the dependency in your app/build.gradle(:app)
 dependencies {
 	          implementation 'com.github.AuroScholar:microscholarship:1.1.67'
 
-	}	
+	}
 ```
 
-  
+
 Step 2 : Enable the databinding and add compileOptions in your app/build.gradle(:app) .
 ----
 
@@ -53,10 +53,10 @@ allprojects {
 			maven { url 'https://jitpack.io' }
 		}
 	}
-	
+
 ```
 
-  
+
 Step 4 : Add google gms service dependency in your build.gradle(Application).
 ----
 
