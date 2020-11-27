@@ -90,8 +90,7 @@ Step 5 : For open then AuroScholar Fragment or Start the Auro Scholar sdk
         auroScholarDataModel.setShareType("teacher");
         auroScholarDataModel.setActivity(Activity Context Here);//Mandatory
         auroScholarDataModel.setReferralLink("");
-        auroScholarDataModel.setEmailVerified(true);
-        auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
+        auroScholarDataModel.setFragmentContainerUiId(Container id Here); //Mandatory Example :- R.id.containerId
         auroScholarDataModel.setSdkcallback(new SdkCallBack() {
             @Override
             public void callBack(String message) {
