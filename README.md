@@ -86,8 +86,8 @@ Step 5 : For open then AuroScholar Fragment or Start the Auro Scholar sdk
 
   AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
         auroScholarDataModel.setMobileNumber("mobile number here");//Mandatory
-        auroScholarDataModel.setRegitrationSource("AuroScholr");
-        auroScholarDataModel.setShareType("teacher");
+        auroScholarDataModel.setRegitrationSource("Your app name");//Mandatory
+        auroScholarDataModel.setShareType("teacher");//Mandatory 
         auroScholarDataModel.setActivity(Activity Context Here);//Mandatory
         auroScholarDataModel.setReferralLink("");
         auroScholarDataModel.setFragmentContainerUiId(Container id Here); //Mandatory Example :- R.id.containerId
