@@ -124,7 +124,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     @Override
     protected void init() {
         HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_DASHBOARD_FRAGMENT);
-        mFirebaseAnalytics = new FirebaseEventUtil(getContext());
+        mFirebaseAnalytics = new FirebaseEventUtil(getActivity());
         logeventparam= new HashMap<>();
 
 

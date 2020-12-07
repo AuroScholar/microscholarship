@@ -563,7 +563,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         Locale.getDefault().getLanguage();
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(this);
-        customDialogModel.setTitle("Processing...");
+        customDialogModel.setTitle(this.getResources().getString(R.string.processing));
         customDialogModel.setTwoButtonRequired(true);
         customProgressDialog = new CustomProgressDialog(customDialogModel);
         Objects.requireNonNull(customProgressDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -571,8 +571,6 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         customProgressDialog.show();
         customProgressDialog.updateDataUi(0);
     }
-
-
     public void closeDialog() {
         if (customProgressDialog != null) {
             customProgressDialog.dismiss();

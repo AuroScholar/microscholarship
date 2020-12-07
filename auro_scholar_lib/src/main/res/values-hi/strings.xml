@@ -195,8 +195,8 @@
         \n \u25CF प्रश्नोत्तरी में 10 प्रश्न हैं।
         \n \u25CF कृपया प्रत्येक प्रश्न को ध्यान से पढ़ें।
         \n \u25CF कैमरा केवल धोखाधड़ी नियंत्रण उद्देश्य के लिए उपयोग किया जाएगा।
-
     </string>
+
     <string name="text1_random">जितना ज़्यादा उतना अच्छा</string>
     <string name="text2_random_chalange_your_friends">प्रश्नोत्तरी लेने के लिए अपने दोस्तों को चुनौती!</string>
     <string name="text3_random_double_the">मज़ा दोगुना। पुरस्कार दोगुना करें।</string>
@@ -325,6 +325,7 @@
     <string name="quiz_verification">प्रश्नोत्तरी सत्यापन स्थिति</string>
     <string name="quiz_is_not_apporved">प्रश्नोत्तरी मंजूर नहीं</string>
     <string name="scholarship_approved">प्रश्नोत्तरी को मंजूरी दी</string>
+    <string name="processing">प्रोसेस हो रहा है ...</string>
 
 
 </resources>

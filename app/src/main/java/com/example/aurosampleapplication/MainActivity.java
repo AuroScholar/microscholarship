@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Locale locale = new Locale("hi");
+        Locale locale = new Locale("en");
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;

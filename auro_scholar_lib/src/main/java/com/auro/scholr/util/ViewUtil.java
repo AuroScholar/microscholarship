@@ -256,6 +256,7 @@ public class ViewUtil {
     }
 
     public static void setLanguageonUi(Activity activity){
+        ViewUtil.setActivityLang(activity);
       /*Resources resources = activity.getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();

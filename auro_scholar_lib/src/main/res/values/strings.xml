@@ -431,5 +431,6 @@
     <string name="scholarship_approved">Your Scholarship is Approved</string>
     <string name="others">OTHERS</string>
     <string name="psp_not_register">PSP is not registered</string>
+    <string name="processing">Processing...</string>
 
 </resources>
