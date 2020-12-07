@@ -119,6 +119,7 @@ public class QuizHomeNewFragment extends BaseFragment implements View.OnClickLis
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
         }
         setRetainInstance(true);
+        ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
         //  return inflater.inflate(R.layout.fragment_quiz_home_new, container, false);
     }

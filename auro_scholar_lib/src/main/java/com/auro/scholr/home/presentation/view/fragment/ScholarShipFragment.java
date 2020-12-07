@@ -39,6 +39,7 @@ import com.auro.scholr.core.common.NetworkUtil;
 import com.auro.scholr.databinding.CardFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.util.ViewUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,6 +75,7 @@ public class ScholarShipFragment extends Fragment {
         }
         HomeActivity.setListingActiveFragment(HomeActivity.QUIZ_DASHBOARD_WEB_FRAGMENT);
         setRetainInstance(true);
+        ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
     }
 

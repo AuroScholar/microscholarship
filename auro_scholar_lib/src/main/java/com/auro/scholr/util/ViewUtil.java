@@ -255,6 +255,24 @@ public class ViewUtil {
         }
     }
 
+    public static void setLanguageonUi(Activity activity){
+        ViewUtil.setActivityLang(activity);
+      /*Resources resources = activity.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        config.locale = new Locale(Locale.getDefault().getLanguage());
+        resources.updateConfiguration(config, dm);*/
+        //Locale.setDefault(Locale.getDefault());
+    }
+
+    public static void setActivityLang(Activity activity){
+        Resources resources = activity.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        config.locale = new Locale(getLanguage());
+        resources.updateConfiguration(config, dm);
+    }
+
 
 
 }

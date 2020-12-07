@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.content.res.AssetManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Locale locale = new Locale("hi");
+        Locale locale = new Locale("en");
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding.btOpen.setOnClickListener(this);
         binding.btSdk.setVisibility(View.VISIBLE);
         //printDeviceInfo();
-      /*  Locale locale = new Locale("hi");
+      /* Locale locale = new Locale("hi");
         Resources standardResources = this.getResources();
         AssetManager assets = standardResources.getAssets();
         DisplayMetrics metrics = standardResources.getDisplayMetrics();

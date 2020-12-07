@@ -28,6 +28,7 @@ import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewMode
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
+import com.auro.scholr.util.ViewUtil;
 import com.google.android.material.shape.CornerFamily;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
@@ -77,6 +78,7 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
         binding.setLifecycleOwner(this);
         init();
         setListener();
+        ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
     }
 

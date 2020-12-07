@@ -98,6 +98,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -155,6 +156,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
         }
         setRetainInstance(true);
+        ViewUtil.setLanguage(Locale.getDefault().getLanguage());
+        ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
     }
 
@@ -433,12 +436,15 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
         bundle.putParcelable(AppConstant.QUIZ_RES_MODEL, quizResModel);
         quizTestFragment.setArguments(bundle);
+        Locale.getDefault().getLanguage();
+        ViewUtil.setLanguageonUi(getActivity());
         openFragment(quizTestFragment);
     }
 
     public void openCameraPhotoFragment() {
         Intent intent = new Intent(getActivity(), CameraActivity.class);
         startActivityForResult(intent, AppConstant.CAMERA_REQUEST_CODE);
+
     }
 
     @Override
@@ -582,9 +588,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         Permissions.check(getActivity(), PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
             @Override
             public void onGranted() {
-
-                //   openQuizTestFragment(dashboardResModel);
-                openCameraPhotoFragment();
+               // openQuizTestFragment(dashboardResModel);
+               openCameraPhotoFragment();
 
             }
 
