@@ -22,7 +22,7 @@
 
     <item android:top="2px" android:end="2px" android:bottom="2px">
         <shape android:shape="rectangle">
-            <solid android:color="#FFFFFF" />
+            <solid android:color="@color/white" />
             <corners
                 android:topLeftRadius="0dp"
                 android:topRightRadius="25dp"

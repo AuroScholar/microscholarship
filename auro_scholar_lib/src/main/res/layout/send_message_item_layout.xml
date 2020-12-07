@@ -21,7 +21,7 @@
                 android:id="@+id/check_icon"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
-                android:src="@drawable/circle_outline" />
+                android:src="@drawable/circle_auro_outline" />
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
                 android:id="@+id/msg_text"

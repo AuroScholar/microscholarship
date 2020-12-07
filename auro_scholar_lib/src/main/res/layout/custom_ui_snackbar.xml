@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <ImageView
@@ -33,12 +34,13 @@
                 android:layout_height="@dimen/_35sdp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
                 android:background="@drawable/oval_background"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/ic_leaderboard_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_leaderboard_icon" />
 
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
@@ -47,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_5sdp"
                 android:paddingStart="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_10sdp"
                 android:text="@string/challenge_your_friends"
                 android:textColor="@color/black"
                 app:Font="Poppins-SemiBold.ttf"
@@ -60,10 +63,12 @@
                 android:id="@+id/arrow"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:background="@drawable/circle_blue"
+                android:background="@drawable/circle_auro_blue"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +79,7 @@
                     android:layout_height="@dimen/_20sdp"
                     android:layout_centerInParent="true"
 
-                    android:background="@drawable/circle_arrow" />
+                    android:background="@drawable/circle_auro_arrow" />
 
 
             </RelativeLayout>

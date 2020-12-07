@@ -8,7 +8,7 @@
         android:top="10dp">
         <rotate
             android:fromDegrees="90"
-            android:pivotX="49%"
+            android:pivotX="50%"
             android:pivotY="50%">
             <shape xmlns:android="http://schemas.android.com/apk/res/android"
                 android:shape="oval">

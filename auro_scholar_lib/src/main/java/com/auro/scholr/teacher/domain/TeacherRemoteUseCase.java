@@ -14,7 +14,9 @@ import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 import com.auro.scholr.teacher.data.model.response.MyProfileResModel;
+import com.auro.scholr.teacher.data.model.response.TeacherProgressModel;
 import com.auro.scholr.teacher.data.model.response.TeacherResModel;
+import com.auro.scholr.teacher.data.model.response.ZohoAppointmentListModel;
 import com.auro.scholr.teacher.data.repository.TeacherRepo;
 import com.auro.scholr.util.AppUtil;
 import com.google.gson.Gson;
@@ -95,6 +97,42 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
         });
     }
 
+    public Single<ResponseApi> getZohoAppointments() {
+
+        return teacherRemoteData.getZohoAppointments().map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+
+                    return handleResponse(response, Status.GET_ZOHO_APPOINTMENT);
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
+    public Single<ResponseApi> bookZohoAppointments(String from_time, String name, String email, String phone_number) {
+
+        return teacherRemoteData.bookZohoAppointments(from_time,name,email,phone_number).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+
+                    return handleResponse(response, Status.GET_ZOHO_APPOINTMENT);
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
     public Single<ResponseApi> uploadTeacherKYC(List<KYCDocumentDatamodel> list) {
 
         return teacherRemoteData.uploadTeacherKYC(list).map(new Function<Response<JsonObject>, ResponseApi>() {
@@ -121,6 +159,23 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
 
                 if (response != null) {
                     return handleResponse(response, Status.GET_TEACHER_DASHBOARD_API);
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
+    public Single<ResponseApi> getTeacherProgressApi(String mobileNumber) {
+
+        return teacherRemoteData.getTeacherProgressApi(mobileNumber).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+                    return handleResponse(response, Status.GET_TEACHER_PROGRESS_API);
 
                 } else {
 
@@ -180,6 +235,13 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
                 MyProfileResModel resModel = gson.fromJson(response.body(), MyProfileResModel.class);
                 return ResponseApi.success(resModel, status);
 
+            case GET_TEACHER_PROGRESS_API:
+                TeacherProgressModel teacherProgressModel = gson.fromJson(response.body(), TeacherProgressModel.class);
+                return ResponseApi.success(teacherProgressModel, status);
+
+            case GET_ZOHO_APPOINTMENT:
+                ZohoAppointmentListModel zohoAppointmentListModel = gson.fromJson(response.body(), ZohoAppointmentListModel.class);
+                return ResponseApi.success(zohoAppointmentListModel, status);
 
             case TEACHER_KYC_API:
                 KYCResListModel list = new Gson().fromJson(response.body(), KYCResListModel.class);

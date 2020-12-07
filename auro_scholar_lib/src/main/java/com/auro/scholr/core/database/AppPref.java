@@ -11,7 +11,6 @@ import static com.auro.scholr.core.common.AppConstant.PREF_OBJECT;
 
 
 public enum AppPref {
-
     INSTANCE;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor sharedPreferenceEditor;

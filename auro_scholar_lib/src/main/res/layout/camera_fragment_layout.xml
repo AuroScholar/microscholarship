@@ -37,23 +37,23 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_300sdp"
             android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_60sdp"
             android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
             android:background="@drawable/qr_square_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/flash_container">
+            app:layout_constraintTop_toTopOf="parent" >
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:text="@string/please_put_your_face_inside_the_box"
                 android:textColor="@color/white"
+                app:Font="Poppins-Regular.ttf"
                 android:textSize="@dimen/_12sdp"
-                app:Font="Poppins-Regular.ttf" />
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:text="@string/please_put_your_face_inside_the_box"/>
         </RelativeLayout>
 
 
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:background="@drawable/circle_white"
+                android:background="@drawable/circle_auro_white"
                 android:padding="@dimen/_2sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -86,10 +86,10 @@
                     android:layout_width="@dimen/_60sdp"
                     android:layout_height="@dimen/_60sdp"
                     android:layout_gravity="center"
-                    android:background="@drawable/cam_circle_selector"
+                    android:background="@drawable/cam_auro_circle_selector"
                     android:padding="10dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/cam_action_stillshot" />
+                    android:src="@drawable/cam_auro_action_stillshot" />
 
             </RelativeLayout>
 
@@ -111,12 +111,12 @@
         <!-- Flash Toggle -->
         <RelativeLayout
             android:id="@+id/flash_container"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_toLeftOf="@+id/switch_orientation_container"
-            android:background="@drawable/circle_white"
+            android:background="@drawable/circle_auro_white"
             android:padding="@dimen/_2sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -126,7 +126,7 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/cam_circle_selector"
+                android:background="@drawable/cam_auro_circle_selector"
                 android:padding="@dimen/_5sdp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_flash_off_black" />
@@ -149,9 +149,9 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <RelativeLayout
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/circle_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle_auro_white"
                 android:padding="@dimen/_2sdp">
 
                 <ImageButton
@@ -159,7 +159,7 @@
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/cam_grey_circle_selector"
+                    android:background="@drawable/cam_auro_grey_circle_selector"
                     android:padding="@dimen/_5sdp"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_switch_camera_black" />

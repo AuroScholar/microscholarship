@@ -25,7 +25,7 @@ public class TeacherDoumentViewHolder extends RecyclerView.ViewHolder {
 
     public void bindUser(KYCDocumentDatamodel model, int position, CommonCallBackListner commonCallBackListner) {
         binding.txtDocumentName.setText(model.getDocumentName());
-        if (!model.getDocumentFileName().equalsIgnoreCase(AuroApp.getAppContext().getString(R.string.no_file_chosen))) {
+        if (!model.getDocumentFileName().equalsIgnoreCase(AuroApp.getAppContext().getResources().getString(R.string.no_file_chosen))) {
             binding.txtFileName.setVisibility(View.VISIBLE);
             binding.txtFileName.setText(model.getDocumentFileName());
             binding.docImg.setOnClickListener(null);

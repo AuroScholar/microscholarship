@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <!--For Retake Layout-->
+        <RelativeLayout
+            android:id="@+id/next_quiz_layout"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/ic_start_quiz_bg"
+            android:visibility="gone">
+
+            <com.auro.scholr.core.util.uiwidget.RPTextView
+                android:id="@+id/next_quiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/auro_start"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8sdp"
+                app:Font="Poppins-Bold.ttf" />
+
+        </RelativeLayout>
+
+
+        <!--For Retake Layout-->
+        <RelativeLayout
+            android:id="@+id/retake_layout"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/ic_quiz_retake"
+            android:visibility="gone">
+
+            <com.auro.scholr.core.util.uiwidget.RPTextView
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/retake"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8sdp"
+                app:Font="Poppins-Bold.ttf" />
+
+        </RelativeLayout>
+
+        <!--For score Box ui-->
+        <RelativeLayout
+            android:id="@+id/layout_score"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginLeft="@dimen/_6sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/ic_score_bg_quiz"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical">
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/txt_score_points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="09"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11sdp"
+                    android:visibility="visible"
+                    app:Font="Poppins-SemiBold.ttf" />
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/txt_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_score_points"
+                    android:gravity="center"
+                    android:text="@string/score"
+                    android:layout_marginTop="@dimen/_minus5sdp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_6sdp"
+                    android:visibility="visible"
+                    app:Font="Poppins-Regular.ttf" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <!--For topic ui-->
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+            android:id="@+id/txt_topic"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:text="Topic"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_8sdp"
+            android:visibility="visible"
+            android:maxLines="4"
+            app:Font="Poppins-Regular.ttf"
+            app:layout_constraintBottom_toTopOf="@+id/level_two"
+            app:layout_constraintStart_toEndOf="@+id/level_one" />
+
+        <!--For progress and circle UI-->
+        <LinearLayout
+            android:id="@+id/background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:id="@+id/pb"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="@dimen/_57sdp"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_gravity="center_vertical"
+                android:max="100"
+                android:progressDrawable="@drawable/progress_drawable_horizontal"
+                app:layout_constraintStart_toEndOf="@+id/wallet_layout"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/circle_image"
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/blue_circle"
+                android:tint="@color/light_grey" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</layout>

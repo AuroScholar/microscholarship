@@ -92,6 +92,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     BottomNavigationView toolbar;
     FancyShowCaseView btnprofile;
     FancyShowCaseView btnKycapp;
+    FancyShowCaseView btnInfotutorial;
 
 
     @Override
@@ -109,17 +110,17 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         AuroApp.getAppComponent().doInjection(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MyClassroomViewModel.class);
         binding.setLifecycleOwner(this);
-
-
         setRetainInstance(true);
         return binding.getRoot();
     }
+
     public void setAdapter(List<MyClassRoomStudentResModel> resModelList) {
         binding.studentList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.studentList.setHasFixedSize(true);
         leaderBoardAdapter = new MyClassroomAdapter(getActivity(), resModelList, this);
         binding.studentList.setAdapter(leaderBoardAdapter);
     }
+
     @Override
     protected void init() {
         HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_DASHBOARD_FRAGMENT);
@@ -140,6 +141,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
 
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,9 +153,11 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         // Create a callbackManager to handle the login responses.
         callbackManager = CallbackManager.Factory.create();
     }
+
     private void setDataOnUi() {
 
     }
+
     private void monthSpinner() {
         String date = "";
         if (myClassRoomResModel != null && myClassRoomResModel.getTeacherResModel() != null && !TextUtil.isEmpty(myClassRoomResModel.getTeacherResModel().getRegistrationDate())) {
@@ -166,7 +170,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             binding.monthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                     if (leaderBoardAdapter != null && myClassRoomResModel != null && !TextUtil.checkListIsEmpty(myClassRoomResModel.getTeacherResModel().getStudentResModels())) {
                         leaderBoardAdapter.updateList(viewModel.teacherUseCase.makeStudentList(myClassRoomResModel.getTeacherResModel().getStudentResModels(), monthDataModelList.get(position).getMonthNumber(), monthDataModelList.get(position).getYear()));
                     }
@@ -180,7 +183,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             int year = DateUtil.getcurrentYearNumber();
             int month = DateUtil.getcurrentMonthNumber();
             if (month != 0) {
-                month = month - 1;
+                //month = month - 1;
             }
             for (int i = 0; i < monthDataModelList.size(); i++) {
                 MonthDataModel model = monthDataModelList.get(i);
@@ -192,10 +195,12 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
 
     }
+
     @Override
     protected void setToolbar() {
         /*Do code here*/
     }
+
     @Override
     protected void setListener() {
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
@@ -268,7 +273,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
             mFirebaseAnalytics.setUserProperTy(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"true");
         } else {
-            completeLink = completeLink + " https://bit.ly/3b1puWr";
+            completeLink = completeLink + " https://rb.gy/np9uh5";
             logeventparam.put(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"false");
             mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
             mFirebaseAnalytics.setUserProperTy(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"false");
@@ -408,8 +413,8 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                     break;
                 } else {
                     ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                            .setQuote(urlToShare.replace("- https://bit.ly/3b1puWr", ""))
-                            .setContentUrl(Uri.parse(" https://bit.ly/3b1puWr"))
+                            .setQuote(urlToShare.replace("-  https://rb.gy/np9uh5", ""))
+                            .setContentUrl(Uri.parse("  https://rb.gy/np9uh5"))
                             .build();
 
                     if (ShareDialog.canShow(ShareLinkContent.class)) {
@@ -460,18 +465,31 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                     }
                 })
                 .build();
+        btnInfotutorial = new FancyShowCaseView.Builder(getActivity())
+                .focusOn(toolbar.findViewById(R.id.action_info))
+                .focusShape(FocusShape.CIRCLE)
+                .customView(R.layout.tutorial_my_class_facebook_layout, new OnViewInflateListener() {
+                    @Override
+                    public void onViewInflated(View view) {
+                        setAnimatedContent(view, btnInfotutorial);
+                    }
+                })
+                .build();
         queue.add(btnfacebook);
         queue.add(btnprofile);
         queue.add(btnKycapp);
+        queue.add(btnInfotutorial);
         queue.show();
     }
     public void setAnimatedContent(View view,FancyShowCaseView fancyShowCaseView){
         TextView link = view.findViewById(R.id.descFb);
         TextView profile = view.findViewById(R.id.tutorial_profile);
         TextView kyc =view.findViewById(R.id.tutorial_kyc);
+        TextView info = view.findViewById(R.id.tutorial_info);
         LinearLayout layoutinvite = view.findViewById(R.id.llayoutinvite);
         LinearLayout layoutprofile = view.findViewById(R.id.layoutProfile);
         LinearLayout layoutkyc = view.findViewById(R.id.layoutkyc);
+        LinearLayout layoutinfo = view.findViewById(R.id.layoutinfo);
         if (fancyShowCaseView == btnfacebook) {
             link.setVisibility(View.VISIBLE);
             layoutinvite.setVisibility(View.VISIBLE);
@@ -491,6 +509,16 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             layoutkyc.setVisibility(View.VISIBLE);
             kyc.setVisibility(View.VISIBLE);
             kyc.setText(getResources().getString(R.string.tutorial_kyc));
+        }else if(fancyShowCaseView == btnInfotutorial){
+            link.setVisibility(View.GONE);
+            profile.setVisibility(View.GONE);
+            layoutprofile.setVisibility(View.GONE);
+            layoutprofile.setVisibility(View.GONE);
+            layoutinvite.setVisibility(View.GONE);
+            layoutkyc.setVisibility(View.GONE);
+            info.setVisibility(View.VISIBLE);
+            layoutinfo.setVisibility(View.VISIBLE);
+            info.setText(getResources().getString(R.string.on_step_info));
         }
 
     }

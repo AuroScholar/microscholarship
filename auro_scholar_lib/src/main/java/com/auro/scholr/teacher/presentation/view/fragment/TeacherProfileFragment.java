@@ -4,26 +4,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.os.Handler;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
@@ -41,10 +29,8 @@ import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.teacher.data.model.request.SelectClassesSubject;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
-import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomTeacherResModel;
 import com.auro.scholr.teacher.data.model.response.MyProfileResModel;
-import com.auro.scholr.teacher.data.model.response.TeacherResModel;
 import com.auro.scholr.teacher.presentation.view.adapter.DistrictSpinnerAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.ProfileScreenAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.StateSpinnerAdapter;
@@ -54,13 +40,19 @@ import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.firebase.FirebaseEventUtil;
 
-import java.util.Arrays;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 public class TeacherProfileFragment extends BaseFragment implements TextWatcher, CommonCallBackListner {
@@ -159,6 +151,9 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
 
         viewModel.getStateListData();
         viewModel.getDistrictListData();
+
+
+
         setRecycleView();
         setDataOnUI();
 
@@ -204,7 +199,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage(getString(R.string.sure_to_logout));
+                builder.setMessage(getActivity().getResources().getString(R.string.sure_to_logout));
 
                 // Set the alert dialog yes button click listener
                 builder.setPositiveButton(Html.fromHtml("<font color='#00A1DB'>YES</font>"), new DialogInterface.OnClickListener() {
@@ -238,21 +233,13 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                 // Display the alert dialog on interface
                 dialog.show();
 
-
-
-               /* if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
-                    AuroApp.getAuroScholarModel().getSdkcallback().logOut();
-                    AppUtil.myClassRoomResModel = null;
-                }*/
-                //  openFragment(new TeacherKycFragment());
-                //  ((HomeActivity) getActivity()).selectNavigationMenu(2);
             }
         });
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logparam.put(getResources().getString(R.string.log_save_profile_btn_teacher),"true");
-                firebaseEventUtil.logEvent(getResources().getString(R.string.log_save_profile_teacher),logparam);
+                logparam.put(getActivity().getResources().getString(R.string.log_save_profile_btn_teacher),"true");
+                firebaseEventUtil.logEvent(getActivity().getResources().getString(R.string.log_save_profile_teacher),logparam);
                 callSaveTeacherProfileApi();
             }
         });
@@ -283,9 +270,9 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == Status.UPDATE_TEACHER_PROFILE_API) {
                         handleProgress(1);
-                        logparam.put(getResources().getString(R.string.log_save_profile_api_teacher),"true");
-                        firebaseEventUtil.logEvent(getResources().getString(R.string.log_save_profile_teacher),logparam);
-                        showSnackbarError(getString(R.string.saved), Color.parseColor("#4bd964"));
+                        logparam.put(getActivity().getResources().getString(R.string.log_save_profile_api_teacher),"true");
+                        firebaseEventUtil.logEvent(getActivity().getResources().getString(R.string.log_save_profile_teacher),logparam);
+                        showSnackbarError(getActivity().getString(R.string.saved), Color.parseColor("#4bd964"));
                     } else if (responseApi.apiTypeStatus == Status.GET_PROFILE_TEACHER_API) {
                         MyProfileResModel teacherResModel = (MyProfileResModel) responseApi.data;
 
@@ -331,7 +318,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
 
                 default:
                     handleProgress(1);
-                    showSnackbarError(getString(R.string.default_error));
+                    showSnackbarError(getActivity().getResources().getString(R.string.default_error));
                     break;
             }
 

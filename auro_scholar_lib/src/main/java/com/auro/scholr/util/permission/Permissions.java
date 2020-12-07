@@ -60,7 +60,7 @@ public class Permissions {
                              PermissionHandler handler) {
         String rationale = null;
         try {
-            rationale = context.getString(rationaleId);
+            rationale = context.getResources().getString(rationaleId);
         } catch (Exception ignored) {
         }
         check(context, new String[]{permission}, rationale, null, handler);
@@ -132,7 +132,7 @@ public class Permissions {
                              Options options, final PermissionHandler handler) {
         String rationale = null;
         try {
-            rationale = context.getString(rationaleId);
+            rationale = context.getResources().getString(rationaleId);
         } catch (Exception ignored) {
         }
         check(context, permissions, rationale, options, handler);

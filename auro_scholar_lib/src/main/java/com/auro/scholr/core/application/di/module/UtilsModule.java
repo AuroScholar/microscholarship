@@ -33,7 +33,7 @@ public class UtilsModule {
 
     @Provides
     @Singleton
-    HttpLoggingInterceptor provideInterceptor(){
+    HttpLoggingInterceptor provideInterceptor() {
         return new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     }
 
@@ -51,7 +51,11 @@ public class UtilsModule {
     OkHttpClient getRequestHeader(HttpLoggingInterceptor httpLoggingInterceptor) {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-       // httpClient.addInterceptor(httpLoggingInterceptor);
+
+        httpClient.addInterceptor(httpLoggingInterceptor);
+
+      // httpClient.addInterceptor(httpLoggingInterceptor);
+
 
         httpClient.addInterceptor(chain -> {
             Request original = chain.request();
@@ -65,9 +69,9 @@ public class UtilsModule {
                     .build();
             return chain.proceed(request);
         })
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS);
+                .connectTimeout(3, TimeUnit.MINUTES)
+                .writeTimeout(3, TimeUnit.MINUTES)
+                .readTimeout(3, TimeUnit.MINUTES);
 
 
         return httpClient.build();

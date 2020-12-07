@@ -30,6 +30,7 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
 import com.auro.scholr.home.presentation.viewmodel.FriendsInviteViewModel;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
+import com.auro.scholr.util.ViewUtil;
 import com.google.gson.Gson;
 
 import javax.inject.Inject;
@@ -62,6 +63,7 @@ public class FriendsInviteBoardFragment extends BaseFragment implements View.OnC
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendsInviteViewModel.class);
         binding.setLifecycleOwner(this);
         setRetainInstance(true);
+        ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
     }
 

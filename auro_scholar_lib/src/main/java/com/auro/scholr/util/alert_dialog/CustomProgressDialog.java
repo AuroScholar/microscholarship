@@ -27,8 +27,12 @@ public class CustomProgressDialog extends Dialog {
         this.customDialogModel = customDialogModel;
     }
 
-    private void setTitle(String msg) {
+    public void setTitle(String msg) {
         customKycDialogBinding.cpTitle.setText(msg);
+    }
+
+    public void setProgressDialogText(String msg) {
+        binding.cpTitle.setText(msg);
     }
 
     @Override

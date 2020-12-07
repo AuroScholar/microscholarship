@@ -1,12 +1,11 @@
 <resources>
 
-    <!--App-->
+
     <string name="app_name">AuroScholr</string>
     <string name="internet_check">ओह, कोई इंटरनेट नहीं मिला। कृपया अपना कनेक्शन जांचें या फिर से प्रयास करें।</string>
     <string name="default_error">कनेक्ट करने में असमर्थ। कृपया कुछ देर बाद प्रयास करें।</string>
     <string name="no_data_found">कोई डेटा उपलब्ध नहीं है</string>
 
-    <!--Crop image string -->
     <string name="crop_image_activity_title"></string>
     <string name="crop_image_menu_rotate_left">Rotate counter clockwise</string>
     <string name="crop_image_menu_rotate_right">Rotate</string>
@@ -18,7 +17,7 @@
     <string name="crop_image_activity_no_permissions">रद्द करना, आवश्यक अनुमति नहीं दी गई हैं</string>
     <string name="upload_file">दस्तावेज अपलोड करें</string>
     <string name="rs">₹</string>
-    <string name="score_msg">स्कोर 8/10 और प्रत्येक प्रश्नोत्तरी के लिए 50 रु</string>
+    <string name="score_msg">अर्जित करें 8/10 अंक और जीतें रु 50 प्रति प्र्श्नोत्तरी</string>
     <string name="get_scholarship">छात्रवृत्ति प्राप्त करें</string>
     <string name="quiz">प्रश्नोत्तरी</string>
     <string name="total_no_of_points">अंकों की कुल संख्या:</string>
@@ -28,19 +27,17 @@
     <string name="wining_price">पुरस्कार जीतना:</string>
     <string name="start_quiz">प्रश्नोत्तरी शुरू करें</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="retry">पुन: प्रयास करें</string>
-    <string name="id_proof_front_side">आईडी प्रूफ सामने की ओर</string>
+    <string name="id_proof_front_side">पहचान पत्र का अगला भाग</string>
     <string name="title_activity_camera">CameraActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="next">आगे</string>
+    <string name="previous">पिछला</string>
 
     <string name="choose_file">फ़ाइल का चयन</string>
-    <string name="no_file_chosen">कोई फ़ाइल नहीं चुनी गई</string>
-    <string name="id_proof_back_side">आईडी प्रूफ बैक साइड</string>
-    <string name="school_id_card">स्कूल आई.डी. कार्ड</string>
+    <string name="no_file_chosen">कोई प्रति नहीं चुनी गई</string>
+    <string name="id_proof_back_side">पहचान पत्र का पिछला भाग</string>
+    <string name="school_id_card">सविद्यालय का प्रमाण पत्र</string>
     <string name="upload_profile_pic">अपनी फोटो अपलोड करें</string>
     <string name="upload">सभी अपलोड करें</string>
     <string name="submit">प्रस्तुत</string>
@@ -48,14 +45,14 @@
     <string name="thank_you">प्रश्नोत्तरी लेने के लिए धन्यवाद!</string>
     <string name="new_quiz_will_be_available_next_month">अगले महीने उपलब्ध होगी नई क्विज!</string>
     <string name="document_all_four_error_msg">कृपया पहले सभी चार दस्तावेज़ चुनें</string>
-    <string name="question_bank_powered_by_cambridge">कैम्ब्रिज द्वारा संचालित प्रश्न बैंक</string>
+    <string name="question_bank_powered_by_cambridge">कैम्ब्रिज द्वारा संचालित मैथ्स प्रश्न</string>
     <string name="permission_contact_error_msg">प्रश्नोत्तरी से संपर्क करने के लिए अनुमति आवश्यक है।</string>
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
     <string name="permission_error_msg">प्रश्नोत्तरी कैमरा लेने के लिए अनुमति आवश्यक है।</string>
     <string name="complete_the_previous_quiz_to_unlock">अनलॉक करने के लिए पिछले प्रश्नोत्तरी को पूरा करें </string>
     <string name="you_win">तुम जीते</string>
-    <string name="your_wallet">आपका वॉलेट</string>
-    <string name="upload_doc_text_msg">यदि आपको कोई समस्या आती है तो कृपया हमें +919667480783 पर कॉल करें.
+    <string name="your_wallet">आपका बटुआ</string>
+    <string name="upload_doc_text_msg">इस ऐप में किसी भी सहायता हेतु हमें इस मो. नं पर संपर्क करें +91 9667480783.
 </string>
     <string name="score_and_get">8/10 स्कोर करें और प्रत्येक क्विज के लिए</string>
     <string name="for_each_quiz">जीतें</string>
@@ -117,9 +114,7 @@
     <string name="successfully">You have successfully completed\n the 100 Days UI Challenge</string>
 
 
-    <string name="instructions">&#8226; foo<br />
-&#8226; bar<br />
-&#8226; baz<br /></string>
+
     <string name="document_uploaded">दस्तावेज़ अपलोड किया गया</string>
     <string name="verification_is_in_process">सत्यापन प्रक्रिया में है</string>
     <string name="document_verified">दस्तावेज़ सत्यापित</string>
@@ -145,10 +140,10 @@
     <string name="call">कॉल</string>
     <string name="upload_document">दस्तावेज़ अपलोड करें</string>
     <string name="please_upload_the_document">कृपया दस्तावेज़ अपलोड करें</string>
-    <string name="upload_verification">सत्यापन अपलोड करें</string>
+    <string name="upload_verification">KYC स्थिति</string>
     <string name="transfer_scholarship">छात्रवृत्ति हस्तांतरित करें</string>
 
-    <string name="verification_In_Progress">प्रगति में राशि पुनरीक्षण</string>
+    <string name="verification_In_Progress">ससत्यापन स्थिति  </string>
     <string name="scholarship_amount_approved">छात्रवृत्ति राशि स्वीकृत</string>
     <string name="transactions">Transactions</string>
     <string name="priceAmmount"><u>₹50.00</u></string>
@@ -158,55 +153,57 @@
     <string name="strike_amount"><strike>₹50.00</strike></string>
     <string name="save_more_details">Save More Details?</string>
     <string name="teacher_name">Teacher Name</string>
-    <string name="email_address">Email Address</string>
-    <string name="mobile_number">Mobile Number</string>
+    <string name="email_address">ईमेल पता</string>
+    <string name="mobile_number">मोबाइल नंबर</string>
     <string name="skip_for_now"><u>Skip For Now</u></string>
-    <string name="select_your_message">Select Your Message</string>
-    <string name="send_message">Send Message</string>
+    <string name="select_your_message">अपना संदेश चुनें</string>
+    <string name="send_message">मेसेज भेजें</string>
     <string name="default_message">Lorem ipsum is simply dummy text of the printing and typeseeting industry lorem ipsum</string>
-    <string name="total_points">Total Points:</string>
-    <string name="wallet_cash">Wallet Cash:</string>
-    <string name="get_now">GET NOW</string>
+    <string name="total_points">कुल अंक:</string>
+    <string name="wallet_cash">बटुआ नकद:</string>
+    <string name="get_now">अब प्राप्त करें</string>
     <string name="teacher_profile">Teacher Profile</string>
     <string name="classes">Classes You Teach</string>
     <string name="subjects_you_teach_till">Subjects You Teach Till 12th</string>
     <string name="school_name">School Name</string>
-    <string name="state">State</string>
+    <string name="state">राज्य</string>
     <string name="city">City</string>
-    <string name="choose_your_state">Choose Your State</string>
-    <string name="choose_your_city">Choose Your City</string>
-    <string name="upload_govt_id">Upload Govt Id Front side</string>
-    <string name="upload_govt_id_back_side">Upload Govt.ID Back Side</string>
-    <string name="upload_school_id">Upload School ID</string>
-    <string name="upload_picture">Upload Picture</string>
-    <string name="uplaod">UPLOAD</string>
-    <string name="save_changes">SAVE CHANGES</string>
-    <string name="kyc_verification">KYC Verification</string>
+    <string name="choose_your_state">अपना राज्य चुनें</string>
+    <string name="choose_your_city">अपना शहर चुनें</string>
+    <string name="upload_govt_id">अपलोड सरकार आईडी फ्रंट साइडe</string>
+    <string name="upload_govt_id_back_side">सरकार आईडी बैक साइड अपलोड करें</string>
+    <string name="upload_school_id">स्कूल आईडी अपलोड करें</string>
+    <string name="upload_picture">तसवीर डालें</string>
+    <string name="uplaod">डालना</string>
+    <string name="save_changes">परिवर्तनों को सुरक्षित करें</string>
+    <string name="kyc_verification">के वाई सी सत्यापन</string>
+    <string name="teacher_info_title">Become an Auro Teacher</string>
 
     <string name="share_msg">Hey!\nI have just got Scholarship Cash on Scholr App, you can too!\nJust take a 10 min quiz and win.\nStart now - https://bit.ly/3en7pnQ</string>
-    <string name="information">Information</string>
+    <string name="information">जानकारी</string>
     <string name="friends_ke_bina_kya_fun">Friends ke bina kya fun!</string>
-    <string name="logout">Logout</string>
-    <string name="sure_to_logout">Are you sure you want to logout?</string>
+    <string name="logout">सत्रांत करें</string>
+    <string name="sure_to_logout">क्या आप स्त्रांत करना चाहते हैं?</string>
     <string name="saved">The changes were saved successfully</string>
     <string name="successfully_send">Successfully Send!!</string>
+    <string name="address_not_found">Address not found</string>
+
 
     <string name="bullted_list">
-          \u25CF  Please read the all instructions carefully,
-       \n \u25CF Question bank is powered by Cambridge.
-        \n \u25CF Quiz contains the 10 questions.
-        \n \u25CF Please read each and every question carefully.
-        \n \u25CF Camera  will be only used for fraud control purpose.
+          \u25CF  कृपया सभी निर्देशों को ध्यान से पढ़ें.
+       \n \u25CF प्रश्न बैंक कैम्ब्रिज द्वारा संचालित है.
+        \n \u25CF प्रश्नोत्तरी में 10 प्रश्न हैं।
+        \n \u25CF कृपया प्रत्येक प्रश्न को ध्यान से पढ़ें।
+        \n \u25CF कैमरा केवल धोखाधड़ी नियंत्रण उद्देश्य के लिए उपयोग किया जाएगा।
 
     </string>
-
-  <!--  <string name="text1_random">जितना ज़्यादा उतना अच्छा</string>
+    <string name="text1_random">जितना ज़्यादा उतना अच्छा</string>
     <string name="text2_random_chalange_your_friends">प्रश्नोत्तरी लेने के लिए अपने दोस्तों को चुनौती!</string>
     <string name="text3_random_double_the">मज़ा दोगुना। पुरस्कार दोगुना करें।</string>
     <string name="text4_random_learning">सीखना मजेदार है, लेकिन साथ में सीखना और भी फायदेमंद है!</string>
     <string name="text5_random_multiply">अपने पुरस्कारों को गुणा करें और अपने दुखों को विभाजित करें!</string>
-    <string name="button1_random">Invite Your Friends</string>
-    <string name="button2_random">Challenge Your Friends</string>-->
+    <string name="button1_random">अपने दोस्तों को आमंत्रित करें</string>
+    <string name="button2_random">अपने दोस्तों को चुनौती दें</string>
 
     <string-array name="classes">
         <item>1st</item>
@@ -235,7 +232,99 @@
     <string name="teacher_share_msg">Hi, I have just referred you to get Scholarship  on Scholr App! \nTake quiz and get Scholarship Certificate every month. \nDownload App - https://bit.ly/3b1puWr</string>
     <string name="challenge_msg">just challenged you in a quiz! Can you beat their score?</string>
     <string name="invite_friend_refrral">Ek Vishesh Nimantran! Scholr App par mujhase juden, doston ko challenge karein aur roz Scholarship &amp; Certificates paayein!\n Click to Install App - ></string>
-    <string name="next_quiz">Next Quiz</string>
-    <string name="impossible">It always seems impossible until it’s done.</string>
+    <string name="next_quiz">अगला प्रश्नोत्तरी</string>
+    <string name="impossible">यह हमेशा असंभव सा लगता है जब तक कि पूरा न हो जाय।</string>
+    <string name="challenge">चुनौती</string>
+    <string name="taking_private_tutions">निजी ट्युशन लेना ?</string>
+    <string name="taking_type">ट्युशन टाइप</string>
+    <string name="payment_failed_error_msg">Payment Request Failed!. Please Try After SomeTime</string>
+    <string name="requested_accepted">Request accepted</string>
+    <string name="getting_webinar_slots">Getting Webinar Slots</string>
+
+    <string name="challenged_you">आपको चुनौती दी</string>
+    <string name="book_free_tutoring_session">बुक फ्री ट्यूशन सत्र</string>
+    <string name="retake">फिर से लेना</string>
+    <string name="auro_start">शुरू</string>
+    <string name="accept">स्वीकार करना</string>
+    <string name="yes">हाँ</string>
+    <string name="no">नहीं</string>
+    <string-array name="privateTutionList">
+        <item>No</item>
+        <item>YES</item>
+    </string-array>
+
+    <string-array name="privateTypeList">
+        <item>Please Select Tution Type</item>
+        <item>Group</item>
+        <item>Personal</item>
+        <item>Online</item>
+    </string-array>
+    <string name="ok">OK</string>-->
+    <string name="language">भाषा</string>
+    <string name="select_your_grade">अपनी कक्षा चुनें </string>
+    <string name="confirm_grade">पुष्टि करें</string>
+    <string name="mobile_num">मोबाइल नंबर :</string>
+    <string name="student_class">कक्षा :</string>
+    <string name="friends_leader_board">Friends Leader Board</string>
+    <string name="payment_info">भुगतान की जानकारी</string>
+    <string name="change_grade">कक्षा  बदलें</string>
+    <string name="ideal_app_for_nyour_education">आपकी शिक्षा के लिए आदर्श ऐप</string>
+    <string name="phone_number">फ़ोन नंबर</string>
+    <string name="send_otp">ओ टी पी भेजें</string>
+
+    <string-array name="grade">
+        <item>कृपया अपनी कक्षा चुनें</item>
+        <item>Class VI</item>
+        <item>Class VII</item>
+        <item>Class VIII</item>
+        <item>Class IX</item>
+        <item>Class X</item>
+        <item>Class XI</item>
+        <item>Class XII</item>
+    </string-array>
+
+    <string name="by_continuing">आगे जारी रखते हुए, आप हमारे</string>
+    <!--Facebook Integration-->
+    <string name="facebook_app_id">1614821145461747</string>
+    <string name="fb_login_protocol_scheme">fb1614821145461747</string>
+    <string name="questions">Questions by :</string>
+    <string name="enter_mobile_number">Enter Mobile Number</string>
+    <string name="login_register">SIGN IN WITH TRUECALLER</string>
+    <string name="continue_give">CONTINUE</string>
+    <string name="privacy">By joining us,you agree to the <u>Terms and Conditions</u> and <u>Privcy Policy</u></string>
+
+    <string name="terms_of_service">मामले &amp; शर्तेँ</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_myprofile">प्रोफ़ाइल</string>
+    <string name="menu_changeclass">वर्ग बदलें</string>
+    <string name="menu_web">Web</string>
+    <string name="back_button">BACK</string>
+    <string name="confirm_otp">पुष्टि करें ओटीपी</string>
+    <string name="not_receive_resend">प्राप्त नहीं किया ? पुन: भेजें</string>
+    <string name="sign_up_with_facebook">SIGN UP WITH FACEBOOK</string>
+    <string name="code_valid_for">(कोड मान्य है)</string>
+    <string name="privacy_policy_auro">गोपनीयता नीति</string>
+    <string name="add_your_kyc">अपने kyc जोड़ें</string>
+    <string name="classe">Classes You Teach</string>
+    <string name="add_friend">Add Friend</string>
+    <string name="and">तथा</string>
+    <string name="change_language">भाषा बदलो</string>
+    <string name="opt_sent_number_txt">इस नंबर पर ओटीपी भेजा गया </string>
+    <string name="enter_otp_txt">OTP दर्ज करें</string>
+    <string name="change_mobile_no">नंबर बदलो</string>
+    <string name="enter_phone_number">फोन नंबर दर्ज</string>
+    <string name="invalid_phone_number">अवैध फोन नंबर</string>
+    <string name="press_again_for_exit">बाहर निकलने के लिए फिर से दबाएं</string>
+    <string name="quiz_instruction">प्रश्नोत्तरी निर्देश</string>
+    <string name="quiz_exit_txt">क्या आप वाकई क्विज़ छोड़ना चाहते हैं?</string>
+    <string name="certificates">प्रमाण पत्र</string>
+    <string name="your_certificates">आपके प्रमाण पत्र</string>
+    <string name="certificate_content">डाउनलोड या बड़े आकार में देखने के लिए प्रत्येक पर क्लिक करने के लिए अपने प्रमाण पत्र का चयन करें</string>
+    <string name="quiz_verification">प्रश्नोत्तरी सत्यापन स्थिति</string>
+    <string name="quiz_is_not_apporved">प्रश्नोत्तरी मंजूर नहीं</string>
+    <string name="scholarship_approved">प्रश्नोत्तरी को मंजूरी दी</string>
+
 
 </resources>

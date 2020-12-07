@@ -44,6 +44,7 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.ViewUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,7 +63,7 @@ import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
  * Created by varun
  */
 
-public class PrivacyPolicyFragment extends BaseFragment {
+public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickListener {
     public static final String TAG = "PrivacyPolicyFragment";
 
     private static final int INPUT_FILE_REQUEST_CODE = 1;
@@ -92,6 +93,7 @@ public class PrivacyPolicyFragment extends BaseFragment {
             binding.setLifecycleOwner(this);
         }
         setRetainInstance(true);
+        ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
     }
 
@@ -118,7 +120,7 @@ public class PrivacyPolicyFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-
+        binding.toolbarLayout.backArrow.setOnClickListener(this);
     }
 
     @Override
@@ -130,6 +132,7 @@ public class PrivacyPolicyFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
+        setListener();
     }
 
     public void checkInternet() {
@@ -175,6 +178,13 @@ public class PrivacyPolicyFragment extends BaseFragment {
 
         webView.loadUrl(webUrl);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.back_arrow){
+            getActivity().getSupportFragmentManager().popBackStack();
+        }
     }
 
     public class PQClient extends WebViewClient {

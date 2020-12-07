@@ -1,9 +1,5 @@
 package com.auro.scholr.teacher.presentation.viewmodel;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.ResponseApi;
@@ -19,6 +15,9 @@ import com.auro.scholr.util.TextUtil;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -48,7 +47,7 @@ public class TeacherProfileViewModel extends ViewModel {
                 getTeacherProfileDataApi(mobileNumber);
             } else {
                 // please check your internet
-                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getResources().getString(R.string.internet_check), Status.NO_INTERNET));
             }
 
         });
@@ -86,6 +85,7 @@ public class TeacherProfileViewModel extends ViewModel {
     }
 
 
+
     public void updateTeacherProfileData(TeacherReqModel reqModel) {
 
         Disposable disposable = teacherRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
@@ -93,7 +93,7 @@ public class TeacherProfileViewModel extends ViewModel {
                 updateTeacherProfileApi(reqModel);
             } else {
                 // please check your internet
-                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getResources().getString(R.string.internet_check), Status.NO_INTERNET));
             }
 
         });

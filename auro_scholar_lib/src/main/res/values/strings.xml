@@ -1,10 +1,84 @@
 <resources>
 
     <!--App-->
-    <string name="app_name">AuroScholr</string>
+    <string name="app_name">AuroScholar</string>
+    <!--Facebook Integration-->
+    <string name="facebook_app_id">1614821145461747</string>
+    <string name="fb_login_protocol_scheme">fb1614821145461747</string>
+
     <string name="internet_check">Oops, No internet found.Please check your connection or try again.</string>
     <string name="default_error">Unable to connect. Please try after sometime.</string>
     <string name="no_data_found">No data available</string>
+
+    <string name="questions">Questions by :</string>
+    <string name="enter_mobile_number">Enter Mobile Number</string>
+    <string name="login_register">SIGN IN WITH TRUECALLER</string>
+    <string name="continue_give">CONTINUE</string>
+    <string name="privacy">By joining us,you agree to the <u>Terms and Conditions</u> and <u>Privcy Policy</u></string>
+
+    <string name="terms_of_service">Terms &amp; Conditions</string>
+    <string name="privacy_policy">Privacy Policy</string>
+
+    <string-array name="select_type_scolar">
+        <item>Please Select User Type</item>
+        <item>I am a Student</item>
+        <item>I am a Teacher</item>
+    </string-array>
+    <string-array name="grade">
+        <item>Please Select your class</item>
+        <item>Class VI</item>
+        <item>Class VII</item>
+        <item>Class VIII</item>
+        <item>Class IX</item>
+        <item>Class X</item>
+        <item>Class XI</item>
+        <item>Class XII</item>
+    </string-array>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_myprofile">Profile</string>
+    <string name="menu_changeclass">Change Class</string>
+    <string name="menu_web">Web</string>
+    <string name="back_button">BACK</string>
+    <string name="confirm_otp">CONFIRM OTP</string>
+    <string name="not_receive_resend">Not Receive ? Resend</string>
+    <string name="sign_up_with_facebook">SIGN UP WITH FACEBOOK</string>
+    <string name="code_valid_for">(Code valid for)</string>
+
+    <string name="title_activity_verify_with_phone_no">VerifyWithPhoneNoActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="intent_phone_number">intentphoneNumber</string>
+    <string name="userOtp">userOtp</string>
+    <string name="splash_screen_page">splash_screen_Page</string>
+    <string name="login_page">login_page</string>
+    <string name="event_verify_by_phone">login_page_verifyByPhone</string>
+    <string name="event_mobile_no">Mobile_No</string>
+    <string name="login_page_verify_by_fb">login_page_verifyByFb</string>
+    <string name="login_page_userfbemail">login_page_userFbEmail</string>
+    <string name="login_page_userfbgender">login_page_userFbGender</string>
+    <string name="login_page_userfbname">login_Page_UserFbName</string>
+    <string name="event_email_to_phoneno">phone_verify_page</string>
+    <string name="event_verify_phone_no">verify_phone_no</string>
+    <string name="event_splash_page_choose">splash_page_choose</string>
+    <string name="event_teacher">Teacher</string>
+    <string name="event_student">Student</string>
+    <string name="event_otp_verify_mobileno">otp_verify_mobileno</string>
+    <string name="event_otp_page">otp_page</string>
+    <string name="event_student_dashboard_mobile_no">student_dashboard_mobile_no</string>
+    <string name="event_student_dashboard_grade">student_dashboard_grade</string>
+    <string name="event_student_dashboard_page">student_dashboard_page</string>
+    <string name="event_teacher_dashboard_mobile_no">teacher_dashboard_mobile_no</string>
+    <string name="event_teacher_dashboard_page">teacher_dashboard_page</string>
+    <string name="event_student_logout">student_logout</string>
+    <string name="event_teacher_logout">teacher_logout</string>
+    <string name="title_activity_web">WebActivity</string>
+    <string name="event_login_page_verifyByGmail">login_page_verifyByGmail</string>
+    <string name="change_mobile_no">Change Number</string>
 
 
     <!--Crop image string -->
@@ -49,8 +123,8 @@
     <string name="thank_you">Thank You \nfor taking the quiz!</string>
     <string name="new_quiz_will_be_available_next_month">New quiz will be available next month!</string>
     <string name="document_all_four_error_msg">Please select the all four document first</string>
-    <string name="question_bank_powered_by_cambridge">Question bank powered by Cambridge</string>
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="question_bank_powered_by_cambridge">Maths Questions powered by Cambridge</string>
+    <string name="privacy_policy_auro">Privacy Policy</string>
     <string name="permission_error_msg">For taking the quiz camera permission is must.</string>
     <string name="permission_contact_error_msg">For taking the quiz contact permission is must.</string>
     <string name="complete_the_previous_quiz_to_unlock">Complete the previous quiz to unlock</string>
@@ -95,6 +169,18 @@
         <item>English</item>
         <item>Other</item>
     </string-array>
+    <string-array name="privateTutionList">
+        <item>No</item>
+        <item>YES</item>
+    </string-array>
+
+    <string-array name="privateTypeList">
+        <item>Please Select Tution Type</item>
+        <item>Group</item>
+        <item>Personal</item>
+        <item>Online</item>
+    </string-array>
+
     <string name="congratulations">Congratulations!</string>
     <string name="successfully">You have got ₹50 Scholarship Cash.\n share with your friends!</string>
     <string name="share_with">Share With Friends</string>
@@ -128,9 +214,6 @@
     <string name="share_with_other">Share With Other</string>
     <string name="invite">Invite</string>
 
-    <!--Facebook Integration-->
-    <string name="facebook_app_id">1614821145461747</string>
-    <string name="fb_login_protocol_scheme">fb1614821145461747</string>
     <string name="friends_leadeboard">Friends \nLeaderboard</string>
 
     <string name="name">Name</string>
@@ -155,9 +238,9 @@
     <string name="please_put_your_face_inside_the_box">Please put your face inside the box</string>
     <string name="call_our_customercare">Please call our customer care number to get your scholarship cash</string>
     <string name="call">Call</string>
-    <string name="upload_document">Upload Document</string>
+    <string name="upload_document">Upload KYC Document</string>
     <string name="please_upload_the_document">Please Upload the Document</string>
-    <string name="upload_verification">Upload Verification</string>
+    <string name="upload_verification">KYC Verification</string>
     <string name="transfer_scholarship">Transfer Scholarship</string>
     <string name="verification_In_Progress">Verification In Progress</string>
     <string name="scholarship_amount_approved">Scholarship Amount Approved</string>
@@ -180,7 +263,7 @@
     <string name="wallet_cash">Wallet Cash :</string>
     <string name="get_now">GET NOW</string>
     <string name="teacher_profile">Teacher Profile</string>
-    <string name="classes">Classes You Teach</string>
+    <string name="classe">Classes You Teach</string>
     <string name="subjects_you_teach_till">Subjects You Teach Till 12th</string>
     <string name="school_name">School Name</string>
     <string name="state">State</string>
@@ -194,12 +277,13 @@
     <string name="uplaod">UPLOAD</string>
     <string name="save_changes">SAVE CHANGES</string>
     <string name="kyc_verification">KYC Verification</string>
+    <string name="teacher_info_title">Become an Auro Teacher</string>
 
     <string name="share_msg">Hey!\nI have just got Scholarship Cash on Scholr App, you can too!\nJust take a 10 min quiz and win.\nStart now - https://bit.ly/3en7pnQ</string>
     <string name="information">Information</string>
     <string name="friends_ke_bina_kya_fun">Friends ke bina kya fun!</string>
-    <string name="teacher_share_msg">Hi, I have just referred you to get Scholarship  on Scholr App! \nTake quiz and get Scholarship Certificate every month. \nDownload App -</string>
-    <string name="invite_friend_refrral">Hi! An exclusive invite just for you! Join me on scholr App, challenge friends and get scholarship &amp; Certificates everyday! \n Click to accept my invitation &amp; Install App - ></string>
+    <string name="teacher_share_msg">Hi, I have just referred you to get Scholarship  on AuroScholar App! \nTake quiz and get Scholarship Certificate every month. \nDownload App -</string>
+    <string name="invite_friend_refrral">Hi! An exclusive invite just for you! Join me on AuroScholar App, challenge friends and get scholarship &amp; Certificates everyday! \n Click to accept my invitation &amp; Install App - ></string>
     <string name="challenge_msg">just challenged you in a quiz! Can you beat their score?</string>
     <string name="logout">Logout</string>
     <string name="saved">The changes were saved successfully</string>
@@ -212,6 +296,8 @@
     <string name="text5_random_multiply">Multiply your rewards and divide your sorrows!</string>
     <string name="button1_random">Invite Your Friends</string>
     <string name="button2_random">Challenge Your Friends</string>
+
+
     <string name="log_save_profile_teacher">save_profile_log_teacher</string>
     <string name="log_save_profile_api_teacher">save_profile_api_teacher</string>
     <string name="log_save_profile_btn_teacher">save_profile_btn_teacher</string>
@@ -222,7 +308,7 @@
     <string name="log_whatapplink_teacher">whatapplink_teacher</string>
     <string name="log_link_teacher">link_teacher</string>
     <string name="log_click_on_whatapp_student">click_on_whatapp_student</string>
-    <string name="log_quiz_home_fragment_student">quiz_home_fragment_student</string>
+    <string name="log_quiz_home_fragment_student">Total_Subject_Page_Student</string>
     <string name="log_start_quiz">start_quiz_student</string>
     <string name="log_click_add_kyc_student">click_add_kyc_student</string>
     <string name="log_friend_leader_board_student">friend_leader_board_student</string>
@@ -235,12 +321,30 @@
     <string name="tutorial_kyc">Please click here to upload your\nKYC details</string>
     <string name="invite_your_Student">Invite Your Students</string>
     <string name="pref_tutorial">tutorial</string>
+
+    <string name="address_not_found">Address not found</string>
+    <string name="choose_your_slot">Choose Your Slot</string>
+    <string name="book_my_seat">Book My Seat</string>
+    <string name="select_single_slot">Select at least single slot.</string>
+    <string name="getting_webinar_slots">Getting Webinar\nSlots</string>
+    <string name="tutorial_video_info">Tutorial video</string>
+    <string name="on_step_info">Steps to be become an AuroScholar Teacher</string>
+
     <string name="retake_quiz">Retake Quiz</string>
     <string name="auro_scholar_wallet">You have got ₹50 Scholarship in your\nAuro Scholar Wallet!</string>
     <string name="share_with_friends">Share with friends</string>
     <string name="congratulation_new">Congratulations</string>
     <string name="next_quiz">Next Quiz</string>
     <string name="impossible">It always seems impossible until it’s done.</string>
+    <string name="accept">Accept</string>
+    <string name="challenge">Challenge</string>
+    <string name="taking_private_tutions">Taking Private Tutions ?</string>
+    <string name="taking_type">Tution Type</string>
+    <string name="challenged_you">Challenged You</string>
+    <string name="book_free_tutoring_session">Book Free Tutoring Session</string>
+    <string name="retake">Retake</string>
+    <string name="auro_start">Start</string>
+    <string name="add_friend">Add Friend</string>
 
     <string-array name="classes">
         <item>1st</item>
@@ -265,5 +369,67 @@
         <item>Hindi</item>
         <item>Other</item>
     </string-array>
+
+    <string name="enter_the_paytm_number">Enter the Paytm Number</string>
+    <string name="enter_the_upi_address">Enter the UPI Address</string>
+    <string name="payment_failed_error_msg">Payment Request Failed!. Please Try After SomeTime</string>
+    <string name="requested_accepted">Request accepted</string>
+    <string name="ok">OK</string>
+    <string name="navigation_header">Navigation header</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Close</string>
+    <string name="classes">Classes You Teach</string>
+    <string name="event_student_score_page">student_score_page</string>
+    <string name="event_upload_id">kyc_document upload_page</string>
+    <string name="event_kyc_document_uplaod_page">Kyc_document_uplaod_page</string>
+    <string name="event_payment_info_page">payment_info_page</string>
+    <string name="event_payement_page">Payement_page</string>
+    <string name="event_phone_no">phone_no</string>
+    <string name="event_payment_by_upi_transfer_page">payment_by_upi_transfer_page</string>
+    <string name="event_payment_by_paytm_transfer_page">payment_by_paytm_transfer_page</string>
+    <string name="event_payment_by_bank_transfer_page">payment_by_bank_transfer_page</string>
+    <string name="event_info_page_book_appoinment">info_page_book_appoinment</string>
+
+    <string name="log_privacy_page">Privacy_page</string>
+    <string name="event_friend_leader_page">Friend_Leader_page</string>
+    <string name="event_start_quiz_page">Start_Quiz_Page</string>
+    <string name="event_send_message_to_student_byMessage_myclassroom_page">send_message_to_student_byMessage_myclassroom_page</string>
+    <string name="event_send_message_to_student_byWhatapp_myclassroom_page">send_message_to_student_byWhatapp_myclassroom_page</string>
+    <string name="event_send_message_to_student_byfacebook_myclassroom_page">send_message_to_student_byfacebook_myclassroom_page</string>
+    <string name="event_demographic_page">Demographic_page</string>
+    <string name="language">Language</string>
+    <string name="select_your_grade">Select Your Grade</string>
+    <string name="confirm_grade">CONFIRM GRADE</string>
+    <string name="mobile_num">Mobile No. :</string>
+    <string name="student_class">Class :</string>
+    <string name="friends_leader_board">Friends Leader Board</string>
+    <string name="payment_info">Payment Info</string>
+    <string name="change_grade">Change Grade</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ideal_app_for_nyour_education">Ideal App For\nYour Education</string>
+    <string name="phone_number">PHONE NUMBER</string>
+    <string name="send_otp">SEND OTP</string>
+    <string name="by_continuing">By continuing, your agree to our</string>
+    <string name="and">and</string>
+    <string name="change_language">Change Language</string>
+    <string name="opt_sent_number_txt">OTP sent on this number</string>
+    <string name="enter_otp_txt">Enter the OTP</string>
+    <string name="enter_phone_number">Enter Phone Number</string>
+    <string name="invalid_phone_number">Invalid Phone Number</string>
+    <string name="press_again_for_exit">Press again for exit</string>
+    <string name="quiz_instruction">Quiz Instructions</string>
+    <string name="quiz_exit_txt">Are you sure you want to quit the quiz ?</string>
+    <string name="bundledashboardresmodel">dashboardResModel</string>
+    <string name="bundleassignmentreqmodel">assignmentReqModel</string>
+    <string name="something">Something Went Wrong! While Sending Invitation</string>
+    <string name="certificates">Certificates</string>
+    <string name="your_certificates">Your Certificates</string>
+    <string name="certificate_content">Select Your Certificates to download or click on each to view in large size</string>
+    <string name="quiz_verification">Quiz Verification</string>
+    <string name="quiz_is_not_apporved">Quiz is not apporved</string>
+    <string name="scholarship_approved">Your Scholarship is Approved</string>
+    <string name="others">OTHERS</string>
+    <string name="psp_not_register">PSP is not registered</string>
 
 </resources>

@@ -141,7 +141,7 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:backgroundTint="@color/dark_magenta"
                         android:textSize="@dimen/_12sdp"
-                        android:inputType="phone"
+                        android:inputType="text"
                         android:hint="IFSC Code"
                         app:Font="Poppins-Regular.ttf"
                         app:backgroundTint="@color/dark_magenta"
@@ -164,6 +164,8 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

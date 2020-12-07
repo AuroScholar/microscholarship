@@ -25,6 +25,10 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.auro.scholr.core.common.Status.AZURE_API;
+import static com.auro.scholr.core.common.Status.DASHBOARD_API;
+import static com.auro.scholr.core.common.Status.GRADE_UPGRADE;
+
 
 public class QuizViewModel extends ViewModel {
 
@@ -87,7 +91,7 @@ public class QuizViewModel extends ViewModel {
                                 new Consumer<Throwable>() {
                                     @Override
                                     public void accept(Throwable throwable) throws Exception {
-                                        defaultError();
+                                        defaultError(AZURE_API);
                                     }
                                 }));
     }
@@ -116,12 +120,54 @@ public class QuizViewModel extends ViewModel {
                                 new Consumer<Throwable>() {
                                     @Override
                                     public void accept(Throwable throwable) throws Exception {
-                                        defaultError();                                    }
+                                        defaultError(DASHBOARD_API);                                    }
                                 }));
 
     }
-    private void defaultError() {
-        serviceLiveData.setValue(new ResponseApi(Status.FAIL, AuroApp.getAppContext().getResources().getString(R.string.default_error), null));
+
+    public void gradeUpgrade(AuroScholarDataModel model) {
+
+        Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
+            if (hasInternet) {
+                gradeClassUpgrade(model);
+            } else {
+                // please check your internet
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
+            }
+        });
+
+        getCompositeDisposable().add(disposable);
+
+    }
+
+    private  void gradeClassUpgrade(AuroScholarDataModel model){
+        getCompositeDisposable().add(homeRemoteUseCase.upgradeStudentGrade(model).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+
+                    }
+                })
+                .subscribe(new Consumer<ResponseApi>() {
+                               @Override
+                               public void accept(ResponseApi responseApi) throws Exception {
+                                   serviceLiveData.setValue(responseApi);
+                               }
+                           },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                defaultError(GRADE_UPGRADE);
+                            }
+                        }));
+    }
+
+
+
+
+    private void defaultError(Status status) {
+        serviceLiveData.setValue(new ResponseApi(Status.FAIL, AuroApp.getAppContext().getResources().getString(R.string.default_error), status));
     }
 
 
@@ -138,6 +184,8 @@ public class QuizViewModel extends ViewModel {
 
         return byteBuff.toByteArray();
     }
+
+
 
 
 

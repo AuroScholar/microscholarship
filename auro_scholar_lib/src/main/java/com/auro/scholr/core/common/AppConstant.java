@@ -26,6 +26,7 @@ public interface AppConstant {
     String QUIZ_RES_MODEL = "QUIZ_TEST_MODEL";
     String AURO_DATA_MODEL = "AURO_DATA_MODEL";
     String MOBILE_NUMBER = "mobile_no";
+    String LOCATION_DATA = "location_data";
 
     int CAMERA_REQUEST_CODE = 007;
     String FAILED = "failed";
@@ -61,6 +62,8 @@ public interface AppConstant {
         String IS_KYC_VERIFIED = "is_kyc_verified";
         String IS_PAYMENT_LASTMONTH = "is_payment_lastmonth";
         String IS_EMAIL_VERIFIED = "email_verified";
+        String PARTNER_SOURCE="partner_source";
+        String USER_PARTNER_ID = "user_partner_id";
     }
 
 
@@ -101,6 +104,9 @@ public interface AppConstant {
         String DD_MMM = "dd-MMM";
         String DD_MMMM_YYYY = "dd MMMM yyyy"; // 02 August 2019
         String dd_MMM_yyyy = "dd MMM, yyyy"; // 02 August 2019
+        String DD_MM_YY_HH_MM = "dd-MM-yy HH:mm";  // 01-11-2019
+        String DD_MMM_HH_MM_AA = "dd MMM, hh:mm aa";
+        String YYYYMM = "yyyymm";
     }
 
     interface DocumentType {
@@ -137,6 +143,14 @@ public interface AppConstant {
         String SCHOOL_TYPE = "school_type";
         String BOARD_TYPE = "board_type";
         String LANGUAGE = "language";
+        String LATITUDE = "latitude";
+        String LONGITUDE = "longitude";
+        String RADIUS = "radius";
+        String MOBILE_MODEL = "mobile_model";
+        String MOBILE_MANUFACTURER = "mobile_manufacturer";
+        String MOBILE_VERSION = "mobile_version";
+        String IS_PRIVATE_TUTION = "is_private_tution";
+        String PRIVATE_TUTION_TYPE = "private_tution_type";
     }
 
     interface FragmentType {
@@ -162,6 +176,7 @@ public interface AppConstant {
         String PLEASE_SELECT_LANGUAGE_MEDIUM = "Please Select Language Medium";
         String PLEASE_SELECT_BOARD = "Please Select Board";
         String PLEASE_SELECT_SCHOOL = "Please Select School";
+        String PLEASE_SELECT_PRIVATE_TUTION = "Please Select Tution Type";
     }
 
 
@@ -178,6 +193,7 @@ public interface AppConstant {
         String QUIZ_ATTEMPT = "quiz_attempt";
         String EKLAVVYA_EXAM_ID = "eklavvya_exam_id";
         String EXAM_FACE_IMG = "exam_face_img";
+        String SUBJECT = "subject";
     }
 
 
@@ -188,6 +204,7 @@ public interface AppConstant {
 
     interface SENDING_DATA {
         String STUDENT_DATA = "STUDENT_DATA";
+        String APPOINTMENT_DATA = "APPOINTMENT_DATA";
     }
 
     interface SdkFragmentType {
@@ -210,9 +227,77 @@ public interface AppConstant {
         String RECEIVER_MOBILE_NUMBER = "receiver_mobile_no";
         String NOTIFICATION_TITLE = "notification_title";
         String NOTIFICATION_MESSAGE = "notification_message";
+        String CHALLENGE_BY = "challenge_by";
+        String CHALLENGE_TO = "challenge_to";
     }
 
     interface Source {
+        String NEW_USER_DASHBOARD = "NEW_USER_DASHBOARD";
+        String DASHBOARD_NAVIGATION = "DASHBOARD_NAVIGATION";
         String QUIZ_DASHBOARD_FRAGMENT = "QUIZ_DASHBOARD_FRAGMENT";
+        String TEACHER_APP_AURO = "TEACHER_APP_AURO";
+    }
+
+    interface paytmApiParam {
+        String RECEIVER_MOBILE_NUMBER = "mobile_no";
+        String RECEIVER_DISBURSEMENT_MONTH = "disbursement_month";
+        String RECEIVER_DISBURSEMENT = "disbursement";
+        String RECEIVER_PURPOSE = "purpose";
+        String BENEFICIARY_MOBILE_NUMBER = "beneficiarymobileno";
+        String BENEFICIARY_NAME = "beneficiaryname";
+
+    }
+
+    interface paytmAccountTransferParam {
+        String RECEIVER_MOBILE_NUMBER = "mobile_no";
+        String RECEIVER_DISBURSEMENT_MONTH = "disbursement_month";
+        String RECEIVER_DISBURSEMENT = "disbursement";
+        String RECEIVER_PURPOSE = "purpose";
+        String RECEIVER_BANKACCOUNT_NO = "bankaccountno";
+        String RECEIVER_IFSCCODE = "ifsccode";
+    }
+
+    interface paytmUPITransfer {
+        String RECEIVER_MOBILE_NUMBER = "mobile_no";
+        String RECEIVER_UPI_ADDRESS = "upiaddress";
+        String RECEIVER_DISBURSEMENT_MONTH = "disbursement_month";
+        String RECEIVER_DISBURSEMENT = "disbursement";
+        String RECEIVER_PURPOSE = "purpose";
+    }
+
+    interface ifscCode {
+        String EMPTYSTRING = "Please Enter IFSC Code";
+        String VALISDIFSCCODE = "Please Enter valid IFSC Code";
+        String VALID = "";
+    }
+
+    interface bankAccountNumber {
+        String EMPTYSTRING = "Please Enter Bank Account Number";
+        String VALIDACCOUNTNUMBER = "Plase Enter Valid Account Number";
+        String VALIDCONFIRMACCOUNTNUMBER = "Plase Enter Valid Confirm Account Number";
+        String VALID = "";
+        String BANKACCOUNTMATCH = "Account Number Mismatch";
+    }
+
+    interface phoneNumber {
+        String EMPTYSTRING = "Please Enter Phone Number";
+        String VALIDPHONENUMBER = "Plase Enter Valid Phone Number";
+        String VALID = "";
+    }
+
+    interface PaytmResponseCode {
+        String DE_002 = "DE_002";
+    }
+    interface RefferalApiCode {
+        String REFFERAL_MOBILENO = "refferal_mobileno";
+        String REFFER_MOBILENO = "reffer_mobileno";
+        String SOURCE = "source";
+        String NAVIGATION_TO = "navigation_to";
+    }
+    interface NavigateToScreen {
+        String STUDENT_DASHBOARD = "STUDENT_DASHBOARD";
+        String FRIENDS_LEADERBOARD = "FRIENDS_LEADERBOARD";
+        String TEACHER_DASHBOARD = "TEACHER_DASHBOARD";
+        String STUDENT_KYC = "STUDENT_KYC";
     }
 }

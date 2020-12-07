@@ -37,6 +37,95 @@ public class DemographicResModel {
     @Expose
     String language;
 
+    @SerializedName("latitude")
+    @Expose
+    String latitude="";
+
+
+    @SerializedName("longitude")
+    @Expose
+    String longitude="";
+
+    @SerializedName("mobile_model")
+    @Expose
+    String mobileModel="";
+
+    @SerializedName("mobile_manufacturer")
+    @Expose
+    String manufacturer="";
+
+    @SerializedName("mobile_version")
+    @Expose
+    String mobileVersion="";
+
+    @SerializedName("is_private_tution")
+    @Expose
+    String isPrivateTution="";
+
+    @SerializedName("private_tution_type")
+    @Expose
+    String privateTutionType="";
+
+    public boolean isError() {
+        return error;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getMobileModel() {
+        return mobileModel;
+    }
+
+    public void setMobileModel(String mobileModel) {
+        this.mobileModel = mobileModel;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getMobileVersion() {
+        return mobileVersion;
+    }
+
+    public void setMobileVersion(String mobileVersion) {
+        this.mobileVersion = mobileVersion;
+    }
+
+    public String getIsPrivateTution() {
+        return isPrivateTution;
+    }
+
+    public void setIsPrivateTution(String isPrivateTution) {
+        this.isPrivateTution = isPrivateTution;
+    }
+
+    public String getPrivateTutionType() {
+        return privateTutionType;
+    }
+
+    public void setPrivateTutionType(String privateTutionType) {
+        this.privateTutionType = privateTutionType;
+    }
+
     public DemographicResModel() {
 
     }

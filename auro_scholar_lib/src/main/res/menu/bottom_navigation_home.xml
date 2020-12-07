@@ -16,7 +16,6 @@
         android:enabled="true"
         android:title="My Classroom"
         android:icon="@drawable/ic_dashboard"
-
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_kyc"
@@ -24,6 +23,11 @@
         android:icon="@drawable/ic_kyc"
         android:title="KYC"
         app:showAsAction="ifRoom" />
-
+    <item
+      android:id="@+id/action_info"
+      android:enabled="true"
+      android:icon="@drawable/ic_info_gray"
+      android:title="Info"
+      app:showAsAction="ifRoom" />
 
 </menu>

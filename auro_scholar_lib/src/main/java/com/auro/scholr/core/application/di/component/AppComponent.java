@@ -11,8 +11,11 @@ import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.fragment.CongratulationsDialog;
 import com.auro.scholr.home.presentation.view.fragment.ConsgratuationLessScoreDialog;
 import com.auro.scholr.home.presentation.view.fragment.DemographicFragment;
+import com.auro.scholr.home.presentation.view.fragment.FriendRequestListDialogFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsInviteBoardFragment;
+import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardAddFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardFragment;
+import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardListFragment;
 import com.auro.scholr.home.presentation.view.fragment.InviteFriendDialog;
 import com.auro.scholr.home.presentation.view.fragment.KYCFragment;
 import com.auro.scholr.home.presentation.view.fragment.KYCViewFragment;
@@ -27,7 +30,9 @@ import com.auro.scholr.payment.presentation.view.fragment.PaytmFragment;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.payment.presentation.view.fragment.UPIFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.SelectYourAppointmentDialogFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.SelectYourMessageDialogFragment;
+import com.auro.scholr.teacher.presentation.view.fragment.TeacherInfoFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherKycFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherProfileFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherSaveDetailFragment;
@@ -75,6 +80,10 @@ public interface AppComponent {
 
     void doInjection(FriendsLeaderBoardFragment friendsLeaderBoardFragment);
 
+    void doInjection(FriendsLeaderBoardAddFragment friendsLeaderBoardAddFragment);
+
+    void doInjection(FriendsLeaderBoardListFragment friendsLeaderBoardListFragment);
+
     void doInjection(InviteFriendDialog inviteFriendDialog);
 
     void doInjection(CongratulationsDialog congratulationsDialog);
@@ -83,13 +92,19 @@ public interface AppComponent {
 
     void doInjection(TeacherKycFragment fragment);
 
+    void doInjection(TeacherInfoFragment fragment);
+
     void doInjection(TeacherSaveDetailFragment fragment);
 
     void doInjection(SelectYourMessageDialogFragment dialog);
 
     void doInjection(TeacherProfileFragment fragment);
 
+    void doInjection(SelectYourAppointmentDialogFragment dialog);
+
     void doInjection(ConsgratuationLessScoreDialog dialog);
 
     void doInjection(QuizHomeNewFragment fragment);
+
+    void doInjection(FriendRequestListDialogFragment fragment);
 }

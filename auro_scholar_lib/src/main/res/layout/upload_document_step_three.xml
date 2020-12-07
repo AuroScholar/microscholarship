@@ -57,7 +57,7 @@
                 android:text="@string/you_will_see_transfer"
                 android:textColor="@color/auro_dark_blue"
                 android:textSize="@dimen/_10sdp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:Font="Poppins-Regular.ttf"
                 app:layout_constraintStart_toEndOf="@+id/serial_number"
                 app:layout_constraintTop_toBottomOf="@+id/text_transfer" />
@@ -72,7 +72,7 @@
                 android:paddingTop="@dimen/_4sdp"
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_4sdp"
-                android:text="@string/call"
+                android:text="@string/tranfer_money"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp"
                 android:visibility="gone"

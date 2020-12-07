@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  tools:ignore="MissingPrefix">
+
+
+  <TextView
+    android:id="@+id/num_txt"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:background="@drawable/bg_rectangle"
+    android:gravity="center"
+    android:paddingBottom="4dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="4dp"
+    android:textColor="@color/black"
+    android:textSize="12sp"
+    tools:text="dhamaraj" />
+
+  <ImageView
+    android:id="@+id/image_arrow"
+    android:layout_width="16dp"
+    android:layout_height="16dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="-1.5dp"
+    android:background="@drawable/triangle" />
+
+</LinearLayout>
