@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Locale locale = new Locale("en");
+        Locale locale = new Locale("hi");
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
@@ -123,10 +123,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openTeacherSDK() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
-        auroScholarDataModel.setMobileNumber(binding.mobileNumber.getText().toString());//7503600686
-        auroScholarDataModel.setStudentClass("6");
-        auroScholarDataModel.setScholrId("880426");
-        auroScholarDataModel.setRegitrationSource("AuroScholr");
+        auroScholarDataModel.setMobileNumber("mobile number here");//Mandatory
+        auroScholarDataModel.setStudentClass("put student class here");
+        auroScholarDataModel.setScholrId("put scholarId here");
+        auroScholarDataModel.setRegitrationSource("put regitration source");
         auroScholarDataModel.setShareType("teacher");
         auroScholarDataModel.setShareIdentity("chandan Sir");
         auroScholarDataModel.setActivity(this);
@@ -178,8 +178,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 // Important Params
         inputModel.setMobileNumber("mobile number here"); //Mandatory
-        inputModel.setActivity(Activity Context Here); //Mandatory
-        inputModel.setFragmentContainerUiId(Container id Here); //Mandatory Example :- R.id.containerId
+        inputModel.setActivity(this); //Activity Context Here  Mandatory
+        inputModel.setFragmentContainerUiId(R.id.home_container); //Mandatory Example :- R.id.containerId
         inputModel.setStudentClass("put student class here"); //Mandatory
         inputModel.setReferralLink("Put here branch or any other referral Link");
         inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
