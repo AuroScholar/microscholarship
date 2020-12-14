@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Locale locale = new Locale("hi");
+        Locale locale = new Locale("en");
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
@@ -175,20 +175,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openGenricSDK(String mobileNumber, String student_class) {
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
-
-// Important Params
-        inputModel.setMobileNumber("mobile number here"); //Mandatory
-        inputModel.setActivity(this); //Activity Context Here  Mandatory
-        inputModel.setFragmentContainerUiId(R.id.home_container); //Mandatory Example :- R.id.containerId
-        inputModel.setStudentClass("put student class here"); //Mandatory
-        inputModel.setReferralLink("Put here branch or any other referral Link");
-        inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
-        inputModel.setPartnerSource("Your Id here");
+        inputModel.setMobileNumber(mobileNumber);//7503600601
+        inputModel.setStudentClass(student_class);
+        inputModel.setRegitrationSource("AuroScholr");
+        inputModel.setReferralLink("https://rb.gy/np9uh5");
+        inputModel.setPartnerSource("AURO3VE4j7"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setUserPartnerId("TestUserpartnerId");
-
-        //This method returns a Fragment Instance
-        Fragment fragment = AuroScholar.startAuroSDK(inputModel);
-        openFragment(fragment);
+        inputModel.setActivity(this);
+        inputModel.setFragmentContainerUiId(R.id.home_container);
+        openFragment(AuroScholar.startAuroSDK(inputModel));
     }
 
     @Override
