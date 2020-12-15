@@ -105,6 +105,7 @@ public class FriendsLeaderBoardListFragment extends BaseFragment implements View
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendsLeaderShipViewModel.class);
         binding.setLifecycleOwner(this);
         setRetainInstance(true);
+        ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
     }
 

@@ -110,7 +110,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         binding.setLifecycleOwner(this);
         binding.setKycViewModel(kycViewModel);
 
-
+        ViewUtil.setLanguageonUi(getActivity());
         setRetainInstance(true);
         return binding.getRoot();
     }

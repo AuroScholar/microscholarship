@@ -31,6 +31,7 @@ import com.auro.scholr.databinding.CameraFragmentLayoutBinding;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.camera.CameraOverlay;
 import com.auro.scholr.util.camera.FaceOverlayGraphics;
 import com.auro.scholr.util.permission.PermissionHandler;
@@ -51,6 +52,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -91,6 +93,8 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
             cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
         }
         setRetainInstance(true);
+        Locale.getDefault().getLanguage();
+        ViewUtil.setLanguageonUi(getActivity());
         checkValueEverySecond();
         return binding.getRoot();
     }
@@ -348,11 +352,11 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
                         params = camera.getParameters();
                         if (!isFlash) {
                             params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-                            binding.flashToggle.setImageDrawable(getActivity().getDrawable(R.drawable.ic_flash_on_black));
+                            binding.flashToggle.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_flash_on_black));
                             isFlash = true;
                         } else {
                             params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-                            binding.flashToggle.setImageDrawable(getActivity().getDrawable(R.drawable.ic_flash_off_black));
+                            binding.flashToggle.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_flash_off_black));
                             isFlash = false;
                         }
                         camera.setParameters(params);

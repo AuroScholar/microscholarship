@@ -101,6 +101,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         binding.setLifecycleOwner(this);
         HomeActivity.setListingActiveFragment(HomeActivity.DEMOGRAPHIC_FRAGMENT);
         setRetainInstance(true);
+        ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
     }
 

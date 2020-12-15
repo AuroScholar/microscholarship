@@ -59,6 +59,7 @@ import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.TextUtil;
+import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
@@ -68,6 +69,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -117,15 +119,18 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        ViewUtil.setLanguageonUi(getActivity());
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
             AuroApp.getAppComponent().doInjection(this);
             quizTestViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizTestViewModel.class);
             binding.setLifecycleOwner(this);
             setHasOptionsMenu(true);
-
         }
         setRetainInstance(true);
+        ViewUtil.setActivityLang(getActivity());
+
+
         return binding.getRoot();
     }
 
@@ -146,6 +151,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
         if (customDialog != null) {
             customDialog.cancel();
         }
+        ViewUtil.setLanguageonUi(getActivity());
         super.onDestroy();
 
     }
@@ -608,10 +614,12 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
     public void alertDialogForQuitQuiz(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Are you sure you want to quit the quiz ?");
+        builder.setMessage(getActivity().getResources().getString(R.string.quiz_exit_txt));
 
+        String yes="<font color='#00A1DB'>"+getActivity().getResources().getString(R.string.yes)+"</font>";
+        String no="<font color='#00A1DB'>"+getActivity().getResources().getString(R.string.no)+"</font>";
         // Set the alert dialog yes button click listener
-        builder.setPositiveButton(Html.fromHtml("<font color='#00A1DB'>YES</font>"), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(Html.fromHtml(yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Do something when user clicked the Yes button
@@ -622,7 +630,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
             }
         });
         // Set the alert dialog no button click listener
-        builder.setNegativeButton(Html.fromHtml("<font color='#00A1DB'>NO</font>"), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(Html.fromHtml(no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Do something when No button clicked

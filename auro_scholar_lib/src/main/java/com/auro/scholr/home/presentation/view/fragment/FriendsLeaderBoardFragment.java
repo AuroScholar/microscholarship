@@ -75,6 +75,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendsLeaderShipViewModel.class);
         binding.setLifecycleOwner(this);
         setRetainInstance(true);
+        ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
     }
 

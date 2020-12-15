@@ -66,7 +66,8 @@ public class FriendRequestListDialogFragment extends BottomSheetDialogFragment i
         AuroApp.getAppComponent().doInjection(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendsLeaderShipViewModel.class);
         binding.setLifecycleOwner(this);
-        setRetainInstance(true);
+        setRetainInstance(true);ViewUtil.setLanguageonUi(getActivity());
+
         return binding.getRoot();
     }
 

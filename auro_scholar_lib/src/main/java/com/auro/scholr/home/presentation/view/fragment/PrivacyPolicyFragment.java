@@ -44,6 +44,7 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.ViewUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -92,6 +93,7 @@ public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickL
             binding.setLifecycleOwner(this);
         }
         setRetainInstance(true);
+        ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
     }
 

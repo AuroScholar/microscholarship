@@ -62,8 +62,6 @@ ext {
             core                 :     'com.google.firebase:firebase-core:16.0.8',
             perfomance           :     'com.google.firebase:firebase-perf:16.2.5',
             analytics            :     'com.google.firebase:firebase-analytics:17.4.4',
-
-
     ]
 
 

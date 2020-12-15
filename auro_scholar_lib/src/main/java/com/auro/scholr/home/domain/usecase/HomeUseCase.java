@@ -25,6 +25,7 @@ import com.auro.scholr.home.data.model.newDashboardModel.QuizTestDataModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
+import com.auro.scholr.util.ViewUtil;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
@@ -35,6 +36,7 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -147,7 +149,7 @@ public class HomeUseCase {
         assignmentReqModel.setRegistration_id(dashboardResModel.getAuroid());
         assignmentReqModel.setSubject(quizResModel.getSubjectName());
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
+        if (ViewUtil.getLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
             assignmentReqModel.setExamlang("E");
         } else {
             assignmentReqModel.setExamlang("H");

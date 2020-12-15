@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -26,6 +28,7 @@ import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.CameraFragmentLayoutBinding;
 import com.auro.scholr.home.presentation.view.fragment.CameraFragment;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 import com.auro.scholr.util.camera.CameraOverlay;
@@ -50,6 +53,7 @@ import androidx.exifinterface.media.ExifInterface;
 
 import android.os.Environment;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -67,6 +71,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
 
@@ -101,6 +106,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
+        ViewUtil.setActivityLang(this);
         init();
     }
 
@@ -116,6 +122,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             binding.flashContainer.setVisibility(View.VISIBLE);
         }*/
         setListener();
+        ViewUtil.setLanguageonUi(this);
 
         checkValueEverySecond();
     }
@@ -123,6 +130,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
+        ViewUtil.setLanguageonUi(this);
         askPermission();
     }
 
@@ -551,9 +559,11 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         if (customProgressDialog != null && customProgressDialog.isShowing()) {
             return;
         }
+
+        Locale.getDefault().getLanguage();
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(this);
-        customDialogModel.setTitle("Processing...");
+        customDialogModel.setTitle(this.getResources().getString(R.string.processing));
         customDialogModel.setTwoButtonRequired(true);
         customProgressDialog = new CustomProgressDialog(customDialogModel);
         Objects.requireNonNull(customProgressDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -561,8 +571,6 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         customProgressDialog.show();
         customProgressDialog.updateDataUi(0);
     }
-
-
     public void closeDialog() {
         if (customProgressDialog != null) {
             customProgressDialog.dismiss();

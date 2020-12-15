@@ -27,6 +27,7 @@ import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewMode
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
+import com.auro.scholr.util.ViewUtil;
 import com.bumptech.glide.Glide;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
@@ -78,6 +79,7 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
         binding.setLifecycleOwner(this);
         init();
         setListener();
+        ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
     }
 

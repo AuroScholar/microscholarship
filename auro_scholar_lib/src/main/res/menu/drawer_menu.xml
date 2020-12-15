@@ -6,7 +6,7 @@
             android:id="@+id/nav_kyc"
             android:icon="@drawable/ic_verification"
             android:checkable="false"
-            android:title="Kyc Verification" />
+            android:title="@string/kyc_verification" />
         <item
             android:id="@+id/nav_friends_leaderboard"
             android:icon="@drawable/ic_friends"
@@ -16,11 +16,11 @@
             android:id="@+id/nav_payment_info"
             android:icon="@drawable/ic_payment_info"
             android:checkable="false"
-            android:title="Payment Info" />
+            android:title="@string/payment_info" />
         <item
             android:id="@+id/nav_privacy"
             android:icon="@drawable/ic_policy"
             android:checkable="false"
-            android:title="Privacy Policy" />
+            android:title="@string/privacy_policy" />
     </group>
 </menu>
