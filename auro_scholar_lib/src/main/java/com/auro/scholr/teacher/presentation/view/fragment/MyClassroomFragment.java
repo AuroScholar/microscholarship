@@ -47,6 +47,7 @@ import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.alert_dialog.ExitDialog;
 import com.auro.scholr.util.firebase.FirebaseEvent;
 import com.auro.scholr.util.firebase.FirebaseEventUtil;
 import com.facebook.CallbackManager;
@@ -391,6 +392,9 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         sendIntent.setPackage("com.whatsapp");
         if (sendIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(sendIntent);
+        }else {
+            ExitDialog  mexitDialog = new ExitDialog(getActivity());
+            mexitDialog.show();
         }
     }
     private void shareAppLinkViaFacebook(String urlToShare) {

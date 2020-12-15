@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 
+
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
@@ -305,6 +306,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
 
                 case DISTRICT_LIST_DATA:
                     districtDataModels = (List<DistrictDataModel>) responseApi.data;
+                    addFirstitem();
                     if (!TextUtil.isEmpty(districtCode)) {
                         districtSpinner(districtCode);
                         districtCode = "";
@@ -323,6 +325,18 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         });
     }
 
+    private  void addFirstitem()
+    {
+       //creation_date,last_update,flag
+        DistrictDataModel districtDataModel=new DistrictDataModel();
+        districtDataModel.setState_code("state_code");
+        districtDataModel.setDistrict_code("district_code");
+        districtDataModel.setDistrict_name("Please select district");
+        districtDataModel.setActive_status("active_status");
+        districtDataModel.setFlag("flag");
+        districtDataModels.add(0,districtDataModel);
+
+    }
 
     private void showSnackbarError(String message) {
         ViewUtil.showSnackBar(binding.getRoot(), message);
@@ -339,17 +353,22 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
             binding.stateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                     if (position != 0) {
                         teacherReqModel.setState_id(stateDataModelList.get(position).getState_code());
                         viewModel.getStateDistrictData(stateDataModelList.get(position).getState_code());
+
                         binding.cityTitle.setVisibility(View.VISIBLE);
                         binding.cityView.setVisibility(View.VISIBLE);
                         binding.citySpinner.setVisibility(View.VISIBLE);
                     } else if (stateDataModelList.get(position).getState_name().trim().equalsIgnoreCase("pleaseselectstate")) {
                         binding.cityTitle.setVisibility(View.GONE);
+
                         binding.cityView.setVisibility(View.GONE);
+
                         binding.citySpinner.setVisibility(View.GONE);
                     } else {
+                        teacherReqModel.setState_id("");
                         binding.cityTitle.setVisibility(View.GONE);
                         binding.cityView.setVisibility(View.GONE);
                         binding.citySpinner.setVisibility(View.GONE);
@@ -386,7 +405,13 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
             binding.citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    teacherReqModel.setDistrict_id(districtDataModels.get(position).getDistrict_code());
+
+                    if(position != 0){
+                        teacherReqModel.setDistrict_id(districtDataModels.get(position).getDistrict_code());
+                    }else{
+                        teacherReqModel.setDistrict_id("");
+                    }
+
                 }
 
                 @Override
@@ -402,6 +427,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         if (district != null) {
             for (int i = 0; i < districtDataModels.size(); i++) {
                 if (district.equalsIgnoreCase(districtDataModels.get(i).getDistrict_code())) {
+
                     binding.citySpinner.setSelection(i);
                 }
             }

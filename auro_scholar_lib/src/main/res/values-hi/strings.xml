@@ -326,6 +326,7 @@
     <string name="quiz_is_not_apporved">प्रश्नोत्तरी मंजूर नहीं</string>
     <string name="scholarship_approved">प्रश्नोत्तरी को मंजूरी दी</string>
     <string name="processing">प्रोसेस हो रहा है ...</string>
+    <string name="manditoryfields">*</string>
 
 
 </resources>
