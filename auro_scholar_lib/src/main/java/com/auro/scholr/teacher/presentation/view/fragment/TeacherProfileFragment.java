@@ -152,8 +152,6 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         viewModel.getStateListData();
         viewModel.getDistrictListData();
 
-
-
         setRecycleView();
         setDataOnUI();
 
