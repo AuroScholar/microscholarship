@@ -265,7 +265,7 @@
     <string name="get_now">GET NOW</string>
     <string name="teacher_profile">Teacher Profile</string>
     <string name="classe">Classes You Teach</string>
-    <string name="subjects_you_teach_till">Subjects You Teach Till 12th<b>*</b></string>
+    <string name="subjects_you_teach_till">Subjects You Teach<b>*</b></string>
     <string name="school_name">School Name<b>*</b></string>
     <string name="state">State<b>*</b></string>
     <string name="city">City<b>*</b></string>
