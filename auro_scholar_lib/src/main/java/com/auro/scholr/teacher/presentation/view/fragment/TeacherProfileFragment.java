@@ -78,11 +78,6 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
     String districtCode = "";
     FirebaseEventUtil firebaseEventUtil;
     Map<String,String> logparam;
-/*    String subject = "English, Maths, Social Science, Science,";
-    String classes = "4th, 8th, 10th, 3rd, 9th, 7th, 2nd,";
-
-    String distict = "52";
-    String state =  "5";*/
 
 
     public TeacherProfileFragment() {
@@ -92,6 +87,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
     }

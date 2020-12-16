@@ -45,10 +45,6 @@ public class FirebaseEventUtil {
 
                 mObjFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
 
-               // mObjFirebaseAnalytics.setMinimumSessionDuration(20000);
-
-
-
                 mObjFirebaseAnalytics.setSessionTimeoutDuration(500);
 
             }catch (Exception e){
