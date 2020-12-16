@@ -1,4 +1,4 @@
-state_code,Please Select state,short_name,active_status,creation_date,last_updated,flag
+state_code,Please Select State,short_name,active_status,creation_date,last_updated,flag
 1,Jammu and Kashmir,JK,1,15-08-2016 01:49,07-12-2016 22:30,1
 2,Himachal Pradesh,HP,1,15-08-2016 01:49,07-12-2016 22:30,1
 3,Punjab,PB,1,15-08-2016 01:49,07-12-2016 22:30,1

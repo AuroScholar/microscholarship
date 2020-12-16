@@ -252,8 +252,9 @@
     <string name="priceAmmount_one">₹50.00</string>
     <string name="strike_amount"><strike>₹50.00</strike></string>
     <string name="save_more_details">Save More Details?</string>
-    <string name="teacher_name">Teacher Name</string>
-    <string name="email_address">Email Address</string>
+    <string name="teacher_name">Teacher Name<b>*</b> "</string>
+
+    <string name="email_address">Email Address<b>*</b></string>
     <string name="mobile_number">Mobile Number</string>
     <string name="skip_for_now"><u>Skip For Now</u></string>
     <string name="select_your_message">Select Your Message</string>
@@ -264,10 +265,10 @@
     <string name="get_now">GET NOW</string>
     <string name="teacher_profile">Teacher Profile</string>
     <string name="classe">Classes You Teach</string>
-    <string name="subjects_you_teach_till">Subjects You Teach Till 12th</string>
-    <string name="school_name">School Name</string>
-    <string name="state">State</string>
-    <string name="city">City</string>
+    <string name="subjects_you_teach_till">Subjects You Teach Till 12th<b>*</b></string>
+    <string name="school_name">School Name<b>*</b></string>
+    <string name="state">State<b>*</b></string>
+    <string name="city">City<b>*</b></string>
     <string name="choose_your_state">Choose Your State</string>
     <string name="choose_your_city">Choose Your City</string>
     <string name="upload_govt_id">Upload Govt Id Front side</string>
@@ -378,7 +379,7 @@
     <string name="navigation_header">Navigation header</string>
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
-    <string name="classes">Classes You Teach</string>
+    <string name="classes">Classes You Teach<b>*</b></string>
     <string name="event_student_score_page">student_score_page</string>
     <string name="event_upload_id">kyc_document upload_page</string>
     <string name="event_kyc_document_uplaod_page">Kyc_document_uplaod_page</string>
@@ -432,5 +433,6 @@
     <string name="others">OTHERS</string>
     <string name="psp_not_register">PSP is not registered</string>
     <string name="processing">Processing...</string>
+    <string name="manditoryfields">*</string>
 
 </resources>

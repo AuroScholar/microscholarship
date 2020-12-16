@@ -32,6 +32,15 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
                     app:Font="Poppins-Regular.ttf" />
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/txtDocumenthint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/upload_govt_id"
+                    android:visibility="gone"
+                    android:textColor="@color/background_camera_bottom_bar"
+                    android:textSize="@dimen/_8sdp"
+                    app:Font="Poppins-Regular.ttf" />
 
                 <com.auro.scholr.core.util.uiwidget.RPTextView
                     android:id="@+id/txtFileName"

@@ -32,6 +32,13 @@ public class TeacherDoumentViewHolder extends RecyclerView.ViewHolder {
         } else {
             binding.txtFileName.setVisibility(View.GONE);
         }
+        if(position ==0 || position == 1){
+            binding.txtDocumenthint.setText("Ex. Aadhaar,Pan card,Driving licence,etc.");
+            binding.txtDocumenthint.setVisibility(View.VISIBLE);
+
+        }else{
+            binding.txtDocumenthint.setVisibility(View.GONE);
+        }
         if (model.isModify()) {
             binding.docImg.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_auro_check));
         } else {
