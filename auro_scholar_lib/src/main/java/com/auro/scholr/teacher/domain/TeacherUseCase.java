@@ -37,6 +37,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class TeacherUseCase {
@@ -158,7 +159,7 @@ public class TeacherUseCase {
             calendar.setTime(a);
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
-            model.setMonthNumber(month);
+            model.setMonthNumber(month+1);
             model.setYear(year);
         } catch (Exception e) {
             AppLogger.e("Date exception", "months--" + e.getMessage());
@@ -166,27 +167,79 @@ public class TeacherUseCase {
     }
 
     public List<MonthDataModel> monthDataModelList(String start) {
+        int count = 0;
+        AppLogger.e("Date DateUtil-", start);
+        HashMap<Integer, String> monthHashmap = new HashMap<>();
+        monthHashmap.put(1, "January");
+        monthHashmap.put(2, "Febuary");
+        monthHashmap.put(3, "March");
+        monthHashmap.put(4, "April");
+        monthHashmap.put(5, "May");
+        monthHashmap.put(6, "June");
+        monthHashmap.put(7, "July");
+        monthHashmap.put(8, "August");
+        monthHashmap.put(9, "September");
+        monthHashmap.put(10, "October");
+        monthHashmap.put(11, "November");
+        monthHashmap.put(12, "December");
         List<MonthDataModel> list = new ArrayList<>();
         try {
-
             // start="2019-06-15 18:21:18";
             Date b = new Date();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date a = dateFormat.parse(start);
-            for (Date d : datesBetween(a, b)) {
+            Calendar calenda1r = Calendar.getInstance();
+            calenda1r.setTime(a);
+            int year = calenda1r.get(Calendar.YEAR);
+            int month = calenda1r.get(Calendar.MONTH);
+            AppLogger.e("Date month name-", year + "--" + month);
+            int currentYear = DateUtil.getcurrentYearNumber();
+            int currentMonth = DateUtil.getcurrentMonthNumber();
+            count = month+1;
+            AppLogger.e("DateUtil count-", count + "--" + month);
+            while (year < currentYear) {
+                MonthDataModel model = new MonthDataModel();
+                model.setMonth(monthHashmap.get(count) + " " + year);
+                model.setMonthNumber(count);
+                model.setYear(year);
+                list.add(model);
+                AppLogger.e("DateUtil", year + "--" + monthHashmap.get(count));
+                if (count == 12) {
+                    year++;
+                    count = 1;
+                }else {
+                    count++;
+                }
+            }
+
+            while (year == currentYear && count <= (currentMonth+1)) {
+                MonthDataModel model = new MonthDataModel();
+                model.setMonth(monthHashmap.get(count) + " " + year);
+                model.setMonthNumber(count);
+                model.setYear(year);
+                list.add(model);
+                AppLogger.e("DateUtil", year + "--" + monthHashmap.get(count));
+                if (count == 12) {
+                    year++;
+                    count = 1;
+                }else {
+                    count++;
+                }
+            }
+          /*  for (Date d : datesBetween(a, b)) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(d);
                 String monthName = new SimpleDateFormat("MMMM").format(calendar.getTime());
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
+               // int year = calendar.get(Calendar.YEAR);
+              //  int month = calendar.get(Calendar.MONTH);
                 MonthDataModel model = new MonthDataModel();
                 model.setMonth(monthName + " " + year);
                 model.setMonthNumber(month);
                 model.setYear(year);
                 list.add(model);
                 AppLogger.e("Date month name-", year + "--" + monthName);
-            }
-            AppLogger.e("Date convert", "months" + datesBetween(a, b).size());
+            }*/
+            //  AppLogger.e("Date convert", "months" + datesBetween(a, b).size());
         } catch (Exception e) {
             AppLogger.e("Date exception", "months--" + e.getMessage());
         }
@@ -194,13 +247,14 @@ public class TeacherUseCase {
 
     }
 
+
     private List<Date> datesBetween(Date d1, Date d2) {
         List<Date> ret = new ArrayList<Date>();
         Calendar c = Calendar.getInstance();
         c.setTime(d1);
         while (c.getTimeInMillis() < d2.getTime()) {
             ret.add(c.getTime());
-            c.add(Calendar.MONTH, 1);
+            c.add(Calendar.MONTH, 0);
         }
         return ret;
     }

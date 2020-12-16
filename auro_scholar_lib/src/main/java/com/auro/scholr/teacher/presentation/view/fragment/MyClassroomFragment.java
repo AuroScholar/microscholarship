@@ -43,6 +43,7 @@ import com.auro.scholr.teacher.data.model.response.MyClassRoomStudentResModel;
 import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.MyClassroomAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.TextUtil;
@@ -127,8 +128,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_DASHBOARD_FRAGMENT);
         mFirebaseAnalytics = new FirebaseEventUtil(getActivity());
         logeventparam= new HashMap<>();
-
-
         List<String> list = new ArrayList<>();
         list.add("odd");
         list.add("even");
@@ -138,7 +137,6 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         // viewModel.getTeacherProfileData("7503600686");
 
         shareDialog = new ShareDialog(this);
-
         viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
 
     }
@@ -188,7 +186,9 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             }
             for (int i = 0; i < monthDataModelList.size(); i++) {
                 MonthDataModel model = monthDataModelList.get(i);
-                if (year == model.getYear() && month == model.getMonthNumber()) {
+                AppLogger.e(TAG,"--current year--"+year+"--month number--"+month);
+                AppLogger.e(TAG,model.getMonth()+"--year--"+model.getYear()+"--month number--"+model.getMonthNumber());
+                if (year == model.getYear() && (month+1) == (model.getMonthNumber())) {
                     binding.monthSpinner.setSelection(i);
                 }
             }
