@@ -59,17 +59,17 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
-import com.auro.scholr.core.util.uiwidget.OnSwipeTouchListener;
+
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
-import com.auro.scholr.home.data.model.AuroScholarDataModel;
+
 import com.auro.scholr.home.data.model.CustomSnackBarModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.RandomInviteFriendsDataModel;
 import com.auro.scholr.home.data.model.SubjectResModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
-import com.auro.scholr.home.presentation.view.adapter.DrawerItemCustomAdapter;
+
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemNewAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
@@ -145,10 +145,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             isStateRestore = true;
             return binding.getRoot();
         }
+        setLanguagefromsdk();
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
         quizViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel.class);
         binding.setLifecycleOwner(this);
+
         binding.setQuizViewModel(quizViewModel);
         // resources = ViewUtil.getCustomResource(getActivity());
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
@@ -187,6 +189,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         logparam.put(getActivity().getResources().getString(R.string.log_start_quiz), "true");
         firebaseEventUtil.logEvent(getActivity().getResources().getString(R.string.log_quiz_home_fragment_student), logparam);
 
+
         if (quizViewModel != null && quizViewModel.serviceLiveData().hasObservers()) {
             quizViewModel.serviceLiveData().removeObservers(this);
 
@@ -205,6 +208,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         //PRADEEP
         lockDrawerMenu();
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
+
         binding.swipeRefreshLayout.setOnRefreshListener(this);
     }
 
@@ -1009,6 +1013,14 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void callClassUpgradeApi() {
         quizViewModel.gradeUpgrade(AuroApp.getAuroScholarModel());
+    }
+
+    private void setLanguagefromsdk(){
+        Locale locale = new Locale(AuroApp.getAuroScholarModel().getLanguage());
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getActivity().getBaseContext().getResources().updateConfiguration(config, getActivity().getBaseContext().getResources().getDisplayMetrics());
     }
 }
 

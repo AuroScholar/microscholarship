@@ -305,7 +305,6 @@
     <string name="not_receive_resend">प्राप्त नहीं किया ? पुन: भेजें</string>
     <string name="sign_up_with_facebook">SIGN UP WITH FACEBOOK</string>
     <string name="code_valid_for">(कोड मान्य है)</string>
-    <string name="privacy_policy_auro">गोपनीयता नीति</string>
     <string name="add_your_kyc">अपने kyc जोड़ें</string>
     <string name="classe">Classes You Teach</string>
     <string name="add_friend">Add Friend</string>
@@ -327,6 +326,7 @@
     <string name="scholarship_approved">प्रश्नोत्तरी को मंजूरी दी</string>
     <string name="processing">प्रोसेस हो रहा है ...</string>
     <string name="manditoryfields">*</string>
+    <string name="privacy_policy_auro">गोपनीयता नीति</string>
 
 
 </resources>

@@ -24,6 +24,7 @@ public class AuroScholarDataModel implements Parcelable {
     int sdkType;
     int sdkFragmentType;
     boolean isEmailVerified;
+    String language;
 
     protected AuroScholarDataModel(Parcel in) {
         mobileNumber = in.readString();
@@ -39,6 +40,7 @@ public class AuroScholarDataModel implements Parcelable {
         sdkType = in.readInt();
         sdkFragmentType = in.readInt();
         isEmailVerified = in.readByte() != 0;
+        language = in.readString();
     }
 
     @Override
@@ -56,6 +58,10 @@ public class AuroScholarDataModel implements Parcelable {
         dest.writeInt(sdkType);
         dest.writeInt(sdkFragmentType);
         dest.writeByte((byte) (isEmailVerified ? 1 : 0));
+        dest.writeString(language);
+    }
+    public AuroScholarDataModel() {
+
     }
 
     @Override
@@ -122,11 +128,6 @@ public class AuroScholarDataModel implements Parcelable {
     public void setReferralLink(String referralLink) {
         this.referralLink = referralLink;
     }
-
-    public AuroScholarDataModel() {
-
-    }
-
 
     public String getScholrId() {
         return scholrId;
@@ -199,4 +200,8 @@ public class AuroScholarDataModel implements Parcelable {
     public void setUserPartnerid(String userPartnerid) {
         this.userPartnerid = userPartnerid;
     }
+
+    public String getLanguage() { return language; }
+
+    public void setLanguage(String language) { this.language = language; }
 }
