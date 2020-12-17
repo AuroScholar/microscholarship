@@ -27,6 +27,7 @@ import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewMode
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
+import com.auro.scholr.util.ViewUtil;
 import com.bumptech.glide.Glide;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
@@ -78,6 +79,7 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
         binding.setLifecycleOwner(this);
         init();
         setListener();
+        ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
     }
 
@@ -151,7 +153,7 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
         if (AuroApp.getAuroScholarModel() != null && !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getReferralLink())) {
             completeLink = completeLink + " " + AuroApp.getAuroScholarModel().getReferralLink();
         } else {
-            completeLink = completeLink + " https://bit.ly/3b1puWr";
+            completeLink = completeLink + " https://rb.gy/np9uh5";
         }
 
         Intent sendIntent = new Intent();

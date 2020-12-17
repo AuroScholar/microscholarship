@@ -92,7 +92,7 @@ public class CropImagesActivity extends AppCompatActivity
       CharSequence title = mOptions != null &&
           mOptions.activityTitle != null && mOptions.activityTitle.length() > 0
               ? mOptions.activityTitle
-              : getResources().getString(R.string.crop_image_activity_title);
+              : this.getResources().getString(R.string.crop_image_activity_title);
       actionBar.setTitle(title);
       actionBar.setDisplayHomeAsUpEnabled(true);
     }

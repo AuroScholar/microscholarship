@@ -187,7 +187,7 @@ public class SelectYourMessageDialogFragment extends BaseDialog implements View.
 
                 default:
                     handleProgress(1);
-                    showSnackbarError(getString(R.string.default_error));
+                    showSnackbarError(getActivity().getResources().getString(R.string.default_error));
                     break;
             }
 
@@ -208,7 +208,7 @@ public class SelectYourMessageDialogFragment extends BaseDialog implements View.
                 break;
             case 1:
 
-                showSnackbarError(getString(R.string.successfully_send));
+                showSnackbarError(getActivity().getResources().getString(R.string.successfully_send));
                 binding.button.setVisibility(View.VISIBLE);
                 binding.progressBar.setVisibility(View.GONE);
                 final Handler handler = new Handler();

@@ -233,7 +233,7 @@ public class ViewUtil {
         AssetManager assets = standardResources.getAssets();
         DisplayMetrics metrics = standardResources.getDisplayMetrics();
         Configuration config = new Configuration(standardResources.getConfiguration());
-        config.locale =Locale.getDefault();
+        config.locale =new Locale(getLanguage());
         Resources res = new Resources(assets, metrics, config);
         return res;
     }
@@ -253,6 +253,24 @@ public class ViewUtil {
             prefModel.setUserLanguage(language);
             AppPref.INSTANCE.setPref(prefModel);
         }
+    }
+
+    public static void setLanguageonUi(Activity activity){
+        ViewUtil.setActivityLang(activity);
+      /*Resources resources = activity.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        config.locale = new Locale(Locale.getDefault().getLanguage());
+        resources.updateConfiguration(config, dm);*/
+        //Locale.setDefault(Locale.getDefault());
+    }
+
+    public static void setActivityLang(Activity activity){
+        Resources resources = activity.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        config.locale = new Locale(getLanguage());
+        resources.updateConfiguration(config, dm);
     }
 
 

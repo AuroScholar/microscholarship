@@ -116,6 +116,7 @@
                 android:id="@+id/send_message"
                 android:layout_width="@dimen/_27sdp"
                 android:layout_height="@dimen/_27sdp"
+                android:visibility="gone"
                 android:background="@drawable/send_msg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/score_text" />

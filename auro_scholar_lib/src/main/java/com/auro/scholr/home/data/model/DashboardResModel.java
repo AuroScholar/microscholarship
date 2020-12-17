@@ -19,7 +19,6 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private boolean error;
 
-
     @SerializedName("phonenumber")
     @Expose
     private String phonenumber;
@@ -113,7 +112,7 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private boolean modify;
 
-    @SerializedName("Message")
+    @SerializedName("message")
     @Expose
     private String message;
 
@@ -184,6 +183,14 @@ public class DashboardResModel implements Parcelable {
     String leadQualified;
 
 
+    @SerializedName("feature")
+    @Expose
+    int feature;
+
+    @SerializedName("user_partner_id")
+    @Expose
+    String userPartnerId;
+
     protected DashboardResModel(Parcel in) {
         status = in.readString();
         error = in.readByte() != 0;
@@ -228,6 +235,8 @@ public class DashboardResModel implements Parcelable {
         isPrivateTution = in.readString();
         privateTutionType = in.readString();
         leadQualified = in.readString();
+        feature = in.readInt();
+        userPartnerId = in.readString();
     }
 
     @Override
@@ -275,6 +284,9 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(isPrivateTution);
         dest.writeString(privateTutionType);
         dest.writeString(leadQualified);
+        dest.writeInt(feature);
+        dest.writeString(userPartnerId);
+
     }
 
     @Override
@@ -293,6 +305,14 @@ public class DashboardResModel implements Parcelable {
             return new DashboardResModel[size];
         }
     };
+
+    public int getFeature() {
+        return feature;
+    }
+
+    public void setFeature(int feature) {
+        this.feature = feature;
+    }
 
     public String getLeadQualified() {
         return leadQualified;
@@ -636,5 +656,13 @@ public class DashboardResModel implements Parcelable {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public String getUserPartnerId() {
+        return userPartnerId;
+    }
+
+    public void setUserPartnerId(String userPartnerId) {
+        this.userPartnerId = userPartnerId;
     }
 }

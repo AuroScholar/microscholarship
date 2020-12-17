@@ -24,9 +24,13 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.core.common.OnItemClickListener;
+import com.auro.scholr.core.common.Status;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.ActivityDashboardBinding;
 import com.auro.scholr.home.data.datasource.remote.HomeRemoteApi;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
+import com.auro.scholr.home.data.model.DynamiclinkResModel;
 import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
 import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherInfoFragment;
@@ -38,6 +42,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -50,7 +55,8 @@ import androidx.lifecycle.ViewModelProviders;
 public class HomeActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
 
-    private  String TAG = HomeActivity.class.getSimpleName().toString();;
+    private String TAG = HomeActivity.class.getSimpleName().toString();
+    ;
     @Inject
     HomeRemoteApi remoteApi;
 
@@ -93,7 +99,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         init();
         setListener();
     }
@@ -117,13 +123,23 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
-       // printHashKey(this);
+        // printHashKey(this);
         setHomeFragmentTab();
+        DynamiclinkResModel dynamiclinkResModel = new DynamiclinkResModel();
+        dynamiclinkResModel.setRefferMobileno(AuroApp.getAuroScholarModel().getMobileNumber());
+        dynamiclinkResModel.setSource(AppConstant.Source.TEACHER_APP_AURO);
+        dynamiclinkResModel.setNavigationTo(AppConstant.NavigateToScreen.STUDENT_DASHBOARD);
+        viewModel.getDynamicData(dynamiclinkResModel);
     }
 
     @Override
     protected void setListener() {
         /*set listner here*/
+        if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
+            viewModel.serviceLiveData().removeObservers(this);
+        } else {
+            observeServiceResponse();
+        }
     }
 
     @Override
@@ -220,7 +236,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
             ViewUtil.showSnackBar(binding.naviagtionContent.homeContainer, "Press again to close the app");
         } else {
             finish();
-          //  finishAffinity();
+            //  finishAffinity();
         }
     }
 
@@ -265,7 +281,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
 
     }
 
-    public  void printHashKey(Activity context) {
+    public void printHashKey(Activity context) {
         try {
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
@@ -281,6 +297,43 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
         }
     }
 
+    private void observeServiceResponse() {
+
+        viewModel.serviceLiveData().observeForever(responseApi -> {
+            switch (responseApi.status) {
+
+                case LOADING:
+
+                    break;
+
+                case SUCCESS:
+                    if (responseApi.apiTypeStatus == Status.DYNAMIC_LINK_API) {
+                        AppLogger.e("DynamicLinking", responseApi.data.toString());
+                        DynamiclinkResModel dynamiclinkResModel = (DynamiclinkResModel) responseApi.data;
+                        AuroApp.getAuroScholarModel().setReferralLink(dynamiclinkResModel.getLink());
+                        AppLogger.i("DynamicLinking","Link" + dynamiclinkResModel.getLink());
+                        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+                        if (prefModel != null) {
+                            prefModel.setDynamiclinkResModel(dynamiclinkResModel);
+                            AppPref.INSTANCE.setPref(prefModel);
+                        }
+
+                    }
+                    break;
+
+                case FAIL:
+                case NO_INTERNET:
+                    AppLogger.e("Error", (String) responseApi.data);
+                    break;
+
+
+                default:
+                    AppLogger.e("Error", (String) responseApi.data);
+                    break;
+            }
+
+        });
+    }
 
 
 }

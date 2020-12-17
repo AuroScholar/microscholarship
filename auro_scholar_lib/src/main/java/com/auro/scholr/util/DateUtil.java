@@ -281,7 +281,7 @@ public class DateUtil {
         String lang = ViewUtil.getLanguage();
        // Locale locale = new Locale(lang);
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat month_date = new SimpleDateFormat("MMMM", new Locale("en"));
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM",  new Locale(ViewUtil.getLanguage()));
         String month_name = month_date.format(cal.getTime());
         return month_name;
     }

@@ -1,27 +1,15 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import android.widget.TextView;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
@@ -33,46 +21,30 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.FriendsLeoboardLayoutBinding;
-import com.auro.scholr.home.data.model.AssignmentReqModel;
-import com.auro.scholr.home.data.model.ChallengeAccepResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
-import com.auro.scholr.home.data.model.FriendListResDataModel;
-import com.auro.scholr.home.data.model.FriendsLeaderBoardModel;
-import com.auro.scholr.home.data.model.QuizResModel;
-import com.auro.scholr.home.data.model.SubjectResModel;
-import com.auro.scholr.home.presentation.view.activity.CameraActivity;
-import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
+import com.auro.scholr.home.data.model.FriendRequestList;
+import com.auro.scholr.home.presentation.view.adapter.LeaderBoardViewPagerAdapter;
 import com.auro.scholr.home.presentation.viewmodel.FriendsLeaderShipViewModel;
-import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
-import com.auro.scholr.teacher.data.model.response.TeacherResModel;
-import com.auro.scholr.util.AppLogger;
-import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.firebase.FirebaseEventUtil;
-import com.auro.scholr.util.permission.PermissionHandler;
-import com.auro.scholr.util.permission.PermissionUtil;
-import com.auro.scholr.util.permission.Permissions;
+import com.google.android.material.tabs.TabLayout;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
-
-import androidx.fragment.app.FragmentTransaction;
-
-import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import static android.app.Activity.RESULT_OK;
-import static com.auro.scholr.core.common.Status.ACCEPT_INVITE_CLICK;
-import static com.auro.scholr.core.common.Status.AZURE_API;
-import static com.auro.scholr.core.common.Status.DASHBOARD_API;
-import static com.auro.scholr.core.common.Status.INVITE_FRIENDS_LIST;
-import static com.auro.scholr.core.common.Status.SEND_INVITE_API;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 
+import static com.auro.scholr.core.common.Status.FRIENDS_REQUEST_LIST;
 
 public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnClickListener, CommonCallBackListner {
 
@@ -80,30 +52,20 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     @Named("FriendsLeaderBoardFragment")
     ViewModelFactory viewModelFactory;
 
-    private static final int REQUEST_CODE_PICK_CONTACTS = 1;
     private static final String TAG = FriendsLeaderBoardFragment.class.getSimpleName();
     FriendsLeoboardLayoutBinding binding;
     FriendsLeaderShipViewModel viewModel;
-    InviteFriendDialog mInviteBoxDialog;
-    FriendListResDataModel resModel;
 
-    LeaderBoardAdapter leaderBoardAdapter;
-    boolean isFriendList = true;
-    Resources resources;
-    boolean isStateRestore;
     FirebaseEventUtil firebaseEventUtil;
     Map<String, String> logparam;
-    FriendsLeaderBoardModel boardModel;
-    DashboardResModel dashboardResModel;
-    AssignmentReqModel assignmentReqModel;
-    QuizResModel quizResModel;
-    int itemPos;
+    LeaderBoardViewPagerAdapter viewPagerAdapter;
+
+    FriendRequestList friendRequestList;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -113,9 +75,9 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendsLeaderShipViewModel.class);
         binding.setLifecycleOwner(this);
         setRetainInstance(true);
+        ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
     }
-
 
     @Override
     protected void init() {
@@ -133,39 +95,23 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         if (AuroApp.getAuroScholarModel() != null) {
             AuroApp.getAuroScholarModel().setSdkFragmentType(AppConstant.FragmentType.QUIZ_DASHBOARD);
         }
-        if (!isStateRestore) {
-            viewModel.getFriendsListData();
-        }
-        viewModel.getDashBoardData(AuroApp.getAuroScholarModel());
+        initialiseTabs();
+       loadData();
 
+
+    }
+
+    public void loadData(){
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        DashboardResModel dashboardResModel = prefModel.getDashboardResModel();
+        if (dashboardResModel != null) {
+            viewModel.friendRequestListData(Integer.valueOf(dashboardResModel.getAuroid()));
+        }
     }
 
     private void setDataUi() {
-        if (isFriendList) {
-            binding.noFriendLayout.setVisibility(View.GONE);
-            binding.friendBoardBg.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.blue_color));
-            binding.friendBgImgLayout.setBackground(AuroApp.getAppContext().getResources().getDrawable(R.drawable.friend_background));
-            binding.boardListLayout.setVisibility(View.VISIBLE);
-            binding.friendsBoardText.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.white));
-
-        } else {
-            binding.friendBoardBg.setBackgroundColor(AuroApp.getAppContext().getResources().getColor(R.color.transparent));
-            binding.friendBgImgLayout.setBackground(null);
-            binding.boardListLayout.setVisibility(View.GONE);
-            binding.noFriendLayout.setVisibility(View.VISIBLE);
-            binding.friendsBoardText.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.black));
-        }
-
-
-        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
-            setLanguageText(AppConstant.HINDI);
-        } else {
-            setLanguageText(AppConstant.ENGLISH);
-        }
 
     }
-
 
     @Override
     protected void setToolbar() {
@@ -178,7 +124,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.inviteButton.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
-        binding.inviteNow.setOnClickListener(this);
+        binding.tvShowFriendRequests.setOnClickListener(this);
 
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
             viewModel.serviceLiveData().removeObservers(this);
@@ -186,6 +132,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         } else {
             observeServiceResponse();
         }
+
     }
 
     private void observeServiceResponse() {
@@ -196,63 +143,32 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
 
                 case LOADING:
                     //For ProgressBar
-                    if (responseApi.apiTypeStatus == INVITE_FRIENDS_LIST) {
+                    if (responseApi.apiTypeStatus == FRIENDS_REQUEST_LIST) {
                         handleProgress(0, "");
-                    } else if (responseApi.apiTypeStatus == ACCEPT_INVITE_CLICK) {
-                        updateData(true, true);
-                    } else if (responseApi.apiTypeStatus == SEND_INVITE_API) {
-                        updateData(true, true);
                     }
 
                     break;
 
                 case SUCCESS:
-                    if (responseApi.apiTypeStatus == INVITE_FRIENDS_LIST) {
-                        resModel = (FriendListResDataModel) responseApi.data;
-                        if (resModel.getError()) {
-                            handleProgress(2, resModel.getMessage());
-                        } else {
+                    if (responseApi.apiTypeStatus == FRIENDS_REQUEST_LIST) {
+                        friendRequestList = (FriendRequestList) responseApi.data;
+                        if (!friendRequestList.isError()) {
                             handleProgress(1, "");
-                            setAdapter();
                         }
-                    } else if (responseApi.apiTypeStatus == SEND_INVITE_API) {
-                        TeacherResModel resModel = (TeacherResModel) responseApi.data;
-                        updateData(false, resModel.getError());
-                    } else if (responseApi.apiTypeStatus == ACCEPT_INVITE_CLICK) {
-                        ChallengeAccepResModel accepResModel = (ChallengeAccepResModel) responseApi.data;
-                        updateData(false, accepResModel.getError());
-                        sendToNextQuiz();
-                    } else if (responseApi.apiTypeStatus == DASHBOARD_API) {
-                        dashboardResModel = (DashboardResModel) responseApi.data;
-                    } else if (responseApi.apiTypeStatus == AZURE_API) {
-
                     }
                     break;
 
-
                 case NO_INTERNET:
                 case FAIL_400:
-                    if (responseApi.apiTypeStatus == INVITE_FRIENDS_LIST) {
+                    if (responseApi.apiTypeStatus == FRIENDS_REQUEST_LIST) {
                         handleProgress(3, (String) responseApi.data);
-                    } else if (responseApi.apiTypeStatus == ACCEPT_INVITE_CLICK) {
-                        updateData(false, true);
-                    } else if (responseApi.apiTypeStatus == SEND_INVITE_API) {
-                        updateData(false, true);
-                    } else if (responseApi.apiTypeStatus == AZURE_API) {
-                        setImageInPref(assignmentReqModel);
                     }
                     showSnackbarError((String) responseApi.data);
                     break;
 
                 default:
-                    if (responseApi.apiTypeStatus == INVITE_FRIENDS_LIST) {
+                    if (responseApi.apiTypeStatus == FRIENDS_REQUEST_LIST) {
                         handleProgress(3, (String) responseApi.data);
-                    } else if (responseApi.apiTypeStatus == ACCEPT_INVITE_CLICK) {
-                        updateData(false, true);
-                    } else if (responseApi.apiTypeStatus == SEND_INVITE_API) {
-                        updateData(false, true);
-                    } else if (responseApi.apiTypeStatus == AZURE_API) {
-                        setImageInPref(assignmentReqModel);
                     }
                     showSnackbarError((String) responseApi.data);
                     break;
@@ -264,59 +180,112 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
     private void handleProgress(int i, String msg) {
         switch (i) {
             case 0:
-
-                binding.progressBar.setVisibility(View.VISIBLE);
-                binding.errorConstraint.setVisibility(View.GONE);
-                binding.noFriendLayout.setVisibility(View.GONE);
-                binding.boardListLayout.setVisibility(View.GONE);
+                binding.tvRequestCount.setVisibility(View.GONE);
                 break;
 
             case 1:
-                binding.progressBar.setVisibility(View.GONE);
-                binding.errorConstraint.setVisibility(View.GONE);
-                binding.noFriendLayout.setVisibility(View.GONE);
-                binding.boardListLayout.setVisibility(View.VISIBLE);
+                if (friendRequestList != null && friendRequestList.getFriends() != null && friendRequestList.getFriends().size()>0) {
+                    binding.tvRequestCount.setVisibility(View.VISIBLE);
+                    binding.tvRequestCount.setText(friendRequestList.getFriends().size() + "");
+                }
+                else{
+                    binding.tvRequestCount.setVisibility(View.GONE);
+                }
+
                 break;
 
             case 2:
-                binding.progressBar.setVisibility(View.GONE);
-                binding.errorConstraint.setVisibility(View.GONE);
-                binding.errorLayout.errorIcon.setVisibility(View.GONE);
-                binding.errorLayout.btRetry.setVisibility(View.GONE);
-                binding.errorLayout.textError.setText(msg);
-                binding.noFriendLayout.setVisibility(View.VISIBLE);
-                binding.boardListLayout.setVisibility(View.GONE);
+                showSnackbarError(msg);
                 break;
 
             case 3:
-                binding.progressBar.setVisibility(View.GONE);
-                binding.errorConstraint.setVisibility(View.VISIBLE);
-                binding.errorLayout.errorIcon.setVisibility(View.VISIBLE);
-                binding.errorLayout.textError.setText(msg);
-                binding.noFriendLayout.setVisibility(View.GONE);
-                binding.boardListLayout.setVisibility(View.GONE);
-                binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        viewModel.getFriendsListData();
-                    }
-                });
+
                 break;
 
         }
 
     }
 
+    public void initialiseTabs() {
+        for (int i = 0; i < getTabList().size(); i++) {
+            binding.dineHomeTabs.addTab(binding.dineHomeTabs.newTab().setCustomView(getViewForEachTab(i)));
+        }
+        setViewPagerAdapter();
+        binding.dineHomeTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                setSelectedTabText(tab.getPosition());
+                binding.dineHomeTabs.setSelectedTabIndicatorColor(getResources().getColor(R.color.off_white));
+                binding.viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // do code here
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // do code here
+                if (binding.dineHomeTabs.getSelectedTabPosition() == 0) {
+                    setSelectedTabText(0);
+                    // binding.dineHomeTabs.setSelectedTabIndicatorColor(getResources().getColor(R.color.blue_color));
+
+                }
+
+            }
+        });
+        setSelectedTabText(0);
+        binding.dineHomeTabs.setSelectedTabIndicatorColor(getResources().getColor(R.color.off_white));
+    }
+
+    public void setViewPagerAdapter() {
+        viewPagerAdapter = new LeaderBoardViewPagerAdapter(getActivity(), getChildFragmentManager(), binding.dineHomeTabs.getTabCount());
+        binding.viewPager.setAdapter(viewPagerAdapter);
+        binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.dineHomeTabs));
+    }
+
+    private View getViewForEachTab(int tabNo) {
+        View view = getLayoutInflater().inflate(R.layout.tab_text_layout, null);
+        TextView tabTitle = view.findViewById(R.id.text_one);
+        //tabTitle.setTextSize(8);
+        tabTitle.setText(getTabList().get(tabNo));
+        return view;
+    }
+
+    private void setSelectedTabText(int pos) {
+        for (int i = 0; i < binding.dineHomeTabs.getTabCount(); i++) {
+            View view = binding.dineHomeTabs.getTabAt(i).getCustomView();
+            TextView text = view.findViewById(R.id.text_one);
+            if (i == pos) {
+                Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Poppins-SemiBold.ttf");
+                text.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.dark_magenta));
+                text.setTypeface(face);
+            } else {
+                Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Poppins-SemiBold.ttf");
+                text.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.non_select));
+                text.setTypeface(face);
+            }
+
+        }
+    }
+
+    public List<String> getTabList() {
+        List<String> tabList = new ArrayList<>();
+        tabList.add("Friend List");
+        tabList.add("Add Friend");
+        return tabList;
+    }
+
     private void showSnackbarError(String message) {
         ViewUtil.showSnackBar(binding.getRoot(), message);
     }
-
 
     @Override
     protected int getLayout() {
         return R.layout.friends_leoboard_layout;
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -330,29 +299,25 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         setListener();
     }
 
-    private void setAdapter() {
-        if (!TextUtil.checkListIsEmpty(resModel.getFriends())) {
-            for (FriendsLeaderBoardModel model : resModel.getFriends()) {
-                model.setViewType(AppConstant.FriendsLeaderBoard.LEADERBOARD_TYPE);
-            }
-            binding.friendsList.setLayoutManager(new LinearLayoutManager(getActivity()));
-            binding.friendsList.setHasFixedSize(true);
-            leaderBoardAdapter = new LeaderBoardAdapter(resModel.getFriends(), this);
-            binding.friendsList.setAdapter(leaderBoardAdapter);
-        }
-    }
-
-
     @Override
     public void onResume() {
         super.onResume();
         setKeyListner();
     }
 
-
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.back_arrow) {
+        if (v.getId() == R.id.tvShowFriendRequests) {
+            if (friendRequestList != null && friendRequestList.getFriends() != null && friendRequestList.getFriends().size()>0) {
+                FriendRequestListDialogFragment bottomSheetFragment = new FriendRequestListDialogFragment(this,friendRequestList);
+                bottomSheetFragment.show(getParentFragmentManager(), bottomSheetFragment.getTag());
+               
+            }
+            else{
+                showSnackbarError("No friend request");
+            }
+
+        } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
             openFragment(new QuizHomeFragment());
         } else if (v.getId() == R.id.invite_button) {
@@ -365,11 +330,11 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
             String text = binding.toolbarLayout.langEng.getText().toString();
             if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase(AppConstant.HINDI)) {
                 ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
-               // resources = ViewUtil.getCustomResource(getActivity());
+                // resources = ViewUtil.getCustomResource(getActivity());
                 setLanguageText(AppConstant.ENGLISH);
             } else {
                 ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
-               // resources = ViewUtil.getCustomResource(getActivity());
+                // resources = ViewUtil.getCustomResource(getActivity());
                 setLanguageText(AppConstant.HINDI);
             }
             reloadFragment();
@@ -391,18 +356,6 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
 
     }
 
-    private void openFragmentDialog(Fragment fragment) {
-        /* getActivity().getSupportFragmentManager().popBackStack();*/
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .setReorderingAllowed(true)
-                .add(AuroApp.getFragmentContainerUiId(), fragment, InviteFriendDialog.class.getSimpleName())
-                .addToBackStack(null)
-                .commitAllowingStateLoss();
-
-    }
-
-
     private void reloadFragment() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         if (Build.VERSION.SDK_INT >= 26) {
@@ -410,7 +363,6 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         }
         ft.detach(this).attach(this).commit();
     }
-
 
     private void openShareDefaultDialog() {
         String completeLink = AuroApp.getAppContext().getResources().getString(R.string.invite_friend_refrral);
@@ -434,58 +386,8 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
 
     @Override
     public void commonEventListner(CommonDataModel commonDataModel) {
-        itemPos = commonDataModel.getSource();
-        boardModel = (FriendsLeaderBoardModel) commonDataModel.getObject();
-        switch (commonDataModel.getClickType()) {
-            case SEND_INVITE_CLICK:
-                callSendInviteApi(boardModel);
-                break;
 
-            case ACCEPT_INVITE_CLICK:
-                acceptChallengeApi();
-                break;
-        }
     }
-
-    private void callSendInviteApi(FriendsLeaderBoardModel model) {
-        if (!TextUtil.isEmpty(model.getMobileNo())) {
-            SendInviteNotificationReqModel reqModel = new SendInviteNotificationReqModel();
-            reqModel.setReceiver_mobile_no(model.getMobileNo());
-            reqModel.setSender_mobile_no(AuroApp.getAuroScholarModel().getMobileNumber());
-            reqModel.setNotification_title("Challenged You");
-            String msg = getString(R.string.challenge_msg);
-            if (!TextUtil.isEmpty(model.getStudentName())) {
-                msg = model.getStudentName() + " " + msg;
-            }
-            reqModel.setNotification_message(msg);
-            viewModel.sendInviteNotificationApi(reqModel);
-        }
-    }
-
-    private void acceptChallengeApi() {
-        if (!TextUtil.isEmpty(boardModel.getMobileNo())) {
-            SendInviteNotificationReqModel reqModel = new SendInviteNotificationReqModel();
-            reqModel.setReceiver_mobile_no(AuroApp.getAuroScholarModel().getMobileNumber());
-            reqModel.setSender_mobile_no(boardModel.getMobileNo());
-            viewModel.acceptChalange(reqModel);
-        }
-    }
-
-    private void updateData(boolean status, boolean sent) {
-        if (resModel != null && !TextUtil.checkListIsEmpty(resModel.getFriends())) {
-            resModel.getFriends().get(itemPos).setProgress(status);
-            if (!sent) {
-                if (boardModel.isChallengedYou()) {
-                    resModel.getFriends().get(itemPos).setSentText(AuroApp.getAppContext().getString(R.string.accept));
-                } else {
-                    resModel.getFriends().get(itemPos).setSentText(AuroApp.getAppContext().getString(R.string.challenge));
-                }
-                resModel.getFriends().get(itemPos).setSent(true);
-            }
-            leaderBoardAdapter.setDataList(resModel.getFriends());
-        }
-    }
-
 
     private void setKeyListner() {
         this.getView().setFocusableInTouchMode(true);
@@ -502,143 +404,10 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
         });
     }
 
-
-    private void sendToNextQuiz() {
-        if (dashboardResModel == null) {
-            return;
-        }
-        if (!viewModel.homeUseCase.checkAllQuizAreFinishedOrNot(dashboardResModel)) {
-            for (int i = 0; i < dashboardResModel.getSubjectResModelList().size(); i++) {
-                SubjectResModel subjectResModel = dashboardResModel.getSubjectResModelList().get(i);
-                for (QuizResModel quizResModel : subjectResModel.getChapter()) {
-                    if (quizResModel.getAttempt() < 3) {
-                        quizResModel.setSubjectPos(i);
-                        this.quizResModel = quizResModel;
-                    }
-                    break;
-                }
-            }
-        } else {
-            openAlerDialog();
-        }
-        if (quizResModel != null) {
-            askPermission();
-        }
-    }
-
-
-    public void setImageInPref(AssignmentReqModel assignmentReqModel) {
-        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (prefModel != null && prefModel.getListAzureImageList() != null) {
-            prefModel.getListAzureImageList().add(assignmentReqModel);
-            AppPref.INSTANCE.setPref(prefModel);
-        }
-    }
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == AppConstant.CAMERA_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                try {
-                    String path = data.getStringExtra(AppConstant.PROFILE_IMAGE_PATH);
-                    azureImage(path);
-                    openQuizTestFragment(dashboardResModel);
-                    logparam.put(getResources().getString(R.string.log_start_quiz), "true");
-                    firebaseEventUtil.logEvent(getResources().getString(R.string.log_quiz_home_fragment_student), logparam);
-                    // loadImageFromStorage(path);
-                } catch (Exception e) {
 
-                }
-
-            } else {
-
-            }
-        }
-    }
-
-    private void azureImage(String path) {
-        try {
-            AppLogger.d(TAG, "Image Path" + path);
-            assignmentReqModel = viewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
-            assignmentReqModel.setEklavvya_exam_id("");
-            assignmentReqModel.setSubject(quizResModel.getSubjectName());
-            Bitmap picBitmap = BitmapFactory.decodeFile(path);
-            byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
-            long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
-            if (mb > 1.5) {
-                assignmentReqModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
-            } else {
-                assignmentReqModel.setImageBytes(bytes);
-            }
-
-            viewModel.getAzureRequestData(assignmentReqModel);
-        } catch (Exception e) {
-            /*Do code here when error occur*/
-        }
-    }
-
-    public void openQuizTestFragment(DashboardResModel dashboardResModel) {
-        Bundle bundle = new Bundle();
-        QuizTestFragment quizTestFragment = new QuizTestFragment();
-        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
-        bundle.putParcelable(AppConstant.QUIZ_RES_MODEL, quizResModel);
-        quizTestFragment.setArguments(bundle);
-        openFragment(quizTestFragment);
-    }
-
-
-    private void askPermission() {
-        String rationale = getString(R.string.permission_error_msg);
-        Permissions.Options options = new Permissions.Options()
-                .setRationaleDialogTitle("Info")
-                .setSettingsDialogTitle("Warning");
-        Permissions.check(getActivity(), PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
-            @Override
-            public void onGranted() {
-
-                //   openQuizTestFragment(dashboardResModel);
-                openCameraPhotoFragment();
-
-            }
-
-            @Override
-            public void onDenied(Context context, ArrayList<String> deniedPermissions) {
-                // permission denied, block the feature.
-                ViewUtil.showSnackBar(binding.getRoot(), rationale);
-            }
-        });
-    }
-
-    public void openCameraPhotoFragment() {
-        Intent intent = new Intent(getActivity(), CameraActivity.class);
-        startActivityForResult(intent, AppConstant.CAMERA_REQUEST_CODE);
-    }
-
-    public void openAlerDialog() {
-        AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
-                getActivity());
-
-// Setting Dialog Title
-        alertDialog2.setTitle("Info");
-
-// Setting Dialog Message
-        alertDialog2.setMessage("You have taken all your quizzes for the month. \nPractise more and come back next month.");
-
-// Setting Icon to Dialog
-        // alertDialog2.setIcon(R.drawable.);
-        alertDialog2.setNegativeButton("OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to execute after dialog
-                        // ViewUtil.showToast("You clicked on NO");
-                        dialog.cancel();
-                    }
-                });
-
-// Showing Alert Dialog
-        alertDialog2.show();
     }
 
 }

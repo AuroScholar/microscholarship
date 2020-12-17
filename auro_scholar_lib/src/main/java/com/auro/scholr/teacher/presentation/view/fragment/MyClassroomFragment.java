@@ -43,10 +43,12 @@ import com.auro.scholr.teacher.data.model.response.MyClassRoomStudentResModel;
 import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.MyClassroomAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.alert_dialog.ExitDialog;
 import com.auro.scholr.util.firebase.FirebaseEvent;
 import com.auro.scholr.util.firebase.FirebaseEventUtil;
 import com.facebook.CallbackManager;
@@ -110,24 +112,22 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         AuroApp.getAppComponent().doInjection(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MyClassroomViewModel.class);
         binding.setLifecycleOwner(this);
-
-
         setRetainInstance(true);
         return binding.getRoot();
     }
+
     public void setAdapter(List<MyClassRoomStudentResModel> resModelList) {
         binding.studentList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.studentList.setHasFixedSize(true);
         leaderBoardAdapter = new MyClassroomAdapter(getActivity(), resModelList, this);
         binding.studentList.setAdapter(leaderBoardAdapter);
     }
+
     @Override
     protected void init() {
         HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_DASHBOARD_FRAGMENT);
-        mFirebaseAnalytics = new FirebaseEventUtil(getContext());
+        mFirebaseAnalytics = new FirebaseEventUtil(getActivity());
         logeventparam= new HashMap<>();
-
-
         List<String> list = new ArrayList<>();
         list.add("odd");
         list.add("even");
@@ -137,10 +137,10 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         // viewModel.getTeacherProfileData("7503600686");
 
         shareDialog = new ShareDialog(this);
-
         viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
 
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,9 +152,11 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         // Create a callbackManager to handle the login responses.
         callbackManager = CallbackManager.Factory.create();
     }
+
     private void setDataOnUi() {
 
     }
+
     private void monthSpinner() {
         String date = "";
         if (myClassRoomResModel != null && myClassRoomResModel.getTeacherResModel() != null && !TextUtil.isEmpty(myClassRoomResModel.getTeacherResModel().getRegistrationDate())) {
@@ -184,7 +186,9 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             }
             for (int i = 0; i < monthDataModelList.size(); i++) {
                 MonthDataModel model = monthDataModelList.get(i);
-                if (year == model.getYear() && month == model.getMonthNumber()) {
+                AppLogger.e(TAG,"--current year--"+year+"--month number--"+month);
+                AppLogger.e(TAG,model.getMonth()+"--year--"+model.getYear()+"--month number--"+model.getMonthNumber());
+                if (year == model.getYear() && (month+1) == (model.getMonthNumber())) {
                     binding.monthSpinner.setSelection(i);
                 }
             }
@@ -192,10 +196,12 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
 
     }
+
     @Override
     protected void setToolbar() {
         /*Do code here*/
     }
+
     @Override
     protected void setListener() {
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
@@ -268,7 +274,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
             mFirebaseAnalytics.setUserProperTy(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"true");
         } else {
-            completeLink = completeLink + " https://bit.ly/3b1puWr";
+            completeLink = completeLink + " https://rb.gy/np9uh5";
             logeventparam.put(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"false");
             mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
             mFirebaseAnalytics.setUserProperTy(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"false");
@@ -386,6 +392,9 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         sendIntent.setPackage("com.whatsapp");
         if (sendIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(sendIntent);
+        }else {
+            ExitDialog  mexitDialog = new ExitDialog(getActivity());
+            mexitDialog.show();
         }
     }
     private void shareAppLinkViaFacebook(String urlToShare) {
@@ -408,8 +417,8 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                     break;
                 } else {
                     ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                            .setQuote(urlToShare.replace("- https://bit.ly/3b1puWr", ""))
-                            .setContentUrl(Uri.parse(" https://bit.ly/3b1puWr"))
+                            .setQuote(urlToShare.replace("-  https://rb.gy/np9uh5", ""))
+                            .setContentUrl(Uri.parse("  https://rb.gy/np9uh5"))
                             .build();
 
                     if (ShareDialog.canShow(ShareLinkContent.class)) {

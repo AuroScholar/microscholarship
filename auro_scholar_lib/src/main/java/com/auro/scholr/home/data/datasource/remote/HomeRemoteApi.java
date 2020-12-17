@@ -2,7 +2,6 @@ package com.auro.scholr.home.data.datasource.remote;
 
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.network.URLConstant;
-import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.google.gson.JsonObject;
 
 import java.util.Map;
@@ -11,10 +10,8 @@ import io.reactivex.Single;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Response;
-import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.HeaderMap;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -78,5 +75,29 @@ public interface HomeRemoteApi {
     @FormUrlEncoded
     Single<Response<JsonObject>> acceptInviteApi(@FieldMap Map<String, String> params);
 
+    @POST(URLConstant.FIND_FRIEND_API)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> findFriendApi(@FieldMap Map<String, Double> params);
+
+    @POST(URLConstant.SEND_FRIEND_REQUEST_API)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> sendFriendRequestApi(@FieldMap Map<String, Object> params);
+
+    @POST(URLConstant.FRIEND_REQUEST_LIST_API)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> friendRequestListApi(@FieldMap Map<String, Integer> params);
+
+    @POST(URLConstant.FRIEND_ACCEPT_API)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> friendAcceptApi(@FieldMap Map<String, String> params);
+
+
+    @POST(URLConstant.GRADE_UPGRADE)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> gradeUpgrade(@FieldMap Map<String, String> params);
+
+    @POST(URLConstant.REFFERAL_API)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> getRefferalapi(@FieldMap Map<String,String> params);
 
 }

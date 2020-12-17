@@ -2,8 +2,10 @@ package com.auro.scholr.home.presentation.view.fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,6 +17,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -54,7 +57,9 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.TextUtil;
+import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
@@ -64,6 +69,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -75,7 +81,7 @@ import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
  * Created by varun
  */
 @SuppressLint("SetJavaScriptEnabled")
-public class QuizTestFragment extends BaseFragment {
+public class QuizTestFragment extends BaseFragment implements View.OnClickListener {
     public static final String TAG = "QuizTestFragment";
 
     @Inject
@@ -113,15 +119,18 @@ public class QuizTestFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        ViewUtil.setLanguageonUi(getActivity());
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
             AuroApp.getAppComponent().doInjection(this);
             quizTestViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizTestViewModel.class);
             binding.setLifecycleOwner(this);
             setHasOptionsMenu(true);
-
         }
         setRetainInstance(true);
+        ViewUtil.setActivityLang(getActivity());
+
+
         return binding.getRoot();
     }
 
@@ -142,6 +151,7 @@ public class QuizTestFragment extends BaseFragment {
         if (customDialog != null) {
             customDialog.cancel();
         }
+        ViewUtil.setLanguageonUi(getActivity());
         super.onDestroy();
 
     }
@@ -180,12 +190,12 @@ public class QuizTestFragment extends BaseFragment {
                     }
                     break;
                 case NO_INTERNET:
-                    handleProgress(2, getActivity().getString(R.string.internet_check));
+                    handleProgress(2, getActivity().getResources().getString(R.string.internet_check));
                     break;
                 case AUTH_FAIL:
                 case FAIL_400:
                 default:
-                    handleProgress(2, getActivity().getString(R.string.default_error));
+                    handleProgress(2, getActivity().getResources().getString(R.string.default_error));
                     break;
             }
         });
@@ -288,6 +298,21 @@ public class QuizTestFragment extends BaseFragment {
         webView.loadUrl(webUrl);
 
     }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.back_arrow){
+
+           // getActivity().getSupportFragmentManager().popBackStack();
+            alertDialogForQuitQuiz();
+
+        }
+    }
+
+    public void onBackPressed() {
+        getActivity().getSupportFragmentManager().popBackStack();
+    }
+
 
 
     class MyJavaScriptInterface {
@@ -571,16 +596,51 @@ public class QuizTestFragment extends BaseFragment {
 
     private void setKeyListner() {
         this.getView().setFocusableInTouchMode(true);
+        binding.toolbarLayout.backArrow.setOnClickListener(this);
         this.getView().requestFocus();
         this.getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    getActivity().getSupportFragmentManager().popBackStack();
+
+                if( keyCode == KeyEvent.KEYCODE_BACK && event.getAction()== KeyEvent.ACTION_DOWN)
+                {
+                    alertDialogForQuitQuiz();
                     return true;
                 }
                 return false;
             }
         });
+    }
+
+    public void alertDialogForQuitQuiz(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(getActivity().getResources().getString(R.string.quiz_exit_txt));
+
+        String yes="<font color='#00A1DB'>"+getActivity().getResources().getString(R.string.yes)+"</font>";
+        String no="<font color='#00A1DB'>"+getActivity().getResources().getString(R.string.no)+"</font>";
+        // Set the alert dialog yes button click listener
+        builder.setPositiveButton(Html.fromHtml(yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do something when user clicked the Yes button
+                // Set the TextView visibility GONE
+                // tv.setVisibility(View.GONE);
+                getActivity().getSupportFragmentManager().popBackStack();
+                dialog.dismiss();
+            }
+        });
+        // Set the alert dialog no button click listener
+        builder.setNegativeButton(Html.fromHtml(no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do something when No button clicked
+                dialog.dismiss();
+                     /*   Toast.makeText(getApplicationContext(),
+                                "No Button Clicked",Toast.LENGTH_SHORT).show();*/
+            }
+        });
+        AlertDialog dialog = builder.create();
+        // Display the alert dialog on interface
+        dialog.show();
     }
 }

@@ -25,12 +25,19 @@ public class TeacherDoumentViewHolder extends RecyclerView.ViewHolder {
 
     public void bindUser(KYCDocumentDatamodel model, int position, CommonCallBackListner commonCallBackListner) {
         binding.txtDocumentName.setText(model.getDocumentName());
-        if (!model.getDocumentFileName().equalsIgnoreCase(AuroApp.getAppContext().getString(R.string.no_file_chosen))) {
+        if (!model.getDocumentFileName().equalsIgnoreCase(AuroApp.getAppContext().getResources().getString(R.string.no_file_chosen))) {
             binding.txtFileName.setVisibility(View.VISIBLE);
             binding.txtFileName.setText(model.getDocumentFileName());
             binding.docImg.setOnClickListener(null);
         } else {
             binding.txtFileName.setVisibility(View.GONE);
+        }
+        if(position ==0 || position == 1){
+            binding.txtDocumenthint.setText("Ex. Aadhaar,Pan card,Driving licence,etc.");
+            binding.txtDocumenthint.setVisibility(View.VISIBLE);
+
+        }else{
+            binding.txtDocumenthint.setVisibility(View.GONE);
         }
         if (model.isModify()) {
             binding.docImg.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_auro_check));

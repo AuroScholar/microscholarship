@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/tools">
+    xmlns:bind="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,88 +11,99 @@
             type="com.auro.scholr.home.presentation.viewmodel.QuizViewModel" />
     </data>
 
-
-    <LinearLayout
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        tools:context=".home.presentation.view.fragment.QuizHomeNewFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+
+        <RelativeLayout
+            android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white">
-
-
-            <include
-                android:id="@+id/toolbar_layout"
-                layout="@layout/toolbar_header_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
-            <include
-                android:id="@+id/header_top_parent"
-                layout="@layout/quiz_header_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
-
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_refresh_layout"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/custom_ui_snackbar"
-                app:layout_constraintTop_toBottomOf="@+id/header_top_parent">
-
-                <androidx.core.widget.NestedScrollView
-                    android:id="@+id/scrollview"
+            android:layout_height="match_parent">
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:background="@android:color/transparent"
-                    android:clipToPadding="false"
-                    android:overScrollMode="never"
-                    android:paddingBottom="@dimen/_10sdp"
-                    app:layout_constraintBottom_toTopOf="@+id/custom_ui_snackbar"
-                    app:layout_constraintTop_toBottomOf="@+id/header_top_parent">
+                    android:layout_height="match_parent"
+                    android:background="@color/white">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:background="@color/white">
+
+
+                        <include
+                            android:id="@+id/toolbar_layout"
+                            layout="@layout/toolbar_navigation_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+
+                        <include
+                            android:id="@+id/header_top_parent"
+                            layout="@layout/quiz_header_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
+
+                        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                            android:id="@+id/swipe_refresh_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toTopOf="@+id/custom_ui_snackbar"
+                            app:layout_constraintTop_toBottomOf="@+id/header_top_parent">
+
+                        <androidx.core.widget.NestedScrollView
+                            android:id="@+id/scrollview"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:background="@android:color/transparent"
+                            android:clipToPadding="false"
+                            android:overScrollMode="never"
+                            android:paddingBottom="@dimen/_10sdp"
+                            app:layout_constraintBottom_toTopOf="@+id/custom_ui_snackbar"
+                            app:layout_constraintTop_toBottomOf="@+id/header_top_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
 
                         <!--Shimmer Layout-->
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_20sdp"
-                            android:layout_marginEnd="@dimen/_10sdp">
-
-                            <com.facebook.shimmer.ShimmerFrameLayout
-                                android:id="@+id/shimmer_view_quiz"
+                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@color/white"
-                                android:orientation="vertical"
-                                android:visibility="gone"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_20sdp"
+                                android:layout_marginEnd="@dimen/_10sdp">
 
-                                <include
-                                    layout="@layout/quiz_home_shimmer_layout"
+                                <com.facebook.shimmer.ShimmerFrameLayout
+                                    android:id="@+id/shimmer_view_quiz"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
-                            </com.facebook.shimmer.ShimmerFrameLayout>
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/white"
+                                    android:orientation="vertical"
+                                    android:visibility="gone"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <include
+                                        layout="@layout/quiz_home_shimmer_layout"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content" />
+                                </com.facebook.shimmer.ShimmerFrameLayout>
 
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <!--Main Layout-->
-                        <RelativeLayout
+                            <RelativeLayout
                             android:id="@+id/main_parent_layout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -261,7 +273,6 @@
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_gravity="end|bottom|right"
                 android:layout_margin="@dimen/_15sdp"
                 android:background="@color/ufo_green"
@@ -311,4 +322,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
+
+        </RelativeLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header_main"
+            app:menu="@menu/drawer_menu"/>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

@@ -3,6 +3,7 @@ package com.auro.scholr.home.data.repository;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
+import com.auro.scholr.home.data.model.DynamiclinkResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
@@ -32,7 +33,17 @@ public interface HomeRepo {
 
         Single<Response<JsonObject>> acceptInviteApi(SendInviteNotificationReqModel reqModel);
 
+        Single<Response<JsonObject>> upgradeClass(AuroScholarDataModel model);
 
+        Single<Response<JsonObject>> findFriendApi(double lat, double longt, double radius);
+
+        Single<Response<JsonObject>> sendFriendRequestApi(int requested_by_id, int requested_user_id, String requested_by_phone, String requested_user_phone);
+
+        Single<Response<JsonObject>> friendRequestListApi(int requested_by_id);
+
+        Single<Response<JsonObject>> friendAcceptApi(int friend_request_id, String request_status);
+
+        Single<Response<JsonObject>> getDynamicDataApi(DynamiclinkResModel model);
 
     }
 

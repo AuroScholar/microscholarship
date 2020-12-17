@@ -71,27 +71,29 @@ public class QuizItemNewAdapter extends RecyclerView.Adapter<QuizItemNewAdapter.
         void setData(SubjectResModel model, int position) {
             binding.txtAmount.setText("" + model.getQuizWonAmount());
             binding.subjectTitle.setText(model.getSubject());
-
             setChapterListAdapter(model, position);
         }
 
         private void setChapterListAdapter(SubjectResModel model, int position) {
-            int mainProgress = 0;
+            int progressCount = 0;
             binding.subjectsChapterRecyclerview.setLayoutManager(new LinearLayoutManager(AuroApp.getAppContext()));
             binding.subjectsChapterRecyclerview.setHasFixedSize(true);
             for (QuizResModel quizResModel : model.getChapter()) {
                 quizResModel.setSubjectPos(position);
                 if (quizResModel.getAttempt() > 0) {
-                    mainProgress++;
+                    progressCount++;
                 }
             }
-            if (mainProgress == 1) {
+            int avgProgress = 100 / model.getChapter().size();
+            int progress = avgProgress * progressCount;
+            binding.parentProgress.setProgress(progress);
+           /* if (progressCount == 1) {
                 binding.parentProgress.setProgress(33);
-            } else if (mainProgress == 2) {
+            } else if (progressCount == 2) {
                 binding.parentProgress.setProgress(66);
-            } else if (mainProgress == 3) {
+            } else if (progressCount == 3) {
                 binding.parentProgress.setProgress(100);
-            }
+            }*/
             expand(binding.subjectsChapterRecyclerview, 1000, model.isQuizOpen());
             QuizItemChapterAdapter quizItemAdapter = new QuizItemChapterAdapter(mContext, model.getChapter(), commonCallBackListner, position);
             binding.subjectsChapterRecyclerview.setAdapter(quizItemAdapter);
@@ -109,29 +111,32 @@ public class QuizItemNewAdapter extends RecyclerView.Adapter<QuizItemNewAdapter.
                 }
             });
 
-
+            int maxAmount = 50 * model.getChapter().size();
+            binding.progressBar.setMax(maxAmount-10);
             Timer timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
 
-                    int quizAmount = 0;
-                    if (model.getQuizWonAmount() == 50) {
-                        quizAmount = 33;
+                    int quizAmount =0;
+                    /*if (model.getQuizWonAmount() == 50) {
+                        quizAmount = 25;
                     }
                     if (model.getQuizWonAmount() == 100) {
-                        quizAmount = 66;
+                        quizAmount = 50;
                     }
 
                     if (model.getQuizWonAmount() == 150) {
-                        quizAmount = 100;
+                        quizAmount = 75;
                     }
-                    if (count == quizAmount) {
+                    if (model.getQuizWonAmount() == 200) {
+                        quizAmount = 100;
+                    }*/
+                    if (count == model.getQuizWonAmount()) {
                         timer.cancel();
                     } else {
                         binding.progressBar.setProgress(count);
                         count++;
-
                     }
                 }
 

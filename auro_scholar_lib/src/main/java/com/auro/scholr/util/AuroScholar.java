@@ -27,6 +27,9 @@ public class AuroScholar {
                     auroScholarDataModel.getRegitrationSource() + "\n" + auroScholarDataModel.getReferralLink();
             AppLogger.e("Auro scholar input data", input);
         }
+        if (TextUtil.isEmpty(auroScholarDataModel.getPartnerSource())) {
+            auroScholarDataModel.setPartnerSource("");
+        }
         if (TextUtil.isEmpty(auroScholarDataModel.getShareIdentity())) {
             auroScholarDataModel.setShareIdentity("");
         }
@@ -64,6 +67,12 @@ public class AuroScholar {
         auroScholarDataModel.setActivity(inputModel.getActivity());
         auroScholarDataModel.setFragmentContainerUiId(inputModel.getFragmentContainerUiId());
         auroScholarDataModel.setReferralLink(inputModel.getReferralLink());
+        auroScholarDataModel.setUserPartnerid(inputModel.getUserPartnerId());
+        if (TextUtil.isEmpty(inputModel.getPartnerSource())) {
+            auroScholarDataModel.setPartnerSource("");
+        } else {
+            auroScholarDataModel.setPartnerSource(inputModel.getPartnerSource());
+        }
         AuroApp.setAuroModel(auroScholarDataModel);
         QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
         return quizHomeFragment;
@@ -75,6 +84,10 @@ public class AuroScholar {
             String input = auroScholarDataModel.getMobileNumber() + "\n" + auroScholarDataModel.getScholrId() + "\n" + auroScholarDataModel.isEmailVerified() + "\n" +
                     auroScholarDataModel.getRegitrationSource() + "\n" + auroScholarDataModel.getReferralLink();
             AppLogger.e("Auro scholar input data", input);
+        }
+
+        if (TextUtil.isEmpty(auroScholarDataModel.getPartnerSource())) {
+            auroScholarDataModel.setPartnerSource("");
         }
         if (TextUtil.isEmpty(auroScholarDataModel.getShareIdentity())) {
             auroScholarDataModel.setShareIdentity("");

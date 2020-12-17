@@ -69,6 +69,7 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
         AuroApp.getAppComponent().doInjection(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SendMoneyViewModel.class);
         binding.setLifecycleOwner(this);
+        ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
     }
 

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 
+
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
@@ -77,11 +78,6 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
     String districtCode = "";
     FirebaseEventUtil firebaseEventUtil;
     Map<String,String> logparam;
-/*    String subject = "English, Maths, Social Science, Science,";
-    String classes = "4th, 8th, 10th, 3rd, 9th, 7th, 2nd,";
-
-    String distict = "52";
-    String state =  "5";*/
 
 
     public TeacherProfileFragment() {
@@ -91,6 +87,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
     }
@@ -152,8 +149,6 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         viewModel.getStateListData();
         viewModel.getDistrictListData();
 
-
-
         setRecycleView();
         setDataOnUI();
 
@@ -199,7 +194,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage(getString(R.string.sure_to_logout));
+                builder.setMessage(getActivity().getResources().getString(R.string.sure_to_logout));
 
                 // Set the alert dialog yes button click listener
                 builder.setPositiveButton(Html.fromHtml("<font color='#00A1DB'>YES</font>"), new DialogInterface.OnClickListener() {
@@ -233,21 +228,13 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                 // Display the alert dialog on interface
                 dialog.show();
 
-
-
-               /* if (AuroApp.getAuroScholarModel() != null && AuroApp.getAuroScholarModel().getSdkcallback() != null) {
-                    AuroApp.getAuroScholarModel().getSdkcallback().logOut();
-                    AppUtil.myClassRoomResModel = null;
-                }*/
-                //  openFragment(new TeacherKycFragment());
-                //  ((HomeActivity) getActivity()).selectNavigationMenu(2);
             }
         });
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logparam.put(getResources().getString(R.string.log_save_profile_btn_teacher),"true");
-                firebaseEventUtil.logEvent(getResources().getString(R.string.log_save_profile_teacher),logparam);
+                logparam.put(getActivity().getResources().getString(R.string.log_save_profile_btn_teacher),"true");
+                firebaseEventUtil.logEvent(getActivity().getResources().getString(R.string.log_save_profile_teacher),logparam);
                 callSaveTeacherProfileApi();
             }
         });
@@ -278,9 +265,9 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == Status.UPDATE_TEACHER_PROFILE_API) {
                         handleProgress(1);
-                        logparam.put(getResources().getString(R.string.log_save_profile_api_teacher),"true");
-                        firebaseEventUtil.logEvent(getResources().getString(R.string.log_save_profile_teacher),logparam);
-                        showSnackbarError(getString(R.string.saved), Color.parseColor("#4bd964"));
+                        logparam.put(getActivity().getResources().getString(R.string.log_save_profile_api_teacher),"true");
+                        firebaseEventUtil.logEvent(getActivity().getResources().getString(R.string.log_save_profile_teacher),logparam);
+                        showSnackbarError(getActivity().getString(R.string.saved), Color.parseColor("#4bd964"));
                     } else if (responseApi.apiTypeStatus == Status.GET_PROFILE_TEACHER_API) {
                         MyProfileResModel teacherResModel = (MyProfileResModel) responseApi.data;
 
@@ -315,6 +302,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
 
                 case DISTRICT_LIST_DATA:
                     districtDataModels = (List<DistrictDataModel>) responseApi.data;
+                    addFirstitem();
                     if (!TextUtil.isEmpty(districtCode)) {
                         districtSpinner(districtCode);
                         districtCode = "";
@@ -326,13 +314,25 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
 
                 default:
                     handleProgress(1);
-                    showSnackbarError(getString(R.string.default_error));
+                    showSnackbarError(getActivity().getResources().getString(R.string.default_error));
                     break;
             }
 
         });
     }
 
+    private  void addFirstitem()
+    {
+       //creation_date,last_update,flag
+        DistrictDataModel districtDataModel=new DistrictDataModel();
+        districtDataModel.setState_code("state_code");
+        districtDataModel.setDistrict_code("district_code");
+        districtDataModel.setDistrict_name("Please select district");
+        districtDataModel.setActive_status("active_status");
+        districtDataModel.setFlag("flag");
+        districtDataModels.add(0,districtDataModel);
+
+    }
 
     private void showSnackbarError(String message) {
         ViewUtil.showSnackBar(binding.getRoot(), message);
@@ -349,17 +349,22 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
             binding.stateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                     if (position != 0) {
                         teacherReqModel.setState_id(stateDataModelList.get(position).getState_code());
                         viewModel.getStateDistrictData(stateDataModelList.get(position).getState_code());
+
                         binding.cityTitle.setVisibility(View.VISIBLE);
                         binding.cityView.setVisibility(View.VISIBLE);
                         binding.citySpinner.setVisibility(View.VISIBLE);
                     } else if (stateDataModelList.get(position).getState_name().trim().equalsIgnoreCase("pleaseselectstate")) {
                         binding.cityTitle.setVisibility(View.GONE);
+
                         binding.cityView.setVisibility(View.GONE);
+
                         binding.citySpinner.setVisibility(View.GONE);
                     } else {
+                        teacherReqModel.setState_id("");
                         binding.cityTitle.setVisibility(View.GONE);
                         binding.cityView.setVisibility(View.GONE);
                         binding.citySpinner.setVisibility(View.GONE);
@@ -396,7 +401,13 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
             binding.citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    teacherReqModel.setDistrict_id(districtDataModels.get(position).getDistrict_code());
+
+                    if(position != 0){
+                        teacherReqModel.setDistrict_id(districtDataModels.get(position).getDistrict_code());
+                    }else{
+                        teacherReqModel.setDistrict_id("");
+                    }
+
                 }
 
                 @Override
@@ -412,6 +423,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         if (district != null) {
             for (int i = 0; i < districtDataModels.size(); i++) {
                 if (district.equalsIgnoreCase(districtDataModels.get(i).getDistrict_code())) {
+
                     binding.citySpinner.setSelection(i);
                 }
             }

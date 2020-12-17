@@ -20,15 +20,21 @@
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <meta-data
+          android:name="com.google.android.geo.API_KEY"
+          android:value="AIzaSyDjbnwn833et_t7M6D0vVP_LSOMz-IdHPQ" />
+        <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
         <activity
             android:name=".home.presentation.view.activity.CameraActivity"
             android:label="@string/title_activity_camera"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".util.permission.PermissionsActivity" />
-        <activity android:name=".home.presentation.view.activity.HomeActivity" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode = "stateAlwaysHidden"/>
+        <activity android:name=".util.permission.PermissionsActivity"
+            android:windowSoftInputMode = "stateAlwaysHidden"/>
+        <activity android:name=".home.presentation.view.activity.HomeActivity"
+            android:windowSoftInputMode = "stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
