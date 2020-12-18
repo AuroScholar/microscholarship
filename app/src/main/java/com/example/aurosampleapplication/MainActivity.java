@@ -131,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 /*Api response here*/
                 AppLogger.e("Chhonker", "callback ---" + message);
             }
-
             @Override
             public void logOut() {
                 AppLogger.e("Chhonker", "Logout");
