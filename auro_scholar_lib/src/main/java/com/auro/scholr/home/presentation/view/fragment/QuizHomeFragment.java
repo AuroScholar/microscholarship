@@ -145,7 +145,17 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             isStateRestore = true;
             return binding.getRoot();
         }
-        setLanguagefromsdk();
+        if (!AuroApp.getAuroScholarModel().isApplicationLang()) {
+            String lang = AuroApp.getAuroScholarModel().getLanguage();
+            if (!TextUtil.isEmpty(lang)) {
+                if (lang.equalsIgnoreCase(AppConstant.LANGUAGE_HI) || lang.equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
+                    setLanguagefromsdk();
+                }
+            } else {
+                AuroApp.getAuroScholarModel().setLanguage(AppConstant.LANGUAGE_EN);
+            }
+        }
+
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
         quizViewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel.class);
@@ -592,8 +602,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         Permissions.check(getActivity(), PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
             @Override
             public void onGranted() {
-               // openQuizTestFragment(dashboardResModel);
-               openCameraPhotoFragment();
+                // openQuizTestFragment(dashboardResModel);
+                openCameraPhotoFragment();
 
             }
 
@@ -1015,7 +1025,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         quizViewModel.gradeUpgrade(AuroApp.getAuroScholarModel());
     }
 
-    private void setLanguagefromsdk(){
+    private void setLanguagefromsdk() {
         Locale locale = new Locale(AuroApp.getAuroScholarModel().getLanguage());
         Locale.setDefault(locale);
         Configuration config = new Configuration();

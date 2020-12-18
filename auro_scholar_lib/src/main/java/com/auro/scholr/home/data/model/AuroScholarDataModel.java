@@ -20,11 +20,16 @@ public class AuroScholarDataModel implements Parcelable {
     String referralLink = "";
     String userPartnerid = "";
     SdkCallBack sdkcallback;
-    String partnerSource="";
+    String partnerSource = "";
     int sdkType;
     int sdkFragmentType;
     boolean isEmailVerified;
-    String language;
+    String language = "en";
+    boolean applicationLang;
+
+    public AuroScholarDataModel() {
+
+    }
 
     protected AuroScholarDataModel(Parcel in) {
         mobileNumber = in.readString();
@@ -41,6 +46,7 @@ public class AuroScholarDataModel implements Parcelable {
         sdkFragmentType = in.readInt();
         isEmailVerified = in.readByte() != 0;
         language = in.readString();
+        applicationLang = in.readByte() != 0;
     }
 
     @Override
@@ -59,9 +65,7 @@ public class AuroScholarDataModel implements Parcelable {
         dest.writeInt(sdkFragmentType);
         dest.writeByte((byte) (isEmailVerified ? 1 : 0));
         dest.writeString(language);
-    }
-    public AuroScholarDataModel() {
-
+        dest.writeByte((byte) (applicationLang ? 1 : 0));
     }
 
     @Override
@@ -80,6 +84,14 @@ public class AuroScholarDataModel implements Parcelable {
             return new AuroScholarDataModel[size];
         }
     };
+
+    public boolean isApplicationLang() {
+        return applicationLang;
+    }
+
+    public void setApplicationLang(boolean applicationLang) {
+        this.applicationLang = applicationLang;
+    }
 
     public String getPartnerSource() {
         return partnerSource;
@@ -201,7 +213,11 @@ public class AuroScholarDataModel implements Parcelable {
         this.userPartnerid = userPartnerid;
     }
 
-    public String getLanguage() { return language; }
+    public String getLanguage() {
+        return language;
+    }
 
-    public void setLanguage(String language) { this.language = language; }
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 }

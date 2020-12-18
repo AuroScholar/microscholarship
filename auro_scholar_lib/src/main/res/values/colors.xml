@@ -112,4 +112,5 @@
     <color name="dropdown_default_divider_color">#BDBDBD</color>
     <color name="dropdown_background_dim">#80000000</color>
     <color name="payment_color_green">#78b348</color>
+    <color name="tranparentwhite">#56000000</color>
 </resources>
