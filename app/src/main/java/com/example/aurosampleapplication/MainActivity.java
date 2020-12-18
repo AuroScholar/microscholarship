@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setUserPartnerId("TestUserpartnerId");
         inputModel.setActivity(this);
         inputModel.setLanguage(language);
-        inputModel.setApplicationLang(true);
+        inputModel.setApplicationLang(false);
         inputModel.setFragmentContainerUiId(R.id.home_container);
         openFragment(AuroScholar.startAuroSDK(inputModel));
     }
