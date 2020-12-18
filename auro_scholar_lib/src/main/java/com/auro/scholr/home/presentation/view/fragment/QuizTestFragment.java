@@ -562,7 +562,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
     private void openDialog() {
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(getActivity());//bug report on 06/07/2020
-        customDialogModel.setTitle("Quiz Instructions");
+        customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.quiz_instruction));
         customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.bullted_list));
         customDialogModel.setTwoButtonRequired(false);
         if (getContext() != null) {

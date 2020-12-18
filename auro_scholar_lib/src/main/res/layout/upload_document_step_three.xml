@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:paddingStart="@dimen/_10sdp"
-            android:paddingLeft="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_5sdp"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"

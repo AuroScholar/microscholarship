@@ -248,7 +248,7 @@
     <string name="priceAmmount"><u>₹50.00</u></string>
 
     <string name="approved">Approved</string>
-    <string name="amount_rejected">Amount Rejected</string>
+    <string name="amount_rejected">Amount\nRejected</string>
     <string name="priceAmmount_one">₹50.00</string>
     <string name="strike_amount"><strike>₹50.00</strike></string>
     <string name="save_more_details">Save More Details?</string>
