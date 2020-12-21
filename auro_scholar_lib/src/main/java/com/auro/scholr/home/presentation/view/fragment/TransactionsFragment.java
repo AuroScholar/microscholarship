@@ -1,5 +1,6 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
@@ -73,6 +74,7 @@ public class TransactionsFragment extends BaseFragment implements View.OnClickLi
 
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(TransactionsViewModel.class);
         binding.setLifecycleOwner(this);
         setRetainInstance(true);

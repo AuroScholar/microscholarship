@@ -54,9 +54,6 @@ public class UtilsModule {
 
         httpClient.addInterceptor(httpLoggingInterceptor);
 
-       httpClient.addInterceptor(httpLoggingInterceptor);
-
-
         httpClient.addInterceptor(chain -> {
             Request original = chain.request();
             Request request = original.newBuilder()

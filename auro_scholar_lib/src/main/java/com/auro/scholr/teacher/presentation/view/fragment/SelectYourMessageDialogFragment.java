@@ -1,5 +1,6 @@
 package com.auro.scholr.teacher.presentation.view.fragment;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -94,6 +95,7 @@ public class SelectYourMessageDialogFragment extends BaseDialog implements View.
 
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SelectYourMessageDialogModel.class);
         binding.setLifecycleOwner(this);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0));

@@ -1,5 +1,6 @@
 package com.auro.scholr.teacher.presentation.view.fragment;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -94,6 +95,7 @@ public class SelectYourAppointmentDialogFragment extends BaseDialog implements V
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         AuroApp.getAppComponent().doInjection(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SelectYourAppointmentDialogModel.class);
         binding.setLifecycleOwner(this);

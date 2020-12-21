@@ -2,6 +2,7 @@ package com.auro.scholr.home.presentation.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -107,6 +108,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         kycViewModel = ViewModelProviders.of(this, viewModelFactory).get(KYCViewModel.class);
         binding.setLifecycleOwner(this);
 

@@ -3,6 +3,7 @@ package com.auro.scholr.home.presentation.view.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -60,6 +61,7 @@ public class FriendsInviteBoardFragment extends BaseFragment implements View.OnC
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendsInviteViewModel.class);
         binding.setLifecycleOwner(this);
         setRetainInstance(true);

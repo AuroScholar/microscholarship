@@ -2,6 +2,7 @@ package com.auro.scholr.home.presentation.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -72,6 +73,7 @@ public class FriendsLeaderBoardFragment extends BaseFragment implements View.OnC
 
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendsLeaderShipViewModel.class);
         binding.setLifecycleOwner(this);
         setRetainInstance(true);

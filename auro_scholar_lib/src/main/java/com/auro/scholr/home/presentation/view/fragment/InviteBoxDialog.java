@@ -39,6 +39,7 @@ public class InviteBoxDialog extends Dialog  implements View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_invite_layout);
 
+
         txtInvite = findViewById(R.id.invite_text);
         txtshareWithOther = findViewById(R.id.txtShareWithOther);
         close = findViewById(R.id.icClose);

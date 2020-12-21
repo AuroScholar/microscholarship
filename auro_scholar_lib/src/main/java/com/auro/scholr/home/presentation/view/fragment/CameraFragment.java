@@ -3,6 +3,7 @@ package com.auro.scholr.home.presentation.view.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -88,6 +89,8 @@ public class CameraFragment extends BaseFragment implements CommonCallBackListne
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         binding.setLifecycleOwner(this);
+        // Fragment locked in portrait screen orientation
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         HomeActivity.setListingActiveFragment(HomeActivity.DEMOGRAPHIC_FRAGMENT);
         if (hasFrontCamera()) {
             cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;

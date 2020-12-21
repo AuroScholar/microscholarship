@@ -1,6 +1,7 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -110,6 +111,7 @@ public class QuizHomeNewFragment extends BaseFragment implements View.OnClickLis
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         quizViewNewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewNewModel.class);
         binding.setLifecycleOwner(this);
         binding.setQuizViewNewModel(quizViewNewModel);

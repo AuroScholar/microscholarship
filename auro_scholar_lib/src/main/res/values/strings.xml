@@ -434,5 +434,6 @@
     <string name="psp_not_register">PSP is not registered</string>
     <string name="processing">Processing...</string>
     <string name="manditoryfields">*</string>
+    <string name="grade_chnage_message">You have changed your grade.\nPlease confirm if you want to change.</string>
 
 </resources>
