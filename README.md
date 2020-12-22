@@ -92,6 +92,7 @@ inputModel.setReferralLink("Put here branch or any other referral Link");
 inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
 inputModel.setPartnerSource("Your Id here"); // This id provided by Auro Scholar to the partner.
 inputModel.setLanguage("Enter Your Prefrence Language");// In Small Letter Eg. Hindi - hi or English-en
+inputModel.setApplicationLang(false);
 //Eg:-inputModel.setLanguage("hi");
 //This method returns a Fragment Instance
 Fragment fragment= AuroScholar.startAuroSDK(inputModel);
