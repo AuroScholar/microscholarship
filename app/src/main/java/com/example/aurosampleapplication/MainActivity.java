@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Locale locale = new Locale("en");
+        Locale locale = new Locale("hi");
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
@@ -64,15 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding.btSdk.setOnClickListener(this);
         binding.btOpen.setOnClickListener(this);
         binding.btSdk.setVisibility(View.VISIBLE);
-        //printDeviceInfo();
-      /* Locale locale = new Locale("hi");
-        Resources standardResources = this.getResources();
-        AssetManager assets = standardResources.getAssets();
-        DisplayMetrics metrics = standardResources.getDisplayMetrics();
-        Configuration config = new Configuration(standardResources.getConfiguration());
-        config.locale = locale;
-        Resources res = new Resources(assets, metrics, config);*/
-        /**/
+
     }
 
 
@@ -174,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void openGenricSDK(String mobileNumber, String student_class) {
+        String language = binding.language.getText().toString();
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
         inputModel.setMobileNumber(mobileNumber);//7503600601
         inputModel.setStudentClass("put student class here");
@@ -182,6 +175,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setPartnerSource("put regitration source"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setUserPartnerId("TestUserpartnerId");
         inputModel.setActivity(this);
+        inputModel.setLanguage(language);
+        inputModel.setApplicationLang(false);
         inputModel.setFragmentContainerUiId(R.id.home_container);
         openFragment(AuroScholar.startAuroSDK(inputModel));
     }

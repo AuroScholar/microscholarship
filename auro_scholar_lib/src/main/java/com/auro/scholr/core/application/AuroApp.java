@@ -3,6 +3,7 @@ package com.auro.scholr.core.application;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 
 
 import com.auro.scholr.core.application.di.component.AppComponent;
@@ -12,6 +13,8 @@ import com.auro.scholr.core.application.di.component.DaggerAppComponent;
 import com.auro.scholr.core.application.di.module.AppModule;
 import com.auro.scholr.core.application.di.module.UtilsModule;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
+
+import java.util.Locale;
 
 /**
  * Created by AAK on 09-Mar-2019.
@@ -62,5 +65,6 @@ public class AuroApp {
                 .build();
         appComponent.injectAppContext(context);
     }
+
 
 }

@@ -42,7 +42,6 @@ import java.util.List;
 
 public class TeacherUseCase {
 
-
     public ArrayList<QuizResModel> makeDummyQuizList() {
         ArrayList<QuizResModel> productModelList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {

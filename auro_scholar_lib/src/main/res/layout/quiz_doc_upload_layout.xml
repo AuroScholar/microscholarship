@@ -36,6 +36,7 @@
                 android:background="@drawable/ic_cloud_done"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -74,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginLeft="@dimen/_30sdp"
                 android:elevation="@dimen/_2sdp"
                 android:indeterminateDrawable="@drawable/circular_progress_white"
                 android:innerRadiusRatio="3"
@@ -87,6 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:background="#0DADFF"
@@ -105,6 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
                 android:text="@string/no_file_chosen"
                 app:Font="Poppins-Regular.ttf"
                 app:layout_constraintBottom_toBottomOf="parent"

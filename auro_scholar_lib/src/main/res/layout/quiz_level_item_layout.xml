@@ -143,6 +143,7 @@
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_marginStart="@dimen/_9sdp"
+            android:layout_marginLeft="@dimen/_9sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:src="@drawable/ic_quiz_lock"
             android:visibility="visible"

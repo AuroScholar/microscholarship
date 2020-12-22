@@ -27,7 +27,7 @@
                 android:id="@+id/serial_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2. "
+                android:text="4. "
                 android:textColor="@color/auro_dark_blue"
                 android:textSize="@dimen/_13sdp"
                 android:visibility="visible"
@@ -35,14 +35,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <com.auro.scholr.core.util.uiwidget.RPTextView
-                android:id="@+id/text_document_verification"
+                android:id="@+id/text_quiz_verification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/_13sdp"
                 android:paddingRight="@dimen/_13sdp"
-                android:text="@string/upload_verification"
+                android:text="@string/quiz_verification"
                 android:textColor="@color/auro_dark_blue"
                 android:textSize="@dimen/_13sdp"
                 android:visibility="visible"
@@ -51,18 +50,18 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.auro.scholr.core.util.uiwidget.RPTextView
-                android:id="@+id/text_verify_msg"
+                android:id="@+id/text_quiz_verify_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingRight="@dimen/_15sdp"
-                android:text="@string/verification_is_in_process"
+                android:text="@string/quiz_is_not_apporved"
                 android:textColor="@color/auro_dark_blue"
                 android:textSize="@dimen/_10sdp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:Font="Poppins-Regular.ttf"
                 app:layout_constraintStart_toEndOf="@+id/serial_number"
-                app:layout_constraintTop_toBottomOf="@+id/text_document_verification" />
+                app:layout_constraintTop_toBottomOf="@+id/text_quiz_verification" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -73,14 +72,14 @@
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
-            android:background="@drawable/ic_done_icon"
             android:visibility="gone"
+            app:srcCompat="@drawable/ic_done_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_document_layout"
             app:layout_constraintTop_toTopOf="parent" />
 
 
-</LinearLayout>
+    </LinearLayout>
 
 
 </layout>

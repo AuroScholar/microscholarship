@@ -16,6 +16,7 @@
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_37sdp"
             android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -27,8 +28,8 @@
                 android:layout_width="@dimen/_37sdp"
                 android:layout_height="@dimen/_37sdp"
                 android:layout_centerInParent="true"
-                android:scaleType="fitXY"
-                android:background="@drawable/rounded_corner_white" />
+                android:background="@drawable/rounded_corner_white"
+                android:scaleType="fitXY" />
 
             <ImageView
                 android:id="@+id/fb_image"
@@ -46,13 +47,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:paddingStart="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_10sdp"
             android:text="Student name 1"
             android:textColor="@color/grey_color"
             android:textSize="@dimen/_12sdp"
             android:textStyle="normal"
             app:Font="Poppins-Regular.ttf"
-            app:layout_constraintEnd_toStartOf="@id/checkbox"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/checkbox"
             app:layout_constraintStart_toEndOf="@+id/friend_image"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,10 +64,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             android:buttonTint="@color/auro_green_color"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

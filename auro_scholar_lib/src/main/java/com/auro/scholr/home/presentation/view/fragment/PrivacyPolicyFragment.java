@@ -164,7 +164,9 @@ public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickL
         webSettings.setDomStorageEnabled(true);
         webSettings = binding.webView.getSettings();
         webSettings.setPluginState(WebSettings.PluginState.ON);
-        webSettings.setMediaPlaybackRequiresUserGesture(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            webSettings.setMediaPlaybackRequiresUserGesture(false);
+        }
         webSettings.setAllowFileAccess(true);
         webSettings.setUserAgentString("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36");
         webView.setWebViewClient(new PQClient());
@@ -226,7 +228,10 @@ public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickL
     public class PQChromeClient extends WebChromeClient {
         @Override
         public void onPermissionRequest(final PermissionRequest request) {
-            String[] requestedResources = request.getResources();
+            String[] requestedResources = new String[0];
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                requestedResources = request.getResources();
+            }
             ArrayList<String> permissions = new ArrayList<>();
             ArrayList<String> grantedPermissions = new ArrayList<String>();
             for (int i = 0; i < requestedResources.length; i++) {
@@ -248,11 +253,15 @@ public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickL
             }
 
             if (grantedPermissions.isEmpty()) {
-                request.deny();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    request.deny();
+                }
             } else {
                 String[] grantedPermissionsArray = new String[grantedPermissions.size()];
                 grantedPermissionsArray = grantedPermissions.toArray(grantedPermissionsArray);
-                request.grant(grantedPermissionsArray);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    request.grant(grantedPermissionsArray);
+                }
             }
         }
 

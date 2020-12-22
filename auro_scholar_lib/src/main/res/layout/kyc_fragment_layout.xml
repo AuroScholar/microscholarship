@@ -5,17 +5,14 @@
 
     <data>
 
-        <variable
-            name="kycViewModel"
-            type="com.auro.scholr.home.presentation.viewmodel.KYCViewModel" />
 
 
     </data>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/blue_color"
         android:orientation="vertical">
 
         <include
@@ -24,251 +21,318 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <include
-            android:id="@+id/cambridge_heading"
-            layout="@layout/quiz_header_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:visibility="gone" />
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/blue_color">
+            android:layout_height="match_parent">
 
-
-            <androidx.core.widget.NestedScrollView
+            <LinearLayout
+                android:id="@+id/kycbackground"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:overScrollMode="never"
-                android:paddingBottom="@dimen/_150sdp"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                android:background="@color/blue_color"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-                <LinearLayout
+
+                <include
+                    android:id="@+id/cambridge_heading"
+                    layout="@layout/quiz_header_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:visibility="gone" />
 
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/blue_color">
+
+
+                    <androidx.core.widget.NestedScrollView
+                        android:id="@+id/nestedScrollView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:layout_marginEnd="@dimen/_10sdp">
+                        android:clipToPadding="false"
+                        android:overScrollMode="never"
+                        android:paddingBottom="@dimen/_150sdp"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                        <com.auro.scholr.core.util.uiwidget.RPTextView
-                            android:id="@+id/get_scholarship_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/_2sdp"
-                            android:text="@string/your_wallet"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_20sdp"
-                            app:Font="Poppins-Regular.ttf"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <com.auro.scholr.core.util.uiwidget.RPTextView
-                            android:id="@+id/warn_msg"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:autoLink="all"
-                            android:text="@string/upload_doc_text_msg"
-                            android:textColor="@color/white"
-                            android:textColorLink="@color/auro_dark_blue"
-                            android:textSize="@dimen/_10sdp"
-                            app:Font="Poppins-Regular.ttf"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/get_scholarship_text" />
-
-
-                        <com.auro.scholr.core.util.uiwidget.RPTextView
-                            android:id="@+id/wallet_bal_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/_2sdp"
-                            android:text="\u20B9 0.00"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_30sdp"
-                            android:textStyle="bold"
-                            app:Font="Poppins-Bold.ttf"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/warn_msg" />
-
-
-                        <ImageView
-                            android:id="@+id/wallet_info"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_15sdp"
-                            android:layout_marginBottom="@dimen/_8sdp"
-                            android:background="@drawable/ic_information"
-                            app:layout_constraintBottom_toTopOf="@+id/main_parent_layout"
-                            app:layout_constraintStart_toEndOf="@+id/wallet_bal_text"
-                            app:layout_constraintTop_toBottomOf="@+id/warn_msg" />
-
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/main_parent_layout"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@drawable/bg_white"
-                            app:layout_constraintTop_toBottomOf="@+id/wallet_bal_text"
-                            bind:layout_editor_absoluteX="0dp">
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-                            <include
-                                android:id="@+id/step_one"
-                                layout="@layout/upload_document_step_one"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15sdp"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-
-                            <include
-                                android:id="@+id/step_two"
-                                layout="@layout/upload_document_step_two"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:layout_constraintTop_toBottomOf="@+id/step_one" />
-
-
-                            <include
-                                android:id="@+id/step_three"
-                                layout="@layout/upload_document_step_three"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:layout_constraintTop_toBottomOf="@+id/step_two" />
-
-                            <View
-                                android:id="@+id/view_line"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_1sdp"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:layout_marginEnd="@dimen/_15sdp"
-                                android:background="@color/light_grey"
-                                app:layout_constraintTop_toBottomOf="@+id/step_three" />
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/document_upload_recyclerview"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginTop="@dimen/_15sdp"
-                                android:layout_marginEnd="@dimen/_15sdp"
-                                android:overScrollMode="never"
-                                app:layout_constraintTop_toBottomOf="@+id/view_line" />
 
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/buttonUploadLayout"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:layout_marginBottom="@dimen/_10sdp"
-                                android:visibility="invisible"
-                                android:background="@drawable/button_bg_orange"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/document_upload_recyclerview">
-
-                                <com.auro.scholr.core.util.uiwidget.RPTextView
-                                    android:id="@+id/bt_upload_all"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingStart="@dimen/_15sdp"
-                                    android:paddingTop="@dimen/_10sdp"
-                                    android:paddingEnd="@dimen/_15sdp"
-                                    android:paddingBottom="@dimen/_10sdp"
-                                    android:text="@string/upload"
-                                    android:textColor="@color/white"
-                                    android:textSize="@dimen/_15sdp"
-                                    android:visibility="visible"
-                                    app:Font="Poppins-Regular.ttf"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <ProgressBar
-                                    android:id="@+id/progressBar"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:elevation="@dimen/_2sdp"
-                                    android:indeterminateDrawable="@drawable/circular_progress_white"
-                                    android:innerRadiusRatio="3"
-                                    android:paddingStart="@dimen/_20sdp"
-                                    android:paddingTop="@dimen/_5sdp"
-                                    android:paddingEnd="@dimen/_20sdp"
-                                    android:paddingBottom="@dimen/_5sdp"
-                                    android:visibility="gone"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                            <com.auro.scholr.core.util.uiwidget.RPTextView
-                                android:id="@+id/bt_modify_all"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_10sdp"
-                                android:layout_marginTop="@dimen/_15sdp"
-                                android:layout_marginEnd="@dimen/_10sdp"
-                                android:layout_marginBottom="@dimen/_15sdp"
-                                android:background="@drawable/button_bg_orange"
-                                android:gravity="center_horizontal"
-                                android:paddingStart="@dimen/_15sdp"
-                                android:paddingTop="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_15sdp"
-                                android:paddingBottom="@dimen/_10sdp"
-                                android:text="@string/modify"
-                                android:textAlignment="center"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/_15sdp"
-                                android:visibility="gone"
-                                app:Font="Poppins-Regular.ttf"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/document_upload_recyclerview" />
+                                android:layout_marginTop="@dimen/_20sdp"
+                                android:layout_marginEnd="@dimen/_10sdp">
+
+                                <com.auro.scholr.core.util.uiwidget.RPTextView
+                                    android:id="@+id/get_scholarship_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    android:text="@string/your_wallet"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_20sdp"
+                                    app:Font="Poppins-Regular.ttf"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <com.auro.scholr.core.util.uiwidget.RPTextView
+                                    android:id="@+id/warn_msg"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:autoLink="all"
+                                    android:text="@string/upload_doc_text_msg"
+                                    android:textColor="@color/white"
+                                    android:textColorLink="@color/auro_dark_blue"
+                                    android:textSize="@dimen/_10sdp"
+                                    app:Font="Poppins-Regular.ttf"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/get_scholarship_text" />
 
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                                <com.auro.scholr.core.util.uiwidget.RPTextView
+                                    android:id="@+id/wallet_bal_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    android:text="\u20B9 0.00"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_30sdp"
+                                    android:textStyle="bold"
+                                    app:Font="Poppins-Bold.ttf"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/warn_msg" />
 
+
+                                <ImageView
+                                    android:id="@+id/wallet_info"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_15sdp"
+                                    android:layout_marginLeft="@dimen/_15sdp"
+                                    android:layout_marginBottom="@dimen/_8sdp"
+                                    android:background="@drawable/ic_information"
+                                    app:layout_constraintBottom_toTopOf="@+id/main_parent_layout"
+                                    app:layout_constraintStart_toEndOf="@+id/wallet_bal_text"
+                                    app:layout_constraintTop_toBottomOf="@+id/warn_msg" />
+
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/main_parent_layout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:background="@drawable/bg_white"
+                                    app:layout_constraintTop_toBottomOf="@+id/wallet_bal_text"
+                                    bind:layout_editor_absoluteX="0dp">
+
+                                    <include
+                                        android:id="@+id/step_one"
+                                        layout="@layout/upload_document_step_one"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/_15sdp"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                                    <include
+                                        android:id="@+id/step_two"
+                                        layout="@layout/upload_document_step_two"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:layout_constraintTop_toBottomOf="@+id/step_one" />
+                                    <include
+                                        android:id="@+id/step_three"
+                                        layout="@layout/quiz_verify_step_four"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:layout_constraintTop_toBottomOf="@+id/step_two" />
+
+
+                                    <include
+                                        android:id="@+id/step_four"
+                                        layout="@layout/upload_document_step_three"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:layout_constraintTop_toBottomOf="@+id/step_three" />
+
+                                    <View
+                                        android:id="@+id/view_line"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_1sdp"
+                                        android:layout_marginStart="@dimen/_15sdp"
+                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:layout_marginEnd="@dimen/_15sdp"
+                                        android:background="@color/light_grey"
+                                        app:layout_constraintTop_toBottomOf="@+id/step_four" />
+
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/document_upload_recyclerview"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_15sdp"
+                                        android:layout_marginTop="@dimen/_15sdp"
+                                        android:layout_marginEnd="@dimen/_15sdp"
+                                        android:overScrollMode="never"
+                                        app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+                                    <androidx.constraintlayout.widget.ConstraintLayout
+                                        android:id="@+id/buttonUploadLayout"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:layout_marginBottom="@dimen/_10sdp"
+                                        android:background="@drawable/button_bg_orange"
+                                        android:visibility="invisible"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/document_upload_recyclerview">
+
+                                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                                            android:id="@+id/bt_upload_all"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:paddingStart="@dimen/_15sdp"
+                                            android:paddingTop="@dimen/_10sdp"
+                                            android:paddingEnd="@dimen/_15sdp"
+                                            android:paddingBottom="@dimen/_10sdp"
+                                            android:text="@string/upload"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/_15sdp"
+                                            android:visibility="visible"
+                                            app:Font="Poppins-Regular.ttf"
+                                            app:layout_constraintBottom_toBottomOf="parent"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+
+                                        <ProgressBar
+                                            android:id="@+id/progressBar"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:elevation="@dimen/_2sdp"
+                                            android:indeterminateDrawable="@drawable/circular_progress_white"
+                                            android:innerRadiusRatio="3"
+                                            android:paddingStart="@dimen/_20sdp"
+                                            android:paddingTop="@dimen/_5sdp"
+                                            android:paddingEnd="@dimen/_20sdp"
+                                            android:paddingBottom="@dimen/_5sdp"
+                                            android:visibility="gone"
+                                            app:layout_constraintBottom_toBottomOf="parent"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                                    <com.auro.scholr.core.util.uiwidget.RPTextView
+                                        android:id="@+id/bt_modify_all"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_15sdp"
+                                        android:layout_marginEnd="@dimen/_10sdp"
+                                        android:layout_marginBottom="@dimen/_15sdp"
+                                        android:background="@drawable/button_bg_orange"
+                                        android:gravity="center_horizontal"
+                                        android:paddingStart="@dimen/_15sdp"
+                                        android:paddingTop="@dimen/_10sdp"
+                                        android:paddingEnd="@dimen/_15sdp"
+                                        android:paddingBottom="@dimen/_10sdp"
+                                        android:text="@string/modify"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_15sdp"
+                                        android:visibility="gone"
+                                        app:Font="Poppins-Regular.ttf"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/document_upload_recyclerview" />
+
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </LinearLayout>
+                    </androidx.core.widget.NestedScrollView>
+
+                    <ImageView
+                        android:id="@+id/resultImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_switch_camera_black"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/transparet"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@color/tranparentwhite"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/nestedScrollView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/nestedScrollView">
+
+                        <ProgressBar
+                            android:id="@+id/progressBar_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:elevation="@dimen/_2sdp"
+                            android:indeterminateDrawable="@drawable/circular_progress_white"
+                            android:innerRadiusRatio="3"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
 
-            <ImageView
-                android:id="@+id/resultImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_switch_camera_black"
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/errorConstraint"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-
+                <include
+                    android:id="@+id/errorLayout"
+                    layout="@layout/error_layout" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </LinearLayout>
 </layout>

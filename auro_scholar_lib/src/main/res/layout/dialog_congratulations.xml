@@ -45,8 +45,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/border_selector_white"
                         android:scaleType="fitXY"
-
-                        android:src="@drawable/ic_modal"
+                        app:srcCompat="@drawable/ic_modal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +70,7 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:tint="@color/black"
-                        android:src="@drawable/ic_close_black"
+                        app:srcCompat="@drawable/ic_close_black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"

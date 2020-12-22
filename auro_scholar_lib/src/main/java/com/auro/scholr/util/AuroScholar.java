@@ -67,7 +67,9 @@ public class AuroScholar {
         auroScholarDataModel.setActivity(inputModel.getActivity());
         auroScholarDataModel.setFragmentContainerUiId(inputModel.getFragmentContainerUiId());
         auroScholarDataModel.setReferralLink(inputModel.getReferralLink());
+        auroScholarDataModel.setLanguage(inputModel.getLanguage());
         auroScholarDataModel.setUserPartnerid(inputModel.getUserPartnerId());
+        auroScholarDataModel.setApplicationLang(inputModel.isApplicationLang());
         if (TextUtil.isEmpty(inputModel.getPartnerSource())) {
             auroScholarDataModel.setPartnerSource("");
         } else {
