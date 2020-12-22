@@ -1,5 +1,6 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +65,7 @@ public class FriendRequestListDialogFragment extends BottomSheetDialogFragment i
 
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendsLeaderShipViewModel.class);
         binding.setLifecycleOwner(this);
         setRetainInstance(true);ViewUtil.setLanguageonUi(getActivity());

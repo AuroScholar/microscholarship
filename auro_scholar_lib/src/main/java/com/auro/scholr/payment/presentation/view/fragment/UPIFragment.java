@@ -1,6 +1,7 @@
 package com.auro.scholr.payment.presentation.view.fragment;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -79,6 +80,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SendMoneyViewModel.class);
         binding.setLifecycleOwner(this);
         ViewUtil.setLanguageonUi(getActivity());

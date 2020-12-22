@@ -2,6 +2,7 @@ package com.auro.scholr.util.alert_dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,6 +86,7 @@ public class CustomPaymentTranferDialog extends Dialog implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_payment_transfer, null, false);
         setContentView(binding.getRoot());
 

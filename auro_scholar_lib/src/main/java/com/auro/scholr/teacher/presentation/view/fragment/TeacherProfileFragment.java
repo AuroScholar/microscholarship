@@ -2,6 +2,7 @@ package com.auro.scholr.teacher.presentation.view.fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -101,6 +102,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         }
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(TeacherProfileViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setTeacherProfileViewModel(viewModel);

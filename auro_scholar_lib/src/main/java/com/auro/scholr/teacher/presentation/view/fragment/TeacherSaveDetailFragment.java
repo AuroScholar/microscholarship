@@ -1,5 +1,6 @@
 package com.auro.scholr.teacher.presentation.view.fragment;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -88,6 +89,7 @@ public class TeacherSaveDetailFragment extends BaseFragment {
         }
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         teacherSaveDetailViewModel = ViewModelProviders.of(this, viewModelFactory).get(TeacherSaveDetailViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setTeacherSaveDetailViewModel(teacherSaveDetailViewModel);

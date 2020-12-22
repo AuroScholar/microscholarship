@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -155,6 +156,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 AuroApp.getAuroScholarModel().setLanguage(AppConstant.LANGUAGE_EN);
             }
         }
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
@@ -817,11 +819,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(AuroApp.getAppContext());
         customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
-        customDialogModel.setContent(dashboardResModel.getMessage());
+        customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.grade_chnage_message));//
         customDialogModel.setTwoButtonRequired(true);
         customDialog = new CustomDialog(AuroApp.getAppContext(), customDialogModel);
-        customDialog.setSecondBtnTxt("Yes");
-        customDialog.setFirstBtnTxt("No");
+        customDialog.setSecondBtnTxt(AuroApp.getAppContext().getResources().getString(R.string.yes));
+        customDialog.setFirstBtnTxt(AuroApp.getAppContext().getResources().getString(R.string.no));
         customDialog.setFirstCallcack(new CustomDialog.FirstCallcack() {
             @Override
             public void clickNoCallback() {

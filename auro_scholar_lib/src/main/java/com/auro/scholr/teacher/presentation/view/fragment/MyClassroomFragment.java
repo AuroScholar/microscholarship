@@ -110,6 +110,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         }
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MyClassroomViewModel.class);
         binding.setLifecycleOwner(this);
         setRetainInstance(true);

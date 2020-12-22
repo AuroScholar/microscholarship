@@ -2,6 +2,7 @@ package com.auro.scholr.home.presentation.view.fragment;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -87,6 +88,7 @@ public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickL
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setHasOptionsMenu(true);
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);

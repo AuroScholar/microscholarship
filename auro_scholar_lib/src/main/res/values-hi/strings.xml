@@ -327,6 +327,9 @@
     <string name="processing">प्रोसेस हो रहा है ...</string>
     <string name="manditoryfields">*</string>
     <string name="privacy_policy_auro">गोपनीयता नीति</string>
-
-
+    <string name="grade_chnage_message">आपने अपना कक्षा: बदल दिया है।\nयदि आप बदलना चाहते हैं तो कृपया पुष्टि करें।</string>
+    <string name="you_have_scored">आपने अर्जित किए।</string>
+    <string name="you_are_almost_there_let_s_make_the_scholarship_happen">आप छात्रवृत्ति के बहुत करीब हैं, चलिए इसे प्राप्त करें।</string>
+    <string name="share_with_friends">दोस्तों के साथ साझा करें।</string>
+    <string name="retake_quiz">क्विज़ पुनः लें।</string>
 </resources>

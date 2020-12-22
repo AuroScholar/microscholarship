@@ -1,6 +1,7 @@
 package com.auro.scholr.teacher.presentation.view.fragment;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -71,6 +72,7 @@ public class TeacherInfoFragment extends BaseFragment implements CommonCallBackL
         }
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(TeacherInfoViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setTeacherInfoViewModel(viewModel);

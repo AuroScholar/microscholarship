@@ -131,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 /*Api response here*/
                 AppLogger.e("Chhonker", "callback ---" + message);
             }
-
             @Override
             public void logOut() {
                 AppLogger.e("Chhonker", "Logout");
@@ -175,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setPartnerSource("put regitration source"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setUserPartnerId("TestUserpartnerId");
         inputModel.setActivity(this);
-        inputModel.setLanguage(language);
+        inputModel.setLanguage("Enter Your Prefrence Language");// In Small Letter Eg. Hindi - hi or English-en
         inputModel.setApplicationLang(false);
         inputModel.setFragmentContainerUiId(R.id.home_container);
         openFragment(AuroScholar.startAuroSDK(inputModel));

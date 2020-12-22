@@ -43,26 +43,27 @@
 
                 <com.auro.scholr.core.util.uiwidget.RPTextView
                     android:id="@+id/tv_message"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_title"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:text="fdhgdfh"
-                    android:gravity="center"
+                    android:text="@string/grade_chnage_message"
+                    android:gravity="center_horizontal"
                     android:textAlignment="center"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:textColor="@color/taupe"
                     android:textSize="@dimen/_12sdp"
                     android:padding="@dimen/_10sdp"
                     app:Font="Poppins-Regular.ttf"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
                 <RelativeLayout
                     android:padding="@dimen/_10sdp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +103,7 @@
                             android:background="@drawable/button_bg"
                             android:gravity="center"
                             android:padding="5dp"
-                            android:text="No"
+                            android:text="@string/no"
                             android:textColor="@color/rich_electric_blue"
                             app:Font="Poppins-Regular.ttf" />
 
@@ -119,7 +120,7 @@
                             android:background="@color/blue_color"
                             android:gravity="center"
                             android:padding="5dp"
-                            android:text="Yes"
+                            android:text="@string/yes"
                             android:textColor="@color/white"
                             app:Font="Poppins-Regular.ttf" />
 
