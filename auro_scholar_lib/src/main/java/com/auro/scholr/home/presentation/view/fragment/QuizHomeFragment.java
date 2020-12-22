@@ -822,8 +822,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.grade_chnage_message));//
         customDialogModel.setTwoButtonRequired(true);
         customDialog = new CustomDialog(AuroApp.getAppContext(), customDialogModel);
-        customDialog.setSecondBtnTxt("Yes");
-        customDialog.setFirstBtnTxt("No");
+        customDialog.setSecondBtnTxt(AuroApp.getAppContext().getResources().getString(R.string.yes));
+        customDialog.setFirstBtnTxt(AuroApp.getAppContext().getResources().getString(R.string.no));
         customDialog.setFirstCallcack(new CustomDialog.FirstCallcack() {
             @Override
             public void clickNoCallback() {

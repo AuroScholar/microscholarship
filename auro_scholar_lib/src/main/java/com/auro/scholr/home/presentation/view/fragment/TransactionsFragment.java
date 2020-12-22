@@ -194,12 +194,14 @@ public class TransactionsFragment extends BaseFragment implements View.OnClickLi
         }
 
         int approvedValue = ConversionUtil.INSTANCE.convertStringToInteger(dashboardResModel.getApproved_scholarship_money());
+
         if (approvedValue > 0) {
             binding.amountTrajection.btTransferMoney.setOnClickListener(this);
             binding.amountTrajection.btTransferMoney.setVisibility(View.VISIBLE);
         } else {
             binding.amountTrajection.btTransferMoney.setVisibility(View.GONE);
         }
+
     }
 
     @Override

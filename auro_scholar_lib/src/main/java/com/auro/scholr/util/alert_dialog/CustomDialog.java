@@ -2,6 +2,7 @@ package com.auro.scholr.util.alert_dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.Window;
 import androidx.databinding.DataBindingUtil;
 
 import com.auro.scholr.R;
+import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.databinding.DialogCustomBinding;
 
 
@@ -81,6 +83,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_custom, null, false);
         setContentView(binding.getRoot());
 

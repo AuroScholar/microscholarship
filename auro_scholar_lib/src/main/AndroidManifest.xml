@@ -29,6 +29,7 @@
         <activity
             android:name=".home.presentation.view.activity.CameraActivity"
             android:label="@string/title_activity_camera"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode = "stateAlwaysHidden"/>
         <activity android:name=".util.permission.PermissionsActivity"

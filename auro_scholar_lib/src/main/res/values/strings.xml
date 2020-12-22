@@ -331,7 +331,7 @@
     <string name="tutorial_video_info">Tutorial video</string>
     <string name="on_step_info">Steps to be become an AuroScholar Teacher</string>
 
-    <string name="retake_quiz">Retake Quiz</string>
+
     <string name="auro_scholar_wallet">You have got ₹50 Scholarship in your\nAuro Scholar Wallet!</string>
     <string name="share_with_friends">Share with friends</string>
     <string name="congratulation_new">Congratulations</string>
@@ -435,5 +435,8 @@
     <string name="processing">Processing...</string>
     <string name="manditoryfields">*</string>
     <string name="grade_chnage_message">You have changed your grade.\nPlease confirm if you want to change.</string>
+    <string name="you_have_scored">You Have Scored</string>
+    <string name="you_are_almost_there_let_s_make_the_scholarship_happen">You are almost there! Let\'s make the scholarship happen!</string>
+    <string name="retake_quiz">Retake Quiz</string>
 
 </resources>

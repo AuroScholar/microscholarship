@@ -131,7 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:layout_marginTop="@dimen/_14sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
                     android:text="@string/priceAmmount_one"
                     android:textColor="@color/auro_green_color"
                     android:textSize="@dimen/_16sdp"

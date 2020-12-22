@@ -103,7 +103,7 @@
                             android:background="@drawable/button_bg"
                             android:gravity="center"
                             android:padding="5dp"
-                            android:text="No"
+                            android:text="@string/no"
                             android:textColor="@color/rich_electric_blue"
                             app:Font="Poppins-Regular.ttf" />
 
@@ -120,7 +120,7 @@
                             android:background="@color/blue_color"
                             android:gravity="center"
                             android:padding="5dp"
-                            android:text="Yes"
+                            android:text="@string/yes"
                             android:textColor="@color/white"
                             app:Font="Poppins-Regular.ttf" />
 

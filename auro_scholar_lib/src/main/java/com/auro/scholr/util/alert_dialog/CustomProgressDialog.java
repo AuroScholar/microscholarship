@@ -1,6 +1,7 @@
 package com.auro.scholr.util.alert_dialog;
 
 import android.app.Dialog;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.Window;
 import androidx.databinding.DataBindingUtil;
 
 import com.auro.scholr.R;
+import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.databinding.CustomKycDialogBinding;
 import com.auro.scholr.databinding.CustomProgressDialogBinding;
 import com.auro.scholr.databinding.DialogTeacherSelectYourMessageBinding;
@@ -39,6 +41,7 @@ public class CustomProgressDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if (!customDialogModel.isTwoButtonRequired()) {
             binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.custom_progress_dialog, null, false);
             setContentView(binding.getRoot());
