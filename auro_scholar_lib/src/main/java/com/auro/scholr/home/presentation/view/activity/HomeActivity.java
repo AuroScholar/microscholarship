@@ -126,9 +126,11 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
         // printHashKey(this);
         setHomeFragmentTab();
         DynamiclinkResModel dynamiclinkResModel = new DynamiclinkResModel();
-        dynamiclinkResModel.setRefferMobileno(AuroApp.getAuroScholarModel().getMobileNumber());
-        dynamiclinkResModel.setSource(AppConstant.Source.TEACHER_APP_AURO);
         dynamiclinkResModel.setNavigationTo(AppConstant.NavigateToScreen.STUDENT_DASHBOARD);
+        dynamiclinkResModel.setRefferMobileno(AuroApp.getAuroScholarModel().getMobileNumber());
+        dynamiclinkResModel.setSource("");
+        dynamiclinkResModel.setNavigationTo(AppConstant.NavigateToScreen.STUDENT_DASHBOARD);
+        dynamiclinkResModel.setReffer_type(AppConstant.NavigateToScreen.TEACHER);
         viewModel.getDynamicData(dynamiclinkResModel);
     }
 

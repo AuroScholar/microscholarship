@@ -32,9 +32,14 @@ public class DynamiclinkResModel implements Parcelable {
     @Expose
     private String link;
 
+    @SerializedName("reffer_type")
+    @Expose
+    private String reffer_type="";
+
     public  DynamiclinkResModel() {
 
     }
+
 
     protected DynamiclinkResModel(Parcel in) {
         status = in.readString();
@@ -45,6 +50,7 @@ public class DynamiclinkResModel implements Parcelable {
         source = in.readString();
         navigationTo = in.readString();
         link = in.readString();
+        reffer_type = in.readString();
     }
 
     @Override
@@ -56,6 +62,7 @@ public class DynamiclinkResModel implements Parcelable {
         dest.writeString(source);
         dest.writeString(navigationTo);
         dest.writeString(link);
+        dest.writeString(reffer_type);
     }
 
     @Override
@@ -131,4 +138,11 @@ public class DynamiclinkResModel implements Parcelable {
         this.link = link;
     }
 
+    public String getReffer_type() {
+        return reffer_type;
+    }
+
+    public void setReffer_type(String reffer_type) {
+        this.reffer_type = reffer_type;
+    }
 }

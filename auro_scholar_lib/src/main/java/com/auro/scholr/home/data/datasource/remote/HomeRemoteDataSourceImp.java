@@ -204,6 +204,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         params.put(AppConstant.RefferalApiCode.REFFER_MOBILENO, model.getRefferMobileno());
         params.put(AppConstant.RefferalApiCode.SOURCE, model.getSource());
         params.put(AppConstant.RefferalApiCode.NAVIGATION_TO, model.getNavigationTo());
+        params.put(AppConstant.RefferalApiCode.REFFER_TYPE, model.getReffer_type());
         return homeRemoteApi.getRefferalapi(params);
     }
 }

@@ -2,6 +2,8 @@ package com.auro.scholr.teacher.data.datasource.remote;
 
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
@@ -38,6 +40,8 @@ public class TeacherRemoteDataSourceImp implements TeacherRepo.TeacherRemoteData
         params.put(AppConstant.TeacherProfileParams.DISTRICT_ID, model.getDistrict_id());
         params.put(AppConstant.TeacherProfileParams.TEACHER_CLASS, model.getTeacher_class());
         params.put(AppConstant.TeacherProfileParams.TEACHER_SUBJECT, model.getTeacher_subject());
+        params.put(AppConstant.REGISTRATION_SOURCE_UTM, model.getUTM_link());
+
         return teacherRemoteApi.updateTeacherProfileApi(params);
 
     }
@@ -95,7 +99,7 @@ public class TeacherRemoteDataSourceImp implements TeacherRepo.TeacherRemoteData
 
     @Override
     public Single<Response<JsonObject>> bookZohoAppointments(String from_time, String name, String email, String phone_number) {
-        return teacherRemoteApi.bookZohoAppointments(from_time,name,email,phone_number);
+        return teacherRemoteApi.bookZohoAppointments(from_time, name, email, phone_number);
     }
 
 }

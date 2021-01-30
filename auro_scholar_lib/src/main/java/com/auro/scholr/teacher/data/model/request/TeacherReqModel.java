@@ -10,6 +10,7 @@ public class TeacherReqModel {
     private String district_id;
     private String teacher_class;
     private String teacher_subject;
+    private  String UTM_link;
 
     public String getMobile_no() {
         return mobile_no;
@@ -73,5 +74,13 @@ public class TeacherReqModel {
 
     public void setTeacher_subject(String teacher_subject) {
         this.teacher_subject = teacher_subject;
+    }
+
+    public String getUTM_link() {
+        return UTM_link;
+    }
+
+    public void setUTM_link(String UTM_link) {
+        this.UTM_link = UTM_link;
     }
 }

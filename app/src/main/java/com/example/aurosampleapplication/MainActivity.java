@@ -54,16 +54,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Locale locale = new Locale("hi");
+        /*Locale locale = new Locale("hi");
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config,
-                getBaseContext().getResources().getDisplayMetrics());
+                getBaseContext().getResources().getDisplayMetrics());*/
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.btSdk.setOnClickListener(this);
         binding.btOpen.setOnClickListener(this);
-        binding.btSdk.setVisibility(View.VISIBLE);
+      //  binding.btSdk.setVisibility(View.VISIBLE);
 
     }
 
@@ -116,14 +116,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void openTeacherSDK() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
         auroScholarDataModel.setMobileNumber(binding.mobileNumber.getText().toString());//Mandatory
-        auroScholarDataModel.setStudentClass("put student class here");
+        auroScholarDataModel.setStudentClass(binding.userClass.getText().toString());
         auroScholarDataModel.setScholrId("put scholarId here");
-        auroScholarDataModel.setRegitrationSource("put regitration source");
+        auroScholarDataModel.setRegitrationSource("AURO3VE4j7");
         auroScholarDataModel.setShareType("teacher");
         auroScholarDataModel.setShareIdentity("chandan Sir");
         auroScholarDataModel.setActivity(this);
         auroScholarDataModel.setReferralLink("");
         auroScholarDataModel.setEmailVerified(true);
+        auroScholarDataModel.setUTMLink(binding.utmTextHere.getText().toString());
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         auroScholarDataModel.setSdkcallback(new SdkCallBack() {
             @Override

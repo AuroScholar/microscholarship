@@ -27,6 +27,8 @@ public interface AppConstant {
     String AURO_DATA_MODEL = "AURO_DATA_MODEL";
     String MOBILE_NUMBER = "mobile_no";
     String LOCATION_DATA = "location_data";
+    String REGISTRATION_SOURCE_UTM = "registration_source_utm";
+
 
     int CAMERA_REQUEST_CODE = 007;
     String FAILED = "failed";
@@ -293,11 +295,16 @@ public interface AppConstant {
         String REFFER_MOBILENO = "reffer_mobileno";
         String SOURCE = "source";
         String NAVIGATION_TO = "navigation_to";
+        String REFFER_TYPE = "reffer_type";
     }
     interface NavigateToScreen {
         String STUDENT_DASHBOARD = "STUDENT_DASHBOARD";
         String FRIENDS_LEADERBOARD = "FRIENDS_LEADERBOARD";
         String TEACHER_DASHBOARD = "TEACHER_DASHBOARD";
         String STUDENT_KYC = "STUDENT_KYC";
+        String PAYMENT_TRANSFER = "STUDENT_TRANSFER_MONEY";
+        String STUDENT_CERTIFICATE = "STUDENT_CERTIFICATE";
+        String TEACHER = "teacher";
+        String STUDENT = "student";
     }
 }

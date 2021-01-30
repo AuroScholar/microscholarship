@@ -26,11 +26,7 @@ public class AuroScholarDataModel implements Parcelable {
     boolean isEmailVerified;
     String language = "en";
     boolean applicationLang;
-
-    public AuroScholarDataModel() {
-
-    }
-
+    String UTMLink;
     protected AuroScholarDataModel(Parcel in) {
         mobileNumber = in.readString();
         fragmentContainerUiId = in.readInt();
@@ -47,6 +43,7 @@ public class AuroScholarDataModel implements Parcelable {
         isEmailVerified = in.readByte() != 0;
         language = in.readString();
         applicationLang = in.readByte() != 0;
+        UTMLink = in.readString();
     }
 
     @Override
@@ -66,6 +63,7 @@ public class AuroScholarDataModel implements Parcelable {
         dest.writeByte((byte) (isEmailVerified ? 1 : 0));
         dest.writeString(language);
         dest.writeByte((byte) (applicationLang ? 1 : 0));
+        dest.writeString(UTMLink);
     }
 
     @Override
@@ -84,6 +82,24 @@ public class AuroScholarDataModel implements Parcelable {
             return new AuroScholarDataModel[size];
         }
     };
+
+    public String getUTMLink() {
+        return UTMLink;
+    }
+
+    public void setUTMLink(String UTMLink) {
+        this.UTMLink = UTMLink;
+    }
+
+
+
+    public AuroScholarDataModel() {
+
+    }
+
+
+
+
 
     public boolean isApplicationLang() {
         return applicationLang;
