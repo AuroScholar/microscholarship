@@ -116,22 +116,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void openTeacherSDK() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
         auroScholarDataModel.setMobileNumber(binding.mobileNumber.getText().toString());//Mandatory
-        auroScholarDataModel.setStudentClass(binding.userClass.getText().toString());
-        auroScholarDataModel.setScholrId("put scholarId here");
-        auroScholarDataModel.setRegitrationSource("AURO3VE4j7");
+        auroScholarDataModel.setStudentClass("put student class here");
+        auroScholarDataModel.setRegitrationSource("put regitration source");
         auroScholarDataModel.setShareType("teacher");
         auroScholarDataModel.setShareIdentity("chandan Sir");
-        auroScholarDataModel.setActivity(this);
-        auroScholarDataModel.setReferralLink("");
+        auroScholarDataModel.setActivity(this); // Activity context here
         auroScholarDataModel.setEmailVerified(true);
-        auroScholarDataModel.setUTMLink(binding.utmTextHere.getText().toString());
-        auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
+        auroScholarDataModel.setFragmentContainerUiId(R.id.home_container) ;//This is the example please put your container id here.
         auroScholarDataModel.setSdkcallback(new SdkCallBack() {
             @Override
             public void callBack(String message) {
                 /*Api response here*/
                 AppLogger.e("Chhonker", "callback ---" + message);
             }
+
             @Override
             public void logOut() {
                 AppLogger.e("Chhonker", "Logout");
@@ -152,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AuroScholar.startTeacherSDK(auroScholarDataModel);
         //   openFragment(AuroScholar.startAuroSDK(inputModel));
     }
-
 
     public static void hideKeyboard(Context context) {
         if (context == null) {
