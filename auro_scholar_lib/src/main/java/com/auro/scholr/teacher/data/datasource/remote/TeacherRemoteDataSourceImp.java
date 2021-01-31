@@ -41,6 +41,7 @@ public class TeacherRemoteDataSourceImp implements TeacherRepo.TeacherRemoteData
         params.put(AppConstant.TeacherProfileParams.TEACHER_CLASS, model.getTeacher_class());
         params.put(AppConstant.TeacherProfileParams.TEACHER_SUBJECT, model.getTeacher_subject());
         params.put(AppConstant.REGISTRATION_SOURCE_UTM, model.getUTM_link());
+        params.put(AppConstant.IP_ADDRESS,model.getIp_address());
 
         return teacherRemoteApi.updateTeacherProfileApi(params);
 

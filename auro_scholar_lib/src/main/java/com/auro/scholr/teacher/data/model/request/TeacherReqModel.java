@@ -11,6 +11,7 @@ public class TeacherReqModel {
     private String teacher_class;
     private String teacher_subject;
     private  String UTM_link;
+    private String ip_address;
 
     public String getMobile_no() {
         return mobile_no;
@@ -82,5 +83,13 @@ public class TeacherReqModel {
 
     public void setUTM_link(String UTM_link) {
         this.UTM_link = UTM_link;
+    }
+
+    public String getIp_address() {
+        return ip_address;
+    }
+
+    public void setIp_address(String ip_address) {
+        this.ip_address = ip_address;
     }
 }

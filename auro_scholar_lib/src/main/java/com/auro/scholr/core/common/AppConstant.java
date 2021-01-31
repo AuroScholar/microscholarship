@@ -28,6 +28,7 @@ public interface AppConstant {
     String MOBILE_NUMBER = "mobile_no";
     String LOCATION_DATA = "location_data";
     String REGISTRATION_SOURCE_UTM = "registration_source_utm";
+    String IP_ADDRESS = "ip_address";
 
 
     int CAMERA_REQUEST_CODE = 007;
@@ -64,7 +65,7 @@ public interface AppConstant {
         String IS_KYC_VERIFIED = "is_kyc_verified";
         String IS_PAYMENT_LASTMONTH = "is_payment_lastmonth";
         String IS_EMAIL_VERIFIED = "email_verified";
-        String PARTNER_SOURCE="partner_source";
+        String PARTNER_SOURCE = "partner_source";
         String USER_PARTNER_ID = "user_partner_id";
     }
 
@@ -290,6 +291,7 @@ public interface AppConstant {
     interface PaytmResponseCode {
         String DE_002 = "DE_002";
     }
+
     interface RefferalApiCode {
         String REFFERAL_MOBILENO = "refferal_mobileno";
         String REFFER_MOBILENO = "reffer_mobileno";
@@ -297,6 +299,7 @@ public interface AppConstant {
         String NAVIGATION_TO = "navigation_to";
         String REFFER_TYPE = "reffer_type";
     }
+
     interface NavigateToScreen {
         String STUDENT_DASHBOARD = "STUDENT_DASHBOARD";
         String FRIENDS_LEADERBOARD = "FRIENDS_LEADERBOARD";

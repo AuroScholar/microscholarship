@@ -56,7 +56,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
 
 
     private String TAG = HomeActivity.class.getSimpleName().toString();
-    ;
+
     @Inject
     HomeRemoteApi remoteApi;
 

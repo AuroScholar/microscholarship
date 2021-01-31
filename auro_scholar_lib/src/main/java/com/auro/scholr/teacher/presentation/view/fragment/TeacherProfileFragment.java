@@ -545,6 +545,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         teacherReqModel.setTeacher_email(binding.editemail.getText().toString());
         teacherReqModel.setSchool_name(binding.editSchoolName.getText().toString());
         teacherReqModel.setUTM_link(AuroApp.getAuroScholarModel().getUTMLink());
+        teacherReqModel.setIp_address(AppUtil.getIpAdress(getActivity()));
         ValidationModel validationModel = viewModel.teacherUseCase.checkTeacherProfileValidation(teacherReqModel);
         if (validationModel.isStatus()) {
             viewModel.updateTeacherProfileData(teacherReqModel);

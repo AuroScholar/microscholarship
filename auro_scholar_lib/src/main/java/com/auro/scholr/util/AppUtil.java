@@ -8,11 +8,14 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
+import android.text.format.Formatter;
 import android.util.TypedValue;
 
 import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 
+import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
@@ -25,6 +28,8 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Locale;
+
+import static android.content.Context.WIFI_SERVICE;
 
 public class AppUtil {
 
@@ -118,8 +123,12 @@ public class AppUtil {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         prefModel.setDashboardResModel(dashboardResModel);
         AppPref.INSTANCE.setPref(prefModel);
+    }
 
-
+    public static String getIpAdress(Context context) {
+        WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);
+        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+        return ip;
     }
 
 
