@@ -325,19 +325,21 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
                         handleProgress(1, "");
                         myClassRoomResModel = (MyClassRoomTeacherResModel) responseApi.data;
-                      /*  if (AppUtil.callBackListner != null && myClassRoomResModel.getError()) {
+                        if (AppUtil.callBackListner != null && myClassRoomResModel.getError()) {
                             binding.errorTxt.setText(myClassRoomResModel.getMessage());
+                            binding.inviteLayout.setVisibility(View.GONE);
                             AppUtil.callBackListner.commonEventListner(AppUtil.getCommonClickModel(0, Status.GET_TEACHER_DASHBOARD_API, myClassRoomResModel));
-                        }*/
+                        }
                         AppUtil.myClassRoomResModel = myClassRoomResModel;
                         monthSpinner();
                         if (myClassRoomResModel != null
                                 && !TextUtil.checkListIsEmpty(myClassRoomResModel.getStudentResModels())) {
+                            binding.inviteLayout.setVisibility(View.GONE);
                             setAdapter(viewModel.teacherUseCase.makeStudentList(myClassRoomResModel.getStudentResModels(), DateUtil.getcurrentMonthNumber(), DateUtil.getcurrentYearNumber()));
                         } else {
+                            binding.inviteLayout.setVisibility(View.VISIBLE);
                             binding.studentList.setVisibility(View.GONE);
                             binding.errorTxt.setVisibility(View.VISIBLE);
-
                         }
 
                     }
