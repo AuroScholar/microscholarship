@@ -63,8 +63,8 @@ public class SelectYourAppointmentDialogFragment extends BaseDialog implements V
         else{
             selectedTimeDate= list.get(0);
         }
-        if (!TextUtil.isEmpty(AppUtil.myClassRoomResModel.getTeacherResModel().getTeacherEmail())) {
-            binding.editEmail.setText(AppUtil.myClassRoomResModel.getTeacherResModel().getTeacherEmail());
+        if (!TextUtil.isEmpty(AppUtil.myClassRoomResModel.getTeacherEmail())) {
+            binding.editEmail.setText(AppUtil.myClassRoomResModel.getTeacherEmail());
         }
 
     }
@@ -127,7 +127,7 @@ public class SelectYourAppointmentDialogFragment extends BaseDialog implements V
                 if(binding.editEmail.getText() == null || TextUtil.isEmpty(binding.editEmail.getText().toString())){
                     showSnackbarError("Please provide email id");
                 }else{
-                    viewModel.bookZohoAppointment(selectedTimeDate, AppUtil.myClassRoomResModel.getTeacherResModel().getTeacherName(), AppUtil.myClassRoomResModel.getTeacherResModel().getTeacherEmail(), AuroApp.getAuroScholarModel().getMobileNumber());
+                    viewModel.bookZohoAppointment(selectedTimeDate, AppUtil.myClassRoomResModel.getTeacherName(), AppUtil.myClassRoomResModel.getTeacherEmail(), AuroApp.getAuroScholarModel().getMobileNumber());
                 }
 
             }

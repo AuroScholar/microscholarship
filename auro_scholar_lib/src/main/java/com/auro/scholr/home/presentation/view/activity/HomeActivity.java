@@ -22,6 +22,7 @@ import com.auro.scholr.core.application.base_component.BaseActivity;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
+import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.core.common.OnItemClickListener;
 import com.auro.scholr.core.common.Status;
@@ -32,11 +33,14 @@ import com.auro.scholr.home.data.datasource.remote.HomeRemoteApi;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
 import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomTeacherResModel;
 import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherInfoFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherKycFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.TeacherProfileFragment;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -52,8 +56,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-public class HomeActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
-
+public class HomeActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener, CommonCallBackListner {
 
     private String TAG = HomeActivity.class.getSimpleName().toString();
 
@@ -108,6 +111,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
     @Override
     protected void init() {
         memberType = "Member";
+        AppUtil.callBackListner = this;
         binding = DataBindingUtil.setContentView(this, getLayout());
         AuroApp.getAppComponent().doInjection(this);
         //view model and handler setup
@@ -313,7 +317,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
                         AppLogger.e("DynamicLinking", responseApi.data.toString());
                         DynamiclinkResModel dynamiclinkResModel = (DynamiclinkResModel) responseApi.data;
                         AuroApp.getAuroScholarModel().setReferralLink(dynamiclinkResModel.getLink());
-                        AppLogger.i("DynamicLinking","Link" + dynamiclinkResModel.getLink());
+                        AppLogger.i("DynamicLinking", "Link" + dynamiclinkResModel.getLink());
                         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
                         if (prefModel != null) {
                             prefModel.setDynamiclinkResModel(dynamiclinkResModel);
@@ -338,4 +342,22 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
     }
 
 
+    @Override
+    public void commonEventListner(CommonDataModel commonDataModel) {
+        AppLogger.e("chhonker-","-commonEventListner");
+        switch (commonDataModel.getClickType()) {
+            case GET_TEACHER_DASHBOARD_API:
+                MyClassRoomTeacherResModel data = (MyClassRoomTeacherResModel) commonDataModel.getObject();
+                AppLogger.e("chhonker-","-"+data.getError());
+                hideBottomNavigation();
+
+                break;
+        }
+    }
+
+
+    public void hideBottomNavigation()
+    {
+        binding.naviagtionContent.bottomNavigation.setVisibility(View.GONE);
+    }
 }

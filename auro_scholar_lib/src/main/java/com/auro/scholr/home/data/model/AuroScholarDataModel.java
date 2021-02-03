@@ -26,7 +26,7 @@ public class AuroScholarDataModel implements Parcelable {
     boolean isEmailVerified;
     String language = "en";
     boolean applicationLang;
-    String UTMLink;
+    String UTMLink="";
     protected AuroScholarDataModel(Parcel in) {
         mobileNumber = in.readString();
         fragmentContainerUiId = in.readInt();

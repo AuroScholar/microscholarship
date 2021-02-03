@@ -13,6 +13,7 @@ import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomTeacherResModel;
 import com.auro.scholr.teacher.data.model.response.MyProfileResModel;
 import com.auro.scholr.teacher.data.model.response.TeacherProgressModel;
 import com.auro.scholr.teacher.data.model.response.TeacherResModel;
@@ -228,7 +229,7 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
                 }
 
             case GET_TEACHER_DASHBOARD_API:
-                MyClassRoomResModel myClassRoomResModel = gson.fromJson(response.body(), MyClassRoomResModel.class);
+                MyClassRoomTeacherResModel myClassRoomResModel = gson.fromJson(response.body(), MyClassRoomTeacherResModel.class);
                 return ResponseApi.success(myClassRoomResModel, status);
 
             case GET_PROFILE_TEACHER_API:

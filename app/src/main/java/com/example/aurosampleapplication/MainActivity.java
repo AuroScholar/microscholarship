@@ -122,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareIdentity("chandan Sir");
         auroScholarDataModel.setActivity(this); // Activity context here
         auroScholarDataModel.setEmailVerified(true);
+        auroScholarDataModel.setPartnerSource("AURO3VE4j7");
+       // auroScholarDataModel.setUTMLink("");
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container) ;//This is the example please put your container id here.
         auroScholarDataModel.setSdkcallback(new SdkCallBack() {
             @Override

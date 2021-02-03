@@ -28,9 +28,11 @@ public interface URLConstant {
     String TEST_URL = "https://assessment.eklavvya.com/exam/StartExam?";
     String PRIVACY_POLICY = "https://auroscholar.com/privacy_policy.php";
 
-    String TEACHER_PROFILE_UPDATE_API = BASE_URL + "teacher_profile_data_api_test.php ";
+    String TEACHER_PROFILE_UPDATE_API = BASE_URL + "teacher_profile_data_api.php ";
 
     String GET_PROFILE_UPDATE_API = BASE_URL + "students_score_data_api_test.php ";
+
+    String GET_PROFILE_PARTNER_API = BASE_URL + "students_score_data_api_partner.php ";
 
     String GET_PROFILE_TEACHER_API = BASE_URL + "teacher_profile_display_api.php ";
 

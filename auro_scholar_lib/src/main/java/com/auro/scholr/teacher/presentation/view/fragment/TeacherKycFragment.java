@@ -32,6 +32,7 @@ import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomTeacherResModel;
 import com.auro.scholr.teacher.presentation.view.adapter.TeacherKycDocumentAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherKycViewModel;
 import com.auro.scholr.util.AppLogger;
@@ -142,7 +143,7 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
                         if (!TextUtil.checkListIsEmpty(kycResListModel.getList())) {
                             updateUIKYC(kycResListModel);
                         } else if (responseApi.apiTypeStatus == Status.GET_TEACHER_DASHBOARD_API) {
-                            AppUtil.myClassRoomResModel = (MyClassRoomResModel) responseApi.data;
+                            AppUtil.myClassRoomResModel = (MyClassRoomTeacherResModel) responseApi.data;
                         }
                         handleProgress(1);
                         uploadBtnStatus = false;
@@ -235,15 +236,15 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
     }
 
     private void setDataOnUI() {
-        if (AppUtil.myClassRoomResModel != null && AppUtil.myClassRoomResModel.getTeacherResModel() != null) {
-            if (AppUtil.myClassRoomResModel.getTeacherResModel().getScoreTotal() != null && !TextUtil.isEmpty(String.valueOf(AppUtil.myClassRoomResModel.getTeacherResModel().getScoreTotal()))) {
-                binding.points.setText("" + AppUtil.myClassRoomResModel.getTeacherResModel().getScoreTotal());
+        if (AppUtil.myClassRoomResModel != null && AppUtil.myClassRoomResModel != null) {
+            if (AppUtil.myClassRoomResModel.getScoreTotal() != null && !TextUtil.isEmpty(String.valueOf(AppUtil.myClassRoomResModel.getScoreTotal()))) {
+                binding.points.setText("" + AppUtil.myClassRoomResModel.getScoreTotal());
             } else {
                 binding.points.setText("0");
             }
 
-            if (!TextUtil.isEmpty(String.valueOf(AppUtil.myClassRoomResModel.getTeacherResModel().getWalletBalance()))) {
-                binding.walletBal.setText(" " + AuroApp.getAppContext().getResources().getString(R.string.rs) + AppUtil.myClassRoomResModel.getTeacherResModel().getWalletBalance());
+            if (!TextUtil.isEmpty(String.valueOf(AppUtil.myClassRoomResModel.getWalletBalance()))) {
+                binding.walletBal.setText(" " + AuroApp.getAppContext().getResources().getString(R.string.rs) + AppUtil.myClassRoomResModel.getWalletBalance());
             } else {
                 binding.walletBal.setText("0");
             }

@@ -123,14 +123,14 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_PROFILE_FRAGMENT);
         init();
         setListener();
-        if (AppUtil.myClassRoomResModel != null && AppUtil.myClassRoomResModel.getTeacherResModel() != null) {
-            setModelinteacherprofile(AppUtil.myClassRoomResModel.getTeacherResModel());
-            if (!TextUtil.isEmpty(AppUtil.myClassRoomResModel.getTeacherResModel().getStateId())) {
-                stateCode = AppUtil.myClassRoomResModel.getTeacherResModel().getStateId();
+        if (AppUtil.myClassRoomResModel != null) {
+            setModelinteacherprofile(AppUtil.myClassRoomResModel);
+            if (!TextUtil.isEmpty(AppUtil.myClassRoomResModel.getStateId())) {
+                stateCode = AppUtil.myClassRoomResModel.getStateId();
             }
 
-            if (!TextUtil.isEmpty(AppUtil.myClassRoomResModel.getTeacherResModel().getDistrictId())) {
-                districtCode = AppUtil.myClassRoomResModel.getTeacherResModel().getDistrictId();
+            if (!TextUtil.isEmpty(AppUtil.myClassRoomResModel.getDistrictId())) {
+                districtCode = AppUtil.myClassRoomResModel.getDistrictId();
             }
         }
         // viewModel.getTeacherProfileData(AuroApp.getAuroScholarModel().getMobileNumber());
@@ -157,15 +157,15 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
     }
 
     private void setDataOnUI() {
-        if (AppUtil.myClassRoomResModel != null && AppUtil.myClassRoomResModel.getTeacherResModel() != null) {
-            if (AppUtil.myClassRoomResModel.getTeacherResModel().getScoreTotal() != null && !TextUtil.isEmpty(String.valueOf(AppUtil.myClassRoomResModel.getTeacherResModel().getScoreTotal()))) {
-                binding.points.setText("" + AppUtil.myClassRoomResModel.getTeacherResModel().getScoreTotal());
+        if (AppUtil.myClassRoomResModel != null  ) {
+            if (AppUtil.myClassRoomResModel.getScoreTotal() != null && !TextUtil.isEmpty(String.valueOf(AppUtil.myClassRoomResModel.getScoreTotal()))) {
+                binding.points.setText("" + AppUtil.myClassRoomResModel.getScoreTotal());
             } else {
                 binding.points.setText("0");
             }
 
-            if (!TextUtil.isEmpty(String.valueOf(AppUtil.myClassRoomResModel.getTeacherResModel().getWalletBalance()))) {
-                binding.walletBal.setText(" " + AuroApp.getAppContext().getResources().getString(R.string.rs) + AppUtil.myClassRoomResModel.getTeacherResModel().getWalletBalance());
+            if (!TextUtil.isEmpty(String.valueOf(AppUtil.myClassRoomResModel.getWalletBalance()))) {
+                binding.walletBal.setText(" " + AuroApp.getAppContext().getResources().getString(R.string.rs) + AppUtil.myClassRoomResModel.getWalletBalance());
             } else {
                 binding.walletBal.setText("0");
             }

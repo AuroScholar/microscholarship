@@ -26,6 +26,7 @@ public interface AppConstant {
     String QUIZ_RES_MODEL = "QUIZ_TEST_MODEL";
     String AURO_DATA_MODEL = "AURO_DATA_MODEL";
     String MOBILE_NUMBER = "mobile_no";
+    String PARTNER_SOURCE = "partner_source";
     String LOCATION_DATA = "location_data";
     String REGISTRATION_SOURCE_UTM = "registration_source_utm";
     String IP_ADDRESS = "ip_address";

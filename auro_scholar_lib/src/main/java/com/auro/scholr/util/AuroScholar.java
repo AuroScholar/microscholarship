@@ -101,6 +101,7 @@ public class AuroScholar {
         if (TextUtil.isEmpty(auroScholarDataModel.getRegitrationSource())) {
             auroScholarDataModel.setRegitrationSource("");
         }
+
         AuroApp.setAuroModel(auroScholarDataModel);
         auroScholarDataModel.getActivity().startActivity(new Intent(auroScholarDataModel.getActivity(), HomeActivity.class));
     }

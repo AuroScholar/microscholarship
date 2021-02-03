@@ -8,6 +8,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class MyClassRoomTeacherResModel {
 
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("error")
+    @Expose
+    private Boolean error=false;
+    @SerializedName("message")
+    @Expose
+    private String message;
+
     @SerializedName("teacher_name")
     @Expose
     private String teacherName;
@@ -205,4 +215,31 @@ public class MyClassRoomTeacherResModel {
     public void setStudentResModels(List<MyClassRoomStudentResModel> studentResModels) {
         this.studentResModels = studentResModels;
     }
+
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Boolean getError() {
+        return error;
+    }
+
+    public void setError(Boolean error) {
+        this.error = error;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
 }

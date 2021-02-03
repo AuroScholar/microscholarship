@@ -51,6 +51,7 @@ public class TeacherRemoteDataSourceImp implements TeacherRepo.TeacherRemoteData
     public Single<Response<JsonObject>> getTeacherDashboardApi(String mobileNumber) {
         Map<String, String> params = new HashMap<String, String>();
         params.put(AppConstant.MOBILE_NUMBER, mobileNumber);
+        params.put(AppConstant.PARTNER_SOURCE,AuroApp.getAuroScholarModel().getPartnerSource());
         return teacherRemoteApi.getTeacherDashboardApi(params);
     }
 

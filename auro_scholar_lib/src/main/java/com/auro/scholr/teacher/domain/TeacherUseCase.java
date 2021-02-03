@@ -140,6 +140,7 @@ public class TeacherUseCase {
 
     public List<MyClassRoomStudentResModel> makeStudentList(List<MyClassRoomStudentResModel> resModelList, int month, int year) {
         List<MyClassRoomStudentResModel> list = new ArrayList<>();
+        AppLogger.e("Date  current", "months--" +month+"-Year-"+year);
         for (MyClassRoomStudentResModel model : resModelList) {
             setValues(model);
             if (model.getMonthNumber() <= month && model.getYear() <= year) {
@@ -158,8 +159,9 @@ public class TeacherUseCase {
             calendar.setTime(a);
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
-            model.setMonthNumber(month+1);
+            model.setMonthNumber(month);
             model.setYear(year);
+            AppLogger.e("Date exception", "months--" +month+"-Year-"+year);
         } catch (Exception e) {
             AppLogger.e("Date exception", "months--" + e.getMessage());
         }
@@ -297,8 +299,8 @@ public class TeacherUseCase {
         kyc_four.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
         kyc_four.setId_name(AppConstant.DocumentType.TEACHER_PHOTO);
 
-        if (AppUtil.myClassRoomResModel != null && AppUtil.myClassRoomResModel.getTeacherResModel() != null) {
-            MyClassRoomTeacherResModel model = AppUtil.myClassRoomResModel.getTeacherResModel();
+        if (AppUtil.myClassRoomResModel != null ) {
+            MyClassRoomTeacherResModel model = AppUtil.myClassRoomResModel;
             if (!TextUtil.isEmpty(model.getGovt_id_front())) {
                 kyc_one.setModify(true);
             }

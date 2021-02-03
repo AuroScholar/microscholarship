@@ -40,6 +40,7 @@ import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.teacher.data.model.common.MonthDataModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomStudentResModel;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomTeacherResModel;
 import com.auro.scholr.teacher.presentation.view.adapter.MonthSpinnerAdapter;
 import com.auro.scholr.teacher.presentation.view.adapter.MyClassroomAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.MyClassroomViewModel;
@@ -82,13 +83,13 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     TeacherMyClassroomLayoutBinding binding;
     MyClassroomViewModel viewModel;
     boolean isStateRestore;
-    MyClassRoomResModel myClassRoomResModel;
+    MyClassRoomTeacherResModel myClassRoomResModel;
     List<MonthDataModel> monthDataModelList;
     MyClassroomAdapter leaderBoardAdapter;
     private CallbackManager callbackManager;
     ShareDialog shareDialog;
     private FirebaseEventUtil mFirebaseAnalytics;
-    Map<String,String> logeventparam ;
+    Map<String, String> logeventparam;
     FancyShowCaseView btnfacebook;
     FancyShowCaseQueue queue;
     BottomNavigationView toolbar;
@@ -102,6 +103,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         super.onAttach(context);
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (binding != null) {
@@ -128,7 +130,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
     protected void init() {
         HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_DASHBOARD_FRAGMENT);
         mFirebaseAnalytics = new FirebaseEventUtil(getActivity());
-        logeventparam= new HashMap<>();
+        logeventparam = new HashMap<>();
         List<String> list = new ArrayList<>();
         list.add("odd");
         list.add("even");
@@ -160,9 +162,10 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
     private void monthSpinner() {
         String date = "";
-        if (myClassRoomResModel != null && myClassRoomResModel.getTeacherResModel() != null && !TextUtil.isEmpty(myClassRoomResModel.getTeacherResModel().getRegistrationDate())) {
-            date = myClassRoomResModel.getTeacherResModel().getRegistrationDate();
+        if (myClassRoomResModel != null && !TextUtil.isEmpty(myClassRoomResModel.getRegistrationDate())) {
+            date = myClassRoomResModel.getRegistrationDate();
         }
+        AppLogger.e("chhonker- reg date-",date);
         monthDataModelList = viewModel.teacherUseCase.monthDataModelList(date);
         if (!TextUtil.checkListIsEmpty(monthDataModelList)) {
             MonthSpinnerAdapter stateSpinnerAdapter = new MonthSpinnerAdapter(monthDataModelList);
@@ -170,8 +173,8 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             binding.monthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (leaderBoardAdapter != null && myClassRoomResModel != null && !TextUtil.checkListIsEmpty(myClassRoomResModel.getTeacherResModel().getStudentResModels())) {
-                        leaderBoardAdapter.updateList(viewModel.teacherUseCase.makeStudentList(myClassRoomResModel.getTeacherResModel().getStudentResModels(), monthDataModelList.get(position).getMonthNumber(), monthDataModelList.get(position).getYear()));
+                    if (leaderBoardAdapter != null && myClassRoomResModel != null && !TextUtil.checkListIsEmpty(myClassRoomResModel.getStudentResModels())) {
+                        leaderBoardAdapter.updateList(viewModel.teacherUseCase.makeStudentList(myClassRoomResModel.getStudentResModels(), monthDataModelList.get(position).getMonthNumber(), monthDataModelList.get(position).getYear()));
                     }
                 }
 
@@ -187,9 +190,9 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             }
             for (int i = 0; i < monthDataModelList.size(); i++) {
                 MonthDataModel model = monthDataModelList.get(i);
-                AppLogger.e(TAG,"--current year--"+year+"--month number--"+month);
-                AppLogger.e(TAG,model.getMonth()+"--year--"+model.getYear()+"--month number--"+model.getMonthNumber());
-                if (year == model.getYear() && (month+1) == (model.getMonthNumber())) {
+                AppLogger.e(TAG, "--current year--" + year + "--month number--" + month);
+                AppLogger.e(TAG, model.getMonth() + "--year--" + model.getYear() + "--month number--" + model.getMonthNumber());
+                if (year == model.getYear() && (month + 1) == (model.getMonthNumber())) {
                     binding.monthSpinner.setSelection(i);
                 }
             }
@@ -213,11 +216,14 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         binding.facebook.setOnClickListener(this);
         binding.whatsapp.setOnClickListener(this);
         binding.share.setOnClickListener(this);
+        binding.inviteLayout.setOnClickListener(this);
     }
+
     @Override
     protected int getLayout() {
         return R.layout.teacher_my_classroom_layout;
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -227,17 +233,19 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
 
     }
+
     @Override
     public void commonEventListner(CommonDataModel commonDataModel) {
         switch (commonDataModel.getClickType()) {
             case SEND_MESSAGE_CLICK:
-                logeventparam.put(getResources().getString(R.string.log_send_message_teacher),"true");
-                mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_send_message_log_teacher),logeventparam);
+                logeventparam.put(getResources().getString(R.string.log_send_message_teacher), "true");
+                mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_send_message_log_teacher), logeventparam);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(AppConstant.SENDING_DATA.STUDENT_DATA, (MyClassRoomStudentResModel) commonDataModel.getObject());
                 SelectYourMessageDialogFragment fragment = new SelectYourMessageDialogFragment(); //where MyFragment is my fragment I want to show
@@ -250,6 +258,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                 break;
         }
     }
+
     private void reloadFragment() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         if (Build.VERSION.SDK_INT >= 26) {
@@ -257,28 +266,31 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         }
         ft.detach(this).attach(this).commit();
     }
+
     @Override
     public void onStop() {
         super.onStop();
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
 
     }
+
     @Override
     public void onClick(View v) {
         String completeLink = AuroApp.getAppContext().getResources().getString(R.string.teacher_share_msg);
         if (AuroApp.getAuroScholarModel() != null && !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getReferralLink())) {
             completeLink = completeLink + AuroApp.getAuroScholarModel().getReferralLink();
-            logeventparam.put(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"true");
-            mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
-            mFirebaseAnalytics.setUserProperTy(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"true");
+            logeventparam.put(getResources().getString(R.string.log_get_referal_link_byscolor_teacher), "true");
+            mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher), logeventparam);
+            mFirebaseAnalytics.setUserProperTy(getResources().getString(R.string.log_get_referal_link_byscolor_teacher), "true");
         } else {
             completeLink = completeLink + " https://rb.gy/np9uh5";
-            logeventparam.put(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"false");
-            mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
-            mFirebaseAnalytics.setUserProperTy(getResources().getString(R.string.log_get_referal_link_byscolor_teacher),"false");
+            logeventparam.put(getResources().getString(R.string.log_get_referal_link_byscolor_teacher), "false");
+            mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher), logeventparam);
+            mFirebaseAnalytics.setUserProperTy(getResources().getString(R.string.log_get_referal_link_byscolor_teacher), "false");
         }
         if (v.getId() == R.id.whatsapp) {
             sendWhatsapp(completeLink);
@@ -287,7 +299,9 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         } else {
             shareWithFriends(completeLink);
         }
+
     }
+
     private void observeServiceResponse() {
 
         viewModel.serviceLiveData().observeForever(responseApi -> {
@@ -302,22 +316,28 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == Status.GET_TEACHER_DASHBOARD_API) {
 
+
                         boolean getTutorial = AppPref.INSTANCE.getBooleanTutorial(getResources().getString(R.string.pref_tutorial));
                         if (getTutorial) {
-                            AppPref.INSTANCE.setBooleanTutorial(getResources().getString(R.string.pref_tutorial),false);
+                            AppPref.INSTANCE.setBooleanTutorial(getResources().getString(R.string.pref_tutorial), false);
                             displayTutofacebook();
                         }
 
                         handleProgress(1, "");
-                        myClassRoomResModel = (MyClassRoomResModel) responseApi.data;
+                        myClassRoomResModel = (MyClassRoomTeacherResModel) responseApi.data;
+                      /*  if (AppUtil.callBackListner != null && myClassRoomResModel.getError()) {
+                            binding.errorTxt.setText(myClassRoomResModel.getMessage());
+                            AppUtil.callBackListner.commonEventListner(AppUtil.getCommonClickModel(0, Status.GET_TEACHER_DASHBOARD_API, myClassRoomResModel));
+                        }*/
                         AppUtil.myClassRoomResModel = myClassRoomResModel;
                         monthSpinner();
-                        if (myClassRoomResModel != null && myClassRoomResModel.getTeacherResModel() != null
-                                && !TextUtil.checkListIsEmpty(myClassRoomResModel.getTeacherResModel().getStudentResModels())) {
-                            setAdapter(viewModel.teacherUseCase.makeStudentList(myClassRoomResModel.getTeacherResModel().getStudentResModels(), DateUtil.getcurrentMonthNumber(), DateUtil.getcurrentYearNumber()));
+                        if (myClassRoomResModel != null
+                                && !TextUtil.checkListIsEmpty(myClassRoomResModel.getStudentResModels())) {
+                            setAdapter(viewModel.teacherUseCase.makeStudentList(myClassRoomResModel.getStudentResModels(), DateUtil.getcurrentMonthNumber(), DateUtil.getcurrentYearNumber()));
                         } else {
                             binding.studentList.setVisibility(View.GONE);
                             binding.errorTxt.setVisibility(View.VISIBLE);
+
                         }
 
                     }
@@ -336,6 +356,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
 
         });
     }
+
     private void handleProgress(int status, String message) {
         switch (status) {
             case 0:
@@ -368,12 +389,14 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         }
 
     }
+
     private void showSnackbarError(String message) {
         ViewUtil.showSnackBar(binding.getRoot(), message);
     }
+
     public void shareWithFriends(String link) {
-        logeventparam.put(getResources().getString(R.string.log_link_teacher),link);
-        mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
+        logeventparam.put(getResources().getString(R.string.log_link_teacher), link);
+        mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher), logeventparam);
 
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
@@ -382,9 +405,10 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         AuroApp.getAppContext().startActivity(shareIntent);
     }
+
     private void sendWhatsapp(String message) {
-        logeventparam.put(getResources().getString(R.string.log_whatapplink_teacher),message);
-        mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
+        logeventparam.put(getResources().getString(R.string.log_whatapplink_teacher), message);
+        mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher), logeventparam);
 
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
@@ -393,15 +417,16 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         sendIntent.setPackage("com.whatsapp");
         if (sendIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(sendIntent);
-        }else {
-            ExitDialog  mexitDialog = new ExitDialog(getActivity());
+        } else {
+            ExitDialog mexitDialog = new ExitDialog(getActivity());
             mexitDialog.show();
         }
     }
+
     private void shareAppLinkViaFacebook(String urlToShare) {
         try {
-            logeventparam.put(getResources().getString(R.string.log_facebook_teacher),urlToShare);
-            mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher),logeventparam);
+            logeventparam.put(getResources().getString(R.string.log_facebook_teacher), urlToShare);
+            mFirebaseAnalytics.logEvent(getResources().getString(R.string.log_share_links_teacher), logeventparam);
             Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, urlToShare);
@@ -432,9 +457,10 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             shareWithFriends(urlToShare);
         }
     }
+
     protected void displayTutofacebook() {
 
-        queue =  new FancyShowCaseQueue();
+        queue = new FancyShowCaseQueue();
 
         int[] viewLocation = new int[2];
         binding.socialShareLayout.getLocationOnScreen(viewLocation);
@@ -450,15 +476,15 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
                     }
                 })
                 .build();
-         btnprofile = new FancyShowCaseView.Builder(getActivity())
+        btnprofile = new FancyShowCaseView.Builder(getActivity())
                 .focusOn(toolbar.findViewById(R.id.action_profile))
                 .focusShape(FocusShape.CIRCLE)
-                 .customView(R.layout.tutorial_my_class_facebook_layout, new OnViewInflateListener() {
-                     @Override
-                     public void onViewInflated(View view) {
-                         setAnimatedContent(view, btnprofile);
-                     }
-                 })
+                .customView(R.layout.tutorial_my_class_facebook_layout, new OnViewInflateListener() {
+                    @Override
+                    public void onViewInflated(View view) {
+                        setAnimatedContent(view, btnprofile);
+                    }
+                })
                 .build();
         btnKycapp = new FancyShowCaseView.Builder(getActivity())
                 .focusOn(toolbar.findViewById(R.id.action_kyc))
@@ -486,10 +512,11 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         queue.add(btnInfotutorial);
         queue.show();
     }
-    public void setAnimatedContent(View view,FancyShowCaseView fancyShowCaseView){
+
+    public void setAnimatedContent(View view, FancyShowCaseView fancyShowCaseView) {
         TextView link = view.findViewById(R.id.descFb);
         TextView profile = view.findViewById(R.id.tutorial_profile);
-        TextView kyc =view.findViewById(R.id.tutorial_kyc);
+        TextView kyc = view.findViewById(R.id.tutorial_kyc);
         TextView info = view.findViewById(R.id.tutorial_info);
         LinearLayout layoutinvite = view.findViewById(R.id.llayoutinvite);
         LinearLayout layoutprofile = view.findViewById(R.id.layoutProfile);
@@ -499,13 +526,13 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             link.setVisibility(View.VISIBLE);
             layoutinvite.setVisibility(View.VISIBLE);
             link.setText(getResources().getString(R.string.tutorial_link));
-        }else if(fancyShowCaseView == btnprofile){
+        } else if (fancyShowCaseView == btnprofile) {
             link.setVisibility(View.GONE);
             profile.setVisibility(View.VISIBLE);
             layoutprofile.setVisibility(View.VISIBLE);
             layoutinvite.setVisibility(View.GONE);
             profile.setText(getResources().getString(R.string.tutorial_profile));
-        }else if(fancyShowCaseView == btnKycapp){
+        } else if (fancyShowCaseView == btnKycapp) {
             link.setVisibility(View.GONE);
             profile.setVisibility(View.GONE);
             layoutprofile.setVisibility(View.VISIBLE);
@@ -514,7 +541,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
             layoutkyc.setVisibility(View.VISIBLE);
             kyc.setVisibility(View.VISIBLE);
             kyc.setText(getResources().getString(R.string.tutorial_kyc));
-        }else if(fancyShowCaseView == btnInfotutorial){
+        } else if (fancyShowCaseView == btnInfotutorial) {
             link.setVisibility(View.GONE);
             profile.setVisibility(View.GONE);
             layoutprofile.setVisibility(View.GONE);

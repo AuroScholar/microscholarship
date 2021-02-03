@@ -167,21 +167,49 @@
                                 app:layout_constraintStart_toStartOf="@+id/month_spinner"
                                 app:layout_constraintTop_toTopOf="@+id/month_spinner" />
 
-                            <com.auro.scholr.core.util.uiwidget.RPTextView
-                                android:id="@+id/error_txt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_40sdp"
-                                android:layout_marginBottom="@dimen/_40sdp"
-                                android:text="No Student Data Found!"
-                                app:Font="Poppins-SemiBold.ttf"
-                                android:visibility="gone"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_14sdp"
+                            <LinearLayout
+                                android:orientation="vertical"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/month_spinner" />
+                                app:layout_constraintTop_toBottomOf="@+id/month_spinner"
+                                android:layout_marginTop="@dimen/_40sdp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <com.auro.scholr.core.util.uiwidget.RPTextView
+                                    android:id="@+id/error_txt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="No Student Data Found!"
+                                    app:Font="Poppins-SemiBold.ttf"
+                                    android:visibility="visible"
+                                    android:gravity="center_horizontal"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_14sdp"
+                                    />
+                                <LinearLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/invite_layout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:layout_marginBottom="@dimen/_40sdp"
+                                    android:background="@drawable/rounded_corner_fb"
+                                    android:backgroundTint="#43C70D">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="@dimen/_6sdp"
+                                        android:text="Invite Student"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_12sdp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/student_list"
