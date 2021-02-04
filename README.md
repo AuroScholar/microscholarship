@@ -21,7 +21,7 @@ Step 1 : Add the dependency in your app/build.gradle(:app)
 
 ```swift
 dependencies {
-	          implementation 'com.github.AuroScholar:TeacherSdk:1.1.71'
+	          implementation 'com.github.AuroScholar:TeacherSdk:1.1.72'
 
 	}
 ```
@@ -89,7 +89,8 @@ Step 5 : For open then AuroScholar Fragment or Start the Auro Scholar sdk
         auroScholarDataModel.setRegitrationSource("Your app name");//Mandatory
         auroScholarDataModel.setShareType("teacher");//Mandatory 
         auroScholarDataModel.setActivity(Activity Context Here);//Mandatory
-        auroScholarDataModel.setReferralLink("");
+	auroScholarDataModel.setPartnerSource("enter here your partner source id");
+        auroScholarDataModel.setUTMLink("Enter UTM Link Here);
         auroScholarDataModel.setSdkcallback(new SdkCallBack() {
             @Override
             public void callBack(String message) {
