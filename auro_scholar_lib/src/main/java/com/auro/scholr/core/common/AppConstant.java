@@ -311,4 +311,11 @@ public interface AppConstant {
         String TEACHER = "teacher";
         String STUDENT = "student";
     }
+
+    interface  TeacherKycParam{
+        String SCHOOL_ID_CARD = "school_id_card";
+        String GOVT_ID_FRONT = "govt_id_front";
+        String GOVT_ID_BACK = "govt_id_back";
+        String TEACHER_PHOTO = "teacher_photo";
+    }
 }

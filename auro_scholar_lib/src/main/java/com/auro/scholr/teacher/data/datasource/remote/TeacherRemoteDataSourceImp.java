@@ -8,6 +8,7 @@ import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.teacher.data.model.request.TeacherReqModel;
 import com.auro.scholr.teacher.data.repository.TeacherRepo;
+import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
 import com.google.gson.JsonObject;
 
@@ -52,6 +53,8 @@ public class TeacherRemoteDataSourceImp implements TeacherRepo.TeacherRemoteData
         Map<String, String> params = new HashMap<String, String>();
         params.put(AppConstant.MOBILE_NUMBER, mobileNumber);
         params.put(AppConstant.PARTNER_SOURCE,AuroApp.getAuroScholarModel().getPartnerSource());
+        params.put(AppConstant.REGISTRATION_SOURCE_UTM,AuroApp.getAuroScholarModel().getUTMLink());
+        params.put(AppConstant.IP_ADDRESS, AppUtil.getIpAdress(AuroApp.getAuroScholarModel().getActivity()));
         return teacherRemoteApi.getTeacherDashboardApi(params);
     }
 

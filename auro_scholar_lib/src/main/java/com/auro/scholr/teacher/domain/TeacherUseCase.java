@@ -1,6 +1,7 @@
 package com.auro.scholr.teacher.domain;
 
 import android.util.Log;
+import android.widget.EditText;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
@@ -140,7 +141,7 @@ public class TeacherUseCase {
 
     public List<MyClassRoomStudentResModel> makeStudentList(List<MyClassRoomStudentResModel> resModelList, int month, int year) {
         List<MyClassRoomStudentResModel> list = new ArrayList<>();
-        AppLogger.e("Date  current", "months--" +month+"-Year-"+year);
+        AppLogger.e("Date  current", "months--" + month + "-Year-" + year);
         for (MyClassRoomStudentResModel model : resModelList) {
             setValues(model);
             if (model.getMonthNumber() <= month && model.getYear() <= year) {
@@ -161,7 +162,7 @@ public class TeacherUseCase {
             int month = calendar.get(Calendar.MONTH);
             model.setMonthNumber(month);
             model.setYear(year);
-            AppLogger.e("Date exception", "months--" +month+"-Year-"+year);
+            AppLogger.e("Date exception", "months--" + month + "-Year-" + year);
         } catch (Exception e) {
             AppLogger.e("Date exception", "months--" + e.getMessage());
         }
@@ -196,7 +197,7 @@ public class TeacherUseCase {
             AppLogger.e("Date month name-", year + "--" + month);
             int currentYear = DateUtil.getcurrentYearNumber();
             int currentMonth = DateUtil.getcurrentMonthNumber();
-            count = month+1;
+            count = month + 1;
             AppLogger.e("DateUtil count-", count + "--" + month);
             while (year < currentYear) {
                 MonthDataModel model = new MonthDataModel();
@@ -208,12 +209,12 @@ public class TeacherUseCase {
                 if (count == 12) {
                     year++;
                     count = 1;
-                }else {
+                } else {
                     count++;
                 }
             }
 
-            while (year == currentYear && count <= (currentMonth+1)) {
+            while (year == currentYear && count <= (currentMonth + 1)) {
                 MonthDataModel model = new MonthDataModel();
                 model.setMonth(monthHashmap.get(count) + " " + year);
                 model.setMonthNumber(count);
@@ -223,7 +224,7 @@ public class TeacherUseCase {
                 if (count == 12) {
                     year++;
                     count = 1;
-                }else {
+                } else {
                     count++;
                 }
             }
@@ -299,7 +300,7 @@ public class TeacherUseCase {
         kyc_four.setButtonText(AuroApp.getAppContext().getString(R.string.choose_file));
         kyc_four.setId_name(AppConstant.DocumentType.TEACHER_PHOTO);
 
-        if (AppUtil.myClassRoomResModel != null ) {
+        if (AppUtil.myClassRoomResModel != null) {
             MyClassRoomTeacherResModel model = AppUtil.myClassRoomResModel;
             if (!TextUtil.isEmpty(model.getGovt_id_front())) {
                 kyc_one.setModify(true);
@@ -314,7 +315,7 @@ public class TeacherUseCase {
                 kyc_three.setModify(true);
             }
 
-            if (!TextUtil.isEmpty(model.getSchool_id_card())) {
+            if (!TextUtil.isEmpty(model.getTeacher_photo())) {
                 kyc_four.setModify(true);
             }
         }
@@ -575,6 +576,8 @@ public class TeacherUseCase {
             return new ValidationModel(false, "Please enter the teacher name");
         } else if (TextUtil.isEmpty(reqModel.getTeacher_email())) {
             return new ValidationModel(false, "Please enter the email");
+        } else if (!emailValidation(reqModel.getTeacher_email())) {
+            return new ValidationModel(false, "Please enter the valid email");
         } else if (TextUtil.isEmpty(reqModel.getMobile_no())) {
             return new ValidationModel(false, "Please enter the mobile number");
         } else if (TextUtil.isEmpty(reqModel.getTeacher_class())) {
@@ -591,6 +594,19 @@ public class TeacherUseCase {
         }
         return new ValidationModel(true, "");
 
+    }
+
+
+    public boolean emailValidation(String emailtext) {
+
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        if (emailtext.trim().matches(emailPattern)) {
+            return true;
+        } else {
+
+            return false;
+        }
     }
 
     public byte[] getBytes(InputStream is) throws IOException {

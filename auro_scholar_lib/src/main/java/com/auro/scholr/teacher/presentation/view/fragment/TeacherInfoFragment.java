@@ -20,11 +20,13 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.FragmentTeacherInfoBinding;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.teacher.data.model.response.MyClassRoomTeacherResModel;
 import com.auro.scholr.teacher.data.model.response.TeacherProgressModel;
 import com.auro.scholr.teacher.data.model.response.ZohoAppointmentListModel;
 import com.auro.scholr.teacher.presentation.view.adapter.TeacherProgressAdapter;
 import com.auro.scholr.teacher.presentation.viewmodel.TeacherInfoViewModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
@@ -85,8 +87,9 @@ public class TeacherInfoFragment extends BaseFragment implements CommonCallBackL
     protected void init() {
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
         setListener();
-        viewModel.getTeacherProgressData(AuroApp.getAuroScholarModel().getMobileNumber());
+        viewModel.getTeacherDashboardData(AuroApp.getAuroScholarModel().getMobileNumber());
 
+        viewModel.getTeacherProgressData(AuroApp.getAuroScholarModel().getMobileNumber());
     }
 
     @Override
@@ -160,6 +163,9 @@ public class TeacherInfoFragment extends BaseFragment implements CommonCallBackL
                         fragment.show(getActivity().getSupportFragmentManager(), TeacherInfoFragment.class.getSimpleName());
 
                     }
+                    if (responseApi.apiTypeStatus == Status.GET_TEACHER_DASHBOARD_API) {
+                        AppUtil.myClassRoomResModel = (MyClassRoomTeacherResModel) responseApi.data;
+                    }
                     break;
 
                 case FAIL:
@@ -194,7 +200,6 @@ public class TeacherInfoFragment extends BaseFragment implements CommonCallBackL
     }
 
 
-
     public void handleProgress(int status) {
         switch (status) {
             case 0:
@@ -225,7 +230,7 @@ public class TeacherInfoFragment extends BaseFragment implements CommonCallBackL
     public void commonEventListner(CommonDataModel commonDataModel) {
         switch (commonDataModel.getClickType()) {
             case WEBINAR_CLICK:
-               // viewModel.getZohoAppointment();
+                // viewModel.getZohoAppointment();
                 break;
         }
     }

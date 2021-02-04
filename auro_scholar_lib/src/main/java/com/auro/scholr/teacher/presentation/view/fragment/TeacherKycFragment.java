@@ -178,16 +178,48 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
         for (int i = 0; i < kycResListModel.getList().size(); i++) {
             count++;
             KYCResItemModel model = kycResListModel.getList().get(i);
-            if (!model.getError()) {
+            /*if (!model.getError() && model.getId_name().equalsIgnoreCase(AppConstant.TeacherKycParam.SCHOOL_ID_CARD)) {
+
                 kycDocumentDatamodelArrayList.get(i).setModify(true);
             } else {
                 kycDocumentDatamodelArrayList.get(i).setModify(false);
+            }*/
+
+            AppLogger.e("chhonker- ",""+model.getError());
+            AppLogger.e("chhonker- ",model.getId_name());
+            if (!model.getError() && model.getId_name().equalsIgnoreCase(AppConstant.TeacherKycParam.SCHOOL_ID_CARD)) {
+                if (AppUtil.myClassRoomResModel != null ) {
+                    AppLogger.e("chhonker 1- ",model.getId_name());
+                    AppUtil.myClassRoomResModel.setSchool_id_card(model.getUrl());
+                }
+            } else if (!model.getError() && model.getId_name().equalsIgnoreCase(AppConstant.TeacherKycParam.GOVT_ID_FRONT)) {
+                if (AppUtil.myClassRoomResModel != null) {
+                    AppLogger.e("chhonker 2- ",model.getId_name());
+                    AppUtil.myClassRoomResModel.setGovt_id_front(model.getUrl());
+                }
+            } else if (!model.getError() && model.getId_name().equalsIgnoreCase(AppConstant.TeacherKycParam.GOVT_ID_BACK)) {
+                if (AppUtil.myClassRoomResModel != null) {
+                    AppLogger.e("chhonker 3- ",model.getId_name());
+                    AppUtil.myClassRoomResModel.setGovt_id_back(model.getUrl());
+                }
+            }else if (!model.getError() && model.getId_name().equalsIgnoreCase(AppConstant.TeacherKycParam.TEACHER_PHOTO)) {
+                if (AppUtil.myClassRoomResModel != null) {
+                    AppLogger.e("chhonker 4- ",model.getUrl());
+                    AppUtil.myClassRoomResModel.setTeacher_photo(model.getUrl());
+                    AppLogger.e("chhonker 5- ", AppUtil.myClassRoomResModel.getTeacher_photo());
+                }
             }
         }
+
+
+
+        AppLogger.e("chhonker 6- ", AppUtil.myClassRoomResModel.getTeacher_photo());
+        kycDocumentDatamodelArrayList = viewModel.teacherUseCase.makeAdapterDocumentList();
         mteacherKycDocumentAdapter.updateList(kycDocumentDatamodelArrayList);
         if (count == 4) {
             binding.buttonLayout.setVisibility(View.INVISIBLE);
         }
+
     }
 
     public void handleProgress(int status) {
@@ -207,7 +239,7 @@ public class TeacherKycFragment extends BaseFragment implements CommonCallBackLi
     public void onResume() {
         super.onResume();
         HomeActivity.setListingActiveFragment(HomeActivity.TEACHER_KYC_FRAGMENT);
-       // resources = ViewUtil.getCustomResource(getActivity());
+        // resources = ViewUtil.getCustomResource(getActivity());
         init();
         setDataOnUI();
     }

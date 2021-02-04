@@ -403,6 +403,7 @@ public class MyClassroomFragment extends BaseFragment implements CommonCallBackL
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, link);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Invite to AuroScholar Scholarship");
         sendIntent.setType("text/plain");
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         AuroApp.getAppContext().startActivity(shareIntent);
