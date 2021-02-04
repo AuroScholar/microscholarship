@@ -116,13 +116,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void openTeacherSDK() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
         auroScholarDataModel.setMobileNumber(binding.mobileNumber.getText().toString());//Mandatory
-        auroScholarDataModel.setStudentClass("put student class here");
         auroScholarDataModel.setRegitrationSource("put regitration source");
         auroScholarDataModel.setShareType("teacher");
         auroScholarDataModel.setShareIdentity("chandan Sir");
         auroScholarDataModel.setActivity(this); // Activity context here
         auroScholarDataModel.setEmailVerified(true);
-        auroScholarDataModel.setPartnerSource("AURO3VE4j7");
+        auroScholarDataModel.setPartnerSource("enter here your partner source id");
         auroScholarDataModel.setUTMLink(binding.utmTextHere.getText().toString());
        // auroScholarDataModel.setUTMLink("");
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container) ;//This is the example please put your container id here.
@@ -168,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void openGenricSDK(String mobileNumber, String student_class) {
         String language = binding.language.getText().toString();
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
-        inputModel.setMobileNumber(mobileNumber);//7503600601
+        inputModel.setMobileNumber(mobileNumber);//
         inputModel.setStudentClass("put student class here");
         inputModel.setRegitrationSource("put scholarId here");
         inputModel.setReferralLink("put refferal link");
