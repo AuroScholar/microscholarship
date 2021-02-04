@@ -225,7 +225,7 @@ public class TeacherInfoFragment extends BaseFragment implements CommonCallBackL
     public void commonEventListner(CommonDataModel commonDataModel) {
         switch (commonDataModel.getClickType()) {
             case WEBINAR_CLICK:
-                viewModel.getZohoAppointment();
+               // viewModel.getZohoAppointment();
                 break;
         }
     }
