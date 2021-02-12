@@ -66,4 +66,6 @@ public interface URLConstant {
 
     String REFFERAL_API  = BASE_URL + "reffer.php";
 
+    String NEW_PAYMENT_API  = "http://auro.auroscholar.com/api/Payment/PostTransaction";
+
 }

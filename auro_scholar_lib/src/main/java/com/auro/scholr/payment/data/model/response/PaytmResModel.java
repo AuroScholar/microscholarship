@@ -13,6 +13,12 @@ public class PaytmResModel{
 	@SerializedName("status")
 	private String status;
 
+	@SerializedName("message")
+	private String message;
+
+
+
+
 	public void setResponse(String response){
 		this.response = response;
 	}
@@ -35,5 +41,13 @@ public class PaytmResModel{
 
 	public String getStatus(){
 		return status;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }

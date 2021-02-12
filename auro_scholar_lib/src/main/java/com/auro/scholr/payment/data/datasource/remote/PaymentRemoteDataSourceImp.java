@@ -69,4 +69,21 @@ public class PaymentRemoteDataSourceImp implements PaymentRepo.PaymentRemoteData
         params.put(AppConstant.paytmAccountTransferParam.RECEIVER_IFSCCODE, reqModel.getIfsccode());
         return paymentRemoteApi.paytmAccountTransferApi(params);
     }
+
+    @Override
+    public Single<Response<JsonObject>> paymentTransferApi(PaytmWithdrawalByBankAccountReqModel reqModel) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.paytmApiParam.STUDENT_MOBILE_NUM, reqModel.getMobileNo());
+        params.put(AppConstant.paytmApiParam.STUDENT_ID, reqModel.getStudentId());
+        params.put(AppConstant.paytmApiParam.PAYMENT_MODE, reqModel.getPaymentMode());
+        params.put(AppConstant.paytmApiParam.MONTH, reqModel.getDisbursementMonth());
+        params.put(AppConstant.paytmApiParam.BENEFICIARY_MOBILE_NUM, reqModel.getBeneficiary_mobileNum());
+        params.put(AppConstant.paytmApiParam.BENEFICIARY_NAME_NEW, reqModel.getBeneficiary_name());
+        params.put(AppConstant.paytmApiParam.BANK_ACCOUNT_NUM, reqModel.getBankaccountno());
+        params.put(AppConstant.paytmApiParam.IFSC_CODE, reqModel.getIfsccode());
+        params.put(AppConstant.paytmApiParam.UPI_ADDRESS, reqModel.getUpiAddress());
+        params.put(AppConstant.paytmApiParam.AMOUNT, reqModel.getAmount());
+        params.put(AppConstant.paytmApiParam.PURPOSE, reqModel.getPurpose());
+        return paymentRemoteApi.paytmAccountTransferApi(params);
+    }
 }

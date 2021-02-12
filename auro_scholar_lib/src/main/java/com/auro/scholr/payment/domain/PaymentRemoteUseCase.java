@@ -24,6 +24,7 @@ import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_400;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_401;
 import static com.auro.scholr.core.common.AppConstant.ResponseConstatnt.RES_FAIL;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
+import static com.auro.scholr.core.common.Status.PAYMENT_TRANSFER_API;
 import static com.auro.scholr.core.common.Status.PAYTM_ACCOUNT_WITHDRAWAL;
 import static com.auro.scholr.core.common.Status.PAYTM_UPI_WITHDRAWAL;
 import static com.auro.scholr.core.common.Status.PAYTM_WITHDRAWAL;
@@ -61,6 +62,11 @@ public class PaymentRemoteUseCase extends NetworkUseCase {
         }
 
         if (status == PAYTM_ACCOUNT_WITHDRAWAL) {
+            PaytmResModel paytmResModel = gson.fromJson(response.body(), PaytmResModel.class);
+            return ResponseApi.success(paytmResModel, status);
+        }
+
+        if (status == PAYMENT_TRANSFER_API) {
             PaytmResModel paytmResModel = gson.fromJson(response.body(), PaytmResModel.class);
             return ResponseApi.success(paytmResModel, status);
         }
@@ -151,6 +157,22 @@ public class PaymentRemoteUseCase extends NetworkUseCase {
 
 
                     return handleResponse(response, Status.PAYTM_ACCOUNT_WITHDRAWAL);
+
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
+    public Single<ResponseApi> paymentTransferApi(PaytmWithdrawalByBankAccountReqModel reqModel){
+        return paymentRemoteData.paymentTransferApi(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+                if (response != null) {
+                    return handleResponse(response, PAYMENT_TRANSFER_API);
 
 
                 } else {

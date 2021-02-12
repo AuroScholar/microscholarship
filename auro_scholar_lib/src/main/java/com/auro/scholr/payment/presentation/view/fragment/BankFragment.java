@@ -29,6 +29,7 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.PaytmError;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.common.ValidationModel;
+import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.databinding.BankFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalByBankAccountReqModel;
@@ -51,6 +52,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import static com.auro.scholr.core.common.Status.PAYMENT_TRANSFER_API;
 import static com.auro.scholr.core.common.Status.PAYTM_ACCOUNT_WITHDRAWAL;
 import static com.auro.scholr.core.common.Status.PAYTM_WITHDRAWAL;
 
@@ -152,7 +154,7 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.send_button){
-            paytmwithdrawalAmountApi();
+            paytmentTransferApi();
         }
 
     }
@@ -187,6 +189,34 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
         }
 
     }
+
+    private void paytmentTransferApi() {
+        String accountnumber = binding.accountNumber.getText().toString();
+        String confirmaccountnumber = binding.confirmAccountNumber.getText().toString();
+        String ifscCode = binding.ifscCode.getText().toString();
+
+        ValidationModel bankAccountvalidation = viewModel.paymentUseCase.isValidBankAccountNumber(accountnumber,ifscCode,confirmaccountnumber);
+
+        if(bankAccountvalidation.isStatus()){
+            PaytmWithdrawalByBankAccountReqModel reqModel = new PaytmWithdrawalByBankAccountReqModel();
+            reqModel.setMobileNo(AuroApp.getAuroScholarModel().getMobileNumber());
+            reqModel.setStudentId(AppPref.INSTANCE.getModelInstance().getDashboardResModel().getStudent_id());
+            /*reqModel.setMobileNo("9654234507");
+            reqModel.setStudentId("4077466");*/
+            reqModel.setPaymentMode(AppConstant.PaymenMode.BANK_Transfer);
+            reqModel.setDisbursementMonth(DateUtil.getMonthName());
+            reqModel.setBeneficiary_name("");
+            reqModel.setBankaccountno(accountnumber);
+            reqModel.setIfsccode(ifscCode);
+            reqModel.setAmount(mdashboard.getApproved_scholarship_money());
+            //  reqModel.setAmount("1");
+            reqModel.setPurpose("Payment Transfer");
+            viewModel.paytmentTransfer(reqModel);
+        }else{
+            showSnackbarError(bankAccountvalidation.getMessage());
+        }
+
+    }
     private void showSnackbarError(String message) {
         ViewUtil.showSnackBar(binding.getRoot(), message);
     }
@@ -209,9 +239,12 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
                         closeDialog();
                         PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
                         mpaytm.getResponse().replaceAll("\\\\", "");
-                        openPaymentDialog(mpaytm.getResponse());
-
-
+                        //openPaymentDialog(mpaytm.getResponse());
+                    }else if(responseApi.apiTypeStatus == PAYMENT_TRANSFER_API)
+                    {
+                        closeDialog();
+                        PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
+                        openPaymentDialog(mpaytm);
                     }
 
                     break;
@@ -258,15 +291,15 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
             customProgressDialog.dismiss();
         }
     }
-    private void openPaymentDialog(String message) {
+    private void openPaymentDialog(PaytmResModel resModel) {
         CustomDialogModel customDialogModel = new CustomDialogModel();
-        customDialogModel.setContext(AuroApp.getAppContext());
-        customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
-       // customDialogModel.setContent(message);
-        if (message.contains(AppConstant.PaytmResponseCode.DE_002)) {
-            customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.requested_accepted));
+        customDialogModel.setContext(getActivity());
+        customDialogModel.setTitle(getActivity().getResources().getString(R.string.information));
+        customDialogModel.setContent(resModel.getMessage());
+     /*   if (message.contains(AppConstant.PaytmResponseCode.DE_002)) {
+            customDialogModel.setContent(getActivity().getResources().getString(R.string.requested_accepted));
         } else {
-            customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.payment_failed_error_msg));
+            customDialogModel.setContent(getActivity().getResources().getString(R.string.payment_failed_error_msg));
             HashMap<String, String> stringStringHashMap = PaytmError.initMapping();
             for (Map.Entry<String, String> entry : stringStringHashMap.entrySet()) {
                 String key = entry.getKey();
@@ -274,19 +307,17 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
                     customDialogModel.setContent(entry.getValue());
                 }
             }
-        }
+        }*/
         customDialogModel.setTwoButtonRequired(true);
-        CustomPaymentTranferDialog customDialog = new CustomPaymentTranferDialog(AuroApp.getAppContext(), customDialogModel);
+        CustomPaymentTranferDialog customDialog = new CustomPaymentTranferDialog(getActivity(), customDialogModel);
         customDialog.setSecondBtnTxt("Ok");
         customDialog.setSecondCallcack(new CustomDialog.SecondCallcack() {
             @Override
             public void clickYesCallback() {
-
-                if(message.contains(AppConstant.PaytmResponseCode.DE_002)){
+                if (!resModel.isError()) {
                     ((SendMoneyFragment) getParentFragment()).backButton();
                     customDialog.dismiss();
-                }else{
-
+                } else {
                     customDialog.dismiss();
                 }
             }

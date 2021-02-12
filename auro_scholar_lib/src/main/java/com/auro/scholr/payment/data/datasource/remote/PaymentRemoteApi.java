@@ -31,7 +31,7 @@ public interface PaymentRemoteApi {
     @FormUrlEncoded
     Single<Response<JsonObject>> paytmUpiTransferApi(@FieldMap Map<String,String> params);
 
-    @POST(URLConstant.PAYTM_ACCOUNT_TRANSFRER)
+    @POST(URLConstant.NEW_PAYMENT_API)
     @FormUrlEncoded
     Single<Response<JsonObject>> paytmAccountTransferApi(@FieldMap Map<String,String> params);
 

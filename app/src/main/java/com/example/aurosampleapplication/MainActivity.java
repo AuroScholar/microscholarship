@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.btSdk.setOnClickListener(this);
         binding.btOpen.setOnClickListener(this);
-      //  binding.btSdk.setVisibility(View.VISIBLE);
+        binding.btSdk.setVisibility(View.VISIBLE);
 
     }
 
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareIdentity("chandan Sir");
         auroScholarDataModel.setActivity(this); // Activity context here
         auroScholarDataModel.setEmailVerified(true);
-        auroScholarDataModel.setPartnerSource("enter here your partner source id");
+        auroScholarDataModel.setPartnerSource("INNOAEbPqC");
         auroScholarDataModel.setUTMLink(binding.utmTextHere.getText().toString());
        // auroScholarDataModel.setUTMLink("");
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container) ;//This is the example please put your container id here.
@@ -168,13 +168,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String language = binding.language.getText().toString();
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
         inputModel.setMobileNumber(mobileNumber);//
-        inputModel.setStudentClass("put student class here");
-        inputModel.setRegitrationSource("put scholarId here");
+        inputModel.setStudentClass(binding.userClass.getText().toString());
+        inputModel.setRegitrationSource("auroscholar");
         inputModel.setReferralLink("put refferal link");
-        inputModel.setPartnerSource("put regitration source"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
-        inputModel.setUserPartnerId("TestUserpartnerId");
+        inputModel.setPartnerSource("AURO3VE4j7"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setActivity(this);
-        inputModel.setLanguage("Enter Your Prefrence Language");// In Small Letter Eg. Hindi - hi or English-en
+        inputModel.setLanguage("en");// In Small Letter Eg. Hindi - hi or English-en
         inputModel.setApplicationLang(false);
         inputModel.setFragmentContainerUiId(R.id.home_container);
         openFragment(AuroScholar.startAuroSDK(inputModel));

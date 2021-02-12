@@ -29,8 +29,10 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.PaytmError;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.common.ValidationModel;
+import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.databinding.PaytmFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.payment.data.model.request.PaytmWithdrawalByBankAccountReqModel;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalReqModel;
 import com.auro.scholr.payment.data.model.response.PaytmResModel;
 import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
@@ -48,6 +50,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import static com.auro.scholr.core.common.Status.PAYMENT_TRANSFER_API;
 import static com.auro.scholr.core.common.Status.PAYTM_WITHDRAWAL;
 
 
@@ -148,7 +151,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.send_button) {
-            paytmwithdrawalAmountApi();
+            paytmentTransferApi();
         }
 
     }
@@ -181,6 +184,29 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         }
     }
 
+    private void paytmentTransferApi() {
+        String phonenumber = binding.numberEdittext.getText().toString();
+
+        ValidationModel validation = viewModel.paymentUseCase.isVlaidPhoneNumber(phonenumber);
+        if (validation.isStatus()) {
+            //!Pattern.matches("[a-zA-Z]+",  phonenumber.toString())&& phonenumber.length() > 9 && phonenumber.length() <= 10  && phonenumber.toString() !=  null
+            PaytmWithdrawalByBankAccountReqModel reqModel = new PaytmWithdrawalByBankAccountReqModel();
+            reqModel.setMobileNo(AuroApp.getAuroScholarModel().getMobileNumber());
+            reqModel.setStudentId(AppPref.INSTANCE.getModelInstance().getDashboardResModel().getStudent_id());
+            reqModel.setPaymentMode(AppConstant.PaymenMode.WALLET);
+            reqModel.setDisbursementMonth(DateUtil.getMonthName());
+            reqModel.setBeneficiary_mobileNum(phonenumber);
+            reqModel.setBeneficiary_name("");
+            reqModel.setAmount(mdashboard.getApproved_scholarship_money());
+            //reqModel.setAmount("1");
+            reqModel.setPurpose("Payment Transfer");
+
+            viewModel.paytmentTransfer(reqModel);
+        } else {
+            showSnackbarError(validation.getMessage());
+        }
+    }
+
     private void observeServiceResponse() {
 
         viewModel.serviceLiveData().observeForever(responseApi -> {
@@ -199,9 +225,13 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
                         closeDialog();
                         PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
                         mpaytm.getResponse().replaceAll("\\\\", "");
-                        openPaymentDialog(mpaytm.getResponse());
+                        // openPaymentDialog(mpaytm.getResponse());
+                    }else if(responseApi.apiTypeStatus == PAYMENT_TRANSFER_API)
+                    {
+                        closeDialog();
+                        PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
+                        openPaymentDialog(mpaytm);
                     }
-
                     break;
 
                 case NO_INTERNET:
@@ -246,14 +276,15 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         }
     }
 
-    private void openPaymentDialog(String message) {
+    private void openPaymentDialog(PaytmResModel resModel) {
         CustomDialogModel customDialogModel = new CustomDialogModel();
-        customDialogModel.setContext(AuroApp.getAppContext());
-        customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
-        if (message.contains(AppConstant.PaytmResponseCode.DE_002)) {
-            customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.requested_accepted));
+        customDialogModel.setContext(getActivity());
+        customDialogModel.setTitle(getActivity().getResources().getString(R.string.information));
+        customDialogModel.setContent(resModel.getMessage());
+     /*   if (message.contains(AppConstant.PaytmResponseCode.DE_002)) {
+            customDialogModel.setContent(getActivity().getResources().getString(R.string.requested_accepted));
         } else {
-            customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.payment_failed_error_msg));
+            customDialogModel.setContent(getActivity().getResources().getString(R.string.payment_failed_error_msg));
             HashMap<String, String> stringStringHashMap = PaytmError.initMapping();
             for (Map.Entry<String, String> entry : stringStringHashMap.entrySet()) {
                 String key = entry.getKey();
@@ -261,19 +292,17 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
                     customDialogModel.setContent(entry.getValue());
                 }
             }
-        }
+        }*/
         customDialogModel.setTwoButtonRequired(true);
-        CustomPaymentTranferDialog customDialog = new CustomPaymentTranferDialog(AuroApp.getAppContext(), customDialogModel);
+        CustomPaymentTranferDialog customDialog = new CustomPaymentTranferDialog(getActivity(), customDialogModel);
         customDialog.setSecondBtnTxt("Ok");
         customDialog.setSecondCallcack(new CustomDialog.SecondCallcack() {
             @Override
             public void clickYesCallback() {
-
-                if (message.contains(AppConstant.PaytmResponseCode.DE_002)) {
+                if (!resModel.isError()) {
                     ((SendMoneyFragment) getParentFragment()).backButton();
                     customDialog.dismiss();
                 } else {
-
                     customDialog.dismiss();
                 }
             }
@@ -302,5 +331,8 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
             }
         });
     }
+
+
+
 
 }

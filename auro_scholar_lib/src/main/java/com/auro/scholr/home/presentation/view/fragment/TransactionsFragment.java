@@ -197,7 +197,7 @@ public class TransactionsFragment extends BaseFragment implements View.OnClickLi
 
         if (approvedValue > 0) {
             binding.amountTrajection.btTransferMoney.setOnClickListener(this);
-            binding.amountTrajection.btTransferMoney.setVisibility(View.VISIBLE);
+            binding.amountTrajection.btTransferMoney.setVisibility(View.GONE);
         } else {
             binding.amountTrajection.btTransferMoney.setVisibility(View.GONE);
         }

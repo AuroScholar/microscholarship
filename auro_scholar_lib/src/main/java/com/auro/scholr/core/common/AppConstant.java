@@ -242,6 +242,8 @@ public interface AppConstant {
         String TEACHER_APP_AURO = "TEACHER_APP_AURO";
     }
 
+
+
     interface paytmApiParam {
         String RECEIVER_MOBILE_NUMBER = "mobile_no";
         String RECEIVER_DISBURSEMENT_MONTH = "disbursement_month";
@@ -250,6 +252,18 @@ public interface AppConstant {
         String BENEFICIARY_MOBILE_NUMBER = "beneficiarymobileno";
         String BENEFICIARY_NAME = "beneficiaryname";
 
+        String STUDENT_MOBILE_NUM="StudentMobileNo";
+        String STUDENT_ID="StudentID";
+        String PAYMENT_MODE="PaymentMode";
+        String MONTH="Month";
+        String BENEFICIARY_MOBILE_NUM="beneficiaryMobileNo";
+        String BENEFICIARY_NAME_NEW="beneficiaryName";
+        String BANK_ACCOUNT_NUM="BankAccountNo";
+        String IFSC_CODE="IfscCode";
+        String UPI_ADDRESS="UPIAddress";
+        String AMOUNT="Amount";
+        String PURPOSE="purpose";
+        //purpose
     }
 
     interface paytmAccountTransferParam {
@@ -317,5 +331,11 @@ public interface AppConstant {
         String GOVT_ID_FRONT = "govt_id_front";
         String GOVT_ID_BACK = "govt_id_back";
         String TEACHER_PHOTO = "teacher_photo";
+    }
+
+    interface PaymenMode {
+        String WALLET = "wallet";
+        String UPI = "upi";
+        String BANK_Transfer = "bank";
     }
 }

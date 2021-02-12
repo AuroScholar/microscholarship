@@ -15,6 +15,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -52,7 +53,7 @@ public class UtilsModule {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
-     //  httpClient.addInterceptor(httpLoggingInterceptor);
+       httpClient.addInterceptor(httpLoggingInterceptor);
 
         httpClient.addInterceptor(chain -> {
             Request original = chain.request();
@@ -61,16 +62,14 @@ public class UtilsModule {
                     .header(AppConstant.DEVICE_ID, DeviceUtil.getDeviceId(AuroApp.getAppContext()))
                     .header(AppConstant.DEVICE_TYPE, AppConstant.PLATFORM_ANDROID)
                     .header(AppConstant.LANGUAGE, "EN")
+                    .header("Authorization",  Credentials.basic("bhanu", "123"))
                     //.header(AUTH_TOKEN, AppPref.INSTANCE.getModelInstance().getOtpRes().getAuthToken())
-
                     .build();
             return chain.proceed(request);
         })
                 .connectTimeout(3, TimeUnit.MINUTES)
                 .writeTimeout(3, TimeUnit.MINUTES)
                 .readTimeout(3, TimeUnit.MINUTES);
-
-
         return httpClient.build();
     }
 

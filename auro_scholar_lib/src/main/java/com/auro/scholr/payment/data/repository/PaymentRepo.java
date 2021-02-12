@@ -19,6 +19,8 @@ public interface PaymentRepo {
         Single<Response<JsonObject>> paytmWithdrawalByUpiApi(PaytmWithdrawalByUPIReqModel reqModel);
 
         Single<Response<JsonObject>> paytmWithdrawalByAccountApi(PaytmWithdrawalByBankAccountReqModel reqModel);
+
+        Single<Response<JsonObject>> paymentTransferApi(PaytmWithdrawalByBankAccountReqModel reqModel);
     }
 
 

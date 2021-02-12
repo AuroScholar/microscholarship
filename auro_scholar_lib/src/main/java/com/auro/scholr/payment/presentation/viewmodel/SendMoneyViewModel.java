@@ -152,6 +152,40 @@ public class SendMoneyViewModel extends ViewModel {
                         }));
     }
 
+    public void paytmentTransfer(PaytmWithdrawalByBankAccountReqModel reqModel) {
+        Disposable disposable = paymentRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
+            if (hasInternet) {
+                paytmentTransferApi(reqModel);
+            } else {
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.ACCEPT_INVITE_CLICK));
+            }
+        });
+        getCompositeDisposable().add(disposable);
+    }
+
+    private void paytmentTransferApi(PaytmWithdrawalByBankAccountReqModel reqModel) {
+        getCompositeDisposable().add(paymentRemoteUseCase.paymentTransferApi(reqModel).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        // serviceLiveData.setValue(ResponseApi.loading(Status.ACCEPT_INVITE_CLICK));
+                        serviceLiveData.setValue(ResponseApi.loading(Status.PAYMENT_TRANSFER_API));
+                    }
+                })
+                .subscribe(new Consumer<ResponseApi>() {
+                               @Override
+                               public void accept(ResponseApi responseApi) throws Exception {
+                                   serviceLiveData.setValue(responseApi);
+                               }
+                           },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                defaultError();
+                            }
+                        }));
+    }
 
 
     private CompositeDisposable getCompositeDisposable() {

@@ -4,14 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-    <data>
-
-        <variable
-            name="quizViewModel"
-            type="com.auro.scholr.home.presentation.viewmodel.TransactionsViewModel" />
-
-
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

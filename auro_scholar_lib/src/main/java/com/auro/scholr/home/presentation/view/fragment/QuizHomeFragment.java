@@ -222,6 +222,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
 
         binding.swipeRefreshLayout.setOnRefreshListener(this);
+
+        setNavHeaderText();
     }
 
     @Override
@@ -1033,6 +1035,25 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         Configuration config = new Configuration();
         config.locale = locale;
         getActivity().getBaseContext().getResources().updateConfiguration(config, getActivity().getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    private void setNavHeaderText()
+    {
+        TextView login_txt = binding.navView.getHeaderView(0).findViewById(R.id.login_id);
+        TextView class_txt = binding.navView.getHeaderView(0).findViewById(R.id.txtClass);
+        if (AuroApp.getAuroScholarModel() != null && !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getMobileNumber()) &&
+                !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getStudentClass())) {
+            login_txt.setVisibility(View.VISIBLE);
+            class_txt.setVisibility(View.VISIBLE);
+            login_txt.setText(getActivity().getString(R.string.mobile_num) + AuroApp.getAuroScholarModel().getMobileNumber());
+            class_txt.setText(getActivity().getString(R.string.student_class) + AuroApp.getAuroScholarModel().getStudentClass());
+        }else
+        {
+            login_txt.setVisibility(View.GONE);
+            class_txt.setVisibility(View.GONE);
+        }
+
+
     }
 }
 

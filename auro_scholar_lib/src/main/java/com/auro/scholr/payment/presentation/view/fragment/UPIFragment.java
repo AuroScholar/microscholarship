@@ -31,8 +31,10 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.PaytmError;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.common.Upipsp;
+import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.databinding.UpiFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.payment.data.model.request.PaytmWithdrawalByBankAccountReqModel;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalByUPIReqModel;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalReqModel;
 import com.auro.scholr.payment.data.model.response.PaytmResModel;
@@ -54,6 +56,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import static com.auro.scholr.core.common.Status.PAYMENT_TRANSFER_API;
 import static com.auro.scholr.core.common.Status.PAYTM_UPI_WITHDRAWAL;
 import static com.auro.scholr.core.common.Status.PAYTM_WITHDRAWAL;
 
@@ -151,7 +154,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
     public void onClick(View v) {
 
         if (v.getId() == R.id.send_button) {
-            paytmwithdrawalAmountApi();
+            paytmentwTransferApi();
         }
     }
 
@@ -189,7 +192,35 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
         }
 
     }
+    private void paytmentwTransferApi() {
+        List<Upipsp> pips = Arrays.asList(Upipsp.values());
+        List<String> pipstring = new ArrayList<>();
+        for (Upipsp pipslist : pips) {
+            pipstring.add(pipslist.name());
+        }
+        String upiId = binding.numberEdittext.getText().toString();
+        String separator = "@";
+        int sepPos = upiId.indexOf(separator);
+        boolean isPsp = pipstring.contains(upiId.substring(sepPos + separator.length()));
+        if (isPsp) {
+            PaytmWithdrawalByBankAccountReqModel reqModel = new PaytmWithdrawalByBankAccountReqModel();
+            reqModel.setMobileNo(AuroApp.getAuroScholarModel().getMobileNumber());
+            reqModel.setStudentId(AppPref.INSTANCE.getModelInstance().getDashboardResModel().getStudent_id());
+           /* reqModel.setMobileNo("9654234507");
+            reqModel.setStudentId("4077466");*/
+            reqModel.setPaymentMode(AppConstant.PaymenMode.UPI);
+            reqModel.setDisbursementMonth(DateUtil.getMonthName());
+            reqModel.setBeneficiary_name("");
+            reqModel.setUpiAddress(upiId);
+            reqModel.setAmount(mdashboard.getApproved_scholarship_money());
+            //reqModel.setAmount("1");
+            reqModel.setPurpose("Payment Transfer");
+            viewModel.paytmentTransfer(reqModel);
+        } else {
+            ViewUtil.showSnackBar(binding.getRoot(), getActivity().getResources().getString(R.string.psp_not_register));
+        }
 
+    }
     private void observeServiceResponse() {
 
         viewModel.serviceLiveData().observeForever(responseApi -> {
@@ -198,7 +229,6 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
 
                 case LOADING:
                     //For ProgressBar
-
                     openProgressDialog();
 
                     break;
@@ -208,9 +238,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
                         closeDialog();
                         PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
                         mpaytm.getResponse().replaceAll("\\\\", "");
-
-                        openPaymentDialog(mpaytm.getResponse());
-
+                        //openPaymentDialog(mpaytm.getResponse());
                         if (!mpaytm.isError()) {
 
                             //checkStatusforCongratulationDialog();
@@ -223,6 +251,12 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
                             //  handleProgress(2, dashboardResModel.getMessage());
                         }
 
+                    }
+                    else if(responseApi.apiTypeStatus == PAYMENT_TRANSFER_API)
+                    {
+                        closeDialog();
+                        PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
+                        openPaymentDialog(mpaytm);
                     }
 
                     break;
@@ -269,14 +303,15 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
         }
     }
 
-    private void openPaymentDialog(String message) {
+    private void openPaymentDialog(PaytmResModel resModel) {
         CustomDialogModel customDialogModel = new CustomDialogModel();
-        customDialogModel.setContext(AuroApp.getAppContext());
-        //customDialogModel.setContent(message);
-        if (message.contains(AppConstant.PaytmResponseCode.DE_002)) {
-            customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.requested_accepted));
+        customDialogModel.setContext(getActivity());
+        customDialogModel.setTitle(getActivity().getResources().getString(R.string.information));
+        customDialogModel.setContent(resModel.getMessage());
+     /*   if (message.contains(AppConstant.PaytmResponseCode.DE_002)) {
+            customDialogModel.setContent(getActivity().getResources().getString(R.string.requested_accepted));
         } else {
-            customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.payment_failed_error_msg));
+            customDialogModel.setContent(getActivity().getResources().getString(R.string.payment_failed_error_msg));
             HashMap<String, String> stringStringHashMap = PaytmError.initMapping();
             for (Map.Entry<String, String> entry : stringStringHashMap.entrySet()) {
                 String key = entry.getKey();
@@ -284,22 +319,19 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
                     customDialogModel.setContent(entry.getValue());
                 }
             }
-        }
-        customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
+        }*/
         customDialogModel.setTwoButtonRequired(true);
-        CustomPaymentTranferDialog customDialog = new CustomPaymentTranferDialog(AuroApp.getAppContext(), customDialogModel);
-        customDialog.setSecondBtnTxt(AuroApp.getAppContext().getResources().getString(R.string.ok));
+        CustomPaymentTranferDialog customDialog = new CustomPaymentTranferDialog(getActivity(), customDialogModel);
+        customDialog.setSecondBtnTxt("Ok");
         customDialog.setSecondCallcack(new CustomDialog.SecondCallcack() {
             @Override
             public void clickYesCallback() {
-
-                if (message.contains(AppConstant.PaytmResponseCode.DE_002)) {
+                if (!resModel.isError()) {
                     ((SendMoneyFragment) getParentFragment()).backButton();
                     customDialog.dismiss();
                 } else {
                     customDialog.dismiss();
                 }
-
             }
         });
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -312,6 +344,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
         customDialog.show();
 
     }
+
     private void setKeyListner() {
         this.getView().setFocusableInTouchMode(true);
         this.getView().requestFocus();
