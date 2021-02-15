@@ -134,6 +134,8 @@ public interface AppConstant {
         String AADHAR_NAME = "aadhar_name";
         String SCHOOL_PHONE = "school_phone";
         String SCHOOL_DOB = "school_dob";
+        String APPROVE = "Approve";
+        String PENDING="Pending";
 
         String YES = "Yes";
         String NO = "No";

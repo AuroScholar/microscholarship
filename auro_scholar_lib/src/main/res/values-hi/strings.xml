@@ -332,4 +332,5 @@
     <string name="you_are_almost_there_let_s_make_the_scholarship_happen">आप छात्रवृत्ति के बहुत करीब हैं, चलिए इसे प्राप्त करें।</string>
     <string name="share_with_friends">दोस्तों के साथ साझा करें।</string>
     <string name="retake_quiz">क्विज़ पुनः लें।</string>
+    <string name="verification_pending">कृपया अपने दस्तावेज़ को फिर से लोड करें</string>
 </resources>

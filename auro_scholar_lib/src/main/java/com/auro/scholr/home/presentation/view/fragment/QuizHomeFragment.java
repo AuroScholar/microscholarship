@@ -169,6 +169,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         if (prefModel != null && TextUtil.isEmpty(prefModel.getUserLanguage())) {
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
         }
+
+        AppLogger.e("handleback","QuizHomeFragment");
+
         setRetainInstance(true);
         ViewUtil.setLanguage(Locale.getDefault().getLanguage());
         ViewUtil.setLanguageonUi(getActivity());
@@ -219,8 +222,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         mDrawerToggle.syncState();
         //PRADEEP
         lockDrawerMenu();
+        AppLogger.e("handleback","AuroApp.getAuroScholarModel()");
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
-
         binding.swipeRefreshLayout.setOnRefreshListener(this);
 
         setNavHeaderText();
@@ -280,6 +283,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         init();
         setListener();
         setDataOnUI();
+        AppLogger.e("handleback","ONrESUME");
     }
 
     private void setDataOnUI() {

@@ -489,10 +489,12 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 setLanguageText(AppConstant.HINDI);
             }
             reloadFragment();
-        } else if (v.getId() == R.id.back_arrow) {
+        }  else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
+            AppLogger.e("handleback","backlisner");
+
         } else if (v.getId() == R.id.bt_transfer_money) {
-             openSendMoneyFragment();
+            openSendMoneyFragment();
             //callNumber();
         } else if (v.getId() == R.id.wallet_info) {
             openTransactionFragment();
@@ -596,7 +598,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         dashboardResModel.setIs_kyc_verified("Rejected");
         dashboardResModel.setIs_payment_lastmonth("Yes");*/
 
-
+        AppLogger.e("chhonker step ","kyc Step 1");
         if (dashboardResModel == null) {
             return;
         }
@@ -604,19 +606,24 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         dashboardResModel.setApproved_scholarship_money("50");
 */
         if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_uploaded()) && dashboardResModel.getIs_kyc_uploaded().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+            AppLogger.e("chhonker step ","kyc Step 2");
             binding.stepOne.tickSign.setVisibility(View.VISIBLE);
             binding.stepOne.textUploadDocumentMsg.setText(R.string.document_uploaded);
             binding.stepOne.textUploadDocumentMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.ufo_green));
             if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.IN_PROCESS)) {
+                AppLogger.e("chhonker step ","kyc Step 3");
                 binding.stepTwo.textVerifyMsg.setText(getString(R.string.verification_is_in_process));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
-            } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+            } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) &&
+                    dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.APPROVE)) {
+                AppLogger.e("chhonker step ","kyc Step 4");
                 binding.stepTwo.textVerifyMsg.setText(R.string.document_verified);
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
                 binding.stepTwo.textVerifyMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.ufo_green));
                 int approvedMoney = ConversionUtil.INSTANCE.convertStringToInteger(dashboardResModel.getApproved_scholarship_money());
                 if (approvedMoney < 1) {
+                    AppLogger.e("chhonker step ","kyc Step 5");
                   /*  binding.stepThree.tickSign.setVisibility(View.GONE);
                     binding.stepThree.textQuizVerifyMsg.setText(AuroApp.getAppContext().getResources().getString(R.string.scholarship_approved));
                     binding.stepFour.textTransferMsg.setText(R.string.successfully_transfered);
@@ -624,9 +631,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                     binding.stepFour.tickSign.setVisibility(View.GONE);
                     binding.stepFour.btTransferMoney.setVisibility(View.GONE);*/
                 } else {
+                    AppLogger.e("chhonker step ","kyc Step 6");
                     binding.stepThree.tickSign.setVisibility(View.VISIBLE);
                     binding.stepThree.textQuizVerifyMsg.setText(AuroApp.getAppContext().getResources().getString(R.string.scholarship_approved));
-
                     binding.stepFour.textTransferMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.ufo_green));
                     binding.stepFour.textTransferMsg.setText(R.string.call_our_customercare);
                     binding.stepFour.tickSign.setVisibility(View.VISIBLE);
@@ -634,19 +641,20 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                     binding.stepFour.btTransferMoney.setOnClickListener(this);
                 }
             } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.REJECTED)) {
+                AppLogger.e("chhonker step ","kyc Step 7");
                 binding.stepTwo.textVerifyMsg.setText(R.string.declined);
                 binding.stepTwo.textVerifyMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_red));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setBackground(getActivity().getResources().getDrawable(R.drawable.ic_cancel_icon));
-
                 binding.stepFour.textTransferMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.auro_dark_blue));
                 binding.stepFour.textTransferMsg.setText(R.string.you_will_see_transfer);
-
                 binding.stepFour.btTransferMoney.setVisibility(View.GONE);
                 binding.stepFour.tickSign.setVisibility(View.GONE);
-
-
+            } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.PENDING)) {
+                AppLogger.e("chhonker step ","kyc Step 7");
+                binding.stepTwo.textVerifyMsg.setText(getString(R.string.verification_pending));
+                binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
             }
         }
     }

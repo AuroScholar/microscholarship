@@ -438,5 +438,6 @@
     <string name="you_have_scored">You Have Scored</string>
     <string name="you_are_almost_there_let_s_make_the_scholarship_happen">You are almost there! Let\'s make the scholarship happen!</string>
     <string name="retake_quiz">Retake Quiz</string>
+    <string name="verification_pending">Please reupload your document again</string>
 
 </resources>

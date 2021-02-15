@@ -39,6 +39,7 @@ import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.presentation.view.adapter.KYCViewDocAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
@@ -210,6 +211,8 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             reloadFragment();
         } else if (v.getId() == R.id.back_arrow) {
             getActivity().getSupportFragmentManager().popBackStack();
+            AppLogger.e("handleback","backlisner");
+
         } else if (v.getId() == R.id.bt_transfer_money) {
             //callNumber();
             openSendMoneyFragment();
@@ -284,61 +287,62 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
        /* dashboardResModel.setIs_kyc_uploaded("Yes");
         dashboardResModel.setIs_kyc_verified("Rejected");
         dashboardResModel.setIs_payment_lastmonth("Yes");*/
+        //  dashboardResModel.setIs_kyc_verified(AppConstant.DocumentType.YES);
+        //  dashboardResModel.setApproved_scholarship_money("50");
 
-
-        if (dashboardResModel == null) {
-            return;
-        }
-     /*   dashboardResModel.setIs_kyc_verified(AppConstant.DocumentType.YES);
-        dashboardResModel.setApproved_scholarship_money("50");
-*/
-        if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_uploaded()) && dashboardResModel.getIs_kyc_uploaded().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+        if (dashboardResModel.getIs_kyc_uploaded().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
             binding.stepOne.tickSign.setVisibility(View.VISIBLE);
             binding.stepOne.textUploadDocumentMsg.setText(R.string.document_uploaded);
-            binding.stepOne.textUploadDocumentMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.ufo_green));
-            if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.IN_PROCESS)) {
+            binding.stepOne.textUploadDocumentMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
+            if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.IN_PROCESS)) {
                 binding.stepTwo.textVerifyMsg.setText(getString(R.string.verification_is_in_process));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
-            } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+            } else if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.APPROVE)) {
                 binding.stepTwo.textVerifyMsg.setText(R.string.document_verified);
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
-                binding.stepTwo.textVerifyMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.ufo_green));
+                binding.stepTwo.textVerifyMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
                 int approvedMoney = ConversionUtil.INSTANCE.convertStringToInteger(dashboardResModel.getApproved_scholarship_money());
                 if (approvedMoney < 1) {
-                  /*  binding.stepThree.tickSign.setVisibility(View.GONE);
+                   /* binding.stepThree.tickSign.setVisibility(View.VISIBLE);
                     binding.stepThree.textQuizVerifyMsg.setText(AuroApp.getAppContext().getResources().getString(R.string.scholarship_approved));
+
                     binding.stepFour.textTransferMsg.setText(R.string.successfully_transfered);
-                    binding.stepFour.textTransferMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.ufo_green));
+                    binding.stepFour.textTransferMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
                     binding.stepFour.tickSign.setVisibility(View.GONE);
+                    binding.stepFour.textTransferMsg.setVisibility(View.VISIBLE);
                     binding.stepFour.btTransferMoney.setVisibility(View.GONE);*/
                 } else {
                     binding.stepThree.tickSign.setVisibility(View.VISIBLE);
                     binding.stepThree.textQuizVerifyMsg.setText(AuroApp.getAppContext().getResources().getString(R.string.scholarship_approved));
+                    binding.stepThree.textQuizVerifyMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
 
-                    binding.stepFour.textTransferMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.ufo_green));
+                    binding.stepFour.textTransferMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
                     binding.stepFour.textTransferMsg.setText(R.string.call_our_customercare);
+                    binding.stepFour.textTransferMsg.setVisibility(View.GONE);
                     binding.stepFour.tickSign.setVisibility(View.VISIBLE);
                     binding.stepFour.btTransferMoney.setVisibility(View.VISIBLE);
                     binding.stepFour.btTransferMoney.setOnClickListener(this);
                 }
-            } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.REJECTED)) {
+
+            } else if (dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.REJECTED)) {
                 binding.stepTwo.textVerifyMsg.setText(R.string.declined);
-                binding.stepTwo.textVerifyMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_red));
+                binding.stepTwo.textVerifyMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.color_red));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
-                binding.stepTwo.tickSign.setBackground(getActivity().getResources().getDrawable(R.drawable.ic_cancel_icon));
-
-                binding.stepFour.textTransferMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.auro_dark_blue));
+                binding.stepTwo.tickSign.setBackground(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_cancel_icon));
+                binding.stepFour.textTransferMsg.setTextColor(ContextCompat.getColor(getActivity(),R.color.auro_dark_blue));
                 binding.stepFour.textTransferMsg.setText(R.string.you_will_see_transfer);
-
                 binding.stepFour.btTransferMoney.setVisibility(View.GONE);
                 binding.stepFour.tickSign.setVisibility(View.GONE);
-
-
+            } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.PENDING)) {
+                AppLogger.e("chhonker step ","kyc Step 7");
+                binding.stepTwo.textVerifyMsg.setText(getString(R.string.verification_pending));
+                binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
             }
         }
     }
+
 
 
     private void observeServiceResponse() {
