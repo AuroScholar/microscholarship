@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.text.Html;
 import android.util.Log;
@@ -33,14 +34,27 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.camera.core.Camera;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageAnalysis;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageCaptureException;
+import androidx.camera.core.ImageProxy;
+import androidx.camera.core.Preview;
+import androidx.camera.extensions.HdrImageCaptureExtender;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.auro.scholr.R;
@@ -56,6 +70,7 @@ import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AssignmentResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
+import com.auro.scholr.home.data.model.SaveImageReqModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
@@ -64,6 +79,7 @@ import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,6 +88,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -116,6 +135,14 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
     };
 
 
+    /*Camera x code */
+    Handler handler = new Handler();
+
+    private Executor executor = Executors.newSingleThreadExecutor();
+    private int REQUEST_CODE_PERMISSIONS = 1001;
+    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
+    /*End of cmera x code*/
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -131,7 +158,6 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
         }
         setRetainInstance(true);
         ViewUtil.setActivityLang(getActivity());
-
 
         return binding.getRoot();
     }
@@ -153,6 +179,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
         if (customDialog != null) {
             customDialog.cancel();
         }
+        handler.removeCallbacksAndMessages(null);
         ViewUtil.setLanguageonUi(getActivity());
         super.onDestroy();
 
@@ -167,6 +194,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
             assignmentReqModel = quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
             quizTestViewModel.getAssignExamData(assignmentReqModel);
         }
+        startCamera();
     }
 
 
@@ -186,6 +214,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
                             String webUrl = URLConstant.TEST_URL + "StudentID=" + assignmentResModel.getStudentID() + "&ExamAssignmentID=" + assignmentResModel.getExamAssignmentID();
                             openDialog();
                             loadWeb(webUrl);
+                            checkNativeCameraEnableOrNot();
                         } else {
                             handleProgress(2, assignmentResModel.getMessage());
                         }
@@ -303,9 +332,9 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.back_arrow){
+        if (view.getId() == R.id.back_arrow) {
 
-           // getActivity().getSupportFragmentManager().popBackStack();
+            // getActivity().getSupportFragmentManager().popBackStack();
             alertDialogForQuitQuiz();
 
         }
@@ -314,7 +343,6 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
     public void onBackPressed() {
         getActivity().getSupportFragmentManager().popBackStack();
     }
-
 
 
     class MyJavaScriptInterface {
@@ -327,6 +355,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
         @JavascriptInterface
         public void boundMethod(String html) {
+            binding.previewView.setVisibility(View.INVISIBLE);
             openProgressDialog();
             AppLogger.e("chhonker bound method", html);
           /*  new Handler().postDelayed(new Runnable() {
@@ -389,6 +418,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
                 if (url.equalsIgnoreCase("https://auroscholar.com/index.php") ||
                         url.contains("demographics")
                         || url.contains("dashboard")) {
+                    binding.previewView.setVisibility(View.INVISIBLE);
                     cancelDialogAfterSubmittingTest();
                 }
             }
@@ -598,14 +628,13 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
     private void setKeyListner() {
         this.getView().setFocusableInTouchMode(true);
-        binding.toolbarLayout.backArrow.setOnClickListener(this);
+        //  binding.toolbarLayout.backArrow.setOnClickListener(this);
         this.getView().requestFocus();
         this.getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-                if( keyCode == KeyEvent.KEYCODE_BACK && event.getAction()== KeyEvent.ACTION_DOWN)
-                {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
                     alertDialogForQuitQuiz();
                     return true;
                 }
@@ -614,12 +643,12 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
         });
     }
 
-    public void alertDialogForQuitQuiz(){
+    public void alertDialogForQuitQuiz() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(getActivity().getResources().getString(R.string.quiz_exit_txt));
 
-        String yes="<font color='#00A1DB'>"+getActivity().getResources().getString(R.string.yes)+"</font>";
-        String no="<font color='#00A1DB'>"+getActivity().getResources().getString(R.string.no)+"</font>";
+        String yes = "<font color='#00A1DB'>" + getActivity().getResources().getString(R.string.yes) + "</font>";
+        String no = "<font color='#00A1DB'>" + getActivity().getResources().getString(R.string.no) + "</font>";
         // Set the alert dialog yes button click listener
         builder.setPositiveButton(Html.fromHtml(yes), new DialogInterface.OnClickListener() {
             @Override
@@ -645,4 +674,121 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
         // Display the alert dialog on interface
         dialog.show();
     }
+
+
+    private void startCamera() {
+
+        final ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
+
+        cameraProviderFuture.addListener(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                    bindPreview(cameraProvider);
+
+                } catch (ExecutionException | InterruptedException e) {
+                    // No errors need to be handled for this Future.
+                    // This should never be reached.
+                }
+            }
+        }, ContextCompat.getMainExecutor(getActivity()));
+    }
+
+    void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
+
+        Preview preview = new Preview.Builder()
+                .build();
+
+        CameraSelector cameraSelector = new CameraSelector.Builder()
+                .requireLensFacing(CameraSelector.LENS_FACING_FRONT)
+                .build();
+
+        ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
+                .build();
+
+        ImageCapture.Builder builder = new ImageCapture.Builder();
+
+        //Vendor-Extensions (The CameraX extensions dependency in build.gradle)
+        HdrImageCaptureExtender hdrImageCaptureExtender = HdrImageCaptureExtender.create(builder);
+
+        // Query if extension is available (optional).
+        if (hdrImageCaptureExtender.isExtensionAvailable(cameraSelector)) {
+            // Enable the extension if available.
+            hdrImageCaptureExtender.enableExtension(cameraSelector);
+        }
+
+        final ImageCapture imageCapture = builder
+                .setTargetRotation(getActivity().getWindowManager().getDefaultDisplay().getRotation())
+                .build();
+
+        preview.setSurfaceProvider(binding.previewView.createSurfaceProvider());
+
+        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageAnalysis, imageCapture);
+    }
+
+
+    void captureImage() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap = binding.previewView.getBitmap();
+                processImage(bitmap);
+                captureImage();
+            }
+        }, 10000);
+    }
+
+
+    void processImage(Bitmap picBitmap) {
+        byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
+        long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
+        int file_size = Integer.parseInt(String.valueOf(bytes.length / 1024));
+        AppLogger.d(TAG, "Image Path Size mb- " + mb + "-bytes-" + file_size);
+        if (file_size >= 500) {
+            assignmentReqModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
+        } else {
+            assignmentReqModel.setImageBytes(bytes);
+        }
+        int new_file_size = Integer.parseInt(String.valueOf(assignmentReqModel.getImageBytes().length / 1024));
+        AppLogger.d(TAG, "Image Path  new Size kb- " + mb + "-bytes-" + new_file_size);
+        callSendExamImageApi();
+    }
+
+    private void callSendExamImageApi() {
+
+        if (!TextUtil.isEmpty(assignmentResModel.getExamAssignmentID())) {
+            if (assignmentResModel != null && !TextUtil.isEmpty(assignmentResModel.getExamAssignmentID())) {
+                SaveImageReqModel saveQuestionResModel = new SaveImageReqModel();
+                saveQuestionResModel.setImageBytes(assignmentReqModel.getImageBytes());
+                saveQuestionResModel.setExamId(assignmentResModel.getExamAssignmentID());
+                quizTestViewModel.uploadExamFace(saveQuestionResModel);
+            }
+        }
+    }
+
+
+    void checkNativeCameraEnableOrNot() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        AppLogger.e("checkNativeCameraEnableOrNot--",""+prefModel.getDashboardResModel().isIs_native_image_capturing());
+        if (prefModel.getDashboardResModel() != null && prefModel.getDashboardResModel().isIs_native_image_capturing()) {
+            if (assignmentResModel != null && !TextUtil.isEmpty(assignmentResModel.getExamAssignmentID())) {
+                if(handler!=null)
+                {
+                    handler.removeCallbacksAndMessages(null);
+                }
+                captureImage();
+                binding.previewView.setVisibility(View.VISIBLE);
+            }
+        } else {
+            binding.previewView.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
 }
+
+
+
+

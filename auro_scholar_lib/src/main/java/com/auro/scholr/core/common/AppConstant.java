@@ -191,6 +191,9 @@ public interface AppConstant {
         String EXAM_NAME = "exam_name";
         String QUIZ_ATTEMPT = "quiz_attempt";
         String EXAMLANG = "examlang";
+        String EKLAVYA_EXAM_ID="eklavvya_exam_id";
+        String EXAM_FACE_IMAGE="exam_face_img";
+
     }
 
     interface AzureApiParams {

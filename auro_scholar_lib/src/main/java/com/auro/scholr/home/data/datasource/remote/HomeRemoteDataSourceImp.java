@@ -8,6 +8,7 @@ import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
+import com.auro.scholr.home.data.model.SaveImageReqModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.util.AppLogger;
@@ -206,5 +207,13 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         params.put(AppConstant.RefferalApiCode.NAVIGATION_TO, model.getNavigationTo());
         params.put(AppConstant.RefferalApiCode.REFFER_TYPE, model.getReffer_type());
         return homeRemoteApi.getRefferalapi(params);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> uploadStudentExamImage(SaveImageReqModel reqModel) {
+        RequestBody exam_id = RequestBody.create(okhttp3.MultipartBody.FORM,reqModel.getExamId());
+        MultipartBody.Part student_photo = ConversionUtil.INSTANCE.makeMultipartRequestForExamImage(reqModel.getImageBytes());
+        return homeRemoteApi.uploadImage(exam_id,
+                student_photo);
     }
 }

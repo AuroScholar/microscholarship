@@ -21,6 +21,7 @@ import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.data.model.NearByFriendList;
+import com.auro.scholr.home.data.model.SaveImageReqModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.teacher.data.model.response.TeacherResModel;
@@ -51,6 +52,7 @@ import static com.auro.scholr.core.common.Status.FRIENDS_REQUEST_LIST;
 import static com.auro.scholr.core.common.Status.INVITE_FRIENDS_LIST;
 import static com.auro.scholr.core.common.Status.SEND_FRIENDS_REQUEST;
 import static com.auro.scholr.core.common.Status.SEND_INVITE_API;
+import static com.auro.scholr.core.common.Status.UPLOAD_EXAM_FACE_API;
 
 public class HomeRemoteUseCase extends NetworkUseCase {
     HomeRepo.DashboardRemoteData dashboardRemoteData;
@@ -301,6 +303,20 @@ public class HomeRemoteUseCase extends NetworkUseCase {
                     return handleResponse(response, DYNAMIC_LINK_API);
                 } else {
                     return responseFail(DYNAMIC_LINK_API);
+                }
+            }
+        });
+    }
+
+    public Single<ResponseApi> uploadStudentExamImage(SaveImageReqModel params) {
+        return dashboardRemoteData.uploadStudentExamImage(params).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+                    return handleResponse(response, UPLOAD_EXAM_FACE_API);
+                } else {
+                    return responseFail(UPLOAD_EXAM_FACE_API);
                 }
             }
         });

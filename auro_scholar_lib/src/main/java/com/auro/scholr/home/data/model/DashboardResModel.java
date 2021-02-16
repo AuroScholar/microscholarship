@@ -191,6 +191,11 @@ public class DashboardResModel implements Parcelable {
     @Expose
     String userPartnerId;
 
+    @SerializedName("is_native_image_capturing")
+    @Expose
+    private boolean is_native_image_capturing;
+
+
     protected DashboardResModel(Parcel in) {
         status = in.readString();
         error = in.readByte() != 0;
@@ -237,6 +242,7 @@ public class DashboardResModel implements Parcelable {
         leadQualified = in.readString();
         feature = in.readInt();
         userPartnerId = in.readString();
+        is_native_image_capturing = in.readByte() != 0;
     }
 
     @Override
@@ -286,7 +292,7 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(leadQualified);
         dest.writeInt(feature);
         dest.writeString(userPartnerId);
-
+        dest.writeByte((byte) (is_native_image_capturing ? 1 : 0));
     }
 
     @Override
@@ -664,5 +670,13 @@ public class DashboardResModel implements Parcelable {
 
     public void setUserPartnerId(String userPartnerId) {
         this.userPartnerId = userPartnerId;
+    }
+
+    public boolean isIs_native_image_capturing() {
+        return is_native_image_capturing;
+    }
+
+    public void setIs_native_image_capturing(boolean is_native_image_capturing) {
+        this.is_native_image_capturing = is_native_image_capturing;
     }
 }

@@ -93,6 +93,7 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
             binding.levelThree.layoutScore.setVisibility(View.VISIBLE);
             binding.levelThree.retakeLayout.setVisibility(View.GONE);
             binding.levelThree.txtTopic.setVisibility(View.GONE);
+
             if (model.getScorepoints() < 10) {
                 binding.levelThree.txtScorePoints.setText("0" + model.getScorepoints());
             } else {
@@ -102,7 +103,7 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
             /*for level four*/
             binding.levelFour.txtTopic.setVisibility(View.GONE);
             binding.levelFour.layoutScore.setVisibility(View.GONE);
-            if (model.getScorepoints() >= 1 && model.getScorepoints() < 8) {
+            if (model.getScorepoints() >= 0  && model.getAttempt()>0) {
                 binding.levelFour.retakeLayout.setVisibility(View.VISIBLE);
                 binding.levelFour.nextQuizLayout.setVisibility(View.GONE);
             } else {
@@ -115,21 +116,21 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
 
             if (model.getAttempt() == 1) {
                 binding.levelTwo.pb.setProgress(100);
-                binding.levelTwo.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
+                binding.levelTwo.circleImage.setColorFilter(mContext.getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
             } else {
                 binding.levelTwo.pb.setProgress(0);
-                binding.levelTwo.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.light_grey), PorterDuff.Mode.SRC_IN);
+                binding.levelTwo.circleImage.setColorFilter(mContext.getResources().getColor(R.color.light_grey), PorterDuff.Mode.SRC_IN);
 
             }
 
             if (model.getAttempt() == 2) {
                 binding.levelTwo.pb.setProgress(100);
                 binding.levelThree.pb.setProgress(100);
-                binding.levelTwo.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
-                binding.levelThree.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
+                binding.levelTwo.circleImage.setColorFilter(mContext.getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
+                binding.levelThree.circleImage.setColorFilter(mContext.getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
             } else {
                 binding.levelThree.pb.setProgress(0);
-                binding.levelThree.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.light_grey), PorterDuff.Mode.SRC_IN);
+                binding.levelThree.circleImage.setColorFilter(mContext.getResources().getColor(R.color.light_grey), PorterDuff.Mode.SRC_IN);
             }
 
             if (model.getAttempt() == 3) {
@@ -138,9 +139,9 @@ public class QuizItemChapterAdapter extends RecyclerView.Adapter<QuizItemChapter
                 binding.levelFour.pb.setProgress(100);
                 binding.levelFour.retakeLayout.setVisibility(View.GONE);
                 binding.levelFour.nextQuizLayout.setVisibility(View.GONE);
-                binding.levelTwo.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
-                binding.levelThree.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
-                binding.levelFour.circleImage.setColorFilter(AuroApp.getAppContext().getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
+                binding.levelTwo.circleImage.setColorFilter(mContext.getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
+                binding.levelThree.circleImage.setColorFilter(mContext.getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
+                binding.levelFour.circleImage.setColorFilter(mContext.getResources().getColor(R.color.blue_color), PorterDuff.Mode.SRC_IN);
 
             } else {
                 binding.levelFour.pb.setProgress(0);

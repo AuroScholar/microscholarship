@@ -538,8 +538,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void setListener() {
         binding.stillshot.setOnClickListener(this);
-        binding.switchOrientation.setOnClickListener(this);
-        binding.flashToggle.setOnClickListener(this);
+       // binding.switchOrientation.setOnClickListener(this);
+       // binding.flashToggle.setOnClickListener(this);
     }
 
     @Override

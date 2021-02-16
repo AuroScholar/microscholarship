@@ -1,5 +1,6 @@
 package com.auro.scholr.util;
 
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 
 import okhttp3.MediaType;
@@ -47,5 +48,13 @@ public enum ConversionUtil {
         }
     }
 
+    public MultipartBody.Part makeMultipartRequestForExamImage(byte[] bytes) {
+        if (bytes!= null) {
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), bytes);
+            return MultipartBody.Part.createFormData(AppConstant.AssignmentApiParams.EXAM_FACE_IMAGE, "image.jpg", requestFile);
+        } else {
+            return null;
+        }
+    }
 
 }

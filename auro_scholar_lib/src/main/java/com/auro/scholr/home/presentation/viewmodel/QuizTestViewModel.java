@@ -10,6 +10,7 @@ import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
+import com.auro.scholr.home.data.model.SaveImageReqModel;
 import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
@@ -83,6 +84,48 @@ public class QuizTestViewModel extends ViewModel {
 
     }
 
+
+    public void uploadExamFace(SaveImageReqModel reqmodel) {
+        Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
+            if (hasInternet) {
+                uploadExamFaceAPi(reqmodel);
+            } else {
+                // please check your internet
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getResources().getString(R.string.internet_check), Status.UPLOAD_EXAM_FACE_API));
+            }
+
+        });
+        getCompositeDisposable().add(disposable);
+
+    }
+
+    private void uploadExamFaceAPi(SaveImageReqModel reqmodel) {
+        getCompositeDisposable()
+                .add(homeRemoteUseCase.uploadStudentExamImage(reqmodel)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(Disposable __) throws Exception {
+                                /*Do code here*/
+                                //    serviceLiveData.setValue(ResponseApi.loading(null));
+                            }
+                        })
+                        .subscribe(new Consumer<ResponseApi>() {
+                                       @Override
+                                       public void accept(ResponseApi responseApi) throws Exception {
+                                         //  serviceLiveData.setValue(responseApi);
+                                       }
+                                   },
+
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        // defaultError(UPLOAD_EXAM_FACE_API);
+                                    }
+                                }));
+
+    }
 
     private CompositeDisposable getCompositeDisposable() {
         if (compositeDisposable == null) {

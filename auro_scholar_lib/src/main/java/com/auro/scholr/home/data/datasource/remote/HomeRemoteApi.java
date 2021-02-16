@@ -100,4 +100,9 @@ public interface HomeRemoteApi {
     @FormUrlEncoded
     Single<Response<JsonObject>> getRefferalapi(@FieldMap Map<String,String> params);
 
+    @Multipart
+    @POST(URLConstant.EXAM_IMAGE_API)
+    Single<Response<JsonObject>> uploadImage(@Part(AppConstant.AssignmentApiParams.EKLAVYA_EXAM_ID) RequestBody description,
+                                             @Part MultipartBody.Part exam_face_image);
+
 }
