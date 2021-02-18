@@ -137,10 +137,6 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
     /*Camera x code */
     Handler handler = new Handler();
-
-    private Executor executor = Executors.newSingleThreadExecutor();
-    private int REQUEST_CODE_PERMISSIONS = 1001;
-    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
     /*End of cmera x code*/
 
     @Nullable

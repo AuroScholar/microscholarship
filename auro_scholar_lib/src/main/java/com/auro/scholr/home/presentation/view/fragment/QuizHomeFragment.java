@@ -498,8 +498,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             assignmentReqModel.setSubject(quizResModel.getSubjectName());
             Bitmap picBitmap = BitmapFactory.decodeFile(path);
             byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
-            long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
-            if (mb > 1.5) {
+           // long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
+            int file_size = Integer.parseInt(String.valueOf(bytes.length / 1024));
+
+            if (file_size >500) {
                 assignmentReqModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
             } else {
                 assignmentReqModel.setImageBytes(bytes);
