@@ -190,7 +190,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
             assignmentReqModel = quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
             quizTestViewModel.getAssignExamData(assignmentReqModel);
         }
-        startCamera();
+
     }
 
 
@@ -774,6 +774,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
                 {
                     handler.removeCallbacksAndMessages(null);
                 }
+                startCamera();
                 captureImage();
                 binding.previewView.setVisibility(View.VISIBLE);
             }
