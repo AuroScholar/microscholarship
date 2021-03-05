@@ -194,5 +194,11 @@
     <style name="SpinnerTheme" parent="android:Widget.Spinner">
         <item name="android:background">@drawable/sppiner_background</item>
     </style>
+    <style name="MyMenu">
+        <item name="android:textColor">@color/colorAccent</item> //font color
+        <item name="android:textSize">25sp</item> <!-- menu item text size-->
+        <item name="android:listPreferredItemHeightSmall">40dp</item><!-- menu item height-->
+
+    </style>
 
 </resources>
