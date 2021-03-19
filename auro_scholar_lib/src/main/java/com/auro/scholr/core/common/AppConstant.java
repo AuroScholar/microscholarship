@@ -68,6 +68,8 @@ public interface AppConstant {
         String IS_EMAIL_VERIFIED = "email_verified";
         String PARTNER_SOURCE = "partner_source";
         String USER_PARTNER_ID = "user_partner_id";
+        String RESGISTRATION_ID = "registration_id";
+        String STUDENT_NAME = "student_name";
     }
 
 

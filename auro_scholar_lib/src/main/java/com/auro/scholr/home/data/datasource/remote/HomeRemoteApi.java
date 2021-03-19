@@ -2,6 +2,7 @@ package com.auro.scholr.home.data.datasource.remote;
 
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.network.URLConstant;
+import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
 import com.google.gson.JsonObject;
 
 import java.util.Map;
@@ -10,8 +11,10 @@ import io.reactivex.Single;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -105,4 +108,10 @@ public interface HomeRemoteApi {
     Single<Response<JsonObject>> uploadImage(@Part(AppConstant.AssignmentApiParams.EKLAVYA_EXAM_ID) RequestBody description,
                                              @Part MultipartBody.Part exam_face_image);
 
+    @POST(URLConstant.CERTIFICATE_API)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> getCertificateApi(@FieldMap Map<String,String> params);
+
+    @POST(URLConstant.PASSPORT_API)
+    Single<Response<JsonObject>> passportApi(@HeaderMap Map<String, String> headerMap, @Body PassportReqModel requestBody);
 }

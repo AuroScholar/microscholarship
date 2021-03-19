@@ -113,4 +113,7 @@
     <color name="dropdown_background_dim">#80000000</color>
     <color name="payment_color_green">#78b348</color>
     <color name="tranparentwhite">#56000000</color>
+    <color name="auro_icon_bg">#055E8A</color>
+    <color name="dark_blue">#054B74</color>
+
 </resources>

@@ -333,4 +333,6 @@
     <string name="share_with_friends">दोस्तों के साथ साझा करें।</string>
     <string name="retake_quiz">क्विज़ पुनः लें।</string>
     <string name="verification_pending">कृपया अपने दस्तावेज़ को फिर से लोड करें</string>
+    <string name="passport">पासपोर्ट</string>
+    <string name="analytics_more">विश्लेषिकी और अधिक</string>
 </resources>

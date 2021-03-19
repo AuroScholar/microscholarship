@@ -439,5 +439,8 @@
     <string name="you_are_almost_there_let_s_make_the_scholarship_happen">You are almost there! Let\'s make the scholarship happen!</string>
     <string name="retake_quiz">Retake Quiz</string>
     <string name="verification_pending">Please reupload your document again</string>
+    <string name="student_profile">Profile</string>
+    <string name="passport">Auro Scholar Passport</string>
+    <string name="analytics_more">Analytics &amp; More</string>
 
 </resources>

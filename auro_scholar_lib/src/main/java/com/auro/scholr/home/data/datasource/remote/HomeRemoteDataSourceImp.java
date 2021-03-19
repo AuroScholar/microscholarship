@@ -4,11 +4,13 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
+import com.auro.scholr.home.data.model.CertificateResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.SaveImageReqModel;
+import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.util.AppLogger;
@@ -215,5 +217,22 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         MultipartBody.Part student_photo = ConversionUtil.INSTANCE.makeMultipartRequestForExamImage(reqModel.getImageBytes());
         return homeRemoteApi.uploadImage(exam_id,
                 student_photo);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> passportApi(PassportReqModel reqModel) {
+        Map<String, String> headers = new HashMap<>();
+        return homeRemoteApi.passportApi(headers, reqModel);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> getCertificateApi(CertificateResModel model) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
+        params.put(AppConstant.DashBoardParams.RESGISTRATION_ID, model.getRegistrationId());
+        if (!TextUtil.isEmpty(model.getStudentName())) {
+            params.put(AppConstant.DashBoardParams.STUDENT_NAME, model.getStudentName());
+        }
+        return homeRemoteApi.getCertificateApi(params);
     }
 }
