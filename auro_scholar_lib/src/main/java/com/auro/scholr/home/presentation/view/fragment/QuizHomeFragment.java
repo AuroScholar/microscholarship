@@ -229,6 +229,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         //PRADEEP
         lockDrawerMenu();
         AppLogger.e("handleback","AuroApp.getAuroScholarModel()");
+
+
+
+        setPrefData();
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
         binding.swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -1072,12 +1076,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         mNavItems.add(new NavItemModel(getActivity().getResources().getString(R.string.student_profile), "", R.drawable.ic_student_profile));
         mNavItems.add(new NavItemModel(getActivity().getResources().getString(R.string.passport), getActivity().getResources().getString(R.string.analytics_more), R.drawable.ic_student_pass));
         mNavItems.add(new NavItemModel(getActivity().getResources().getString(R.string.kyc_verification), "", R.drawable.ic_verification));
-        if (val == 1) {
-            mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.friends_leader_board), "", R.drawable.ic_friends));
-        }
+
         mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.certificates), "", R.drawable.ic_certificate_icon));
         mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.payment_info), "", R.drawable.ic_payment_info));
-        mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.change_grade), "", R.drawable.ic_change_grade));
+
         mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.change_language), "", R.drawable.ic_language));
         mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.privacy_policy), "", R.drawable.ic_policy));
         // DrawerLayout
@@ -1108,7 +1110,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
             case 1:
                 /*Passport*/
-                //openTransactionsFragment();
+                openTransactionsFragment();
                 break;
 
             case 2:
@@ -1160,6 +1162,25 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         }
 
         binding.drawerLayout.closeDrawer(GravityCompat.START);
+
+    }
+    public void openTransactionsFragment() {
+        Bundle bundle = new Bundle();
+        TransactionsFragment transactionsFragment = new TransactionsFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        transactionsFragment.setArguments(bundle);
+        openFragment(transactionsFragment);
+    }
+
+    public void setPrefData(){
+        if(AuroApp.getAuroScholarModel()!= null) {
+            PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+            prefModel.setUserMobile(AuroApp.getAuroScholarModel().getMobileNumber());
+            prefModel.setStudentClass(ConversionUtil.INSTANCE.convertStringToInteger(AuroApp.getAuroScholarModel().getStudentClass()));
+            AppPref.INSTANCE.setPref(prefModel);
+        }
+
+
 
     }
 }

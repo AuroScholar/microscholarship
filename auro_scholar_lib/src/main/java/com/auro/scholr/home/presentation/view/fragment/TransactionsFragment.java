@@ -495,6 +495,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
         handleProgress(0, "");
         PassportReqModel passportReqModel = new PassportReqModel();
         passportReqModel.setMobileNumber(prefModel.getUserMobile());
+        AppLogger.e("callTransportApi-", month);
         passportReqModel.setMonth(month);
         passportReqModel.setSubject(spinnerSubject.getMonth());
         passportReqModel.setIsAll(isall);
