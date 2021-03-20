@@ -553,6 +553,14 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 .commitAllowingStateLoss();
     }
 
+    private void openWalletAmountlistFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        WalletInfoDetailFragment fragment = new WalletInfoDetailFragment();
+        fragment.setArguments(bundle);
+        openFragment(fragment);
+    }
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.wallet_bal_text) {
@@ -1074,13 +1082,17 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     private void setDrawerItemList(int status, int val) {
         mNavItems.clear();
         mNavItems.add(new NavItemModel(getActivity().getResources().getString(R.string.student_profile), "", R.drawable.ic_student_profile));
+
         mNavItems.add(new NavItemModel(getActivity().getResources().getString(R.string.passport), getActivity().getResources().getString(R.string.analytics_more), R.drawable.ic_student_pass));
+
         mNavItems.add(new NavItemModel(getActivity().getResources().getString(R.string.kyc_verification), "", R.drawable.ic_verification));
 
         mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.certificates), "", R.drawable.ic_certificate_icon));
+
         mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.payment_info), "", R.drawable.ic_payment_info));
 
-        mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.change_language), "", R.drawable.ic_language));
+       // mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.change_language), "", R.drawable.ic_language));
+
         mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.privacy_policy), "", R.drawable.ic_policy));
         // DrawerLayout
         if (status == 0) {
@@ -1105,7 +1117,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         switch (position) {
             case 0:
                 /*Profile*/
-               // openStudentFragment();
+                openStudentFragment();
                 break;
 
             case 1:
@@ -1123,35 +1135,30 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 break;
 
             case 3:
-                /*Firends LeaderBoard*/
-                //openFriendLeaderBoardFragment();
-                break;
-
-            case 4:
                 /*Certificates*/
                 //openCertificateFragment();
                 break;
 
-            case 5:
+            case 4:
                 /*Payment Info*/
-                //openWalletAmountlistFragment();
+                openWalletAmountlistFragment();
                 break;
 
-            case 6:
+          //  case 5:
                 /*Change Grade*/
                // ((HomeActivity) getActivity()).openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
                 // openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
            /* if (AuroApp.getAuroScholarModel().getSdkcallback() != null) {
                 AuroApp.getAuroScholarModel().getSdkcallback().commonCallback(Status.NAV_CHANGE_GRADE_CLICK, "");
             }*/
-                break;
+              //  break;
 
-            case 7:
-                /*Change Language*/
+           /* case 7:
+                *//*Change Language*//*
                // openChangeLanguageDialog();
                 break;
-
-            case 8:
+*/
+            case 5:
                 /*Privacy Policy*/
                 openFragment(new PrivacyPolicyFragment());
                 break;
@@ -1179,9 +1186,16 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             prefModel.setStudentClass(ConversionUtil.INSTANCE.convertStringToInteger(AuroApp.getAuroScholarModel().getStudentClass()));
             AppPref.INSTANCE.setPref(prefModel);
         }
+    }
 
 
+    public void openStudentFragment() {
+        Bundle bundle = new Bundle();
+        StudentProfileFragment studentProfile = new StudentProfileFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
 
+        studentProfile.setArguments(bundle);
+        openFragment(studentProfile);
     }
 }
 

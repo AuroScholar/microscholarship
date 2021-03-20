@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:layout_margin="@dimen/_15sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_200sdp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/profileCard"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_170sdp"
+            app:cardCornerRadius="@dimen/_4sdp"
+            app:cardElevation="@dimen/_4sdp"
+            app:cardUseCompatPadding="false">
+
+            <ImageView
+                android:id="@+id/certificate_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ImageView>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <ImageView
+            android:id="@+id/select_img"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:elevation="@dimen/_8sdp"
+            app:srcCompat="@drawable/ic_check" />
+
+    </RelativeLayout>
+
+</layout>

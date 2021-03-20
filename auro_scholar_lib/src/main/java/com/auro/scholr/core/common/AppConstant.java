@@ -30,6 +30,18 @@ public interface AppConstant {
     String LOCATION_DATA = "location_data";
     String REGISTRATION_SOURCE_UTM = "registration_source_utm";
     String IP_ADDRESS = "ip_address";
+    String USER_FIRSTNAME = "username";
+    String EMAIL_ID = "email_id";
+    String GRADE = "grade";
+    String GENDER = "gender";
+    String SCHOOL_TYPE = "school_type";
+    String BOARD_TYPE ="board_type";
+    String LANGUAGE_MEDIUM = "language";
+    String SCHOLAR_SHIP_AMOUNT = "scholarship_amount";
+    String STUDENT_PROFILE_UPLOAD = "user_profile_image";
+    String MOBILE_MODEL = "mobile_model";
+    String MOBILE_MANUFACTURER ="mobile_manufacturer";
+    String MOBILE_VERSION ="mobile_version";
 
 
     int CAMERA_REQUEST_CODE = 007;
@@ -185,6 +197,7 @@ public interface AppConstant {
         String PLEASE_SELECT_BOARD = "Please Select Board";
         String PLEASE_SELECT_SCHOOL = "Please Select School";
         String PLEASE_SELECT_PRIVATE_TUTION = "Please Select Tution Type";
+        String PLEASE_ENTER_YOUR_NAME = "Please Enter Your Name";
     }
 
 
@@ -216,6 +229,8 @@ public interface AppConstant {
     interface SENDING_DATA {
         String STUDENT_DATA = "STUDENT_DATA";
         String APPOINTMENT_DATA = "APPOINTMENT_DATA";
+        String STUDENT_PROFILE = "STUDENT_PROFILE";
+        String CERTIFICATE_DATA = "CERTIFICATE_DATA";
     }
 
     interface SdkFragmentType {

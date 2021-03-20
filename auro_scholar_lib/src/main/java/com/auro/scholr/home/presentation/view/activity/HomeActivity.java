@@ -81,6 +81,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener, V
     public static final int TEACHER_PROFILE_FRAGMENT = 07;
     public static final int TEACHER_INFO_FRAGMENT = 8;
     public static final int TRANSACTION_FRAGMENT = 11;
+    public static final int STUDENT_PROFILE = 14;
 
     String memberType;
     CommonCallBackListner commonCallBackListner;

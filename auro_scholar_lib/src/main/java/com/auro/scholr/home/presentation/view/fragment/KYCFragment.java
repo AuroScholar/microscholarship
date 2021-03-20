@@ -63,6 +63,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -496,8 +497,14 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         } else if (v.getId() == R.id.bt_transfer_money) {
             openSendMoneyFragment();
             //callNumber();
-        } else if (v.getId() == R.id.wallet_info) {
+        } /*else if (v.getId() == R.id.wallet_info) {
             openTransactionFragment();
+        }*/
+        else if (v.getId() == R.id.wallet_info) {
+           /* firebaseEventUtil.logEvent(getContext(), getResources().getString(R.string.event_payment_info_page), new HashMap<>());
+            comingFrom = "";*/
+            openWalletInfoFragment();
+            //openTransactionFragment();
         }
 
     }
@@ -740,5 +747,18 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         if (customProgressDialog != null) {
             customProgressDialog.dismiss();
         }
+    }
+    private void openWalletInfoFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        WalletInfoDetailFragment fragment = new WalletInfoDetailFragment();
+        fragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(AuroApp.getFragmentContainerUiId(), fragment, QuizHomeFragment.class
+                        .getSimpleName())
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
     }
 }

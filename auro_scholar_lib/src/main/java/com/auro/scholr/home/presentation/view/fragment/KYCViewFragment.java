@@ -47,6 +47,7 @@ import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomSnackBar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -217,7 +218,9 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             //callNumber();
             openSendMoneyFragment();
         } else if (v.getId() == R.id.wallet_info) {
-            openTransactionFragment();
+          //  firebaseEventUtil.logEvent(getContext(), getResources().getString(R.string.event_payment_info_page), new HashMap<>());
+            // openTransactionFragment();
+            openWalletInfoFragment();
         }
     }
 
@@ -411,6 +414,14 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 return false;
             }
         });
+    }
+
+    private void openWalletInfoFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        WalletInfoDetailFragment fragment = new WalletInfoDetailFragment();
+        fragment.setArguments(bundle);
+        openFragment(fragment);
     }
 
 }

@@ -74,4 +74,6 @@ public interface URLConstant {
 
     String PASSPORT_API=BASE_URL+"passport.php";
 
+    String UPDATE_STUDENT_PROFILE = "update_profile.php";
+
 }

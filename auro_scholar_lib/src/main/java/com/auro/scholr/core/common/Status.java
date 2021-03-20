@@ -51,7 +51,7 @@ public enum Status {
     REQUEST_ACCEPT,
     REQUEST_DECLINE,
 
-
+    SCREEN_TOUCH,
     NEXT_QUIZ_CLICK,
     ACCEPT_INVITE_CLICK,
     BOOK_TUTOR_SESSION_CLICK,
@@ -66,4 +66,7 @@ public enum Status {
     ITEM_CLICK,
     PASSPORT_API,
     CERTIFICATE_API,
+    UPDATE_STUDENT,
+    ITEM_LONG_CLICK
+
 }

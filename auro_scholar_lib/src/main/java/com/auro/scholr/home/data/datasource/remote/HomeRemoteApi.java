@@ -50,6 +50,30 @@ public interface HomeRemoteApi {
                                              @Part MultipartBody.Part student_id,
                                              @Part MultipartBody.Part student_photo);
 
+
+    @POST(URLConstant.UPDATE_STUDENT_PROFILE)
+    @Multipart
+    Single<Response<JsonObject>> studentUpdateProfile(@Part(AppConstant.MOBILE_NUMBER) RequestBody mobileNumber,
+                                                      @Part(AppConstant.USER_FIRSTNAME) RequestBody firstName ,
+                                                      @Part(AppConstant.EMAIL_ID) RequestBody emailId,
+                                                      @Part(AppConstant.GENDER) RequestBody gender,
+                                                      @Part(AppConstant.SCHOOL_TYPE) RequestBody schoolType,
+                                                      @Part(AppConstant.BOARD_TYPE) RequestBody boardType,
+                                                      @Part(AppConstant.LANGUAGE_MEDIUM)RequestBody languageMedium,
+                                                      @Part(AppConstant.MOBILE_MODEL) RequestBody mobileModel,
+                                                      @Part(AppConstant.MOBILE_MANUFACTURER) RequestBody mobileManufature,
+                                                      @Part(AppConstant.MOBILE_VERSION) RequestBody mobileVersion,
+                                                      @Part(AppConstant.DemographicType.LATITUDE) RequestBody latitude,
+                                                      @Part(AppConstant.DemographicType.LONGITUDE)RequestBody longitude,
+                                                      @Part(AppConstant.DemographicType.IS_PRIVATE_TUTION) RequestBody isPrivateTutor,
+                                                      @Part(AppConstant.DemographicType.PRIVATE_TUTION_TYPE) RequestBody privateTutorType,
+                                                      @Part MultipartBody.Part studentProfileImage);
+
+
+
+
+
+
     @POST(URLConstant.GET_ASSIGNMENT_ID)
     @FormUrlEncoded
     Single<Response<JsonObject>> getAssignmentId(@FieldMap  Map<String, String> params);

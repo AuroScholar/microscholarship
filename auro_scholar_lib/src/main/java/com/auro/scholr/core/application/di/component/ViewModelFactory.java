@@ -16,7 +16,9 @@ import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewNewModel;
 import com.auro.scholr.home.presentation.viewmodel.ScholarShipViewModel;
+import com.auro.scholr.home.presentation.viewmodel.StudentProfileViewModel;
 import com.auro.scholr.home.presentation.viewmodel.TransactionsViewModel;
+import com.auro.scholr.home.presentation.viewmodel.WalletAmountViewModel;
 import com.auro.scholr.payment.domain.PaymentRemoteUseCase;
 import com.auro.scholr.payment.domain.PaymentUseCase;
 import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
@@ -148,7 +150,17 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }else if(modelClass.isAssignableFrom(QuizViewNewModel.class)){
 
             return (T) new QuizViewNewModel(homeUseCase,homeDbUseCase,homeRemoteUseCase);
+        } else if(modelClass.isAssignableFrom(StudentProfileViewModel.class)){
+
+            return (T) new StudentProfileViewModel(homeUseCase,homeDbUseCase,homeRemoteUseCase);
+        } else if(modelClass.isAssignableFrom(WalletAmountViewModel.class)){
+
+            return (T) new WalletAmountViewModel(homeUseCase,homeDbUseCase,homeRemoteUseCase);
         }
+
+
+
+
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
 }

@@ -196,6 +196,15 @@ public class DashboardResModel implements Parcelable {
     private boolean is_native_image_capturing;
 
 
+    @SerializedName("inprocess_scholarship_money")
+    @Expose
+    private String inProcessScholarShipMoney;
+
+    @SerializedName("disburse_scholarship_money")
+    @Expose
+    private String disburseScholarshipMoney;
+
+
     protected DashboardResModel(Parcel in) {
         status = in.readString();
         error = in.readByte() != 0;
@@ -243,6 +252,8 @@ public class DashboardResModel implements Parcelable {
         feature = in.readInt();
         userPartnerId = in.readString();
         is_native_image_capturing = in.readByte() != 0;
+        inProcessScholarShipMoney = in.readString();
+        disburseScholarshipMoney=in.readString();
     }
 
     @Override
@@ -292,6 +303,7 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(leadQualified);
         dest.writeInt(feature);
         dest.writeString(userPartnerId);
+        dest.writeString(disburseScholarshipMoney);
         dest.writeByte((byte) (is_native_image_capturing ? 1 : 0));
     }
 
@@ -311,6 +323,22 @@ public class DashboardResModel implements Parcelable {
             return new DashboardResModel[size];
         }
     };
+
+    public String getDisburseScholarshipMoney() {
+        return disburseScholarshipMoney;
+    }
+
+    public void setDisburseScholarshipMoney(String disburseScholarshipMoney) {
+        this.disburseScholarshipMoney = disburseScholarshipMoney;
+    }
+
+    public String getInProcessScholarShipMoney() {
+        return inProcessScholarShipMoney;
+    }
+
+    public void setInProcessScholarShipMoney(String inProcessScholarShipMoney) {
+        this.inProcessScholarShipMoney = inProcessScholarShipMoney;
+    }
 
     public int getFeature() {
         return feature;

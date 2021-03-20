@@ -57,4 +57,13 @@ public enum ConversionUtil {
         }
     }
 
+    public MultipartBody.Part makeMultipartRequestProfile(byte[]  imagbyte ) {
+        if (imagbyte != null) {
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"),imagbyte);
+            return MultipartBody.Part.createFormData(AppConstant.STUDENT_PROFILE_UPLOAD, "image.jpg", requestFile);
+        } else {
+            return null;
+        }
+    }
+
 }
