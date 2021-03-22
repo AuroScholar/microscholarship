@@ -231,6 +231,8 @@ public interface AppConstant {
         String APPOINTMENT_DATA = "APPOINTMENT_DATA";
         String STUDENT_PROFILE = "STUDENT_PROFILE";
         String CERTIFICATE_DATA = "CERTIFICATE_DATA";
+        String DYNAMIC_LINK = "DYNAMIC_LINK";
+
     }
 
     interface SdkFragmentType {

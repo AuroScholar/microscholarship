@@ -451,5 +451,7 @@
     <string name="wl_scholarship_disbursed">Scholarship Disbursed</string>
     <string name="wl_payment_in_process">Payment In Process</string>
     <string name="wl_scholarship_amounta_approved">Scholarship Amount Approved</string>
+    <string name="update_auroscholar">Update Auroscholar?</string>
+    <string name="updateMessage">We have worked harder to improve the app, Please click the button below to update.</string>
 
 </resources>

@@ -140,7 +140,7 @@
     <string name="call">कॉल</string>
     <string name="upload_document">दस्तावेज़ अपलोड करें</string>
     <string name="please_upload_the_document">कृपया दस्तावेज़ अपलोड करें</string>
-    <string name="upload_verification">KYC स्थिति</string>
+    <string name="upload_verification">केवाईसी स्थिति</string>
     <string name="transfer_scholarship">छात्रवृत्ति हस्तांतरित करें</string>
 
     <string name="verification_In_Progress">ससत्यापन स्थिति  </string>
@@ -333,6 +333,10 @@
     <string name="share_with_friends">दोस्तों के साथ साझा करें।</string>
     <string name="retake_quiz">क्विज़ पुनः लें।</string>
     <string name="verification_pending">कृपया अपने दस्तावेज़ को फिर से लोड करें</string>
+    <string name="student_profile">प्रोफ़ाइल</string>
+    <string name="student_phone_number">फोन नंबर*</string>
+    <string name="grade_student">कक्षा :</string>
     <string name="passport">पासपोर्ट</string>
     <string name="analytics_more">विश्लेषिकी और अधिक</string>
+    <string name="save">सहेजें</string>
 </resources>

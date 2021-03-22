@@ -1136,7 +1136,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
             case 3:
                 /*Certificates*/
-                //openCertificateFragment();
+                openCertificateFragment();
                 break;
 
             case 4:
@@ -1196,6 +1196,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
         studentProfile.setArguments(bundle);
         openFragment(studentProfile);
+    }
+    /*For testing purpose*/
+    public void openCertificateFragment() {
+        Bundle bundle = new Bundle();
+        CertificateFragment certificateFragment = new CertificateFragment();
+        openFragment(certificateFragment);
     }
 }
 

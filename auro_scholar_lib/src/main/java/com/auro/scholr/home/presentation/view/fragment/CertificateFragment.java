@@ -2,12 +2,15 @@ package com.auro.scholr.home.presentation.view.fragment;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,12 +19,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.FragmentCertificateBinding;
 import com.auro.scholr.home.data.model.APIcertificate;
 import com.auro.scholr.home.data.model.CertificateResModel;
@@ -31,6 +37,7 @@ import com.auro.scholr.home.presentation.viewmodel.TransactionsViewModel;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.alert_dialog.AskNameCustomDialog;
 import com.auro.scholr.util.alert_dialog.CertificateDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.permission.PermissionHandler;
@@ -40,6 +47,7 @@ import com.auro.scholr.util.permission.Permissions;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -107,17 +115,9 @@ public class CertificateFragment extends BaseFragment implements View.OnClickLis
         ViewUtil.setLanguageonUi(getActivity());
 
 
-        if (comingFrom != null && comingFrom.equalsIgnoreCase(AppConstant.SENDING_DATA.DYNAMIC_LINK)) {
-            handleNavigationProgress(0, "");
-            AuroScholarDashBoardActivity.setListingActiveFragment(AuroScholarDashBoardActivity.CERTIFICATE_DIRECT_FRAGMENT);
-            AppLogger.i(TAG, "Log DynamicLink");
-            ((AuroScholarDashBoardActivity) getActivity()).setListner(this);
+        callCertificateApi();
 
-            ((AuroScholarDashBoardActivity) getActivity()).callDashboardApi();
-        } else {
-            callCertificateApi();
-            AuroScholarDashBoardActivity.setListingActiveFragment(AuroScholarDashBoardActivity.QUIZ_KYC_VIEW_FRAGMENT);
-        }
+
         setListener();
 
         //setAdapter();
@@ -150,14 +150,11 @@ public class CertificateFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.back_arrow:
-                getActivity().onBackPressed();
-                break;
-            case R.id.download_icon:
-                askPermission();
-
-                break;
+        int id = v.getId();
+        if (id == R.id.back_arrow) {
+            getActivity().onBackPressed();
+        } else if (id == R.id.download_icon) {
+            askPermission();
         }
     }
 
@@ -282,9 +279,9 @@ public class CertificateFragment extends BaseFragment implements View.OnClickLis
 
             case LISTNER_SUCCESS:
                 handleNavigationProgress(1, "");
-                dashboardResModel = (DashboardResModel) commonDataModel.getObject();
+               /* dashboardResModel = (DashboardResModel) commonDataModel.getObject();
                 ((AuroScholarDashBoardActivity) getActivity()).dashboardModel(dashboardResModel);
-                callCertificateApi();
+                callCertificateApi();*/
                 break;
 
             case LISTNER_FAIL:
@@ -387,7 +384,7 @@ public class CertificateFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void callCertificateApi() {
-        PrefModel prefModel = AuroAppPref.INSTANCE.getModelInstance();
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel.getDashboardResModel() != null) {
             handleProgress(0, "");
             CertificateResModel certificateResModel = new CertificateResModel();
@@ -419,7 +416,7 @@ public class CertificateFragment extends BaseFragment implements View.OnClickLis
             binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((AuroScholarDashBoardActivity) getActivity()).callDashboardApi();
+                    callCertificateApi();
                 }
             });
         }

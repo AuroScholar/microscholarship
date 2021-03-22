@@ -13,6 +13,7 @@
         android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_5sdp"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
