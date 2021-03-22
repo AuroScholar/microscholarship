@@ -304,6 +304,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 binding.stepTwo.textVerifyMsg.setText(R.string.document_verified);
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
+                binding.btModifyAll.setVisibility(View.GONE);
                 binding.stepTwo.textVerifyMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
                 int approvedMoney = ConversionUtil.INSTANCE.convertStringToInteger(dashboardResModel.getApproved_scholarship_money());
                 if (approvedMoney < 1) {

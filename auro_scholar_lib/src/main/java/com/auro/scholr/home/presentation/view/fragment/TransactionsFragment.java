@@ -140,9 +140,9 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
         spinnerMonth = new MonthDataModel();
         spinnerMonth.setMonthNumber(DateUtil.getcurrentMonthNumber());
         spinnerMonth.setYear(DateUtil.getcurrentYearNumber());
-        spinnerMonth.setMonth(DateUtil.getMonthName());
+        spinnerMonth.setMonth(DateUtil.getMonthNameForSpinner());
 
-        AppLogger.e(TAG, "current month-" + DateUtil.getMonthName());
+        AppLogger.e(TAG, "current month-" + DateUtil.getMonthNameForSpinner());
 
         spinnerSubject = new MonthDataModel();
         spinnerSubject.setMonth("All");
@@ -158,9 +158,9 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
             for (int i = 0; i < monthDataModelList.size(); i++) {
 
                 MonthDataModel monthDataModel = monthDataModelList.get(i);
-                AppLogger.e(TAG, "selectCurrentMonthInSpinner step 3 month -" + monthDataModel.getMonth() + "-current month-" + DateUtil.getMonthName());
+                AppLogger.e(TAG, "selectCurrentMonthInSpinner step 3 month -" + monthDataModel.getMonth() + "-current month-" + DateUtil.getMonthNameForSpinner());
 
-                if (monthDataModel.getMonth().equalsIgnoreCase(DateUtil.getMonthName()) || monthDataModel.getMonth().contains(DateUtil.getMonthName())) {
+                if (monthDataModel.getMonth().equalsIgnoreCase(DateUtil.getMonthNameForSpinner()) || monthDataModel.getMonth().contains(DateUtil.getMonthNameForSpinner())) {
                     binding.monthSpinner.setSelection(i);
                     binding.monthTitle.setText(monthDataModel.getMonth());
                 }

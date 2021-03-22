@@ -192,7 +192,7 @@ public class TeacherProfileFragment extends BaseFragment implements TextWatcher,
         binding.editemail.addTextChangedListener(this);
         binding.editPhoneNumber.addTextChangedListener(this);
         binding.editSchoolName.addTextChangedListener(this);
-        binding.txtGetNow.setOnClickListener(new View.OnClickListener() {
+        binding.logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
