@@ -116,12 +116,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void openTeacherSDK() {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
         auroScholarDataModel.setMobileNumber(binding.mobileNumber.getText().toString());//Mandatory
-        auroScholarDataModel.setRegitrationSource("put regitration source");
+        auroScholarDataModel.setRegitrationSource("AuroScholr");
         auroScholarDataModel.setShareType("teacher");
         auroScholarDataModel.setShareIdentity("chandan Sir");
         auroScholarDataModel.setActivity(this); // Activity context here
         auroScholarDataModel.setEmailVerified(true);
-        auroScholarDataModel.setPartnerSource("Partner Source id");
+        auroScholarDataModel.setPartnerSource("AURO3VE4j7");
         auroScholarDataModel.setUTMLink(binding.utmTextHere.getText().toString());
        // auroScholarDataModel.setUTMLink("");
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container) ;//This is the example please put your container id here.
@@ -169,9 +169,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
         inputModel.setMobileNumber(mobileNumber);//
         inputModel.setStudentClass(binding.userClass.getText().toString());
-        inputModel.setRegitrationSource("");
+        inputModel.setRegitrationSource("AuroScholr");
         inputModel.setReferralLink("put refferal link");
-        inputModel.setPartnerSource(""); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
+        inputModel.setPartnerSource("AURO3VE4j7"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setActivity(this);
         inputModel.setLanguage("en");// In Small Letter Eg. Hindi - hi or English-en
         inputModel.setApplicationLang(false);
