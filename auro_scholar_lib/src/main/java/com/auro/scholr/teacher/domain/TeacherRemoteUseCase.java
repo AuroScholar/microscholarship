@@ -229,8 +229,8 @@ public class TeacherRemoteUseCase extends NetworkUseCase {
                 }
 
             case GET_TEACHER_DASHBOARD_API:
-                MyClassRoomTeacherResModel myClassRoomResModel = gson.fromJson(response.body(), MyClassRoomTeacherResModel.class);
-                return ResponseApi.success(myClassRoomResModel, status);
+                MyClassRoomResModel myClassRoomResModel = gson.fromJson(response.body(), MyClassRoomResModel.class);
+                return ResponseApi.success(myClassRoomResModel.getTeacherResModel(), status);
 
             case GET_PROFILE_TEACHER_API:
                 MyProfileResModel resModel = gson.fromJson(response.body(), MyProfileResModel.class);

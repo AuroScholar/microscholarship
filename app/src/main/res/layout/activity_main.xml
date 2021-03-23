@@ -35,7 +35,7 @@
             android:padding="10dp"
             android:text="Teacher SDk"
             android:textColor="@color/white"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
 
         <EditText
