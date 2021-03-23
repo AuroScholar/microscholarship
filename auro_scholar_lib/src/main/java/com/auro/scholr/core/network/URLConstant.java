@@ -70,4 +70,10 @@ public interface URLConstant {
 
     String EXAM_IMAGE_API=BASE_URL+"exam_img.php";
 
+    String CERTIFICATE_API  = "https://auroscholar.com/api/gen_certificate_api.php";
+
+    String PASSPORT_API=BASE_URL+"passport.php";
+
+    String UPDATE_STUDENT_PROFILE = "update_profile.php";
+
 }

@@ -47,10 +47,11 @@ public class HomeModule {
     }
 
 
+
     @Provides
     @Singleton
-    HomeDbUseCase provideHomeDbUseCase() {
-        return new HomeDbUseCase();
+    HomeDbUseCase provideHomeDbUseCase(HomeRepo.DashboardDbData homeDbDashboard) {
+        return new HomeDbUseCase(homeDbDashboard);
     }
 
 
@@ -184,4 +185,27 @@ public class HomeModule {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
     }
 
+    @Provides
+    @Singleton
+    @Named("StudentProfileFragment")
+    ViewModelFactory provideStudentProfileViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
+
+
+    @Provides
+    @Singleton
+    @Named("WalletInfoDetailFragment")
+    ViewModelFactory provideWalletAmountViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
+
+
+
+    @Provides
+    @Singleton
+    @Named("CertificateFragment")
+    ViewModelFactory provideCertificateFragmentViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
 }

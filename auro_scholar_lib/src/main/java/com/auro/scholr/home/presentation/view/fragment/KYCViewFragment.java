@@ -47,6 +47,7 @@ import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomSnackBar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -217,7 +218,9 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             //callNumber();
             openSendMoneyFragment();
         } else if (v.getId() == R.id.wallet_info) {
-            openTransactionFragment();
+          //  firebaseEventUtil.logEvent(getContext(), getResources().getString(R.string.event_payment_info_page), new HashMap<>());
+            // openTransactionFragment();
+            openWalletInfoFragment();
         }
     }
 
@@ -301,6 +304,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 binding.stepTwo.textVerifyMsg.setText(R.string.document_verified);
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
+                binding.btModifyAll.setVisibility(View.GONE);
                 binding.stepTwo.textVerifyMsg.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.ufo_green));
                 int approvedMoney = ConversionUtil.INSTANCE.convertStringToInteger(dashboardResModel.getApproved_scholarship_money());
                 if (approvedMoney < 1) {
@@ -411,6 +415,14 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 return false;
             }
         });
+    }
+
+    private void openWalletInfoFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        WalletInfoDetailFragment fragment = new WalletInfoDetailFragment();
+        fragment.setArguments(bundle);
+        openFragment(fragment);
     }
 
 }

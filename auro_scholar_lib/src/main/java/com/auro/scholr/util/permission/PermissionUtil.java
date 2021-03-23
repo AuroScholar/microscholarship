@@ -58,7 +58,7 @@ public class PermissionUtil {
     public static final String[] mContactPermission = new String[]{READ_CONTACTS};
     public static final String[] mLocationPermission = new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION};
     private static final String[] mSMSPermission = new String[]{SEND_SMS, READ_SMS};
-    private static final String[] mStorage = new String[]{READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE};
+    public static final String[] mStorage = new String[]{READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE};
     private static final String[] mStorageAndLocation = new String[]{READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION};
     private static final String[] mReceiveSmsPermissions = new String[]{RECEIVE_SMS};
 

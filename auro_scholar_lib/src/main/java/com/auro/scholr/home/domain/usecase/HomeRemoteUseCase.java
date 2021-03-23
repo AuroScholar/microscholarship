@@ -11,20 +11,26 @@ import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AssignmentResModel;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AzureResModel;
+import com.auro.scholr.home.data.model.CertificateResModel;
 import com.auro.scholr.home.data.model.ChallengeAccepResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
 import com.auro.scholr.home.data.model.FriendListResDataModel;
 import com.auro.scholr.home.data.model.FriendRequestList;
+import com.auro.scholr.home.data.model.GetStudentUpdateProfile;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.data.model.NearByFriendList;
 import com.auro.scholr.home.data.model.SaveImageReqModel;
+import com.auro.scholr.home.data.model.StudentProfileModel;
+import com.auro.scholr.home.data.model.passportmodels.PassportMonthModel;
+import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.teacher.data.model.response.TeacherResModel;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -43,6 +49,7 @@ import static com.auro.scholr.core.common.Status.ACCEPT_INVITE_CLICK;
 import static com.auro.scholr.core.common.Status.ACCEPT_INVITE_REQUEST;
 import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
 import static com.auro.scholr.core.common.Status.AZURE_API;
+import static com.auro.scholr.core.common.Status.CERTIFICATE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
 import static com.auro.scholr.core.common.Status.DYNAMIC_LINK_API;
@@ -50,8 +57,10 @@ import static com.auro.scholr.core.common.Status.GRADE_UPGRADE;
 import static com.auro.scholr.core.common.Status.FIND_FRIEND_DATA;
 import static com.auro.scholr.core.common.Status.FRIENDS_REQUEST_LIST;
 import static com.auro.scholr.core.common.Status.INVITE_FRIENDS_LIST;
+import static com.auro.scholr.core.common.Status.PASSPORT_API;
 import static com.auro.scholr.core.common.Status.SEND_FRIENDS_REQUEST;
 import static com.auro.scholr.core.common.Status.SEND_INVITE_API;
+import static com.auro.scholr.core.common.Status.UPDATE_STUDENT;
 import static com.auro.scholr.core.common.Status.UPLOAD_EXAM_FACE_API;
 
 public class HomeRemoteUseCase extends NetworkUseCase {
@@ -169,6 +178,23 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         });
     }
 
+    public Single<ResponseApi> uploadStudentProfile(StudentProfileModel studentUpdateProfile) {
+
+        return dashboardRemoteData.studentUpdateProfile(studentUpdateProfile).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+
+                    return handleResponse(response, UPDATE_STUDENT);
+
+                } else {
+
+                    return responseFail(UPDATE_STUDENT);
+                }
+            }
+        });
+    }
     public Single<ResponseApi> friendAcceptApi(int friend_request_id, String request_status) {
 
         return dashboardRemoteData.friendAcceptApi(friend_request_id, request_status).map(new Function<Response<JsonObject>, ResponseApi>() {
@@ -322,6 +348,40 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         });
     }
 
+    public Single<ResponseApi> getCertificateApi(CertificateResModel reqModel) {
+        return dashboardRemoteData.getCertificateApi(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+                if (response != null) {
+
+                    return handleResponse(response, CERTIFICATE_API);
+
+                } else {
+
+                    return responseFail(null);
+                }
+
+            }
+        });
+    }
+
+    public Single<ResponseApi> getPassportApi(PassportReqModel reqModel) {
+        return dashboardRemoteData.passportApi(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+                if (response != null) {
+
+                    return handleResponse(response, PASSPORT_API);
+
+                } else {
+
+                    return responseFail(null);
+                }
+
+            }
+        });
+    }
+
     private ResponseApi handleResponse(Response<JsonObject> response, Status apiTypeStatus) {
 
         switch (response.code()) {
@@ -397,6 +457,17 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         } else if(status ==  DYNAMIC_LINK_API){
             DynamiclinkResModel dynamiclinkResModel = new Gson().fromJson(response.body(),DynamiclinkResModel.class);
             return ResponseApi.success(dynamiclinkResModel,status);
+        }else if (status == PASSPORT_API) {
+            PassportMonthModel passportMonthModel = gson.fromJson(response.body(), PassportMonthModel.class);
+            AppLogger.v("RemoteApi",""+PASSPORT_API);
+            return ResponseApi.success(passportMonthModel, status);
+        }else if (status == CERTIFICATE_API) {
+            CertificateResModel certificateResModel = gson.fromJson(response.body(), CertificateResModel.class);
+            return ResponseApi.success(certificateResModel, status);
+        } else if (status == UPDATE_STUDENT) {
+            GetStudentUpdateProfile getStudentUpdateProfile = gson.fromJson(response.body(), GetStudentUpdateProfile.class);
+            AppLogger.v("RemoteApi",""+UPDATE_STUDENT);
+            return ResponseApi.success(getStudentUpdateProfile, status);
         }
 
 

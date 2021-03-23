@@ -66,11 +66,14 @@ import com.auro.scholr.home.data.model.AssignmentReqModel;
 
 import com.auro.scholr.home.data.model.CustomSnackBarModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.home.data.model.NavItemModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.RandomInviteFriendsDataModel;
 import com.auro.scholr.home.data.model.SubjectResModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 
+import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.home.presentation.view.adapter.DrawerListAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemNewAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
@@ -134,6 +137,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     FirebaseEventUtil firebaseEventUtil;
     Map<String, String> logparam;
     ActionBarDrawerToggle mDrawerToggle;
+    ArrayList<NavItemModel> mNavItems = new ArrayList<NavItemModel>();
+    DrawerListAdapter drawerListAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -175,6 +180,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         setRetainInstance(true);
         ViewUtil.setLanguage(Locale.getDefault().getLanguage());
         ViewUtil.setLanguageonUi(getActivity());
+        setDrawerItemList(0, 0);
         return binding.getRoot();
     }
 
@@ -223,10 +229,14 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         //PRADEEP
         lockDrawerMenu();
         AppLogger.e("handleback","AuroApp.getAuroScholarModel()");
+
+
+
+        setPrefData();
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
         binding.swipeRefreshLayout.setOnRefreshListener(this);
 
-        setNavHeaderText();
+       // setNavHeaderText();
     }
 
     @Override
@@ -302,6 +312,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         } else {
             setLangOnUi(AppConstant.ENGLISH);
         }
+
+
     }
 
     @Override
@@ -433,10 +445,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     private void checkForFriendsLeaderBoard() {
         if (dashboardResModel.getFeature() == 0) {
             binding.customUiSnackbar.inviteParentLayout.setVisibility(View.VISIBLE);
-            binding.navView.getMenu().findItem(R.id.nav_friends_leaderboard).setVisible(true);
+          //  binding.navView.getMenu().findItem(R.id.nav_friends_leaderboard).setVisible(true);
+            setDrawerItemList(1, 1);
         } else {
             binding.customUiSnackbar.inviteParentLayout.setVisibility(View.GONE);
-            binding.navView.getMenu().findItem(R.id.nav_friends_leaderboard).setVisible(false);
+           // binding.navView.getMenu().findItem(R.id.nav_friends_leaderboard).setVisible(false);
+            setDrawerItemList(0, 0);
         }
     }
 
@@ -447,6 +461,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             //   setQuizListAdapter(dashboardResModel.getQuiz());
             setQuizListNewAdapter();
             //setQuizWonListAdapter(dashboardResModel.getSubjectResModelList());
+            setNavHeaderText();
             getSpannableString();
         }
 
@@ -536,6 +551,14 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                         .getSimpleName())
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
+    }
+
+    private void openWalletAmountlistFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        WalletInfoDetailFragment fragment = new WalletInfoDetailFragment();
+        fragment.setArguments(bundle);
+        openFragment(fragment);
     }
 
     @Override
@@ -1045,21 +1068,140 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     private void setNavHeaderText()
     {
-        TextView login_txt = binding.navView.getHeaderView(0).findViewById(R.id.login_id);
-        TextView class_txt = binding.navView.getHeaderView(0).findViewById(R.id.txtClass);
-        if (AuroApp.getAuroScholarModel() != null && !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getMobileNumber()) &&
-                !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getStudentClass())) {
-            login_txt.setVisibility(View.VISIBLE);
-            class_txt.setVisibility(View.VISIBLE);
-            login_txt.setText(getActivity().getString(R.string.mobile_num) + AuroApp.getAuroScholarModel().getMobileNumber());
-            class_txt.setText(getActivity().getString(R.string.student_class) + AuroApp.getAuroScholarModel().getStudentClass());
-        }else
-        {
-            login_txt.setVisibility(View.GONE);
-            class_txt.setVisibility(View.GONE);
+        TextView login_txt = binding.navHeader.findViewById(R.id.login_id);
+        login_txt.setText(getActivity().getString(R.string.mobile_num) + dashboardResModel.getPhonenumber());
+
+        TextView class_txt = binding.navHeader.findViewById(R.id.txtClass);
+        class_txt.setText(getActivity().getString(R.string.student_class) + dashboardResModel.getStudentclass());
+
+
+
+    }
+
+
+    private void setDrawerItemList(int status, int val) {
+        mNavItems.clear();
+        mNavItems.add(new NavItemModel(getActivity().getResources().getString(R.string.student_profile), "", R.drawable.ic_student_profile));
+
+        mNavItems.add(new NavItemModel(getActivity().getResources().getString(R.string.passport), getActivity().getResources().getString(R.string.analytics_more), R.drawable.ic_student_pass));
+
+        mNavItems.add(new NavItemModel(getActivity().getResources().getString(R.string.kyc_verification), "", R.drawable.ic_verification));
+
+        mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.certificates), "", R.drawable.ic_certificate_icon));
+
+        mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.payment_info), "", R.drawable.ic_payment_info));
+
+       // mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.change_language), "", R.drawable.ic_language));
+
+        mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.privacy_policy), "", R.drawable.ic_policy));
+        // DrawerLayout
+        if (status == 0) {
+            drawerListAdapter = new DrawerListAdapter(getActivity(), mNavItems);
+            binding.navList.setAdapter(drawerListAdapter);
+            // Drawer Item click listeners
+            binding.navList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    handleDrawerItemClick(position);
+                }
+            });
+        } else {
+            if (drawerListAdapter != null) {
+                drawerListAdapter.udpateList(mNavItems);
+            }
+        }
+    }
+
+    private void handleDrawerItemClick(int position) {
+
+        switch (position) {
+            case 0:
+                /*Profile*/
+                openStudentFragment();
+                break;
+
+            case 1:
+                /*Passport*/
+                openTransactionsFragment();
+                break;
+
+            case 2:
+                /*KYC Verification*/
+                if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+                    openKYCViewFragment(dashboardResModel);
+                } else {
+                    openKYCFragment(dashboardResModel);
+                }
+                break;
+
+            case 3:
+                /*Certificates*/
+                openCertificateFragment();
+                break;
+
+            case 4:
+                /*Payment Info*/
+                openWalletAmountlistFragment();
+                break;
+
+          //  case 5:
+                /*Change Grade*/
+               // ((HomeActivity) getActivity()).openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
+                // openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
+           /* if (AuroApp.getAuroScholarModel().getSdkcallback() != null) {
+                AuroApp.getAuroScholarModel().getSdkcallback().commonCallback(Status.NAV_CHANGE_GRADE_CLICK, "");
+            }*/
+              //  break;
+
+           /* case 7:
+                *//*Change Language*//*
+               // openChangeLanguageDialog();
+                break;
+*/
+            case 5:
+                /*Privacy Policy*/
+                openFragment(new PrivacyPolicyFragment());
+                break;
+
+
+
+
         }
 
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
 
+    }
+    public void openTransactionsFragment() {
+        Bundle bundle = new Bundle();
+        TransactionsFragment transactionsFragment = new TransactionsFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        transactionsFragment.setArguments(bundle);
+        openFragment(transactionsFragment);
+    }
+
+    public void setPrefData(){
+        if(AuroApp.getAuroScholarModel()!= null) {
+            PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+            prefModel.setUserMobile(AuroApp.getAuroScholarModel().getMobileNumber());
+            prefModel.setStudentClass(ConversionUtil.INSTANCE.convertStringToInteger(AuroApp.getAuroScholarModel().getStudentClass()));
+            AppPref.INSTANCE.setPref(prefModel);
+        }
+    }
+
+
+    public void openStudentFragment() {
+        Bundle bundle = new Bundle();
+        StudentProfileFragment studentProfile = new StudentProfileFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+
+        studentProfile.setArguments(bundle);
+        openFragment(studentProfile);
+    }
+    /*For testing purpose*/
+    public void openCertificateFragment() {
+        Bundle bundle = new Bundle();
+        CertificateFragment certificateFragment = new CertificateFragment();
+        openFragment(certificateFragment);
     }
 }
 

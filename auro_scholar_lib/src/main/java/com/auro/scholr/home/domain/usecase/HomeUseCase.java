@@ -19,9 +19,12 @@ import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.MonthlyScholarShipModel;
 import com.auro.scholr.home.data.model.QuizResModel;
+import com.auro.scholr.home.data.model.StudentProfileModel;
 import com.auro.scholr.home.data.model.SubjectResModel;
 import com.auro.scholr.home.data.model.newDashboardModel.ChapterResModel;
 import com.auro.scholr.home.data.model.newDashboardModel.QuizTestDataModel;
+import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
+import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
@@ -33,6 +36,10 @@ import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.i18n.phonenumbers.PhoneNumberMatch;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -155,6 +162,37 @@ public class HomeUseCase {
             assignmentReqModel.setExamlang("H");
         }
         return assignmentReqModel;
+    }
+    public ValidationModel validateStudentProfile(StudentProfileModel demographicResModel) {
+        if (demographicResModel.getUserName().equalsIgnoreCase("Guest") || TextUtil.isEmpty(demographicResModel.getUserName())) {
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_ENTER_YOUR_NAME);
+        }
+      /*  if (TextUtil.isEmpty(demographicResModel.getEmailID())) {
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_ENTER_EMAIL_ID);
+        }*/
+        if (demographicResModel.getGender().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_GENDER)) {
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_GENDER);
+        }
+        if (demographicResModel.getSchool_type().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_SCHOOL)) {
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_SCHOOL);
+        }
+        if (demographicResModel.getBoard_type().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_BOARD)) {
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_BOARD);
+        }
+        if (demographicResModel.getLanguage().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_LANGUAGE_MEDIUM)) {
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_LANGUAGE_MEDIUM);
+        }
+
+        if (demographicResModel.getIsPrivateTution().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
+            if (demographicResModel.getPrivateTutionType().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_PRIVATE_TUTION) || TextUtil.isEmpty(demographicResModel.getPrivateTutionType())) {
+                return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_PRIVATE_TUTION);
+            }
+        }
+
+
+
+        return new ValidationModel(true, "");
+
     }
 
 
@@ -474,6 +512,63 @@ public class HomeUseCase {
         quizTestDataModel.setScorePercentage(percentage);
         quizTestDataModel.setChapter(makeChapterList());
         return quizTestDataModel;
+    }
+
+    public List<StateDataModel> readStateData() {
+        List<StateDataModel> stateList = new ArrayList<>();
+        InputStream inStream = AuroApp.getAppContext().getResources().openRawResource(R.raw.state);
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
+        String line = "";
+        try {
+            while ((line = buffer.readLine()) != null) {
+                String[] colums = line.split(",");
+                if (colums.length != 7) {
+                    AppLogger.d("CSVParser", "Skipping Bad CSV Row");
+                    continue;
+                } else {
+                    StateDataModel stateDataModel = new StateDataModel();
+                    stateDataModel.setState_code(colums[0].replaceAll("\"", ""));
+                    stateDataModel.setState_name(colums[1].replaceAll("\"", ""));
+                    stateDataModel.setShort_name(colums[2].replaceAll("\"", ""));
+                    stateDataModel.setActive_status(colums[3].replaceAll("\"", ""));
+                    stateDataModel.setFlag(colums[6].replaceAll("\"", ""));
+                    stateList.add(stateDataModel);
+                    AppLogger.d("CSVParser", "state_name" + colums[1]);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stateList;
+    }
+
+
+    public List<DistrictDataModel> readDistrictData() {
+        List<DistrictDataModel> districtList = new ArrayList<>();
+        InputStream inStream = AuroApp.getAppContext().getResources().openRawResource(R.raw.district);
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
+        String line = "";
+        try {
+            while ((line = buffer.readLine()) != null) {
+                String[] colums = line.split(",");
+                if (colums.length != 7) {
+                    AppLogger.d("CSVParser", "Skipping Bad CSV Row");
+                    continue;
+                } else {
+                    DistrictDataModel districtDataModel = new DistrictDataModel();
+                    districtDataModel.setState_code(colums[0].replaceAll("\"", ""));
+                    districtDataModel.setDistrict_code(colums[1].replaceAll("\"", ""));
+                    districtDataModel.setDistrict_name(colums[2].replaceAll("\"", ""));
+                    districtDataModel.setActive_status(colums[3].replaceAll("\"", ""));
+                    districtDataModel.setFlag(colums[6].replaceAll("\"", ""));
+                    districtList.add(districtDataModel);
+                    AppLogger.d("CSVParser", "district_name" + colums[2]);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return districtList;
     }
 
     private List<ChapterResModel> makeChapterList() {

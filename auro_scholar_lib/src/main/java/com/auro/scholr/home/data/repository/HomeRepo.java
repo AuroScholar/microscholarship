@@ -2,11 +2,16 @@ package com.auro.scholr.home.data.repository;
 
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
+import com.auro.scholr.home.data.model.CertificateResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.SaveImageReqModel;
+import com.auro.scholr.home.data.model.StudentProfileModel;
+import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
+import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
+import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.google.gson.JsonObject;
 
@@ -48,11 +53,27 @@ public interface HomeRepo {
 
         Single<Response<JsonObject>> uploadStudentExamImage(SaveImageReqModel reqModel);
 
+        Single<Response<JsonObject>> getCertificateApi(CertificateResModel model);
+
+        Single<Response<JsonObject>> passportApi(PassportReqModel reqModel);
+
+        Single<Response<JsonObject>> studentUpdateProfile(StudentProfileModel model);
+
     }
 
 
+
     interface DashboardDbData {
-        Single<Integer> getStoreDataCount();
+        Single<Long[]> insertStateList(List<StateDataModel> stateDataModelList);
+
+        Single<Long[]> insertDistrictList(List<DistrictDataModel> stateDataModelList);
+
+        Single<List<StateDataModel>> getStateList();
+
+        Single<List<DistrictDataModel>> getDistrictList();
+
+
+        Single<List<DistrictDataModel>> getStateDistrictList(String stateCode);
 
     }
 

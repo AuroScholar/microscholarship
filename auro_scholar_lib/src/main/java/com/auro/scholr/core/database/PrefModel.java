@@ -18,10 +18,28 @@ public class PrefModel implements Serializable {
 
     private AssignmentReqModel assignmentReqModel;
     private boolean tooltipStatus;
+    private String userMobile;
+
+    private int studentClass;
     private List<AssignmentReqModel> listAzureImageList = new ArrayList<>();
 
     private DynamiclinkResModel dynamiclinkResModel;
 
+    public int getStudentClass() {
+        return studentClass;
+    }
+
+    public void setStudentClass(int studentClass) {
+        this.studentClass = studentClass;
+    }
+
+    public String getUserMobile() {
+        return userMobile;
+    }
+
+    public void setUserMobile(String userMobile) {
+        this.userMobile = userMobile;
+    }
 
     public AssignmentReqModel getAssignmentReqModel() {
         return assignmentReqModel;
