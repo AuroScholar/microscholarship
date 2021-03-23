@@ -146,7 +146,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingRight="@dimen/_10sdp"
                                 android:layout_gravity="bottom"
-                                android:text="Guest"
+                                android:text="@string/guest"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_15sdp"
                                 />

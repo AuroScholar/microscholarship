@@ -136,10 +136,10 @@
     <string name="english">English</string>
     <string name="sucessfully_uploaded">Sucessfully Uploaded</string>
     <string name="auro_scholar_demographics_details">Auro Scholar Demographics Details</string>
-    <string name="gender">Gender</string>
-    <string name="school_type">School Type</string>
-    <string name="board">Board</string>
-    <string name="language_medium">Language medium</string>
+    <string name="gender">Gender*</string>
+    <string name="school_type">School Type*</string>
+    <string name="board">Board*</string>
+    <string name="language_medium">Language medium*</string>
 
     <string-array name="genderlist">
         <item>Please Select Gender</item>
@@ -254,7 +254,7 @@
     <string name="save_more_details">Save More Details?</string>
     <string name="teacher_name">Teacher Name<b>*</b> "</string>
 
-    <string name="email_address">Email Address<b>*</b></string>
+    <string name="email_address">Email Address</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="skip_for_now"><u>Skip For Now</u></string>
     <string name="select_your_message">Select Your Message</string>
@@ -339,8 +339,8 @@
     <string name="impossible">It always seems impossible until it’s done.</string>
     <string name="accept">Accept</string>
     <string name="challenge">Challenge</string>
-    <string name="taking_private_tutions">Taking Private Tutions ?</string>
-    <string name="taking_type">Tution Type</string>
+    <string name="taking_private_tutions">Taking Private Tutions* ?</string>
+    <string name="taking_type">Tution Type*</string>
     <string name="challenged_you">Challenged You</string>
     <string name="book_free_tutoring_session">Book Free Tutoring Session</string>
     <string name="retake">Retake</string>
@@ -453,5 +453,6 @@
     <string name="wl_scholarship_amounta_approved">Scholarship Amount Approved</string>
     <string name="update_auroscholar">Update Auroscholar?</string>
     <string name="updateMessage">We have worked harder to improve the app, Please click the button below to update.</string>
+    <string name="guest">Guest</string>
 
 </resources>
