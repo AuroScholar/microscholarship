@@ -1,4 +1,4 @@
-## AuroScholar MicroScholarship Android  library
+# AuroScholar MicroScholarship Android  library
 
 ![alt text](./AuroSholar.png "AuroScholar Logo")
 
@@ -21,7 +21,7 @@ Step 1 : Add the dependency in your app/build.gradle(:app)
 
 ```swift
 dependencies {
-	          implementation 'com.github.AuroScholar:microscholarship:1.1.73'
+	          implementation 'com.github.AuroScholar:TeacherSdk:1.1.72'
 
 	}
 ```
@@ -82,28 +82,39 @@ Step 5 : For open then AuroScholar Fragment or Start the Auro Scholar sdk
 ----
 ```swift
 
-AuroScholarInputModel inputModel= new AuroScholarInputModel();
-// Important Params
-inputModel.setMobileNumber("mobile number here"); //Mandatory
-inputModel.setActivity(Activity Context Here); //Mandatory
-inputModel.setFragmentContainerUiId(Container id Here); //Mandatory Example :- R.id.containerId
-inputModel.setStudentClass("put student class here"); //Mandatory
-inputModel.setReferralLink("Put here branch or any other referral Link");
-inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
-inputModel.setPartnerSource("Your Id here"); // This id provided by Auro Scholar to the partner.
-inputModel.setLanguage("Enter Your Prefrence Language");// In Small Letter Eg. Hindi - hi or English-en
-inputModel.setApplicationLang(false);
-//Eg:-inputModel.setLanguage("hi");
-//This method returns a Fragment Instance
-Fragment fragment= AuroScholar.startAuroSDK(inputModel);
 
-  ((AppCompatActivity) (this)).getSupportFragmentManager()
-                .beginTransaction()
-                .setReorderingAllowed(true)
-                .replace(R.id.home_container, fragment, SampleFragment.class
-                        .getSimpleName())
-                .addToBackStack(null)
-                .commitAllowingStateLoss();
+
+  AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
+        auroScholarDataModel.setMobileNumber("mobile number here");//Mandatory
+        auroScholarDataModel.setRegitrationSource("Your app name");//Mandatory
+        auroScholarDataModel.setShareType("teacher");//Mandatory 
+        auroScholarDataModel.setActivity(Activity Context Here);//Mandatory
+	auroScholarDataModel.setPartnerSource("enter here your partner source id");
+        auroScholarDataModel.setUTMLink("Enter UTM Link Here);
+        auroScholarDataModel.setSdkcallback(new SdkCallBack() {
+            @Override
+            public void callBack(String message) {
+                /*Api response here*/
+              
+            }
+
+            @Override
+            public void logOut() {
+               //for logout
+            }
+
+            @Override
+            public void commonCallback(Status status, Object o) {
+                switch (status) {
+                    case BOOK_TUTOR_SESSION_CLICK:
+                        /*write your code here*/
+                        break;
+                }
+            }
+        });
+
+
+        AuroScholar.startTeacherSDK(auroScholarDataModel);
 
 ```
 Step 6 : Add these lines in activity in onActivityResult( ) Method.
@@ -136,3 +147,4 @@ Auro Scholar is the world's 1st Micro Scholarship program aimed at encouraging I
 © 2019 AuroScholar
 
 Licensed under the [MIT License](LICENSE).
+
