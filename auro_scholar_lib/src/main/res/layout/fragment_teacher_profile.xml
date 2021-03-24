@@ -223,7 +223,7 @@
 
                                 <ImageView
                                     android:id="@+id/icteachername"
-                                    android:layout_width="0dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="@dimen/_20sdp"
                                     android:layout_gravity="center_vertical"
                                     android:layout_weight="0.5"
@@ -344,7 +344,7 @@
                             android:id="@+id/recycleViewclass"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
@@ -378,7 +378,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:overScrollMode="never"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/txtSubject" />

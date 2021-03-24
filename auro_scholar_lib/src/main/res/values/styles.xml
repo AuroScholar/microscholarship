@@ -189,6 +189,7 @@
     <style name="MyEditText" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/color_dim_grey</item>
         <item name="colorControlActivated">@color/color_dim_grey</item>
+        <item name="colorControlHighlight">@color/color_dim_grey</item>
     </style>
 
     <style name="SpinnerTheme" parent="android:Widget.Spinner">
