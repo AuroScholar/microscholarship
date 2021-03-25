@@ -574,11 +574,11 @@ public class TeacherUseCase {
     public ValidationModel checkTeacherProfileValidation(TeacherReqModel reqModel) {
         if (TextUtil.isEmpty(reqModel.getTeacher_name())) {
             return new ValidationModel(false, "Please enter the teacher name");
-        } else if (TextUtil.isEmpty(reqModel.getTeacher_email())) {
+        } else /*if (TextUtil.isEmpty(reqModel.getTeacher_email())) {
             return new ValidationModel(false, "Please enter the email");
         } else if (!emailValidation(reqModel.getTeacher_email())) {
             return new ValidationModel(false, "Please enter the valid email");
-        } else if (TextUtil.isEmpty(reqModel.getMobile_no())) {
+        } else */if (TextUtil.isEmpty(reqModel.getMobile_no())) {
             return new ValidationModel(false, "Please enter the mobile number");
         } else if (TextUtil.isEmpty(reqModel.getTeacher_class())) {
             return new ValidationModel(false, "Please enter the select the class");

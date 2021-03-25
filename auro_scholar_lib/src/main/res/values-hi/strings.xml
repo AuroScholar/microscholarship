@@ -154,7 +154,7 @@
     <string name="save_more_details">Save More Details?</string>
     <string name="teacher_name">Teacher Name</string>
     <string name="email_address">ईमेल पता</string>
-    <string name="mobile_number">मोबाइल नंबर</string>
+    <string name="mobile_number">मोबाइल नंबर*</string>
     <string name="skip_for_now"><u>Skip For Now</u></string>
     <string name="select_your_message">अपना संदेश चुनें</string>
     <string name="send_message">मेसेज भेजें</string>
