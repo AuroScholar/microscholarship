@@ -30,8 +30,13 @@ public class MyClassRoomStudentResModel implements Parcelable {
     @Expose
     private String invite_date;
 
+    @SerializedName("total_quizes")
+    @Expose
+    private int  totalQuizes;
+
     int year;
     int monthNumber;
+
 
     protected MyClassRoomStudentResModel(Parcel in) {
         sudentName = in.readString();
@@ -40,6 +45,7 @@ public class MyClassRoomStudentResModel implements Parcelable {
         studentPhoto = in.readString();
         registration_date = in.readString();
         invite_date = in.readString();
+        totalQuizes = in.readInt();
         year = in.readInt();
         monthNumber = in.readInt();
     }
@@ -52,6 +58,7 @@ public class MyClassRoomStudentResModel implements Parcelable {
         dest.writeString(studentPhoto);
         dest.writeString(registration_date);
         dest.writeString(invite_date);
+        dest.writeInt(totalQuizes);
         dest.writeInt(year);
         dest.writeInt(monthNumber);
     }
@@ -137,4 +144,11 @@ public class MyClassRoomStudentResModel implements Parcelable {
         this.studentPhoto = studentPhoto;
     }
 
+    public int getTotalQuizes() {
+        return totalQuizes;
+    }
+
+    public void setTotalQuizes(int totalQuizes) {
+        this.totalQuizes = totalQuizes;
+    }
 }

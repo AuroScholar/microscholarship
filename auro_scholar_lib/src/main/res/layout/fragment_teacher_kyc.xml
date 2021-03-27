@@ -68,6 +68,7 @@
 
                         <RelativeLayout
                             android:id="@+id/rlpayment"
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_15sdp"
@@ -80,10 +81,10 @@
                             <LinearLayout
                                 android:id="@+id/linearLayout4"
                                 android:layout_width="wrap_content"
-
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:visibility="invisible">
 
                                 <com.auro.scholr.core.util.uiwidget.RPTextView
                                     android:layout_width="wrap_content"
@@ -173,8 +174,8 @@
                                     android:id="@+id/rvDoucumentUpload"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    app:layout_constraintEnd_toEndOf="parent"
                                     android:overScrollMode="never"
+                                    app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -185,8 +186,8 @@
                                     android:layout_marginLeft="@dimen/_20sdp"
                                     android:layout_marginTop="@dimen/_20sdp"
                                     android:layout_marginRight="@dimen/_20sdp"
-                                    android:visibility="gone"
                                     android:background="@drawable/rectangle_backs"
+                                    android:visibility="gone"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/rvDoucumentUpload">

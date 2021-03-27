@@ -60,11 +60,11 @@ public class MyClassroomAdapter extends RecyclerView.Adapter<MyClassroomAdapter.
             this.binding = binding;
         }
 
-        public void setData(List<MyClassRoomStudentResModel> mValues,MyClassRoomStudentResModel model, int position) {
+        public void setData(List<MyClassRoomStudentResModel> mValues, MyClassRoomStudentResModel model, int position) {
 
-            if(mValues.size()-1 == position){
+            if (mValues.size() - 1 == position) {
                 binding.viewLine.setVisibility(View.GONE);
-            }else{
+            } else {
                 binding.viewLine.setVisibility(View.VISIBLE);
             }
             if (model != null && !TextUtil.isEmpty(model.getSudentName())) {
@@ -75,19 +75,18 @@ public class MyClassroomAdapter extends RecyclerView.Adapter<MyClassroomAdapter.
 
             if (model != null && !TextUtil.isEmpty(model.getSudentMobile())) {
                 binding.mobileText.setText(model.getSudentMobile());
-            }else
-            {
+            } else {
                 binding.mobileText.setVisibility(View.GONE);
             }
 
 
-            if (model != null && !TextUtil.isEmpty(model.getTotalScore())) {
-                getSpannableString(binding.scoreText, model.getTotalScore());
+            if (model != null && !TextUtil.isEmpty(model.getTotalScore()) && model.getTotalQuizes()>0) {
+                getSpannableString(binding.scoreText, model.getTotalScore()+"/"+(model.getTotalQuizes() *10));
             } else {
                 getSpannableString(binding.scoreText, "0");
             }
             if (model != null && !TextUtil.isEmpty(model.getStudentPhoto())) {
-                ImageUtil.loadCircleImage(binding.profileImage, model.getStudentPhoto());
+                 ImageUtil.loadCircleImage(binding.profileImage, model.getStudentPhoto());
             }
             binding.numberText.setText("" + (position + 1) + ".");
 
@@ -113,7 +112,7 @@ public class MyClassroomAdapter extends RecyclerView.Adapter<MyClassroomAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder Vholder, int position) {
-        Vholder.setData(mValues,mValues.get(position), position);
+        Vholder.setData(mValues, mValues.get(position), position);
 
 
     }

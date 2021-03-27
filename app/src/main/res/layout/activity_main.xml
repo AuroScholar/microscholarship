@@ -20,7 +20,7 @@
             android:background="@color/color_red"
             android:padding="10dp"
             android:text="Student SDK"
-            android:visibility="visible"
+            android:visibility="gone"
             android:textColor="@color/white" />
 
         <TextView
@@ -61,7 +61,7 @@
             android:layout_marginRight="@dimen/_35sdp"
             android:inputType="phone"
             android:maxLength="2"
-            android:visibility="visible"
+            android:visibility="gone"
             android:hint="Please Enter class"
             android:layout_below="@+id/mobile_number"/>
 
@@ -75,7 +75,7 @@
             android:layout_marginRight="@dimen/_35sdp"
             android:inputType="text"
             android:maxLength="2"
-            android:visibility="visible"
+            android:visibility="gone"
             android:hint="Please select Language"
             android:layout_below="@+id/user_class"/>
 

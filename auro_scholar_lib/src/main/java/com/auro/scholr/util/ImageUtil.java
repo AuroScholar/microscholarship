@@ -21,6 +21,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.Target;
 
 import java.io.File;
@@ -239,36 +240,22 @@ public class ImageUtil {
     public static void loadCircleImage(ImageView imageView, String imagePath)
     {
 
-        Glide.with(imageView.getContext())
-                .asBitmap()
-                .load(imagePath)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .listener(new RequestListener<Bitmap>() {
-                              @Override
-                              public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Bitmap> target, boolean b) {
-                                  return true;
-                              }
-
-                              @Override
-                              public boolean onResourceReady(Bitmap resource, Object o, Target<Bitmap> target, DataSource dataSource, boolean b) {
-                                  // add image to the imageView here
-                                  RoundedBitmapDrawable circularBitmapDrawable =
-                                          RoundedBitmapDrawableFactory.create(AuroApp.getAppContext().getResources(), resource);
-                                  circularBitmapDrawable.setCircular(true);
-
-                                  AuroApp.getAppContext().runOnUiThread(new Runnable() {
-                                      @Override
-                                      public void run() {
-                                          // TODO your Code
-                                          imageView.setImageDrawable(circularBitmapDrawable);
-                                      }
-                                  });
-
-                                  return true;
-                              }
-                          }
-                ).submit();
+        Glide.with(imageView.getContext()).asBitmap().load(imagePath)
+                .apply(RequestOptions.placeholderOf(R.drawable.account_circle)
+                        .error(R.drawable.account_circle)
+                        .centerCrop()
+                        .dontAnimate()
+                        .priority(Priority.IMMEDIATE)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL))
+                .into(new BitmapImageViewTarget(imageView) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(imageView.getContext().getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        imageView.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
     }
 
 }
