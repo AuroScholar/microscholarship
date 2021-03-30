@@ -198,6 +198,7 @@
                                     android:layout_gravity="center"
                                     android:maxLines="1"
                                     android:gravity="center"
+                                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ.-"
                                     android:inputType="textPersonName"
                                     android:maxLength="15" />
 
@@ -416,6 +417,7 @@
                                     android:hint="@string/email_address"
                                     android:inputType="textPersonName"
                                     android:maxLines="1"
+                                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ.-@"
                                     android:paddingRight="@dimen/_20sdp"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/_12sdp"

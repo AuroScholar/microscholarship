@@ -605,7 +605,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
 
         } else if (value == 1) {
 
-            binding.submitbutton.setText(getActivity().getString(R.string.submit));
+            binding.submitbutton.setText(getActivity().getString(R.string.save));
             binding.submitbutton.setEnabled(true);
             binding.progressBar.setVisibility(View.GONE);
         }

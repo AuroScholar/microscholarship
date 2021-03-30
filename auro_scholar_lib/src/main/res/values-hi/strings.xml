@@ -249,6 +249,7 @@
     <string name="yes">हाँ</string>
     <string name="no">नहीं</string>
     <string-array name="privateTutionList">
+        <item>Please Select Private Tution</item>
         <item>No</item>
         <item>YES</item>
     </string-array>

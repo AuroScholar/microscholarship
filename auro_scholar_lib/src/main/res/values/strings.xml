@@ -136,7 +136,9 @@
     <string name="english">English</string>
     <string name="sucessfully_uploaded">Sucessfully Uploaded</string>
     <string name="auro_scholar_demographics_details">Auro Scholar Demographics Details</string>
+    <!--<string name="gender">Gender<font color="#FF0000">*</font></string>-->
     <string name="gender">Gender*</string>
+
     <string name="school_type">School Type*</string>
     <string name="board">Board*</string>
     <string name="language_medium">Language medium*</string>
@@ -170,6 +172,7 @@
         <item>Other</item>
     </string-array>
     <string-array name="privateTutionList">
+        <item>Please Select Private Tution</item>
         <item>No</item>
         <item>YES</item>
     </string-array>

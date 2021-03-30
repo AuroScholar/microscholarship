@@ -75,6 +75,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
     MonthDataModel spinnerSubject;
     boolean userClick = false;
     PassportSpinnerAdapter subjectSpinner;
+    List<MonthDataModel> subjectResModelList;
 
 
     public TransactionsFragment() {
@@ -271,6 +272,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
             binding.monthSpinner.performClick();
         } else if (id == R.id.subject_parent_layout) {
             userClick = true;
+            AppLogger.e(TAG,"subject_parent_layout on click");
             binding.subjectSpinner.performClick();
         }
     }
@@ -369,7 +371,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
     }
 
     private void monthSpinner() {
-        PrefModel prefModel =  AppPref.INSTANCE.getModelInstance();
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         DashboardResModel dashboardResModel = prefModel.getDashboardResModel();
         String date = dashboardResModel.getRegistrationdate();
         //  String date = "2020-05-01 16:22:56";
@@ -407,7 +409,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
     }
 
     private void SubjectSpinner(PassportMonthModel passportMonthModel, int status) {
-        List<MonthDataModel> subjectResModelList = new ArrayList<>();
+        subjectResModelList = new ArrayList<>();
         if (status == 1) {
             for (String subjectName : passportMonthModel.getSubjects()) {
                 MonthDataModel monthDataModelnew = new MonthDataModel();
@@ -448,14 +450,8 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
                         AppLogger.e(TAG, "on subject selected" + spinnerSubject.getMonth());
                         binding.subjectTitle.setText(subjectResModelList.get(position).getMonth());
                         checkCallApiStatus();
-                    } else {
-                        if (subjectResModelList.size() == 1) {
-                            spinnerSubject = subjectResModelList.get(position);
-                            AppLogger.e(TAG, "on subject selected" + spinnerSubject.getMonth());
-                            binding.subjectTitle.setText(subjectResModelList.get(position).getMonth());
-                            checkCallApiStatus();
-                        }
                     }
+
                 }
 
                 @Override
@@ -464,13 +460,36 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
                 }
             });
 
-            binding.subjectSpinner.setSelection(subjectResModelList.size() - 1);
+
+        }
+        if (!TextUtil.checkListIsEmpty(subjectResModelList) && subjectResModelList.size() > 1) {
+            setCurrentSubject();
+        }
+        if (!TextUtil.checkListIsEmpty(subjectResModelList) && subjectResModelList.size() ==1) {
+            binding.subjectSpinner.setSelection(0);
+            binding.subjectTitle.setText(subjectResModelList.get(0).getMonth());
         }
     }
 
-    private void setSubjectSpinner() {
-
+    private void setCurrentSubject() {
+        AppLogger.e(TAG, "setCurrentSubject step 1");
+        if (!TextUtil.checkListIsEmpty(subjectResModelList)) {
+            AppLogger.e(TAG, "setCurrentSubject step 2");
+            for (int i = 0; i < subjectResModelList.size(); i++) {
+                String subjectName = binding.subjectTitle.getText().toString();
+                MonthDataModel monthDataModel = subjectResModelList.get(i);
+                AppLogger.e(TAG, "setCurrentSubject step 3 month -" + monthDataModel.getMonth() + "-current month-" + subjectName);
+                if (monthDataModel.getMonth().equalsIgnoreCase(subjectName) || monthDataModel.getMonth().contains(subjectName)) {
+                    AppLogger.e(TAG, "setCurrentSubject step 4 found -" + monthDataModel.getMonth() + "-current month-" + subjectName);
+                    binding.subjectSpinner.setSelection(i);
+                    binding.subjectTitle.setText(monthDataModel.getMonth());
+                }
+            }
+        }
     }
+
+
+
 
 
     private void checkCallApiStatus() {

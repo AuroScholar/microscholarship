@@ -182,6 +182,9 @@ public class HomeUseCase {
         if (demographicResModel.getLanguage().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_LANGUAGE_MEDIUM)) {
             return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_LANGUAGE_MEDIUM);
         }
+        if (demographicResModel.getIsPrivateTution().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_THE_PRIVATE_TUTION)) {
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_SELECT_THE_PRIVATE_TUTION);
+        }
 
         if (demographicResModel.getIsPrivateTution().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
             if (demographicResModel.getPrivateTutionType().equalsIgnoreCase(AppConstant.SpinnerType.PLEASE_SELECT_PRIVATE_TUTION) || TextUtil.isEmpty(demographicResModel.getPrivateTutionType())) {
