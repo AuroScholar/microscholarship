@@ -68,7 +68,7 @@ public interface URLConstant {
 
     String NEW_PAYMENT_API  = "http://auro.auroscholar.com/api/Payment/PostTransaction";
 
-    String EXAM_IMAGE_API=BASE_URL+"exam_img.php";
+    String EXAM_IMAGE_API="https://auroscholar.org/api/exam_img";
 
     String CERTIFICATE_API  = "https://auroscholar.com/api/gen_certificate_api.php";
 

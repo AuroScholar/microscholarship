@@ -9,6 +9,10 @@ public class SaveImageReqModel {
     @Expose
     private String examId;
 
+    @SerializedName("QuestionID")
+    @Expose
+    private String registration_id;
+
     byte[] imageBytes;
 
     public String getExamId() {
@@ -25,5 +29,13 @@ public class SaveImageReqModel {
 
     public void setImageBytes(byte[] imageBytes) {
         this.imageBytes = imageBytes;
+    }
+
+    public String getRegistration_id() {
+        return registration_id;
+    }
+
+    public void setRegistration_id(String registration_id) {
+        this.registration_id = registration_id;
     }
 }

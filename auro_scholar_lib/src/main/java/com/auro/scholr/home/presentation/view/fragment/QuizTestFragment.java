@@ -730,7 +730,9 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void run() {
                 Bitmap bitmap = binding.previewView.getBitmap();
-                processImage(bitmap);
+                if(bitmap!=null) {
+                    processImage(bitmap);
+                }
                 captureImage();
             }
         }, 10000);
@@ -759,6 +761,11 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
                 SaveImageReqModel saveQuestionResModel = new SaveImageReqModel();
                 saveQuestionResModel.setImageBytes(assignmentReqModel.getImageBytes());
                 saveQuestionResModel.setExamId(assignmentResModel.getExamAssignmentID());
+
+                PrefModel prefModel=AppPref.INSTANCE.getModelInstance();
+                DashboardResModel dashboardResModel=prefModel.getDashboardResModel();
+                saveQuestionResModel.setRegistration_id(dashboardResModel.getAuroid());
+
                 quizTestViewModel.uploadExamFace(saveQuestionResModel);
             }
         }
@@ -767,6 +774,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
     void checkNativeCameraEnableOrNot() {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+       // prefModel.getDashboardResModel().setIs_native_image_capturing(true);
         AppLogger.e("checkNativeCameraEnableOrNot--",""+prefModel.getDashboardResModel().isIs_native_image_capturing());
         if (prefModel.getDashboardResModel() != null && prefModel.getDashboardResModel().isIs_native_image_capturing()) {
             if (assignmentResModel != null && !TextUtil.isEmpty(assignmentResModel.getExamAssignmentID())) {

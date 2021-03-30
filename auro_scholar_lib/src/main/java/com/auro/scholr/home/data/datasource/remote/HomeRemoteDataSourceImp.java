@@ -215,8 +215,9 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
     @Override
     public Single<Response<JsonObject>> uploadStudentExamImage(SaveImageReqModel reqModel) {
         RequestBody exam_id = RequestBody.create(okhttp3.MultipartBody.FORM,reqModel.getExamId());
+        RequestBody registration_id = RequestBody.create(okhttp3.MultipartBody.FORM,reqModel.getRegistration_id());
         MultipartBody.Part student_photo = ConversionUtil.INSTANCE.makeMultipartRequestForExamImage(reqModel.getImageBytes());
-        return homeRemoteApi.uploadImage(exam_id,
+        return homeRemoteApi.uploadImage(exam_id,registration_id,
                 student_photo);
     }
 

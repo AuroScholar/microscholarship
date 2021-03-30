@@ -130,6 +130,7 @@ public interface HomeRemoteApi {
     @Multipart
     @POST(URLConstant.EXAM_IMAGE_API)
     Single<Response<JsonObject>> uploadImage(@Part(AppConstant.AssignmentApiParams.EKLAVYA_EXAM_ID) RequestBody description,
+                                             @Part(AppConstant.AssignmentApiParams.REGISTRATION_ID) RequestBody registration_id,
                                              @Part MultipartBody.Part exam_face_image);
 
     @POST(URLConstant.CERTIFICATE_API)
