@@ -199,6 +199,7 @@ public interface AppConstant {
         String PLEASE_SELECT_PRIVATE_TUTION = "Please Select Tution Type";
         String PLEASE_ENTER_YOUR_NAME = "Please Enter Your Name";
         String PLEASE_SELECT_THE_PRIVATE_TUTION = "Please Select Private Tution";
+        String PLEASE_ENTER_VALID_EMAIL = "Please Enter Valid Email";
     }
 
 

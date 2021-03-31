@@ -79,6 +79,7 @@ import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
+import com.auro.scholr.util.alert_dialog.InstructionDialog;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
@@ -119,7 +120,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
     QuizTestViewModel quizTestViewModel;
     QuizResModel quizResModel;
     AssignmentResModel assignmentResModel;
-    CustomDialog customDialog;
+    InstructionDialog customDialog;
     Dialog customProgressDialog;
 
     AssignmentReqModel assignmentReqModel;
@@ -588,16 +589,8 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void openDialog() {
-        CustomDialogModel customDialogModel = new CustomDialogModel();
-        customDialogModel.setContext(getActivity());//bug report on 06/07/2020
-        customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.quiz_instruction));
-        customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.bullted_list));
-        customDialogModel.setTwoButtonRequired(false);
         if (getContext() != null) {
-            customDialog = new CustomDialog(getContext(), customDialogModel);
-
-            // Window window = customDialog.getWindow();
-            // window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            customDialog = new InstructionDialog(getContext());
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(customDialog.getWindow().getAttributes());
             lp.width = WindowManager.LayoutParams.MATCH_PARENT;

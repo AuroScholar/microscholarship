@@ -417,7 +417,7 @@
                                     android:hint="@string/email_address"
                                     android:inputType="textPersonName"
                                     android:maxLines="1"
-                                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ.-@"
+                                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ.-@1234567890"
                                     android:paddingRight="@dimen/_20sdp"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/_12sdp"

@@ -174,7 +174,7 @@
     <string-array name="privateTutionList">
         <item>Please Select Private Tution</item>
         <item>No</item>
-        <item>YES</item>
+        <item>Yes</item>
     </string-array>
 
     <string-array name="privateTypeList">
@@ -195,9 +195,14 @@
         \n \u25CF Quiz contains the 10 questions.
         \n \u25CF Please read each and every question carefully.
         \n \u25CF Camera  will be only used for fraud control purpose.
-
     </string>
 
+
+    <string name="bullet_one">Please read the all instructions carefully</string>
+    <string name="bullet_two">Question bank is powered by Cambridge.</string>
+    <string name="bullet_three">Quiz contains the 10 questions.</string>
+    <string name="bullet_four">Please read each and every question carefully.</string>
+    <string name="bullet_five">Camera  will be only used for fraud control purpose.</string>
 
     <string name="instructions">&#8226; foo \n
 &#8226; bar \n

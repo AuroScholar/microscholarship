@@ -163,6 +163,7 @@ public class HomeUseCase {
         }
         return assignmentReqModel;
     }
+
     public ValidationModel validateStudentProfile(StudentProfileModel demographicResModel) {
         if (demographicResModel.getUserName().equalsIgnoreCase("Guest") || TextUtil.isEmpty(demographicResModel.getUserName())) {
             return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_ENTER_YOUR_NAME);
@@ -192,7 +193,12 @@ public class HomeUseCase {
             }
         }
 
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
+
+        if (!TextUtil.isEmpty(demographicResModel.getEmailID()) && !demographicResModel.getEmailID().matches(emailPattern)) {
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_ENTER_VALID_EMAIL);
+        }
 
         return new ValidationModel(true, "");
 

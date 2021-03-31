@@ -338,7 +338,6 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
             sendProfileScreenApi();
         } else if (id == R.id.editUserNameIcon) {
             AppLogger.v("TextEdit", "   UserName");
-
             binding.UserName.setVisibility(View.GONE);
             binding.editUserNameIcon.setVisibility(View.GONE);
             binding.editProfileName.setVisibility(View.VISIBLE);
@@ -380,9 +379,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
             }
         } else if (id == R.id.linearLayout8) {
             if (!TextUtil.isEmpty(binding.editProfile.getText().toString())) {
-
                 changeTheEditText();
-
             } else {
                 binding.editProfileName.setError("Enter Your Name");
             }
