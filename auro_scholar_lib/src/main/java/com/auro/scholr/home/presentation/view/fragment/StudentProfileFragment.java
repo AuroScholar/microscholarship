@@ -475,7 +475,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
 
     public void spinnermethodcall(List<String> languageLines, AppCompatSpinner spinner) {
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, languageLines);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_list, languageLines);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

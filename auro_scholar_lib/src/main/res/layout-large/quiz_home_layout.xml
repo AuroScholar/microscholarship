@@ -330,13 +330,29 @@
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
-            android:layout_width="@dimen/_180sdp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            app:headerLayout="@layout/nav_header_main"
-            app:theme="@style/MyMenu"
-            app:menu="@menu/drawer_menu"/>
+            android:layout_marginRight="@dimen/_100sdp"
+            android:fitsSystemWindows="true">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/nav_header"
+                    layout="@layout/nav_header_main" />
+
+                <ListView
+                    android:id="@+id/navList"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </com.google.android.material.navigation.NavigationView>
 
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>
