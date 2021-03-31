@@ -1,0 +1,780 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <variable
+            name="studentProfileViewModel"
+            type="com.auro.scholr.home.presentation.viewmodel.StudentProfileViewModel" />
+
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        tools:context=".home.presentation.view.fragment.StudentProfileFragment">
+
+        <RelativeLayout
+            android:id="@+id/main_parent_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/toolbar_layout"
+                layout="@layout/toolbar_header_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_240sdp"
+                android:layout_below="@+id/toolbar_layout"
+                android:scaleType="fitXY"
+                android:src="@drawable/myclassroom_bg"
+                android:visibility="gone" />
+
+
+            <include
+                android:id="@+id/header_top_parent"
+                layout="@layout/quiz_header_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar_layout"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
+
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/parent_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/header_top_parent"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fillViewport="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/header_top_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/profile_image"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+
+                            <ImageView
+                                android:id="@+id/profileimage"
+                                android:layout_width="@dimen/_85sdp"
+                                android:layout_height="@dimen/_85sdp"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/account_circle"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/number_text"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                            <RelativeLayout
+                                android:id="@+id/editImage"
+                                android:layout_width="@dimen/_25sdp"
+                                android:layout_height="@dimen/_25sdp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentBottom="true">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/circle_student_outline" />
+
+                                <ImageView
+                                    android:layout_width="@dimen/_12sdp"
+                                    android:layout_height="@dimen/_12sdp"
+                                    android:layout_centerInParent="true"
+                                    app:srcCompat="@drawable/ic_edit_white" />
+
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/editUserName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        android:layout_marginTop="@dimen/_15sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_image">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/UserName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:text="@string/guest"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_15sdp" />
+
+
+                            <ImageView
+                                android:id="@+id/editUserNameIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginBottom="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_15sdp"
+                                app:srcCompat="@drawable/ic_edit_profile"
+
+
+                                />
+                        </LinearLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout11"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_50sdp"
+                            android:layout_marginRight="@dimen/_50sdp"
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/edit_ProfileName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/_25sdp"
+                                android:visibility="gone"
+                                app:counterEnabled="true"
+                                app:counterMaxLength="15"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:passwordToggleEnabled="false">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editProfile"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:maxLines="1"
+                                    android:textSize="@dimen/_15sdp"
+                                    android:gravity="center"
+                                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ.-"
+                                    android:inputType="textPersonName"
+                                    android:maxLength="15" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <!--    <com.auro.application.core.util.uiwidget.RPEditText
+                                android:id="@+id/edit_ProfileName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:hint="Guest"
+                                android:visibility="gone"
+                                android:lines="1"
+                                android:layout_centerInParent="true"
+                                android:focusableInTouchMode="true"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_15sdp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+-->
+                            <ImageView
+                                android:id="@+id/cancelUserNameIcon"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:srcCompat="@drawable/ic_cancel_icon"
+                                android:visibility="gone"
+                                app:layout_constraintStart_toEndOf="@+id/edit_ProfileName"
+                                app:layout_constraintTop_toTopOf="@+id/edit_ProfileName" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <!--wallet-->
+                    <RelativeLayout
+                        android:id="@+id/grade_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editUserName">
+
+
+                        <LinearLayout
+                            android:id="@+id/gradeChnage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:padding="@dimen/_5sdp"
+                            android:visibility="gone"
+                            android:layout_marginLeft="@dimen/_20sdp"
+                            android:orientation="horizontal">
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/grade"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/grade_student"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_18sdp"
+                                android:theme="@style/MyEditText"
+                                app:Font="Poppins-SemiBold.ttf" />
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/class_student"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_17sdp"
+                                android:theme="@style/MyEditText"
+                                app:Font="Poppins-SemiBold.ttf" />
+
+                            <ImageView
+                                android:id="@+id/imagevGrade"
+                                android:layout_width="@dimen/_10sdp"
+                                android:layout_height="@dimen/_10sdp"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                app:srcCompat="@drawable/ic_edit_profile"
+                                app:layout_constraintEnd_toEndOf="@+id/edit_UserName"
+                                app:layout_constraintTop_toTopOf="@+id/edit_UserName" />
+
+                        </LinearLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/wallet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/_20sdp">
+
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/wallet_bal_text"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:background="@drawable/wallet_balance_icon"
+                                android:gravity="center_vertical"
+
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_12sdp"
+                                app:Font="Poppins-SemiBold.ttf"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                bind:ignore="RtlCompat" />
+
+                            <RelativeLayout
+                                android:id="@+id/relativeLayout"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"
+                                android:background="@drawable/transparent_circle_large"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_8sdp"
+                                    android:layout_height="@dimen/_8sdp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/ic_cart"
+                                    android:visibility="visible" />
+
+                            </RelativeLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </RelativeLayout>
+
+
+                    <!--Wallet-->
+
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:orientation="vertical"
+                        android:focusableInTouchMode="true"
+                        android:padding="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/grade_layout">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+
+                            >
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilteachertxt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:layout_weight="3.5"
+                                app:hintTextAppearance="@style/TextInputLayout"
+                                app:hintTextColor="@color/color_dim_grey">
+
+                                <com.auro.scholr.core.util.uiwidget.RPEditText
+                                    android:id="@+id/editPhone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:editable="false"
+                                    android:hint="@string/student_phone_number"
+                                    android:inputType="none"
+                                    android:maxLines="1"
+                                    android:paddingRight="@dimen/_20sdp"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:theme="@style/MyEditText"
+                                    app:Font="Poppins-Regular.ttf" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <ImageView
+                                android:id="@+id/icteachername"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginTop="@dimen/_13sdp"
+                                android:layout_marginRight="@dimen/_15sdp"
+                                android:layout_weight="0.5"
+                                app:srcCompat="@drawable/ic_auro_check"
+                                android:visibility="gone" />
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:orientation="horizontal"
+                            android:weightSum="4">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/inputemailedittext"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:layout_weight="3.5"
+                                app:hintTextAppearance="@style/TextInputLayout"
+                                app:hintTextColor="@color/color_dim_grey">
+
+                                <com.auro.scholr.core.util.uiwidget.RPEditText
+                                    android:id="@+id/editemail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/email_address"
+                                    android:inputType="textPersonName"
+                                    android:maxLines="1"
+                                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ.-@"
+                                    android:paddingRight="@dimen/_20sdp"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:theme="@style/MyEditText"
+                                    app:Font="Poppins-Regular.ttf" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <ImageView
+                                android:id="@+id/icemail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginTop="@dimen/_13sdp"
+                                android:layout_marginRight="@dimen/_15sdp"
+                                android:layout_weight="0.5"
+                                app:srcCompat="@drawable/ic_auro_check"
+                                android:visibility="gone" />
+
+
+                        </RelativeLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/llSppiner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:orientation="horizontal">
+
+                            <!--Gender-->
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/tvGender"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/gender"
+                                android:textColor="@color/backgroun_transparent"
+                                android:textSize="@dimen/_12sdp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/SpinnerGender"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:textSize="@dimen/_20sdp"
+                                android:background="@drawable/sppiner_boader"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvGender" />
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/_4sdp"
+                                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/SpinnerGender"
+                                app:layout_constraintEnd_toEndOf="@+id/SpinnerGender"
+                                app:layout_constraintHorizontal_bias="0.97"
+                                app:layout_constraintStart_toStartOf="@+id/SpinnerGender"
+                                app:layout_constraintTop_toTopOf="@+id/SpinnerGender" />
+
+
+                            <!--SchoolType-->
+
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/tvSchoolType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:text="@string/school_type"
+                                android:textColor="@color/backgroun_transparent"
+                                android:textSize="@dimen/_12sdp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/SpinnerGender" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/SpinnerSchoolType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/sppiner_boader"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvSchoolType" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/_4sdp"
+                                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/SpinnerSchoolType"
+                                app:layout_constraintEnd_toEndOf="@+id/SpinnerSchoolType"
+                                app:layout_constraintHorizontal_bias="0.97"
+                                app:layout_constraintStart_toStartOf="@+id/SpinnerSchoolType"
+                                app:layout_constraintTop_toTopOf="@+id/SpinnerSchoolType" />
+
+
+                            <!--Board-->
+
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/tvBoard"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:text="@string/board"
+                                android:textColor="@color/backgroun_transparent"
+                                android:textSize="@dimen/_12sdp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/SpinnerSchoolType" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/SpinnerBoard"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/sppiner_boader"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvBoard" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/_4sdp"
+                                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/SpinnerBoard"
+                                app:layout_constraintEnd_toEndOf="@+id/SpinnerBoard"
+                                app:layout_constraintHorizontal_bias="0.97"
+                                app:layout_constraintStart_toStartOf="@+id/SpinnerBoard"
+                                app:layout_constraintTop_toTopOf="@+id/SpinnerBoard" />
+
+                            <!-- Language Medium-->
+
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/tvLanguageMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:text="@string/language_medium"
+                                android:textColor="@color/backgroun_transparent"
+                                android:textSize="@dimen/_12sdp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/SpinnerBoard" />
+
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/SpinnerLanguageMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/sppiner_boader"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvLanguageMedium" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/_4sdp"
+                                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/SpinnerLanguageMedium"
+                                app:layout_constraintEnd_toEndOf="@+id/SpinnerLanguageMedium"
+                                app:layout_constraintHorizontal_bias="0.97"
+                                app:layout_constraintStart_toStartOf="@+id/SpinnerLanguageMedium"
+                                app:layout_constraintTop_toTopOf="@+id/SpinnerLanguageMedium" />
+
+                            <!--Tution-->
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/tvPrivateTution"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:text="@string/taking_private_tutions"
+                                android:textColor="@color/backgroun_transparent"
+                                android:textSize="@dimen/_12sdp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/SpinnerLanguageMedium" />
+
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/spinnerPrivateTution"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/sppiner_boader"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvPrivateTution" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/_4sdp"
+                                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/spinnerPrivateTution"
+                                app:layout_constraintEnd_toEndOf="@+id/spinnerPrivateTution"
+                                app:layout_constraintHorizontal_bias="0.97"
+                                app:layout_constraintStart_toStartOf="@+id/spinnerPrivateTution"
+                                app:layout_constraintTop_toTopOf="@+id/spinnerPrivateTution" />
+
+
+                            <!--Tution Type-->
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/tvPrivateType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:text="@string/taking_type"
+                                android:textColor="@color/backgroun_transparent"
+                                android:textSize="@dimen/_12sdp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/spinnerPrivateTution" />
+
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/spinnerPrivateType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/sppiner_boader"
+                                app:layout_constraintEnd_toEndOf="parent"
+
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvPrivateType" />
+
+                            <ImageView
+                                android:id="@+id/privateTypeArrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/_4sdp"
+                                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/spinnerPrivateType"
+                                app:layout_constraintEnd_toEndOf="@+id/spinnerPrivateType"
+                                app:layout_constraintHorizontal_bias="0.97"
+                                app:layout_constraintStart_toStartOf="@+id/spinnerPrivateType"
+                                app:layout_constraintTop_toTopOf="@+id/spinnerPrivateType" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal">
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/submitbutton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/button_bg_blue"
+                            android:gravity="center"
+                            android:padding="@dimen/_10sdp"
+                            android:layout_marginLeft="@dimen/_30sdp"
+                            android:layout_marginRight="@dimen/_30sdp"
+                            android:text="@string/save"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            app:Font="Poppins-SemiBold.ttf"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:elevation="@dimen/_2sdp"
+                            android:indeterminateDrawable="@drawable/circular_white_progress"
+                            android:innerRadiusRatio="3"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/submitbutton"
+                            app:layout_constraintEnd_toEndOf="@+id/submitbutton"
+                            app:layout_constraintStart_toStartOf="@+id/submitbutton"
+                            app:layout_constraintTop_toTopOf="@+id/submitbutton"
+                            />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/errorConstraint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/parent_layout_one"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+
+                android:id="@+id/errorLayout"
+                layout="@layout/error_layout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_my_classroom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                layout="@layout/shimmer_my_classroom_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+    </RelativeLayout>
+
+
+</layout>

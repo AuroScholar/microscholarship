@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.auro.scholr.core.util.uiwidget.RPTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="5dp"
+    android:textColor="@color/black"
+    android:textSize="@dimen/_10sdp"
+    app:Font="Poppins-Regular.ttf" />
