@@ -4,12 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="teacherKycViewModel"
             type="com.auro.scholr.teacher.presentation.viewmodel.TeacherKycViewModel" />
-
-
     </data>
 
 
