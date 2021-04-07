@@ -326,18 +326,18 @@ public class DateUtil {
             calenda1r.setTime(a);
             int year = calenda1r.get(Calendar.YEAR);
             int month = calenda1r.get(Calendar.MONTH);
-            AppLogger.e("Date month name-", year + "--" + month);
+            AppLogger.e("DateUtil", "date Year"+year + "--" + month);
             int currentYear = DateUtil.getcurrentYearNumber();
             int currentMonth = DateUtil.getcurrentMonthNumber();
             count = month + 1;
-            AppLogger.e("DateUtil count-", count + "--" + month);
+            AppLogger.e("DateUtil", "date Year"+count + "--" + month);
             while (year < currentYear) {
                 MonthDataModel model = new MonthDataModel();
                 model.setMonth(monthHashmap.get(count) + " " + year);
                 model.setMonthNumber(count);
                 model.setYear(year);
                 list.add(model);
-                AppLogger.e("DateUtil", year + "--" + monthHashmap.get(count));
+                AppLogger.e("DateUtil", year + "-- up" + monthHashmap.get(count));
                 if (count == 12) {
                     year++;
                     count = 1;

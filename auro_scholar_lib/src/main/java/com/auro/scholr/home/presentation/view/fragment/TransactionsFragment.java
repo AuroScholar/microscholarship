@@ -76,6 +76,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
     boolean userClick = false;
     PassportSpinnerAdapter subjectSpinner;
     List<MonthDataModel> subjectResModelList;
+    boolean isComeFirstApi =true;
 
 
     public TransactionsFragment() {
@@ -148,7 +149,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
         spinnerSubject = new MonthDataModel();
         spinnerSubject.setMonth("All");
         selectCurrentMonthInSpinner();
-        checkCallApiStatus();
+        checkCallApiStatus(isComeFirstApi);
 
     }
 
@@ -378,7 +379,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
         monthDataModelList = DateUtil.monthDataModelList(date);
         if (!TextUtil.checkListIsEmpty(monthDataModelList)) {
             PassportSpinnerAdapter monthSpinnerAdapter = new PassportSpinnerAdapter(monthDataModelList);
-            binding.monthSpinner.setAdapter(monthSpinnerAdapter);
+            binding.monthSpinner .setAdapter(monthSpinnerAdapter);
             binding.monthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -386,7 +387,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
                         userClick = false;
                         spinnerMonth = monthDataModelList.get(position);
                         binding.monthTitle.setText(monthDataModelList.get(position).getMonth());
-                        checkCallApiStatus();
+                        checkCallApiStatus(isComeFirstApi);
                     }
                 }
 
@@ -449,7 +450,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
                         spinnerSubject = subjectResModelList.get(position);
                         AppLogger.e(TAG, "on subject selected" + spinnerSubject.getMonth());
                         binding.subjectTitle.setText(subjectResModelList.get(position).getMonth());
-                        checkCallApiStatus();
+                        checkCallApiStatus(isComeFirstApi);
                     }
 
                 }
@@ -492,14 +493,21 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
 
 
 
-    private void checkCallApiStatus() {
+    private void checkCallApiStatus(boolean isFirstTime) {
         if (spinnerSubject != null && !TextUtil.isEmpty(spinnerSubject.getMonth()) && spinnerMonth != null && !TextUtil.isEmpty(spinnerMonth.getMonth())) {
-            callTransportApi();
+            callTransportApi(isFirstTime);
         }
     }
 
-    private void callTransportApi() {
-        int monthnum = spinnerMonth.getMonthNumber() + 1;
+    private void callTransportApi(boolean isFirstTime) {
+        int monthnum=0;
+        if(isFirstTime){
+            monthnum = spinnerMonth.getMonthNumber()+1;
+        }else{
+            monthnum = spinnerMonth.getMonthNumber();
+        }
+
+        AppLogger.e("Pradeep"," p-----------"+ monthnum);
         String monNum = "" + monthnum;
         if (monthnum < 10) {
             monNum = "0" + monthnum;
@@ -538,6 +546,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
                 case SUCCESS:
                     PassportMonthModel passportMonthModel = (PassportMonthModel) responseApi.data;
                     AppLogger.e(TAG, "SUCCESS 1");
+                    isComeFirstApi=false;
                     SubjectSpinner(passportMonthModel, 1);
                     if (!TextUtil.checkListIsEmpty(passportMonthModel.getPassportSubjectModelList())) {
                         setPassportAdapter(passportMonthModel);
@@ -591,7 +600,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
                 binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        checkCallApiStatus();
+                        checkCallApiStatus(isComeFirstApi);
                     }
                 });
                 binding.errorLayout.errorIcon.setVisibility(View.GONE);
