@@ -210,6 +210,7 @@ public interface AppConstant {
         String EXAMLANG = "examlang";
         String EKLAVYA_EXAM_ID="eklavvya_exam_id";
         String EXAM_FACE_IMAGE="exam_face_img";
+        String IS_MOBILE="is_mobile";
 
     }
 
