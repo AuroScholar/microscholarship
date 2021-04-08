@@ -46,26 +46,46 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
-                    android:id="@+id/llinputPhone"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_20sdp"
-                    android:background="@drawable/bg_otp_box"
+
                     android:orientation="horizontal"
                     android:padding="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view">
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/llinputPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        app:errorEnabled="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12sdp"
+                            android:hint="Enter your name" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
 
                     <com.auro.scholr.core.util.uiwidget.RPEditText
-                        android:id="@+id/textName"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:background="@null"
+                        android:visibility="gone"
                         android:hint="Enter your name"
                         android:inputType="text"
                         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "

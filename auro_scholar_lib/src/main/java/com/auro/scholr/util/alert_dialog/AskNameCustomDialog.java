@@ -14,6 +14,7 @@ import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.AskNameLayoutBinding;
 import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.TextUtil;
 
 public class AskNameCustomDialog  extends Dialog implements View.OnClickListener {
 
@@ -49,9 +50,14 @@ public class AskNameCustomDialog  extends Dialog implements View.OnClickListener
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btDone) {
-            dismiss();
-            if (commonCallBackListner != null) {
-                commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(0, Status.NAME_DONE_CLICK, binding.textName.getText().toString()));
+
+            if(!TextUtil.isEmpty(binding.textName.getText().toString())) {
+                dismiss();
+                if (commonCallBackListner != null) {
+                    commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(0, Status.NAME_DONE_CLICK, binding.textName.getText().toString()));
+                }
+            }else{
+                binding.llinputPhone.setError("Please Enter Your Name");
             }
         }
 

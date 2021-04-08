@@ -230,8 +230,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         lockDrawerMenu();
         AppLogger.e("handleback","AuroApp.getAuroScholarModel()");
 
-
-
         setPrefData();
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
         binding.swipeRefreshLayout.setOnRefreshListener(this);
