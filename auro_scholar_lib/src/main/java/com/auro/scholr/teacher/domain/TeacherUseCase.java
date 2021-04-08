@@ -592,6 +592,12 @@ public class TeacherUseCase {
         if (TextUtil.isEmpty(reqModel.getDistrict_id())) {
             return new ValidationModel(false, "Please select  the state city");
         }
+
+
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        if (!TextUtil.isEmpty(reqModel.getTeacher_email()) && !reqModel.getTeacher_email().matches(emailPattern)) {
+            return new ValidationModel(false, AppConstant.SpinnerType.PLEASE_ENTER_VALID_EMAIL);
+        }
         return new ValidationModel(true, "");
 
     }
