@@ -75,13 +75,15 @@
 
                 </LinearLayout>
 
-                <com.auro.scholr.core.util.uiwidget.RPButton
+                <com.auro.scholr.core.util.uiwidget.RPTextView
                     android:id="@+id/btDone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:background="@color/blue_color"
                     android:text="Done"
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp"
                     app:Font="Poppins-SemiBold.ttf"

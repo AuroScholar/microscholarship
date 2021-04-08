@@ -2,11 +2,13 @@ package com.auro.scholr.util;
 
 import android.graphics.Typeface;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.widget.TextView;
 
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class TextUtil {
 
@@ -51,5 +53,12 @@ public class TextUtil {
     public static String removeAllSpace(String text) {
         return text.replaceAll("\\s+", "");
     }
+    public static boolean isValidEmail(String  target) {
+        String EMAIL_PATTERN =
+                "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                        + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        return (!TextUtils.isEmpty(target) && Pattern.compile(EMAIL_PATTERN).matcher(target).matches());
+    }
+
 
 }

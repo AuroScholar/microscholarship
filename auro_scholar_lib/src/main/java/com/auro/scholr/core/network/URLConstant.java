@@ -72,6 +72,8 @@ public interface URLConstant {
 
     String CERTIFICATE_API  = "https://auroscholar.com/api/gen_certificate_api.php";
 
+    //String CERTIFICATE_API  = "https://auroscholar.com/api/gen_certificate_api_test_vaibhav.php";
+
     String PASSPORT_API=BASE_URL+"passport.php";
 
     String UPDATE_STUDENT_PROFILE = "update_profile.php";

@@ -167,8 +167,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void openGenricSDK(String mobileNumber, String student_class) {
         String language = binding.language.getText().toString();
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
-        inputModel.setMobileNumber(mobileNumber);//
-        inputModel.setStudentClass(binding.userClass.getText().toString());
+        inputModel.setMobileNumber(mobileNumber);//mobileNumber
+        inputModel.setStudentClass(binding.userClass.getText().toString());//"binding.userClass.getText().toString()"
         inputModel.setRegitrationSource("");
         inputModel.setReferralLink("put refferal link");
         inputModel.setPartnerSource("AURO3VE4j7"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA

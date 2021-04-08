@@ -749,7 +749,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
 
     @Override
     public void afterTextChanged(Editable editable) {
-        if (binding.editemail.getText().toString().matches(emailPattern) && editable.length() > 0) {
+        if (binding.editemail.getText().toString().length() > 0 && TextUtil.isValidEmail(binding.editemail.getText().toString())) {
 
             AppLogger.v("afterTextChanged", "valid email address");
             binding.icemail.setVisibility(View.VISIBLE);
@@ -769,6 +769,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
         }
 
     }
+
 
 
     private void changeTheEditText() {
