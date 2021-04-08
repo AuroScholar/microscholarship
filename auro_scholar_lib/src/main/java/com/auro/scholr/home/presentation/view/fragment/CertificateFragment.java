@@ -313,7 +313,7 @@ public class CertificateFragment extends BaseFragment implements View.OnClickLis
                 case SUCCESS:
                     certificateResModel = (CertificateResModel) responseApi.data;
                     if (certificateResModel.getError()) {
-                        if (certificateResModel.getStudentNameVerified().equalsIgnoreCase(AppConstant.DocumentType.NO)) {
+                        if (!TextUtil.isEmpty(certificateResModel.getStudentNameVerified())&&certificateResModel.getStudentNameVerified().equalsIgnoreCase(AppConstant.DocumentType.NO)) {
                             openAskNameDialog();
                         }
                         handleProgress(3, certificateResModel.getMessage());
