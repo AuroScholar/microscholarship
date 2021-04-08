@@ -48,7 +48,6 @@
             android:layout_marginRight="@dimen/_35sdp"
             android:inputType="phone"
             android:maxLength="10"
-            android:text="9654234507"
             android:hint="Please Enter Your Mobile Number"
             android:layout_below="@+id/bt_open"/>
 
@@ -62,7 +61,6 @@
             android:layout_marginRight="@dimen/_35sdp"
             android:inputType="phone"
             android:maxLength="2"
-            android:text="1"
             android:visibility="visible"
             android:hint="Please Enter class"
             android:layout_below="@+id/mobile_number"/>
