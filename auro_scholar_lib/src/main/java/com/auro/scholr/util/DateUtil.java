@@ -330,7 +330,7 @@ public class DateUtil {
             int currentYear = DateUtil.getcurrentYearNumber();
             int currentMonth = DateUtil.getcurrentMonthNumber();
             count = month + 1;
-            AppLogger.e("DateUtil", "date Year"+count + "--" + month);
+            AppLogger.e("DateUtil", "date Year"+count + "--" + month +"--current--month--"+currentMonth);
             while (year < currentYear) {
                 MonthDataModel model = new MonthDataModel();
                 model.setMonth(monthHashmap.get(count) + " " + year);
