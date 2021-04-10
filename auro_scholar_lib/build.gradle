@@ -113,7 +113,7 @@ dependencies {
     implementation"androidx.camera:camera-view:1.0.0-alpha12"
     implementation "androidx.camera:camera-extensions:1.0.0-alpha12"
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
-
+    implementation 'com.android.support:multidex:2.0.1'
 
 }
 apply plugin: 'com.google.gms.google-services'

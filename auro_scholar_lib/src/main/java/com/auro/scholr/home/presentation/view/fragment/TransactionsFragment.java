@@ -76,6 +76,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
     boolean userClick = false;
     PassportSpinnerAdapter subjectSpinner;
     List<MonthDataModel> subjectResModelList;
+    boolean isMonthSelected = false;
 
 
     public TransactionsFragment() {
@@ -384,6 +385,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     if (userClick) {
                         userClick = false;
+                        isMonthSelected = true;
                         spinnerMonth = monthDataModelList.get(position);
                         binding.monthTitle.setText(monthDataModelList.get(position).getMonth());
                         checkCallApiStatus();
@@ -462,7 +464,14 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
 
         }
         if (!TextUtil.checkListIsEmpty(subjectResModelList) && subjectResModelList.size() > 1) {
-            setCurrentSubject();
+            if (isMonthSelected) {
+                isMonthSelected = false;
+                MonthDataModel monthDataModel = subjectResModelList.get(subjectResModelList.size() - 1);
+                binding.subjectSpinner.setSelection(subjectResModelList.size() - 1);
+                binding.subjectTitle.setText(monthDataModel.getMonth());
+            } else {
+                setCurrentSubject();
+            }
         }
         if (!TextUtil.checkListIsEmpty(subjectResModelList) && subjectResModelList.size() ==1) {
             binding.subjectSpinner.setSelection(0);
