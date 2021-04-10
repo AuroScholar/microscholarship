@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setStudentClass(binding.userClass.getText().toString());//"binding.userClass.getText().toString()"
         inputModel.setRegitrationSource("");
         inputModel.setReferralLink("put refferal link");
-        inputModel.setPartnerSource("AURO3VE4j7"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
+        inputModel.setPartnerSource(""); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setActivity(this);
         inputModel.setLanguage(binding.language.getText().toString());// In Small Letter Eg. Hindi - hi or English-en
         inputModel.setApplicationLang(false);
