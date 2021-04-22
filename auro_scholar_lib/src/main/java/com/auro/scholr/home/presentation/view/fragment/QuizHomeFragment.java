@@ -175,7 +175,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
         }
 
-        AppLogger.e("handleback","QuizHomeFragment");
+        AppLogger.e("handleback", "QuizHomeFragment");
 
         setRetainInstance(true);
         ViewUtil.setLanguage(Locale.getDefault().getLanguage());
@@ -228,13 +228,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         mDrawerToggle.syncState();
         //PRADEEP
         lockDrawerMenu();
-        AppLogger.e("handleback","AuroApp.getAuroScholarModel()");
+        AppLogger.e("handleback", "AuroApp.getAuroScholarModel()");
 
         setPrefData();
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
         binding.swipeRefreshLayout.setOnRefreshListener(this);
 
-       // setNavHeaderText();
+        // setNavHeaderText();
     }
 
     @Override
@@ -291,7 +291,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         init();
         setListener();
         setDataOnUI();
-        AppLogger.e("handleback","ONrESUME");
+        AppLogger.e("handleback", "ONrESUME");
     }
 
     private void setDataOnUI() {
@@ -443,11 +443,11 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     private void checkForFriendsLeaderBoard() {
         if (dashboardResModel.getFeature() == 0) {
             binding.customUiSnackbar.inviteParentLayout.setVisibility(View.VISIBLE);
-          //  binding.navView.getMenu().findItem(R.id.nav_friends_leaderboard).setVisible(true);
+            //  binding.navView.getMenu().findItem(R.id.nav_friends_leaderboard).setVisible(true);
             setDrawerItemList(1, 1);
         } else {
             binding.customUiSnackbar.inviteParentLayout.setVisibility(View.GONE);
-           // binding.navView.getMenu().findItem(R.id.nav_friends_leaderboard).setVisible(false);
+            // binding.navView.getMenu().findItem(R.id.nav_friends_leaderboard).setVisible(false);
             setDrawerItemList(0, 0);
         }
     }
@@ -511,10 +511,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
             assignmentReqModel.setSubject(quizResModel.getSubjectName());
             Bitmap picBitmap = BitmapFactory.decodeFile(path);
             byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
-           // long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
+            // long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
             int file_size = Integer.parseInt(String.valueOf(bytes.length / 1024));
 
-            if (file_size >500) {
+            if (file_size > 500) {
                 assignmentReqModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
             } else {
                 assignmentReqModel.setImageBytes(bytes);
@@ -845,6 +845,10 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void openErrorDialog() {
+        if (customDialog != null && customDialog.isShowing()) {
+            customDialog.dismiss();
+        }
+
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(AuroApp.getAppContext());
         customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
@@ -876,7 +880,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         customDialog.getWindow().setAttributes(lp);
         Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        customDialog.setCancelable(false);
+        customDialog.setCancelable(true);
         customDialog.show();
 
     }
@@ -1064,14 +1068,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         getActivity().getBaseContext().getResources().updateConfiguration(config, getActivity().getBaseContext().getResources().getDisplayMetrics());
     }
 
-    private void setNavHeaderText()
-    {
+    private void setNavHeaderText() {
         TextView login_txt = binding.navHeader.findViewById(R.id.login_id);
         login_txt.setText(getActivity().getString(R.string.mobile_num) + dashboardResModel.getPhonenumber());
 
         TextView class_txt = binding.navHeader.findViewById(R.id.txtClass);
         class_txt.setText(getActivity().getString(R.string.student_class) + dashboardResModel.getStudentclass());
-
 
 
     }
@@ -1085,13 +1087,13 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
         mNavItems.add(new NavItemModel(getActivity().getResources().getString(R.string.kyc_verification), "", R.drawable.ic_verification));
 
-        mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.certificates), "", R.drawable.ic_certificate_icon));
+        mNavItems.add(new NavItemModel(getActivity().getResources().getString(R.string.certificates), "", R.drawable.ic_certificate_icon));
 
-        mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.payment_info), "", R.drawable.ic_payment_info));
+        mNavItems.add(new NavItemModel(getActivity().getResources().getString(R.string.payment_info), "", R.drawable.ic_payment_info));
 
-       // mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.change_language), "", R.drawable.ic_language));
+        // mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.change_language), "", R.drawable.ic_language));
 
-        mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.privacy_policy), "", R.drawable.ic_policy));
+        mNavItems.add(new NavItemModel(getActivity().getResources().getString(R.string.privacy_policy), "", R.drawable.ic_policy));
         // DrawerLayout
         if (status == 0) {
             drawerListAdapter = new DrawerListAdapter(getActivity(), mNavItems);
@@ -1142,17 +1144,17 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 openWalletAmountlistFragment();
                 break;
 
-          //  case 5:
-                /*Change Grade*/
-               // ((HomeActivity) getActivity()).openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
-                // openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
+            //  case 5:
+            /*Change Grade*/
+            // ((HomeActivity) getActivity()).openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
+            // openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
            /* if (AuroApp.getAuroScholarModel().getSdkcallback() != null) {
                 AuroApp.getAuroScholarModel().getSdkcallback().commonCallback(Status.NAV_CHANGE_GRADE_CLICK, "");
             }*/
-              //  break;
+            //  break;
 
-           /* case 7:
-                *//*Change Language*//*
+            /* case 7:
+             *//*Change Language*//*
                // openChangeLanguageDialog();
                 break;
 */
@@ -1162,13 +1164,12 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
                 break;
 
 
-
-
         }
 
         binding.drawerLayout.closeDrawer(GravityCompat.START);
 
     }
+
     public void openTransactionsFragment() {
         Bundle bundle = new Bundle();
         TransactionsFragment transactionsFragment = new TransactionsFragment();
@@ -1177,8 +1178,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         openFragment(transactionsFragment);
     }
 
-    public void setPrefData(){
-        if(AuroApp.getAuroScholarModel()!= null) {
+    public void setPrefData() {
+        if (AuroApp.getAuroScholarModel() != null) {
             PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
             prefModel.setUserMobile(AuroApp.getAuroScholarModel().getMobileNumber());
             prefModel.setStudentClass(ConversionUtil.INSTANCE.convertStringToInteger(AuroApp.getAuroScholarModel().getStudentClass()));
@@ -1195,6 +1196,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         studentProfile.setArguments(bundle);
         openFragment(studentProfile);
     }
+
     /*For testing purpose*/
     public void openCertificateFragment() {
         Bundle bundle = new Bundle();

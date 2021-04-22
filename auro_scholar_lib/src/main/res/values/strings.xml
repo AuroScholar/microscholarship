@@ -153,7 +153,6 @@
     <string-array name="boardlist">
         <item>Please Select Board</item>
         <item>CBSE</item>
-        <item>CESC</item>
         <item>ICSE</item>
         <item>Other</item>
     </string-array>
