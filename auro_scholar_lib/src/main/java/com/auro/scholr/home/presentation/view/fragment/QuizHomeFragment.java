@@ -1,13 +1,11 @@
 package com.auro.scholr.home.presentation.view.fragment;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -22,8 +20,6 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +27,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,7 +38,6 @@ import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -60,10 +53,8 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
-
 import com.auro.scholr.databinding.QuizHomeLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
-
 import com.auro.scholr.home.data.model.CustomSnackBarModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.NavItemModel;
@@ -71,13 +62,11 @@ import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.RandomInviteFriendsDataModel;
 import com.auro.scholr.home.data.model.SubjectResModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
-
-import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.adapter.DrawerListAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizItemNewAdapter;
 import com.auro.scholr.home.presentation.view.adapter.QuizWonAdapter;
-import com.auro.scholr.home.presentation.viewmodel.DataModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
@@ -92,13 +81,10 @@ import com.auro.scholr.util.firebase.FirebaseEventUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
-
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -244,6 +230,8 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void setListener() {
+        ((StudentDashboardActivity) getActivity()).setListingActiveFragment(StudentDashboardActivity.QUIZ_DASHBOARD_FRAGMENT);
+
         binding.walletBalText.setOnClickListener(this);
         binding.privacyPolicy.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
@@ -288,6 +276,7 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
     public void onResume() {
         super.onResume();
         // resources = ViewUtil.getCustomResource(getActivity());
+
         init();
         setListener();
         setDataOnUI();
@@ -1080,6 +1069,9 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
 
 
     private void setDrawerItemList(int status, int val) {
+        if (getActivity() == null) {
+            return;
+        }
         mNavItems.clear();
         mNavItems.add(new NavItemModel(getActivity().getResources().getString(R.string.student_profile), "", R.drawable.ic_student_profile));
 

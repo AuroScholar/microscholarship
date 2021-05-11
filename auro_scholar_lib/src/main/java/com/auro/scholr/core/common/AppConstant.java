@@ -82,6 +82,8 @@ public interface AppConstant {
         String USER_PARTNER_ID = "user_partner_id";
         String RESGISTRATION_ID = "registration_id";
         String STUDENT_NAME = "student_name";
+        String IP_ADDRESS="ip_address";
+        String BUILD_VERSION="build_version";
     }
 
 

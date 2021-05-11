@@ -15,6 +15,7 @@ import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
 import com.google.gson.JsonObject;
@@ -41,26 +42,15 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
     @Override
     public Single<Response<JsonObject>> getDashboardData(AuroScholarDataModel model) {
         Map<String, String> params = new HashMap<String, String>();
-        if (TextUtil.isEmpty(model.getScholrId())) {
-            params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
-            params.put(AppConstant.DashBoardParams.STUDENT_CLASS, model.getStudentClass());
-            params.put(AppConstant.DashBoardParams.REGISTRATION_SOURCE, model.getRegitrationSource());
-            params.put(AppConstant.DashBoardParams.PARTNER_SOURCE,model.getPartnerSource());
-            params.put(AppConstant.DashBoardParams.USER_PARTNER_ID,model.getUserPartnerid());
-            AppLogger.e("HomeRemoteDataSourceImp", "Calling  Generic SDK");
-            return homeRemoteApi.getDashboardSDKData(params);
-        } else {
-            params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
-            params.put(AppConstant.DashBoardParams.SCHOLAR_ID, model.getScholrId());
-            params.put(AppConstant.DashBoardParams.STUDENT_CLASS, model.getStudentClass());
-            params.put(AppConstant.DashBoardParams.REGISTRATION_SOURCE, model.getRegitrationSource());
-            params.put(AppConstant.DashBoardParams.SHARE_TYPE, model.getShareType());
-            params.put(AppConstant.DashBoardParams.SHARE_IDENTITY, model.getShareIdentity());
-            params.put(AppConstant.DashBoardParams.IS_EMAIL_VERIFIED, "" + model.isEmailVerified());
-            params.put(AppConstant.DashBoardParams.PARTNER_SOURCE,model.getPartnerSource());
-            AppLogger.e("HomeRemoteDataSourceImp", "Calling  Scholar SDK");
-            return homeRemoteApi.getDashboardData(params);
-        }
+        params.put(AppConstant.MOBILE_NUMBER, model.getMobileNumber());
+        params.put(AppConstant.DashBoardParams.STUDENT_CLASS, model.getStudentClass());
+        params.put(AppConstant.DashBoardParams.REGISTRATION_SOURCE, model.getRegitrationSource());
+        params.put(AppConstant.DashBoardParams.PARTNER_SOURCE, model.getPartnerSource());
+        params.put(AppConstant.DashBoardParams.USER_PARTNER_ID, model.getUserPartnerid());
+        params.put(AppConstant.DashBoardParams.IP_ADDRESS, AppUtil.getIpAdress(AuroApp.getAppContext()));
+        params.put(AppConstant.DashBoardParams.BUILD_VERSION, AppUtil.getSDKTag(AuroApp.getAppContext()));
+        AppLogger.e("HomeRemoteDataSourceImp", "Calling  Generic SDK");
+        return homeRemoteApi.getDashboardSDKData(params);
 
 
     }
@@ -68,6 +58,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
 
     @Override
     public Single<Response<JsonObject>> getAzureData(AssignmentReqModel azureReqModel) {
+
         RequestBody registration_id = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getRegistration_id());
         RequestBody exam_id = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getEklavvya_exam_id());
         RequestBody exam_name = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getExam_name());
@@ -76,6 +67,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), azureReqModel.getImageBytes());
         MultipartBody.Part student_photo = MultipartBody.Part.createFormData("exam_face_img", "image.jpg", requestFile);
         return homeRemoteApi.getAzureApiData(registration_id, exam_id, exam_name, quiz_attempt, subject, student_photo);
+
     }
 
     @Override
@@ -177,7 +169,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
     }
 
     @Override
-    public Single<Response<JsonObject>> sendFriendRequestApi(int requested_by_id, int requested_user_id, String  requested_by_phone, String requested_user_phone) {
+    public Single<Response<JsonObject>> sendFriendRequestApi(int requested_by_id, int requested_user_id, String requested_by_phone, String requested_user_phone) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("requested_by_id", requested_by_id);
         params.put("requested_user_id", requested_user_id);
@@ -214,11 +206,11 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
 
     @Override
     public Single<Response<JsonObject>> uploadStudentExamImage(SaveImageReqModel reqModel) {
-        RequestBody exam_id = RequestBody.create(okhttp3.MultipartBody.FORM,reqModel.getExamId());
-        RequestBody registration_id = RequestBody.create(okhttp3.MultipartBody.FORM,reqModel.getRegistration_id());
-        RequestBody is_mobile = RequestBody.create(okhttp3.MultipartBody.FORM,"1");
+        RequestBody exam_id = RequestBody.create(okhttp3.MultipartBody.FORM, reqModel.getExamId());
+        RequestBody registration_id = RequestBody.create(okhttp3.MultipartBody.FORM, reqModel.getRegistration_id());
+        RequestBody is_mobile = RequestBody.create(okhttp3.MultipartBody.FORM, "1");
         MultipartBody.Part student_photo = ConversionUtil.INSTANCE.makeMultipartRequestForExamImage(reqModel.getImageBytes());
-        return homeRemoteApi.uploadImage(exam_id,registration_id,is_mobile,
+        return homeRemoteApi.uploadImage(exam_id, registration_id, is_mobile,
                 student_photo);
     }
 
@@ -246,7 +238,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         RequestBody privateTuterType = RequestBody.create(okhttp3.MultipartBody.FORM, model.getPrivateTutionType());
         RequestBody getEmailId = RequestBody.create(okhttp3.MultipartBody.FORM, model.getEmailID());
         MultipartBody.Part id_proof_front = ConversionUtil.INSTANCE.makeMultipartRequestProfile(model.getImageBytes());
-        return homeRemoteApi.studentUpdateProfile(phonenumber,firstName,getEmailId,gender,schoolType,boardType,language,mobileModel,manufacturer,mobileVersion,latitude,longitude,isPrivateTutor,privateTuterType,id_proof_front);
+        return homeRemoteApi.studentUpdateProfile(phonenumber, firstName, getEmailId, gender, schoolType, boardType, language, mobileModel, manufacturer, mobileVersion, latitude, longitude, isPrivateTutor, privateTuterType, id_proof_front);
     }
 
 

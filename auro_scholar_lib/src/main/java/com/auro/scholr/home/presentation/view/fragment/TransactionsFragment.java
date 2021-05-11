@@ -36,6 +36,7 @@ import com.auro.scholr.home.data.model.passportmodels.PassportQuizModel;
 import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
 import com.auro.scholr.home.data.model.passportmodels.PassportSubjectModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
 import com.auro.scholr.home.presentation.view.adapter.MontlyWiseAdapter;
 import com.auro.scholr.home.presentation.view.adapter.PassportSpinnerAdapter;
@@ -177,6 +178,8 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
 
     @Override
     protected void setListener() {
+        ((StudentDashboardActivity)getActivity()).setListingActiveFragment(StudentDashboardActivity.PASSPORT_FRAGMENT);
+
         binding.headerParent.cambridgeHeading.setVisibility(View.VISIBLE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
@@ -263,7 +266,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.back_arrow) {
-            getActivity().getSupportFragmentManager().popBackStack();
+            getActivity().onBackPressed();
         } else if (id == R.id.lang_eng) {
             changeLanguage();
         } else if (id == R.id.bt_transfer_money) {
@@ -330,20 +333,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
 
     }
 
-    private void setKeyListner() {
-        this.getView().setFocusableInTouchMode(true);
-        this.getView().requestFocus();
-        this.getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    getActivity().getSupportFragmentManager().popBackStack();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
+
 
 
     public void openSendMoneyFragment() {

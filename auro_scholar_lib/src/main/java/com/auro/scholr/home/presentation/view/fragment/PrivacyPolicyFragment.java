@@ -43,6 +43,7 @@ import com.auro.scholr.databinding.QuizTestLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
+import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.ViewUtil;
@@ -122,6 +123,8 @@ public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickL
 
     @Override
     protected void setListener() {
+        ((StudentDashboardActivity)getActivity()).setListingActiveFragment(StudentDashboardActivity.PRIVACY_POLICY_FRAGMENT);
+
         binding.toolbarLayout.backArrow.setOnClickListener(this);
     }
 
@@ -153,7 +156,7 @@ public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
-        setKeyListner();
+
     }
 
     private void loadWeb(String webUrl) {
@@ -187,7 +190,7 @@ public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.back_arrow){
-            getActivity().getSupportFragmentManager().popBackStack();
+            getActivity().onBackPressed();
         }
     }
 
@@ -359,18 +362,4 @@ public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickL
         }
     }
 
-    private void setKeyListner() {
-        this.getView().setFocusableInTouchMode(true);
-        this.getView().requestFocus();
-        this.getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    getActivity().getSupportFragmentManager().popBackStack();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
 }

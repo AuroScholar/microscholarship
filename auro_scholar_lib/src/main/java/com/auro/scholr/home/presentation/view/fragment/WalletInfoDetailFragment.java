@@ -19,6 +19,7 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.databinding.FragmentWalletInfoDetailBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.WalletResponseAmountResModel;
+import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.adapter.WalletAdapter;
 import com.auro.scholr.home.presentation.viewmodel.WalletAmountViewModel;
 import com.auro.scholr.util.TextUtil;
@@ -199,6 +200,8 @@ public class WalletInfoDetailFragment extends BaseFragment implements View.OnCli
 
     @Override
     protected void setListener() {
+        ((StudentDashboardActivity)getActivity()).setListingActiveFragment(StudentDashboardActivity.PAYMENT_INFO_FRAGMENT);
+
         // binding.headerParent.cambridgeHeading.setVisibility(View.VISIBLE);
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
@@ -213,7 +216,7 @@ public class WalletInfoDetailFragment extends BaseFragment implements View.OnCli
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.back_arrow) {
-            getActivity().getSupportFragmentManager().popBackStack();
+            getActivity().onBackPressed();
         }
     }
 

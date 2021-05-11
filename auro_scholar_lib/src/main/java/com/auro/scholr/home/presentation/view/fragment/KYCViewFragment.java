@@ -7,12 +7,9 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,10 +29,9 @@ import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.KycFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
-import com.auro.scholr.home.data.model.CustomSnackBarModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
-import com.auro.scholr.home.data.model.KYCResListModel;
+import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.adapter.KYCViewDocAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
@@ -44,17 +40,13 @@ import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 
-import com.auro.scholr.util.alert_dialog.CustomSnackBar;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import static com.auro.scholr.core.common.Status.AZURE_API;
-import static com.auro.scholr.core.common.Status.UPLOAD_PROFILE_IMAGE;
 
 
 public class KYCViewFragment extends BaseFragment implements View.OnClickListener {
@@ -145,6 +137,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected void setListener() {
+        ((StudentDashboardActivity) getActivity()).setListingActiveFragment(StudentDashboardActivity.KYC_VIEW_FRAGMENT);
         /*Do code here*/
         binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
@@ -191,7 +184,6 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        setKeyListner();
     }
 
     @Override
@@ -202,7 +194,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             String text = binding.toolbarLayout.langEng.getText().toString();
             if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase(AppConstant.HINDI)) {
                 ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
-               // resources = ViewUtil.getCustomResource(getActivity());
+                // resources = ViewUtil.getCustomResource(getActivity());
                 setLanguageText(AppConstant.ENGLISH);
             } else {
                 ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
@@ -211,21 +203,21 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             }
             reloadFragment();
         } else if (v.getId() == R.id.back_arrow) {
-            getActivity().getSupportFragmentManager().popBackStack();
-            AppLogger.e("handleback","backlisner");
+            getActivity().onBackPressed();
+            AppLogger.e("handleback", "backlisner");
 
         } else if (v.getId() == R.id.bt_transfer_money) {
             //callNumber();
             openSendMoneyFragment();
         } else if (v.getId() == R.id.wallet_info) {
-          //  firebaseEventUtil.logEvent(getContext(), getResources().getString(R.string.event_payment_info_page), new HashMap<>());
+            //  firebaseEventUtil.logEvent(getContext(), getResources().getString(R.string.event_payment_info_page), new HashMap<>());
             // openTransactionFragment();
             openWalletInfoFragment();
         }
     }
 
-    public void openSendMoneyFragment( ) {
-       // getActivity().getSupportFragmentManager().popBackStack();
+    public void openSendMoneyFragment() {
+        // getActivity().getSupportFragmentManager().popBackStack();
         Bundle bundle = new Bundle();
         SendMoneyFragment sendMoneyFragment = new SendMoneyFragment();
         bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
@@ -335,18 +327,17 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setBackground(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_cancel_icon));
-                binding.stepFour.textTransferMsg.setTextColor(ContextCompat.getColor(getActivity(),R.color.auro_dark_blue));
+                binding.stepFour.textTransferMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.auro_dark_blue));
                 binding.stepFour.textTransferMsg.setText(R.string.you_will_see_transfer);
                 binding.stepFour.btTransferMoney.setVisibility(View.GONE);
                 binding.stepFour.tickSign.setVisibility(View.GONE);
             } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.PENDING)) {
-                AppLogger.e("chhonker step ","kyc Step 7");
+                AppLogger.e("chhonker step ", "kyc Step 7");
                 binding.stepTwo.textVerifyMsg.setText(getString(R.string.verification_pending));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
             }
         }
     }
-
 
 
     private void observeServiceResponse() {
@@ -402,20 +393,6 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         }
     }
 
-    private void setKeyListner() {
-        this.getView().setFocusableInTouchMode(true);
-        this.getView().requestFocus();
-        this.getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    getActivity().getSupportFragmentManager().popBackStack();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
 
     private void openWalletInfoFragment() {
         Bundle bundle = new Bundle();

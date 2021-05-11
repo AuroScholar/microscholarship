@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareIdentity("");
         auroScholarDataModel.setActivity(this); // Activity context here
         auroScholarDataModel.setEmailVerified(true);
-        auroScholarDataModel.setPartnerSource("");
+        auroScholarDataModel.setPartnerSource("AURO3VE4j7");
         auroScholarDataModel.setUTMLink(binding.utmTextHere.getText().toString());
        // auroScholarDataModel.setUTMLink("");
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container) ;//This is the example please put your container id here.
@@ -175,8 +175,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setActivity(this);
         inputModel.setLanguage(binding.language.getText().toString());// In Small Letter Eg. Hindi - hi or English-en
         inputModel.setApplicationLang(false);
+        inputModel.setPartnerSource("AURO3VE4j7");
         inputModel.setFragmentContainerUiId(R.id.home_container);
-        openFragment(AuroScholar.startAuroSDK(inputModel));
+        AuroScholar.startAuroSDK(inputModel);
+       // openFragment();
     }
 
     @Override

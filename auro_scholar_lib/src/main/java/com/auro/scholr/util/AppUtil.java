@@ -15,15 +15,12 @@ import android.util.TypedValue;
 import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 
-import com.auro.scholr.core.application.AuroApp;
-import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
-import com.auro.scholr.teacher.data.model.response.MyClassRoomResModel;
 import com.auro.scholr.teacher.data.model.response.MyClassRoomTeacherResModel;
 
 import org.json.JSONObject;
@@ -133,6 +130,10 @@ public class AppUtil {
         WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);
         String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
         return ip;
+    }
+
+    public static String getSDKTag(Context context) {
+        return "1.1.81";
     }
 
 

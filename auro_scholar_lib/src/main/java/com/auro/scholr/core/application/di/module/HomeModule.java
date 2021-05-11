@@ -208,4 +208,11 @@ public class HomeModule {
     ViewModelFactory provideCertificateFragmentViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
     }
+
+    @Provides
+    @Singleton
+    @Named("StudentDashboardActivity")
+    ViewModelFactory provideStudentDashboardActivityViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
 }

@@ -41,6 +41,10 @@ androidx.camera.lifecycle,androidx.camera.core" />
         <activity
             android:name=".util.permission.PermissionsActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name=".home.presentation.view.activity.StudentDashboardActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".home.presentation.view.activity.HomeActivity"
             android:screenOrientation="portrait"

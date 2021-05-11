@@ -8,6 +8,7 @@ import com.auro.scholr.core.application.di.module.PaymentModule;
 import com.auro.scholr.core.application.di.module.TeacherModule;
 import com.auro.scholr.core.application.di.module.UtilsModule;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.fragment.CertificateFragment;
 import com.auro.scholr.home.presentation.view.fragment.CongratulationsDialog;
 import com.auro.scholr.home.presentation.view.fragment.ConsgratuationLessScoreDialog;
@@ -52,6 +53,8 @@ public interface AppComponent {
     void injectAppContext(Activity reciprociApp);
 
     void doInjection(HomeActivity homeActivity);
+
+    void doInjection(StudentDashboardActivity homeActivity);
 
     void doInjection(KYCViewFragment kycViewFragment);
 

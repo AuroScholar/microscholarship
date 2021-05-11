@@ -10,6 +10,7 @@ import com.auro.scholr.core.common.SdkCallBack;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
 import com.google.gson.Gson;
@@ -59,7 +60,7 @@ public class AuroScholar {
     }
 
     /*For generic with PhoneNumber and class*/
-    public static Fragment startAuroSDK(AuroScholarInputModel inputModel) {
+    public static void startAuroSDK(AuroScholarInputModel inputModel) {
         AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
         auroScholarDataModel.setMobileNumber(inputModel.getMobileNumber());
         auroScholarDataModel.setStudentClass(inputModel.getStudentClass());
@@ -76,8 +77,10 @@ public class AuroScholar {
             auroScholarDataModel.setPartnerSource(inputModel.getPartnerSource());
         }
         AuroApp.setAuroModel(auroScholarDataModel);
-        QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
-        return quizHomeFragment;
+       // QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
+        auroScholarDataModel.getActivity().startActivity(new Intent(auroScholarDataModel.getActivity(), StudentDashboardActivity.class));
+
+      //  return quizHomeFragment;
     }
 
 

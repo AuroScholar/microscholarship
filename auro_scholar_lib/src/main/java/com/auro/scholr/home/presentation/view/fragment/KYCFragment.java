@@ -45,6 +45,7 @@ import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
+import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.adapter.KYCuploadAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
@@ -168,6 +169,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     @Override
     protected void setListener() {
+        ((StudentDashboardActivity)getActivity()).setListingActiveFragment(StudentDashboardActivity.KYC_FRAGMENT);
+
         /*Do code here*/
         binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
@@ -222,7 +225,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             AppPref.INSTANCE.setPref(prefModel);
         }
 
-        setKeyListner();
     }
 
 
@@ -491,7 +493,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             }
             reloadFragment();
         }  else if (v.getId() == R.id.back_arrow) {
-            getActivity().getSupportFragmentManager().popBackStack();
+            getActivity().onBackPressed();
             AppLogger.e("handleback","backlisner");
 
         } else if (v.getId() == R.id.bt_transfer_money) {
@@ -693,20 +695,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         }
     }
 
-    private void setKeyListner() {
-        this.getView().setFocusableInTouchMode(true);
-        this.getView().requestFocus();
-        this.getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    getActivity().getSupportFragmentManager().popBackStack();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
+
 
     private void openProgressDialog() {
         if (customProgressDialog != null && customProgressDialog.isShowing()) {
