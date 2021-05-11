@@ -6,15 +6,12 @@ import androidx.fragment.app.Fragment;
 
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
-import com.auro.scholr.core.common.SdkCallBack;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class AuroScholar {
 
@@ -77,10 +74,13 @@ public class AuroScholar {
             auroScholarDataModel.setPartnerSource(inputModel.getPartnerSource());
         }
         AuroApp.setAuroModel(auroScholarDataModel);
-       // QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
+        if (auroScholarDataModel != null && auroScholarDataModel.getActivity() == null) {
+            return;
+        }
+        // QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
         auroScholarDataModel.getActivity().startActivity(new Intent(auroScholarDataModel.getActivity(), StudentDashboardActivity.class));
 
-      //  return quizHomeFragment;
+        //  return quizHomeFragment;
     }
 
 
