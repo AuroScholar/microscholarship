@@ -44,6 +44,7 @@ androidx.camera.lifecycle,androidx.camera.core" />
 
         <activity
             android:name=".home.presentation.view.activity.StudentDashboardActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".home.presentation.view.activity.HomeActivity"
