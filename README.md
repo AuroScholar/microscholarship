@@ -86,7 +86,7 @@ AuroScholarInputModel inputModel= new AuroScholarInputModel();
 // Important Params
 inputModel.setMobileNumber("mobile number here"); //Mandatory
 inputModel.setActivity(Activity Context Here); //Mandatory
-inputModel.setFragmentContainerUiId(Container id Here); //Mandatory Example :- R.id.containerId
+inputModel.setFragmentContainerUiId(R.id.home_container); //Mandatory Don't Change this Container Id. it should be same 
 inputModel.setStudentClass("put student class here"); //Mandatory
 inputModel.setReferralLink("Put here branch or any other referral Link");
 inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
