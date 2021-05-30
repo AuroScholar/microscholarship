@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.auro.scholr">
 
+    <uses-sdk tools:overrideLibrary="com.pierfrancescosoffritti.androidyoutubeplayer, androidx.camera.view , androidx.camera.extensions,androidx.camera.camera2, androidx.camera.lifecycle,androidx.camera.core" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -13,14 +15,12 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <uses-sdk tools:overrideLibrary="com.pierfrancescosoffritti.androidyoutubeplayer, androidx.camera.view , androidx.camera.extensions,androidx.camera.camera2,
-androidx.camera.lifecycle,androidx.camera.core" />
-
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="true" />
 
     <application>
+        <activity android:name=".home.presentation.view.activity.newDashboard.StudentMainDashboardActivity"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -41,7 +41,6 @@ androidx.camera.lifecycle,androidx.camera.core" />
         <activity
             android:name=".util.permission.PermissionsActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
             android:name=".home.presentation.view.activity.StudentDashboardActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -69,17 +68,18 @@ androidx.camera.lifecycle,androidx.camera.core" />
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-
-        <!--     <provider android:authorities="com.facebook.app.FacebookContentProvider1614821145461747"
+        <!--
+     <provider android:authorities="com.facebook.app.FacebookContentProvider1614821145461747"
                  android:name="com.facebook.FacebookContentProvider"
-                 android:exported="true"/>-->
+                 android:exported="true"/>
+        -->
         <!--
  <meta-data
              android:name="com.google.android.geo.API_KEY"
              android:value="@string/google_api_places_key" />
         -->
-        <!--<provider
+        <!--
+<provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.auro.scholr.provider"
             android:exported="false"
@@ -89,8 +89,8 @@ androidx.camera.lifecycle,androidx.camera.core" />
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>-->
-
+        </provider>
+        -->
         <activity
             android:name=".util.cropper.CropImagesActivity"
             android:theme="@style/Base.Theme.AppCompat" />
