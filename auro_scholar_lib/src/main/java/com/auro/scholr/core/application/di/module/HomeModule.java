@@ -216,12 +216,6 @@ public class HomeModule {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
     }
 
-    @Provides
-    @Singleton
-    @Named("StudentNewDashboardActivity")
-    ViewModelFactory provideStudentDashboardActivityViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
-        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
-    }
 
     @Provides
     @Singleton
@@ -230,11 +224,6 @@ public class HomeModule {
         return new ViewModelFactory(homeUseCase,homeDbUseCase,homeRemoteUseCase);
     }
 
-    @Provides
-    @Singleton
-    @Named("MainQuizHomeFragment")
-    ViewModelFactory provideMainQuizViewModelFactory(HomeUseCase homeUseCase,HomeDbUseCase homeDbUseCase,HomeRemoteUseCase homeRemoteUseCase){
-        return new ViewModelFactory(homeUseCase,homeDbUseCase,homeRemoteUseCase);
-    }
+
 
 }

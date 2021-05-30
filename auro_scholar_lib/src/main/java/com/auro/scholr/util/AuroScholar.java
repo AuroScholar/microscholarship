@@ -9,8 +9,8 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+
 import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
-import com.auro.scholr.home.presentation.view.activity.newUi.StudentNewDashBoardActivity;
 import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
 
@@ -79,7 +79,7 @@ public class AuroScholar {
             return;
         }
         // QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
-        auroScholarDataModel.getActivity().startActivity(new Intent(auroScholarDataModel.getActivity(), StudentNewDashBoardActivity.class));
+        auroScholarDataModel.getActivity().startActivity(new Intent(auroScholarDataModel.getActivity(), StudentDashboardActivity.class));
 
         //  return quizHomeFragment;
     }

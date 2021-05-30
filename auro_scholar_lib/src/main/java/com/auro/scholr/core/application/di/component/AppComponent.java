@@ -10,7 +10,7 @@ import com.auro.scholr.core.application.di.module.UtilsModule;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.activity.UserProfileActivity;
-import com.auro.scholr.home.presentation.view.activity.newUi.StudentNewDashBoardActivity;
+
 import com.auro.scholr.home.presentation.view.fragment.CertificateFragment;
 import com.auro.scholr.home.presentation.view.fragment.CongratulationsDialog;
 import com.auro.scholr.home.presentation.view.fragment.ConsgratuationLessScoreDialog;
@@ -31,7 +31,7 @@ import com.auro.scholr.home.presentation.view.fragment.ScholarShipFragment;
 import com.auro.scholr.home.presentation.view.fragment.StudentProfileFragment;
 import com.auro.scholr.home.presentation.view.fragment.TransactionsFragment;
 import com.auro.scholr.home.presentation.view.fragment.WalletInfoDetailFragment;
-import com.auro.scholr.home.presentation.view.fragment.newDesgin.MainQuizHomeFragment;
+
 import com.auro.scholr.payment.presentation.view.fragment.BankFragment;
 import com.auro.scholr.payment.presentation.view.fragment.PaytmFragment;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
@@ -58,8 +58,6 @@ public interface AppComponent {
     void doInjection(HomeActivity homeActivity);
 
     void doInjection(StudentDashboardActivity homeActivity);
-
-    void doInjection(StudentNewDashBoardActivity homeActivity);
 
     void doInjection(KYCViewFragment kycViewFragment);
 
@@ -126,6 +124,6 @@ public interface AppComponent {
 
     void doInjection(UserProfileActivity fragment);
 
-    void doInjection(MainQuizHomeFragment activity);
+
 
 }

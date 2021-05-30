@@ -2,12 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data>
-
-        <variable
-            name="quizViewModel"
-            type="com.auro.application.home.presentation.viewmodel.QuizViewModel" />
-    </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -76,7 +70,7 @@
                     android:padding="@dimen/_2sdp"
                     android:visibility="gone"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:src="@drawable/ic_notification" />
+                    app:srcCompat="@drawable/ic_notification" />
 
                 <ImageView
                     android:id="@+id/imageViewLanguage"
