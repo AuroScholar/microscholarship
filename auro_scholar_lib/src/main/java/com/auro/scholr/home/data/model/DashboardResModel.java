@@ -205,6 +205,11 @@ public class DashboardResModel implements Parcelable {
     private String disburseScholarshipMoney;
 
 
+    @SerializedName("profile_pic")
+    @Expose
+    private  String profilePic;
+
+
     protected DashboardResModel(Parcel in) {
         status = in.readString();
         error = in.readByte() != 0;
@@ -254,6 +259,8 @@ public class DashboardResModel implements Parcelable {
         is_native_image_capturing = in.readByte() != 0;
         inProcessScholarShipMoney = in.readString();
         disburseScholarshipMoney=in.readString();
+        profilePic = in.readString();
+
     }
 
     @Override
@@ -305,6 +312,7 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(userPartnerId);
         dest.writeString(disburseScholarshipMoney);
         dest.writeByte((byte) (is_native_image_capturing ? 1 : 0));
+        dest.writeString(profilePic);
     }
 
     @Override
@@ -707,4 +715,13 @@ public class DashboardResModel implements Parcelable {
     public void setIs_native_image_capturing(boolean is_native_image_capturing) {
         this.is_native_image_capturing = is_native_image_capturing;
     }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
+
 }

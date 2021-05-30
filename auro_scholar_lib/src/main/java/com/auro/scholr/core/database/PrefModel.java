@@ -21,6 +21,18 @@ public class PrefModel implements Serializable {
     private String userMobile;
 
     private int studentClass;
+
+    private  String deviceToken;
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
+
     private List<AssignmentReqModel> listAzureImageList = new ArrayList<>();
 
     private DynamiclinkResModel dynamiclinkResModel;
@@ -99,4 +111,6 @@ public class PrefModel implements Serializable {
     public void setDynamiclinkResModel(DynamiclinkResModel dynamiclinkResModel) {
         this.dynamiclinkResModel = dynamiclinkResModel;
     }
+
+
 }

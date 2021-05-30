@@ -273,6 +273,11 @@ public class ViewUtil {
         resources.updateConfiguration(config, dm);
     }
 
-
+    public static void setProfilePic(ImageView imageView) {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null && prefModel.getDashboardResModel() != null && !TextUtil.isEmpty(prefModel.getDashboardResModel().getProfilePic())) {
+            ImageUtil.loadNormalImage(imageView, prefModel.getDashboardResModel().getProfilePic());
+        }
+    }
 
 }

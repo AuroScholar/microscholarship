@@ -212,7 +212,29 @@ public class HomeModule {
     @Provides
     @Singleton
     @Named("StudentDashboardActivity")
+    ViewModelFactory provideStudentNewDashboardActivityViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
+
+    @Provides
+    @Singleton
+    @Named("StudentNewDashboardActivity")
     ViewModelFactory provideStudentDashboardActivityViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
     }
+
+    @Provides
+    @Singleton
+    @Named("UserProfileActivity")
+    ViewModelFactory provideUserProfileModelFactory(HomeUseCase homeUseCase,HomeDbUseCase homeDbUseCase,HomeRemoteUseCase homeRemoteUseCase){
+        return new ViewModelFactory(homeUseCase,homeDbUseCase,homeRemoteUseCase);
+    }
+
+    @Provides
+    @Singleton
+    @Named("MainQuizHomeFragment")
+    ViewModelFactory provideMainQuizViewModelFactory(HomeUseCase homeUseCase,HomeDbUseCase homeDbUseCase,HomeRemoteUseCase homeRemoteUseCase){
+        return new ViewModelFactory(homeUseCase,homeDbUseCase,homeRemoteUseCase);
+    }
+
 }
