@@ -33,6 +33,7 @@ import com.auro.scholr.home.presentation.view.fragment.StudentProfileFragment;
 import com.auro.scholr.home.presentation.view.fragment.TransactionsFragment;
 import com.auro.scholr.home.presentation.view.fragment.WalletInfoDetailFragment;
 
+import com.auro.scholr.home.presentation.view.fragment.newDesgin.MainQuizHomeFragment;
 import com.auro.scholr.payment.presentation.view.fragment.BankFragment;
 import com.auro.scholr.payment.presentation.view.fragment.PaytmFragment;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
@@ -126,5 +127,7 @@ public interface AppComponent {
     void doInjection(UserProfileActivity fragment);
 
     void doInjection(StudentMainDashboardActivity activity);
+
+    void doInjection(MainQuizHomeFragment activity);
 
 }

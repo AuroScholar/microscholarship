@@ -15,6 +15,8 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
@@ -36,6 +38,8 @@ import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.core.common.OnItemClickListener;
 import com.auro.scholr.core.common.Status;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.ActivityStudentMainDashboardBinding;
 import com.auro.scholr.databinding.StudentActivityDashboardBinding;
 import com.auro.scholr.home.data.datasource.remote.HomeRemoteApi;
@@ -61,6 +65,7 @@ import com.auro.scholr.util.AppUtil;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -318,6 +323,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
             return;
         }
         mNavItems.clear();
+
         mNavItems.add(new NavItemModel(getResources().getString(R.string.student_profile), "", R.drawable.ic_student_profile));
 
         mNavItems.add(new NavItemModel(getResources().getString(R.string.passport), getResources().getString(R.string.analytics_more), R.drawable.ic_student_pass));
@@ -452,6 +458,15 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
         kycViewFragment.setArguments(bundle);
         openFragment(kycViewFragment);
+    }
+    public void openProfileFragment() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        Bundle bundle = new Bundle();
+        StudentProfileFragment studentProfile = new StudentProfileFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, prefModel.getDashboardResModel());
+        bundle.putString(AppConstant.COMING_FROM, AppConstant.SENDING_DATA.STUDENT_PROFILE);
+        studentProfile.setArguments(bundle);
+        openFragment(studentProfile);
     }
 
 }

@@ -230,5 +230,11 @@ public class HomeModule {
     ViewModelFactory provideStudentMainDashboardActivityViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
     }
+    @Provides
+    @Singleton
+    @Named("MainQuizHomeFragment")
+    ViewModelFactory provideMainQuizHomeViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
 
 }
