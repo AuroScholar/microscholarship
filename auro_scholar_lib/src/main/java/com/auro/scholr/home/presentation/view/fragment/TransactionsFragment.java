@@ -37,6 +37,7 @@ import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
 import com.auro.scholr.home.data.model.passportmodels.PassportSubjectModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
+import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.home.presentation.view.adapter.LeaderBoardAdapter;
 import com.auro.scholr.home.presentation.view.adapter.MontlyWiseAdapter;
 import com.auro.scholr.home.presentation.view.adapter.PassportSpinnerAdapter;
@@ -178,7 +179,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
 
     @Override
     protected void setListener() {
-        ((StudentDashboardActivity)getActivity()).setListingActiveFragment(StudentDashboardActivity.PASSPORT_FRAGMENT);
+        ((StudentMainDashboardActivity)getActivity()).setListingActiveFragment(StudentMainDashboardActivity.PASSPORT_FRAGMENT);
 
         binding.headerParent.cambridgeHeading.setVisibility(View.VISIBLE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);

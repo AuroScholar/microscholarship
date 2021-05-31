@@ -56,6 +56,7 @@ import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
 import com.auro.scholr.home.presentation.view.fragment.StudentProfileFragment;
 import com.auro.scholr.home.presentation.view.fragment.TransactionsFragment;
 import com.auro.scholr.home.presentation.view.fragment.WalletInfoDetailFragment;
+import com.auro.scholr.home.presentation.view.fragment.newDesgin.MainQuizHomeFragment;
 import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
@@ -149,8 +150,8 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         }*/
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-       // openFragment(new QuizHomeFragment());
-        setDrawerItemList(0, 0);
+        openFragment(new MainQuizHomeFragment());
+
     }
 
     @Override
@@ -318,147 +319,8 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
                 break;
         }
     }
-    private void setDrawerItemList(int status, int val) {
-        if (this == null) {
-            return;
-        }
-        mNavItems.clear();
-
-        mNavItems.add(new NavItemModel(getResources().getString(R.string.student_profile), "", R.drawable.ic_student_profile));
-
-        mNavItems.add(new NavItemModel(getResources().getString(R.string.passport), getResources().getString(R.string.analytics_more), R.drawable.ic_student_pass));
-
-        mNavItems.add(new NavItemModel(getResources().getString(R.string.kyc_verification), "", R.drawable.ic_verification));
-
-        mNavItems.add(new NavItemModel(getResources().getString(R.string.certificates), "", R.drawable.ic_certificate_icon));
-
-        mNavItems.add(new NavItemModel(getResources().getString(R.string.payment_info), "", R.drawable.ic_payment_info));
-
-        // mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.change_language), "", R.drawable.ic_language));
-
-        mNavItems.add(new NavItemModel(getResources().getString(R.string.privacy_policy), "", R.drawable.ic_policy));
-        // DrawerLayout
-        if (status == 0) {
-            drawerListAdapter = new DrawerListAdapter(this, mNavItems);
-            binding.navList.setAdapter(drawerListAdapter);
-            // Drawer Item click listeners
-            binding.navList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    handleDrawerItemClick(position);
-                }
-            });
-        } else {
-            if (drawerListAdapter != null) {
-                drawerListAdapter.udpateList(mNavItems);
-            }
-        }
-    }
-
-    private void handleDrawerItemClick(int position) {
-
-        switch (position) {
-            case 0:
-                /*Profile*/
-                openStudentFragment();
-                break;
-
-            case 1:
-                /*Passport*/
-                openTransactionsFragment();
-                break;
-
-            case 2:
-                /*KYC Verification*/
-                if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
-                    openKYCViewFragment(dashboardResModel);
-                } else {
-                    openKYCFragment(dashboardResModel);
-                }
-                break;
-
-            case 3:
-                /*Certificates*/
-                openCertificateFragment();
-                break;
-
-            case 4:
-                /*Payment Info*/
-                openWalletAmountlistFragment();
-                break;
-
-            //  case 5:
-            /*Change Grade*/
-            // ((HomeActivity) getActivity()).openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
-            // openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
-           /* if (AuroApp.getAuroScholarModel().getSdkcallback() != null) {
-                AuroApp.getAuroScholarModel().getSdkcallback().commonCallback(Status.NAV_CHANGE_GRADE_CLICK, "");
-            }*/
-            //  break;
-
-            /* case 7:
-             *//*Change Language*//*
-               // openChangeLanguageDialog();
-                break;
-*/
-            case 5:
-                /*Privacy Policy*/
-                openFragment(new PrivacyPolicyFragment());
-                break;
 
 
-        }
-
-        binding.drawerLayout.closeDrawer(GravityCompat.START);
-
-    }
-
-    public void openTransactionsFragment() {
-        Bundle bundle = new Bundle();
-        TransactionsFragment transactionsFragment = new TransactionsFragment();
-       // bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
-        transactionsFragment.setArguments(bundle);
-        openFragment(transactionsFragment);
-    }
-    public void openStudentFragment() {
-        Bundle bundle = new Bundle();
-        StudentProfileFragment studentProfile = new StudentProfileFragment();
-       // bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
-
-        studentProfile.setArguments(bundle);
-        openFragment(studentProfile);
-    }
-
-    /*For testing purpose*/
-    public void openCertificateFragment() {
-        Bundle bundle = new Bundle();
-        CertificateFragment certificateFragment = new CertificateFragment();
-        openFragment(certificateFragment);
-    }
-
-
-    private void openWalletAmountlistFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
-        WalletInfoDetailFragment fragment = new WalletInfoDetailFragment();
-        fragment.setArguments(bundle);
-        openFragment(fragment);
-    }
-    public void openKYCFragment(DashboardResModel dashboardResModel) {
-        Bundle bundle = new Bundle();
-        KYCFragment kycFragment = new KYCFragment();
-        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
-        kycFragment.setArguments(bundle);
-        openFragment(kycFragment);
-    }
-
-    public void openKYCViewFragment(DashboardResModel dashboardResModel) {
-        Bundle bundle = new Bundle();
-        KYCViewFragment kycViewFragment = new KYCViewFragment();
-        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
-        kycViewFragment.setArguments(bundle);
-        openFragment(kycViewFragment);
-    }
     public void openProfileFragment() {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         Bundle bundle = new Bundle();
@@ -468,5 +330,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         studentProfile.setArguments(bundle);
         openFragment(studentProfile);
     }
+
+
 
 }

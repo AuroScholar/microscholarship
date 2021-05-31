@@ -48,6 +48,7 @@ import com.auro.scholr.home.data.model.StudentProfileModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
+import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.home.presentation.viewmodel.StudentProfileViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
@@ -173,7 +174,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
 
     @Override
     protected void setListener() {
-        ((StudentDashboardActivity)getActivity()).setListingActiveFragment(StudentDashboardActivity.PROFILE_FRAGMENT);
+        ((StudentMainDashboardActivity)getActivity()).setListingActiveFragment(StudentMainDashboardActivity.PROFILE_FRAGMENT);
 
         binding.profileImage.setOnClickListener(this);
         binding.toolbarLayout.backArrow.setOnClickListener(this);

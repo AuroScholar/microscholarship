@@ -20,6 +20,7 @@ import com.auro.scholr.databinding.FragmentWalletInfoDetailBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.WalletResponseAmountResModel;
 import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
+import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.home.presentation.view.adapter.WalletAdapter;
 import com.auro.scholr.home.presentation.viewmodel.WalletAmountViewModel;
 import com.auro.scholr.util.TextUtil;
@@ -200,7 +201,7 @@ public class WalletInfoDetailFragment extends BaseFragment implements View.OnCli
 
     @Override
     protected void setListener() {
-        ((StudentDashboardActivity)getActivity()).setListingActiveFragment(StudentDashboardActivity.PAYMENT_INFO_FRAGMENT);
+        ((StudentMainDashboardActivity)getActivity()).setListingActiveFragment(StudentMainDashboardActivity.PAYMENT_INFO_FRAGMENT);
 
         // binding.headerParent.cambridgeHeading.setVisibility(View.VISIBLE);
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);

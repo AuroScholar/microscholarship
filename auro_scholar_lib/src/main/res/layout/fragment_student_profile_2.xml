@@ -25,12 +25,14 @@
             android:id="@+id/main_parent_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <include
                 android:id="@+id/toolbar_layout"
                 layout="@layout/toolbar_header_layout"
                 android:layout_width="match_parent"
+                android:visibility="visible"
                 android:layout_height="wrap_content" />
+
+
 
             <ImageView
                 android:layout_width="match_parent"
@@ -41,12 +43,32 @@
                 android:visibility="gone" />
 
 
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar_layout"
+                app:srcCompat="@drawable/ic_bg_left_rangoli"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:rotation="90"
+                android:layout_below="@+id/toolbar_layout"
+                app:srcCompat="@drawable/ic_bg_left_rangoli"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
             <include
                 android:id="@+id/header_top_parent"
                 layout="@layout/quiz_header_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/toolbar_layout"
+                android:visibility="gone"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
@@ -56,7 +78,7 @@
                 android:id="@+id/parent_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/header_top_parent"
+                android:layout_below="@+id/toolbar_layout"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fillViewport="true"
                 app:layout_constraintBottom_toBottomOf="parent"

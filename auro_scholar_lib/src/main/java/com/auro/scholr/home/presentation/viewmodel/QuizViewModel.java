@@ -14,6 +14,7 @@ import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
+import com.auro.scholr.util.AppLogger;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -50,6 +51,7 @@ public class QuizViewModel extends ViewModel {
     }
 
     public void getDashBoardData(AuroScholarDataModel model) {
+        AppLogger.v("DASHBOARD",model.getMobileNumber());
 
         Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
             if (hasInternet) {
