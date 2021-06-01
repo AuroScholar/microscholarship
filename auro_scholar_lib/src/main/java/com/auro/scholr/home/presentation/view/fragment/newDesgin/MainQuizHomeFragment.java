@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,6 +53,7 @@ import com.auro.scholr.home.data.model.NavItemModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.SelectChapterQuizModel;
 import com.auro.scholr.home.data.model.SubjectResModel;
+import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.home.presentation.view.adapter.DrawerListAdapter;
 import com.auro.scholr.home.presentation.view.adapter.newuiadapter.ChapterSelectAdapter;
@@ -75,6 +77,7 @@ import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
+import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
 import com.bumptech.glide.Glide;
@@ -287,20 +290,17 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
             case NEXT_QUIZ_CLICK:
                 quizResModel = (QuizResModel) commonDataModel.getObject();
-                /*funnelRetakeQuiz();
-                askPermission();*/
+
+                askPermission();
                 break;
 
             case START_QUIZ_BUTON:
                 quizResModel = (QuizResModel) commonDataModel.getObject();
-
-             /*   funnelStartQuiz();
-                askPermission();*/
+                askPermission();
                 break;
         }
     }
-
-   /* private void askPermission() {
+    private void askPermission() {
         String rationale = getString(R.string.permission_error_msg);
         Permissions.Options options = new Permissions.Options()
                 .setRationaleDialogTitle("Info")
@@ -321,10 +321,10 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
     }
 
     public void openCameraPhotoFragment() {
-        Intent intent = new Intent(getActivity(), CameraxActivity.class);
+        Intent intent = new Intent(getActivity(), CameraActivity.class);
         startActivityForResult(intent, AppConstant.CAMERA_REQUEST_CODE);
-        //  startActivity(new Intent(getActivity(), CameraxActivity.class));
-    }*/
+    }
+
 
     void backPressHandling() {
         int status = binding.quizSelectionSheet.sheetLayoutQuiz.getVisibility();
@@ -516,6 +516,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
     private void setDataOnUi(DashboardResModel dashboardResModel) {
      //   binding.walletBalText.setText(getString(R.string.rs) + " " + quizViewModel.homeUseCase.getWalletBalance(dashboardResModel));
         setSubjectAdapter(dashboardResModel);
+        setNavHeaderText();
     }
 
 
@@ -599,8 +600,8 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                     String path = data.getStringExtra(AppConstant.PROFILE_IMAGE_PATH);
                     azureImage(path);
                     openQuizTestFragment(dashboardResModel);
-                    AppLogger.e("chhonker-", "QuizTestFragment  setp 1");
-                    //loadImageFromStorage(path);
+
+                    // loadImageFromStorage(path);
                 } catch (Exception e) {
 
                 }
@@ -893,5 +894,14 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
     private void callClassUpgradeApi() {
         quizViewModel.gradeUpgrade(AuroApp.getAuroScholarModel());
+    }
+    private void setNavHeaderText() {
+        TextView login_txt = binding.navHeader.findViewById(R.id.login_id);
+        login_txt.setText(getActivity().getString(R.string.mobile_num) + dashboardResModel.getPhonenumber());
+
+        TextView class_txt = binding.navHeader.findViewById(R.id.txtClass);
+        class_txt.setText(getActivity().getString(R.string.student_class) + dashboardResModel.getStudentclass());
+
+
     }
 }
