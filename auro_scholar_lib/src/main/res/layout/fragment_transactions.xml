@@ -21,7 +21,7 @@
                 android:id="@+id/toolbar_layout"
                 layout="@layout/toolbar_header_layout"
                 android:layout_width="match_parent"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_height="wrap_content" />
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/rltoplayout"
@@ -86,10 +86,11 @@
                     android:dividerHeight="0.0px"
                     android:elevation="@dimen/_10sdp"
                     app:cardCornerRadius="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     app:cardElevation="@dimen/_15sdp"
                     app:cardPreventCornerOverlap="false"
-                    app:layout_constraintBottom_toBottomOf="@+id/imagerotate"
-                    app:layout_constraintStart_toStartOf="@+id/imagerotate">
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView5">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
@@ -123,6 +124,18 @@
                             android:scaleType="fitXY" />
                     </androidx.cardview.widget.CardView>
                 </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/login_back_button"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/imagerotate"
+                    app:layout_constraintStart_toStartOf="@+id/imagerotate" />
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

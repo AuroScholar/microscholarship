@@ -152,6 +152,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
         spinnerSubject.setMonth("All");
         selectCurrentMonthInSpinner();
         checkCallApiStatus();
+        ViewUtil.setProfilePic(binding.imageView6);
 
     }
 
@@ -191,6 +192,9 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
         } else {
             observeServiceResponse();
         }
+
+        binding.backButton.setOnClickListener(this);
+        binding.cardView2.setOnClickListener(this);
     }
 
     @Override
@@ -266,7 +270,7 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.back_arrow) {
+        if (id == R.id.backButton) {
             getActivity().onBackPressed();
         } else if (id == R.id.lang_eng) {
             changeLanguage();
@@ -279,6 +283,8 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
             userClick = true;
             AppLogger.e(TAG,"subject_parent_layout on click");
             binding.subjectSpinner.performClick();
+        }else if (id ==  R.id.cardView2){
+            ((StudentMainDashboardActivity)getActivity()).openProfileFragment();
         }
     }
 

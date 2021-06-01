@@ -19,11 +19,14 @@
             android:id="@+id/toolbar_layout"
             layout="@layout/toolbar_header_layout"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
 
             <LinearLayout
                 android:id="@+id/kycbackground"
@@ -32,6 +35,18 @@
                 android:background="@color/blue_color"
                 android:orientation="vertical"
                 android:visibility="visible">
+                <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/login_back_button"
+                    android:visibility="visible"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_gravity="right"
+                    app:layout_constraintBottom_toBottomOf="@+id/imagerotate"
+                    app:layout_constraintStart_toStartOf="@+id/imagerotate" />
 
 
                 <include
@@ -69,7 +84,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_10sdp"
-                                android:layout_marginTop="@dimen/_20sdp"
                                 android:layout_marginEnd="@dimen/_10sdp">
 
                                 <com.auro.scholr.core.util.uiwidget.RPTextView

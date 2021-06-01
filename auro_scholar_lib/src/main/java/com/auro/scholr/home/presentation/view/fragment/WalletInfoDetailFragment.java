@@ -114,7 +114,7 @@ public class WalletInfoDetailFragment extends BaseFragment implements View.OnCli
             setLanguageText(AppConstant.ENGLISH);
         }*/
 
-
+        ViewUtil.setProfilePic(binding.imageView6);
         setAdapter();
 
 
@@ -206,7 +206,8 @@ public class WalletInfoDetailFragment extends BaseFragment implements View.OnCli
         // binding.headerParent.cambridgeHeading.setVisibility(View.VISIBLE);
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
-
+        binding.backButton.setOnClickListener(this);
+        binding.cardView2.setOnClickListener(this);
     }
 
     @Override
@@ -216,8 +217,10 @@ public class WalletInfoDetailFragment extends BaseFragment implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.back_arrow) {
+        if (v.getId() == R.id.backButton) {
             getActivity().onBackPressed();
+        }else if (v.getId()==  R.id.cardView2){
+            ((StudentMainDashboardActivity)getActivity()).openProfileFragment();
         }
     }
 

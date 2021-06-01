@@ -18,6 +18,7 @@
                 android:id="@+id/toolbar_layout"
                 layout="@layout/toolbar_header_layout"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content" />
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -33,7 +34,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-                    <RelativeLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <ImageView
@@ -66,12 +67,57 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:rotation="90"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_bg_left_rangoli" />
 
-                            app:srcCompat="@drawable/ic_bg_left_rangoli"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardView2"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:clipChildren="false"
+                            android:clipToPadding="false"
+                            android:divider="@android:color/transparent"
+                            android:dividerHeight="0.0px"
+                            android:elevation="@dimen/_10sdp"
+                            app:cardCornerRadius="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            app:cardElevation="@dimen/_15sdp"
+                            app:cardPreventCornerOverlap="false"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/imageView5">
 
-                    </RelativeLayout>
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="@dimen/_2sdp"
+                                android:divider="@android:color/transparent"
+                                app:cardCornerRadius="@dimen/_5sdp"
+
+                                >
+
+                                <ImageView
+                                    android:id="@+id/imageView6"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/ic_profile"
+                                    android:scaleType="fitXY" />
+
+                            </androidx.cardview.widget.CardView>
+                        </androidx.cardview.widget.CardView>
+
+                        <ImageView
+                            android:id="@+id/backButton"
+                            android:layout_width="@dimen/_50sdp"
+                            android:layout_height="@dimen/_50sdp"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/login_back_button"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+
+                            app:layout_constraintStart_toStartOf="@+id/imageView7" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
@@ -105,7 +151,7 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_18sdp"
                                 android:textStyle="normal"
-                                app:Font="Poppins-SemiBold.ttf"
+                                app:Font="Calibre-Light.ttf"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -114,6 +160,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 app:layout_constraintTop_toBottomOf="@id/get_scholarship_text">
+
 
                                 <com.auro.scholr.core.util.uiwidget.RPTextView
                                     android:id="@+id/score_text"
@@ -130,7 +177,6 @@
                                     app:Font="Poppins-Regular.ttf"
                                     app:layout_constraintEnd_toStartOf="@+id/wallet_bal_text"
                                     app:layout_constraintTop_toBottomOf="@id/get_scholarship_text" />
-
 
                                 <ImageView
                                     android:id="@+id/download_icon"

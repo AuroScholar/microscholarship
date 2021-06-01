@@ -32,6 +32,7 @@ import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
+import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.home.presentation.view.adapter.KYCViewDocAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
@@ -137,9 +138,9 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected void setListener() {
-        ((StudentDashboardActivity) getActivity()).setListingActiveFragment(StudentDashboardActivity.KYC_VIEW_FRAGMENT);
+        ((StudentMainDashboardActivity) getActivity()).setListingActiveFragment(StudentMainDashboardActivity.KYC_VIEW_FRAGMENT);
         /*Do code here*/
-        binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
+        binding.toolbarLayout.backArrow.setVisibility(View.GONE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.btModifyAll.setOnClickListener(this);
         binding.walletInfo.setOnClickListener(this);
@@ -149,6 +150,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         } else {
             observeServiceResponse();
         }
+        binding.backButton.setOnClickListener(this);
     }
 
 
@@ -202,7 +204,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 setLanguageText(AppConstant.HINDI);
             }
             reloadFragment();
-        } else if (v.getId() == R.id.back_arrow) {
+        } else if (v.getId() == R.id.backButton) {
             getActivity().onBackPressed();
             AppLogger.e("handleback", "backlisner");
 

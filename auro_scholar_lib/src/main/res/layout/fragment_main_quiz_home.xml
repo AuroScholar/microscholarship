@@ -58,6 +58,7 @@
                         android:layout_height="@dimen/_45sdp"
                         android:layout_centerHorizontal="true"
                         android:adjustViewBounds="true"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         android:background="@drawable/ic_auro_scholar_logo"
                         android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
@@ -66,14 +67,13 @@
 
                     <ImageView
                         android:id="@+id/menuBarItem"
-                        android:layout_width="@dimen/_25sdp"
-                        android:layout_height="@dimen/_25sdp"
-                        android:background="@drawable/ic_navigation_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_hamburger"
                         android:visibility="visible"
+                        android:layout_marginRight="@dimen/_15sdp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView5"
-                        app:layout_constraintStart_toStartOf="@+id/imageView5"
-                        app:layout_constraintTop_toTopOf="@+id/imageView5" />
+                        app:layout_constraintEnd_toEndOf="@+id/imageView5" />
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardView2"
@@ -85,6 +85,7 @@
                         android:dividerHeight="0.0px"
                         android:elevation="@dimen/_10sdp"
                         app:cardCornerRadius="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         app:cardElevation="@dimen/_15sdp"
                         app:cardPreventCornerOverlap="false"
                         app:layout_constraintBottom_toBottomOf="@+id/imagerotate"

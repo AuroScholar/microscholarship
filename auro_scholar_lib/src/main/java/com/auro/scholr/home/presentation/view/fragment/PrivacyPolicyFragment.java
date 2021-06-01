@@ -127,6 +127,7 @@ public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickL
         ((StudentMainDashboardActivity)getActivity()).setListingActiveFragment(StudentMainDashboardActivity.PRIVACY_POLICY_FRAGMENT);
 
         binding.toolbarLayout.backArrow.setOnClickListener(this);
+        binding.backButton.setOnClickListener(this);
     }
 
     @Override
@@ -190,7 +191,7 @@ public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.back_arrow){
+        if(view.getId() == R.id.backButton){
             getActivity().onBackPressed();
         }
     }

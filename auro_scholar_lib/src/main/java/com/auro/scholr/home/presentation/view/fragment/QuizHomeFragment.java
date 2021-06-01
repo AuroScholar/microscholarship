@@ -461,7 +461,6 @@ public class QuizHomeFragment extends BaseFragment implements View.OnClickListen
         bundle.putParcelable(AppConstant.QUIZ_RES_MODEL, quizResModel);
         quizTestFragment.setArguments(bundle);
         Locale.getDefault().getLanguage();
-        ViewUtil.setLanguageonUi(getActivity());
         openFragment(quizTestFragment);
     }
 

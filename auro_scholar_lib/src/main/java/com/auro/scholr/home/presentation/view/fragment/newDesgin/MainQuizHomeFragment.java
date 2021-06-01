@@ -163,6 +163,9 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         init();
         setListener();
         AppLogger.v("Pradeep", DateUtil.getMonthName());
+        ViewUtil.setLanguage(Locale.getDefault().getLanguage());
+
+        ViewUtil.setLanguageonUi(getActivity());
         setDrawerItemList(0, 0);
         return binding.getRoot();
     }
@@ -793,6 +796,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         KYCViewFragment kycViewFragment = new KYCViewFragment();
         bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
         kycViewFragment.setArguments(bundle);
+        ViewUtil.setLanguageonUi(getActivity());
         openFragment(kycViewFragment);
     }
     public void openProfileFragment() {

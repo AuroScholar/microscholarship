@@ -29,7 +29,7 @@
                 android:id="@+id/toolbar_layout"
                 layout="@layout/toolbar_header_layout"
                 android:layout_width="match_parent"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_height="wrap_content" />
 
 
@@ -62,6 +62,16 @@
                 app:srcCompat="@drawable/ic_bg_left_rangoli"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+
+                android:src="@drawable/login_back_button"
+                android:visibility="visible"
+                android:layout_alignLeft="@+id/imageView7"
+                android:layout_alignBottom="@+id/imageView7"/>
+
             <include
                 android:id="@+id/header_top_parent"
                 layout="@layout/quiz_header_layout"

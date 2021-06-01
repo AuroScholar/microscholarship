@@ -115,7 +115,7 @@ public class CertificateFragment extends BaseFragment implements View.OnClickLis
 
         }
         ViewUtil.setLanguageonUi(getActivity());
-
+        ViewUtil.setProfilePic(binding.imageView6);
 
         callCertificateApi();
 
@@ -144,6 +144,8 @@ public class CertificateFragment extends BaseFragment implements View.OnClickLis
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
         binding.downloadIcon.setOnClickListener(this);
+        binding.backButton.setOnClickListener(this);
+        binding.cardView2.setOnClickListener(this);
     }
 
     @Override
@@ -155,10 +157,12 @@ public class CertificateFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.back_arrow) {
+        if (id == R.id.backButton) {
             getActivity().onBackPressed();
         } else if (id == R.id.download_icon) {
             askPermission();
+        }else if (id ==  R.id.cardView2){
+            ((StudentMainDashboardActivity)getActivity()).openProfileFragment();
         }
     }
 
