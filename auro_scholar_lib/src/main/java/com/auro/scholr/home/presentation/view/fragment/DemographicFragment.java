@@ -110,7 +110,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
 
     @Override
     protected void init() {
-        binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
+        binding.toolbarLayout.backArrow.setVisibility(View.GONE);
         setKeyListner();
         if (TextUtil.isEmpty(dashboardResModel.getLatitude()) && TextUtil.isEmpty(dashboardResModel.getLongitude())) {
             askPermission();
@@ -331,7 +331,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
                 // TODO Auto-generated method stub
             }
         });
-
+        binding.backButton.setOnClickListener(this);
     }
 
 
@@ -448,7 +448,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
             }
             reloadFragment();
 
-        } else if (v.getId() == R.id.back_arrow) {
+        } else if (v.getId() == R.id.backButton) {
             getActivity().getSupportFragmentManager().popBackStack();
         }
 
