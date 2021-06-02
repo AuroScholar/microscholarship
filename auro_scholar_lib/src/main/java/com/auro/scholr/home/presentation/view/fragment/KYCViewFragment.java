@@ -31,7 +31,6 @@ import com.auro.scholr.databinding.KycFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
-import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.home.presentation.view.adapter.KYCViewDocAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
@@ -117,7 +116,6 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             }
             setDataStepsOfVerifications();
         }
-        binding.cambridgeHeading.cambridgeHeading.setTextColor(AuroApp.getAppContext().getResources().getColor(R.color.white));
 
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
@@ -128,7 +126,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
     }
 
     private void setLanguageText(String text) {
-        binding.toolbarLayout.langEng.setText(text);
+       // binding.toolbarLayout.langEng.setText(text);
     }
 
     @Override
@@ -140,17 +138,15 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
     protected void setListener() {
         ((StudentMainDashboardActivity) getActivity()).setListingActiveFragment(StudentMainDashboardActivity.KYC_VIEW_FRAGMENT);
         /*Do code here*/
-        binding.toolbarLayout.backArrow.setVisibility(View.GONE);
-        binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.btModifyAll.setOnClickListener(this);
         binding.walletInfo.setOnClickListener(this);
-        binding.toolbarLayout.langEng.setOnClickListener(this);
         if (kycViewModel != null && kycViewModel.serviceLiveData().hasObservers()) {
             kycViewModel.serviceLiveData().removeObservers(this);
         } else {
             observeServiceResponse();
         }
         binding.backButton.setOnClickListener(this);
+
     }
 
 
@@ -193,27 +189,14 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         if (v.getId() == R.id.bt_modify_all) {
             openKYCFragment();
         } else if (v.getId() == R.id.lang_eng) {
-            String text = binding.toolbarLayout.langEng.getText().toString();
-            if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase(AppConstant.HINDI)) {
-                ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
-                // resources = ViewUtil.getCustomResource(getActivity());
-                setLanguageText(AppConstant.ENGLISH);
-            } else {
-                ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
-                //resources = ViewUtil.getCustomResource(getActivity());
-                setLanguageText(AppConstant.HINDI);
-            }
+
             reloadFragment();
         } else if (v.getId() == R.id.backButton) {
             getActivity().onBackPressed();
             AppLogger.e("handleback", "backlisner");
-
         } else if (v.getId() == R.id.bt_transfer_money) {
-            //callNumber();
             openSendMoneyFragment();
         } else if (v.getId() == R.id.wallet_info) {
-            //  firebaseEventUtil.logEvent(getContext(), getResources().getString(R.string.event_payment_info_page), new HashMap<>());
-            // openTransactionFragment();
             openWalletInfoFragment();
         }
     }

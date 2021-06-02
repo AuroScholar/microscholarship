@@ -177,12 +177,12 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
         ((StudentMainDashboardActivity)getActivity()).setListingActiveFragment(StudentMainDashboardActivity.PROFILE_FRAGMENT);
 
         binding.profileImage.setOnClickListener(this);
-        binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.editImage.setOnClickListener(this);
         binding.editemail.addTextChangedListener(this);
         binding.submitbutton.setOnClickListener(this);
         binding.UserName.setOnClickListener(this);
         binding.cancelUserNameIcon.setOnClickListener(this);
+        binding.backButton.setOnClickListener(this);
 
         binding.gradeChnage.setOnClickListener(this);
         binding.walletBalText.setOnClickListener(this);
@@ -410,6 +410,9 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
             } else {
                 binding.editProfileName.setError("Enter Your Name");
             }
+        } else if(id == R.id.backButton)
+        {
+            getActivity().onBackPressed();
         }
 
     }

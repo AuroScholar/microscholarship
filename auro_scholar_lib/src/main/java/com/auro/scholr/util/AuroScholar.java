@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import androidx.fragment.app.Fragment;
 
+import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
@@ -65,7 +66,7 @@ public class AuroScholar {
         auroScholarDataModel.setStudentClass(inputModel.getStudentClass());
         auroScholarDataModel.setRegitrationSource(inputModel.getRegitrationSource());
         auroScholarDataModel.setActivity(inputModel.getActivity());
-        auroScholarDataModel.setFragmentContainerUiId(inputModel.getFragmentContainerUiId());
+        auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         auroScholarDataModel.setReferralLink(inputModel.getReferralLink());
         auroScholarDataModel.setLanguage(inputModel.getLanguage());
         auroScholarDataModel.setUserPartnerid(inputModel.getUserPartnerId());

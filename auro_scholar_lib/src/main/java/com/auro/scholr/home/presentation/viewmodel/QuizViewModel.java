@@ -109,7 +109,7 @@ public class QuizViewModel extends ViewModel {
                             @Override
                             public void accept(Disposable __) throws Exception {
                                 /*Do code here*/
-                                serviceLiveData.setValue(ResponseApi.loading(null));
+                            //    serviceLiveData.setValue(ResponseApi.loading(null));
                             }
                         })
                         .subscribe(new Consumer<ResponseApi>() {

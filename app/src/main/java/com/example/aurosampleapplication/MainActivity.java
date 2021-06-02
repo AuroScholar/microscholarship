@@ -175,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setActivity(this);
         inputModel.setLanguage(binding.language.getText().toString());// In Small Letter Eg. Hindi - hi or English-en
         inputModel.setApplicationLang(false);
-        inputModel.setFragmentContainerUiId(R.id.home_container);
         AuroScholar.startAuroSDK(inputModel);
        // openFragment();
     }

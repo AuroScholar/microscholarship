@@ -71,6 +71,7 @@ import com.auro.scholr.home.data.model.AssignmentResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.SaveImageReqModel;
+import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.home.presentation.viewmodel.QuizTestViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
@@ -185,7 +186,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void init() {
-        setKeyListner();
+        //setKeyListner();
         setListener();
         if (dashboardResModel != null && quizResModel != null) {
             assignmentReqModel = quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
@@ -236,6 +237,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void setListener() {
+        binding.backButton.setOnClickListener(this);
         if (quizTestViewModel != null && quizTestViewModel.serviceLiveData().hasObservers()) {
             quizTestViewModel.serviceLiveData().removeObservers(this);
         } else {
@@ -329,11 +331,10 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.back_arrow) {
-
-            // getActivity().getSupportFragmentManager().popBackStack();
-            alertDialogForQuitQuiz();
-
+        int viewId =view.getId();
+         if(viewId== R.id.backButton)
+        {
+            ((StudentMainDashboardActivity)getActivity()).alertDialogForQuitQuiz();
         }
     }
 
@@ -624,7 +625,8 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    alertDialogForQuitQuiz();
+
+
                     return true;
                 }
                 return false;
@@ -632,37 +634,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
         });
     }
 
-    public void alertDialogForQuitQuiz() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(getActivity().getResources().getString(R.string.quiz_exit_txt));
 
-        String yes = "<font color='#00A1DB'>" + getActivity().getResources().getString(R.string.yes) + "</font>";
-        String no = "<font color='#00A1DB'>" + getActivity().getResources().getString(R.string.no) + "</font>";
-        // Set the alert dialog yes button click listener
-        builder.setPositiveButton(Html.fromHtml(yes), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do something when user clicked the Yes button
-                // Set the TextView visibility GONE
-                // tv.setVisibility(View.GONE);
-                getActivity().getSupportFragmentManager().popBackStack();
-                dialog.dismiss();
-            }
-        });
-        // Set the alert dialog no button click listener
-        builder.setNegativeButton(Html.fromHtml(no), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do something when No button clicked
-                dialog.dismiss();
-                     /*   Toast.makeText(getApplicationContext(),
-                                "No Button Clicked",Toast.LENGTH_SHORT).show();*/
-            }
-        });
-        AlertDialog dialog = builder.create();
-        // Display the alert dialog on interface
-        dialog.show();
-    }
 
 
     private void startCamera() {

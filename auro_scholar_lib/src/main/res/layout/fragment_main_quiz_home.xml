@@ -7,15 +7,14 @@
 
         <variable
             name="quizViewModel"
-            type="com.auro.scholr.home.presentation.viewmodel.QuizViewModel"  />
+            type="com.auro.scholr.home.presentation.viewmodel.QuizViewModel" />
     </data>
 
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -39,9 +38,9 @@
                         android:id="@+id/imageView5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_bg_left_rangoli"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_bg_left_rangoli" />
 
                     <ImageView
                         android:id="@+id/imagerotate"
@@ -57,8 +56,8 @@
                         android:layout_width="@dimen/_100sdp"
                         android:layout_height="@dimen/_45sdp"
                         android:layout_centerHorizontal="true"
-                        android:adjustViewBounds="true"
                         android:layout_marginBottom="@dimen/_10sdp"
+                        android:adjustViewBounds="true"
                         android:background="@drawable/ic_auro_scholar_logo"
                         android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
@@ -69,9 +68,9 @@
                         android:id="@+id/menuBarItem"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/_15sdp"
                         android:background="@drawable/ic_hamburger"
                         android:visibility="visible"
-                        android:layout_marginRight="@dimen/_15sdp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                         app:layout_constraintEnd_toEndOf="@+id/imageView5" />
 
@@ -79,13 +78,13 @@
                         android:id="@+id/cardView2"
                         android:layout_width="@dimen/_40sdp"
                         android:layout_height="@dimen/_40sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:clipChildren="false"
                         android:clipToPadding="false"
                         android:divider="@android:color/transparent"
                         android:dividerHeight="0.0px"
                         android:elevation="@dimen/_10sdp"
                         app:cardCornerRadius="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
                         app:cardElevation="@dimen/_15sdp"
                         app:cardPreventCornerOverlap="false"
                         app:layout_constraintBottom_toBottomOf="@+id/imagerotate"
@@ -129,6 +128,7 @@
                         android:id="@+id/linearLayout6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -156,7 +156,50 @@
                             app:Font="ArticulatCF-Regular.otf" />
                     </LinearLayout>
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/walleticon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/cardView2">
 
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/wallet_bal_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/wallet_balance_icon"
+                            android:backgroundTint="@color/blue_color"
+                            android:gravity="center_vertical"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:textSize="@dimen/_12sdp"
+                            app:Font="Poppins-SemiBold.ttf"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <RelativeLayout
+                            android:id="@+id/relativeLayout"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:background="@drawable/transparent_circle"
+                            app:layout_constraintEnd_toEndOf="@+id/wallet_bal_text"
+                            app:layout_constraintTop_toTopOf="@+id/wallet_bal_text">
+
+                            <ImageView
+                                android:layout_width="@dimen/_10sdp"
+                                android:layout_height="@dimen/_10sdp"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/ic_cart"
+                                android:visibility="visible" />
+
+                        </RelativeLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <com.auro.scholr.core.util.uiwidget.RPTextView
                         android:id="@+id/RPTextView11"
@@ -176,9 +219,9 @@
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/constantLayout"
                     android:clipToPadding="false"
                     android:paddingBottom="@dimen/_15sdp"
-                    android:layout_below="@+id/constantLayout"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
@@ -194,8 +237,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginRight="@dimen/_10sdp"
-                            />
+                            android:layout_marginRight="@dimen/_10sdp" />
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/privacy_policy"
@@ -293,13 +335,6 @@
         </com.google.android.material.navigation.NavigationView>
 
     </androidx.drawerlayout.widget.DrawerLayout>
-
-
-
-
-
-
-
 
 
 </layout>

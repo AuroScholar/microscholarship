@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -19,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -96,13 +99,14 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
 
     public static final int QUIZ_DASHBOARD_FRAGMENT = 1;
     public static final int PROFILE_FRAGMENT = 2;
-    public static final int PASSPORT_FRAGMENT = 2;
-    public static final int KYC_FRAGMENT = 2;
-    public static final int KYC_VIEW_FRAGMENT = 2;
-    public static final int SEND_MONEY_FRAGMENT = 2;
-    public static final int CERTIFICATES_FRAGMENT = 2;
-    public static final int PAYMENT_INFO_FRAGMENT = 2;
-    public static final int PRIVACY_POLICY_FRAGMENT = 2;
+    public static final int PASSPORT_FRAGMENT = 3;
+    public static final int KYC_FRAGMENT = 4;
+    public static final int KYC_VIEW_FRAGMENT = 5;
+    public static final int SEND_MONEY_FRAGMENT = 6;
+    public static final int CERTIFICATES_FRAGMENT = 7;
+    public static final int PAYMENT_INFO_FRAGMENT = 8;
+    public static final int PRIVACY_POLICY_FRAGMENT = 9;
+    public static final int QUIZ_TEST_FRAGMENT = 10;
 
 
     CommonCallBackListner commonCallBackListner;
@@ -222,6 +226,9 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
             case QUIZ_DASHBOARD_FRAGMENT:
                 finish();
                 break;
+            case QUIZ_TEST_FRAGMENT:
+                alertDialogForQuitQuiz();
+                break;
             default:
                 popBackStack();
                 break;
@@ -331,6 +338,47 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         openFragment(studentProfile);
     }
 
+    public void openKYCFragment(DashboardResModel dashboardResModel) {
+        Bundle bundle = new Bundle();
+        KYCFragment kycFragment = new KYCFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        kycFragment.setArguments(bundle);
+        openFragment(kycFragment);
+    }
+
+    public void openKYCViewFragment(DashboardResModel dashboardResModel) {
+        Bundle bundle = new Bundle();
+        KYCViewFragment kycViewFragment = new KYCViewFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        kycViewFragment.setArguments(bundle);
+        openFragment(kycViewFragment);
+    }
 
 
+    public void alertDialogForQuitQuiz() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(this.getResources().getString(R.string.quiz_exit_txt));
+
+        String yes = "<font color='#00A1DB'>" + this.getResources().getString(R.string.yes) + "</font>";
+        String no = "<font color='#00A1DB'>" + this.getResources().getString(R.string.no) + "</font>";
+        // Set the alert dialog yes button click listener
+        builder.setPositiveButton(Html.fromHtml(yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getSupportFragmentManager().popBackStack();
+                dialog.dismiss();
+            }
+        });
+        // Set the alert dialog no button click listener
+        builder.setNegativeButton(Html.fromHtml(no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        // Display the alert dialog on interface
+        dialog.show();
+    }
 }

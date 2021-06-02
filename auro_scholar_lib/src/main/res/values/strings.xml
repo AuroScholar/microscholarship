@@ -93,7 +93,7 @@
     <string name="crop_image_activity_no_permissions">Cancelling, required permissions are not granted</string>
     <string name="upload_file">Upload File</string>
     <string name="rs">₹</string>
-    <string name="score_msg">Score 8/10 and get Rs.50 for each quiz</string>
+    <string name="score_msg">Upto INR 1000, Rs.50 per quiz if you score more than 8/10</string>
     <string name="get_scholarship">Get Scholarship</string>
     <string name="quiz">Quiz</string>
     <string name="total_no_of_points">Total No. of Points:</string>

@@ -3,24 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/tools">
 
-    <data>
-
-
-
-    </data>
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolbar_layout"
-            layout="@layout/toolbar_header_layout"
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            android:layout_height="wrap_content" />
+
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,14 +37,6 @@
                     app:layout_constraintStart_toStartOf="@+id/imagerotate" />
 
 
-                <include
-                    android:id="@+id/cambridge_heading"
-                    layout="@layout/quiz_header_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:visibility="gone" />
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout

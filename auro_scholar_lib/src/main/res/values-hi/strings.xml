@@ -17,7 +17,7 @@
     <string name="crop_image_activity_no_permissions">रद्द करना, आवश्यक अनुमति नहीं दी गई हैं</string>
     <string name="upload_file">दस्तावेज अपलोड करें</string>
     <string name="rs">₹</string>
-    <string name="score_msg">अर्जित करें 8/10 अंक और जीतें रु 50 प्रति प्र्श्नोत्तरी</string>
+    <string name="score_msg">1000 रुपए तक । 50 रुपए प्रति क्विज, यदि आप 8/10 से अधिक अंक अर्जित करते हैं</string>
     <string name="get_scholarship">छात्रवृत्ति प्राप्त करें</string>
     <string name="quiz">प्रश्नोत्तरी</string>
     <string name="total_no_of_points">अंकों की कुल संख्या:</string>

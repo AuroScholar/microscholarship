@@ -33,7 +33,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseFragment;
@@ -80,7 +79,6 @@ import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -106,6 +104,8 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
     QuizViewModel quizViewModel;
     DashboardResModel dashboardResModel;
 
+    boolean isStateRestore;
+
     String TAG = MainQuizHomeFragment.class.getSimpleName();
     QuizResModel quizResModel;
     AssignmentReqModel assignmentReqModel;
@@ -114,7 +114,6 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
     ActionBarDrawerToggle mDrawerToggle;
     ArrayList<NavItemModel> mNavItems = new ArrayList<NavItemModel>();
     DrawerListAdapter drawerListAdapter;
-    boolean isStateRestore;
 
     public MainQuizHomeFragment() {
         // Required empty public constructor
@@ -177,7 +176,15 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         AppLogger.v("Pradeep", DateUtil.getMonthName());
-       // ((StudentMainDashboardActivity) getActivity()).setListner(this);
+        // ((StudentMainDashboardActivity) getActivity()).setListner(this);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        callDasboardApi();
+        StudentMainDashboardActivity.setListingActiveFragment(StudentMainDashboardActivity.QUIZ_DASHBOARD_FRAGMENT);
     }
 
     @Override
@@ -187,7 +194,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         if (!TextUtil.isEmpty(DateUtil.getMonthName())) {
             binding.RPTextView9.setText(DateUtil.getMonthName() + " " + getActivity().getResources().getString(R.string.scholarship));
         }
-        callDasboardApi();
+
         //navigation drawerToggle
         mDrawerToggle = new ActionBarDrawerToggle(
                 getActivity(), binding.drawerLayout, R.string.drawer_open, R.string.drawer_close);
@@ -199,7 +206,6 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         AppLogger.e("handleback", "AuroApp.getAuroScholarModel()");
 
         setPrefData();
-        quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
 
     }
 
@@ -216,9 +222,8 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
     @Override
     protected void setListener() {
-        StudentMainDashboardActivity.setListingActiveFragment(StudentMainDashboardActivity.QUIZ_DASHBOARD_FRAGMENT);
-       /* binding.languageLayout.setOnClickListener(this);
-        binding.walleticon.setOnClickListener(this);*/
+
+        binding.walleticon.setOnClickListener(this);
         binding.cardView2.setOnClickListener(this);
         binding.privacyPolicy.setOnClickListener(this);
         binding.menuBarItem.setOnClickListener(this);
@@ -265,7 +270,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         binding.recyclerViewMenu.setLayoutManager(layoutManager);
         binding.recyclerViewMenu.setHasFixedSize(true);
-        SubjectSelectAdapter subjectadapter = new SubjectSelectAdapter(dashboardResModel.getSubjectResModelList(),getContext(), this);
+        SubjectSelectAdapter subjectadapter = new SubjectSelectAdapter(dashboardResModel.getSubjectResModelList(), getContext(), this);
         binding.recyclerViewMenu.setAdapter(subjectadapter);
     }
 
@@ -300,6 +305,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                 break;
         }
     }
+
     private void askPermission() {
         String rationale = getString(R.string.permission_error_msg);
         Permissions.Options options = new Permissions.Options()
@@ -332,7 +338,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         if (status == 0) {
             binding.quizSelectionSheet.sheetLayoutQuiz.setVisibility(View.GONE);
         } else {
-           // ((StudentMainDashboardActivity) getActivity()).dismissApplication();
+            // ((StudentMainDashboardActivity) getActivity()).dismissApplication();
         }
     }
 
@@ -364,15 +370,15 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             AppLogger.e(TAG, "On click called sheet_layout");
         } else if (id == R.id.cardView2) {
             ((StudentMainDashboardActivity) getActivity()).openProfileFragment();
-        } /*else if (id == R.id.walleticon) {
+        } else if (id == R.id.walleticon) {
             if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
-              //  ((StudentMainDashboardActivity) getActivity()).openKYCViewFragment(dashboardResModel, 0);
+                ((StudentMainDashboardActivity) getActivity()).openKYCViewFragment(dashboardResModel);
             } else {
-              //  ((StudentMainDashboardActivity) getActivity()).openKYCFragment(dashboardResModel, 0);
+                ((StudentMainDashboardActivity) getActivity()).openKYCFragment(dashboardResModel);
             }
-        }*/ else if (id == R.id.privacy_policy) {
+        } else if (id == R.id.privacy_policy) {
             ((StudentMainDashboardActivity) getActivity()).openFragment(new PrivacyPolicyFragment());
-        }else if(id == R.id.menuBarItem){
+        } else if (id == R.id.menuBarItem) {
             binding.drawerLayout.openDrawer(Gravity.LEFT);
         }
 
@@ -438,7 +444,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                     if (customDialog != null) {
                         customDialog.dismiss();
                     }
-                   // binding.swipeRefreshLayout.setRefreshing(false);
+                    // binding.swipeRefreshLayout.setRefreshing(false);
                     Log.d(TAG, "observeServiceResponse: default");
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(2, (String) responseApi.data);
@@ -446,7 +452,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                         setImageInPref(assignmentReqModel);
                         //  openQuizTestFragment(dashboardResModel);
                     }
-                  //  handleProgress(1, (String) responseApi.data);
+                    //  handleProgress(1, (String) responseApi.data);
                     break;
             }
 
@@ -489,7 +495,6 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         handleProgress(1, "");
         AppUtil.setDashboardResModelToPref(dashboardResModel);
         if (!dashboardResModel.isError()) {
-           // ((StudentMainDashboardActivity) getActivity()).showBottomNavigationView();
             handleProgress(2, "");
             checkStatusforCongratulationDialog();
             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
@@ -497,8 +502,8 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             } else {
                 setDataOnUi(dashboardResModel);
             }
-        }else {
-            handleProgress(2, dashboardResModel.getMessage());
+        } else {
+            handleProgress(1, dashboardResModel.getMessage());
             if (dashboardResModel.getMessage().contains("grade")) {
                 openErrorDialog();
             }
@@ -514,7 +519,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
     }
 
     private void setDataOnUi(DashboardResModel dashboardResModel) {
-     //   binding.walletBalText.setText(getString(R.string.rs) + " " + quizViewModel.homeUseCase.getWalletBalance(dashboardResModel));
+        binding.walletBalText.setText(getString(R.string.rs) + " " + quizViewModel.homeUseCase.getWalletBalance(dashboardResModel));
         setSubjectAdapter(dashboardResModel);
         setNavHeaderText();
     }
@@ -543,12 +548,12 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                             }
                         }
                     }
-                  //  funnelCompleteQuiz();
+                    //  funnelCompleteQuiz();
                     assignmentReqModel.setActualScore(score);
                     if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && score > 7) {
-                      //  openCongratulationsDialog(dashboardResModel, assignmentReqModel);
+                        openCongratulationsDialog(dashboardResModel, assignmentReqModel);
                     } else {
-                      //  openCongratulationsLessScoreDialog(dashboardResModel, assignmentReqModel);
+                        openCongratulationsLessScoreDialog(dashboardResModel, assignmentReqModel);
                     }
                 }
                 prefModel.setAssignmentReqModel(null);
@@ -559,15 +564,16 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
     }
 
 
-   /* private void openCongratulationsDialog(DashboardResModel dashboardResModel, AssignmentReqModel assignmentReqModel) {
-        CongratulationsDialog congratulationsDialog = CongratulationsDialog.newInstance(this, dashboardResModel, assignmentReqModel);
+    private void openCongratulationsDialog(DashboardResModel dashboardResModel, AssignmentReqModel assignmentReqModel) {
+        CongratulationsDialog congratulationsDialog = new CongratulationsDialog(getContext(), dashboardResModel, assignmentReqModel, this);
         openFragmentDialog(congratulationsDialog);
     }
 
     private void openCongratulationsLessScoreDialog(DashboardResModel dashboardResModel, AssignmentReqModel assignmentReqModel) {
-        ConsgratuationLessScoreDialog congratulationsDialog = ConsgratuationLessScoreDialog.newInstance(this, dashboardResModel, assignmentReqModel);
+        ConsgratuationLessScoreDialog congratulationsDialog = new ConsgratuationLessScoreDialog(getContext(), this, dashboardResModel, assignmentReqModel);
         openFragmentDialog(congratulationsDialog);
-    }*/
+    }
+
 
     private void openFragmentDialog(Fragment fragment) {
         getActivity().getSupportFragmentManager()
@@ -581,7 +587,9 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
 
     void callDasboardApi() {
-        handleProgress(0, "");
+        if (!isStateRestore) {
+            handleProgress(0, "");
+        }
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         String deviceToken = prefModel.getDeviceToken();
         if (!TextUtil.isEmpty(deviceToken)) {
@@ -598,6 +606,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             if (resultCode == RESULT_OK) {
                 try {
                     String path = data.getStringExtra(AppConstant.PROFILE_IMAGE_PATH);
+                    openFadeOutSelectionLayout();
                     azureImage(path);
                     openQuizTestFragment(dashboardResModel);
 
@@ -759,7 +768,6 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
     }
 
 
-
     public void openStudentFragment() {
         Bundle bundle = new Bundle();
         StudentProfileFragment studentProfile = new StudentProfileFragment();
@@ -784,6 +792,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         fragment.setArguments(bundle);
         openFragment(fragment);
     }
+
     public void openKYCFragment(DashboardResModel dashboardResModel) {
         Bundle bundle = new Bundle();
         KYCFragment kycFragment = new KYCFragment();
@@ -800,6 +809,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         ViewUtil.setLanguageonUi(getActivity());
         openFragment(kycViewFragment);
     }
+
     public void openProfileFragment() {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         Bundle bundle = new Bundle();
@@ -809,6 +819,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         studentProfile.setArguments(bundle);
         openFragment(studentProfile);
     }
+
     public void openTransactionsFragment() {
         Bundle bundle = new Bundle();
         TransactionsFragment transactionsFragment = new TransactionsFragment();
@@ -818,12 +829,12 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
     }
 
     public void lockDrawerMenu() {
-       // binding.toolbarLayout.backArrow.setEnabled(false);
+        // binding.toolbarLayout.backArrow.setEnabled(false);
         binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     public void unLockDrawerMenu() {
-       // binding.toolbarLayout.backArrow.setEnabled(true);
+        // binding.toolbarLayout.backArrow.setEnabled(true);
         binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
@@ -844,6 +855,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         config.locale = locale;
         getActivity().getBaseContext().getResources().updateConfiguration(config, getActivity().getBaseContext().getResources().getDisplayMetrics());
     }
+
     public void setImageInPref(AssignmentReqModel assignmentReqModel) {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel != null && prefModel.getListAzureImageList() != null) {
@@ -851,6 +863,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             AppPref.INSTANCE.setPref(prefModel);
         }
     }
+
     private void openErrorDialog() {
         if (customDialog != null && customDialog.isShowing()) {
             customDialog.dismiss();
@@ -895,6 +908,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
     private void callClassUpgradeApi() {
         quizViewModel.gradeUpgrade(AuroApp.getAuroScholarModel());
     }
+
     private void setNavHeaderText() {
         TextView login_txt = binding.navHeader.findViewById(R.id.login_id);
         login_txt.setText(getActivity().getString(R.string.mobile_num) + dashboardResModel.getPhonenumber());
