@@ -519,7 +519,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
     }
 
     private void setDataOnUi(DashboardResModel dashboardResModel) {
-        binding.walletBalText.setText(getString(R.string.rs) + " " + quizViewModel.homeUseCase.getWalletBalance(dashboardResModel));
+        binding.walletBalText.setText(getContext().getResources().getString(R.string.rs) + " " + quizViewModel.homeUseCase.getWalletBalance(dashboardResModel));
         setSubjectAdapter(dashboardResModel);
         setNavHeaderText();
     }
