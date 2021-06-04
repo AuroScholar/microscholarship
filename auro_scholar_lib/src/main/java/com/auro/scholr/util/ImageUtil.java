@@ -179,6 +179,17 @@ public class ImageUtil {
                 .into(view);
     }
 
+    public static void loaWithoutCropImage(ImageView view,String imgUrl)
+    {
+        Glide.with(view.getContext()).load(imgUrl)
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_image_placeholder)
+                        .error(R.drawable.ic_image_placeholder)
+
+                        .dontAnimate()
+                        .priority(Priority.IMMEDIATE)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL))
+                .into(view);
+    }
 
 
     // [-100, +100] -> Default = 0

@@ -59,7 +59,7 @@ public class CertificateDialog extends DialogFragment implements View.OnClickLis
         ImageView download = (ImageView) view.findViewById(R.id.download_icon);
         closeButton.setOnClickListener(this);
         download.setOnClickListener(this);
-        ImageUtil.loadNormalImage(imageView, apIcertificate.getCertificateImage());
+        ImageUtil.loaWithoutCropImage(imageView, apIcertificate.getCertificateImage());
         dialog.setContentView(view);
         dialog.show();
         return dialog;
