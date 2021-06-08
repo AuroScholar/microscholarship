@@ -399,7 +399,9 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                     break;
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
-                        onApiSuccess(responseApi);
+                        if(isVisible()) {
+                            onApiSuccess(responseApi);
+                        }
 
                     } else if (responseApi.apiTypeStatus == GRADE_UPGRADE) {
                         DashboardResModel dashboardResModel = (DashboardResModel) responseApi.data;
@@ -576,12 +578,14 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
 
     private void openFragmentDialog(Fragment fragment) {
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .setReorderingAllowed(true)
-                .add(AuroApp.getFragmentContainerUiId(), fragment, CongratulationsDialog.class.getSimpleName())
-                .addToBackStack(null)
-                .commitAllowingStateLoss();
+        if(isVisible()) {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(AuroApp.getFragmentContainerUiId(), fragment, CongratulationsDialog.class.getSimpleName())
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss();
+        }
 
     }
 
