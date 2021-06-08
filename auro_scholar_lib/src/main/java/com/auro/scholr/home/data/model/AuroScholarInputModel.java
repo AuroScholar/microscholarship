@@ -8,7 +8,6 @@ public class AuroScholarInputModel implements Parcelable {
 
     String mobileNumber;
     Activity activity;
-    int fragmentContainerUiId;
     String studentClass;
     String regitrationSource="";
     String referralLink="";
@@ -16,10 +15,12 @@ public class AuroScholarInputModel implements Parcelable {
     String partnerSource;
     String language="en";
     boolean applicationLang;
+    String partnerLogoUrl="";
+    String schoolName="";
+
 
     protected AuroScholarInputModel(Parcel in) {
         mobileNumber = in.readString();
-        fragmentContainerUiId = in.readInt();
         studentClass = in.readString();
         regitrationSource = in.readString();
         referralLink = in.readString();
@@ -27,12 +28,13 @@ public class AuroScholarInputModel implements Parcelable {
         partnerSource = in.readString();
         language = in.readString();
         applicationLang = in.readByte() != 0;
+        partnerLogoUrl = in.readString();
+        schoolName = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mobileNumber);
-        dest.writeInt(fragmentContainerUiId);
         dest.writeString(studentClass);
         dest.writeString(regitrationSource);
         dest.writeString(referralLink);
@@ -40,6 +42,8 @@ public class AuroScholarInputModel implements Parcelable {
         dest.writeString(partnerSource);
         dest.writeString(language);
         dest.writeByte((byte) (applicationLang ? 1 : 0));
+        dest.writeString(partnerLogoUrl);
+        dest.writeString(schoolName);
     }
 
     @Override
@@ -58,6 +62,22 @@ public class AuroScholarInputModel implements Parcelable {
             return new AuroScholarInputModel[size];
         }
     };
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
+    public String getPartnerLogoUrl() {
+        return partnerLogoUrl;
+    }
+
+    public void setPartnerLogoUrl(String partnerLogoUrl) {
+        this.partnerLogoUrl = partnerLogoUrl;
+    }
 
     public boolean isApplicationLang() {
         return applicationLang;
@@ -121,13 +141,7 @@ public class AuroScholarInputModel implements Parcelable {
         this.activity = activity;
     }
 
-    public int getFragmentContainerUiId() {
-        return fragmentContainerUiId;
-    }
 
-    public void setFragmentContainerUiId(int fragmentContainerUiId) {
-        this.fragmentContainerUiId = fragmentContainerUiId;
-    }
 
     public String getUserPartnerId() {
         return userPartnerId;

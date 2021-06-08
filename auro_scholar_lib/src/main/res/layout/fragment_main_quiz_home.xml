@@ -52,13 +52,12 @@
                         app:srcCompat="@drawable/ic_bg_left_rangoli" />
 
                     <ImageView
-                        android:id="@+id/auro_scholar_logo"
+                        android:id="@+id/partner_logo"
                         android:layout_width="@dimen/_100sdp"
                         android:layout_height="@dimen/_45sdp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="@dimen/_10sdp"
                         android:adjustViewBounds="true"
-                        android:background="@drawable/ic_auro_scholar_logo"
                         android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                         app:layout_constraintEnd_toStartOf="@+id/imagerotate"
@@ -258,6 +257,39 @@
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginRight="@dimen/_10sdp" />
+
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/powered_by"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_2sdp"
+                            android:text="@string/powered_by_auroscholar"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/_14sdp"
+                            android:textColor="@color/black"
+                            app:Font="Poppins-Regular.ttf"
+                            app:layout_constraintTop_toBottomOf="@+id/quizwon_type_list" />
+
+
+                        <ImageView
+                            android:id="@+id/auro_scholar_logo"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center_horizontal"
+                            app:srcCompat="@drawable/ic_auro_scholar_logo"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:adjustViewBounds="true"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                            app:layout_constraintEnd_toStartOf="@+id/imagerotate"
+                            app:layout_constraintStart_toEndOf="@+id/imageView5" />
+
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/privacy_policy"

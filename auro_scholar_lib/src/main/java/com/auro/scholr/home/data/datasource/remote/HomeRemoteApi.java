@@ -132,6 +132,9 @@ public interface HomeRemoteApi {
     Single<Response<JsonObject>> uploadImage(@Part(AppConstant.AssignmentApiParams.EKLAVYA_EXAM_ID) RequestBody description,
                                              @Part(AppConstant.AssignmentApiParams.REGISTRATION_ID) RequestBody registration_id,
                                              @Part(AppConstant.AssignmentApiParams.IS_MOBILE) RequestBody isMobile,
+                                             @Part(AppConstant.AssignmentApiParams.QUIZ_ID) RequestBody quiz_id,
+                                             @Part(AppConstant.AssignmentApiParams.IMG_NORMAL_PATH) RequestBody image_normal_path,
+                                             @Part(AppConstant.AssignmentApiParams.IMG_PATH) RequestBody image_path,
                                              @Part MultipartBody.Part exam_face_image);
 
     @POST(URLConstant.CERTIFICATE_API)

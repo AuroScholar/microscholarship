@@ -84,6 +84,7 @@ public interface AppConstant {
         String STUDENT_NAME = "student_name";
         String IP_ADDRESS="ip_address";
         String BUILD_VERSION="build_version";
+        String SCHOOL_NAME="school_name";
     }
 
 
@@ -213,7 +214,9 @@ public interface AppConstant {
         String EKLAVYA_EXAM_ID="eklavvya_exam_id";
         String EXAM_FACE_IMAGE="exam_face_img";
         String IS_MOBILE="is_mobile";
-
+        String IMG_NORMAL_PATH="img_normal_path";
+        String IMG_PATH="img_path";
+        String QUIZ_ID="quiz_id";
     }
 
     interface AzureApiParams {

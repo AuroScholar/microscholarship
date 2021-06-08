@@ -175,7 +175,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setActivity(this);
         inputModel.setLanguage(binding.language.getText().toString());// In Small Letter Eg. Hindi - hi or English-en
         inputModel.setApplicationLang(false);
+        inputModel.setPartnerLogoUrl("https://auroscholar.com/assets/img/mindler_logo.png");
+        inputModel.setSchoolName("Everest Public School"); //optional Filed
         AuroScholar.startAuroSDK(inputModel);
+
        // openFragment();
     }
 

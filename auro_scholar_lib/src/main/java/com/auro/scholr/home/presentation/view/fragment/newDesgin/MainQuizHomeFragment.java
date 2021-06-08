@@ -206,7 +206,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         AppLogger.e("handleback", "AuroApp.getAuroScholarModel()");
 
         setPrefData();
-
+        ((StudentMainDashboardActivity)getActivity()).loadPartnerLogo(binding.partnerLogo);
     }
 
     @Override
@@ -915,7 +915,6 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
         TextView class_txt = binding.navHeader.findViewById(R.id.txtClass);
         class_txt.setText(getActivity().getString(R.string.student_class) + dashboardResModel.getStudentclass());
-
 
     }
 }

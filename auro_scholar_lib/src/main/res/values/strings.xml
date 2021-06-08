@@ -495,6 +495,7 @@
     <string name="student_passport">Student Passport</string>
     <string name="passport_sub_title">Find The Quiz Details As Per Your Prefrence</string>
     <string name="nav_home">Home</string>
+    <string name="powered_by_auroscholar">Powered By </string>
 
 
     <string-array name="genderlist_profile">

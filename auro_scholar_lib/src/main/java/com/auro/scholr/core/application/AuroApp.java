@@ -22,6 +22,8 @@ import java.util.Locale;
 
 public class AuroApp {
 
+
+
     public static AppComponent appComponent;
     public static Activity context;
     public static AuroScholarDataModel auroScholarDataModel;

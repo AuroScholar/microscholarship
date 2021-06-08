@@ -2,10 +2,8 @@ package com.auro.scholr.home.presentation.view.fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -17,15 +15,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Looper;
 import android.provider.MediaStore;
-import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.PermissionRequest;
@@ -34,8 +29,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,17 +36,13 @@ import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageCapture;
-import androidx.camera.core.ImageCaptureException;
-import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.extensions.HdrImageCaptureExtender;
 import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -77,7 +66,6 @@ import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
-import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 import com.auro.scholr.util.alert_dialog.InstructionDialog;
@@ -88,11 +76,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -331,10 +316,9 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        int viewId =view.getId();
-         if(viewId== R.id.backButton)
-        {
-            ((StudentMainDashboardActivity)getActivity()).alertDialogForQuitQuiz();
+        int viewId = view.getId();
+        if (viewId == R.id.backButton) {
+            ((StudentMainDashboardActivity) getActivity()).alertDialogForQuitQuiz();
         }
     }
 
@@ -635,8 +619,6 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
     }
 
 
-
-
     private void startCamera() {
 
         final ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
@@ -695,7 +677,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void run() {
                 Bitmap bitmap = binding.previewView.getBitmap();
-                if(bitmap!=null) {
+                if (bitmap != null) {
                     processImage(bitmap);
                 }
                 captureImage();
@@ -726,9 +708,24 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
                 SaveImageReqModel saveQuestionResModel = new SaveImageReqModel();
                 saveQuestionResModel.setImageBytes(assignmentReqModel.getImageBytes());
                 saveQuestionResModel.setExamId(assignmentResModel.getExamAssignmentID());
+                if (!TextUtil.isEmpty(assignmentResModel.getImgNormalPath())) {
+                    saveQuestionResModel.setImgNormalPath(assignmentResModel.getImgNormalPath());
+                } else {
+                    saveQuestionResModel.setImgNormalPath("");
+                }
+                if (!TextUtil.isEmpty(assignmentResModel.getImgPath())) {
+                    saveQuestionResModel.setImgPath(assignmentResModel.getImgPath());
+                } else {
+                    saveQuestionResModel.setImgPath("");
+                }
+                if (!TextUtil.isEmpty(assignmentResModel.getQuizId())) {
+                    saveQuestionResModel.setQuizId(assignmentResModel.getQuizId());
+                } else {
+                    saveQuestionResModel.setQuizId("");
+                }
 
-                PrefModel prefModel=AppPref.INSTANCE.getModelInstance();
-                DashboardResModel dashboardResModel=prefModel.getDashboardResModel();
+                PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+                DashboardResModel dashboardResModel = prefModel.getDashboardResModel();
                 saveQuestionResModel.setRegistration_id(dashboardResModel.getAuroid());
 
                 quizTestViewModel.uploadExamFace(saveQuestionResModel);
@@ -739,12 +736,11 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
     void checkNativeCameraEnableOrNot() {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-       // prefModel.getDashboardResModel().setIs_native_image_capturing(true);
-        AppLogger.e("checkNativeCameraEnableOrNot--",""+prefModel.getDashboardResModel().isIs_native_image_capturing());
+        // prefModel.getDashboardResModel().setIs_native_image_capturing(true);
+        AppLogger.e("checkNativeCameraEnableOrNot--", "" + prefModel.getDashboardResModel().isIs_native_image_capturing());
         if (prefModel.getDashboardResModel() != null && prefModel.getDashboardResModel().isIs_native_image_capturing()) {
             if (assignmentResModel != null && !TextUtil.isEmpty(assignmentResModel.getExamAssignmentID())) {
-                if(handler!=null)
-                {
+                if (handler != null) {
                     handler.removeCallbacksAndMessages(null);
                 }
                 startCamera();

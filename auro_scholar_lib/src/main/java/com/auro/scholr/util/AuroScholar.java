@@ -10,8 +10,6 @@ import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
-
-import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
@@ -71,6 +69,12 @@ public class AuroScholar {
         auroScholarDataModel.setLanguage(inputModel.getLanguage());
         auroScholarDataModel.setUserPartnerid(inputModel.getUserPartnerId());
         auroScholarDataModel.setApplicationLang(inputModel.isApplicationLang());
+        auroScholarDataModel.setPartnerLogo(inputModel.getPartnerLogoUrl());
+        if (!TextUtil.isEmpty(inputModel.getSchoolName())) {
+            auroScholarDataModel.setSchoolName(inputModel.getSchoolName());
+        } else {
+            auroScholarDataModel.setSchoolName("");
+        }
         if (TextUtil.isEmpty(inputModel.getPartnerSource())) {
             auroScholarDataModel.setPartnerSource("");
         } else {

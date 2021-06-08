@@ -64,10 +64,9 @@
                     android:id="@+id/auro_scholar_logo"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_45sdp"
-
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:adjustViewBounds="true"
                     android:background="@drawable/ic_auro_scholar_logo"
                     android:visibility="visible"

@@ -1,14 +1,5 @@
 package com.auro.scholr.home.presentation.view.activity.newDashboard;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -17,19 +8,22 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
+import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
@@ -44,41 +38,34 @@ import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.ActivityStudentMainDashboardBinding;
-import com.auro.scholr.databinding.StudentActivityDashboardBinding;
 import com.auro.scholr.home.data.datasource.remote.HomeRemoteApi;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.NavItemModel;
 import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.adapter.DrawerListAdapter;
-import com.auro.scholr.home.presentation.view.fragment.CertificateFragment;
 import com.auro.scholr.home.presentation.view.fragment.KYCFragment;
 import com.auro.scholr.home.presentation.view.fragment.KYCViewFragment;
-import com.auro.scholr.home.presentation.view.fragment.PrivacyPolicyFragment;
-import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
 import com.auro.scholr.home.presentation.view.fragment.StudentProfileFragment;
-import com.auro.scholr.home.presentation.view.fragment.TransactionsFragment;
-import com.auro.scholr.home.presentation.view.fragment.WalletInfoDetailFragment;
 import com.auro.scholr.home.presentation.view.fragment.newDesgin.MainQuizHomeFragment;
 import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
 import com.auro.scholr.util.AppLogger;
-import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.TextUtil;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import static com.auro.scholr.util.ViewUtil.setLightStatusBar;
-
-public class StudentMainDashboardActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener,CommonCallBackListner{
-
-
+public class StudentMainDashboardActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener, CommonCallBackListner {
 
 
     private String TAG = StudentDashboardActivity.class.getSimpleName().toString();
@@ -116,6 +103,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
     ArrayList<NavItemModel> mNavItems = new ArrayList<NavItemModel>();
     DrawerListAdapter drawerListAdapter;
     QuizViewModel quizViewModel;
+
     public static int getListingActiveFragment() {
         return LISTING_ACTIVE_FRAGMENT;
     }
@@ -132,7 +120,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         AuroApp.getAuroScholarModel().setActivity(this);
-        AuroApp.context=this;
+        AuroApp.context = this;
         // getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         init();
         setListener();
@@ -380,5 +368,23 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         AlertDialog dialog = builder.create();
         // Display the alert dialog on interface
         dialog.show();
+    }
+
+
+    public void loadPartnerLogo( ImageView imageView) {
+        if(AuroApp.getAuroScholarModel()!=null) {
+            String imgUrl = AuroApp.getAuroScholarModel().getPartnerLogo();
+            if (!TextUtil.isEmpty(imgUrl)) {
+                imageView.setVisibility(View.VISIBLE);
+                Glide.with(this).load(imgUrl)
+                        .apply(RequestOptions.placeholderOf(R.drawable.ic_image_placeholder)
+                                .dontAnimate()
+                                .priority(Priority.IMMEDIATE)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .into(imageView);
+            } else {
+                imageView.setVisibility(View.GONE);
+            }
+        }
     }
 }

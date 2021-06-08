@@ -8,7 +8,7 @@ public class AssignmentResModel {
 
     @SerializedName("status")
     @Expose
-    private String status;
+    private String status="";
 
     @SerializedName("error")
     @Expose
@@ -16,27 +16,64 @@ public class AssignmentResModel {
 
     @SerializedName("message")
     @Expose
-    private String message;
+    private String message="";
 
     @SerializedName("StudentID")
     @Expose
-    private String StudentID;
+    private String StudentID="";
 
     @SerializedName("exam_name")
     @Expose
-    private String exam_name;
+    private String exam_name="";
 
     @SerializedName("quiz_attempt")
     @Expose
-    private String quiz_attempt;
+    private String quiz_attempt="";
 
     @SerializedName("examlang")
     @Expose
-    private String examlang;
+    private String examlang="";
 
     @SerializedName("ExamAssignmentID")
     @Expose
-    private String ExamAssignmentID;
+    private String ExamAssignmentID="";
+
+    @SerializedName("img_normal_path")
+    @Expose
+    private String imgNormalPath="";
+
+    @SerializedName("img_path")
+    @Expose
+    private String imgPath="";
+
+    @SerializedName("quiz_id")
+    @Expose
+    private String quizId="";
+
+
+    public String getImgNormalPath() {
+        return imgNormalPath;
+    }
+
+    public void setImgNormalPath(String imgNormalPath) {
+        this.imgNormalPath = imgNormalPath;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
+    public String getQuizId() {
+        return quizId;
+    }
+
+    public void setQuizId(String quizId) {
+        this.quizId = quizId;
+    }
 
     public String getStatus() {
         return status;

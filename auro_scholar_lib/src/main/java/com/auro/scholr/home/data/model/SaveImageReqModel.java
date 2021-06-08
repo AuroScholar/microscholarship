@@ -13,7 +13,44 @@ public class SaveImageReqModel {
     @Expose
     private String registration_id;
 
+    @SerializedName("img_normal_path")
+    @Expose
+    private String imgNormalPath="";
+
+    @SerializedName("img_path")
+    @Expose
+    private String imgPath="";
+
+    @SerializedName("quiz_id")
+    @Expose
+    private String quizId="";
+
+
     byte[] imageBytes;
+
+    public String getImgNormalPath() {
+        return imgNormalPath;
+    }
+
+    public void setImgNormalPath(String imgNormalPath) {
+        this.imgNormalPath = imgNormalPath;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
+    public String getQuizId() {
+        return quizId;
+    }
+
+    public void setQuizId(String quizId) {
+        this.quizId = quizId;
+    }
 
     public String getExamId() {
         return examId;
