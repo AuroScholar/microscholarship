@@ -78,7 +78,7 @@ Step 4 : Add google gms service dependency in your build.gradle(Application).
 ```
 
 
-Step 5 : For open then AuroScholar Activity or Start the Auro Scholar sdk
+Step 5 : For open ,AuroScholar Activity or Start the Auro Scholar sdk
 ----
 ```swift
 
