@@ -14,7 +14,7 @@ public class AuroScholarInputModel implements Parcelable {
     String userPartnerId="";
     String partnerSource;
     String language="en";
-    boolean applicationLang;
+    boolean applicationLang=false;
     String partnerLogoUrl="";
     String schoolName="";
 
