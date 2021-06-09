@@ -21,7 +21,7 @@ Step 1 : Add the dependency in your app/build.gradle(:app)
 
 ```swift
 dependencies {
-	          implementation 'com.github.AuroScholar:microscholarship:1.1.88'
+	          implementation 'com.github.AuroScholar:microscholarship:1.1.90'
 
 	}
 ```
@@ -78,7 +78,7 @@ Step 4 : Add google gms service dependency in your build.gradle(Application).
 ```
 
 
-Step 5 : For open then AuroScholar Fragment or Start the Auro Scholar sdk
+Step 5 : For open ,AuroScholar Activity or Start the Auro Scholar sdk
 ----
 ```swift
 
@@ -86,7 +86,7 @@ AuroScholarInputModel inputModel= new AuroScholarInputModel();
 // Important Params
 inputModel.setMobileNumber("mobile number here"); //Mandatory
 inputModel.setActivity(Activity Context Here); //Mandatory
-inputModel.setFragmentContainerUiId(Container id Here); //Mandatory Example :- R.id.containerId
+inputModel.setFragmentContainerUiId(R.id.home_container); //Mandatory Don't Change this Container Id. it should be same 
 inputModel.setStudentClass("put student class here"); //Mandatory
 inputModel.setReferralLink("Put here branch or any other referral Link");
 inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
@@ -94,16 +94,10 @@ inputModel.setPartnerSource("Your Id here"); // This id provided by Auro Scholar
 inputModel.setLanguage("Enter Your Prefrence Language");// In Small Letter Eg. Hindi - hi or English-en
 inputModel.setApplicationLang(false);
 //Eg:-inputModel.setLanguage("hi");
-//This method returns a Fragment Instance
-Fragment fragment= AuroScholar.startAuroSDK(inputModel);
+//This method start the SDK
+AuroScholar.startAuroSDK(inputModel);
 
-  ((AppCompatActivity) (this)).getSupportFragmentManager()
-                .beginTransaction()
-                .setReorderingAllowed(true)
-                .replace(R.id.home_container, fragment, SampleFragment.class
-                        .getSimpleName())
-                .addToBackStack(null)
-                .commitAllowingStateLoss();
+
 
 ```
 Step 6 : Add these lines in activity in onActivityResult( ) Method.
