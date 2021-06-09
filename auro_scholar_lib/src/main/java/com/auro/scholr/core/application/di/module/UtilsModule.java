@@ -24,11 +24,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by AAK on 09-Mar-2019.
- * asif.abrar88@gmail.com
- * 9899982894, 9821900190 India.
- */
 
 @Module
 public class UtilsModule {
@@ -54,7 +49,7 @@ public class UtilsModule {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
-    //    httpClient.addInterceptor(httpLoggingInterceptor);
+        httpClient.addInterceptor(httpLoggingInterceptor);
         httpClient.addInterceptor(chain -> {
             Request original = chain.request();
             Request request = original.newBuilder()
