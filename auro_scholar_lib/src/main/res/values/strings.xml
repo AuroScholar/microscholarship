@@ -93,7 +93,7 @@
     <string name="crop_image_activity_no_permissions">Cancelling, required permissions are not granted</string>
     <string name="upload_file">Upload File</string>
     <string name="rs">₹</string>
-    <string name="score_msg">Score 8/10 and get Rs.50 for each quiz</string>
+    <string name="score_msg">Upto INR 1000, Rs.50 per quiz if you score more than 8/10</string>
     <string name="get_scholarship">Get Scholarship</string>
     <string name="quiz">Quiz</string>
     <string name="total_no_of_points">Total No. of Points:</string>
@@ -461,4 +461,47 @@
     <string name="update_auroscholar">Update Auroscholar?</string>
     <string name="updateMessage">We have worked harder to improve the app, Please click the button below to update.</string>
     <string name="guest">Guest</string>
+
+    <string name="auro_login_sign_up">Are you a student or a teacher ?</string>
+    <string name="auro_choose_any_one_option">Select your profile to continue your account set up accordingly.</string>
+    <string name="auro_teacher">Teacher</string>
+    <string name="auro_student">Student</string>
+    <string name="auro_set_my_account">Setup My Account</string>
+    <string name="auro_choose_class_des">10 mins, 10 questions one step away from scholarship</string>
+    <string name="auro_please_be_patience">Please Be Patience <font color='#5B96F3'>Almost Done !</font></string>
+    <string name="auro_choose_class">Choose Class</string>
+    <string name="auro_single_language">ଓଡ଼ିଶା</string>
+    <string name="auro_january_scholarship">January Scholarship</string>
+    <string name="auro_subject">Subject</string>
+    <string name="auro_you_have_chance">You have Chance To<font color='#5B96F3'> Win ₹50 Per Quiz</font>   So What Are You Waiting For?</string>
+    <string name="botoom_text">Lorem Ipsum is simply dummy text of the printing and <font color='#5B96F3'> typesetting industry.</font></string>
+    <string name="auro_skip_for_now"><u>Skip For Now</u></string>
+    <string name="auro_low_memory_status">Low Internal Storage</string>
+    <string name="enter_your_mobile_number">Enter your mobile number</string>
+    <string name="we_sent_otp_to_the_below_number">We Sent OTP To The Below Number</string>
+    <string name="you_can_resend_in">\"You can resend in  \"</string>
+    <string name="learning_resources">Learning Resources</string>
+    <string name="nav_passport">Passport</string>
+    <string name="more">More</string>
+    <string name="nave_back">Back</string>
+    <string name="nav_kyc">KYC</string>
+    <string name="nav_auro_friends">Auro Friends</string>
+    <string name="hey_enter_otp">Hey, Enter OTP!</string>
+    <string name="enter_otp_below_number">We Sent OTP To The Below Number</string>
+    <string name="resend">Resend</string>
+    <string name="my_profile">My Profile</string>
+    <string name="learn_with_our_partner_app">Learn with our partner app</string>
+    <string name="sub_partner_title">Looking for some fun lessons? Check out and sharpen your knowledge with these apps.</string>
+    <string name="student_passport">Student Passport</string>
+    <string name="passport_sub_title">Find The Quiz Details As Per Your Prefrence</string>
+    <string name="nav_home">Home</string>
+    <string name="powered_by_auroscholar">Powered By </string>
+
+
+    <string-array name="genderlist_profile">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
 </resources>

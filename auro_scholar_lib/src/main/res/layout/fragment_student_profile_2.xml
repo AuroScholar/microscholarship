@@ -26,19 +26,45 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/toolbar_layout"
-                layout="@layout/toolbar_header_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_240sdp"
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/toolbar_layout"
-                android:scaleType="fitXY"
-                android:src="@drawable/myclassroom_bg"
-                android:visibility="gone" />
+                app:srcCompat="@drawable/ic_bg_left_rangoli"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:rotation="90"
+                android:layout_below="@+id/toolbar_layout"
+                app:srcCompat="@drawable/ic_bg_left_rangoli"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/login_back_button"
+                android:visibility="visible"
+                android:layout_alignLeft="@+id/imageView7"
+                android:layout_alignBottom="@+id/imageView7"/>
+
+            <ImageView
+                android:id="@+id/auro_scholar_logo"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/ic_auro_scholar_logo"
+                android:visibility="visible"
+            />
 
 
             <include
@@ -47,6 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/toolbar_layout"
+                android:visibility="gone"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
@@ -56,7 +83,7 @@
                 android:id="@+id/parent_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/header_top_parent"
+                android:layout_below="@+id/imageView7"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fillViewport="true"
                 app:layout_constraintBottom_toBottomOf="parent"

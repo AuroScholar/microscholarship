@@ -18,6 +18,7 @@
                 android:id="@+id/toolbar_layout"
                 layout="@layout/toolbar_header_layout"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content" />
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -33,16 +34,92 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-
-                    <include
-                        android:id="@+id/header_parent"
-                        layout="@layout/quiz_header_layout"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/imageView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_bg_left_rangoli"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <ImageView
+                            android:id="@+id/auro_scholar_logo"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:adjustViewBounds="true"
+                            android:background="@drawable/ic_auro_scholar_logo"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="@+id/imagerotate"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/imageView7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:rotation="90"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_bg_left_rangoli" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardView2"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:clipChildren="false"
+                            android:clipToPadding="false"
+                            android:divider="@android:color/transparent"
+                            android:dividerHeight="0.0px"
+                            android:elevation="@dimen/_10sdp"
+                            app:cardCornerRadius="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            app:cardElevation="@dimen/_15sdp"
+                            app:cardPreventCornerOverlap="false"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/imageView5">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="@dimen/_2sdp"
+                                android:divider="@android:color/transparent"
+                                app:cardCornerRadius="@dimen/_5sdp"
+
+                                >
+
+                                <ImageView
+                                    android:id="@+id/imageView6"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/ic_profile"
+                                    android:scaleType="fitXY" />
+
+                            </androidx.cardview.widget.CardView>
+                        </androidx.cardview.widget.CardView>
+
+                        <ImageView
+                            android:id="@+id/backButton"
+                            android:layout_width="@dimen/_50sdp"
+                            android:layout_height="@dimen/_50sdp"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/login_back_button"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+
+                            app:layout_constraintStart_toStartOf="@+id/imageView7" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,7 +151,7 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_18sdp"
                                 android:textStyle="normal"
-                                app:Font="Poppins-SemiBold.ttf"
+                                app:Font="Calibre-Light.ttf"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,6 +160,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 app:layout_constraintTop_toBottomOf="@id/get_scholarship_text">
+
 
                                 <com.auro.scholr.core.util.uiwidget.RPTextView
                                     android:id="@+id/score_text"
@@ -99,7 +177,6 @@
                                     app:Font="Poppins-Regular.ttf"
                                     app:layout_constraintEnd_toStartOf="@+id/wallet_bal_text"
                                     app:layout_constraintTop_toBottomOf="@id/get_scholarship_text" />
-
 
                                 <ImageView
                                     android:id="@+id/download_icon"

@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="quizViewModel"
+            type="com.auro.scholr.home.presentation.viewmodel.QuizViewModel" />
+    </data>
+
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/mainParentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                tools:context=".home.presentation.view.fragment.newDesgin.MainQuizHomeFragment">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constantLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_bg_left_rangoli" />
+
+                    <ImageView
+                        android:id="@+id/imagerotate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:rotation="90"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_bg_left_rangoli" />
+
+                    <ImageView
+                        android:id="@+id/partner_logo"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:adjustViewBounds="true"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                        app:layout_constraintEnd_toStartOf="@+id/imagerotate"
+                        app:layout_constraintStart_toEndOf="@+id/imageView5" />
+
+                    <ImageView
+                        android:id="@+id/menuBarItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/_15sdp"
+                        android:background="@drawable/ic_hamburger"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                        app:layout_constraintEnd_toEndOf="@+id/imageView5" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardView2"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:divider="@android:color/transparent"
+                        android:dividerHeight="0.0px"
+                        android:elevation="@dimen/_10sdp"
+                        app:cardCornerRadius="@dimen/_5sdp"
+                        app:cardElevation="@dimen/_15sdp"
+                        app:cardPreventCornerOverlap="false"
+                        app:layout_constraintBottom_toBottomOf="@+id/imagerotate"
+                        app:layout_constraintStart_toStartOf="@+id/imagerotate">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/_2sdp"
+                            android:divider="@android:color/transparent"
+                            app:cardCornerRadius="@dimen/_5sdp"
+
+                            >
+
+
+                            <ImageView
+                                android:id="@+id/back_arrow"
+                                android:layout_width="@dimen/_25sdp"
+                                android:layout_height="@dimen/_25sdp"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_4sdp"
+                                android:layout_marginBottom="@dimen/_4sdp"
+                                android:background="@drawable/ic_navigation_menu"
+                                android:backgroundTint="@color/white"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/imageView6"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/ic_profile"
+                                android:scaleType="fitXY" />
+                        </androidx.cardview.widget.CardView>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.06"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView5">
+
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/RPTextView9"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/auro_black"
+                                android:textSize="@dimen/_22sdp"
+                                app:Font="Calibre-Light.ttf" />
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/RPTextView10"
+                                android:layout_width="@dimen/_220sdp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:maxLines="2"
+                                android:text="@string/score_msg"
+                                android:textColor="@color/auro_grey"
+                                android:textSize="@dimen/_8sdp"
+                                app:Font="ArticulatCF-Regular.otf" />
+                        </LinearLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/walleticon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/linearLayout6"
+                            app:layout_constraintTop_toTopOf="parent">
+
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/wallet_bal_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:background="@drawable/wallet_balance_icon"
+                                android:backgroundTint="@color/blue_color"
+                                android:gravity="center_vertical"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_12sdp"
+                                app:Font="Poppins-SemiBold.ttf"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="1.0" />
+
+                            <RelativeLayout
+                                android:id="@+id/relativeLayout"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:background="@drawable/transparent_circle"
+                                app:layout_constraintEnd_toEndOf="@+id/wallet_bal_text"
+                                app:layout_constraintTop_toTopOf="@+id/wallet_bal_text">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_10sdp"
+                                    android:layout_height="@dimen/_10sdp"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/ic_cart"
+                                    android:visibility="visible" />
+
+                            </RelativeLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.auro.scholr.core.util.uiwidget.RPTextView
+                        android:id="@+id/RPTextView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:text="@string/auro_subject"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_15sdp"
+                        android:visibility="gone"
+                        app:Font="ArticulatCF-Regular.otf"
+                        app:layout_constraintStart_toStartOf="@+id/linearl"
+                        app:layout_constraintTop_toBottomOf="@+id/linearl" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/constantLayout"
+                    android:clipToPadding="false"
+                    android:paddingBottom="@dimen/_15sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_10sdp" />
+
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/powered_by"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_2sdp"
+                            android:text="@string/powered_by_auroscholar"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/_14sdp"
+                            android:textColor="@color/black"
+                            app:Font="Poppins-Regular.ttf"
+                            app:layout_constraintTop_toBottomOf="@+id/quizwon_type_list" />
+
+
+                        <ImageView
+                            android:id="@+id/auro_scholar_logo"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center_horizontal"
+                            app:srcCompat="@drawable/ic_auro_scholar_logo"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:adjustViewBounds="true"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                            app:layout_constraintEnd_toStartOf="@+id/imagerotate"
+                            app:layout_constraintStart_toEndOf="@+id/imageView5" />
+
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/privacy_policy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/quizwon_type_list"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:background="@drawable/blue_strip"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="@dimen/_8sdp"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:text="@string/privacy_policy_auro"
+                            android:textAlignment="center"
+                            android:textColor="@color/blue_color"
+                            app:Font="Poppins-Regular.ttf"
+                            app:layout_constraintTop_toBottomOf="@+id/quizwon_type_list" />
+
+                    </LinearLayout>
+
+
+                </androidx.core.widget.NestedScrollView>
+
+
+                <include
+                    android:id="@+id/quiz_selection_sheet"
+                    layout="@layout/user_select_start_quiz_bottom_sheet"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </RelativeLayout>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_quiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <include
+                    layout="@layout/fragment_main_quiz_home_shimmer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/errorConstraint"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <include
+
+                    android:id="@+id/errorLayout"
+                    layout="@layout/error_layout" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/nav_header"
+                    layout="@layout/nav_header_main" />
+
+                <ListView
+                    android:id="@+id/navList"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </com.google.android.material.navigation.NavigationView>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+</layout>

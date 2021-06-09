@@ -116,4 +116,21 @@
     <color name="auro_icon_bg">#055E8A</color>
     <color name="dark_blue">#054B74</color>
 
+
+
+    <!--AuroColorNewDesgin-->
+    <color name="auro_backgrount_trasparent">#0000CC</color>
+    <color name="auro_grey">#A0A4B8</color>
+    <color name="auro_more_dark_grey">#707070</color>
+    <color name="auro_black">#312E33</color>
+    <color name="auro_orange">#F57949</color>
+    <color name="auro_start_greay">#DFE1E9</color>
+    <color name="auro_blue">#345FD6</color>
+    <color name="auro_border_blue">#276EF1</color>
+    <color name="auro_buton_text_blue">#5B96F3</color>
+    <color name="auro_subject_blue">#1A203E</color>
+    <color name="disable_text">#D5D6DD</color>
+    <color name="red">#d32f2f</color>
+    <color name="ui_color_code">#9296AB</color>
+
 </resources>

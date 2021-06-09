@@ -75,7 +75,7 @@
             android:layout_marginRight="@dimen/_35sdp"
             android:inputType="text"
             android:maxLength="2"
-            android:visibility="visible"
+            android:visibility="gone"
             android:hint="Please select Language"
             android:layout_below="@+id/user_class"/>
 

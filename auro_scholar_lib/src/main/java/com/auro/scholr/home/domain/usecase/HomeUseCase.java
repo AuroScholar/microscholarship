@@ -609,4 +609,40 @@ public class HomeUseCase {
         return chapterResModel;
     }
 
+    public String getCurrentMonthWalletBalance(DashboardResModel resModel) {
+        int walletBalance = 0;
+        if (resModel != null && !TextUtil.checkListIsEmpty(resModel.getSubjectResModelList())) {
+            AppLogger.e("walletBalance A-","A");
+            for (SubjectResModel subjectResModel : resModel.getSubjectResModelList()) {
+                AppLogger.e("walletBalance B-","B");
+                if (subjectResModel != null && !TextUtil.checkListIsEmpty(subjectResModel.getChapter())) {
+                    for (QuizResModel model : subjectResModel.getChapter()) {
+                        AppLogger.e("walletBalance C-","C");
+                        if (model.getAttempt() > 0) {
+                            if (!TextUtil.isEmpty(model.getScoreallpoints())) {
+                                AppLogger.e("walletBalance 1-",model.getScoreallpoints());
+                                String[] scoreArray = model.getScoreallpoints().split(",");
+                                if (scoreArray.length > 0) {
+                                    for (String val : scoreArray) {
+                                        AppLogger.e("walletBalance 2-",val);
+                                        int tmpval = ConversionUtil.INSTANCE.convertStringToInteger(val);
+                                        if (tmpval > 7) {
+                                            AppLogger.e("walletBalance 3-",""+tmpval);
+                                            walletBalance = ++walletBalance;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        AppLogger.e("walletBalance 4-",""+walletBalance);
+        // walletBalance =
+        return "" + (walletBalance*50);
+    }
+
+
 }

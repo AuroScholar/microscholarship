@@ -27,6 +27,10 @@ public class AuroScholarDataModel implements Parcelable {
     String language = "en";
     boolean applicationLang;
     String UTMLink="";
+
+    String partnerLogo="";
+    String schoolName="";
+
     protected AuroScholarDataModel(Parcel in) {
         mobileNumber = in.readString();
         fragmentContainerUiId = in.readInt();
@@ -44,6 +48,8 @@ public class AuroScholarDataModel implements Parcelable {
         language = in.readString();
         applicationLang = in.readByte() != 0;
         UTMLink = in.readString();
+        partnerLogo = in.readString();
+        schoolName = in.readString();
     }
 
     @Override
@@ -64,6 +70,8 @@ public class AuroScholarDataModel implements Parcelable {
         dest.writeString(language);
         dest.writeByte((byte) (applicationLang ? 1 : 0));
         dest.writeString(UTMLink);
+        dest.writeString(partnerLogo);
+        dest.writeString(schoolName);
     }
 
     @Override
@@ -82,6 +90,22 @@ public class AuroScholarDataModel implements Parcelable {
             return new AuroScholarDataModel[size];
         }
     };
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
+    public String getPartnerLogo() {
+        return partnerLogo;
+    }
+
+    public void setPartnerLogo(String partnerLogo) {
+        this.partnerLogo = partnerLogo;
+    }
 
     public String getUTMLink() {
         return UTMLink;

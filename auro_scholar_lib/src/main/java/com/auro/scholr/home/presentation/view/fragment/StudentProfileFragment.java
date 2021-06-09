@@ -48,6 +48,7 @@ import com.auro.scholr.home.data.model.StudentProfileModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
+import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.home.presentation.viewmodel.StudentProfileViewModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
@@ -173,15 +174,15 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
 
     @Override
     protected void setListener() {
-        ((StudentDashboardActivity)getActivity()).setListingActiveFragment(StudentDashboardActivity.PROFILE_FRAGMENT);
+        ((StudentMainDashboardActivity)getActivity()).setListingActiveFragment(StudentMainDashboardActivity.PROFILE_FRAGMENT);
 
         binding.profileImage.setOnClickListener(this);
-        binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.editImage.setOnClickListener(this);
         binding.editemail.addTextChangedListener(this);
         binding.submitbutton.setOnClickListener(this);
         binding.UserName.setOnClickListener(this);
         binding.cancelUserNameIcon.setOnClickListener(this);
+        binding.backButton.setOnClickListener(this);
 
         binding.gradeChnage.setOnClickListener(this);
         binding.walletBalText.setOnClickListener(this);
@@ -327,14 +328,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
         if (id == R.id.back_arrow) {
             getActivity().onBackPressed();
         } else if (id == R.id.editImage) {//  selectImage(getContext());
-            CropImages.activity()
-                    .setGuidelines(CropImageViews.Guidelines.ON)
-                    .start(getActivity());
-                /* case R.id.imagevGrade:
-                changeTheEditText();
-               // ((AuroScholarDashBoardActivity) getActivity()).openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
-                openGradeChangeFragment();
-                break;*/
+            askPermission();
         } else if (id == R.id.submitbutton) {
             changeTheEditText();
             sendProfileScreenApi();
@@ -409,6 +403,9 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
             } else {
                 binding.editProfileName.setError("Enter Your Name");
             }
+        } else if(id == R.id.backButton)
+        {
+            getActivity().onBackPressed();
         }
 
     }
@@ -787,23 +784,22 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
     }
 
     private void askPermission() {
-        String rationale = "Please give location permission for provide you the better service.";
+        String rationale ="For Upload Profile Picture. Camera and Storage Permission is Must.";
         Permissions.Options options = new Permissions.Options()
                 .setRationaleDialogTitle("Info")
                 .setSettingsDialogTitle("Warning");
-        Permissions.check(getActivity(), PermissionUtil.mLocationPermission, rationale, options, new PermissionHandler() {
+        Permissions.check(getActivity(), PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
             @Override
             public void onGranted() {
-                // getCurrentLocation();
-                AppLogger.e("StudentProfile", "Location Permission Granted");
+                CropImages.activity()
+                        .setGuidelines(CropImageViews.Guidelines.ON)
+                        .start(getActivity());
             }
 
             @Override
             public void onDenied(Context context, ArrayList<String> deniedPermissions) {
                 // permission denied, block the feature.
-                //getActivity().getSupportFragmentManager().popBackStack();
-                AppLogger.e("StudentProfile", "Location Permission Denied");
-
+                ViewUtil.showSnackBar(binding.getRoot(), rationale);
             }
         });
     }

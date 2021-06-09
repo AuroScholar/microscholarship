@@ -211,4 +211,62 @@
         <!--<item name="android:windowAnimationStyle">@style/DialogAnimation</item>-->
     </style>
 
+
+
+    //new Desgin
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeColor">@color/auro_border_blue</item>
+
+        <item name="boxCornerRadiusBottomEnd">@dimen/_18sdp</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/_18sdp</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/_18sdp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/_18sdp</item>
+        <item name="hintTextAppearance">@style/HintText</item>
+        <item name="errorTextAppearance">@color/red</item>
+
+        <item name="android:textColor">@color/auro_border_blue</item>
+        <item name="android:textColorHint">@color/auro_border_blue</item>
+        <item name="colorControlNormal">@color/auro_border_blue</item>
+        <item name="colorControlActivated">@color/auro_border_blue</item>
+        <item name="colorControlHighlight">@color/auro_border_blue</item>
+    </style>
+
+
+    <style name="TextInputLayoutExposeStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeColor">@color/auro_border_blue</item>
+
+        <item name="boxCornerRadiusBottomEnd">@dimen/_18sdp</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/_18sdp</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/_18sdp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/_18sdp</item>
+        <item name="hintTextAppearance">@style/HintText</item>
+        <item name="errorTextAppearance">@color/red</item>
+
+        <item name="android:textColor">@color/auro_border_blue</item>
+        <item name="android:textColorHint">@color/auro_border_blue</item>
+        <item name="colorControlNormal">@color/auro_border_blue</item>
+        <item name="colorControlActivated">@color/auro_border_blue</item>
+        <item name="colorControlHighlight">@color/auro_border_blue</item>
+    </style>
+    <style name="TextExposeInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeColor">@color/auro_border_blue</item>
+
+        <item name="boxCornerRadiusBottomEnd">@dimen/_18sdp</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/_18sdp</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/_18sdp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/_18sdp</item>
+        <item name="hintTextAppearance">@style/HintText</item>
+        <item name="errorTextAppearance">@color/red</item>
+
+        <item name="android:textColor">@color/auro_border_blue</item>
+        <item name="android:textColorHint">@color/auro_border_blue</item>
+        <item name="colorControlNormal">@color/auro_border_blue</item>
+        <item name="colorControlActivated">@color/auro_border_blue</item>
+        <item name="colorControlHighlight">@color/auro_border_blue</item>
+    </style>
+
+
 </resources>

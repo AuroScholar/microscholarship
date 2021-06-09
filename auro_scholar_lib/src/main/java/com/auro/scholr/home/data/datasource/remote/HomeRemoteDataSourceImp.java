@@ -49,6 +49,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         params.put(AppConstant.DashBoardParams.USER_PARTNER_ID, model.getUserPartnerid());
         params.put(AppConstant.DashBoardParams.IP_ADDRESS, AppUtil.getIpAdress(AuroApp.getAppContext()));
         params.put(AppConstant.DashBoardParams.BUILD_VERSION, AppUtil.getSDKTag(AuroApp.getAppContext()));
+        params.put(AppConstant.DashBoardParams.SCHOOL_NAME, model.getSchoolName());
         AppLogger.e("HomeRemoteDataSourceImp", "Calling  Generic SDK");
         return homeRemoteApi.getDashboardSDKData(params);
 
@@ -140,6 +141,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         params.put(AppConstant.AssignmentApiParams.QUIZ_ATTEMPT, assignmentReqModel.getQuiz_attempt());
         params.put(AppConstant.AssignmentApiParams.EXAMLANG, assignmentReqModel.getExamlang());
         params.put(AppConstant.AzureApiParams.SUBJECT, assignmentReqModel.getSubject());
+
         return homeRemoteApi.getAssignmentId(params);
     }
 
@@ -209,8 +211,11 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         RequestBody exam_id = RequestBody.create(okhttp3.MultipartBody.FORM, reqModel.getExamId());
         RequestBody registration_id = RequestBody.create(okhttp3.MultipartBody.FORM, reqModel.getRegistration_id());
         RequestBody is_mobile = RequestBody.create(okhttp3.MultipartBody.FORM, "1");
+        RequestBody quiz_id = RequestBody.create(okhttp3.MultipartBody.FORM, reqModel.getQuizId());
+        RequestBody image_normal_path = RequestBody.create(okhttp3.MultipartBody.FORM, reqModel.getImgNormalPath());
+        RequestBody image_path = RequestBody.create(okhttp3.MultipartBody.FORM, reqModel.getImgPath());
         MultipartBody.Part student_photo = ConversionUtil.INSTANCE.makeMultipartRequestForExamImage(reqModel.getImageBytes());
-        return homeRemoteApi.uploadImage(exam_id, registration_id, is_mobile,
+        return homeRemoteApi.uploadImage(exam_id, registration_id, is_mobile,quiz_id,image_normal_path,image_path,
                 student_photo);
     }
 

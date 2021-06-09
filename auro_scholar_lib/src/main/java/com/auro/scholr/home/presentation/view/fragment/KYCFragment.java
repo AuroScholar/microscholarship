@@ -46,6 +46,7 @@ import com.auro.scholr.home.data.model.KYCResItemModel;
 import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
+import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.home.presentation.view.adapter.KYCuploadAdapter;
 import com.auro.scholr.home.presentation.viewmodel.KYCViewModel;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
@@ -147,7 +148,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             }
 
         }
-        binding.cambridgeHeading.cambridgeHeading.setTextColor(getResources().getColor(R.color.white));
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
             setLanguageText(AppConstant.HINDI);
@@ -158,7 +158,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
 
     private void setLanguageText(String text) {
-        binding.toolbarLayout.langEng.setText(text);
+       // binding.toolbarLayout.langEng.setText(text);
     }
 
 
@@ -169,20 +169,17 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     @Override
     protected void setListener() {
-        ((StudentDashboardActivity)getActivity()).setListingActiveFragment(StudentDashboardActivity.KYC_FRAGMENT);
+        ((StudentMainDashboardActivity)getActivity()).setListingActiveFragment(StudentMainDashboardActivity.KYC_FRAGMENT);
 
-        /*Do code here*/
-        binding.toolbarLayout.backArrow.setVisibility(View.VISIBLE);
-        binding.toolbarLayout.backArrow.setOnClickListener(this);
         //  binding.btUploadAll.setOnClickListener(this);
         binding.walletInfo.setOnClickListener(this);
-        binding.toolbarLayout.langEng.setOnClickListener(this);
         if (kycViewModel != null && kycViewModel.serviceLiveData().hasObservers()) {
             kycViewModel.serviceLiveData().removeObservers(this);
-
         } else {
             observeServiceResponse();
         }
+
+        binding.backButton.setOnClickListener(this);
     }
 
 
@@ -481,18 +478,8 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 ViewUtil.showSnackBar(binding.getRoot(), getActivity().getResources().getString(R.string.document_all_four_error_msg));
             }
         } else if (v.getId() == R.id.lang_eng) {
-            String text = binding.toolbarLayout.langEng.getText().toString();
-            if (!TextUtil.isEmpty(text) && text.equalsIgnoreCase(AppConstant.HINDI)) {
-                ViewUtil.setLanguage(AppConstant.LANGUAGE_HI);
-                //   resources = ViewUtil.getCustomResource(getActivity());
-                setLanguageText(AppConstant.ENGLISH);
-            } else {
-                ViewUtil.setLanguage(AppConstant.LANGUAGE_EN);
-                //resources = ViewUtil.getCustomResource(getActivity());
-                setLanguageText(AppConstant.HINDI);
-            }
             reloadFragment();
-        }  else if (v.getId() == R.id.back_arrow) {
+        }  else if (v.getId() == R.id.backButton) {
             getActivity().onBackPressed();
             AppLogger.e("handleback","backlisner");
 

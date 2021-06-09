@@ -173,12 +173,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setReferralLink("put refferal link");
         inputModel.setPartnerSource(""); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setActivity(this);
-        inputModel.setLanguage(binding.language.getText().toString());// In Small Letter Eg. Hindi - hi or English-en
-        inputModel.setApplicationLang(false);
-        inputModel.setPartnerSource("");
-        inputModel.setFragmentContainerUiId(R.id.home_container);
+        inputModel.setPartnerLogoUrl(""); //optional Filed
+        inputModel.setSchoolName(""); //optional Filed
         AuroScholar.startAuroSDK(inputModel);
-       // openFragment();
     }
 
     @Override

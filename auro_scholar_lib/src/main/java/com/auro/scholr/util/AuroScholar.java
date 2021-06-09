@@ -4,12 +4,13 @@ import android.content.Intent;
 
 import androidx.fragment.app.Fragment;
 
+import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
-import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
+import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardFragment;
 import com.auro.scholr.home.presentation.view.fragment.QuizHomeFragment;
 
@@ -63,11 +64,17 @@ public class AuroScholar {
         auroScholarDataModel.setStudentClass(inputModel.getStudentClass());
         auroScholarDataModel.setRegitrationSource(inputModel.getRegitrationSource());
         auroScholarDataModel.setActivity(inputModel.getActivity());
-        auroScholarDataModel.setFragmentContainerUiId(inputModel.getFragmentContainerUiId());
+        auroScholarDataModel.setFragmentContainerUiId(R.id.home_container);
         auroScholarDataModel.setReferralLink(inputModel.getReferralLink());
         auroScholarDataModel.setLanguage(inputModel.getLanguage());
         auroScholarDataModel.setUserPartnerid(inputModel.getUserPartnerId());
         auroScholarDataModel.setApplicationLang(inputModel.isApplicationLang());
+        auroScholarDataModel.setPartnerLogo(inputModel.getPartnerLogoUrl());
+        if (!TextUtil.isEmpty(inputModel.getSchoolName())) {
+            auroScholarDataModel.setSchoolName(inputModel.getSchoolName());
+        } else {
+            auroScholarDataModel.setSchoolName("");
+        }
         if (TextUtil.isEmpty(inputModel.getPartnerSource())) {
             auroScholarDataModel.setPartnerSource("");
         } else {
@@ -78,7 +85,7 @@ public class AuroScholar {
             return;
         }
         // QuizHomeFragment quizHomeFragment = new QuizHomeFragment();
-        auroScholarDataModel.getActivity().startActivity(new Intent(auroScholarDataModel.getActivity(), StudentDashboardActivity.class));
+        auroScholarDataModel.getActivity().startActivity(new Intent(auroScholarDataModel.getActivity(), StudentMainDashboardActivity.class));
 
         //  return quizHomeFragment;
     }

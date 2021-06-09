@@ -32,7 +32,8 @@ import com.auro.scholr.databinding.FragmentCertificateBinding;
 import com.auro.scholr.home.data.model.APIcertificate;
 import com.auro.scholr.home.data.model.CertificateResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
-import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
+
+import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.home.presentation.view.adapter.CertificateAdapter;
 import com.auro.scholr.home.presentation.viewmodel.TransactionsViewModel;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
@@ -114,7 +115,7 @@ public class CertificateFragment extends BaseFragment implements View.OnClickLis
 
         }
         ViewUtil.setLanguageonUi(getActivity());
-
+        ViewUtil.setProfilePic(binding.imageView6);
 
         callCertificateApi();
 
@@ -131,7 +132,7 @@ public class CertificateFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     protected void setListener() {
-        ((StudentDashboardActivity)getActivity()).setListingActiveFragment(StudentDashboardActivity.CERTIFICATES_FRAGMENT);
+        ((StudentMainDashboardActivity)getActivity()).setListingActiveFragment(StudentMainDashboardActivity.CERTIFICATES_FRAGMENT);
 
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
             viewModel.serviceLiveData().removeObservers(this);
@@ -139,10 +140,12 @@ public class CertificateFragment extends BaseFragment implements View.OnClickLis
             observeServiceResponse();
         }
 
-        binding.headerParent.cambridgeHeading.setVisibility(View.VISIBLE);
+       // binding.headerParent.cambridgeHeading.setVisibility(View.VISIBLE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
         binding.downloadIcon.setOnClickListener(this);
+        binding.backButton.setOnClickListener(this);
+        binding.cardView2.setOnClickListener(this);
     }
 
     @Override
@@ -154,10 +157,12 @@ public class CertificateFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.back_arrow) {
+        if (id == R.id.backButton) {
             getActivity().onBackPressed();
         } else if (id == R.id.download_icon) {
             askPermission();
+        }else if (id ==  R.id.cardView2){
+            ((StudentMainDashboardActivity)getActivity()).openProfileFragment();
         }
     }
 

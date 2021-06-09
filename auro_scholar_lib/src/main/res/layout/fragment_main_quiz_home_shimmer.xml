@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".home.presentation.view.fragment.newDesgin.MainQuizHomeFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constantLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            >
+
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_bg_left_rangoli" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0.0px"
+                android:elevation="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_15sdp"
+                app:cardPreventCornerOverlap="false"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                app:layout_constraintEnd_toEndOf="@+id/imageView5">
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:padding="@dimen/_2sdp"
+                    android:background="@color/shimmer_color"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView5">
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/RPTextView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auro_january_scholarship"
+                    android:textColor="@color/shimmer_color"
+                    android:textSize="@dimen/_17sdp"
+                    android:background="@color/shimmer_color"
+                    app:Font="Calibre-Light.ttf" />
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/RPTextView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/score_msg"
+                    android:textColor="@color/shimmer_color"
+                    android:textSize="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/shimmer_color"
+                    app:Font="ArticulatCF-Regular.otf" />
+
+
+            </LinearLayout>
+
+            <com.auro.scholr.core.util.uiwidget.RPTextView
+                android:id="@+id/RPTextView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/auro_subject"
+                android:background="@color/shimmer_color"
+                android:textColor="@color/shimmer_color"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:textSize="@dimen/_15sdp"
+                app:Font="ArticulatCF-Regular.otf"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout6"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/quiz_layout_one"
+            android:layout_below="@+id/constantLayout"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_weight="1"
+                android:background="@color/shimmer_color"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_170sdp"/>
+
+            <ImageView
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:background="@color/shimmer_color"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_170sdp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_below="@+id/quiz_layout_one"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_weight="1"
+                android:background="@color/shimmer_color"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_170sdp"/>
+
+            <ImageView
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:background="@color/shimmer_color"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_170sdp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>

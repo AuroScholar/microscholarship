@@ -212,7 +212,29 @@ public class HomeModule {
     @Provides
     @Singleton
     @Named("StudentDashboardActivity")
-    ViewModelFactory provideStudentDashboardActivityViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+    ViewModelFactory provideStudentNewDashboardActivityViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
     }
+
+
+    @Provides
+    @Singleton
+    @Named("UserProfileActivity")
+    ViewModelFactory provideUserProfileModelFactory(HomeUseCase homeUseCase,HomeDbUseCase homeDbUseCase,HomeRemoteUseCase homeRemoteUseCase){
+        return new ViewModelFactory(homeUseCase,homeDbUseCase,homeRemoteUseCase);
+    }
+
+    @Provides
+    @Singleton
+    @Named("StudentMainDashboardActivity")
+    ViewModelFactory provideStudentMainDashboardActivityViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
+    @Provides
+    @Singleton
+    @Named("MainQuizHomeFragment")
+    ViewModelFactory provideMainQuizHomeViewModelFactory(HomeUseCase homeUseCase, HomeDbUseCase homeDbUseCase, HomeRemoteUseCase homeRemoteUseCase) {
+        return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
+    }
+
 }
