@@ -19,7 +19,9 @@
         android:name="android.hardware.camera.autofocus"
         android:required="true" />
 
-    <application>
+    <application
+        android:usesCleartextTraffic="true"
+        >
         <activity android:name=".home.presentation.view.activity.newDashboard.StudentMainDashboardActivity"></activity>
 
         <meta-data
