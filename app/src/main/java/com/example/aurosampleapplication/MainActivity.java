@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding.btOpen.setOnClickListener(this);
         binding.btSdk.setVisibility(View.VISIBLE);
         binding.btOpen.setVisibility(View.GONE);
+
     }
 
 
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setPartnerSource("");
         auroScholarDataModel.setUTMLink(binding.utmTextHere.getText().toString());
        // auroScholarDataModel.setUTMLink("");
+
         auroScholarDataModel.setFragmentContainerUiId(R.id.home_container) ;//This is the example please put your container id here.
         auroScholarDataModel.setSdkcallback(new SdkCallBack() {
             @Override

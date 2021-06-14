@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-  <domain-config cleartextTrafficPermitted="false">
+  <base-config cleartextTrafficPermitted="true" />
+  <domain-config cleartextTrafficPermitted="true">
     <domain includeSubdomains="true">auroscholar.com</domain>
     <trust-anchors>
       <certificates src="@raw/debug_certificate"/>

@@ -132,5 +132,6 @@
     <color name="disable_text">#D5D6DD</color>
     <color name="red">#d32f2f</color>
     <color name="ui_color_code">#9296AB</color>
+    <color name="color_transparent">#80000000</color>
 
 </resources>

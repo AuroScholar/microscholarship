@@ -6,7 +6,7 @@
         android:id="@+id/sheet_layout_quiz"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#80000000"
+        android:background="@color/color_transparent"
         android:clickable="true"
         android:visibility="gone">
 
@@ -17,7 +17,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="-20dp"
-            app:cardBackgroundColor="@android:color/white"
+            android:background="@color/white"
             app:cardCornerRadius="@dimen/_20sdp">
 
 
@@ -117,8 +117,13 @@
                             android:layout_height="@dimen/_40sdp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:layout_marginBottom="@dimen/_30sdp"
-                            android:visibility="gone"
-                            android:background="@drawable/ic_retake_button">
+                            android:visibility="gone">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:srcCompat="@drawable/ic_retake_button"/>
+
+
 
                             <com.auro.scholr.core.util.uiwidget.RPTextView
                                 android:id="@+id/buttonSelect"
@@ -126,7 +131,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:gravity="center"
-
                                 android:padding="@dimen/_11sdp"
                                 android:text="Start Quiz"
                                 android:textColor="@color/white"
