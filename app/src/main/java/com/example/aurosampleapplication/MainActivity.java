@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding.btSdk.setVisibility(View.VISIBLE);
         binding.btOpen.setVisibility(View.GONE);
 
+
     }
 
 
@@ -170,10 +171,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String language = binding.language.getText().toString();
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
         inputModel.setMobileNumber(mobileNumber);//mobileNumber
-        inputModel.setStudentClass(binding.userClass.getText().toString());//"binding.userClass.getText().toString()"
-        inputModel.setRegitrationSource("");
+        inputModel.setStudentClass(student_class);//"binding.userClass.getText().toString()"
+        inputModel.setRegitrationSource("TopSchool");
         inputModel.setReferralLink("put refferal link");
-        inputModel.setPartnerSource(""); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
+        inputModel.setPartnerSource("TOPSbivM6t"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setActivity(this);
         inputModel.setPartnerLogoUrl(""); //optional Filed
         inputModel.setSchoolName(""); //optional Filed
