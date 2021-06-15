@@ -68,7 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/_15sdp"
-                        android:background="@drawable/ic_hamburger"
+                        app:srcCompat="@drawable/hamburgerpbutton"
                         android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                         app:layout_constraintEnd_toEndOf="@+id/imageView5" />
@@ -82,6 +82,7 @@
                         android:clipToPadding="false"
                         android:divider="@android:color/transparent"
                         android:dividerHeight="0.0px"
+
                         android:elevation="@dimen/_10sdp"
                         app:cardCornerRadius="@dimen/_5sdp"
                         app:cardElevation="@dimen/_15sdp"
@@ -89,37 +90,23 @@
                         app:layout_constraintBottom_toBottomOf="@+id/imagerotate"
                         app:layout_constraintStart_toStartOf="@+id/imagerotate">
 
-                        <androidx.cardview.widget.CardView
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_margin="@dimen/_2sdp"
+                            android:background="@color/white"
                             android:divider="@android:color/transparent"
-                            app:cardCornerRadius="@dimen/_5sdp"
-
-                            >
+                            app:cardCornerRadius="@dimen/_5sdp">
 
 
-                            <ImageView
-                                android:id="@+id/back_arrow"
-                                android:layout_width="@dimen/_25sdp"
-                                android:layout_height="@dimen/_25sdp"
-                                android:layout_marginStart="@dimen/_10sdp"
-                                android:layout_marginTop="@dimen/_4sdp"
-                                android:layout_marginBottom="@dimen/_4sdp"
-                                android:background="@drawable/ic_navigation_menu"
-                                android:backgroundTint="@color/white"
-                                android:visibility="visible"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+
 
                             <ImageView
                                 android:id="@+id/imageView6"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/ic_profile"
+                                app:srcCompat="@drawable/ic_profile"
                                 android:scaleType="fitXY" />
-                        </androidx.cardview.widget.CardView>
+                        </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
 
@@ -209,7 +196,7 @@
                                     android:layout_width="@dimen/_10sdp"
                                     android:layout_height="@dimen/_10sdp"
                                     android:layout_centerInParent="true"
-                                    android:background="@drawable/ic_cart"
+                                    app:srcCompat="@drawable/ic_cart"
                                     android:visibility="visible" />
 
                             </RelativeLayout>
