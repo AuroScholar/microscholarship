@@ -650,7 +650,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
 
     public void setSpinner() {
         // Spinner Drop down Gender
-        genderLines = Arrays.asList(getResources().getStringArray(R.array.genderlist));
+        genderLines = Arrays.asList(getActivity().getResources().getStringArray(R.array.genderlist));
         spinnermethodcall(genderLines, binding.SpinnerGender);
         for (int i = 0; i < genderLines.size(); i++) {
             String gender = genderLines.get(i);
@@ -662,7 +662,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
         }
 
         // Spinner Drop down schooltype
-        schooltypeLines = Arrays.asList(getResources().getStringArray(R.array.schooltypelist));
+        schooltypeLines = Arrays.asList(getActivity().getResources().getStringArray(R.array.schooltypelist));
         spinnermethodcall(schooltypeLines, binding.SpinnerSchoolType);
         for (int i = 0; i < schooltypeLines.size(); i++) {
             String school = schooltypeLines.get(i);
