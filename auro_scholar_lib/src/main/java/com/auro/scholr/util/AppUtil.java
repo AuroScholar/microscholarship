@@ -133,7 +133,7 @@ public class AppUtil {
     }
 
     public static String getSDKTag(Context context) {
-        return "1.1.92";
+        return "1.1.96";
     }
 
 
