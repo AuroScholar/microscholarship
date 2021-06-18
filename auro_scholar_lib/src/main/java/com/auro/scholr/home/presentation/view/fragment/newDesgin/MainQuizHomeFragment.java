@@ -401,13 +401,15 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         if(isVisible()) {
                             onApiSuccess(responseApi);
+                            AppLogger.v("PRADEEP_DATA","SUCCESS");
                         }
 
                     } else if (responseApi.apiTypeStatus == GRADE_UPGRADE) {
                         DashboardResModel dashboardResModel = (DashboardResModel) responseApi.data;
-                        handleProgress(1, "");
+                        handleProgress(0, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
-                        //setPrefForTesting();
+                        //setPrefForTesting()
+                        AppLogger.v("PRADEEP_DATA",dashboardResModel.isError()+"");
                         if (!dashboardResModel.isError()) {
                             if (customDialog != null) {
                                 customDialog.dismiss();
@@ -425,15 +427,18 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                     if (customDialog != null) {
                         customDialog.dismiss();
                     }
+                    AppLogger.v("PRADEEP_DATA","NO_INTERNET");
                     handleProgress(2, (String) responseApi.data);
                     break;
                 case AUTH_FAIL:
                 case FAIL_400:
                     if (customDialog != null) {
                         customDialog.dismiss();
+                        AppLogger.v("PRADEEP_DATA","FAIL_400 null");
                     }
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(2, (String) responseApi.data);
+                        AppLogger.v("PRADEEP_DATA","DASHBOARD_API---");
                     } else {
                         setImageInPref(assignmentReqModel);
                         // openQuizTestFragment(dashboardResModel);
@@ -447,7 +452,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                         customDialog.dismiss();
                     }
                     // binding.swipeRefreshLayout.setRefreshing(false);
-                    Log.d(TAG, "observeServiceResponse: default");
+                    AppLogger.v("PRADEEP_DATA","default---");
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(2, (String) responseApi.data);
                     } else {
