@@ -56,7 +56,7 @@ public class UtilsModule {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
-        httpClient.addInterceptor(httpLoggingInterceptor);
+       // httpClient.addInterceptor(httpLoggingInterceptor);
         httpClient.addInterceptor(chain -> {
             Request original = chain.request();
             Request request = original.newBuilder()
@@ -81,7 +81,7 @@ public class UtilsModule {
         return new Retrofit.Builder()
                 .baseUrl(URLConstant.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(getUnsafeOkHttpClient())
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
