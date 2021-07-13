@@ -61,6 +61,7 @@ import com.auro.scholr.home.presentation.view.adapter.newuiadapter.SubjectSelect
 import com.auro.scholr.home.presentation.view.fragment.CertificateFragment;
 import com.auro.scholr.home.presentation.view.fragment.CongratulationsDialog;
 import com.auro.scholr.home.presentation.view.fragment.ConsgratuationLessScoreDialog;
+import com.auro.scholr.home.presentation.view.fragment.DemographicFragment;
 import com.auro.scholr.home.presentation.view.fragment.KYCFragment;
 import com.auro.scholr.home.presentation.view.fragment.KYCViewFragment;
 import com.auro.scholr.home.presentation.view.fragment.PrivacyPolicyFragment;
@@ -380,6 +381,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         } else if (id == R.id.privacy_policy) {
             ((StudentMainDashboardActivity) getActivity()).openFragment(new PrivacyPolicyFragment());
         } else if (id == R.id.menuBarItem) {
+           // openDemographicFragment();
             binding.drawerLayout.openDrawer(Gravity.LEFT);
         } else if (id == R.id.termsofuse) {
             Bundle bundle = new Bundle();
@@ -969,5 +971,13 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         TextView class_txt = binding.navHeader.findViewById(R.id.txtClass);
         class_txt.setText(getActivity().getString(R.string.student_class) + dashboardResModel.getStudentclass());
 
+    }
+
+    public void openDemographicFragment() {
+        Bundle bundle = new Bundle();
+        DemographicFragment demographicFragment = new DemographicFragment();
+        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        demographicFragment.setArguments(bundle);
+        openFragment(demographicFragment);
     }
 }

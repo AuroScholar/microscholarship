@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setPartnerLogoUrl(""); //optional Filed
         inputModel.setSchoolName("EPS");//optional Filed
         inputModel.setBoardType("CBSE");//optional Filed
-        inputModel.setSchoolType("Government School");//optional Filed
+        inputModel.setSchoolType("Private School");//optional Filed
         inputModel.setGender("Male");//optional Filed
         inputModel.setEmail("vksep07@gmail.com");//optional Filed
         AuroScholar.startAuroSDK(inputModel);
