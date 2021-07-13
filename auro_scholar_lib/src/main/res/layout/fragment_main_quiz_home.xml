@@ -278,22 +278,56 @@
                             app:layout_constraintStart_toEndOf="@+id/imageView5" />
 
 
-                        <com.auro.scholr.core.util.uiwidget.RPTextView
-                            android:id="@+id/privacy_policy"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/quizwon_type_list"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/_15sdp"
+                        <LinearLayout
                             android:background="@drawable/blue_strip"
-                            android:gravity="center_horizontal"
-                            android:paddingTop="@dimen/_8sdp"
-                            android:paddingBottom="@dimen/_8sdp"
-                            android:text="@string/privacy_policy_auro"
-                            android:textAlignment="center"
-                            android:textColor="@color/blue_color"
-                            app:Font="Poppins-Regular.ttf"
-                            app:layout_constraintTop_toBottomOf="@+id/quizwon_type_list" />
+                            android:orientation="horizontal"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_30sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/privacy_policy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/quizwon_type_list"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_horizontal"
+                                android:layout_weight="1.5"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_marginBottom="@dimen/_10sdp"
+                                android:text="@string/privacy_policy_auro"
+                                android:textAlignment="center"
+                                android:textSize="@dimen/_10sdp"
+                                android:textColor="@color/blue_color"
+                                app:Font="Poppins-Regular.ttf"
+                                app:layout_constraintTop_toBottomOf="@+id/quizwon_type_list" />
+
+                            <View
+                                android:background="@color/blue_color"
+                                android:layout_width="@dimen/_1sdp"
+                                android:layout_height="match_parent"/>
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/termsofuse"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_marginBottom="@dimen/_10sdp"
+                                android:layout_below="@+id/quizwon_type_list"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_horizontal"
+                                android:text="@string/terms_of_service"
+                                android:textAlignment="center"
+                                android:textColor="@color/blue_color"
+                                app:Font="Poppins-Regular.ttf"
+                                app:layout_constraintTop_toBottomOf="@+id/quizwon_type_list" />
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

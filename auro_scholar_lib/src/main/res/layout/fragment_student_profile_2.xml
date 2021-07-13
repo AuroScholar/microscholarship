@@ -388,22 +388,19 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/_10sdp"
                                 android:layout_weight="3.5"
-                                app:hintTextAppearance="@style/TextInputLayout"
-                                app:hintTextColor="@color/color_dim_grey">
+                                android:theme="@style/MyEditText"
+                                android:hint="@string/student_phone_number">
 
-                                <com.auro.scholr.core.util.uiwidget.RPEditText
-                                    android:id="@+id/editPhone"
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editPhonenew"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:editable="false"
-                                    android:hint="@string/student_phone_number"
                                     android:inputType="none"
                                     android:maxLines="1"
                                     android:paddingRight="@dimen/_20sdp"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/_12sdp"
-                                    android:theme="@style/MyEditText"
-                                    app:Font="Poppins-Regular.ttf" />
+                                    android:textSize="@dimen/_12sdp" />
 
                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -434,22 +431,22 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/_10sdp"
                                 android:layout_weight="3.5"
-                                app:hintTextAppearance="@style/TextInputLayout"
-                                app:hintTextColor="@color/color_dim_grey">
+                                android:hint="@string/email_address"
+                                android:theme="@style/MyEditText">
 
                                 <com.auro.scholr.core.util.uiwidget.RPEditText
                                     android:id="@+id/editemail"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="@string/email_address"
+
                                     android:inputType="textPersonName"
                                     android:maxLines="1"
                                     android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ.-@1234567890"
                                     android:paddingRight="@dimen/_20sdp"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/_12sdp"
-                                    android:theme="@style/MyEditText"
-                                    app:Font="Poppins-Regular.ttf" />
+
+                                     />
 
                             </com.google.android.material.textfield.TextInputLayout>
 

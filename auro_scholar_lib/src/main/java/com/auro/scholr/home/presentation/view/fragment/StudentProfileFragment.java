@@ -199,7 +199,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
         binding.gradeLayout.setOnTouchListener(this);
         binding.linearLayout8.setOnTouchListener(this);
         binding.editUserNameIcon.setOnClickListener(this);
-        binding.editPhone.setOnTouchListener(this);
+        binding.editPhonenew.setOnTouchListener(this);
         binding.editemail.setOnTouchListener(this);
 
 
@@ -617,10 +617,9 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
 
     public void setDataonUi() {
         if (getStudentUpdateProfile != null) {
-            ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
             binding.classStudent.setText(getStudentUpdateProfile.getGrade() + "");
             binding.walletBalText.setText(getStudentUpdateProfile.getScholarshipAmount() + "");
-            binding.editPhone.setText(getStudentUpdateProfile.getMobileNo());
+            binding.editPhonenew.setText(getStudentUpdateProfile.getMobileNo());
             if (TextUtil.isEmpty(getStudentUpdateProfile.getUsername())) {
                 binding.UserName.setText("Guest");
                 binding.editProfile.setText("Guest");
@@ -720,6 +719,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
     }
 
     public void sendProfileScreenApi() {
+        ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
         firstTimeCome = false;
         AppLogger.v("callApi", firstTimeCome + "");
         String username = binding.UserName.getText().toString();

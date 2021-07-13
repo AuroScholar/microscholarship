@@ -206,21 +206,19 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/_10sdp"
                                     android:layout_weight="3.5"
-                                    app:hintTextAppearance="@style/TextInputLayout"
-                                    app:hintTextColor="@color/color_dim_grey">
+                                    android:theme="@style/MyEditText"
+                                    android:hint="@string/teacher_name"
+                                    >
 
-                                    <com.auro.scholr.core.util.uiwidget.RPEditText
+                                    <com.google.android.material.textfield.TextInputEditText
                                         android:id="@+id/editteachername"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:hint="@string/teacher_name"
                                         android:inputType="textPersonName"
                                         android:maxLines="1"
                                         android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ.-"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/_12sdp"
-                                        android:theme="@style/MyEditText"
-                                        app:Font="Poppins-Regular.ttf" />
+                                        android:textSize="@dimen/_12sdp" />
 
                                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -251,9 +249,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/_10sdp"
-                                    android:layout_weight="3.5"
-                                    app:hintTextAppearance="@style/TextInputLayout"
-                                    app:hintTextColor="@color/color_dim_grey">
+                                    android:theme="@style/MyEditText"
+                                    android:layout_weight="3.5">
 
                                     <com.auro.scholr.core.util.uiwidget.RPEditText
                                         android:id="@+id/editemail"
@@ -265,8 +262,8 @@
                                         android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ.-@1234567890"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/_12sdp"
-                                        android:theme="@style/MyEditText"
-                                        app:Font="Poppins-Regular.ttf" />
+
+                                         />
 
                                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -297,21 +294,22 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/_10sdp"
                                     android:layout_weight="3.5"
-                                    app:hintTextAppearance="@style/TextInputLayout"
-                                    app:hintTextColor="@color/color_dim_grey">
+                                    android:theme="@style/MyEditText"
+                                    android:hint="@string/mobile_number"
+                                    >
 
                                     <com.auro.scholr.core.util.uiwidget.RPEditText
                                         android:id="@+id/editPhoneNumber"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:hint="@string/mobile_number"
+
                                         android:inputType="number"
                                         android:maxLength="11"
                                         android:textColor="@color/black"
                                         android:textColorHint="@color/color_dim_grey"
                                         android:textSize="@dimen/_12sdp"
-                                        android:theme="@style/MyEditText"
-                                        app:Font="Poppins-Regular.ttf" />
+
+                                         />
 
                                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -415,20 +413,19 @@
                                 android:layout_marginTop="@dimen/_15sdp"
                                 android:layout_marginRight="@dimen/_10sdp"
                                 android:layout_weight="3.5"
-                                app:hintTextAppearance="@style/TextInputLayout"
-                                app:hintTextColor="@color/color_dim_grey">
+                                android:theme="@style/MyEditText"
+                                android:hint="@string/school_name"
+                                >
 
-                                <com.auro.scholr.core.util.uiwidget.RPEditText
+                                <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/editSchoolName"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="@string/school_name"
+
                                     android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                     android:inputType="textPersonName"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/_12sdp"
-                                    android:theme="@style/MyEditText"
-                                    app:Font="Poppins-Regular.ttf" />
+                                    android:textSize="@dimen/_12sdp" />
 
                             </com.google.android.material.textfield.TextInputLayout>
 

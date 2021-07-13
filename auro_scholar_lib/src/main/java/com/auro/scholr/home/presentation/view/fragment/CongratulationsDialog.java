@@ -26,6 +26,7 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.SubjectResModel;
 import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewModel;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
@@ -180,29 +181,48 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
     }
 
 
+
+
     private void makeQuiz() {
-        int lastPos = finishedTestPos - 1;
+        // AppLogger.e("chhonker makeQuiz", "-lastPos--" + lastPos);
         for (int i = 0; i < subjectResModel.getChapter().size(); i++) {
-            if (i != lastPos) {
+            AppLogger.e("chhonker getChapter", "-i--" + i);
+            AppLogger.e("chhonker getChapter name", "-i--" + subjectResModel.getChapter().get(i).getName());
+            AppLogger.e("chhonker subject  name", "-i--" + subjectResModel.getChapter().get(i).getSubjectName());
+            QuizResModel model = subjectResModel.getChapter().get(i);
+            if (model.getAttempt() == 0) {
+                quizResModel = model;
+                sendClickCallBack(quizResModel);
+                break;
+            }
+            /*if (quizResModel.getNumber() != (i+1)) {
                 if (subjectResModel.getChapter().get(i).getAttempt() < 3) {
+                    AppLogger.e("chhonker getAttempt", "-i--"+subjectResModel.getChapter().get(i).getAttempt());
                     sendClickCallBack(subjectResModel.getChapter().get(i));
                     break;
                 }
-            }
+            }*/
         }
     }
 
 
     private boolean checkAllQuizAreFinishedOrNot() {
         int totalAttempt = 0;
-        for (QuizResModel quizResModel : subjectResModel.getChapter()) {
-            totalAttempt = quizResModel.getAttempt() + totalAttempt;
-        }
-        if (totalAttempt == 12) {
-            return true;
+        int atleastOneAttempt = 0;
+        if (subjectResModel != null) {
+            for (QuizResModel quizResModel : subjectResModel.getChapter()) {
+                totalAttempt = quizResModel.getAttempt() + totalAttempt;
+                if (quizResModel.getAttempt() > 0) {
+                    atleastOneAttempt = atleastOneAttempt + 1;
+                }
+            }
+            if (atleastOneAttempt == 4) {
+                return true;
+            }
         }
         return false;
     }
+
 
 
     private void sendClickCallBack(QuizResModel quizResModel) {

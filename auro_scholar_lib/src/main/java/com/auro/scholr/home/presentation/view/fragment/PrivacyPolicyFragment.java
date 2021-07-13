@@ -77,6 +77,7 @@ public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickL
     private long size = 0;
     QuizTestLayoutBinding binding;
     private WebView webView;
+    String url=URLConstant.PRIVACY_POLICY;
 
     // Storage Permissions variables
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -96,6 +97,11 @@ public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickL
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
             binding.setLifecycleOwner(this);
+        }
+
+        if(getArguments()!=null)
+        {
+            url=getArguments().getString(AppConstant.WEB_LINK);
         }
         setRetainInstance(true);
         ViewUtil.setLanguageonUi(getActivity());
@@ -147,7 +153,7 @@ public class PrivacyPolicyFragment extends BaseFragment implements View.OnClickL
         Disposable disposable = NetworkUtil.hasInternetConnection().subscribe(hasInternet -> {
             if (hasInternet) {
                 handleProgress(0, "");
-                loadWeb(URLConstant.PRIVACY_POLICY);
+                loadWeb(url);
             } else {
                 handleProgress(2, getString(R.string.internet_check));
             }

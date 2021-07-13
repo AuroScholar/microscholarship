@@ -23,6 +23,7 @@ public interface AppConstant {
     String FALSE = "false";
     String PROFILE_IMAGE_PATH = "PROFILE_IMAGE_PATH";
     String DASHBOARD_RES_MODEL = "DASHBOARD_RES_MODEL";
+    String WEB_LINK = "WEB_LINK";
     String QUIZ_RES_MODEL = "QUIZ_TEST_MODEL";
     String AURO_DATA_MODEL = "AURO_DATA_MODEL";
     String MOBILE_NUMBER = "mobile_no";

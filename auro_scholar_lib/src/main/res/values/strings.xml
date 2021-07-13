@@ -137,11 +137,11 @@
     <string name="sucessfully_uploaded">Sucessfully Uploaded</string>
     <string name="auro_scholar_demographics_details">Auro Scholar Demographics Details</string>
     <!--<string name="gender">Gender<font color="#FF0000">*</font></string>-->
-    <string name="gender">Gender*</string>
+    <string name="gender">Gender<font color='#FF0000'>*</font></string>
 
-    <string name="school_type">School Type*</string>
-    <string name="board">Board*</string>
-    <string name="language_medium">Language medium*</string>
+    <string name="school_type">School Type<font color='#FF0000'>*</font></string>
+    <string name="board">Board<font color='#FF0000'>*</font></string>
+    <string name="language_medium">Language medium<font color='#FF0000'>*</font></string>
 
     <string-array name="genderlist">
         <item>Please Select Gender</item>
@@ -259,10 +259,10 @@
     <string name="priceAmmount_one">₹50.00</string>
     <string name="strike_amount"><strike>₹50.00</strike></string>
     <string name="save_more_details">Save More Details?</string>
-    <string name="teacher_name">Teacher Name<b>*</b> "</string>
+    <string name="teacher_name">Teacher Name <font color='#FF0000'>*</font></string>
 
     <string name="email_address">Email Address</string>
-    <string name="mobile_number">Mobile Number*</string>
+    <string name="mobile_number">Mobile Number<font color='#FF0000'>*</font></string>
     <string name="skip_for_now"><u>Skip For Now</u></string>
     <string name="select_your_message">Select Your Message</string>
     <string name="send_message">Send Message</string>
@@ -272,9 +272,9 @@
     <string name="get_now">GET NOW</string>
     <string name="teacher_profile">Teacher Profile</string>
     <string name="classe">Classes You Teach</string>
-    <string name="subjects_you_teach_till">Subjects You Teach<b>*</b></string>
-    <string name="school_name">School Name<b>*</b></string>
-    <string name="state">State<b>*</b></string>
+    <string name="subjects_you_teach_till">Subjects You Teach<font color='#FF0000'>*</font></string>
+    <string name="school_name">School Name<font color='#FF0000'>*</font></string>
+    <string name="state">State<font color='#FF0000'>*</font></string>
     <string name="city">City<b>*</b></string>
     <string name="choose_your_state">Choose Your State</string>
     <string name="choose_your_city">Choose Your City</string>
@@ -346,8 +346,8 @@
     <string name="impossible">It always seems impossible until it’s done.</string>
     <string name="accept">Accept</string>
     <string name="challenge">Challenge</string>
-    <string name="taking_private_tutions">Taking Private Tutions* ?</string>
-    <string name="taking_type">Tution Type*</string>
+    <string name="taking_private_tutions">Taking Private Tutions<font color='#FF0000'>*</font> ?</string>
+    <string name="taking_type">Tution Type<font color='#FF0000'>*</font></string>
     <string name="challenged_you">Challenged You</string>
     <string name="book_free_tutoring_session">Book Free Tutoring Session</string>
     <string name="retake">Retake</string>
@@ -386,7 +386,7 @@
     <string name="navigation_header">Navigation header</string>
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
-    <string name="classes">Classes You Teach<b>*</b></string>
+    <string name="classes">Classes You Teach<font color='#FF0000'>*</font></string>
     <string name="event_student_score_page">student_score_page</string>
     <string name="event_upload_id">kyc_document upload_page</string>
     <string name="event_kyc_document_uplaod_page">Kyc_document_uplaod_page</string>
@@ -451,7 +451,7 @@
     <string name="analytics_more">Analytics &amp; More</string>
     <string name="grade_student">Grade :</string>
     <string name="save">Save</string>
-    <string name="student_phone_number">Phone Number*</string>
+    <string name="student_phone_number">Phone Number<font color='#FF0000'>*</font></string>
     <string name="wl_amount_rejected">Scholarship Amount Rejected</string>
     <string name="wl_amount">₹100.00</string>
     <string name="wl_verification_in_process">Verification In Process</string>

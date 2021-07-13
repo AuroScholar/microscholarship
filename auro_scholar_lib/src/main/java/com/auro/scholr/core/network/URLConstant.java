@@ -9,7 +9,6 @@ public interface URLConstant {
     // String DASHBOARD_API = BASE_URL + "dashboard.php";
 
     // String DASHBOARD_API = BASE_URL + "dashboard_multiple.php";
-
     // String DASHBOARD_SDK_API = BASE_URL + "dashboard_sdk_multiple.php";
     String DASHBOARD_API = BASE_URL + "dashboard_partner.php";
     String DASHBOARD_SDK_API = BASE_URL + "dashboard_sdk_partner.php";
@@ -26,7 +25,7 @@ public interface URLConstant {
     // String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction.php ";
     String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction_multiple.php";
     String TEST_URL = "https://assessment.eklavvya.com/exam/StartExam?";
-    String PRIVACY_POLICY = "https://dev.auroscholar.org/privacy_policy";
+    String PRIVACY_POLICY = "https://auroscholar.org/privacy_policy";
 
     String TEACHER_PROFILE_UPDATE_API = BASE_URL + "teacher_profile_data_api.php ";
 
@@ -77,5 +76,8 @@ public interface URLConstant {
     String PASSPORT_API=BASE_URL+"passport.php";
 
     String UPDATE_STUDENT_PROFILE = "update_profile.php";
+
+    String TERM_CONDITION = "https://auroscholar.com/terms-of-use.php";
+
 
 }

@@ -322,6 +322,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
             }
         }
+
     }
 
 

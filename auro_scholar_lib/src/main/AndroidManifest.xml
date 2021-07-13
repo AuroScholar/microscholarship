@@ -46,7 +46,8 @@
         <activity
             android:name=".home.presentation.view.activity.StudentDashboardActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            />
         <activity
             android:name=".home.presentation.view.activity.HomeActivity"
             android:screenOrientation="portrait"

@@ -70,10 +70,10 @@
     <string name="login_with_facebook">Login with Facebook</string>
 
     <string name="auro_scholar_demographics_details">ऑरो स्कॉलर जनसांख्यिकी विवरण</string>
-    <string name="gender">लिंग*</string>
-    <string name="school_type">स्कूल का प्रकार*</string>
-    <string name="board">मंडल*</string>
-    <string name="language_medium">भाषा माध्यम*</string>
+    <string name="gender">लिंग<font color='#FF0000'>*</font></string>
+    <string name="school_type">स्कूल का प्रकार<font color='#FF0000'>*</font></string>
+    <string name="board">मंडल<font color='#FF0000'>*</font></string>
+    <string name="language_medium">भाषा माध्यम<font color='#FF0000'>*</font></string>
 
     <string-array name="genderlist">
         <item>Please Select Gender</item>
@@ -241,8 +241,8 @@
     <string name="next_quiz">अगला प्रश्नोत्तरी</string>
     <string name="impossible">यह हमेशा असंभव सा लगता है जब तक कि पूरा न हो जाय।</string>
     <string name="challenge">चुनौती</string>
-    <string name="taking_private_tutions">निजी ट्युशन लेना* ?</string>
-    <string name="taking_type">ट्युशन टाइप*</string>
+    <string name="taking_private_tutions">निजी ट्युशन लेना<font color='#FF0000'>*</font> ?</string>
+    <string name="taking_type">ट्युशन टाइप<font color='#FF0000'>*</font></string>
     <string name="payment_failed_error_msg">Payment Request Failed!. Please Try After SomeTime</string>
     <string name="requested_accepted">Request accepted</string>
     <string name="getting_webinar_slots">Getting Webinar Slots</string>
@@ -342,7 +342,7 @@
     <string name="retake_quiz">क्विज़ पुनः लें।</string>
     <string name="verification_pending">कृपया अपने दस्तावेज़ को फिर से लोड करें</string>
     <string name="student_profile">प्रोफ़ाइल</string>
-    <string name="student_phone_number">फोन नंबर*</string>
+    <string name="student_phone_number">फोन नंबर<font color='#FF0000'>*</font></string>
     <string name="grade_student">कक्षा :</string>
     <string name="passport">पासपोर्ट</string>
     <string name="analytics_more">विश्लेषिकी और अधिक</string>
