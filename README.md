@@ -21,7 +21,7 @@ Step 1 : Add the dependency in your app/build.gradle(:app)
 
 ```swift
 dependencies {
-	          implementation 'com.github.AuroScholar:microscholarship:1.1.96'
+	          implementation 'com.github.AuroScholar:microscholarship:1.1.98'
 
 	}
 ```
@@ -92,6 +92,10 @@ inputModel.setRegitrationSource("put your company unqiue id here"); //Mandatory
 inputModel.setPartnerSource("Your Id here"); // This id provided by Auro Scholar to the partner.
 inputModel.setPartnerLogoUrl(""); //optional Field
 inputModel.setSchoolName(""); //optional Field
+inputModel.setBoardType("");//optional Filed
+inputModel.setSchoolType(" ");//optional Filed
+inputModel.setGender("");//optional Filed
+inputModel.setEmail("");//optional Filed
 //This method start the SDK
 AuroScholar.startAuroSDK(inputModel);
 
