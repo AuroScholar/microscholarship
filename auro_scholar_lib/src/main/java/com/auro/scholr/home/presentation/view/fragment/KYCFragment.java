@@ -347,28 +347,32 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         kycViewModel.serviceLiveData().observeForever(responseApi -> {
             switch (responseApi.status) {
                 case LOADING:
-                    if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
-                        openProgressDialog();
-                    } else {
-                        progressBarHandling(0);
+                    if(isVisible()) {
+                        if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
+                            openProgressDialog();
+                        } else {
+                            progressBarHandling(0);
+                        }
                     }
                     break;
 
                 case SUCCESS:
-                    if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
-                        closeDialog();
-                        KYCResListModel kycResListModel = (KYCResListModel) responseApi.data;
-                        if (!kycResListModel.isError()) {
-                            ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
-                            updateListonResponse(kycResListModel);
+                    if(isVisible()) {
+                        if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
+                            closeDialog();
+                            KYCResListModel kycResListModel = (KYCResListModel) responseApi.data;
+                            if (!kycResListModel.isError()) {
+                                ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
+                                updateListonResponse(kycResListModel);
 
-                            uploadBtnStatus = false;
-                        } else {
-                            showError(kycResListModel.getMessage());
-                            progressBarHandling(1);
+                                uploadBtnStatus = false;
+                            } else {
+                                showError(kycResListModel.getMessage());
+                                progressBarHandling(1);
+                            }
+                        } else if (responseApi.apiTypeStatus == AZURE_API) {
+                            sendFaceImageOnServer();
                         }
-                    } else if (responseApi.apiTypeStatus == AZURE_API) {
-                        sendFaceImageOnServer();
                     }
 
                     break;
@@ -376,22 +380,26 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 case NO_INTERNET:
                 case AUTH_FAIL:
                 case FAIL_400:
-                    if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
-                        updateDialogUi();
-                    } else {
-                        showError((String) responseApi.data);
-                        progressBarHandling(1);
-                        updateFaceListInPref();
+                    if(isVisible()) {
+                        if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
+                            updateDialogUi();
+                        } else {
+                            showError((String) responseApi.data);
+                            progressBarHandling(1);
+                            updateFaceListInPref();
+                        }
                     }
                     break;
 
                 default:
-                    if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
-                        updateDialogUi();
-                    } else {
-                        showError((String) responseApi.data);
-                        progressBarHandling(1);
-                        updateFaceListInPref();
+                    if(isVisible()) {
+                        if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
+                            updateDialogUi();
+                        } else {
+                            showError((String) responseApi.data);
+                            progressBarHandling(1);
+                            updateFaceListInPref();
+                        }
                     }
                     break;
             }

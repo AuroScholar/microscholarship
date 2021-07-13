@@ -406,6 +406,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                     }*/
                     break;
                 case SUCCESS:
+
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         if (isVisible()) {
                             dashboardResModel = (DashboardResModel) responseApi.data;
