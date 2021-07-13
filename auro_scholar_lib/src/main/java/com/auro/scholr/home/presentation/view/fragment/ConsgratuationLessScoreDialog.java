@@ -20,12 +20,14 @@ import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
+import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.databinding.DialogLessScoreCongratulationsBinding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.SubjectResModel;
 import com.auro.scholr.home.presentation.viewmodel.CongratulationsDialogViewModel;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
@@ -95,13 +97,25 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
                 .setTopLeftCorner(CornerFamily.ROUNDED, radius)
                 .build());
         binding.tickerView.setCharacterLists(TickerUtils.provideNumberList());
-        subjectResModel = dashboardResModel.getSubjectResModelList().get(assignmentReqModel.getSubjectPos());
-        finishedTestPos = ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getExam_name());
-        quizResModel = subjectResModel.getChapter().get(finishedTestPos - 1);
-        marks = quizResModel.getScorepoints() * 10;
+        AppLogger.e("chhonker check dialog 1","step 1");
+        quizResModel = AppPref.INSTANCE.getModelInstance().getQuizResModel();
+        for (SubjectResModel model : dashboardResModel.getSubjectResModelList()) {
+            AppLogger.e("chhonker check dialog 2","subject a -"+model.getSubject()+"----"+quizResModel.getCoreSubjectName());
+            if (model.getSubject().equalsIgnoreCase(quizResModel.getCoreSubjectName())) {
+                subjectResModel=model;
+                quizResModel = model.getChapter().get(quizResModel.getNumber() - 1);
+                AppLogger.e("chhonker check dialog 3","subject a -"+model.getSubject()+"----"+quizResModel.getCoreSubjectName());
+
+                break;
+            }
+            AppLogger.e("chhonker check dialog 4","subject a -"+model.getSubject()+"----"+quizResModel.getCoreSubjectName());
+
+        }
+        marks = assignmentReqModel.getActualScore() * 10;
         for (int i = 0; i <= marks; i++) {
             binding.tickerView.setText(i + "%");
         }
+
 
         if (ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getQuiz_attempt()) < 3) {
             binding.txtRetakeQuiz.setVisibility(View.VISIBLE);

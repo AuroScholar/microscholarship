@@ -4,6 +4,7 @@ package com.auro.scholr.core.database;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
+import com.auro.scholr.home.data.model.QuizResModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class PrefModel implements Serializable {
 
     private String userKYCProfilePhotoPath;
     private String userLanguage;
+    private boolean isDashbaordApiCall;
 
     private DashboardResModel dashboardResModel;
 
@@ -23,6 +25,9 @@ public class PrefModel implements Serializable {
     private int studentClass;
 
     private  String deviceToken;
+
+    private QuizResModel quizResModel;
+
 
     public String getDeviceToken() {
         return deviceToken;
@@ -113,4 +118,19 @@ public class PrefModel implements Serializable {
     }
 
 
+    public QuizResModel getQuizResModel() {
+        return quizResModel;
+    }
+
+    public void setQuizResModel(QuizResModel quizResModel) {
+        this.quizResModel = quizResModel;
+    }
+
+    public boolean isDashbaordApiCall() {
+        return isDashbaordApiCall;
+    }
+
+    public void setDashbaordApiCall(boolean dashbaordApiCall) {
+        isDashbaordApiCall = dashbaordApiCall;
+    }
 }

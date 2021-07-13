@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         auroScholarDataModel.setShareIdentity("");
         auroScholarDataModel.setActivity(this); // Activity context here
         auroScholarDataModel.setEmailVerified(true);
-        auroScholarDataModel.setPartnerSource("");
+        auroScholarDataModel.setPartnerSource("AURO3VE4j7");
         auroScholarDataModel.setUTMLink(binding.utmTextHere.getText().toString());
        // auroScholarDataModel.setUTMLink("");
 
@@ -174,10 +174,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setStudentClass(student_class);//"binding.userClass.getText().toString()"
         inputModel.setRegitrationSource("");
         inputModel.setReferralLink("put refferal link");
-        inputModel.setPartnerSource(""); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
+        inputModel.setPartnerSource("AURO3VE4j7"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setActivity(this);
         inputModel.setPartnerLogoUrl(""); //optional Filed
-        inputModel.setSchoolName(""); //optional Filed
+        inputModel.setSchoolName("EPS");//optional Filed
+        inputModel.setBoardType("CBSE");//optional Filed
+        inputModel.setSchoolType("Government School");//optional Filed
+        inputModel.setGender("Male");//optional Filed
+        inputModel.setEmail("vksep07@gmail.com");//optional Filed
         AuroScholar.startAuroSDK(inputModel);
     }
 

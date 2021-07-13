@@ -19,6 +19,7 @@ import com.auro.scholr.core.application.base_component.BaseDialog;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
+import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.databinding.DialogCongratulations2Binding;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
@@ -99,15 +100,18 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
         Random randomno = new Random();
         binding.tickerView.setPreferredScrollingDirection(TickerView.ScrollingDirection.DOWN);
         binding.tickerView.setCharacterLists(TickerUtils.provideNumberList());
-        subjectResModel = dashboardResModel.getSubjectResModelList().get(assignmentReqModel.getSubjectPos());
-        finishedTestPos = ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getExam_name());
-        quizResModel = subjectResModel.getChapter().get(finishedTestPos - 1);
-        marks = quizResModel.getScorepoints() * 10;
-
+        quizResModel = AppPref.INSTANCE.getModelInstance().getQuizResModel();
+        for (SubjectResModel model : dashboardResModel.getSubjectResModelList()) {
+            if (model.getSubject().equalsIgnoreCase(quizResModel.getCoreSubjectName())) {
+                subjectResModel = model;
+                quizResModel = model.getChapter().get(quizResModel.getNumber() - 1);
+                break;
+            }
+        }
+        marks = assignmentReqModel.getActualScore() * 10;
         for (int i = 1; i <= marks; i++) {
             binding.tickerView.setText(i + "%");
         }
-
         if (!TextUtil.isEmpty(dashboardResModel.getStudent_name())) {
             binding.RPTextView4.setVisibility(View.VISIBLE);
             binding.RPTextView4.setText(dashboardResModel.getStudent_name());

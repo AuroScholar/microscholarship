@@ -359,6 +359,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                         closeDialog();
                         KYCResListModel kycResListModel = (KYCResListModel) responseApi.data;
                         if (!kycResListModel.isError()) {
+                            ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
                             updateListonResponse(kycResListModel);
 
                             uploadBtnStatus = false;

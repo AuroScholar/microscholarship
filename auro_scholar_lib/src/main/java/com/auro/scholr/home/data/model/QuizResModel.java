@@ -1,6 +1,5 @@
 package com.auro.scholr.home.data.model;
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -51,6 +50,11 @@ public class QuizResModel implements Parcelable {
     private int subjectPos;
 
 
+    @SerializedName("subjectName")
+    @Expose
+    private String coreSubjectName;
+
+
     protected QuizResModel(Parcel in) {
         if (in.readByte() == 0) {
             number = null;
@@ -79,6 +83,7 @@ public class QuizResModel implements Parcelable {
         wonStatus = in.readByte() != 0;
         subjectName = in.readString();
         subjectPos = in.readInt();
+        coreSubjectName = in.readString();
     }
 
     @Override
@@ -114,6 +119,7 @@ public class QuizResModel implements Parcelable {
         dest.writeByte((byte) (wonStatus ? 1 : 0));
         dest.writeString(subjectName);
         dest.writeInt(subjectPos);
+        dest.writeString(coreSubjectName);
     }
 
     @Override
@@ -223,5 +229,13 @@ public class QuizResModel implements Parcelable {
 
     public void setScoreallpoints(String scoreallpoints) {
         this.scoreallpoints = scoreallpoints;
+    }
+
+    public String getCoreSubjectName() {
+        return coreSubjectName;
+    }
+
+    public void setCoreSubjectName(String coreSubjectName) {
+        this.coreSubjectName = coreSubjectName;
     }
 }

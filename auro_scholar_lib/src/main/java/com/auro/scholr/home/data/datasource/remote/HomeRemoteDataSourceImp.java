@@ -50,6 +50,10 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         params.put(AppConstant.DashBoardParams.IP_ADDRESS, AppUtil.getIpAdress(AuroApp.getAppContext()));
         params.put(AppConstant.DashBoardParams.BUILD_VERSION, AppUtil.getSDKTag(AuroApp.getAppContext()));
         params.put(AppConstant.DashBoardParams.SCHOOL_NAME, model.getSchoolName());
+        params.put(AppConstant.DashBoardParams.BOARD_TYPE, model.getBoardType());
+        params.put(AppConstant.DashBoardParams.SCHOOL_TYPE, model.getSchoolType());
+        params.put(AppConstant.DashBoardParams.GENDER, model.getGender());
+        params.put(AppConstant.DashBoardParams.EMAIL, model.getEmail());
         AppLogger.e("HomeRemoteDataSourceImp", "Calling  Generic SDK");
         return homeRemoteApi.getDashboardSDKData(params);
 

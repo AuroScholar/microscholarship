@@ -136,6 +136,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel.class);
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
+        setDashboardApiCallingInPref(true);
         setLightStatusBar(this);
        /* if (getIntent() != null && getIntent().getParcelableExtra(AppConstant.AURO_DATA_MODEL) != null) {
             auroScholarDataModel = (AuroScholarDataModel) getIntent().getParcelableExtra(AppConstant.AURO_DATA_MODEL);
@@ -144,6 +145,13 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         openFragment(new MainQuizHomeFragment());
 
+
+    }
+    public void setDashboardApiCallingInPref(boolean status)
+    {
+        PrefModel prefModel=AppPref.INSTANCE.getModelInstance();
+        prefModel.setDashbaordApiCall(status);
+        AppPref.INSTANCE.setPref(prefModel);
     }
 
     @Override

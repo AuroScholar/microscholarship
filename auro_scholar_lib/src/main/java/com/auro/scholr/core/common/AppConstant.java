@@ -85,6 +85,10 @@ public interface AppConstant {
         String IP_ADDRESS="ip_address";
         String BUILD_VERSION="build_version";
         String SCHOOL_NAME="school_name";
+        String SCHOOL_TYPE="school_type";
+        String GENDER="gender";
+        String EMAIL="email";
+        String BOARD_TYPE="board_type";
     }
 
 

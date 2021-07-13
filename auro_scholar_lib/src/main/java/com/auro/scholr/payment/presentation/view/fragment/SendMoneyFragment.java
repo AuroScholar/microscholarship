@@ -34,6 +34,7 @@ import com.auro.scholr.databinding.SendMoneyFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
+import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.home.presentation.view.fragment.KYCViewFragment;
 import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
 import com.auro.scholr.payment.presentation.view.adapter.ViewPagerAdapter;
@@ -91,7 +92,7 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
             setLanguageText(AppConstant.ENGLISH);
         }
 
-
+        ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
     }
 
 

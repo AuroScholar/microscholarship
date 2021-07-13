@@ -206,7 +206,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         AppLogger.e("handleback", "AuroApp.getAuroScholarModel()");
 
         setPrefData();
-        ((StudentMainDashboardActivity)getActivity()).loadPartnerLogo(binding.partnerLogo);
+        ((StudentMainDashboardActivity) getActivity()).loadPartnerLogo(binding.partnerLogo);
     }
 
     @Override
@@ -393,23 +393,23 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
                 case LOADING:
                     //For ProgressBar
-                    if (!isStateRestore) {
+                   /* if (!isStateRestore) {
                         handleProgress(0, "");
-                    }
+                    }*/
                     break;
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
-                        if(isVisible()) {
-                            onApiSuccess(responseApi);
-                            AppLogger.v("PRADEEP_DATA","SUCCESS");
+                        if (isVisible()) {
+                            dashboardResModel = (DashboardResModel) responseApi.data;
+                            onApiSuccess(dashboardResModel);
+                            AppLogger.v("PRADEEP_DATA", "SUCCESS");
                         }
 
                     } else if (responseApi.apiTypeStatus == GRADE_UPGRADE) {
-                        DashboardResModel dashboardResModel = (DashboardResModel) responseApi.data;
                         handleProgress(0, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
                         //setPrefForTesting()
-                        AppLogger.v("PRADEEP_DATA",dashboardResModel.isError()+"");
+                        AppLogger.v("PRADEEP_DATA", dashboardResModel.isError() + "");
                         if (!dashboardResModel.isError()) {
                             if (customDialog != null) {
                                 customDialog.dismiss();
@@ -427,22 +427,24 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                     if (customDialog != null) {
                         customDialog.dismiss();
                     }
-                    AppLogger.v("PRADEEP_DATA","NO_INTERNET");
+                    AppLogger.v("PRADEEP_DATA", "NO_INTERNET");
                     handleProgress(2, (String) responseApi.data);
+                    ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
                     break;
                 case AUTH_FAIL:
                 case FAIL_400:
                     if (customDialog != null) {
                         customDialog.dismiss();
-                        AppLogger.v("PRADEEP_DATA","FAIL_400 null");
+                        AppLogger.v("PRADEEP_DATA", "FAIL_400 null");
                     }
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(2, (String) responseApi.data);
-                        AppLogger.v("PRADEEP_DATA","DASHBOARD_API---");
+                        AppLogger.v("PRADEEP_DATA", "DASHBOARD_API---");
                     } else {
                         setImageInPref(assignmentReqModel);
                         // openQuizTestFragment(dashboardResModel);
                     }
+                    ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
                     //handleProgress(1, (String) responseApi.data);
                     break;
                 default:
@@ -452,13 +454,14 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                         customDialog.dismiss();
                     }
                     // binding.swipeRefreshLayout.setRefreshing(false);
-                    AppLogger.v("PRADEEP_DATA","default---");
+                    AppLogger.v("PRADEEP_DATA", "default---");
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
                         handleProgress(2, (String) responseApi.data);
                     } else {
                         setImageInPref(assignmentReqModel);
                         //  openQuizTestFragment(dashboardResModel);
                     }
+                    ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
                     //  handleProgress(1, (String) responseApi.data);
                     break;
             }
@@ -497,11 +500,12 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
     }
 
 
-    private void onApiSuccess(ResponseApi responseApi) {
-        dashboardResModel = (DashboardResModel) responseApi.data;
+    private void onApiSuccess(DashboardResModel dashboardResModel) {
+        updateList(dashboardResModel);
         handleProgress(1, "");
         AppUtil.setDashboardResModelToPref(dashboardResModel);
         if (!dashboardResModel.isError()) {
+            ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(false);
             handleProgress(2, "");
             checkStatusforCongratulationDialog();
             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
@@ -510,6 +514,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                 setDataOnUi(dashboardResModel);
             }
         } else {
+            ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
             handleProgress(1, dashboardResModel.getMessage());
             if (dashboardResModel.getMessage().contains("grade")) {
                 openErrorDialog();
@@ -523,6 +528,16 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         prefModel.setDynamiclinkResModel(new DynamiclinkResModel());
         AppPref.INSTANCE.setPref(prefModel);
         ViewUtil.setProfilePic(binding.imageView6);
+    }
+
+    private void updateList(DashboardResModel dashboardResModel) {
+        if (dashboardResModel != null && !dashboardResModel.isError() && !TextUtil.checkListIsEmpty(dashboardResModel.getSubjectResModelList())) {
+            for (SubjectResModel subjectResModel : dashboardResModel.getSubjectResModelList()) {
+                for (QuizResModel quizResModel : subjectResModel.getChapter()) {
+                    quizResModel.setCoreSubjectName(subjectResModel.getSubject());
+                }
+            }
+        }
     }
 
     private void setDataOnUi(DashboardResModel dashboardResModel) {
@@ -540,7 +555,13 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                 if (dashboardResModel != null && !TextUtil.checkListIsEmpty(dashboardResModel.getSubjectResModelList())) {
                     SubjectResModel subjectResModel = dashboardResModel.getSubjectResModelList().get(assignmentReqModel.getSubjectPos());
                     int finishedTestPos = ConversionUtil.INSTANCE.convertStringToInteger(assignmentReqModel.getExam_name());
-                    QuizResModel quizResModel = subjectResModel.getChapter().get(finishedTestPos - 1);
+                    QuizResModel quizResModel = prefModel.getQuizResModel();
+                    for (SubjectResModel model : dashboardResModel.getSubjectResModelList()) {
+                        if (model.getSubject().equalsIgnoreCase(quizResModel.getCoreSubjectName())) {
+                            quizResModel = model.getChapter().get(quizResModel.getNumber() - 1);
+                            break;
+                        }
+                    }
                     Gson gson = new Gson();
                     String json = gson.toJson(quizResModel);
                     String jso2 = gson.toJson(assignmentReqModel);
@@ -555,8 +576,9 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                             }
                         }
                     }
-                    //  funnelCompleteQuiz();
                     assignmentReqModel.setActualScore(score);
+
+                    AppLogger.e("chhonker score", "" + score);
                     if (String.valueOf(quizResModel.getNumber()).equalsIgnoreCase(assignmentReqModel.getExam_name()) && score > 7) {
                         openCongratulationsDialog(dashboardResModel, assignmentReqModel);
                     } else {
@@ -583,7 +605,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
 
     private void openFragmentDialog(Fragment fragment) {
-        if(isVisible()) {
+        if (isVisible()) {
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .setReorderingAllowed(true)
@@ -596,16 +618,21 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
 
     void callDasboardApi() {
-        if (!isStateRestore) {
-            handleProgress(0, "");
-        }
+
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+
         String deviceToken = prefModel.getDeviceToken();
         if (!TextUtil.isEmpty(deviceToken)) {
             AppLogger.v("DeviceToken_1", deviceToken);
         }
+        if (prefModel.isDashbaordApiCall()) {
+            handleProgress(0, "");
+            quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
+        } else {
+            dashboardResModel=prefModel.getDashboardResModel();
+            onApiSuccess(prefModel.getDashboardResModel());
+        }
 
-        quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
     }
 
     @Override
@@ -626,304 +653,311 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
             } else {
 
+
             }
         }
     }
 
-    private void azureImage(String path) {
-        if (quizResModel == null || dashboardResModel == null) {
-            return;
-        }
-        try {
-            AppLogger.d(TAG, "Image Path" + path);
-            assignmentReqModel = quizViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
-            assignmentReqModel.setEklavvya_exam_id("");
-            assignmentReqModel.setSubject(quizResModel.getSubjectName());
-            Bitmap picBitmap = BitmapFactory.decodeFile(path);
-            byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
-            long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
-            if (mb > 1.5) {
-                assignmentReqModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
-            } else {
-                assignmentReqModel.setImageBytes(bytes);
+        private void azureImage(String path){
+            if (quizResModel == null || dashboardResModel == null) {
+                return;
             }
-            quizViewModel.getAzureRequestData(assignmentReqModel);
-        } catch (Exception e) {
-            AppLogger.e("chhonker-", "QuizTestFragment  setp 2" + e.getMessage());
-
-            /*Do code here when error occur*/
-        }
-    }
-
-    public void openQuizTestFragment(DashboardResModel dashboardResModel) {
-        if (quizResModel == null || dashboardResModel == null) {
-            return;
-        }
-        Bundle bundle = new Bundle();
-        QuizTestFragment quizTestFragment = new QuizTestFragment();
-        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
-        bundle.putParcelable(AppConstant.QUIZ_RES_MODEL, quizResModel);
-        quizTestFragment.setArguments(bundle);
-        openFragment(quizTestFragment);
-    }
-
-    private void openFragment(Fragment fragment) {
-        ((AppCompatActivity) (this.getContext())).getSupportFragmentManager()
-                .beginTransaction()
-                .setReorderingAllowed(true)
-                .replace(AuroApp.getFragmentContainerUiId(), fragment, MainQuizHomeFragment.class
-                        .getSimpleName())
-                .addToBackStack(null)
-                .commitAllowingStateLoss();
-    }
-
-    private void setDrawerItemList(int status, int val) {
-        if (getActivity() == null) {
-            return;
-        }
-        mNavItems.clear();
-
-        mNavItems.add(new NavItemModel(getResources().getString(R.string.student_profile), "", R.drawable.ic_student_profile));
-
-        mNavItems.add(new NavItemModel(getResources().getString(R.string.passport), getResources().getString(R.string.analytics_more), R.drawable.ic_student_pass));
-
-        mNavItems.add(new NavItemModel(getResources().getString(R.string.kyc_verification), "", R.drawable.ic_verification));
-
-        mNavItems.add(new NavItemModel(getResources().getString(R.string.certificates), "", R.drawable.ic_certificate_icon));
-
-        mNavItems.add(new NavItemModel(getResources().getString(R.string.payment_info), "", R.drawable.ic_payment_info));
-
-        // mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.change_language), "", R.drawable.ic_language));
-
-        mNavItems.add(new NavItemModel(getResources().getString(R.string.privacy_policy), "", R.drawable.ic_policy));
-        // DrawerLayout
-        if (status == 0) {
-            drawerListAdapter = new DrawerListAdapter(getActivity(), mNavItems);
-            binding.navList.setAdapter(drawerListAdapter);
-            // Drawer Item click listeners
-            binding.navList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    handleDrawerItemClick(position);
-                }
-            });
-        } else {
-            if (drawerListAdapter != null) {
-                drawerListAdapter.udpateList(mNavItems);
-            }
-        }
-    }
-
-    private void handleDrawerItemClick(int position) {
-
-        switch (position) {
-
-
-            case 0:
-                /*Profile Fragment*/
-                openStudentFragment();
-
-                break;
-
-            case 1:
-                /*Transaction Fragemnt*/
-
-                openTransactionsFragment();
-
-                break;
-
-            case 2:
-                /*KYC Verification*/
-                if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
-                    openKYCViewFragment(dashboardResModel);
+            try {
+                AppLogger.d(TAG, "Image Path" + path);
+                assignmentReqModel = quizViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
+                assignmentReqModel.setEklavvya_exam_id("");
+                assignmentReqModel.setSubject(quizResModel.getSubjectName());
+                Bitmap picBitmap = BitmapFactory.decodeFile(path);
+                byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
+                long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
+                if (mb > 1.5) {
+                    assignmentReqModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
                 } else {
-                    openKYCFragment(dashboardResModel);
+                    assignmentReqModel.setImageBytes(bytes);
                 }
-                break;
+                quizViewModel.getAzureRequestData(assignmentReqModel);
+            } catch (Exception e) {
+                AppLogger.e("chhonker-", "QuizTestFragment  setp 2" + e.getMessage());
 
-            case 3:
-                /*Certificates*/
-                openCertificateFragment();
-                break;
+                /*Do code here when error occur*/
+            }
+        }
 
-            //  case 5:
-            /*Change Grade*/
-            // ((HomeActivity) getActivity()).openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
-            // openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
+        public void openQuizTestFragment (DashboardResModel dashboardResModel){
+            if (quizResModel == null || dashboardResModel == null) {
+                return;
+            }
+
+            PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+            prefModel.setDashboardResModel(dashboardResModel);
+            prefModel.setQuizResModel(quizResModel);
+            AppPref.INSTANCE.setPref(prefModel);
+            //  Bundle bundle = new Bundle();
+            QuizTestFragment quizTestFragment = new QuizTestFragment();
+      /*  bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+        bundle.putParcelable(AppConstant.QUIZ_RES_MODEL, quizResModel);
+        quizTestFragment.setArguments(bundle);*/
+            openFragment(quizTestFragment);
+            //bundle.clear();//TODO PRADEEP
+        }
+
+        private void openFragment (Fragment fragment){
+            ((AppCompatActivity) (this.getContext())).getSupportFragmentManager()
+                    .beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(AuroApp.getFragmentContainerUiId(), fragment, MainQuizHomeFragment.class
+                            .getSimpleName())
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss();
+        }
+
+        private void setDrawerItemList ( int status, int val){
+            if (getActivity() == null) {
+                return;
+            }
+            mNavItems.clear();
+
+            mNavItems.add(new NavItemModel(getResources().getString(R.string.student_profile), "", R.drawable.ic_student_profile));
+
+            mNavItems.add(new NavItemModel(getResources().getString(R.string.passport), getResources().getString(R.string.analytics_more), R.drawable.ic_student_pass));
+
+            mNavItems.add(new NavItemModel(getResources().getString(R.string.kyc_verification), "", R.drawable.ic_verification));
+
+            mNavItems.add(new NavItemModel(getResources().getString(R.string.certificates), "", R.drawable.ic_certificate_icon));
+
+            mNavItems.add(new NavItemModel(getResources().getString(R.string.payment_info), "", R.drawable.ic_payment_info));
+
+            // mNavItems.add(new NavItemModel( getActivity().getResources().getString(R.string.change_language), "", R.drawable.ic_language));
+
+            mNavItems.add(new NavItemModel(getResources().getString(R.string.privacy_policy), "", R.drawable.ic_policy));
+            // DrawerLayout
+            if (status == 0) {
+                drawerListAdapter = new DrawerListAdapter(getActivity(), mNavItems);
+                binding.navList.setAdapter(drawerListAdapter);
+                // Drawer Item click listeners
+                binding.navList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        handleDrawerItemClick(position);
+                    }
+                });
+            } else {
+                if (drawerListAdapter != null) {
+                    drawerListAdapter.udpateList(mNavItems);
+                }
+            }
+        }
+
+        private void handleDrawerItemClick ( int position){
+
+            switch (position) {
+
+
+                case 0:
+                    /*Profile Fragment*/
+                    openStudentFragment();
+
+                    break;
+
+                case 1:
+                    /*Transaction Fragemnt*/
+
+                    openTransactionsFragment();
+
+                    break;
+
+                case 2:
+                    /*KYC Verification*/
+                    if (quizViewModel.homeUseCase.checkKycStatus(dashboardResModel)) {
+                        openKYCViewFragment(dashboardResModel);
+                    } else {
+                        openKYCFragment(dashboardResModel);
+                    }
+                    break;
+
+                case 3:
+                    /*Certificates*/
+                    openCertificateFragment();
+                    break;
+
+                //  case 5:
+                /*Change Grade*/
+                // ((HomeActivity) getActivity()).openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
+                // openGradeChangeFragment(AppConstant.Source.DASHBOARD_NAVIGATION);
            /* if (AuroApp.getAuroScholarModel().getSdkcallback() != null) {
                 AuroApp.getAuroScholarModel().getSdkcallback().commonCallback(Status.NAV_CHANGE_GRADE_CLICK, "");
             }*/
-            //  break;
+                //  break;
 
-            /* case 7:
-             *//*Change Language*//*
+                /* case 7:
+                 *//*Change Language*//*
                // openChangeLanguageDialog();
                 break;
 */
-            case 4:
-                /*Payment Info*/
-                openWalletAmountlistFragment();
-                break;
-            case 5:
-                /*Privacy Policy*/
-                openFragment(new PrivacyPolicyFragment());
-                break;
+                case 4:
+                    /*Payment Info*/
+                    openWalletAmountlistFragment();
+                    break;
+                case 5:
+                    /*Privacy Policy*/
+                    openFragment(new PrivacyPolicyFragment());
+                    break;
 
+
+            }
+
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
 
         }
 
-        binding.drawerLayout.closeDrawer(GravityCompat.START);
 
-    }
+        public void openStudentFragment () {
+            Bundle bundle = new Bundle();
+            StudentProfileFragment studentProfile = new StudentProfileFragment();
+            bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
 
+            studentProfile.setArguments(bundle);
+            openFragment(studentProfile);
+        }
 
-    public void openStudentFragment() {
-        Bundle bundle = new Bundle();
-        StudentProfileFragment studentProfile = new StudentProfileFragment();
-        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
-
-        studentProfile.setArguments(bundle);
-        openFragment(studentProfile);
-    }
-
-    /*For testing purpose*/
-    public void openCertificateFragment() {
-        Bundle bundle = new Bundle();
-        CertificateFragment certificateFragment = new CertificateFragment();
-        openFragment(certificateFragment);
-    }
+        /*For testing purpose*/
+        public void openCertificateFragment () {
+            Bundle bundle = new Bundle();
+            CertificateFragment certificateFragment = new CertificateFragment();
+            openFragment(certificateFragment);
+        }
 
 
-    private void openWalletAmountlistFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
-        WalletInfoDetailFragment fragment = new WalletInfoDetailFragment();
-        fragment.setArguments(bundle);
-        openFragment(fragment);
-    }
+        private void openWalletAmountlistFragment () {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+            WalletInfoDetailFragment fragment = new WalletInfoDetailFragment();
+            fragment.setArguments(bundle);
+            openFragment(fragment);
+        }
 
-    public void openKYCFragment(DashboardResModel dashboardResModel) {
-        Bundle bundle = new Bundle();
-        KYCFragment kycFragment = new KYCFragment();
-        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
-        kycFragment.setArguments(bundle);
-        openFragment(kycFragment);
-    }
+        public void openKYCFragment (DashboardResModel dashboardResModel){
+            Bundle bundle = new Bundle();
+            KYCFragment kycFragment = new KYCFragment();
+            bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+            kycFragment.setArguments(bundle);
+            openFragment(kycFragment);
+        }
 
-    public void openKYCViewFragment(DashboardResModel dashboardResModel) {
-        Bundle bundle = new Bundle();
-        KYCViewFragment kycViewFragment = new KYCViewFragment();
-        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
-        kycViewFragment.setArguments(bundle);
-        ViewUtil.setLanguageonUi(getActivity());
-        openFragment(kycViewFragment);
-    }
+        public void openKYCViewFragment (DashboardResModel dashboardResModel){
+            Bundle bundle = new Bundle();
+            KYCViewFragment kycViewFragment = new KYCViewFragment();
+            bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+            kycViewFragment.setArguments(bundle);
+            ViewUtil.setLanguageonUi(getActivity());
+            openFragment(kycViewFragment);
+        }
 
-    public void openProfileFragment() {
-        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        Bundle bundle = new Bundle();
-        StudentProfileFragment studentProfile = new StudentProfileFragment();
-        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, prefModel.getDashboardResModel());
-        bundle.putString(AppConstant.COMING_FROM, AppConstant.SENDING_DATA.STUDENT_PROFILE);
-        studentProfile.setArguments(bundle);
-        openFragment(studentProfile);
-    }
-
-    public void openTransactionsFragment() {
-        Bundle bundle = new Bundle();
-        TransactionsFragment transactionsFragment = new TransactionsFragment();
-        bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
-        transactionsFragment.setArguments(bundle);
-        openFragment(transactionsFragment);
-    }
-
-    public void lockDrawerMenu() {
-        // binding.toolbarLayout.backArrow.setEnabled(false);
-        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-    }
-
-    public void unLockDrawerMenu() {
-        // binding.toolbarLayout.backArrow.setEnabled(true);
-        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-    }
-
-
-    public void setPrefData() {
-        if (AuroApp.getAuroScholarModel() != null) {
+        public void openProfileFragment () {
             PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-            prefModel.setUserMobile(AuroApp.getAuroScholarModel().getMobileNumber());
-            prefModel.setStudentClass(ConversionUtil.INSTANCE.convertStringToInteger(AuroApp.getAuroScholarModel().getStudentClass()));
-            AppPref.INSTANCE.setPref(prefModel);
-        }
-    }
-
-    private void setLanguagefromsdk() {
-        Locale locale = new Locale(AuroApp.getAuroScholarModel().getLanguage());
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getActivity().getBaseContext().getResources().updateConfiguration(config, getActivity().getBaseContext().getResources().getDisplayMetrics());
-    }
-
-    public void setImageInPref(AssignmentReqModel assignmentReqModel) {
-        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (prefModel != null && prefModel.getListAzureImageList() != null) {
-            prefModel.getListAzureImageList().add(assignmentReqModel);
-            AppPref.INSTANCE.setPref(prefModel);
-        }
-    }
-
-    private void openErrorDialog() {
-        if (customDialog != null && customDialog.isShowing()) {
-            customDialog.dismiss();
+            Bundle bundle = new Bundle();
+            StudentProfileFragment studentProfile = new StudentProfileFragment();
+            bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, prefModel.getDashboardResModel());
+            bundle.putString(AppConstant.COMING_FROM, AppConstant.SENDING_DATA.STUDENT_PROFILE);
+            studentProfile.setArguments(bundle);
+            openFragment(studentProfile);
         }
 
-        CustomDialogModel customDialogModel = new CustomDialogModel();
-        customDialogModel.setContext(AuroApp.getAppContext());
-        customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
-        customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.grade_chnage_message));//
-        customDialogModel.setTwoButtonRequired(true);
-        customDialog = new CustomDialog(AuroApp.getAppContext(), customDialogModel);
-        customDialog.setSecondBtnTxt(AuroApp.getAppContext().getResources().getString(R.string.yes));
-        customDialog.setFirstBtnTxt(AuroApp.getAppContext().getResources().getString(R.string.no));
-        customDialog.setFirstCallcack(new CustomDialog.FirstCallcack() {
-            @Override
-            public void clickNoCallback() {
+        public void openTransactionsFragment () {
+            Bundle bundle = new Bundle();
+            TransactionsFragment transactionsFragment = new TransactionsFragment();
+            bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
+            transactionsFragment.setArguments(bundle);
+            openFragment(transactionsFragment);
+        }
 
+        public void lockDrawerMenu () {
+            // binding.toolbarLayout.backArrow.setEnabled(false);
+            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
+
+        public void unLockDrawerMenu () {
+            // binding.toolbarLayout.backArrow.setEnabled(true);
+            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
+
+
+        public void setPrefData () {
+            if (AuroApp.getAuroScholarModel() != null) {
+                PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+                prefModel.setUserMobile(AuroApp.getAuroScholarModel().getMobileNumber());
+                prefModel.setStudentClass(ConversionUtil.INSTANCE.convertStringToInteger(AuroApp.getAuroScholarModel().getStudentClass()));
+                AppPref.INSTANCE.setPref(prefModel);
+            }
+        }
+
+        private void setLanguagefromsdk () {
+            Locale locale = new Locale(AuroApp.getAuroScholarModel().getLanguage());
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getActivity().getBaseContext().getResources().updateConfiguration(config, getActivity().getBaseContext().getResources().getDisplayMetrics());
+        }
+
+        public void setImageInPref (AssignmentReqModel assignmentReqModel){
+            PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+            if (prefModel != null && prefModel.getListAzureImageList() != null) {
+                prefModel.getListAzureImageList().add(assignmentReqModel);
+                AppPref.INSTANCE.setPref(prefModel);
+            }
+        }
+
+        private void openErrorDialog () {
+            if (customDialog != null && customDialog.isShowing()) {
                 customDialog.dismiss();
             }
-        });
 
-        customDialog.setSecondCallcack(new CustomDialog.SecondCallcack() {
-            @Override
-            public void clickYesCallback() {
-                //   customDialog.dismiss();
-                customDialog.updateUI(1);
-                callClassUpgradeApi();
-            }
-        });
+            CustomDialogModel customDialogModel = new CustomDialogModel();
+            customDialogModel.setContext(AuroApp.getAppContext());
+            customDialogModel.setTitle(AuroApp.getAppContext().getResources().getString(R.string.information));
+            customDialogModel.setContent(AuroApp.getAppContext().getResources().getString(R.string.grade_chnage_message));//
+            customDialogModel.setTwoButtonRequired(true);
+            customDialog = new CustomDialog(AuroApp.getAppContext(), customDialogModel);
+            customDialog.setSecondBtnTxt(AuroApp.getAppContext().getResources().getString(R.string.yes));
+            customDialog.setFirstBtnTxt(AuroApp.getAppContext().getResources().getString(R.string.no));
+            customDialog.setFirstCallcack(new CustomDialog.FirstCallcack() {
+                @Override
+                public void clickNoCallback() {
 
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(customDialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        customDialog.getWindow().setAttributes(lp);
-        Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        customDialog.setCancelable(true);
-        customDialog.show();
+                    customDialog.dismiss();
+                }
+            });
 
+            customDialog.setSecondCallcack(new CustomDialog.SecondCallcack() {
+                @Override
+                public void clickYesCallback() {
+                    //   customDialog.dismiss();
+                    customDialog.updateUI(1);
+                    callClassUpgradeApi();
+                }
+            });
+
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(customDialog.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            customDialog.getWindow().setAttributes(lp);
+            Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            customDialog.setCancelable(true);
+            customDialog.show();
+
+        }
+
+        private void callClassUpgradeApi () {
+            quizViewModel.gradeUpgrade(AuroApp.getAuroScholarModel());
+        }
+
+        private void setNavHeaderText () {
+            TextView login_txt = binding.navHeader.findViewById(R.id.login_id);
+            login_txt.setText(getActivity().getString(R.string.mobile_num) + dashboardResModel.getPhonenumber());
+
+            TextView class_txt = binding.navHeader.findViewById(R.id.txtClass);
+            class_txt.setText(getActivity().getString(R.string.student_class) + dashboardResModel.getStudentclass());
+
+        }
     }
-
-    private void callClassUpgradeApi() {
-        quizViewModel.gradeUpgrade(AuroApp.getAuroScholarModel());
-    }
-
-    private void setNavHeaderText() {
-        TextView login_txt = binding.navHeader.findViewById(R.id.login_id);
-        login_txt.setText(getActivity().getString(R.string.mobile_num) + dashboardResModel.getPhonenumber());
-
-        TextView class_txt = binding.navHeader.findViewById(R.id.txtClass);
-        class_txt.setText(getActivity().getString(R.string.student_class) + dashboardResModel.getStudentclass());
-
-    }
-}

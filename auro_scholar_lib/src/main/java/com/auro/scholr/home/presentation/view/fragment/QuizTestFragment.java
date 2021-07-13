@@ -139,6 +139,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
             binding.setLifecycleOwner(this);
             setHasOptionsMenu(true);
         }
+        AppLogger.e(TAG, "Step 1");
         setRetainInstance(true);
         ViewUtil.setActivityLang(getActivity());
 
@@ -172,8 +173,11 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
     @Override
     protected void init() {
         //setKeyListner();
+        ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
         setListener();
+        AppLogger.e(TAG, "Step 2");
         if (dashboardResModel != null && quizResModel != null) {
+            AppLogger.e(TAG, "Step 3");
             assignmentReqModel = quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
             quizTestViewModel.getAssignExamData(assignmentReqModel);
         }
@@ -192,6 +196,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
                     break;
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == ASSIGNMENT_STUDENT_DATA_API) {
+                        AppLogger.e(TAG, "Step 3");
                         assignmentResModel = (AssignmentResModel) responseApi.data;
                         if (!assignmentResModel.isError()) {
                             String webUrl = URLConstant.TEST_URL + "StudentID=" + assignmentResModel.getStudentID() + "&ExamAssignmentID=" + assignmentResModel.getExamAssignmentID();
@@ -239,10 +244,14 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+        dashboardResModel=AppPref.INSTANCE.getModelInstance().getDashboardResModel();
+        quizResModel=AppPref.INSTANCE.getModelInstance().getQuizResModel();
+/*
         if (getArguments() != null) {
             dashboardResModel = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
             quizResModel = getArguments().getParcelable(AppConstant.QUIZ_RES_MODEL);
-        }
+        }*/
         init();
     }
 

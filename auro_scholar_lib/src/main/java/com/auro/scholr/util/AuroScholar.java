@@ -70,11 +70,41 @@ public class AuroScholar {
         auroScholarDataModel.setUserPartnerid(inputModel.getUserPartnerId());
         auroScholarDataModel.setApplicationLang(inputModel.isApplicationLang());
         auroScholarDataModel.setPartnerLogo(inputModel.getPartnerLogoUrl());
+        auroScholarDataModel.setGender(inputModel.getGender());
+        auroScholarDataModel.setEmail(inputModel.getEmail());
         if (!TextUtil.isEmpty(inputModel.getSchoolName())) {
             auroScholarDataModel.setSchoolName(inputModel.getSchoolName());
         } else {
             auroScholarDataModel.setSchoolName("");
         }
+
+        if (!TextUtil.isEmpty(inputModel.getBoardType())) {
+            auroScholarDataModel.setBoardType(inputModel.getBoardType());
+        } else {
+            auroScholarDataModel.setBoardType("");
+        }
+
+
+        if (!TextUtil.isEmpty(inputModel.getSchoolType())) {
+            auroScholarDataModel.setSchoolType(inputModel.getSchoolType());
+        } else {
+            auroScholarDataModel.setSchoolType("");
+        }
+
+
+        if (!TextUtil.isEmpty(inputModel.getGender())) {
+            auroScholarDataModel.setGender(inputModel.getGender());
+        } else {
+            auroScholarDataModel.setGender("");
+        }
+
+        if (!TextUtil.isEmpty(inputModel.getEmail())) {
+            auroScholarDataModel.setEmail(inputModel.getEmail());
+        } else {
+            auroScholarDataModel.setEmail("");
+        }
+
+
         if (TextUtil.isEmpty(inputModel.getPartnerSource())) {
             auroScholarDataModel.setPartnerSource("");
         } else {

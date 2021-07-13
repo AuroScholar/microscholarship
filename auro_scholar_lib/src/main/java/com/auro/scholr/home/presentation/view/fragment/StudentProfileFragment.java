@@ -617,6 +617,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
 
     public void setDataonUi() {
         if (getStudentUpdateProfile != null) {
+            ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
             binding.classStudent.setText(getStudentUpdateProfile.getGrade() + "");
             binding.walletBalText.setText(getStudentUpdateProfile.getScholarshipAmount() + "");
             binding.editPhone.setText(getStudentUpdateProfile.getMobileNo());

@@ -30,6 +30,10 @@ public class AuroScholarDataModel implements Parcelable {
 
     String partnerLogo="";
     String schoolName="";
+    String boardType="";
+    String schoolType="";
+    String gender="";
+    String email="";
 
     protected AuroScholarDataModel(Parcel in) {
         mobileNumber = in.readString();
@@ -50,6 +54,10 @@ public class AuroScholarDataModel implements Parcelable {
         UTMLink = in.readString();
         partnerLogo = in.readString();
         schoolName = in.readString();
+        boardType = in.readString();
+        schoolType = in.readString();
+        gender = in.readString();
+        email = in.readString();
     }
 
     @Override
@@ -72,6 +80,10 @@ public class AuroScholarDataModel implements Parcelable {
         dest.writeString(UTMLink);
         dest.writeString(partnerLogo);
         dest.writeString(schoolName);
+        dest.writeString(boardType);
+        dest.writeString(schoolType);
+        dest.writeString(gender);
+        dest.writeString(email);
     }
 
     @Override
@@ -90,6 +102,38 @@ public class AuroScholarDataModel implements Parcelable {
             return new AuroScholarDataModel[size];
         }
     };
+
+    public String getBoardType() {
+        return boardType;
+    }
+
+    public void setBoardType(String boardType) {
+        this.boardType = boardType;
+    }
+
+    public String getSchoolType() {
+        return schoolType;
+    }
+
+    public void setSchoolType(String schoolType) {
+        this.schoolType = schoolType;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getSchoolName() {
         return schoolName;

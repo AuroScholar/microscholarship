@@ -17,6 +17,10 @@ public class AuroScholarInputModel implements Parcelable {
     boolean applicationLang=false;
     String partnerLogoUrl="";
     String schoolName="";
+    String schoolType="";
+    String email="";
+    String boardType="";
+    String gender="";
 
 
     protected AuroScholarInputModel(Parcel in) {
@@ -30,6 +34,10 @@ public class AuroScholarInputModel implements Parcelable {
         applicationLang = in.readByte() != 0;
         partnerLogoUrl = in.readString();
         schoolName = in.readString();
+        schoolType = in.readString();
+        email = in.readString();
+        boardType = in.readString();
+        gender = in.readString();
     }
 
     @Override
@@ -44,6 +52,10 @@ public class AuroScholarInputModel implements Parcelable {
         dest.writeByte((byte) (applicationLang ? 1 : 0));
         dest.writeString(partnerLogoUrl);
         dest.writeString(schoolName);
+        dest.writeString(schoolType);
+        dest.writeString(email);
+        dest.writeString(boardType);
+        dest.writeString(gender);
     }
 
     @Override
@@ -62,6 +74,38 @@ public class AuroScholarInputModel implements Parcelable {
             return new AuroScholarInputModel[size];
         }
     };
+
+    public String getSchoolType() {
+        return schoolType;
+    }
+
+    public void setSchoolType(String schoolType) {
+        this.schoolType = schoolType;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBoardType() {
+        return boardType;
+    }
+
+    public void setBoardType(String boardType) {
+        this.boardType = boardType;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
     public String getSchoolName() {
         return schoolName;
