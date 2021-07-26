@@ -202,7 +202,7 @@ public class WalletInfoDetailFragment extends BaseFragment implements View.OnCli
     @Override
     protected void setListener() {
         ((StudentMainDashboardActivity)getActivity()).setListingActiveFragment(StudentMainDashboardActivity.PAYMENT_INFO_FRAGMENT);
-
+        ((StudentMainDashboardActivity) getActivity()).loadPartnerLogo(binding.auroScholarLogo);
         // binding.headerParent.cambridgeHeading.setVisibility(View.VISIBLE);
         binding.headerTopParent.cambridgeHeading.setVisibility(View.GONE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);

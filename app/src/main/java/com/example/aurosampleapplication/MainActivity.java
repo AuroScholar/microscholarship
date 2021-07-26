@@ -174,9 +174,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setStudentClass(student_class);//"binding.userClass.getText().toString()"
         inputModel.setRegitrationSource("");
         inputModel.setReferralLink("put refferal link");
-        inputModel.setPartnerSource(""); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
+        inputModel.setPartnerSource("AURO3VE4j7"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setActivity(this);
-        inputModel.setPartnerLogoUrl(""); //optional Filed
+        inputModel.setPartnerLogoUrl("https://auroscholar.com/assets/img/MERIDIAN%20_LOGO.png"); //optional Filed
         inputModel.setSchoolName("");//optional Filed
         inputModel.setBoardType("");//optional Filed
         inputModel.setSchoolType(" ");//optional Filed

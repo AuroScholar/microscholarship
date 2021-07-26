@@ -133,6 +133,7 @@ public class CertificateFragment extends BaseFragment implements View.OnClickLis
     @Override
     protected void setListener() {
         ((StudentMainDashboardActivity)getActivity()).setListingActiveFragment(StudentMainDashboardActivity.CERTIFICATES_FRAGMENT);
+        ((StudentMainDashboardActivity) getActivity()).loadPartnerLogo(binding.auroScholarLogo);
 
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
             viewModel.serviceLiveData().removeObservers(this);

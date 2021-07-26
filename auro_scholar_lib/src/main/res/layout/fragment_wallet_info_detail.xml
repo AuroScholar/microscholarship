@@ -58,7 +58,6 @@
                 android:layout_marginTop="@dimen/_15sdp"
                 android:visibility="visible"
 
-                android:background="@drawable/ic_auro_scholar_logo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -182,6 +182,8 @@ public class TransactionsFragment  extends BaseFragment implements View.OnClickL
     protected void setListener() {
         ((StudentMainDashboardActivity)getActivity()).setListingActiveFragment(StudentMainDashboardActivity.PASSPORT_FRAGMENT);
 
+        ((StudentMainDashboardActivity) getActivity()).loadPartnerLogo(binding.auroScholarLogo);
+
         binding.headerParent.cambridgeHeading.setVisibility(View.VISIBLE);
         binding.toolbarLayout.backArrow.setOnClickListener(this);
         binding.toolbarLayout.langEng.setOnClickListener(this);
