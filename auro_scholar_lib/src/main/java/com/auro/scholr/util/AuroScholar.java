@@ -72,6 +72,7 @@ public class AuroScholar {
         auroScholarDataModel.setPartnerLogo(inputModel.getPartnerLogoUrl());
         auroScholarDataModel.setGender(inputModel.getGender());
         auroScholarDataModel.setEmail(inputModel.getEmail());
+        auroScholarDataModel.setPartnerName(inputModel.getPartnerName());
         if (!TextUtil.isEmpty(inputModel.getSchoolName())) {
             auroScholarDataModel.setSchoolName(inputModel.getSchoolName());
         } else {

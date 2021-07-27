@@ -181,6 +181,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
             assignmentReqModel = quizTestViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
             quizTestViewModel.getAssignExamData(assignmentReqModel);
         }
+        ((StudentMainDashboardActivity) getActivity()).loadPartnerLogo(binding.auroScholarLogo);
 
     }
 

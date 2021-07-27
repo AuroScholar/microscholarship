@@ -162,9 +162,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RvwalletAmount"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
 
             app:layout_constraintTop_toBottomOf="@+id/header_top_parent" />
+
+        <include
+            layout="@layout/auro_logo_layout"/>
 
     </LinearLayout>
 </layout>

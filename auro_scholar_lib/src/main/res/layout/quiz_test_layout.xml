@@ -14,10 +14,11 @@
             android:visibility="gone"
             android:layout_height="wrap_content" />
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/topbarMenu"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_50sdp"
             android:background="@color/blue_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -35,7 +36,19 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imagerotate"
                 app:layout_constraintStart_toStartOf="@+id/imagerotate" />
 
-        </RelativeLayout>
+            <ImageView
+                android:id="@+id/auro_scholar_logo"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_marginStart="@dimen/_1sdp"
+                android:adjustViewBounds="true"
+                android:layout_centerHorizontal="true"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progressBar"

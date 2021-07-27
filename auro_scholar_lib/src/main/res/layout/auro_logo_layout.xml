@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/parentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.auro.scholr.core.util.uiwidget.RPTextView
+            android:id="@+id/powered_by"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text="@string/powered_by_auroscholar"
+            android:textAlignment="center"
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/black"
+            app:Font="Poppins-Regular.ttf"
+           />
+
+
+        <ImageView
+            android:id="@+id/auro_scholar_logo"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            app:srcCompat="@drawable/ic_auro_scholar_logo"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:adjustViewBounds="true"
+            android:visibility="visible"
+           />
+
+
+
+
+
+    </LinearLayout>
+
+
+</layout>

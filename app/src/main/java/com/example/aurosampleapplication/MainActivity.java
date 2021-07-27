@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     openGenricSDK(mobileNumber, student_class);
                 }
-
                 hideKeyboard(this);
                 break;
             case R.id.bt_open:
@@ -173,14 +172,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setMobileNumber(mobileNumber);//mobileNumber
         inputModel.setStudentClass(student_class);//"binding.userClass.getText().toString()"
         inputModel.setRegitrationSource("");
-        inputModel.setReferralLink("put refferal link");
+        inputModel.setReferralLink("https://auroscholar.com/assets/img/rwf_logo.png");
         inputModel.setPartnerSource("AURO3VE4j7"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setActivity(this);
-        inputModel.setPartnerLogoUrl("https://auroscholar.com/assets/img/MERIDIAN%20_LOGO.png"); //optional Filed
+        inputModel.setPartnerLogoUrl("https://auroscholar.com/assets/img/rwf_logo.png"); //optional Filed
         inputModel.setSchoolName("");//optional Filed
         inputModel.setBoardType("");//optional Filed
         inputModel.setSchoolType(" ");//optional Filed
         inputModel.setGender("");//optional Filed
+        inputModel.setPartnerName("Right a Walk");//Mandatory
         inputModel.setEmail("");//optional Filed
         AuroScholar.startAuroSDK(inputModel);
     }

@@ -22,7 +22,6 @@ public class AuroScholarInputModel implements Parcelable {
     String boardType="";
     String gender="";
 
-
     protected AuroScholarInputModel(Parcel in) {
         mobileNumber = in.readString();
         studentClass = in.readString();
@@ -38,6 +37,7 @@ public class AuroScholarInputModel implements Parcelable {
         email = in.readString();
         boardType = in.readString();
         gender = in.readString();
+        partnerName = in.readString();
     }
 
     @Override
@@ -56,6 +56,7 @@ public class AuroScholarInputModel implements Parcelable {
         dest.writeString(email);
         dest.writeString(boardType);
         dest.writeString(gender);
+        dest.writeString(partnerName);
     }
 
     @Override
@@ -74,6 +75,19 @@ public class AuroScholarInputModel implements Parcelable {
             return new AuroScholarInputModel[size];
         }
     };
+
+    public String getPartnerName() {
+        return partnerName;
+    }
+
+    public void setPartnerName(String partnerName) {
+        this.partnerName = partnerName;
+    }
+
+    String partnerName="";
+
+
+
 
     public String getSchoolType() {
         return schoolType;

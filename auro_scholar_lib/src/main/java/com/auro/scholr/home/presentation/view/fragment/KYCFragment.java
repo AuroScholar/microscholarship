@@ -662,6 +662,10 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
             }
         }
+
+        binding.stepFour.tickSign.setVisibility(View.VISIBLE);
+        binding.stepFour.btTransferMoney.setVisibility(View.VISIBLE);
+        binding.stepFour.btTransferMoney.setOnClickListener(this);
     }
 
 

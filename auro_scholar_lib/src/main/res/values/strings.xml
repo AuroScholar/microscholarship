@@ -292,6 +292,8 @@
     <string name="friends_ke_bina_kya_fun">Friends ke bina kya fun!</string>
     <string name="teacher_share_msg">Hi, I have just referred you to get Scholarship  on AuroScholar App! \nTake quiz and get Scholarship Certificate every month. \nDownload App -</string>
     <string name="invite_friend_refrral">Hi! An exclusive invite just for you! Join me on AuroScholar App, challenge friends and get scholarship &amp; Certificates everyday! \n Click to accept my invitation &amp; Install App - ></string>
+    <string name="share_friend_text" translatable="false">, challenge friends and get scholarship &amp; Certificates everyday! \n Click to accept my invitation &amp; Install App - ></string>
+    <string name="exclusive_invite" translatable="false">Hi! An exclusive invite just for you! Join me on </string>
     <string name="challenge_msg">just challenged you in a quiz! Can you beat their score?</string>
     <string name="logout">Logout</string>
     <string name="saved">The changes were saved successfully</string>

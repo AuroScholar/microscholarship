@@ -62,7 +62,6 @@
                 android:layout_centerHorizontal="true"
                 android:adjustViewBounds="true"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:background="@drawable/ic_auro_scholar_logo"
                 android:visibility="visible"
             />
 
@@ -706,9 +705,9 @@
 
                     </LinearLayout>
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/submit_button_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginBottom="@dimen/_10sdp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -745,6 +744,22 @@
                             app:layout_constraintStart_toStartOf="@+id/submitbutton"
                             app:layout_constraintTop_toTopOf="@+id/submitbutton"
                             />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/submit_button_layout"
+                        >
+
+                        <include
+
+                            layout="@layout/auro_logo_layout" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

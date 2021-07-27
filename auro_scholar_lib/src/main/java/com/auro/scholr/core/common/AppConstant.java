@@ -375,4 +375,27 @@ public interface AppConstant {
         String UPI = "upi";
         String BANK_Transfer = "bank";
     }
+
+
+    interface SchoolType
+    {
+        String PRIVATE_SCHOOL = "Private School";
+        String GOVERNMENT_SCHOOL = "Government School";
+        String OTHER = "Other";
+    }
+
+    interface SchoolBoardType
+    {
+        String CBSE = "CBSE";
+        String ICSE = "ICSE";
+        String OTHER = "Other";
+    }
+
+
+    interface Gender
+    {
+        String MALE = "Male";
+        String FEMALE = "Female";
+        String OTHER = "Other";
+    }
 }

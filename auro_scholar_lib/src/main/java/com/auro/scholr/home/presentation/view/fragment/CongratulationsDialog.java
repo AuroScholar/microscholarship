@@ -156,11 +156,23 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
     }
 
     public void shareWithFriends() {
-        String completeLink = AuroApp.getAppContext().getResources().getString(R.string.invite_friend_refrral);
-        if (AuroApp.getAuroScholarModel() != null && !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getReferralLink())) {
-            completeLink = completeLink + " " + AuroApp.getAuroScholarModel().getReferralLink();
+        String completeLink = "";
+
+        if (AuroApp.getAuroScholarModel() != null && !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getPartnerName())) {
+            completeLink = AuroApp.getAppContext().getResources().getString(R.string.exclusive_invite) + " " + AuroApp.getAuroScholarModel().getPartnerName() + AuroApp.getAppContext().getResources().getString(R.string.share_friend_text) ;
+
+            if (AuroApp.getAuroScholarModel() != null && !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getReferralLink())) {
+                completeLink = completeLink  + " " + AuroApp.getAuroScholarModel().getReferralLink();
+            } else {
+                completeLink = completeLink + " https://rb.gy/np9uh5";
+            }
         } else {
-            completeLink = completeLink + " https://rb.gy/np9uh5";
+            if (AuroApp.getAuroScholarModel() != null && !TextUtil.isEmpty(AuroApp.getAuroScholarModel().getReferralLink())) {
+                completeLink = AuroApp.getAppContext().getResources().getString(R.string.invite_friend_refrral);
+                completeLink = completeLink + " " + AuroApp.getAuroScholarModel().getReferralLink();
+            } else {
+                completeLink = completeLink + " https://rb.gy/np9uh5";
+            }
         }
 
         Intent sendIntent = new Intent();
@@ -179,8 +191,6 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
         }
         return new String(result);
     }
-
-
 
 
     private void makeQuiz() {
@@ -222,7 +232,6 @@ public class CongratulationsDialog extends BaseDialog implements View.OnClickLis
         }
         return false;
     }
-
 
 
     private void sendClickCallBack(QuizResModel quizResModel) {

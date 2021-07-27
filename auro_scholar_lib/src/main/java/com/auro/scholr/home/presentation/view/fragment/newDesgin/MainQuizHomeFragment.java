@@ -203,7 +203,6 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
         // Where do I put this?
         mDrawerToggle.syncState();
-        //PRADEEP
         lockDrawerMenu();
         AppLogger.e("handleback", "AuroApp.getAuroScholarModel()");
 

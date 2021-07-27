@@ -164,6 +164,8 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
         //AppUtil.commonCallBackListner = this;
 
         setSpinner();
+        ((StudentMainDashboardActivity) getActivity()).loadPartnerLogo(binding.auroScholarLogo);
+
 
     }
 
