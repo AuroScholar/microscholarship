@@ -78,6 +78,7 @@ import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
+import com.auro.scholr.util.disclaimer.QuizDisclaimerDialog;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
@@ -296,12 +297,15 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
             case NEXT_QUIZ_CLICK:
                 quizResModel = (QuizResModel) commonDataModel.getObject();
-
                 askPermission();
                 break;
 
             case START_QUIZ_BUTON:
                 quizResModel = (QuizResModel) commonDataModel.getObject();
+                checkPreQuizDisclaimer();
+                break;
+
+            case ACCEPT_PARENT_BUTTON:
                 askPermission();
                 break;
         }
@@ -436,7 +440,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                         customDialog.dismiss();
                     }
                     AppLogger.v("PRADEEP_DATA", "NO_INTERNET");
-                    handleProgress(2, (String) responseApi.data);
+                    handleProgress(1, (String) responseApi.data);
                     ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
                     break;
                 case AUTH_FAIL:
@@ -446,7 +450,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                         AppLogger.v("PRADEEP_DATA", "FAIL_400 null");
                     }
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
-                        handleProgress(2, (String) responseApi.data);
+                        handleProgress(1, (String) responseApi.data);
                         AppLogger.v("PRADEEP_DATA", "DASHBOARD_API---");
                     } else {
                         setImageInPref(assignmentReqModel);
@@ -464,7 +468,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                     // binding.swipeRefreshLayout.setRefreshing(false);
                     AppLogger.v("PRADEEP_DATA", "default---");
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
-                        handleProgress(2, (String) responseApi.data);
+                        handleProgress(1, (String) responseApi.data);
                     } else {
                         setImageInPref(assignmentReqModel);
                         //  openQuizTestFragment(dashboardResModel);
@@ -633,6 +637,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         if (!TextUtil.isEmpty(deviceToken)) {
             AppLogger.v("DeviceToken_1", deviceToken);
         }
+        AppLogger.v(TAG, ""+prefModel.isDashbaordApiCall());
         if (prefModel.isDashbaordApiCall()) {
             handleProgress(0, "");
             quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
@@ -979,5 +984,21 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
         demographicFragment.setArguments(bundle);
         openFragment(demographicFragment);
+    }
+
+
+    private void checkPreQuizDisclaimer() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (!prefModel.isPreQuizDisclaimer()) {
+            QuizDisclaimerDialog askDetailCustomDialog = new QuizDisclaimerDialog(getActivity(), this);
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(askDetailCustomDialog.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            askDetailCustomDialog.getWindow().setAttributes(lp);
+            Objects.requireNonNull(askDetailCustomDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            askDetailCustomDialog.setCancelable(false);
+            askDetailCustomDialog.show();
+        }
     }
 }

@@ -39,6 +39,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, mdashboard);
                 paytmFragment.setArguments(bundle);
                 return paytmFragment;
+
             case 1:
                // UPIFragment upiFragment = new UPIFragment();
 

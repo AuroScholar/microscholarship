@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:cardElevation="@dimen/_8sdp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:orientation="vertical">
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/tv_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:layout_weight="2"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_gravity="center"
+                    android:text="Parent Section"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:textColor="@color/taupe"
+                    android:textSize="@dimen/_15sdp"
+                    app:Font="Calibre-Regular.ttf" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="@dimen/_90sdp"
+                        android:layout_height="@dimen/_90sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:background="@drawable/login_bg_button"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <ImageView
+                            android:id="@+id/parent"
+                            android:layout_width="@dimen/_70sdp"
+                            android:layout_height="@dimen/_70sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            app:srcCompat="@drawable/ic_parents"
+                            android:layout_centerInParent="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </RelativeLayout>
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_title">
+                        <LinearLayout
+                            android:id="@+id/parent_check_row"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="2"
+                            android:orientation="horizontal">
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/tv_message"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginRight="@dimen/_20sdp"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_weight="1.8"
+                                android:padding="@dimen/_5sdp"
+                                android:layout_alignLeft="@+id/checkIsParent"
+                                android:textColor="@color/taupe"
+                                android:textSize="@dimen/_12sdp"
+                                app:Font="Calibre-Regular.ttf" />
+
+                            <androidx.appcompat.widget.AppCompatCheckBox
+                                android:id="@+id/checkIsParent"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:layout_weight=".2"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignTop="@+id/tv_message"
+                                android:layout_alignParentTop="true"
+                               />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/RlKycCheck"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:orientation="horizontal">
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/tv_messageKyc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:padding="@dimen/_5sdp"
+                                android:layout_weight="2"
+                                android:text="I grant my consent that the uploaded KYC documents are correct."
+                                android:textColor="@color/taupe"
+                                android:textSize="@dimen/_12sdp"
+                                app:Font="Calibre-Regular.ttf"/>
+
+                            <androidx.appcompat.widget.AppCompatCheckBox
+                                android:id="@+id/checkIsKyc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:layout_alignParentRight="true"
+                                android:gravity="right"/>
+
+                        </LinearLayout>
+
+
+
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/RPAccept"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:background="@drawable/button_continue"
+                            android:gravity="center"
+                            android:padding="@dimen/_11sdp"
+                            android:text="Continue"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11sdp"
+                            android:visibility="visible"
+                            app:Font="ArticulatCF-Regular.otf" />
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <ImageView
+            android:id="@+id/closeButton"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/cardViewItem"
+            app:srcCompat="@drawable/ic_cross_close"
+      />
+
+
+
+
+    </RelativeLayout>
+</layout>

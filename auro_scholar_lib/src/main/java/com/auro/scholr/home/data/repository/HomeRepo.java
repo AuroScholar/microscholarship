@@ -8,7 +8,9 @@ import com.auro.scholr.home.data.model.DynamiclinkResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.SaveImageReqModel;
+import com.auro.scholr.home.data.model.SendOtpReqModel;
 import com.auro.scholr.home.data.model.StudentProfileModel;
+import com.auro.scholr.home.data.model.VerifyOtpReqModel;
 import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
 import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
@@ -33,7 +35,7 @@ public interface HomeRepo {
 
         Single<Response<JsonObject>> getAzureData(AssignmentReqModel azureReqModel);
 
-        Single<Response<JsonObject>> inviteFriendListApi( );
+        Single<Response<JsonObject>> inviteFriendListApi();
 
         Single<Response<JsonObject>> sendInviteNotificationApi(SendInviteNotificationReqModel reqModel);
 
@@ -59,8 +61,10 @@ public interface HomeRepo {
 
         Single<Response<JsonObject>> studentUpdateProfile(StudentProfileModel model);
 
-    }
+        Single<Response<JsonObject>> sendOtpHomeRepo(SendOtpReqModel reqModel);
 
+        Single<Response<JsonObject>> verifyOtpHomeRepo(VerifyOtpReqModel reqModel);
+    }
 
 
     interface DashboardDbData {

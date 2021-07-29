@@ -2,6 +2,8 @@ package com.auro.scholr.home.data.datasource.remote;
 
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.AppConstant;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.CertificateResModel;
@@ -10,7 +12,9 @@ import com.auro.scholr.home.data.model.DynamiclinkResModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.SaveImageReqModel;
+import com.auro.scholr.home.data.model.SendOtpReqModel;
 import com.auro.scholr.home.data.model.StudentProfileModel;
+import com.auro.scholr.home.data.model.VerifyOtpReqModel;
 import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
 import com.auro.scholr.teacher.data.model.request.SendInviteNotificationReqModel;
@@ -219,7 +223,7 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         RequestBody image_normal_path = RequestBody.create(okhttp3.MultipartBody.FORM, reqModel.getImgNormalPath());
         RequestBody image_path = RequestBody.create(okhttp3.MultipartBody.FORM, reqModel.getImgPath());
         MultipartBody.Part student_photo = ConversionUtil.INSTANCE.makeMultipartRequestForExamImage(reqModel.getImageBytes());
-        return homeRemoteApi.uploadImage(exam_id, registration_id, is_mobile,quiz_id,image_normal_path,image_path,
+        return homeRemoteApi.uploadImage(exam_id, registration_id, is_mobile, quiz_id, image_normal_path, image_path,
                 student_photo);
     }
 
@@ -261,4 +265,22 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         }
         return homeRemoteApi.getCertificateApi(params);
     }
+
+
+    @Override
+    public Single<Response<JsonObject>> sendOtpHomeRepo(SendOtpReqModel reqModel) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.SendOtpRequest.PHONENUMBER, reqModel.getMobileNo());
+        params.put(AppConstant.SendOtpRequest.USER_TYPE, AppConstant.userTypeLogin.API_PARAM_STUDENT);
+        return homeRemoteApi.sendOTP(params);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> verifyOtpHomeRepo(VerifyOtpReqModel reqModel) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(AppConstant.SendOtpRequest.PHONENUMBER, reqModel.getMobileNumber());
+        params.put(AppConstant.SendOtpRequest.OTPVERIFY, reqModel.getOtpVerify());
+        return homeRemoteApi.verifyOTP(params);
+    }
+
 }

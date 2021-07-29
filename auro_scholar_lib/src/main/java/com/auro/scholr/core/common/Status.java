@@ -14,6 +14,7 @@ public enum Status {
     ON_SHOW_NO_INTERNET,
     ON_SHOW_SHIMMER,
 
+
     OK,
     HIDE_KEYBOARD,
     NO_INTERNET,
@@ -83,8 +84,11 @@ public enum Status {
     PARTNERS_LOGIN_API,
     PARTNERS_CLICK,
     CLEAR_EDIT_TEXT,
-    DIALER_CALL_BACK_LISTNER
-
+    SEND_OTP,
+    VERIFY_OTP,
+    DIALER_CALL_BACK_LISTNER,
+    OTP_VERIFY,
+    ACCEPT_PARENT_BUTTON
 
 
     }

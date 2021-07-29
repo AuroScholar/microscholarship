@@ -12,6 +12,8 @@ import com.auro.scholr.core.common.MessgeNotifyStatus;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
+import com.auro.scholr.home.data.model.SendOtpReqModel;
+import com.auro.scholr.home.data.model.VerifyOtpReqModel;
 import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
@@ -97,5 +99,78 @@ public class HomeViewModel extends ViewModel {
 
     }
 
+
+    public void verifyOtpApi(VerifyOtpReqModel reqModel){
+        Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet ->{
+            if(hasInternet){
+                verifyOtpRxApi(reqModel);
+            }else {
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.SEND_OTP));
+            }
+
+        });
+        getCompositeDisposable().add(disposable);
+    }
+
+
+    private void verifyOtpRxApi(VerifyOtpReqModel reqModel) {
+        getCompositeDisposable().add(homeRemoteUseCase.verifyOtpApi(reqModel).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+
+                        //  serviceLiveData.setValue(ResponseApi.loading(Status.VERIFY_OTP));
+                    }
+                })
+                .subscribe(new Consumer<ResponseApi>() {
+                               @Override
+                               public void accept(ResponseApi responseApi) throws Exception {
+                                   serviceLiveData.setValue(responseApi);
+                               }
+                           },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                defaultError();
+                            }
+                        }));
+    }
+
+    public void sendOtpApi(SendOtpReqModel reqModel){
+        Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet ->{
+            if(hasInternet){
+                sendOtpRxApi(reqModel);
+            }else {
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.SEND_OTP));
+            }
+
+        });
+        getCompositeDisposable().add(disposable);
+    }
+
+    private void sendOtpRxApi(SendOtpReqModel reqModel) {
+        getCompositeDisposable().add(homeRemoteUseCase.sendOtpApi(reqModel).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        // serviceLiveData.setValue(ResponseApi.loading(Status.ACCEPT_INVITE_CLICK));
+                        serviceLiveData.setValue(ResponseApi.loading(Status.SEND_OTP));
+                    }
+                })
+                .subscribe(new Consumer<ResponseApi>() {
+                               @Override
+                               public void accept(ResponseApi responseApi) throws Exception {
+                                   serviceLiveData.setValue(responseApi);
+                               }
+                           },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                defaultError();
+                            }
+                        }));
+    }
 
 }

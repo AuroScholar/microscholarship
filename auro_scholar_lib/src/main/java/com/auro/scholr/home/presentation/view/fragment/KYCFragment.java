@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -59,6 +60,7 @@ import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 import com.auro.scholr.util.cropper.CropImages;
 import com.auro.scholr.util.cropper.CropImageViews;
+import com.auro.scholr.util.disclaimer.DisclaimerKycDialog;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -109,6 +111,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (binding != null) {
+            return binding.getRoot();
+        }
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
         AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -117,6 +122,11 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
         ViewUtil.setLanguageonUi(getActivity());
         setRetainInstance(true);
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        AppLogger.v("CheckKyc","Prefrence"+prefModel.isPreKycDisclaimer());
+        if (!prefModel.isPreKycDisclaimer()) {
+            checkDisclaimerKYCDialog();
+        }
         return binding.getRoot();
     }
 
@@ -149,7 +159,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
         }
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
+        if (!TextUtil.isEmpty(prefModel.getUserLanguage())&& prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
             setLanguageText(AppConstant.HINDI);
         } else {
             setLanguageText(AppConstant.ENGLISH);
@@ -663,9 +673,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             }
         }
 
-        binding.stepFour.tickSign.setVisibility(View.VISIBLE);
+      /*  binding.stepFour.tickSign.setVisibility(View.VISIBLE);
         binding.stepFour.btTransferMoney.setVisibility(View.VISIBLE);
-        binding.stepFour.btTransferMoney.setOnClickListener(this);
+        binding.stepFour.btTransferMoney.setOnClickListener(this);*/
     }
 
 
@@ -749,5 +759,20 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                         .getSimpleName())
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
+    }
+
+    private void checkDisclaimerKYCDialog( ) {
+        PrefModel prefModel=AppPref.INSTANCE.getModelInstance();
+        if(!prefModel.isPreKycDisclaimer()) {
+            DisclaimerKycDialog askDetailCustomDialog = new DisclaimerKycDialog(getActivity());
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(askDetailCustomDialog.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            askDetailCustomDialog.getWindow().setAttributes(lp);
+            Objects.requireNonNull(askDetailCustomDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            askDetailCustomDialog.setCancelable(false);
+            askDetailCustomDialog.show();
+        }
     }
 }

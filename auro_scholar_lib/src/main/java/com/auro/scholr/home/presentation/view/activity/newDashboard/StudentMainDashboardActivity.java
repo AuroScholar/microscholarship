@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
 import android.util.Base64;
 import android.util.DisplayMetrics;
@@ -38,10 +41,14 @@ import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.ActivityStudentMainDashboardBinding;
+import com.auro.scholr.home.data.SendOtpResModel;
+import com.auro.scholr.home.data.VerifyOtpResModel;
 import com.auro.scholr.home.data.datasource.remote.HomeRemoteApi;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.NavItemModel;
+import com.auro.scholr.home.data.model.SendOtpReqModel;
+import com.auro.scholr.home.data.model.VerifyOtpReqModel;
 import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.adapter.DrawerListAdapter;
 import com.auro.scholr.home.presentation.view.fragment.KYCFragment;
@@ -52,7 +59,11 @@ import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
 import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.TextUtil;
+import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.disclaimer.CustomOtpDialog;
+import com.auro.scholr.util.disclaimer.LoginDisclaimerDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -61,9 +72,12 @@ import com.bumptech.glide.request.RequestOptions;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import static com.auro.scholr.core.common.Status.SEND_OTP;
 
 public class StudentMainDashboardActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener, CommonCallBackListner {
 
@@ -103,6 +117,8 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
     ArrayList<NavItemModel> mNavItems = new ArrayList<NavItemModel>();
     DrawerListAdapter drawerListAdapter;
     QuizViewModel quizViewModel;
+    CustomOtpDialog customOtpDialog;
+
 
     public static int getListingActiveFragment() {
         return LISTING_ACTIVE_FRAGMENT;
@@ -144,12 +160,15 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         openFragment(new MainQuizHomeFragment());
-
+        checkDisclaimer();
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        prefModel.setUserLanguage("en");
+        AppPref.INSTANCE.setPref(prefModel);
 
     }
-    public void setDashboardApiCallingInPref(boolean status)
-    {
-        PrefModel prefModel=AppPref.INSTANCE.getModelInstance();
+
+    public void setDashboardApiCallingInPref(boolean status) {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         prefModel.setDashbaordApiCall(status);
         AppPref.INSTANCE.setPref(prefModel);
     }
@@ -240,7 +259,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         AppLogger.e("chhonker", "Activity requestCode=" + requestCode);
     }
 
-    private void popBackStack() {
+    public void popBackStack() {
         backPress = 0;
         getSupportFragmentManager().popBackStack();
     }
@@ -293,18 +312,45 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
                     break;
 
                 case SUCCESS:
+                    binding.progressbar.pgbar.setVisibility(View.GONE);
                     if (responseApi.apiTypeStatus == Status.DYNAMIC_LINK_API) {
-
+                    } else if (responseApi.apiTypeStatus == SEND_OTP) {
+                        SendOtpResModel sendOtp = (SendOtpResModel) responseApi.data;
+                        if (!sendOtp.getError()) {
+                            checkOtpDialog();
+                        }
+                    } else if (responseApi.apiTypeStatus == Status.VERIFY_OTP) {
+                        VerifyOtpResModel verifyOtp = (VerifyOtpResModel) responseApi.data;
+                        AppLogger.e(TAG, "Step 1");
+                        if (!verifyOtp.getError()) {
+                            // checkUserType();
+                            if (customOtpDialog != null && customOtpDialog.isShowing()) {
+                                customOtpDialog.dismiss();
+                                customOtpDialog.hideProgress();
+                                if (commonCallBackListner != null) {
+                                    commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(0, Status.OTP_VERIFY, ""));
+                                }
+                            }
+                            AppLogger.e(TAG, "Step 2");
+                        } else {
+                            AppLogger.e(TAG, "Step 3");
+                            if (customOtpDialog != null && customOtpDialog.isShowing()) {
+                                customOtpDialog.hideProgress();
+                                customOtpDialog.showSnackBar(verifyOtp.getMessage());
+                            }
+                        }
                     }
                     break;
 
                 case FAIL:
                 case NO_INTERNET:
+                    binding.progressbar.pgbar.setVisibility(View.GONE);
                     AppLogger.e("Error", (String) responseApi.data);
                     break;
 
 
                 default:
+                    binding.progressbar.pgbar.setVisibility(View.GONE);
                     AppLogger.e("Error", (String) responseApi.data);
                     break;
             }
@@ -379,8 +425,8 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
     }
 
 
-    public void loadPartnerLogo( ImageView imageView) {
-        if(AuroApp.getAuroScholarModel()!=null) {
+    public void loadPartnerLogo(ImageView imageView) {
+        if (AuroApp.getAuroScholarModel() != null) {
             String imgUrl = AuroApp.getAuroScholarModel().getPartnerLogo();
             if (!TextUtil.isEmpty(imgUrl)) {
                 imageView.setVisibility(View.VISIBLE);
@@ -394,5 +440,77 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
                 imageView.setVisibility(View.GONE);
             }
         }
+    }
+
+
+    private void checkDisclaimer() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (!prefModel.isPreLoginDisclaimer()) {
+            LoginDisclaimerDialog askDetailCustomDialog = new LoginDisclaimerDialog(this);
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(askDetailCustomDialog.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            askDetailCustomDialog.getWindow().setAttributes(lp);
+            Objects.requireNonNull(askDetailCustomDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            askDetailCustomDialog.setCancelable(false);
+            askDetailCustomDialog.show();
+        }
+    }
+
+
+    private void checkOtpDialog() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+
+        customOtpDialog = new CustomOtpDialog(this);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(customOtpDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        customOtpDialog.getWindow().setAttributes(lp);
+        Objects.requireNonNull(customOtpDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        customOtpDialog.setCancelable(false);
+        customOtpDialog.show();
+
+
+    }
+
+
+    public void sendOtpApiReqPass() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                binding.progressbar.pgbar.setVisibility(View.GONE);
+            }
+        }, 10000);
+        binding.progressbar.pgbar.setVisibility(View.VISIBLE);
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        String phonenumber = "91" + prefModel.getUserMobile();
+        SendOtpReqModel mreqmodel = new SendOtpReqModel();
+        mreqmodel.setMobileNo(phonenumber);
+        viewModel.sendOtpApi(mreqmodel);
+
+
+    }
+
+    public void verifyOtpRxApi(String otptext) {
+        ViewUtil.hideKeyboard(this);
+        if (customOtpDialog != null && customOtpDialog.isShowing()) {
+            customOtpDialog.showProgress();
+            VerifyOtpReqModel mverifyOtpRequestModel = new VerifyOtpReqModel();
+            PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+            mverifyOtpRequestModel.setUserType(0);
+            mverifyOtpRequestModel.setResgistrationSource("AuroScholr");
+            String phonenumber = "91" + prefModel.getUserMobile();
+            mverifyOtpRequestModel.setDeviceToken(prefModel.getDeviceToken());
+            mverifyOtpRequestModel.setMobileNumber(phonenumber);
+            mverifyOtpRequestModel.setOtpVerify(otptext);
+            viewModel.verifyOtpApi(mverifyOtpRequestModel);
+        }
+    }
+
+
+    public void setListner(CommonCallBackListner listner) {
+        this.commonCallBackListner = listner;
     }
 }

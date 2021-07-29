@@ -32,6 +32,7 @@ import com.auro.scholr.core.common.ValidationModel;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.databinding.BankFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalByBankAccountReqModel;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalReqModel;
 import com.auro.scholr.payment.data.model.response.PaytmResModel;
@@ -70,6 +71,11 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
     DashboardResModel mdashboard;
 
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ViewUtil.setLanguageonUi(getActivity());
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -81,10 +87,9 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
-        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SendMoneyViewModel.class);
         binding.setLifecycleOwner(this);
-        ViewUtil.setLanguageonUi(getActivity());
+        setRetainInstance(true);
         return binding.getRoot();
     }
 
@@ -92,11 +97,12 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
     @Override
     protected void init() {
 
+
         if (getArguments() != null) {
             mdashboard = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
         }
 
-        binding.walletBalText.setText("₹"+mdashboard.getApproved_scholarship_money()+".00");
+        binding.walletBalText.setText("₹" + mdashboard.getApproved_scholarship_money() + ".00");
 
         if (viewModel != null && viewModel.serviceLiveData().hasObservers()) {
             viewModel.serviceLiveData().removeObservers(this);
@@ -104,9 +110,22 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
         } else {
             observeServiceResponse();
         }
+
+
     }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            AppLogger.e("chhonker-", "isVisibleToUser Bank ");
+            if (getActivity() != null) {
+                AppLogger.e("chhonker-","isVisibleToUser Bank  YEs");
+                ((StudentMainDashboardActivity) getActivity()).setListner(this);
+                ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
+            }
+        }
 
-
+    }
 
     @Override
     protected void setToolbar() {
@@ -146,15 +165,28 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
 
     @Override
     public void commonEventListner(CommonDataModel commonDataModel) {
-
+        switch (commonDataModel.getClickType()) {
+            case OTP_VERIFY:
+                paytmentTransferApi();
+                break;
+        }
     }
-
 
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.send_button){
-            paytmentTransferApi();
+        if (v.getId() == R.id.send_button) {
+            String accountnumber = binding.accountNumber.getText().toString();
+            String confirmaccountnumber = binding.confirmAccountNumber.getText().toString();
+            String ifscCode = binding.ifscCode.getText().toString();
+
+            ValidationModel bankAccountvalidation = viewModel.paymentUseCase.isValidBankAccountNumber(accountnumber, ifscCode, confirmaccountnumber);
+
+            if (bankAccountvalidation.isStatus()) {
+                ((StudentMainDashboardActivity) getActivity()).sendOtpApiReqPass();
+            } else {
+                showSnackbarError(bankAccountvalidation.getMessage());
+            }
         }
 
     }
@@ -168,55 +200,26 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
         ft.detach(this).attach(this).commit();
     }
 
-    private void paytmwithdrawalAmountApi() {
-        String accountnumber = binding.accountNumber.getText().toString();
-        String confirmaccountnumber = binding.confirmAccountNumber.getText().toString();
-        String ifscCode = binding.ifscCode.getText().toString();
-
-        ValidationModel bankAccountvalidation = viewModel.paymentUseCase.isValidBankAccountNumber(accountnumber,ifscCode,confirmaccountnumber);
-
-        if(bankAccountvalidation.isStatus()){
-            PaytmWithdrawalByBankAccountReqModel reqModel = new PaytmWithdrawalByBankAccountReqModel();
-            reqModel.setMobileNo(AuroApp.getAuroScholarModel().getMobileNumber());
-            reqModel.setDisbursementMonth(DateUtil.getcurrentYearMothsNumber());
-            reqModel.setDisbursement(mdashboard.getApproved_scholarship_money());
-            reqModel.setBankaccountno(confirmaccountnumber);
-            reqModel.setIfsccode(ifscCode);
-            reqModel.setPurpose("OTHERS");
-            viewModel.paytmWithdrawalByAccount(reqModel);
-        }else{
-            showSnackbarError(bankAccountvalidation.getMessage());
-        }
-
-    }
 
     private void paytmentTransferApi() {
         String accountnumber = binding.accountNumber.getText().toString();
-        String confirmaccountnumber = binding.confirmAccountNumber.getText().toString();
         String ifscCode = binding.ifscCode.getText().toString();
-
-        ValidationModel bankAccountvalidation = viewModel.paymentUseCase.isValidBankAccountNumber(accountnumber,ifscCode,confirmaccountnumber);
-
-        if(bankAccountvalidation.isStatus()){
-            PaytmWithdrawalByBankAccountReqModel reqModel = new PaytmWithdrawalByBankAccountReqModel();
-            reqModel.setMobileNo(AuroApp.getAuroScholarModel().getMobileNumber());
-            reqModel.setStudentId(AppPref.INSTANCE.getModelInstance().getDashboardResModel().getStudent_id());
+        PaytmWithdrawalByBankAccountReqModel reqModel = new PaytmWithdrawalByBankAccountReqModel();
+        reqModel.setMobileNo(AuroApp.getAuroScholarModel().getMobileNumber());
+        reqModel.setStudentId(AppPref.INSTANCE.getModelInstance().getDashboardResModel().getStudent_id());
             /*reqModel.setMobileNo("9654234507");
             reqModel.setStudentId("4077466");*/
-            reqModel.setPaymentMode(AppConstant.PaymenMode.BANK_Transfer);
-            reqModel.setDisbursementMonth(DateUtil.getMonthName());
-            reqModel.setBeneficiary_name("");
-            reqModel.setBankaccountno(accountnumber);
-            reqModel.setIfsccode(ifscCode);
-            reqModel.setAmount(mdashboard.getApproved_scholarship_money());
-            //  reqModel.setAmount("1");
-            reqModel.setPurpose("Payment Transfer");
-            viewModel.paytmentTransfer(reqModel);
-        }else{
-            showSnackbarError(bankAccountvalidation.getMessage());
-        }
-
+        reqModel.setPaymentMode(AppConstant.PaymenMode.BANK_Transfer);
+        reqModel.setDisbursementMonth(DateUtil.getMonthName());
+        reqModel.setBeneficiary_name("");
+        reqModel.setBankaccountno(accountnumber);
+        reqModel.setIfsccode(ifscCode);
+        reqModel.setAmount(mdashboard.getApproved_scholarship_money());
+        //  reqModel.setAmount("1");
+        reqModel.setPurpose("Payment Transfer");
+        viewModel.paytmentTransfer(reqModel);
     }
+
     private void showSnackbarError(String message) {
         ViewUtil.showSnackBar(binding.getRoot(), message);
     }
@@ -230,22 +233,29 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
                 case LOADING:
                     //For ProgressBar
 
-                        openProgressDialog();
+                    openProgressDialog();
 
                     break;
 
                 case SUCCESS:
-                    if (responseApi.apiTypeStatus == PAYTM_ACCOUNT_WITHDRAWAL) {
+                   if (responseApi.apiTypeStatus == PAYTM_ACCOUNT_WITHDRAWAL) {
                         closeDialog();
                         PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
                         mpaytm.getResponse().replaceAll("\\\\", "");
                         //openPaymentDialog(mpaytm.getResponse());
-                    }else if(responseApi.apiTypeStatus == PAYMENT_TRANSFER_API)
-                    {
+                    } else if (responseApi.apiTypeStatus == PAYMENT_TRANSFER_API) {
                         closeDialog();
                         PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
                         openPaymentDialog(mpaytm);
                     }
+
+                    /*For testing purpose only*/
+                  /*  closeDialog();
+                    AppLogger.e("chhonker-", "PAYMENT_TRANSFER_API");
+                    PaytmResModel paytmResModel = new PaytmResModel();
+                    paytmResModel.setError(false);
+                    paytmResModel.setMessage("Request accepted");
+                    openPaymentDialog(paytmResModel);*/
 
                     break;
 
@@ -286,11 +296,14 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
         customProgressDialog.show();
         customProgressDialog.updateDataUi(0);
     }
+
     public void closeDialog() {
         if (customProgressDialog != null) {
             customProgressDialog.dismiss();
         }
     }
+
+
     private void openPaymentDialog(PaytmResModel resModel) {
         CustomDialogModel customDialogModel = new CustomDialogModel();
         customDialogModel.setContext(getActivity());
@@ -332,6 +345,7 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
         customDialog.show();
 
     }
+
     private void setKeyListner() {
         this.getView().setFocusableInTouchMode(true);
         this.getView().requestFocus();
@@ -339,7 +353,7 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    ((SendMoneyFragment)getParentFragment()).onBackPressed();
+                    ((SendMoneyFragment) getParentFragment()).onBackPressed();
                     return true;
                 }
                 return false;

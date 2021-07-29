@@ -32,10 +32,12 @@ import com.auro.scholr.core.common.ValidationModel;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.databinding.PaytmFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalByBankAccountReqModel;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalReqModel;
 import com.auro.scholr.payment.data.model.response.PaytmResModel;
 import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
@@ -57,7 +59,7 @@ import static com.auro.scholr.core.common.Status.PAYTM_WITHDRAWAL;
 public class PaytmFragment extends BaseFragment implements CommonCallBackListner, View.OnClickListener {
 
     @Inject
-    @Named("SendMoneyFragment")
+    @Named("PaytmFragment")
     ViewModelFactory viewModelFactory;
     PaytmFragmentLayoutBinding binding;
     SendMoneyViewModel viewModel;
@@ -98,9 +100,25 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         } else {
             observeServiceResponse();
         }
+        AppLogger.e("chhonker-", "init");
 
+        ((StudentMainDashboardActivity) getActivity()).setListner(this);
+        ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            AppLogger.e("chhonker-", "isVisibleToUser Paytm ");
+            if (getActivity() != null) {
+                AppLogger.e("chhonker-","isVisibleToUser Paytm  YEs");
+                ((StudentMainDashboardActivity) getActivity()).setListner(this);
+                ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
+            }
+        }
+
+    }
 
     @Override
     protected void setToolbar() {
@@ -140,7 +158,18 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
 
     @Override
     public void commonEventListner(CommonDataModel commonDataModel) {
+        switch (commonDataModel.getClickType()) {
+            case OTP_VERIFY:
+                AppLogger.e("chhonker-", "callSendMoneyApi");
+                callSendMoneyApi();
+                break;
+        }
+    }
 
+    public void callSendMoneyApi() {
+        AppLogger.e("chhonker-", "callSendMoneyApi");
+
+        paytmentTransferApi();
     }
 
 
@@ -151,7 +180,15 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.send_button) {
-            paytmentTransferApi();
+            String phonenumber = binding.numberEdittext.getText().toString();
+
+            ValidationModel validation = viewModel.paymentUseCase.isVlaidPhoneNumber(phonenumber);
+            if (validation.isStatus()) {
+                ((StudentMainDashboardActivity) getActivity()).sendOtpApiReqPass();
+            } else {
+                showSnackbarError(validation.getMessage());
+            }
+
         }
 
     }
@@ -221,7 +258,9 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
                     break;
 
                 case SUCCESS:
-                    if (responseApi.apiTypeStatus == PAYTM_WITHDRAWAL) {
+                    AppLogger.e("chhonker-", " SUCCESS callSendMoneyApi");
+
+                  if (responseApi.apiTypeStatus == PAYTM_WITHDRAWAL) {
                         closeDialog();
                         PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
                         mpaytm.getResponse().replaceAll("\\\\", "");
@@ -232,6 +271,14 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
                         PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
                         openPaymentDialog(mpaytm);
                     }
+
+                 /*   *//*For testing purpose only*//*
+                    closeDialog();
+                    AppLogger.e("chhonker-", "PAYMENT_TRANSFER_API");
+                    PaytmResModel paytmResModel = new PaytmResModel();
+                    paytmResModel.setError(false);
+                    paytmResModel.setMessage("Request accepted");
+                    openPaymentDialog(paytmResModel);*/
                     break;
 
                 case NO_INTERNET:
@@ -317,6 +364,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         customDialog.show();
 
     }
+
     private void setKeyListner() {
         this.getView().setFocusableInTouchMode(true);
         this.getView().requestFocus();
@@ -324,15 +372,13 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    ((SendMoneyFragment)getParentFragment()).onBackPressed();
+                    ((SendMoneyFragment) getParentFragment()).onBackPressed();
                     return true;
                 }
                 return false;
             }
         });
     }
-
-
 
 
 }

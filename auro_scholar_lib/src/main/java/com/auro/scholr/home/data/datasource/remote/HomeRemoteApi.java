@@ -143,4 +143,14 @@ public interface HomeRemoteApi {
 
     @POST(URLConstant.PASSPORT_API)
     Single<Response<JsonObject>> passportApi(@HeaderMap Map<String, String> headerMap, @Body PassportReqModel requestBody);
+
+
+    @POST(URLConstant.OTP_SEND_API)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> sendOTP(@FieldMap Map<String,String> params);
+
+
+    @POST(URLConstant.OTP_VERIFY)
+    @FormUrlEncoded
+    Single<Response<JsonObject>> verifyOTP(@FieldMap Map<String,String> params);
 }

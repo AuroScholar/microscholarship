@@ -80,4 +80,8 @@ public interface URLConstant {
     String TERM_CONDITION = "https://auroscholar.com/terms-of-use.php";
 
 
+    String OTP_SEND_API = BASE_URL + "otp_send_new.php";
+
+    String OTP_VERIFY = BASE_URL + "app_otp_verify.php";
+
 }

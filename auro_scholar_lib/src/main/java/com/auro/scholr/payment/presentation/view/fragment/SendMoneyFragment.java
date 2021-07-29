@@ -3,13 +3,16 @@ package com.auro.scholr.payment.presentation.view.fragment;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -39,11 +42,14 @@ import com.auro.scholr.home.presentation.view.fragment.KYCViewFragment;
 import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
 import com.auro.scholr.payment.presentation.view.adapter.ViewPagerAdapter;
 import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.ViewUtil;
+import com.auro.scholr.util.disclaimer.DisclaimerMoneyTransferDialog;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -67,12 +73,16 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
+        if (binding != null) {
+            return binding.getRoot();
+        }
+       binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
         AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SendMoneyViewModel.class);
         binding.setLifecycleOwner(this);
         ViewUtil.setLanguageonUi(getActivity());
+        checkDisclaimerMoneyDialog();
         return binding.getRoot();
     }
 
@@ -283,7 +293,27 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
     }
 
     public void backButton() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        prefModel.setDashbaordApiCall(true);
+        AppPref.INSTANCE.setPref(prefModel);
+        PrefModel prefModel2 = AppPref.INSTANCE.getModelInstance();
+        AppLogger.e("chhonker backButton --", "" + prefModel2.isDashbaordApiCall());
         getActivity().getSupportFragmentManager().popBackStack();
         getActivity().getSupportFragmentManager().popBackStack();
+    }
+
+    private void checkDisclaimerMoneyDialog() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (!prefModel.isPreMoneyTransferDisclaimer()) {
+            DisclaimerMoneyTransferDialog askDetailCustomDialog = new DisclaimerMoneyTransferDialog(getActivity());
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(askDetailCustomDialog.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            askDetailCustomDialog.getWindow().setAttributes(lp);
+            Objects.requireNonNull(askDetailCustomDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            askDetailCustomDialog.setCancelable(false);
+            askDetailCustomDialog.show();
+        }
     }
 }

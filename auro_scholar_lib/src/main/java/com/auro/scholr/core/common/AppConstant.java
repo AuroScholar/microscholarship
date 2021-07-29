@@ -398,4 +398,26 @@ public interface AppConstant {
         String FEMALE = "Female";
         String OTHER = "Other";
     }
+
+
+    interface SendOtpRequest {
+        String PHONENUMBER = "mobile_no";
+        String OTPVERIFY = "otp_val";
+        String EMAILID = "email_id";
+        String STUDENT_CLASS = "student_class";
+        String USER_TYPE = "user_type";
+    }
+    interface userTypeLogin {
+
+        String SELECT_USERTYPE = "Please Select the UserType";
+        String SELECTED = "";
+
+        int TEACHER = 1;
+        int STUDENT = 2;
+
+
+        String API_PARAM_STUDENT="0";
+        String API_PARAM_TEACHER="1";
+
+    }
 }

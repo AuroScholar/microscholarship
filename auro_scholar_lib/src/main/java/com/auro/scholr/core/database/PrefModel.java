@@ -28,6 +28,45 @@ public class PrefModel implements Serializable {
 
     private QuizResModel quizResModel;
 
+    private boolean preLoginDisclaimer;
+
+    private boolean preQuizDisclaimer;
+
+    private boolean preKycDisclaimer;
+
+    private boolean preMoneyTransferDisclaimer;
+
+    public boolean isPreLoginDisclaimer() {
+        return preLoginDisclaimer;
+    }
+
+    public void setPreLoginDisclaimer(boolean preLoginDisclaimer) {
+        this.preLoginDisclaimer = preLoginDisclaimer;
+    }
+
+    public boolean isPreQuizDisclaimer() {
+        return preQuizDisclaimer;
+    }
+
+    public void setPreQuizDisclaimer(boolean preQuizDisclaimer) {
+        this.preQuizDisclaimer = preQuizDisclaimer;
+    }
+
+    public boolean isPreKycDisclaimer() {
+        return preKycDisclaimer;
+    }
+
+    public void setPreKycDisclaimer(boolean preKycDisclaimer) {
+        this.preKycDisclaimer = preKycDisclaimer;
+    }
+
+    public boolean isPreMoneyTransferDisclaimer() {
+        return preMoneyTransferDisclaimer;
+    }
+
+    public void setPreMoneyTransferDisclaimer(boolean preMoneyTransferDisclaimer) {
+        this.preMoneyTransferDisclaimer = preMoneyTransferDisclaimer;
+    }
 
     public String getDeviceToken() {
         return deviceToken;

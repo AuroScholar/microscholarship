@@ -6,6 +6,8 @@ import com.auro.scholr.core.common.NetworkUtil;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.network.NetworkUseCase;
+import com.auro.scholr.home.data.SendOtpResModel;
+import com.auro.scholr.home.data.VerifyOtpResModel;
 import com.auro.scholr.home.data.model.AcceptInviteRequest;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AssignmentResModel;
@@ -24,7 +26,9 @@ import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.KYCResListModel;
 import com.auro.scholr.home.data.model.NearByFriendList;
 import com.auro.scholr.home.data.model.SaveImageReqModel;
+import com.auro.scholr.home.data.model.SendOtpReqModel;
 import com.auro.scholr.home.data.model.StudentProfileModel;
+import com.auro.scholr.home.data.model.VerifyOtpReqModel;
 import com.auro.scholr.home.data.model.passportmodels.PassportMonthModel;
 import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
@@ -60,8 +64,10 @@ import static com.auro.scholr.core.common.Status.INVITE_FRIENDS_LIST;
 import static com.auro.scholr.core.common.Status.PASSPORT_API;
 import static com.auro.scholr.core.common.Status.SEND_FRIENDS_REQUEST;
 import static com.auro.scholr.core.common.Status.SEND_INVITE_API;
+import static com.auro.scholr.core.common.Status.SEND_OTP;
 import static com.auro.scholr.core.common.Status.UPDATE_STUDENT;
 import static com.auro.scholr.core.common.Status.UPLOAD_EXAM_FACE_API;
+import static com.auro.scholr.core.common.Status.VERIFY_OTP;
 
 public class HomeRemoteUseCase extends NetworkUseCase {
     HomeRepo.DashboardRemoteData dashboardRemoteData;
@@ -382,6 +388,45 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         });
     }
 
+    public Single<ResponseApi> sendOtpApi(SendOtpReqModel reqModel) {
+        return dashboardRemoteData.sendOtpHomeRepo(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+
+
+                    return handleResponse(response, SEND_OTP);
+
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
+    public Single<ResponseApi> verifyOtpApi(VerifyOtpReqModel reqModel) {
+        return dashboardRemoteData.verifyOtpHomeRepo(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+
+
+                    return handleResponse(response, VERIFY_OTP);
+
+
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
+
     private ResponseApi handleResponse(Response<JsonObject> response, Status apiTypeStatus) {
 
         switch (response.code()) {
@@ -468,6 +513,12 @@ public class HomeRemoteUseCase extends NetworkUseCase {
             GetStudentUpdateProfile getStudentUpdateProfile = gson.fromJson(response.body(), GetStudentUpdateProfile.class);
             AppLogger.v("RemoteApi",""+UPDATE_STUDENT);
             return ResponseApi.success(getStudentUpdateProfile, status);
+        } else if (status == SEND_OTP) {
+            SendOtpResModel sendOtpResModel = gson.fromJson(response.body(), SendOtpResModel.class);
+            return ResponseApi.success(sendOtpResModel, status);
+        }else if (status == VERIFY_OTP) {
+            VerifyOtpResModel verifyOtpResModel = gson.fromJson(response.body(), VerifyOtpResModel.class);
+            return ResponseApi.success(verifyOtpResModel, status);
         }
 
 
@@ -495,5 +546,8 @@ public class HomeRemoteUseCase extends NetworkUseCase {
     public ResponseApi responseFail(Status status) {
         return ResponseApi.fail(AuroApp.getAppContext().getResources().getString(R.string.default_error), status);
     }
+
+
+
 
 }

@@ -34,11 +34,13 @@ import com.auro.scholr.core.common.Upipsp;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.databinding.UpiFragmentLayoutBinding;
 import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalByBankAccountReqModel;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalByUPIReqModel;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalReqModel;
 import com.auro.scholr.payment.data.model.response.PaytmResModel;
 import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.DateUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.alert_dialog.CustomDialog;
@@ -64,7 +66,7 @@ import static com.auro.scholr.core.common.Status.PAYTM_WITHDRAWAL;
 public class UPIFragment extends BaseFragment implements CommonCallBackListner, View.OnClickListener {
 
     @Inject
-    @Named("SendMoneyFragment")
+    @Named("UPIFragment")
     ViewModelFactory viewModelFactory;
     UpiFragmentLayoutBinding binding;
     SendMoneyViewModel viewModel;
@@ -72,6 +74,12 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
     private String TAG = "UPIFragment";
     CustomProgressDialog customProgressDialog;
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ViewUtil.setLanguageonUi(getActivity());
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -83,15 +91,15 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         AuroApp.getAppComponent().doInjection(this);
-        AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SendMoneyViewModel.class);
         binding.setLifecycleOwner(this);
-        ViewUtil.setLanguageonUi(getActivity());
+        setRetainInstance(true);
         return binding.getRoot();
     }
 
     @Override
     protected void init() {
+
         if (getArguments() != null) {
             mdashboard = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
         }
@@ -103,8 +111,25 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
         } else {
             observeServiceResponse();
         }
-    }
 
+       // ((StudentMainDashboardActivity) getActivity()).setListner(this);
+       // ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
+
+    }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            AppLogger.e("chhonker-","isVisibleToUser UPI ");
+            if (getActivity() != null) {
+                AppLogger.e("chhonker-","isVisibleToUser UPI  YEs");
+
+                ((StudentMainDashboardActivity) getActivity()).setListner(this);
+                ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
+            }
+        }
+
+    }
 
     @Override
     protected void setToolbar() {
@@ -137,12 +162,19 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
     @Override
     public void onResume() {
         super.onResume();
+        AppLogger.e("chhonker-","onResume UPI ");
+
     }
 
 
     @Override
     public void commonEventListner(CommonDataModel commonDataModel) {
 
+        switch (commonDataModel.getClickType()) {
+            case OTP_VERIFY:
+                paytmentwTransferApi();
+                break;
+        }
     }
 
 
@@ -154,73 +186,54 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
     public void onClick(View v) {
 
         if (v.getId() == R.id.send_button) {
-            paytmentwTransferApi();
+
+            List<Upipsp> pips = Arrays.asList(Upipsp.values());
+
+            List<String> pipstring = new ArrayList<>();
+            for (Upipsp pipslist : pips) {
+                pipstring.add(pipslist.name());
+            }
+            String upiId = binding.numberEdittext.getText().toString();
+            String separator = "@";
+            int sepPos = upiId.indexOf(separator);
+            boolean isPsp = pipstring.contains(upiId.substring(sepPos + separator.length()));
+            if (isPsp) {
+                ((StudentMainDashboardActivity) getActivity()).sendOtpApiReqPass();
+            } else {
+                ViewUtil.showSnackBar(binding.getRoot(), getActivity().getResources().getString(R.string.psp_not_register));
+            }
         }
     }
 
 
     private void reloadFragment() {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         if (Build.VERSION.SDK_INT >= 26) {
             ft.setReorderingAllowed(false);
         }
         ft.detach(this).attach(this).commit();
     }
 
-    private void paytmwithdrawalAmountApi() {
-
-        List<Upipsp> pips = Arrays.asList(Upipsp.values());
-
-        List<String> pipstring = new ArrayList<>();
-        for (Upipsp pipslist : pips) {
-            pipstring.add(pipslist.name());
-        }
-        String upiId = binding.numberEdittext.getText().toString();
-        String separator = "@";
-        int sepPos = upiId.indexOf(separator);
-        boolean isPsp = pipstring.contains(upiId.substring(sepPos + separator.length()));
-        if (isPsp) {
-            PaytmWithdrawalByUPIReqModel reqModel = new PaytmWithdrawalByUPIReqModel();
-            reqModel.setMobileNo(AuroApp.getAuroScholarModel().getMobileNumber());
-            reqModel.setUpiaddress(upiId);
-            reqModel.setDisbursementMonth(DateUtil.getcurrentYearMothsNumber());
-            reqModel.setDisbursement(mdashboard.getApproved_scholarship_money());
-            reqModel.setPurpose("OTHERS");
-            viewModel.paytmWithdrawalByUPI(reqModel);
-        } else {
-            ViewUtil.showSnackBar(binding.getRoot(), "PSP is not registered");
-        }
-
-    }
     private void paytmentwTransferApi() {
-        List<Upipsp> pips = Arrays.asList(Upipsp.values());
-        List<String> pipstring = new ArrayList<>();
-        for (Upipsp pipslist : pips) {
-            pipstring.add(pipslist.name());
-        }
+
         String upiId = binding.numberEdittext.getText().toString();
-        String separator = "@";
-        int sepPos = upiId.indexOf(separator);
-        boolean isPsp = pipstring.contains(upiId.substring(sepPos + separator.length()));
-        if (isPsp) {
-            PaytmWithdrawalByBankAccountReqModel reqModel = new PaytmWithdrawalByBankAccountReqModel();
-            reqModel.setMobileNo(AuroApp.getAuroScholarModel().getMobileNumber());
-            reqModel.setStudentId(AppPref.INSTANCE.getModelInstance().getDashboardResModel().getStudent_id());
+        PaytmWithdrawalByBankAccountReqModel reqModel = new PaytmWithdrawalByBankAccountReqModel();
+        reqModel.setMobileNo(AuroApp.getAuroScholarModel().getMobileNumber());
+        reqModel.setStudentId(AppPref.INSTANCE.getModelInstance().getDashboardResModel().getStudent_id());
            /* reqModel.setMobileNo("9654234507");
             reqModel.setStudentId("4077466");*/
-            reqModel.setPaymentMode(AppConstant.PaymenMode.UPI);
-            reqModel.setDisbursementMonth(DateUtil.getMonthName());
-            reqModel.setBeneficiary_name("");
-            reqModel.setUpiAddress(upiId);
-            reqModel.setAmount(mdashboard.getApproved_scholarship_money());
-            //reqModel.setAmount("1");
-            reqModel.setPurpose("Payment Transfer");
-            viewModel.paytmentTransfer(reqModel);
-        } else {
-            ViewUtil.showSnackBar(binding.getRoot(), getActivity().getResources().getString(R.string.psp_not_register));
-        }
+        reqModel.setPaymentMode(AppConstant.PaymenMode.UPI);
+        reqModel.setDisbursementMonth(DateUtil.getMonthName());
+        reqModel.setBeneficiary_name("");
+        reqModel.setUpiAddress(upiId);
+        reqModel.setAmount(mdashboard.getApproved_scholarship_money());
+        //reqModel.setAmount("1");
+        reqModel.setPurpose("Payment Transfer");
+        viewModel.paytmentTransfer(reqModel);
+
 
     }
+
     private void observeServiceResponse() {
 
         viewModel.serviceLiveData().observeForever(responseApi -> {
@@ -229,36 +242,31 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
 
                 case LOADING:
                     //For ProgressBar
+
                     openProgressDialog();
 
                     break;
 
                 case SUCCESS:
-                    if (responseApi.apiTypeStatus == PAYTM_UPI_WITHDRAWAL) {
+                   if (responseApi.apiTypeStatus == PAYTM_UPI_WITHDRAWAL) {
                         closeDialog();
                         PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
                         mpaytm.getResponse().replaceAll("\\\\", "");
-                        //openPaymentDialog(mpaytm.getResponse());
-                        if (!mpaytm.isError()) {
+                        AppLogger.v("Upi_transfer","Data Transfer"+mpaytm);
 
-                            //checkStatusforCongratulationDialog();
-                           /* if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
-                                handleProgress(2, dashboardResModel.getMessage());
-                            } else {
-                                setDataOnUi(dashboardResModel);
-                            }*/
-                        } else {
-                            //  handleProgress(2, dashboardResModel.getMessage());
-                        }
-
-                    }
-                    else if(responseApi.apiTypeStatus == PAYMENT_TRANSFER_API)
-                    {
+                    } else if (responseApi.apiTypeStatus == PAYMENT_TRANSFER_API) {
                         closeDialog();
                         PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
                         openPaymentDialog(mpaytm);
                     }
 
+                  /*  *//*For testing purpose only*//*
+                    closeDialog();
+                    AppLogger.e("chhonker-", "PAYMENT_TRANSFER_API");
+                    PaytmResModel paytmResModel = new PaytmResModel();
+                    paytmResModel.setError(false);
+                    paytmResModel.setMessage("Request accepted");
+                    openPaymentDialog(paytmResModel);*/
                     break;
 
                 case NO_INTERNET:
@@ -352,7 +360,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    ((SendMoneyFragment)getParentFragment()).onBackPressed();
+                    ((SendMoneyFragment) getParentFragment()).onBackPressed();
                     return true;
                 }
                 return false;

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_10sdp"
+
+            android:layout_marginBottom="@dimen/_20sdp"
+
+            app:cardElevation="@dimen/_8sdp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:orientation="vertical">
+
+
+
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:orientation="vertical">
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/left_corner_image"
+                            android:text="Enter OTP!"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_18sdp"
+                            app:Font="Calibre-Light.ttf"/>
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/left_corner_image"
+                            android:text="OTP has been sent to this number"
+                            android:textColor="@color/ui_color_code"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:textSize="@dimen/_11sdp" />
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/mobileNumberText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/left_corner_image"
+                            android:text="886******9"
+                            android:textColor="@color/ui_color_code"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:textSize="@dimen/_11sdp" />
+
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/mobile_number_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/left_corner_image"
+                            android:text=""
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <com.chaos.view.PinView
+                            android:id="@+id/otp_view"
+                            android:layout_gravity="center_horizontal"
+                            style="@style/PinWidget.PinView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:cursorVisible="true"
+                            android:inputType="number"
+                            android:itemBackground="@color/transparent"
+                            android:padding="@dimen/_12sdp"
+                            android:focusableInTouchMode="true"
+                            android:focusable="true"
+                            android:textColor="@color/blue_color"
+                            android:textSize="@dimen/_14sdp"
+                            android:textStyle="bold"
+                            app:cursorColor="@color/blue_color"
+                            app:cursorWidth="2dp"
+                            app:hideLineWhenFilled="false"
+                            app:itemCount="6"
+                            app:itemHeight="@dimen/_30sdp"
+                            app:itemSpacing="@dimen/_5sdp"
+                            app:itemWidth="@dimen/_30sdp"
+                            app:lineColor="@color/grey_color"
+                            app:lineWidth="@dimen/_1sdp"
+                            app:viewType="line" />
+
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/resend_timer_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/left_corner_image"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:layout_marginBottom="@dimen/_7sdp"
+                            android:text="Resend Code In 00:47"
+                            android:textAlignment="center"
+                            android:textColor="@color/blue_color"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <RelativeLayout
+
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/RPVerify"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:background="@drawable/button_continue"
+                                android:padding="@dimen/_11sdp"
+                                android:text="@string/resend_code"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_11sdp"
+                                android:visibility="gone"
+                                app:Font="ArticulatCF-Regular.otf" />
+
+
+                            <ProgressBar
+                                android:id="@+id/progressBar_2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:elevation="@dimen/_2sdp"
+                                android:indeterminateDrawable="@drawable/circular_progress"
+                                android:innerRadiusRatio="3"
+                                android:visibility="gone"
+                                android:layout_centerInParent="true"
+                                />
+
+                        </RelativeLayout>
+
+
+
+
+
+
+
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/closeButton"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_below="@+id/cardViewItem"
+
+            android:layout_centerHorizontal="true"
+
+            android:src="@drawable/ic_cross_close" />
+
+
+
+
+    </RelativeLayout>
+</layout>
