@@ -113,14 +113,15 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
 
 
     }
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             AppLogger.e("chhonker-", "isVisibleToUser Bank ");
+            StudentMainDashboardActivity.setListner(this);
             if (getActivity() != null) {
-                AppLogger.e("chhonker-","isVisibleToUser Bank  YEs");
-                ((StudentMainDashboardActivity) getActivity()).setListner(this);
+                AppLogger.e("chhonker-", "isVisibleToUser Bank  YEs");
                 ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
             }
         }
@@ -238,7 +239,7 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
                     break;
 
                 case SUCCESS:
-                   if (responseApi.apiTypeStatus == PAYTM_ACCOUNT_WITHDRAWAL) {
+                    if (responseApi.apiTypeStatus == PAYTM_ACCOUNT_WITHDRAWAL) {
                         closeDialog();
                         PaytmResModel mpaytm = (PaytmResModel) responseApi.data;
                         mpaytm.getResponse().replaceAll("\\\\", "");

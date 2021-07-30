@@ -79,6 +79,7 @@ public class CustomOtpDialog extends Dialog implements View.OnClickListener {
     public void hideProgress() {
         binding.RPVerify.setVisibility(View.GONE);
         binding.progressBar2.setVisibility(View.GONE);
+        binding.otpView.setText("");
     }
 
     public void showSnackBar(String msg) {

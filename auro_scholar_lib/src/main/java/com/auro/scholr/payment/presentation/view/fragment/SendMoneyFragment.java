@@ -43,6 +43,7 @@ import com.auro.scholr.home.presentation.viewmodel.DemographicViewModel;
 import com.auro.scholr.payment.presentation.view.adapter.ViewPagerAdapter;
 import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.disclaimer.DisclaimerMoneyTransferDialog;
 import com.google.android.material.tabs.TabLayout;
@@ -96,7 +97,7 @@ public class SendMoneyFragment extends BaseFragment implements CommonCallBackLis
         }
         initialiseTabs();
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
+        if (prefModel!=null && !TextUtil.isEmpty(prefModel.getUserLanguage()) && prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
             setLanguageText(AppConstant.HINDI);
         } else {
             setLanguageText(AppConstant.ENGLISH);

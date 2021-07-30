@@ -110,7 +110,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
     public static final int QUIZ_TEST_FRAGMENT = 10;
 
 
-    CommonCallBackListner commonCallBackListner;
+   public static  CommonCallBackListner commonCallBackListner;
 
     AuroScholarDataModel auroScholarDataModel;
     ActionBarDrawerToggle mDrawerToggle;
@@ -510,7 +510,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
     }
 
 
-    public void setListner(CommonCallBackListner listner) {
-        this.commonCallBackListner = listner;
+    public static void setListner(CommonCallBackListner listner) {
+      commonCallBackListner = listner;
     }
 }

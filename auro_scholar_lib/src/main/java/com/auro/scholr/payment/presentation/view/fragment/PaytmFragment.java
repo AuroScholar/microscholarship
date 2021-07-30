@@ -102,7 +102,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         }
         AppLogger.e("chhonker-", "init");
 
-        ((StudentMainDashboardActivity) getActivity()).setListner(this);
+        StudentMainDashboardActivity.setListner(this);
         ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
     }
 
@@ -113,7 +113,6 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
             AppLogger.e("chhonker-", "isVisibleToUser Paytm ");
             if (getActivity() != null) {
                 AppLogger.e("chhonker-","isVisibleToUser Paytm  YEs");
-                ((StudentMainDashboardActivity) getActivity()).setListner(this);
                 ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
             }
         }

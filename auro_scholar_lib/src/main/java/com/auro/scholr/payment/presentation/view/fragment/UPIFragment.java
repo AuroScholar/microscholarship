@@ -112,8 +112,9 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
             observeServiceResponse();
         }
 
-       // ((StudentMainDashboardActivity) getActivity()).setListner(this);
-       // ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
+        StudentMainDashboardActivity.setListner(this);
+
+        // ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
 
     }
     @Override
@@ -123,8 +124,6 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
             AppLogger.e("chhonker-","isVisibleToUser UPI ");
             if (getActivity() != null) {
                 AppLogger.e("chhonker-","isVisibleToUser UPI  YEs");
-
-                ((StudentMainDashboardActivity) getActivity()).setListner(this);
                 ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
             }
         }
