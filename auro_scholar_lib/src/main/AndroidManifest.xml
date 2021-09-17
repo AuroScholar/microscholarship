@@ -68,29 +68,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <!--
-     <provider android:authorities="com.facebook.app.FacebookContentProvider1614821145461747"
-                 android:name="com.facebook.FacebookContentProvider"
-                 android:exported="true"/>
-        -->
-        <!--
- <meta-data
-             android:name="com.google.android.geo.API_KEY"
-             android:value="@string/google_api_places_key" />
-        -->
-        <!--
-<provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.auro.scholr.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-
-            &lt;!&ndash; ressource file to create &ndash;&gt;
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
-        -->
         <activity
             android:name=".util.cropper.CropImagesActivity"
             android:theme="@style/Base.Theme.AppCompat" />
