@@ -18,7 +18,8 @@
         android:required="true" />
 
     <application
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:largeHeap="true">
         <activity android:name=".home.presentation.view.activity.newDashboard.StudentMainDashboardActivity"></activity>
 
         <meta-data
