@@ -19,6 +19,17 @@
         <item name="android:windowActionBarOverlay">true</item>
     </style>
 
+
+
+        <style name="AppThemeNew" parent="Theme.AppCompat.Light.NoActionBar">
+            <!-- Customize your theme here. -->
+            <item name="colorPrimary">@color/colorPrimary</item>
+            <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+            <item name="colorAccent">@color/colorAccent</item>
+            <item name="android:windowBackground">@color/background</item>
+        </style>
+
+
 <!--    <style name="CustomAlertDialog" parent="android:Theme.Holo.Dialog.NoActionBar" >
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
