@@ -19,7 +19,6 @@
 
     <application
         android:usesCleartextTraffic="true"
-        android:hardwareAccelerated="false"
         android:largeHeap="true">
         <activity android:name=".home.presentation.view.activity.newDashboard.StudentMainDashboardActivity"></activity>
 
