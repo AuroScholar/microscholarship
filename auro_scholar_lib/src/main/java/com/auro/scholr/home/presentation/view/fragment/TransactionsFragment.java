@@ -60,7 +60,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 
-public class TransactionsFragment  extends BaseFragment implements View.OnClickListener{
+public class    TransactionsFragment  extends BaseFragment implements View.OnClickListener{
 
     @Inject
     @Named("TransactionsFragment")
