@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/itemSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        >
+
+        <LinearLayout
+            android:id="@+id/main_parent_layout"
+            android:layout_width="@dimen/_160sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/chemistry_subject"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/RPTextViewTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:text="English"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp"
+                    app:Font="ArticulatCF-Regular.otf" />
+
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/totalQuizText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:text="04 Quiz"
+                    android:textAlignment="center"
+                    android:textColor="@color/grey_color"
+                    android:textSize="@dimen/_12sdp"
+                    app:Font="ArticulatCF-Regular.otf" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/check_icon"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_auro_check" />
+
+        <RelativeLayout
+            android:id="@+id/lock_layout"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:visibility="gone"
+            android:background="@drawable/disable_background"
+            android:layout_width="@dimen/_160sdp"
+            android:layout_height="@dimen/_70sdp"/>
+
+
+    </RelativeLayout>
+</layout>
