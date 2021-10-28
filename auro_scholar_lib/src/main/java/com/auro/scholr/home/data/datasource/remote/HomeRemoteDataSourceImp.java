@@ -302,5 +302,4 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
     public Single<Response<JsonObject>> fetchStudentPreferenceApi(FetchStudentPrefReqModel reqModel) {
         return homeRemoteApi.fetchStudentPreferenceApi(reqModel);
     }
-
 }
