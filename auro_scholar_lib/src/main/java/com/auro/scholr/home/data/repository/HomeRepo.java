@@ -5,11 +5,13 @@ import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.CertificateResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
+import com.auro.scholr.home.data.model.FetchStudentPrefReqModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.SaveImageReqModel;
 import com.auro.scholr.home.data.model.SendOtpReqModel;
 import com.auro.scholr.home.data.model.StudentProfileModel;
+import com.auro.scholr.home.data.model.UpdatePrefReqModel;
 import com.auro.scholr.home.data.model.VerifyOtpReqModel;
 import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
 import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
@@ -64,6 +66,12 @@ public interface HomeRepo {
         Single<Response<JsonObject>> sendOtpHomeRepo(SendOtpReqModel reqModel);
 
         Single<Response<JsonObject>> verifyOtpHomeRepo(VerifyOtpReqModel reqModel);
+
+        Single<Response<JsonObject>> preferenceSubjectList();
+
+        Single<Response<JsonObject>> updateStudentPreference(UpdatePrefReqModel reqModel);
+
+        Single<Response<JsonObject>> fetchStudentPreferenceApi(FetchStudentPrefReqModel reqModel);
     }
 
 

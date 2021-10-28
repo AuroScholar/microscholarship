@@ -9,11 +9,13 @@ import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.CertificateResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
+import com.auro.scholr.home.data.model.FetchStudentPrefReqModel;
 import com.auro.scholr.home.data.model.KYCDocumentDatamodel;
 import com.auro.scholr.home.data.model.KYCInputModel;
 import com.auro.scholr.home.data.model.SaveImageReqModel;
 import com.auro.scholr.home.data.model.SendOtpReqModel;
 import com.auro.scholr.home.data.model.StudentProfileModel;
+import com.auro.scholr.home.data.model.UpdatePrefReqModel;
 import com.auro.scholr.home.data.model.VerifyOtpReqModel;
 import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
 import com.auro.scholr.home.data.repository.HomeRepo;
@@ -281,6 +283,24 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         params.put(AppConstant.SendOtpRequest.PHONENUMBER, reqModel.getMobileNumber());
         params.put(AppConstant.SendOtpRequest.OTPVERIFY, reqModel.getOtpVerify());
         return homeRemoteApi.verifyOTP(params);
+    }
+    @Override
+    public Single<Response<JsonObject>> preferenceSubjectList() {
+
+        Map<String,String>  requestMap=new HashMap<>();
+        requestMap.put("student_class",""+AppPref.INSTANCE.getModelInstance().getStudentClass());
+        return homeRemoteApi.preferenceSubjectList(requestMap);
+    }
+
+    @Override
+    public Single<Response<JsonObject>> updateStudentPreference(UpdatePrefReqModel reqModel) {
+        return homeRemoteApi.updateStudentPreference(reqModel);
+    }
+
+
+    @Override
+    public Single<Response<JsonObject>> fetchStudentPreferenceApi(FetchStudentPrefReqModel reqModel) {
+        return homeRemoteApi.fetchStudentPreferenceApi(reqModel);
     }
 
 }

@@ -18,6 +18,7 @@ import com.auro.scholr.home.data.model.ChallengeAccepResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
+import com.auro.scholr.home.data.model.FetchStudentPrefReqModel;
 import com.auro.scholr.home.data.model.FriendListResDataModel;
 import com.auro.scholr.home.data.model.FriendRequestList;
 import com.auro.scholr.home.data.model.GetStudentUpdateProfile;
@@ -28,6 +29,7 @@ import com.auro.scholr.home.data.model.NearByFriendList;
 import com.auro.scholr.home.data.model.SaveImageReqModel;
 import com.auro.scholr.home.data.model.SendOtpReqModel;
 import com.auro.scholr.home.data.model.StudentProfileModel;
+import com.auro.scholr.home.data.model.UpdatePrefReqModel;
 import com.auro.scholr.home.data.model.VerifyOtpReqModel;
 import com.auro.scholr.home.data.model.passportmodels.PassportMonthModel;
 import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
@@ -57,6 +59,7 @@ import static com.auro.scholr.core.common.Status.CERTIFICATE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 import static com.auro.scholr.core.common.Status.DEMOGRAPHIC_API;
 import static com.auro.scholr.core.common.Status.DYNAMIC_LINK_API;
+import static com.auro.scholr.core.common.Status.FETCH_STUDENT_PREFERENCES_API;
 import static com.auro.scholr.core.common.Status.GRADE_UPGRADE;
 import static com.auro.scholr.core.common.Status.FIND_FRIEND_DATA;
 import static com.auro.scholr.core.common.Status.FRIENDS_REQUEST_LIST;
@@ -65,6 +68,8 @@ import static com.auro.scholr.core.common.Status.PASSPORT_API;
 import static com.auro.scholr.core.common.Status.SEND_FRIENDS_REQUEST;
 import static com.auro.scholr.core.common.Status.SEND_INVITE_API;
 import static com.auro.scholr.core.common.Status.SEND_OTP;
+import static com.auro.scholr.core.common.Status.SUBJECT_PREFRENCE_LIST_API;
+import static com.auro.scholr.core.common.Status.UPDATE_PREFERENCE_API;
 import static com.auro.scholr.core.common.Status.UPDATE_STUDENT;
 import static com.auro.scholr.core.common.Status.UPLOAD_EXAM_FACE_API;
 import static com.auro.scholr.core.common.Status.VERIFY_OTP;
@@ -425,6 +430,54 @@ public class HomeRemoteUseCase extends NetworkUseCase {
             }
         });
     }
+
+    public Single<ResponseApi> preferenceSubjectList() {
+
+        return dashboardRemoteData.preferenceSubjectList().map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+                    return handleResponse(response, SUBJECT_PREFRENCE_LIST_API);
+                } else {
+                    return responseFail(SUBJECT_PREFRENCE_LIST_API);
+                }
+            }
+        });
+    }
+
+
+
+    public Single<ResponseApi> updateStudentPreference(UpdatePrefReqModel reqModel) {
+
+        return dashboardRemoteData.updateStudentPreference(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+                    return handleResponse(response, UPDATE_PREFERENCE_API);
+                } else {
+                    return responseFail(UPDATE_PREFERENCE_API);
+                }
+            }
+        });
+    }
+
+    public Single<ResponseApi> fetchStudentPreferenceApi(FetchStudentPrefReqModel reqModel) {
+        return dashboardRemoteData.fetchStudentPreferenceApi(reqModel).map(new Function<Response<JsonObject>, ResponseApi>() {
+            @Override
+            public ResponseApi apply(Response<JsonObject> response) throws Exception {
+
+                if (response != null) {
+                    return handleResponse(response, FETCH_STUDENT_PREFERENCES_API);
+                } else {
+
+                    return responseFail(null);
+                }
+            }
+        });
+    }
+
 
 
     private ResponseApi handleResponse(Response<JsonObject> response, Status apiTypeStatus) {

@@ -12,6 +12,7 @@ import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.activity.UserProfileActivity;
 
 import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
+import com.auro.scholr.home.presentation.view.activity.newDashboard.SubjectPreferencesActivity;
 import com.auro.scholr.home.presentation.view.fragment.CertificateFragment;
 import com.auro.scholr.home.presentation.view.fragment.CongratulationsDialog;
 import com.auro.scholr.home.presentation.view.fragment.ConsgratuationLessScoreDialog;
@@ -129,5 +130,7 @@ public interface AppComponent {
     void doInjection(StudentMainDashboardActivity activity);
 
     void doInjection(MainQuizHomeFragment activity);
+
+    void doInjection(SubjectPreferencesActivity activity);
 
 }

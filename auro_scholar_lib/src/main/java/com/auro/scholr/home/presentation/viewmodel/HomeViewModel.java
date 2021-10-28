@@ -12,7 +12,9 @@ import com.auro.scholr.core.common.MessgeNotifyStatus;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
+import com.auro.scholr.home.data.model.FetchStudentPrefReqModel;
 import com.auro.scholr.home.data.model.SendOtpReqModel;
+import com.auro.scholr.home.data.model.UpdatePrefReqModel;
 import com.auro.scholr.home.data.model.VerifyOtpReqModel;
 import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
@@ -172,5 +174,99 @@ public class HomeViewModel extends ViewModel {
                             }
                         }));
     }
+
+    public void checkInternetForApi(Status status, Object reqmodel) {
+        Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
+            if (hasInternet) {
+                switch (status) {
+
+                    case SUBJECT_PREFRENCE_LIST_API:
+                        preferenceSubjectList();
+                        break;
+
+                    case DYNAMIC_LINK_API:
+                        getDynamicDataApi((DynamiclinkResModel) reqmodel);
+                        break;
+
+                    case UPDATE_PREFERENCE_API:
+                        updateStudentPreference((UpdatePrefReqModel) reqmodel);
+                        break;
+
+                    case FETCH_STUDENT_PREFERENCES_API:
+                        fetchStudentPreference((FetchStudentPrefReqModel) reqmodel);
+                        break;
+                }
+
+            } else {
+                // please check your internet
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getResources().getString(R.string.internet_check), Status.NO_INTERNET));
+            }
+
+        });
+        getCompositeDisposable().add(disposable);
+
+    }
+
+
+    private void preferenceSubjectList() {
+        getCompositeDisposable()
+                .add(homeRemoteUseCase.preferenceSubjectList()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<ResponseApi>() {
+                                       @Override
+                                       public void accept(ResponseApi responseApi) throws Exception {
+                                           serviceLiveData.setValue(responseApi);
+                                       }
+                                   },
+
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        defaultError();
+                                    }
+                                }));
+
+    }
+
+
+    private void updateStudentPreference(UpdatePrefReqModel reqModel) {
+        getCompositeDisposable()
+                .add(homeRemoteUseCase.updateStudentPreference(reqModel)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<ResponseApi>() {
+                                       @Override
+                                       public void accept(ResponseApi responseApi) throws Exception {
+                                           serviceLiveData.setValue(responseApi);
+                                       }
+                                   },
+
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        defaultError();
+                                    }
+                                }));
+
+    }
+
+    private void fetchStudentPreference(FetchStudentPrefReqModel reqModel) {
+        getCompositeDisposable().add(homeRemoteUseCase.fetchStudentPreferenceApi(reqModel).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResponseApi>() {
+                               @Override
+                               public void accept(ResponseApi responseApi) throws Exception {
+                                   serviceLiveData.setValue(responseApi);
+                               }
+                           },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                defaultError();
+                            }
+                        }));
+    }
+
 
 }

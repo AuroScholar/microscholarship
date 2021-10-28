@@ -420,4 +420,17 @@ public interface AppConstant {
         String API_PARAM_TEACHER="1";
 
     }
+    interface SubjectCodes {
+        String Mathematics = "MATH";
+        String English = "ENGLISH";
+        String Hindi = "HINDI";
+        String Social_Science = "SOCIAL_SCIENCE";
+        String Science = "SCIENCE";
+        String Physics = "PHYSICS";
+        String Chemistry = "CHEMISTRY";
+        String Biology = "BIOLOGY";
+        String History = "HISTORY";
+        String Political_Science = "POLITICAL_SCIENCE";
+        String Geography = "GEOGRAPHY";
+    }
 }

@@ -2,6 +2,8 @@ package com.auro.scholr.home.data.datasource.remote;
 
 import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.network.URLConstant;
+import com.auro.scholr.home.data.model.FetchStudentPrefReqModel;
+import com.auro.scholr.home.data.model.UpdatePrefReqModel;
 import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
 import com.google.gson.JsonObject;
 
@@ -153,4 +155,13 @@ public interface HomeRemoteApi {
     @POST(URLConstant.OTP_VERIFY)
     @FormUrlEncoded
     Single<Response<JsonObject>> verifyOTP(@FieldMap Map<String,String> params);
+
+    @POST(URLConstant.FETCH_STUDENT_PREFERENCE_API)
+    Single<Response<JsonObject>> fetchStudentPreferenceApi(@Body FetchStudentPrefReqModel reqModel);
+
+    @POST(URLConstant.UPDATE_USER_PREFERENCE)
+    Single<Response<JsonObject>> updateStudentPreference(@Body UpdatePrefReqModel reqModel);
+
+    @POST(URLConstant.STUDENT_SUBJECT_PREFERENCE_API)
+    Single<Response<JsonObject>> preferenceSubjectList(@Body Map<String,String>  map );
 }

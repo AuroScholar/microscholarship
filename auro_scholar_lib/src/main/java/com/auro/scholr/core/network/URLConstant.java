@@ -84,4 +84,10 @@ public interface URLConstant {
 
     String OTP_VERIFY = BASE_URL + "app_otp_verify.php";
 
+    String FETCH_STUDENT_PREFERENCE_API = "https://auroscholar.com/api/fetch_student_preference.php";
+
+    String UPDATE_USER_PREFERENCE = "https://auroscholar.com/api/update_student_preference.php";
+
+    String STUDENT_SUBJECT_PREFERENCE_API = "https://auroscholar.com/api/fetch_subject_list.php";
+
 }

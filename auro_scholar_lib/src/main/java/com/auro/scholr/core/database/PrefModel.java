@@ -4,6 +4,7 @@ package com.auro.scholr.core.database;
 import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
+import com.auro.scholr.home.data.model.FetchStudentPrefResModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 
 import java.io.Serializable;
@@ -35,6 +36,9 @@ public class PrefModel implements Serializable {
     private boolean preKycDisclaimer;
 
     private boolean preMoneyTransferDisclaimer;
+
+    private boolean isDashboardaApiNeedToCall;
+    private FetchStudentPrefResModel fetchStudentPrefResModel;
 
     public boolean isPreLoginDisclaimer() {
         return preLoginDisclaimer;
@@ -172,4 +176,14 @@ public class PrefModel implements Serializable {
     public void setDashbaordApiCall(boolean dashbaordApiCall) {
         isDashbaordApiCall = dashbaordApiCall;
     }
+    public void setDashboardaApiNeedToCall(boolean dashboardaApiNeedToCall) {
+        isDashboardaApiNeedToCall = dashboardaApiNeedToCall;
+    }
+    public void setFetchStudentPrefResModel(FetchStudentPrefResModel fetchStudentPrefResModel) {
+        this.fetchStudentPrefResModel = fetchStudentPrefResModel;
+    }
+    public FetchStudentPrefResModel getFetchStudentPrefResModel() {
+        return fetchStudentPrefResModel;
+    }
+
 }

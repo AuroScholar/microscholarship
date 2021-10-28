@@ -6,7 +6,7 @@
 
         <variable
             name="quizViewModel"
-            type="com.auro.application.home.presentation.viewmodel.QuizViewModel" />
+            type="com.auro.scholr.home.presentation.viewmodel.QuizViewModel" />
     </data>
 
     <RelativeLayout
@@ -31,7 +31,7 @@
                     android:id="@+id/imageView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bg_left_rangoli"
+                    app:srcCompat="@drawable/ic_bg_left_rangoli"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,7 +56,7 @@
                     android:layout_marginTop="@dimen/_25sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:padding="@dimen/_2sdp"
-                    android:src="@drawable/ic_cross"
+                    app:srcCompat="@drawable/ic_cross"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,7 +71,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView5">
 
-                    <com.auro.application.core.util.uiwidget.RPTextView
+                    <com.auro.scholr.core.util.uiwidget.RPTextView
                         android:id="@+id/RPTextView9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                         android:textSize="@dimen/_18sdp"
                         app:Font="Calibre-Light.ttf" />
 
-                    <com.auro.application.core.util.uiwidget.RPTextView
+                    <com.auro.scholr.core.util.uiwidget.RPTextView
                         android:id="@+id/RPTextView10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
             android:layout_marginBottom="@dimen/_20sdp"
             android:layout_height="wrap_content">
 
-            <com.auro.application.core.util.uiwidget.RPTextView
+            <com.auro.scholr.core.util.uiwidget.RPTextView
                 android:id="@+id/bt_continue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

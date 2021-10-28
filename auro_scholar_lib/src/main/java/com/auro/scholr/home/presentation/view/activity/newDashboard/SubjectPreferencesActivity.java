@@ -1,12 +1,19 @@
 package com.auro.scholr.home.presentation.view.activity.newDashboard;
 
 
+import static com.auro.scholr.core.common.Status.FETCH_STUDENT_PREFERENCES_API;
+import static com.auro.scholr.core.common.Status.SUBJECT_PREFRENCE_LIST_API;
+import static com.auro.scholr.core.common.Status.UPDATE_PREFERENCE_API;
+import static com.auro.scholr.core.common.Status.UPDATE_STUDENT;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,10 +24,24 @@ import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.application.base_component.BaseActivity;
 import com.auro.scholr.core.application.di.component.ViewModelFactory;
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
+import com.auro.scholr.core.common.CommonDataModel;
+import com.auro.scholr.core.common.Status;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.SubjectPrefLayoutBinding;
+import com.auro.scholr.home.data.model.CategorySubjectResModel;
+import com.auro.scholr.home.data.model.FetchStudentPrefReqModel;
+import com.auro.scholr.home.data.model.FetchStudentPrefResModel;
+import com.auro.scholr.home.data.model.SubjectPreferenceResModel;
+import com.auro.scholr.home.data.model.UpdatePrefReqModel;
+import com.auro.scholr.home.data.model.UpdatePrefResModel;
+import com.auro.scholr.home.presentation.view.adapter.newuiadapter.SubjectPrefAdapter;
 import com.auro.scholr.home.presentation.viewmodel.HomeViewModel;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.TextUtil;
+import com.auro.scholr.util.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +71,7 @@ public class SubjectPreferencesActivity extends BaseActivity implements CommonCa
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, getLayout());
-        ((AuroApp) this.getApplication()).getAppComponent().doInjection(this);
+      //  ((AuroApp) this.getApplication()).getAppComponent().doInjection(this);
         homeViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel.class);
         binding.setLifecycleOwner(this);
         init();
@@ -69,16 +90,16 @@ public class SubjectPreferencesActivity extends BaseActivity implements CommonCa
     }
 
     public void setProgressVal() {
-        PrefModel prefModel = AuroAppPref.INSTANCE.getModelInstance();
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         prefModel.setDashboardaApiNeedToCall(true);
-        AuroAppPref.INSTANCE.setPref(prefModel);
+        AppPref.INSTANCE.setPref(prefModel);
 
     }
 
 
     @Override
     protected void setListener() {
-        DashBoardMainActivity.setListingActiveFragment(DashBoardMainActivity.PARTNERS_FRAGMENT);
+        StudentMainDashboardActivity.setListingActiveFragment(StudentMainDashboardActivity.PARTNERS_FRAGMENT);
         if (homeViewModel != null && homeViewModel.serviceLiveData().hasObservers()) {
             homeViewModel.serviceLiveData().removeObservers(this);
         } else {
@@ -86,6 +107,7 @@ public class SubjectPreferencesActivity extends BaseActivity implements CommonCa
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setSubjectAdapter(SubjectPreferenceResModel subjectPreferenceResModel) {
         AppLogger.e("setSubjectAdapter- ", "Step 0");
         AppLogger.v("setSubjectAdapter-", "Call---->" + subjectPreferenceResModel.getSubjects().size());
@@ -93,7 +115,7 @@ public class SubjectPreferencesActivity extends BaseActivity implements CommonCa
             return;
         }
         AppLogger.e("setSubjectAdapter- ", "Step 1");
-        PrefModel prefModel = AuroAppPref.INSTANCE.getModelInstance();
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         FetchStudentPrefResModel fetchStudentPrefResModel = prefModel.getFetchStudentPrefResModel();
         if (fetchStudentPrefResModel != null && !TextUtil.checkListIsEmpty(fetchStudentPrefResModel.getSubjects())) {
             AppLogger.e("setSubjectAdapter- ", "Step 2");
@@ -162,19 +184,16 @@ public class SubjectPreferencesActivity extends BaseActivity implements CommonCa
     @Override
     public void onClick(View v) {
         AppLogger.e(TAG, "On click called");
-        switch (v.getId()) {
-            case R.id.ic_close:
-                finish();
-                startDashboardActivity();
-                break;
-
-            case R.id.bt_continue:
-                callUpdatePrefApi();
-                break;
-
+        int id = v.getId();
+        if (id == R.id.ic_close) {
+            finish();
+            startDashboardActivity();
+        } else if (id == R.id.bt_continue) {
+            callUpdatePrefApi();
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void observeServiceResponse() {
         homeViewModel.serviceLiveData().observeForever(responseApi -> {
             switch (responseApi.status) {
@@ -200,9 +219,9 @@ public class SubjectPreferencesActivity extends BaseActivity implements CommonCa
                     } else if (responseApi.apiTypeStatus == FETCH_STUDENT_PREFERENCES_API) {
 
                         FetchStudentPrefResModel fetchStudentPrefResModel = (FetchStudentPrefResModel) responseApi.data;
-                        PrefModel prefModel = AuroAppPref.INSTANCE.getModelInstance();
+                        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
                         prefModel.setFetchStudentPrefResModel(fetchStudentPrefResModel);
-                        AuroAppPref.INSTANCE.setPref(prefModel);
+                        AppPref.INSTANCE.setPref(prefModel);
                         callSubjectListPreference();
                     } else if (responseApi.apiTypeStatus == UPDATE_PREFERENCE_API) {
                         UpdatePrefResModel updatePrefResModel = (UpdatePrefResModel) responseApi.data;
@@ -296,7 +315,7 @@ public class SubjectPreferencesActivity extends BaseActivity implements CommonCa
 
         binding.progressBarButton.setVisibility(View.VISIBLE);
         UpdatePrefReqModel reqModel = new UpdatePrefReqModel();
-        reqModel.setMobileNo(AuroAppPref.INSTANCE.getModelInstance().getUserMobile());
+        reqModel.setMobileNo(AppPref.INSTANCE.getModelInstance().getUserMobile());
         reqModel.setPreference(preference);
         homeViewModel.checkInternetForApi(Status.UPDATE_PREFERENCE_API, reqModel);
     }
@@ -305,17 +324,18 @@ public class SubjectPreferencesActivity extends BaseActivity implements CommonCa
     void callFetchUserPreference() {
         handleProgress(0, "");
         FetchStudentPrefReqModel fetchStudentPrefReqModel = new FetchStudentPrefReqModel();
-        fetchStudentPrefReqModel.setMobileNo(AuroAppPref.INSTANCE.getModelInstance().getUserMobile());
+        fetchStudentPrefReqModel.setMobileNo(AppPref.INSTANCE.getModelInstance().getUserMobile());
         homeViewModel.checkInternetForApi(FETCH_STUDENT_PREFERENCES_API, fetchStudentPrefReqModel);
     }
 
     private void startDashboardActivity() {
         finish();
-        Intent i = new Intent(this, DashBoardMainActivity.class);
+        Intent i = new Intent(this, StudentMainDashboardActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("UseCompatLoadingForDrawables")
     private Drawable getImageFromCode(CategorySubjectResModel categorySubjectResModel) {
         switch (categorySubjectResModel.getSubjectCode()) {

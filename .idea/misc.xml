@@ -5,6 +5,17 @@
       <map>
         <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/drawable/disable_background.xml" value="0.15462962962962962" />
         <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_auro_check_disable.xml" value="0.15462962962962962" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_biology_horizontal.xml" value="0.14074074074074075" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_chemistry_horizontal.xml" value="0.14074074074074075" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_english_horizontal.xml" value="0.14074074074074075" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_geographic_horizontal.xml" value="0.5428571428571428" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_hindi_horizontal.xml" value="0.14074074074074075" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_history_horizontal.xml" value="0.14074074074074075" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_maths_horizontal.xml" value="0.14074074074074075" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_physics_horizontal.xml" value="0.14074074074074075" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_political_science_horizontal.xml" value="0.14074074074074075" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_science_horizontal.xml" value="0.14074074074074075" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_social_science_horizontal.xml" value="0.14074074074074075" />
         <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/layout/subject_pref_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/layout/subjects_pref_item_layout.xml" value="0.20416666666666666" />
       </map>

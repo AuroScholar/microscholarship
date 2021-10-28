@@ -108,6 +108,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
     public static final int PAYMENT_INFO_FRAGMENT = 8;
     public static final int PRIVACY_POLICY_FRAGMENT = 9;
     public static final int QUIZ_TEST_FRAGMENT = 10;
+    public static final int PARTNERS_FRAGMENT = 15;
 
 
    public static  CommonCallBackListner commonCallBackListner;
