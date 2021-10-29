@@ -351,5 +351,6 @@
     <string name="powered_by_auroscholar">Powered By </string>
     <string name="resend_code">Resend Code</string>
     <string name="hi_there">Hi There!</string>
+    <string name="your_subject_new">Your Subjects</string>
 
 </resources>

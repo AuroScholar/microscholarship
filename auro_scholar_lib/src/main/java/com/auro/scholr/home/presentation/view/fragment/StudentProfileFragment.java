@@ -50,6 +50,10 @@ import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
 import com.auro.scholr.home.presentation.viewmodel.StudentProfileViewModel;
+import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
+import com.auro.scholr.teacher.data.model.common.StateDataModel;
+import com.auro.scholr.teacher.presentation.view.adapter.DistrictSpinnerAdapter;
+import com.auro.scholr.teacher.presentation.view.adapter.StateSpinnerAdapter;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ImageUtil;
@@ -104,6 +108,10 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
     String TAG = "StudentProfileFragment";
     PrefModel prefModel;
     AuroScholarInputModel inputModel;
+    List<StateDataModel> stateDataModelList;
+    List<DistrictDataModel> districtDataModels;
+    String stateCode = "";
+    String districtCode = "";
 
     public StudentProfileFragment() {
         // Required empty public constructor
@@ -160,6 +168,8 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
         } else {
             observeServiceResponse();
         }
+        viewModel.getStateListData();
+        viewModel.getDistrictListData();
         callingStudentUpdateProfile();
         //AppUtil.commonCallBackListner = this;
 
@@ -550,6 +560,31 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
                 case FAIL_400:
                     handleProgress(2, (String) responseApi.data);
                     break;
+                /*For state list*/
+                case STATE_LIST_ARRAY:
+                    if (isVisible()) {
+                        stateDataModelList = (List<StateDataModel>) responseApi.data;
+                        if (!TextUtil.isEmpty(stateCode)) {
+                            stateSpinner(stateCode);
+                            stateCode = "";
+                        } else {
+                            stateSpinner(stateCode);
+                        }
+                    }
+                    break;
+
+                case DISTRICT_LIST_DATA:
+                    if (isVisible()) {
+                        districtDataModels = (List<DistrictDataModel>) responseApi.data;
+                        if (!TextUtil.isEmpty(districtCode)) {
+                            districtSpinner(districtCode);
+                            districtCode = "";
+                        } else {
+                            districtSpinner(districtCode);
+                        }
+                    }
+
+                    break;
                 default:
                     // handleProgress(1, (String) responseApi.data);
                     AppLogger.v("apiData", responseApi.data + "   pradeep");
@@ -839,6 +874,93 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
                 }
 
                 break;
+        }
+    }
+
+    private void stateSpinner(String state) {
+        if (!TextUtil.checkListIsEmpty(stateDataModelList)) {
+            StateSpinnerAdapter stateSpinnerAdapter = new StateSpinnerAdapter(stateDataModelList);
+            binding.stateSpinner.setAdapter(stateSpinnerAdapter);
+
+            binding.stateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (position != 0) {
+                        stateCode = stateDataModelList.get(position).getState_code();
+                        studentProfileModel.setStateCode(stateDataModelList.get(position).getState_code());
+
+                        viewModel.getStateDistrictData(stateDataModelList.get(position).getState_code());
+                        binding.cityTitle.setVisibility(View.VISIBLE);
+                        binding.privatecity.setVisibility(View.VISIBLE);
+
+                        binding.citySpinner.setVisibility(View.VISIBLE);
+                    } else if (stateDataModelList.get(position).getState_name().trim().equalsIgnoreCase("pleaseselectstate")) {
+                        binding.cityTitle.setVisibility(View.GONE);
+
+                        binding.citySpinner.setVisibility(View.GONE);
+                        binding.privatecity.setVisibility(View.GONE);
+                    } else {
+                        binding.cityTitle.setVisibility(View.GONE);
+                        binding.privatecity.setVisibility(View.GONE);
+                        binding.citySpinner.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+
+            if (state != null) {
+                for (int i = 0; i < stateDataModelList.size(); i++) {
+                    if (state.equalsIgnoreCase(stateDataModelList.get(i).getState_code())) {
+                        binding.stateSpinner.setSelection(i);
+                    }
+                }
+            }
+
+        }
+
+
+    }
+
+    private void districtSpinner(String district) {
+        if (!TextUtil.checkListIsEmpty(districtDataModels)) {
+            binding.cityTitle.setVisibility(View.VISIBLE);
+            binding.citySpinner.setVisibility(View.VISIBLE);
+            DistrictSpinnerAdapter stateSpinnerAdapter = new DistrictSpinnerAdapter(districtDataModels);
+            binding.citySpinner.setAdapter(stateSpinnerAdapter);
+
+
+            binding.citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    districtCode = districtDataModels.get(position).getDistrict_code();
+
+                    studentProfileModel.setDistricts(districtDataModels.get(position).getDistrict_code());
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        } else {
+            binding.cityTitle.setVisibility(View.GONE);
+            binding.citySpinner.setVisibility(View.GONE);
+            binding.privatecity.setVisibility(View.GONE);
+        }
+
+
+        if (district != null) {
+            for (int i = 0; i < districtDataModels.size(); i++) {
+                if (district.equalsIgnoreCase(districtDataModels.get(i).getDistrict_code())) {
+                    binding.citySpinner.setSelection(i);
+                }
+            }
         }
     }
 

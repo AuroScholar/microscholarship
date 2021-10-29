@@ -700,10 +700,127 @@
                             android:baselineAligned="false"
                             android:orientation="horizontal">
 
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/state_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/state"
+                                android:textColor="@color/backgroun_transparent"
+                                android:textSize="@dimen/_12sdp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/state_spinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/sppiner_boader"
+                                android:tooltipText="@string/choose_your_state"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/state_title" />
+
+                            <ImageView
+                                android:id="@+id/privatestate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/state_spinner"
+                                app:layout_constraintEnd_toEndOf="@+id/state_spinner"
+                                app:layout_constraintHorizontal_bias="0.97"
+                                app:layout_constraintStart_toStartOf="@+id/state_spinner"
+                                app:layout_constraintTop_toTopOf="@+id/state_spinner"
+                                />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp">
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/city_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/city"
+                                android:textColor="@color/backgroun_transparent"
+                                android:textSize="@dimen/_12sdp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/city_spinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/sppiner_boader"
+                                android:tooltipText="@string/choose_your_state"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/city_title" />
+
+                            <ImageView
+                                android:id="@+id/privatecity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/city_spinner"
+                                app:layout_constraintEnd_toEndOf="@+id/city_spinner"
+                                app:layout_constraintHorizontal_bias="0.97"
+                                app:layout_constraintStart_toStartOf="@+id/city_spinner"
+                                app:layout_constraintTop_toTopOf="@+id/city_spinner"
+                                />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+                        <LinearLayout
+                            android:id="@+id/yourSubjectsLayout"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/yourSubjects"
+                                android:layout_weight="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/your_subject_new"
+                                android:textColor="@color/backgroun_transparent"
+                                android:textSize="@dimen/_12sdp"
+                                android:layout_gravity="center_vertical"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                />
+
+                            <ImageView
+                                android:id="@+id/edit_subject_icon"
+                                android:layout_weight="0.5"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                app:srcCompat="@drawable/ic_edit_subject"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/subjects_recyclerview"
+                            android:layout_width="match_parent"
+                            android:visibility="gone"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_height="wrap_content"/>
+
                     </LinearLayout>
+
+
+
+
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/submit_button_layout"
                         android:layout_width="match_parent"

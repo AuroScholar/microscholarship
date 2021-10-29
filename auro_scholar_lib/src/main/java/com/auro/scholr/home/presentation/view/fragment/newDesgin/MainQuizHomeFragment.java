@@ -396,7 +396,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             openFragment(policyFragment);
         }else if(id == R.id.imageChat){
 
-            startActivity(new Intent(getActivity(), YuboChatActivity.class));
+               startActivity(new Intent(getActivity(), YuboChatActivity.class));
 
         }
 

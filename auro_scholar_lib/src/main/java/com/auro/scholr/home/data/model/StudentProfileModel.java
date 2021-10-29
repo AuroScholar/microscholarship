@@ -19,6 +19,23 @@ public class StudentProfileModel {
     String emailID="";
     byte[] imageBytes;
     String userName="";
+    String stateCode = "";
+    String districts =  "";
+
+    public void setStateCode(String stateCode) {
+        this.stateCode = stateCode;
+    }
+    public String getStateCode() {
+        return stateCode;
+    }
+
+    public String getDistricts() {
+        return districts;
+    }
+
+    public void setDistricts(String districts) {
+        this.districts = districts;
+    }
 
     public String getMobile_model() {
         return mobile_model;
