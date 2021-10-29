@@ -95,6 +95,9 @@
         </provider>
         -->
         <activity
+            android:name=".yubochat.YuboChatActivity"
+            android:exported="true" />
+        <activity
             android:name=".util.cropper.CropImagesActivity"
             android:theme="@style/Base.Theme.AppCompat" />
     </application>

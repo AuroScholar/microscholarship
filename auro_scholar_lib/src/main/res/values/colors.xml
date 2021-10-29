@@ -133,5 +133,11 @@
     <color name="red">#d32f2f</color>
     <color name="ui_color_code">#9296AB</color>
     <color name="color_transparent">#80000000</color>
+    <color name="auro_chat_blue">#008EE5</color>
+    <color name="accepted">#7acc25</color>
+    <color name="dark_text_color">#414042</color>
+    <color name="light_gray_text1">#C6C7C9</color>
+    <color name="f3f3f3">#f3f3f3</color>
+    <color name="dark_blue_green">#0A404F</color>
 
 </resources>

@@ -350,6 +350,30 @@
                     android:id="@+id/errorLayout"
                     layout="@layout/error_layout" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/imageChat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:orientation="vertical">
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hi_there"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_8sdp"/>
+                <ImageView
+
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:background="@drawable/ic_chat_bot_icon"
+                    android:scaleType="fitXY" />
+
+            </LinearLayout>
         </RelativeLayout>
 
         <com.google.android.material.navigation.NavigationView

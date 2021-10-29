@@ -82,6 +82,7 @@ import com.auro.scholr.util.disclaimer.QuizDisclaimerDialog;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
+import com.auro.scholr.yubochat.YuboChatActivity;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -229,6 +230,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         binding.privacyPolicy.setOnClickListener(this);
         binding.menuBarItem.setOnClickListener(this);
         binding.termsofuse.setOnClickListener(this);
+        binding.imageChat.setOnClickListener(this);
         binding.quizSelectionSheet.sheetLayoutQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -392,6 +394,10 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             bundle.putString(AppConstant.WEB_LINK, URLConstant.TERM_CONDITION);
             policyFragment.setArguments(bundle);
             openFragment(policyFragment);
+        }else if(id == R.id.imageChat){
+
+            startActivity(new Intent(getActivity(), YuboChatActivity.class));
+
         }
 
     }
