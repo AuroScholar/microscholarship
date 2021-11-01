@@ -186,4 +186,7 @@ public class PrefModel implements Serializable {
         return fetchStudentPrefResModel;
     }
 
+    public boolean isDashboardaApiNeedToCall() {
+        return isDashboardaApiNeedToCall;
+    }
 }

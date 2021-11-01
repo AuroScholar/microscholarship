@@ -32,6 +32,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
@@ -98,7 +99,7 @@ import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 import static com.auro.scholr.core.common.Status.GRADE_UPGRADE;
 
 
-public class MainQuizHomeFragment extends BaseFragment implements CommonCallBackListner, View.OnClickListener {
+public class MainQuizHomeFragment extends BaseFragment implements CommonCallBackListner, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener  {
 
     @Inject
     @Named("MainQuizHomeFragment")
@@ -249,6 +250,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         } else {
             observeServiceResponse();
         }
+        binding.swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     public void setAdapterChapter(SubjectResModel subjectResModel) {
@@ -417,17 +419,19 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                 case SUCCESS:
 
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
+
                         if (isVisible()) {
+                            binding.swipeRefreshLayout.setRefreshing(false);
                             dashboardResModel = (DashboardResModel) responseApi.data;
                             onApiSuccess(dashboardResModel);
-                            AppLogger.v("PRADEEP_DATA", "SUCCESS");
+                            AppLogger.v("PRADEEP_DATA", "DASHBOARD_API");
                         }
 
                     } else if (responseApi.apiTypeStatus == GRADE_UPGRADE) {
                         handleProgress(0, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
                         //setPrefForTesting()
-                        AppLogger.v("PRADEEP_DATA", dashboardResModel.isError() + "");
+                        AppLogger.v("PRADEEP_DATA", "GRADE_UPGRADE" + "");
                         if (!dashboardResModel.isError()) {
                             if (customDialog != null) {
                                 customDialog.dismiss();
@@ -466,19 +470,21 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                     //handleProgress(1, (String) responseApi.data);
                     break;
                 default:
-
-
                     if (customDialog != null) {
                         customDialog.dismiss();
                     }
                     // binding.swipeRefreshLayout.setRefreshing(false);
                     AppLogger.v("PRADEEP_DATA", "default---");
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
+
                         handleProgress(1, (String) responseApi.data);
+                        binding.swipeRefreshLayout.setRefreshing(false);
                     } else {
+                        AppLogger.v("PRADEEP_DATA", "default---");
                         setImageInPref(assignmentReqModel);
                         //  openQuizTestFragment(dashboardResModel);
                     }
+                    AppLogger.v("PRADEEP_DATA", "default---");
                     ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
                     //  handleProgress(1, (String) responseApi.data);
                     break;
@@ -636,8 +642,23 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
 
     void callDasboardApi() {
-
+        /*New Code add in sdk*/
+        AppLogger.e("callDasboardApi-", "Step 1");
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel.isDashboardaApiNeedToCall()) {
+            handleProgress(0, "");
+        }
+
+        String deviceToken = prefModel.getDeviceToken();
+        if (!TextUtil.isEmpty(deviceToken)) {
+            AppLogger.v("DeviceToken_1", deviceToken);
+        }
+        AppLogger.v("DeviceToken_2", deviceToken);
+        quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
+
+        /*-------------Old Code Add in the sdk */
+
+       /* PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
 
         String deviceToken = prefModel.getDeviceToken();
         if (!TextUtil.isEmpty(deviceToken)) {
@@ -646,11 +667,13 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         AppLogger.v(TAG, ""+prefModel.isDashbaordApiCall());
         if (prefModel.isDashbaordApiCall()) {
             handleProgress(0, "");
+            AppLogger.v("DeviceToken_1", "isDashbaordApiCall()");
             quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
         } else {
             dashboardResModel = prefModel.getDashboardResModel();
+            AppLogger.v("DeviceToken_1", "else");
             onApiSuccess(prefModel.getDashboardResModel());
-        }
+        }*/
 
     }
 
@@ -1006,5 +1029,11 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             askDetailCustomDialog.setCancelable(false);
             askDetailCustomDialog.show();
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        handleProgress(0, "");
+        callDasboardApi();
     }
 }

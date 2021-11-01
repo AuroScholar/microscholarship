@@ -222,6 +222,12 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/swipe_refresh_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/constantLayout"
+                    >
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -303,7 +309,7 @@
 
 
                 </androidx.core.widget.NestedScrollView>
-
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
                 <include
                     android:id="@+id/quiz_selection_sheet"
