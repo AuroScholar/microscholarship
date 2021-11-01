@@ -50,6 +50,7 @@ import com.auro.scholr.home.data.model.AssignmentReqModel;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
+import com.auro.scholr.home.data.model.FetchStudentPrefResModel;
 import com.auro.scholr.home.data.model.NavItemModel;
 import com.auro.scholr.home.data.model.QuizResModel;
 import com.auro.scholr.home.data.model.SelectChapterQuizModel;
@@ -421,14 +422,15 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                     if (responseApi.apiTypeStatus == DASHBOARD_API) {
 
                         if (isVisible()) {
+
                             binding.swipeRefreshLayout.setRefreshing(false);
                             dashboardResModel = (DashboardResModel) responseApi.data;
+
                             onApiSuccess(dashboardResModel);
-                            AppLogger.v("PRADEEP_DATA", "DASHBOARD_API");
                         }
 
                     } else if (responseApi.apiTypeStatus == GRADE_UPGRADE) {
-                        handleProgress(0, "");
+                         handleProgress(0, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
                         //setPrefForTesting()
                         AppLogger.v("PRADEEP_DATA", "GRADE_UPGRADE" + "");
@@ -535,6 +537,17 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             if (dashboardResModel != null && dashboardResModel.getStatus().equalsIgnoreCase(AppConstant.FAILED)) {
                 handleProgress(1, dashboardResModel.getMessage());
             } else {
+                PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+
+                int studentClass = Integer.parseInt(dashboardResModel.getStudentclass());
+                prefModel.setStudentClass(studentClass);
+                AppPref.INSTANCE.setPref(prefModel);
+
+                //prefModel.setStudentClass();
+                checkScreenPreferences();
+
+
+                AppLogger.v("PRADEEP_DATA", "DASHBOARD_API"+studentClass+" "+prefModel.getStudentClass());
                 setDataOnUi(dashboardResModel);
             }
         } else {
@@ -651,9 +664,9 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
         String deviceToken = prefModel.getDeviceToken();
         if (!TextUtil.isEmpty(deviceToken)) {
-            AppLogger.v("DeviceToken_1", deviceToken);
+
         }
-        AppLogger.v("DeviceToken_2", deviceToken);
+
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
 
         /*-------------Old Code Add in the sdk */
@@ -1028,6 +1041,19 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             Objects.requireNonNull(askDetailCustomDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             askDetailCustomDialog.setCancelable(false);
             askDetailCustomDialog.show();
+        }
+    }
+
+    void checkScreenPreferences() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel.getStudentClass() > 10) {
+            FetchStudentPrefResModel fetchStudentPrefResModel = prefModel.getFetchStudentPrefResModel();
+            if (fetchStudentPrefResModel != null && !TextUtil.checkListIsEmpty(fetchStudentPrefResModel.getPreference())) {
+                /* Do CODE HERE*/
+            } else {
+                ((StudentMainDashboardActivity) getActivity()).setListner(this);
+                ((StudentMainDashboardActivity) getActivity()).callFetchUserPreference();
+            }
         }
     }
 

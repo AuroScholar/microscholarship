@@ -46,6 +46,8 @@ import com.auro.scholr.home.data.VerifyOtpResModel;
 import com.auro.scholr.home.data.datasource.remote.HomeRemoteApi;
 import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.home.data.model.FetchStudentPrefReqModel;
+import com.auro.scholr.home.data.model.FetchStudentPrefResModel;
 import com.auro.scholr.home.data.model.NavItemModel;
 import com.auro.scholr.home.data.model.SendOtpReqModel;
 import com.auro.scholr.home.data.model.VerifyOtpReqModel;
@@ -340,6 +342,17 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
                                 customOtpDialog.showSnackBar(verifyOtp.getMessage());
                             }
                         }
+                    }else if (responseApi.apiTypeStatus == Status.FETCH_STUDENT_PREFERENCES_API) {
+                        FetchStudentPrefResModel fetchStudentPrefResModel = (FetchStudentPrefResModel) responseApi.data;
+                        if (TextUtil.checkListIsEmpty(fetchStudentPrefResModel.getPreference())) {
+                            openSubjectPreferenceScreen();
+                        } else {
+                            PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+                            prefModel.setFetchStudentPrefResModel(fetchStudentPrefResModel);
+                            AppPref.INSTANCE.setPref(prefModel);
+                        }
+
+
                     }
                     break;
 
@@ -510,8 +523,27 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         }
     }
 
+    private void openSubjectPreferenceScreen() {
+       /* if (loginDisclaimerDialog != null && loginDisclaimerDialog.isShowing()) {
+            loginDisclaimerDialog.dismiss();
+        }*/
+        finish();
+        Intent newIntent = new Intent(this, SubjectPreferencesActivity.class);
+        startActivity(newIntent);
+        finish();
+    }
 
     public static void setListner(CommonCallBackListner listner) {
       commonCallBackListner = listner;
+    }
+
+    public void callFetchUserPreference() {
+        AppLogger.e("DashbaordMain", "oncreate step 2");
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel.getStudentClass() > 10) {
+            FetchStudentPrefReqModel fetchStudentPrefReqModel = new FetchStudentPrefReqModel();
+            fetchStudentPrefReqModel.setMobileNo(AppPref.INSTANCE.getModelInstance().getUserMobile());
+            viewModel.fetchStudentPreference((FetchStudentPrefReqModel) fetchStudentPrefReqModel);
+        }
     }
 }

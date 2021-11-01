@@ -251,7 +251,7 @@ public class HomeViewModel extends ViewModel {
 
     }
 
-    private void fetchStudentPreference(FetchStudentPrefReqModel reqModel) {
+    public void fetchStudentPreference(FetchStudentPrefReqModel reqModel) {
         getCompositeDisposable().add(homeRemoteUseCase.fetchStudentPreferenceApi(reqModel).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResponseApi>() {
