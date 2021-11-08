@@ -781,7 +781,7 @@
                             android:id="@+id/yourSubjectsLayout"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:orientation="horizontal"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <com.auro.scholr.core.util.uiwidget.RPTextView
@@ -810,7 +810,7 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/subjects_recyclerview"
                             android:layout_width="match_parent"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:layout_height="wrap_content"/>

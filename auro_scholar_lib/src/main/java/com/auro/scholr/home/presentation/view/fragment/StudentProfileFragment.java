@@ -29,6 +29,8 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
@@ -42,13 +44,19 @@ import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.databinding.FragmentStudentProfile2Binding;
 import com.auro.scholr.home.data.model.AuroScholarInputModel;
+import com.auro.scholr.home.data.model.CategorySubjectResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
+import com.auro.scholr.home.data.model.FetchStudentPrefReqModel;
+import com.auro.scholr.home.data.model.FetchStudentPrefResModel;
 import com.auro.scholr.home.data.model.GetStudentUpdateProfile;
 import com.auro.scholr.home.data.model.StudentProfileModel;
+import com.auro.scholr.home.data.model.SubjectPreferenceResModel;
 import com.auro.scholr.home.presentation.view.activity.CameraActivity;
 import com.auro.scholr.home.presentation.view.activity.HomeActivity;
 import com.auro.scholr.home.presentation.view.activity.StudentDashboardActivity;
 import com.auro.scholr.home.presentation.view.activity.newDashboard.StudentMainDashboardActivity;
+import com.auro.scholr.home.presentation.view.activity.newDashboard.SubjectPreferencesActivity;
+import com.auro.scholr.home.presentation.view.adapter.newuiadapter.SubjectPrefProfileAdapter;
 import com.auro.scholr.home.presentation.viewmodel.StudentProfileViewModel;
 import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
@@ -79,6 +87,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import static android.app.Activity.RESULT_OK;
+import static com.auro.scholr.core.common.Status.FETCH_STUDENT_PREFERENCES_API;
+import static com.auro.scholr.core.common.Status.SUBJECT_PREFRENCE_LIST_API;
 import static com.auro.scholr.core.common.Status.UPDATE_STUDENT;
 
 public class StudentProfileFragment extends BaseFragment implements View.OnClickListener, TextWatcher, View.OnTouchListener,/* View.OnFocusChangeListener,*/ CommonCallBackListner/*, GradeChangeFragment.OnClickButton*/ {
@@ -186,7 +196,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
 
     @Override
     protected void setListener() {
-        ((StudentMainDashboardActivity)getActivity()).setListingActiveFragment(StudentMainDashboardActivity.PROFILE_FRAGMENT);
+        ((StudentMainDashboardActivity) getActivity()).setListingActiveFragment(StudentMainDashboardActivity.PROFILE_FRAGMENT);
 
         binding.profileImage.setOnClickListener(this);
         binding.editImage.setOnClickListener(this);
@@ -213,6 +223,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
         binding.editUserNameIcon.setOnClickListener(this);
         binding.editPhonenew.setOnTouchListener(this);
         binding.editemail.setOnTouchListener(this);
+        binding.editSubjectIcon.setOnClickListener(this);
 
 
         binding.SpinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -329,8 +340,8 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
     @Override
     public void onResume() {
         super.onResume();
-      //  init();
-       // setListener();
+        //  init();
+        // setListener();
     }
 
     @Override
@@ -415,9 +426,12 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
             } else {
                 binding.editProfileName.setError("Enter Your Name");
             }
-        } else if(id == R.id.backButton)
-        {
+        } else if (id == R.id.backButton) {
             getActivity().onBackPressed();
+        } else if (id == R.id.edit_subject_icon) {
+            getActivity().finish();
+            Intent newIntent = new Intent(getActivity(), SubjectPreferencesActivity.class);
+            startActivity(newIntent);
         }
 
     }
@@ -547,6 +561,20 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
                             setDataonUi();
                             AppLogger.v("apiResponse", getStudentUpdateProfile + "");
                         }
+                    } else if (responseApi.apiTypeStatus == SUBJECT_PREFRENCE_LIST_API) {
+                        SubjectPreferenceResModel subjectPreferenceResModel = (SubjectPreferenceResModel) responseApi.data;
+                        if (!TextUtil.checkListIsEmpty(subjectPreferenceResModel.getSubjects())) {
+                            setSubjectListVisibility(true);
+                            setSubjectAdapter(subjectPreferenceResModel);
+                        } else {
+                            setSubjectListVisibility(false);
+                        }
+                    } else if (responseApi.apiTypeStatus == FETCH_STUDENT_PREFERENCES_API) {
+                        FetchStudentPrefResModel fetchStudentPrefResModel = (FetchStudentPrefResModel) responseApi.data;
+                        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+                        prefModel.setFetchStudentPrefResModel(fetchStudentPrefResModel);
+                        AppPref.INSTANCE.setPref(prefModel);
+                        callSubjectListPreference();
                     }
 
                     break;
@@ -799,14 +827,24 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
 
     public void callingStudentUpdateProfile() {
         if (dashboardResModel != null) {
+            PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+            if (prefModel.getStudentClass() > 10) {
+                if (prefModel.getFetchStudentPrefResModel() != null && !TextUtil.checkListIsEmpty(prefModel.getFetchStudentPrefResModel().getSubjects())) {
+                    callSubjectListPreference();
+                } else {
+                    callFetchUserPreference();
+                }
+            } else {
+                setSubjectListVisibility(false);
+            }
+
+
             handleProgress(0, "");
             StudentProfileModel studentProfileModel = new StudentProfileModel();
             studentProfileModel.setPhonenumber(dashboardResModel.getPhonenumber());
             viewModel.sendStudentProfileInternet(studentProfileModel);
         }
-
     }
-
 
 
     private void changeTheEditText() {
@@ -822,7 +860,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
     }
 
     private void askPermission() {
-        String rationale ="For Upload Profile Picture. Camera and Storage Permission is Must.";
+        String rationale = "For Upload Profile Picture. Camera and Storage Permission is Must.";
         Permissions.Options options = new Permissions.Options()
                 .setRationaleDialogTitle("Info")
                 .setSettingsDialogTitle("Warning");
@@ -1068,4 +1106,67 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
 
         return false;
     }
+
+
+    private void setSubjectAdapter(SubjectPreferenceResModel subjectPreferenceResModel) {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        List<CategorySubjectResModel> categorySubjectResModelList = new ArrayList<>();
+        FetchStudentPrefResModel fetchStudentPrefResModel = prefModel.getFetchStudentPrefResModel();
+        if (fetchStudentPrefResModel != null && !TextUtil.checkListIsEmpty(fetchStudentPrefResModel.getSubjects())) {
+            for (CategorySubjectResModel resModel : fetchStudentPrefResModel.getSubjects()) {
+                for (CategorySubjectResModel categorySubjectResModel : subjectPreferenceResModel.getSubjects()) {
+                    // AppLogger.e("setSubjectAdapter- ", "Step 2 .2-- " + categorySubjectResModel.getSubjectname());
+                    if (resModel.getId().equalsIgnoreCase(categorySubjectResModel.getId())) {
+                        categorySubjectResModel.setSelected(true);
+                        if (resModel.getAttempted() > 0) {
+                            categorySubjectResModel.setLock(true);
+                        }
+
+                    } else {
+                    }
+                }
+            }
+        }
+
+
+        for (CategorySubjectResModel categorySubjectResModel : subjectPreferenceResModel.getSubjects()) {
+            if (categorySubjectResModel.isSelected()) {
+                categorySubjectResModelList.add(0, categorySubjectResModel);
+            } else {
+                categorySubjectResModelList.add(categorySubjectResModel);
+            }
+        }
+
+        GridLayoutManager gridlayout2 = new GridLayoutManager(getActivity(), 4, LinearLayoutManager.HORIZONTAL, false);
+        gridlayout2.setOrientation(LinearLayoutManager.HORIZONTAL);
+        binding.subjectsRecyclerview.setLayoutManager(gridlayout2);
+        binding.subjectsRecyclerview.setHasFixedSize(true);
+        binding.subjectsRecyclerview.setNestedScrollingEnabled(false);
+        SubjectPrefProfileAdapter mProfileSubjectAdapter = new SubjectPrefProfileAdapter(categorySubjectResModelList, this);
+        binding.subjectsRecyclerview.setAdapter(mProfileSubjectAdapter);
+    }
+
+
+    private void setSubjectListVisibility(boolean status) {
+        if (status) {
+            binding.yourSubjectsLayout.setVisibility(View.VISIBLE);
+            binding.subjectsRecyclerview.setVisibility(View.VISIBLE);
+        } else {
+            binding.yourSubjectsLayout.setVisibility(View.GONE);
+            binding.subjectsRecyclerview.setVisibility(View.GONE);
+        }
+    }
+
+
+    void callSubjectListPreference() {
+        viewModel.checkInternetForApi(SUBJECT_PREFRENCE_LIST_API, "");
+    }
+
+    void callFetchUserPreference() {
+        handleProgress(0, "");
+        FetchStudentPrefReqModel fetchStudentPrefReqModel = new FetchStudentPrefReqModel();
+        fetchStudentPrefReqModel.setMobileNo(AppPref.INSTANCE.getModelInstance().getUserMobile());
+        viewModel.checkInternetForApi(FETCH_STUDENT_PREFERENCES_API, fetchStudentPrefReqModel);
+    }
+
 }

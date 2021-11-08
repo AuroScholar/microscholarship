@@ -71,7 +71,7 @@ public class SubjectPreferencesActivity extends BaseActivity implements CommonCa
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, getLayout());
-      //  ((AuroApp) this.getApplication()).getAppComponent().doInjection(this);
+        AuroApp.getAppComponent().doInjection(this);
         homeViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel.class);
         binding.setLifecycleOwner(this);
         init();
@@ -107,7 +107,6 @@ public class SubjectPreferencesActivity extends BaseActivity implements CommonCa
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setSubjectAdapter(SubjectPreferenceResModel subjectPreferenceResModel) {
         AppLogger.e("setSubjectAdapter- ", "Step 0");
         AppLogger.v("setSubjectAdapter-", "Call---->" + subjectPreferenceResModel.getSubjects().size());
@@ -193,7 +192,6 @@ public class SubjectPreferencesActivity extends BaseActivity implements CommonCa
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void observeServiceResponse() {
         homeViewModel.serviceLiveData().observeForever(responseApi -> {
             switch (responseApi.status) {
@@ -214,7 +212,6 @@ public class SubjectPreferencesActivity extends BaseActivity implements CommonCa
                         }
                     } else if (responseApi.apiTypeStatus == UPDATE_STUDENT) {
                         AppLogger.e(TAG, "UPDATE_STUDENT ");
-
 
                     } else if (responseApi.apiTypeStatus == FETCH_STUDENT_PREFERENCES_API) {
 
@@ -335,45 +332,44 @@ public class SubjectPreferencesActivity extends BaseActivity implements CommonCa
         startActivity(i);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @SuppressLint("UseCompatLoadingForDrawables")
+
     private Drawable getImageFromCode(CategorySubjectResModel categorySubjectResModel) {
         switch (categorySubjectResModel.getSubjectCode()) {
             case AppConstant.SubjectCodes.Mathematics:
-                return this.getDrawable(R.drawable.ic_maths_horizontal);
+                return this.getResources().getDrawable(R.drawable.ic_maths_horizontal);
 
             case AppConstant.SubjectCodes.English:
-                return this.getDrawable(R.drawable.ic_english_horizontal);
+                return this.getResources().getDrawable(R.drawable.ic_english_horizontal);
 
             case AppConstant.SubjectCodes.Hindi:
-                return this.getDrawable(R.drawable.ic_hindi_horizontal);
+                return this.getResources().getDrawable(R.drawable.ic_hindi_horizontal);
 
             case AppConstant.SubjectCodes.Social_Science:
-                return this.getDrawable(R.drawable.ic_social_science_horizontal);
+                return this.getResources().getDrawable(R.drawable.ic_social_science_horizontal);
 
             case AppConstant.SubjectCodes.Science:
-                return this.getDrawable(R.drawable.ic_science_horizontal);
+                return this.getResources().getDrawable(R.drawable.ic_science_horizontal);
 
             case AppConstant.SubjectCodes.Physics:
-                return this.getDrawable(R.drawable.ic_physics_horizontal);
+                return this.getResources().getDrawable(R.drawable.ic_physics_horizontal);
 
             case AppConstant.SubjectCodes.Chemistry:
-                return this.getDrawable(R.drawable.ic_chemistry_horizontal);
+                return this.getResources().getDrawable(R.drawable.ic_chemistry_horizontal);
 
             case AppConstant.SubjectCodes.Biology:
-                return this.getDrawable(R.drawable.ic_biology_horizontal);
+                return this.getResources().getDrawable(R.drawable.ic_biology_horizontal);
 
             case AppConstant.SubjectCodes.History:
-                return this.getDrawable(R.drawable.ic_history_horizontal);
+                return this.getResources().getDrawable(R.drawable.ic_history_horizontal);
 
             case AppConstant.SubjectCodes.Political_Science:
-                return this.getDrawable(R.drawable.ic_political_science_horizontal);
+                return this.getResources().getDrawable(R.drawable.ic_political_science_horizontal);
 
             case AppConstant.SubjectCodes.Geography:
-                return this.getDrawable(R.drawable.ic_geographic_horizontal);
+                return this.getResources().getDrawable(R.drawable.ic_geographic_horizontal);
 
             default:
-                return this.getDrawable(R.drawable.ic_physics_horizontal);
+                return this.getResources().getDrawable(R.drawable.ic_physics_horizontal);
 
         }
 

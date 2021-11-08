@@ -79,6 +79,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import static com.auro.scholr.core.common.Status.FETCH_STUDENT_PREFERENCES_API;
 import static com.auro.scholr.core.common.Status.SEND_OTP;
 
 public class StudentMainDashboardActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener, CommonCallBackListner {
@@ -113,7 +114,8 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
     public static final int PARTNERS_FRAGMENT = 15;
 
 
-   public static  CommonCallBackListner commonCallBackListner;
+    LoginDisclaimerDialog disclaimerDialog;
+    public static  CommonCallBackListner commonCallBackListner;
 
     AuroScholarDataModel auroScholarDataModel;
     ActionBarDrawerToggle mDrawerToggle;
@@ -310,10 +312,6 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         viewModel.serviceLiveData().observeForever(responseApi -> {
             switch (responseApi.status) {
 
-                case LOADING:
-
-                    break;
-
                 case SUCCESS:
                     binding.progressbar.pgbar.setVisibility(View.GONE);
                     if (responseApi.apiTypeStatus == Status.DYNAMIC_LINK_API) {
@@ -358,12 +356,15 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
 
                 case FAIL:
                 case NO_INTERNET:
+                    AppLogger.e("observeServiceResponse--",responseApi.status.toString());
+                    AppLogger.e("observeServiceResponse--","FAIL  NO_INTERNET ");
                     binding.progressbar.pgbar.setVisibility(View.GONE);
                     AppLogger.e("Error", (String) responseApi.data);
                     break;
 
 
                 default:
+                    AppLogger.e("observeServiceResponse--","default ");
                     binding.progressbar.pgbar.setVisibility(View.GONE);
                     AppLogger.e("Error", (String) responseApi.data);
                     break;
@@ -460,15 +461,15 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
     private void checkDisclaimer() {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (!prefModel.isPreLoginDisclaimer()) {
-            LoginDisclaimerDialog askDetailCustomDialog = new LoginDisclaimerDialog(this);
+            disclaimerDialog = new LoginDisclaimerDialog(this);
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(askDetailCustomDialog.getWindow().getAttributes());
+            lp.copyFrom(disclaimerDialog.getWindow().getAttributes());
             lp.width = WindowManager.LayoutParams.MATCH_PARENT;
             lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-            askDetailCustomDialog.getWindow().setAttributes(lp);
-            Objects.requireNonNull(askDetailCustomDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            askDetailCustomDialog.setCancelable(false);
-            askDetailCustomDialog.show();
+            disclaimerDialog.getWindow().setAttributes(lp);
+            Objects.requireNonNull(disclaimerDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            disclaimerDialog.setCancelable(false);
+            disclaimerDialog.show();
         }
     }
 
@@ -524,10 +525,9 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
     }
 
     private void openSubjectPreferenceScreen() {
-       /* if (loginDisclaimerDialog != null && loginDisclaimerDialog.isShowing()) {
-            loginDisclaimerDialog.dismiss();
-        }*/
-        finish();
+        if (disclaimerDialog != null && disclaimerDialog.isShowing()) {
+            disclaimerDialog.dismiss();
+        }
         Intent newIntent = new Intent(this, SubjectPreferencesActivity.class);
         startActivity(newIntent);
         finish();
@@ -543,7 +543,8 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         if (prefModel.getStudentClass() > 10) {
             FetchStudentPrefReqModel fetchStudentPrefReqModel = new FetchStudentPrefReqModel();
             fetchStudentPrefReqModel.setMobileNo(AppPref.INSTANCE.getModelInstance().getUserMobile());
-            viewModel.fetchStudentPreference((FetchStudentPrefReqModel) fetchStudentPrefReqModel);
+            viewModel.checkInternetForApi(FETCH_STUDENT_PREFERENCES_API, fetchStudentPrefReqModel);
+          //  viewModel.fetchStudentPreference((FetchStudentPrefReqModel) fetchStudentPrefReqModel);
         }
     }
 }

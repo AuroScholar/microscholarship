@@ -19,6 +19,7 @@ import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DemographicResModel;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
 import com.auro.scholr.home.data.model.FetchStudentPrefReqModel;
+import com.auro.scholr.home.data.model.FetchStudentPrefResModel;
 import com.auro.scholr.home.data.model.FriendListResDataModel;
 import com.auro.scholr.home.data.model.FriendRequestList;
 import com.auro.scholr.home.data.model.GetStudentUpdateProfile;
@@ -29,7 +30,9 @@ import com.auro.scholr.home.data.model.NearByFriendList;
 import com.auro.scholr.home.data.model.SaveImageReqModel;
 import com.auro.scholr.home.data.model.SendOtpReqModel;
 import com.auro.scholr.home.data.model.StudentProfileModel;
+import com.auro.scholr.home.data.model.SubjectPreferenceResModel;
 import com.auro.scholr.home.data.model.UpdatePrefReqModel;
+import com.auro.scholr.home.data.model.UpdatePrefResModel;
 import com.auro.scholr.home.data.model.VerifyOtpReqModel;
 import com.auro.scholr.home.data.model.passportmodels.PassportMonthModel;
 import com.auro.scholr.home.data.model.passportmodels.PassportReqModel;
@@ -472,7 +475,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
                     return handleResponse(response, FETCH_STUDENT_PREFERENCES_API);
                 } else {
 
-                    return responseFail(null);
+                    return responseFail(FETCH_STUDENT_PREFERENCES_API);
                 }
             }
         });
@@ -572,10 +575,21 @@ public class HomeRemoteUseCase extends NetworkUseCase {
         }else if (status == VERIFY_OTP) {
             VerifyOtpResModel verifyOtpResModel = gson.fromJson(response.body(), VerifyOtpResModel.class);
             return ResponseApi.success(verifyOtpResModel, status);
+        }else if (status == SUBJECT_PREFRENCE_LIST_API) {
+            SubjectPreferenceResModel subjectPreferenceResModel = gson.fromJson(response.body(), SubjectPreferenceResModel.class);
+            AppLogger.v("RemoteApi", "" + SUBJECT_PREFRENCE_LIST_API);
+            return ResponseApi.success(subjectPreferenceResModel, status);
+        } else if (status == FETCH_STUDENT_PREFERENCES_API) {
+            FetchStudentPrefResModel fetchStudentPrefResModel = gson.fromJson(response.body(), FetchStudentPrefResModel.class);
+            AppLogger.v("RemoteApi", "" + FETCH_STUDENT_PREFERENCES_API);
+            return ResponseApi.success(fetchStudentPrefResModel, status);
+        } else if (status == UPDATE_PREFERENCE_API) {
+            UpdatePrefResModel updatePrefResModel = gson.fromJson(response.body(), UpdatePrefResModel.class);
+            AppLogger.v("RemoteApi", "" + UPDATE_PREFERENCE_API);
+            return ResponseApi.success(updatePrefResModel, status);
         }
 
-
-        return ResponseApi.fail(null, status);
+        return ResponseApi.fail("", status);
     }
 
     @Override

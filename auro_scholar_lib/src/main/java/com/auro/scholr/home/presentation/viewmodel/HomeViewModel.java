@@ -19,6 +19,7 @@ import com.auro.scholr.home.data.model.VerifyOtpReqModel;
 import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
+import com.auro.scholr.util.AppLogger;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -78,13 +79,6 @@ public class HomeViewModel extends ViewModel {
                 .add(homeRemoteUseCase.getDynamicDataApi(model)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSubscribe(new Consumer<Disposable>() {
-                            @Override
-                            public void accept(Disposable __) throws Exception {
-                                /*Do code here*/
-                                serviceLiveData.setValue(ResponseApi.loading(null));
-                            }
-                        })
                         .subscribe(new Consumer<ResponseApi>() {
                                        @Override
                                        public void accept(ResponseApi responseApi) throws Exception {
@@ -118,13 +112,6 @@ public class HomeViewModel extends ViewModel {
     private void verifyOtpRxApi(VerifyOtpReqModel reqModel) {
         getCompositeDisposable().add(homeRemoteUseCase.verifyOtpApi(reqModel).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-
-                        //  serviceLiveData.setValue(ResponseApi.loading(Status.VERIFY_OTP));
-                    }
-                })
                 .subscribe(new Consumer<ResponseApi>() {
                                @Override
                                public void accept(ResponseApi responseApi) throws Exception {
@@ -154,13 +141,6 @@ public class HomeViewModel extends ViewModel {
     private void sendOtpRxApi(SendOtpReqModel reqModel) {
         getCompositeDisposable().add(homeRemoteUseCase.sendOtpApi(reqModel).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        // serviceLiveData.setValue(ResponseApi.loading(Status.ACCEPT_INVITE_CLICK));
-                        serviceLiveData.setValue(ResponseApi.loading(Status.SEND_OTP));
-                    }
-                })
                 .subscribe(new Consumer<ResponseApi>() {
                                @Override
                                public void accept(ResponseApi responseApi) throws Exception {
@@ -257,12 +237,14 @@ public class HomeViewModel extends ViewModel {
                 .subscribe(new Consumer<ResponseApi>() {
                                @Override
                                public void accept(ResponseApi responseApi) throws Exception {
+                                   AppLogger.e("fetchStudentPreference--","responseApi ");
                                    serviceLiveData.setValue(responseApi);
                                }
                            },
                         new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
+                                AppLogger.e("fetchStudentPreference--","Exception ");
                                 defaultError();
                             }
                         }));

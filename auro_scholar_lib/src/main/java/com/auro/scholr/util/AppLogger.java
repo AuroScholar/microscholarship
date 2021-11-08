@@ -31,6 +31,9 @@ public class AppLogger {
     }
 
     public static void i(final String TAG, final String MSG) {
+        if (MSG == null) {
+            return;
+        }
         if (enableLogger) {
             Log.i(TAG, MSG);
         }

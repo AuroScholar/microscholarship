@@ -1051,12 +1051,14 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel.getStudentClass() > 10) {
             FetchStudentPrefResModel fetchStudentPrefResModel = prefModel.getFetchStudentPrefResModel();
-            if (fetchStudentPrefResModel != null && !TextUtil.checkListIsEmpty(fetchStudentPrefResModel.getPreference())) {
-                /* Do CODE HERE*/
+            ((StudentMainDashboardActivity) getActivity()).setListner(this);
+            ((StudentMainDashboardActivity) getActivity()).callFetchUserPreference();
+           /* if (fetchStudentPrefResModel != null && !TextUtil.checkListIsEmpty(fetchStudentPrefResModel.getPreference())) {
+                *//* Do CODE HERE*//*
             } else {
                 ((StudentMainDashboardActivity) getActivity()).setListner(this);
                 ((StudentMainDashboardActivity) getActivity()).callFetchUserPreference();
-            }
+            }*/
         }
     }
 

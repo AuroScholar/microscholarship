@@ -100,6 +100,12 @@
         <activity
             android:name=".util.cropper.CropImagesActivity"
             android:theme="@style/Base.Theme.AppCompat" />
+
+        <activity
+            android:name=".home.presentation.view.activity.newDashboard.SubjectPreferencesActivity"
+            android:configChanges="locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
