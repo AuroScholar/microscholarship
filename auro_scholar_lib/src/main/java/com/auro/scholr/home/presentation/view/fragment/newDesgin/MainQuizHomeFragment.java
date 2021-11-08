@@ -503,10 +503,12 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             binding.mainParentLayout.setVisibility(View.GONE);
             binding.shimmerViewQuiz.setVisibility(View.VISIBLE);
             binding.shimmerViewQuiz.startShimmer();
+            binding.imageChat.setVisibility(View.GONE);
         } else if (value == 1) {
             binding.errorConstraint.setVisibility(View.VISIBLE);
             binding.mainParentLayout.setVisibility(View.GONE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
+            binding.imageChat.setVisibility(View.GONE);
             binding.shimmerViewQuiz.stopShimmer();
             binding.errorLayout.textError.setText(message);
             binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
@@ -519,6 +521,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             binding.errorConstraint.setVisibility(View.GONE);
             binding.mainParentLayout.setVisibility(View.VISIBLE);
             binding.shimmerViewQuiz.setVisibility(View.GONE);
+            binding.imageChat.setVisibility(View.VISIBLE);
             binding.shimmerViewQuiz.stopShimmer();
 
         }
