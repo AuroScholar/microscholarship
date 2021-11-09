@@ -2,6 +2,7 @@ package com.auro.scholr.core.database;
 
 
 import com.auro.scholr.home.data.model.AssignmentReqModel;
+import com.auro.scholr.home.data.model.AssignmentResModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
 import com.auro.scholr.home.data.model.FetchStudentPrefResModel;
@@ -22,10 +23,13 @@ public class PrefModel implements Serializable {
     private AssignmentReqModel assignmentReqModel;
     private boolean tooltipStatus;
     private String userMobile;
+    private AssignmentResModel assignmentResModel;
 
     private int studentClass;
 
     private  String deviceToken;
+
+    private List<String> studentClasses = new ArrayList<>();
 
     private QuizResModel quizResModel;
 
@@ -152,6 +156,16 @@ public class PrefModel implements Serializable {
         this.dashboardResModel = dashboardResModel;
     }
 
+    public List<String> getStudentClasses() {
+        return studentClasses;
+    }
+
+    public void setStudentClasses(List<String> studentClasses) {
+        this.studentClasses = studentClasses;
+    }
+
+
+
     public DynamiclinkResModel getDynamiclinkResModel() {
         return dynamiclinkResModel;
     }
@@ -186,6 +200,13 @@ public class PrefModel implements Serializable {
         return fetchStudentPrefResModel;
     }
 
+    public AssignmentResModel getAssignmentResModel() {
+        return assignmentResModel;
+    }
+
+    public void setAssignmentResModel(AssignmentResModel assignmentResModel) {
+        this.assignmentResModel = assignmentResModel;
+    }
     public boolean isDashboardaApiNeedToCall() {
         return isDashboardaApiNeedToCall;
     }

@@ -79,6 +79,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 import static com.auro.scholr.core.common.Status.FETCH_STUDENT_PREFERENCES_API;
 import static com.auro.scholr.core.common.Status.SEND_OTP;
 
@@ -112,6 +113,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
     public static final int PRIVACY_POLICY_FRAGMENT = 9;
     public static final int QUIZ_TEST_FRAGMENT = 10;
     public static final int PARTNERS_FRAGMENT = 15;
+    public static final int NATIVE_QUIZ_FRAGMENT = 12;
 
 
     LoginDisclaimerDialog disclaimerDialog;
@@ -123,6 +125,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
     DrawerListAdapter drawerListAdapter;
     QuizViewModel quizViewModel;
     CustomOtpDialog customOtpDialog;
+    public AlertDialog dialogQuit;
 
 
     public static int getListingActiveFragment() {
@@ -546,5 +549,39 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
             viewModel.checkInternetForApi(FETCH_STUDENT_PREFERENCES_API, fetchStudentPrefReqModel);
           //  viewModel.fetchStudentPreference((FetchStudentPrefReqModel) fetchStudentPrefReqModel);
         }
+    }
+
+    public void callDashboardApi() {
+        viewModel.checkInternetForApi(DASHBOARD_API, auroScholarDataModel);
+    }
+    public void openDialogForQuit() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(this.getResources().getString(R.string.want_to_quit_quiz));
+        // Set the alert dialog yes button click listener
+        String yes=this.getResources().getString(R.string.yes);
+        String no=this.getResources().getString(R.string.no);
+
+        builder.setPositiveButton(Html.fromHtml("<font color='#00A1DB'>"+yes+"</font>"), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogQuit, int which) {
+                if(AppUtil.callBackListner!=null)
+                {
+                    AppUtil.callBackListner.commonEventListner(AppUtil.getCommonClickModel(0, Status.FINISH_DIALOG_CLICK,""));
+                }
+            }
+        });
+        // Set the alert dialog no button click listener
+        builder.setNegativeButton(Html.fromHtml("<font color='#00A1DB'>"+no+"</font>"), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogQuit, int which) {
+
+                dialogQuit.dismiss();
+
+            }
+        });
+
+        dialogQuit = builder.create();
+        dialogQuit.show();
+        // Display the alert dialog on interface
     }
 }

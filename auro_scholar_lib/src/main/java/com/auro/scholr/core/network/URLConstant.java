@@ -90,4 +90,16 @@ public interface URLConstant {
 
     String STUDENT_SUBJECT_PREFERENCE_API = "https://auroscholar.com/api/fetch_subject_list.php";
 
+    String FETCH_QUIZ_DATA = BASE_URL + "fetch_quiz_question.php";
+
+    // String SAVE_QUIZ_DATA  = BASE_URL + "save_quiz_question.php";
+
+    String SAVE_QUIZ_DATA  = BASE_URL + "save_quiz_question_rahul.php";
+
+    //String FINISH_QUIZ_DATA  = BASE_URL + "submit_final_quiz_test.php";
+
+    String FINISH_QUIZ_DATA  = BASE_URL + "submit_final_quiz_rahul.php";
+
+
+
 }

@@ -502,6 +502,20 @@
     <string name="hi_there">Hi There!</string>
     <string name="your_subject_new">Your Subjects</string>
 
+    <string name="save_amp_next"><![CDATA[Save & Next]]></string>
+    <string name="exit_quiz">Exit Quiz</string>
+    <string name="subject">Subject</string>
+    <string name="saving">Saving...</string>
+    <string name="save_next">Save and Next</string>
+    <string name="save_submit">Save and Submit</string>
+    <string name="finish_your_text">Finishing Your Test...</string>
+    <string name="quiz_error">Due to a technical issue, quiz is not launched. Please try again later.</string>
+    <string name="already_finished">Quiz is already finished due to some following reasons Time Out, Already Attempted or You Identify Cheated.</string>
+    <string name="finish_quiz_txt">Are you sure you want to finish the quiz.</string>
+    <string name="not_showing_face">Your face is not visible. Please make sure you are in proper lighting.</string>
+    <string name="quiz_internet">No internet connection. Please try again.</string>
+    <string name="quiz_internet_2">No internet connection, Please connect to the internet to complete the quiz.</string>
+    <string name="want_to_quit_quiz">Please confirm if you want to end the quiz.</string>
 
     <string-array name="genderlist_profile">
         <item>Male</item>

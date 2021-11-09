@@ -1,12 +1,14 @@
 package com.auro.scholr.util.alert_dialog;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
 import com.auro.scholr.R;
@@ -26,6 +28,10 @@ public class CustomProgressDialog extends Dialog {
 
     public CustomProgressDialog(CustomDialogModel customDialogModel) {
         super(customDialogModel.getContext());
+        this.customDialogModel = customDialogModel;
+    }
+    public CustomProgressDialog(@NonNull Context context, CustomDialogModel customDialogModel) {
+        super(context);
         this.customDialogModel = customDialogModel;
     }
 

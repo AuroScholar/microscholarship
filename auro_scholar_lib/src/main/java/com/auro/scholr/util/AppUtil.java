@@ -35,6 +35,8 @@ public class AppUtil {
     public static CommonCallBackListner callBackListner;
 
     public static MyClassRoomTeacherResModel myClassRoomResModel;
+    public static int  dashboardQuizScore;
+    public static DashboardResModel dashboardResModel;
 
     public static boolean isMyServiceRunning(Class<?> serviceClass, Context context) {
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);

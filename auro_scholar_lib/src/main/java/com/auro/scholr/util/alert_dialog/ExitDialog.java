@@ -19,17 +19,24 @@ public class ExitDialog extends Dialog implements View.OnClickListener {
 
     public Activity context;
     private ExitSelectionLayoutBinding binding;
+    String msg;
 
     public ExitDialog(@NonNull Activity context) {
         super(context);
         this.context = context;
+    }
+    public ExitDialog(@NonNull Activity context, String msg) {
+        super(context);
+        this.context = context;
+        this.msg=msg;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),  R.layout.exit_selection_layout, null, false);
-        binding.tvMessage.setText("What App is not install!!\nPlease Install App From PlayStore");
+        //binding.tvMessage.setText("What App is not install!!\nPlease Install App From PlayStore");
+        binding.tvMessage.setText(msg);
         setContentView(binding.getRoot());
         setListener();
     }

@@ -139,5 +139,6 @@
     <color name="light_gray_text1">#C6C7C9</color>
     <color name="f3f3f3">#f3f3f3</color>
     <color name="dark_blue_green">#0A404F</color>
+    <color name="green_timer_color">#03AE4D</color>
 
 </resources>

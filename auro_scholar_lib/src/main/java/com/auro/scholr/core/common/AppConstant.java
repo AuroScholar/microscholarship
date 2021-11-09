@@ -21,6 +21,7 @@ public interface AppConstant {
     // String MOBILE_NUMBER = "MOBILE_NUMBER";
     String TRUE = "true";
     String FALSE = "false";
+    String QUIZ_ATTEMPTED="Attempted";
     String PROFILE_IMAGE_PATH = "PROFILE_IMAGE_PATH";
     String DASHBOARD_RES_MODEL = "DASHBOARD_RES_MODEL";
     String WEB_LINK = "WEB_LINK";
@@ -82,6 +83,7 @@ public interface AppConstant {
         String PARTNER_SOURCE = "partner_source";
         String USER_PARTNER_ID = "user_partner_id";
         String RESGISTRATION_ID = "registration_id";
+        String REFERRER_MOBILE = "referrer_mobile";
         String STUDENT_NAME = "student_name";
         String IP_ADDRESS="ip_address";
         String BUILD_VERSION="build_version";
@@ -220,8 +222,15 @@ public interface AppConstant {
         String EXAM_FACE_IMAGE="exam_face_img";
         String IS_MOBILE="is_mobile";
         String IMG_NORMAL_PATH="img_normal_path";
+        String QUESTION_SERIAL_NUMBER="QuestionSerialNo";
         String IMG_PATH="img_path";
         String QUIZ_ID="quiz_id";
+        String SUBJECT = "subject";
+        String EXAM_ASSIGNMENT_ID="ExamAssignmentID";
+        String COMPLETE_BY="complete_by";
+        String ANSWER_ID="AnswerID";
+        String QUESTION_ID="QuestionID";
+
     }
 
     interface AzureApiParams {
@@ -432,5 +441,16 @@ public interface AppConstant {
         String History = "HISTORY";
         String Political_Science = "POLITICAL_SCIENCE";
         String Geography = "GEOGRAPHY";
+    }
+    interface QuizNative{
+        String IMAGEINLARGE = "IMAGEINLARGE";
+    }
+    interface ManufacturerName {
+        String SAMSUNG = "SAMSUNG";
+    }
+    interface QuizFinishStatus {
+        String STUDENT = "student";
+        String AUTO_SUBMITTED = "auto submitted";
+        String EXIT_BY_STUDENT = "exit by student";
     }
 }

@@ -7,7 +7,7 @@
 
         <variable
             name="selectYourMessageDialogModel"
-            type="com.auro.application.teacher.presentation.viewmodel.SelectYourMessageDialogModel" />
+            type="com.auro.scholr.teacher.presentation.viewmodel.SelectYourMessageDialogModel" />
 
 
     </data>-->

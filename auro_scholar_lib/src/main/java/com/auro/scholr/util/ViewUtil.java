@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.os.Build;
 import android.text.SpannableStringBuilder;
 import android.text.method.LinkMovementMethod;
@@ -14,6 +15,7 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.auro.scholr.core.application.AuroApp;
@@ -31,6 +34,7 @@ import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.util.alert_dialog.ErrorSnackbar;
 import com.auro.scholr.R;
+import com.google.android.gms.common.images.Size;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -279,5 +283,37 @@ public class ViewUtil {
             ImageUtil.loadNormalImage(imageView, prefModel.getDashboardResModel().getProfilePic());
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public static Size[] sizeToSize(android.util.Size[] sizes) {
+        Size[] size = new Size[sizes.length];
+        for(int i=0; i<sizes.length; i++) {
+            size[i] = new Size(sizes[i].getWidth(), sizes[i].getHeight());
+        }
+        return size;
+    }
 
+    public static int getScreenHeight(Context c) {
+        WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.y;
+    }
+    public static int getScreenWidth(Context c) {
+        WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.x;
+    }
+
+
+    public static int getScreenRotation(Context c) {
+        WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
+        return wm.getDefaultDisplay().getRotation();
+    }
+    public static float getScreenRatio(Context c) {
+        DisplayMetrics metrics = c.getResources().getDisplayMetrics();
+        return ((float)metrics.heightPixels / (float)metrics.widthPixels);
+    }
 }

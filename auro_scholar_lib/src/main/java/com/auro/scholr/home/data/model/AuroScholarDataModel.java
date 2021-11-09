@@ -35,6 +35,7 @@ public class AuroScholarDataModel implements Parcelable {
     String gender="";
     String email="";
     String partnerName="";
+    String devicetoken="";
 
     protected AuroScholarDataModel(Parcel in) {
         mobileNumber = in.readString();
@@ -60,6 +61,7 @@ public class AuroScholarDataModel implements Parcelable {
         gender = in.readString();
         email = in.readString();
         partnerName = in.readString();
+        devicetoken = in.readString();
     }
 
     @Override
@@ -87,6 +89,7 @@ public class AuroScholarDataModel implements Parcelable {
         dest.writeString(gender);
         dest.writeString(email);
         dest.writeString(partnerName);
+        dest.writeString(devicetoken);
     }
 
     @Override
@@ -314,5 +317,12 @@ public class AuroScholarDataModel implements Parcelable {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+    public String getDevicetoken() {
+        return devicetoken;
+    }
+
+    public void setDevicetoken(String devicetoken) {
+        this.devicetoken = devicetoken;
     }
 }

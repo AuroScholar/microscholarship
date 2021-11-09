@@ -1,5 +1,7 @@
 package com.auro.scholr.home.data.model;
 
+import static com.auro.scholr.core.application.AuroApp.fragmentContainerUiId;
+
 import android.app.Activity;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -21,6 +23,7 @@ public class AuroScholarInputModel implements Parcelable {
     String email="";
     String boardType="";
     String gender="";
+    int fragmentContainerUiId;
 
     protected AuroScholarInputModel(Parcel in) {
         mobileNumber = in.readString();
@@ -38,6 +41,7 @@ public class AuroScholarInputModel implements Parcelable {
         boardType = in.readString();
         gender = in.readString();
         partnerName = in.readString();
+        fragmentContainerUiId = in.readInt();
     }
 
     @Override
@@ -57,6 +61,7 @@ public class AuroScholarInputModel implements Parcelable {
         dest.writeString(boardType);
         dest.writeString(gender);
         dest.writeString(partnerName);
+        dest.writeInt(fragmentContainerUiId);
     }
 
     @Override
@@ -199,7 +204,13 @@ public class AuroScholarInputModel implements Parcelable {
         this.activity = activity;
     }
 
+    public int getFragmentContainerUiId() {
+        return fragmentContainerUiId;
+    }
 
+    public void setFragmentContainerUiId(int fragmentContainerUiId) {
+        this.fragmentContainerUiId = fragmentContainerUiId;
+    }
 
     public String getUserPartnerId() {
         return userPartnerId;

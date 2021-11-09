@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="QuizTestNativeViewModel"
+            type="com.auro.scholr.quiz.presentation.viewmodel.QuizTestNativeViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/background"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+
+                android:scaleType="fitXY"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/header_top_parent"
+                layout="@layout/quiz_header_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp" />
+
+            <RelativeLayout
+                android:id="@+id/main_content_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/header_top_parent"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/timerProgressbar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:max="10"
+                    android:progress="0" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/preview_timer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/timerProgressbar">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.auro.scholr.util.camera.CameraSourcePreview
+                            android:id="@+id/preview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentStart="true"
+                            android:background="@color/black"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.auro.scholr.util.utility.GraphicOverlay
+                                android:id="@+id/faceOverlay"
+                                android:layout_width="@dimen/_50sdp"
+                                android:layout_height="@dimen/_50sdp"
+                                android:visibility="invisible" />
+                        </com.auro.scholr.util.camera.CameraSourcePreview>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/timer_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_clock_image" />
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/timer_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:gravity="center_horizontal"
+                            android:text="09:58"
+                            android:textAlignment="center"
+                            android:textColor="@color/green_timer_color"
+                            android:textSize="@dimen/_16sdp"
+                            app:Font="Poppins-SemiBold.ttf" />
+
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/parent_scrollview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/card_view"
+                    android:layout_below="@+id/preview_timer"
+                    android:fadeScrollbars="false"
+                    android:scrollbars="vertical"
+                    android:fillViewport="true"
+                    android:scrollbarFadeDuration="0"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/subject_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/preview_timer"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:gravity="center_horizontal"
+                            android:text="@string/subject"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_16sdp"
+                            app:Font="Poppins-Bold.ttf"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/preview_timer" />
+
+
+                        <LinearLayout
+                            android:id="@+id/llquestion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_7sdp"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/subject_title">
+
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/ques_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="@dimen/_15sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:text="Q. The University of Waterloo does NOT have a building of this name?"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_10sdp"
+                                app:Font="Poppins-Regular.ttf"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/subject_title" />
+
+                            <ImageView
+                                android:id="@+id/ques_img"
+                                android:layout_width="@dimen/_150sdp"
+                                android:layout_height="@dimen/_80sdp"
+                                android:layout_marginStart="@dimen/_15sdp"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_clock_image"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/ques_text" />
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvselect_quizOption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/llquestion"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <RadioGroup
+                            android:id="@+id/ans_radiogroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/llquestion">
+
+                            <RadioButton
+                                android:id="@+id/ans_one"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:button="@drawable/radio_button_selector"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:text="one" />
+
+                            <RadioButton
+                                android:id="@+id/ans_two"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:button="@drawable/radio_button_selector"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:text="two" />
+
+                            <RadioButton
+                                android:id="@+id/ans_three"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:button="@drawable/radio_button_selector"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:text="three" />
+
+                            <RadioButton
+                                android:id="@+id/ans_four"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:button="@drawable/radio_button_selector"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:text="four" />
+                        </RadioGroup>
+                        -->
+                        <!--Test-->
+
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+
+                <!--    </androidx.cardview.widget.CardView>-->
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_alignParentBottom="true"
+                    android:elevation="@dimen/_8sdp"
+                    app:cardElevation="@dimen/_10sdp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white">
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/exit_bt"
+                            android:layout_width="@dimen/_90sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:background="@drawable/border_selector_exit"
+                            android:drawableLeft="@drawable/ic_baseline_close_24"
+                            android:drawablePadding="@dimen/_2sdp"
+                            android:gravity="left|center"
+                            android:paddingLeft="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_2sdp"
+                            android:paddingRight="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_2sdp"
+                            android:text="@string/exit_quiz"
+                            android:visibility="gone"
+                            android:textColor="@color/red_dark"
+                            android:textSize="@dimen/_12sdp"
+                            app:Font="Poppins-Regular.ttf"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/save_next_bt"
+                            android:layout_width="@dimen/_90sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:background="@drawable/ic_quiz_retake"
+                            android:gravity="center"
+                            android:text="@string/save_amp_next"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            app:Font="Poppins-Regular.ttf"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/errorConstraint"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <include
+                    android:id="@+id/errorLayout"
+                    layout="@layout/error_layout" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <RelativeLayout
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/tranparentwhite"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:elevation="@dimen/_2sdp"
+                    android:indeterminateDrawable="@drawable/circular_progress"
+                    android:innerRadiusRatio="3"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

@@ -1,5 +1,7 @@
 package com.auro.scholr.home.presentation.viewmodel;
 
+import static com.auro.scholr.core.common.Status.DASHBOARD_API;
+
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -11,6 +13,10 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.MessgeNotifyStatus;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
+import com.auro.scholr.home.data.model.AuroScholarDataModel;
+import com.auro.scholr.home.data.model.AuroScholarInputModel;
 import com.auro.scholr.home.data.model.DynamiclinkResModel;
 import com.auro.scholr.home.data.model.FetchStudentPrefReqModel;
 import com.auro.scholr.home.data.model.SendOtpReqModel;
@@ -20,6 +26,7 @@ import com.auro.scholr.home.domain.usecase.HomeDbUseCase;
 import com.auro.scholr.home.domain.usecase.HomeRemoteUseCase;
 import com.auro.scholr.home.domain.usecase.HomeUseCase;
 import com.auro.scholr.util.AppLogger;
+import com.auro.scholr.util.TextUtil;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -71,6 +78,11 @@ public class HomeViewModel extends ViewModel {
     }
 
     private void defaultError() {
+        serviceLiveData.setValue(new ResponseApi(Status.FAIL, AuroApp.getAppContext().getResources().getString(R.string.default_error), null));
+    }
+
+
+    private void defaultError(Status status) {
         serviceLiveData.setValue(new ResponseApi(Status.FAIL, AuroApp.getAppContext().getResources().getString(R.string.default_error), null));
     }
 
@@ -175,6 +187,9 @@ public class HomeViewModel extends ViewModel {
                     case FETCH_STUDENT_PREFERENCES_API:
                         fetchStudentPreference((FetchStudentPrefReqModel) reqmodel);
                         break;
+                    case DASHBOARD_API:
+                        getDashboardData((AuroScholarInputModel) reqmodel);
+                        break;
                 }
 
             } else {
@@ -248,6 +263,48 @@ public class HomeViewModel extends ViewModel {
                                 defaultError();
                             }
                         }));
+    }
+    public void getDashboardData(AuroScholarInputModel inputModel) {
+        AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
+        auroScholarDataModel.setMobileNumber(inputModel.getMobileNumber());
+        auroScholarDataModel.setStudentClass(inputModel.getStudentClass());
+        auroScholarDataModel.setRegitrationSource(inputModel.getRegitrationSource());
+        auroScholarDataModel.setActivity(inputModel.getActivity());
+        auroScholarDataModel.setFragmentContainerUiId(inputModel.getFragmentContainerUiId());
+        auroScholarDataModel.setReferralLink(inputModel.getReferralLink());
+
+        if (TextUtil.isEmpty(inputModel.getPartnerSource())) {
+            auroScholarDataModel.setPartnerSource("");
+        } else {
+            auroScholarDataModel.setPartnerSource(inputModel.getPartnerSource());
+        }
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel.getDeviceToken() != null && !TextUtil.isEmpty(prefModel.getDeviceToken())) {
+            auroScholarDataModel.setDevicetoken(prefModel.getDeviceToken());
+        } else {
+            auroScholarDataModel.setDevicetoken("");
+        }
+        dashBoardApi(auroScholarDataModel);
+    }
+
+    private void dashBoardApi(AuroScholarDataModel model) {
+        getCompositeDisposable()
+                .add(homeRemoteUseCase.getDashboardData(model)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<ResponseApi>() {
+                                       @Override
+                                       public void accept(ResponseApi responseApi) throws Exception {
+                                           serviceLiveData.setValue(responseApi);
+                                       }
+                                   },
+
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        defaultError(DASHBOARD_API);
+                                    }
+                                }));
     }
 
 
