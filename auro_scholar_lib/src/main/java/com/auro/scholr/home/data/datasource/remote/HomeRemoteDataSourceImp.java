@@ -252,8 +252,10 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         RequestBody isPrivateTutor = RequestBody.create(okhttp3.MultipartBody.FORM, model.getIsPrivateTution());
         RequestBody privateTuterType = RequestBody.create(okhttp3.MultipartBody.FORM, model.getPrivateTutionType());
         RequestBody getEmailId = RequestBody.create(okhttp3.MultipartBody.FORM, model.getEmailID());
+        RequestBody stateCode = RequestBody.create(okhttp3.MultipartBody.FORM, model.getStateCode());
+        RequestBody distcitcode = RequestBody.create(okhttp3.MultipartBody.FORM, model.getDistricts());
         MultipartBody.Part id_proof_front = ConversionUtil.INSTANCE.makeMultipartRequestProfile(model.getImageBytes());
-        return homeRemoteApi.studentUpdateProfile(phonenumber, firstName, getEmailId, gender, schoolType, boardType, language, mobileModel, manufacturer, mobileVersion, latitude, longitude, isPrivateTutor, privateTuterType, id_proof_front);
+        return homeRemoteApi.studentUpdateProfile(phonenumber, firstName, getEmailId, gender, schoolType, boardType, language, mobileModel, manufacturer, mobileVersion, latitude, longitude, isPrivateTutor, privateTuterType, stateCode, distcitcode, id_proof_front);
     }
 
 

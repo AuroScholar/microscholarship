@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -77,6 +79,7 @@ import com.auro.scholr.util.permission.LocationUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -454,8 +457,40 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         AppLogger.e("StudentProfile", "fragment requestCode=" + requestCode);
+        if (requestCode == 2404) {
+            // CropImages.ActivityResult result = CropImages.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                try {
+                    Uri uri = data.getData();
+                    AppLogger.e("StudentProfile", "image path=" + uri.getPath());
 
-        if (requestCode == CropImages.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                    Bitmap picBitmap = BitmapFactory.decodeFile(uri.getPath());
+                    byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
+                    long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
+                    int file_size = Integer.parseInt(String.valueOf(bytes.length / 1024));
+
+                    AppLogger.e("StudentProfile", "image size=" + uri.getPath());
+                    if (file_size >= 500) {
+                        studentProfileModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
+                    } else {
+                        studentProfileModel.setImageBytes(bytes);
+                    }
+                    int new_file_size = Integer.parseInt(String.valueOf(studentProfileModel.getImageBytes().length / 1024));
+                    AppLogger.d(TAG, "Image Path  new Size kb- " + mb + "-bytes-" + new_file_size);
+
+
+                    loadimage(picBitmap);
+                } catch (Exception e) {
+                    AppLogger.e("StudentProfile", "fragment exception=" + e.getMessage());
+                }
+
+            } else if (resultCode == ImagePicker.RESULT_ERROR) {
+                showSnackbarError(ImagePicker.Companion.getError(data));
+            } else {
+                // Toast.makeText(getActivity(), "Task Cancelled", Toast.LENGTH_SHORT).show();
+            }
+        }
+       /* if (requestCode == CropImages.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImages.ActivityResult result = CropImages.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 try {
@@ -485,7 +520,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
                 Exception error = result.getError();
                 AppLogger.e("StudentProfile", "fragment error=" + error.getMessage());
             }
-        }
+        }*/
     }
 
     private void loadimage(Bitmap picBitmap) {
@@ -682,6 +717,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
 
     public void setDataonUi() {
         if (getStudentUpdateProfile != null) {
+            districtCode = getStudentUpdateProfile.getDistrict_id();
             binding.classStudent.setText(getStudentUpdateProfile.getGrade() + "");
             binding.walletBalText.setText(getStudentUpdateProfile.getScholarshipAmount() + "");
             binding.editPhonenew.setText(getStudentUpdateProfile.getMobileNo());
@@ -713,9 +749,9 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
 
     }
 
-    public void setSpinner() {
+    public void setSpinner() throws IllegalStateException {
         // Spinner Drop down Gender
-        genderLines = Arrays.asList(getActivity().getResources().getStringArray(R.array.genderlist));
+        genderLines = Arrays.asList(getResources().getStringArray(R.array.genderlist));
         spinnermethodcall(genderLines, binding.SpinnerGender);
         for (int i = 0; i < genderLines.size(); i++) {
             String gender = genderLines.get(i);
@@ -727,7 +763,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
         }
 
         // Spinner Drop down schooltype
-        schooltypeLines = Arrays.asList(getActivity().getResources().getStringArray(R.array.schooltypelist));
+        schooltypeLines = Arrays.asList(getResources().getStringArray(R.array.schooltypelist));
         spinnermethodcall(schooltypeLines, binding.SpinnerSchoolType);
         for (int i = 0; i < schooltypeLines.size(); i++) {
             String school = schooltypeLines.get(i);
@@ -781,6 +817,11 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
                 break;
             }
         }
+        if (getStudentUpdateProfile != null && getStudentUpdateProfile.getState_id() != null && !TextUtil.isEmpty(getStudentUpdateProfile.getState_id())) {
+            stateSpinner(getStudentUpdateProfile.getState_id());
+
+        }
+
     }
 
     public void sendProfileScreenApi() {
@@ -867,9 +908,18 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
         Permissions.check(getActivity(), PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
             @Override
             public void onGranted() {
-                CropImages.activity()
-                        .setGuidelines(CropImageViews.Guidelines.ON)
-                        .start(getActivity());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+// perform Opertaion
+                    ImagePicker.Companion.with(getActivity())
+                            .crop()                    //Crop image(Optional), Check Customization for more option
+                            .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                            .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                            .start();
+                } else {
+                    CropImages.activity()
+                            .setGuidelines(CropImageViews.Guidelines.ON)
+                            .start(getActivity());
+                }
             }
 
             @Override
@@ -976,7 +1026,6 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     districtCode = districtDataModels.get(position).getDistrict_code();
-
                     studentProfileModel.setDistricts(districtDataModels.get(position).getDistrict_code());
 
                 }

@@ -92,7 +92,7 @@
     <string-array name="schooltypelist">
         <item>Please Select School</item>
         <item>Private School</item>
-        <item>Goverment School</item>
+        <item>Government School</item>
         <item>Other</item>
     </string-array>
     <string name="invite_by">Invite By</string>
