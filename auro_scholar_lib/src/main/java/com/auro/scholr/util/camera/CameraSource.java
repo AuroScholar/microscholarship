@@ -42,7 +42,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.annotation.StringDef;
 
-import com.auro.application.util.ViewUtil;
+import com.auro.scholr.util.ViewUtil;
 import com.google.android.gms.common.images.Size;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Frame;

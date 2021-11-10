@@ -3,7 +3,6 @@ package com.auro.scholr.home.presentation.view.adapter;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardAddFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardListFragment;
 
 import androidx.fragment.app.Fragment;
@@ -37,10 +36,9 @@ public class LeaderBoardViewPagerAdapter extends FragmentPagerAdapter {
                // UPIFragment upiFragment = new UPIFragment();
 
                // Bundle bundleupi = new Bundle();
-                FriendsLeaderBoardAddFragment friendsLeaderBoardAddFragment = new FriendsLeaderBoardAddFragment();
               //  bundleupi.putParcelable(AppConstant.DASHBOARD_RES_MODEL, mdashboard);
               //  upiFragment.setArguments(bundleupi);
-                return friendsLeaderBoardAddFragment;
+
 
             default:
                 return null;

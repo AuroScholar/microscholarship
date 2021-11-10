@@ -239,6 +239,9 @@ public class HomeModule {
         return new ViewModelFactory(homeUseCase, homeDbUseCase, homeRemoteUseCase);
     }
 
+
+
+
     @Provides
     @Singleton
     @Named("SubjectPreferencesActivity")

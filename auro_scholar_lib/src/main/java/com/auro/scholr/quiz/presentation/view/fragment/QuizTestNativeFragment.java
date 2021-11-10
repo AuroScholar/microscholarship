@@ -221,7 +221,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         }
         setTimerProgress(countQuiz + 1);
         useCamera2 = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
-        if (DeviceUtil.getManufacturer(getActivity()).equalsIgnoreCase(AppConstant.ManufacturerName.SAMSUNG)) {
+        if (DeviceUtil.getManufacturer().equalsIgnoreCase(AppConstant.ManufacturerName.SAMSUNG)) {
             useCamera2 = false;
         }
         if (dashboardResModel != null && quizResModel != null) {

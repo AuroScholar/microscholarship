@@ -1,3 +1,4 @@
+/*
 package com.auro.scholr.home.presentation.view.fragment;
 
 import android.Manifest;
@@ -42,7 +43,6 @@ import com.auro.scholr.util.permission.LocationUtil;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -584,3 +584,4 @@ public class FriendsLeaderBoardAddFragment extends BaseFragment implements View.
 
 }
 
+*/

@@ -453,4 +453,8 @@ public interface AppConstant {
         String AUTO_SUBMITTED = "auto submitted";
         String EXIT_BY_STUDENT = "exit by student";
     }
+
+    interface  QuizTestNativeScreen{
+        int QUIZOPTIONADAPTER = 107;
+    }
 }

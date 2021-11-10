@@ -20,7 +20,6 @@ import com.auro.scholr.home.presentation.view.fragment.ConsgratuationLessScoreDi
 import com.auro.scholr.home.presentation.view.fragment.DemographicFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendRequestListDialogFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsInviteBoardFragment;
-import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardAddFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardFragment;
 import com.auro.scholr.home.presentation.view.fragment.FriendsLeaderBoardListFragment;
 import com.auro.scholr.home.presentation.view.fragment.InviteFriendDialog;
@@ -40,6 +39,7 @@ import com.auro.scholr.payment.presentation.view.fragment.BankFragment;
 import com.auro.scholr.payment.presentation.view.fragment.PaytmFragment;
 import com.auro.scholr.payment.presentation.view.fragment.SendMoneyFragment;
 import com.auro.scholr.payment.presentation.view.fragment.UPIFragment;
+import com.auro.scholr.quiz.presentation.view.fragment.QuizTestNativeFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.SelectYourAppointmentDialogFragment;
 import com.auro.scholr.teacher.presentation.view.fragment.SelectYourMessageDialogFragment;
@@ -67,6 +67,8 @@ public interface AppComponent {
 
     void doInjection(MyClassroomFragment fragment);
 
+    void doInjection(QuizTestNativeFragment fragment);
+
     void doInjection(ScholarShipFragment scholarShipFragment);
 
     void doInjection(QuizHomeFragment quizHomeFragment);
@@ -91,8 +93,6 @@ public interface AppComponent {
     void doInjection(FriendsInviteBoardFragment friendsInviteBoardFragment);
 
     void doInjection(FriendsLeaderBoardFragment friendsLeaderBoardFragment);
-
-    void doInjection(FriendsLeaderBoardAddFragment friendsLeaderBoardAddFragment);
 
     void doInjection(FriendsLeaderBoardListFragment friendsLeaderBoardListFragment);
 
