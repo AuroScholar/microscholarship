@@ -30,7 +30,7 @@ public class YuboChatActivity extends BaseActivity {
     @Override
     protected void init() {
 
-        loadFragment(new YuboChatBotFragment());
+        //loadFragment(new YuboChatBotFragment());
         setListener();
     }
 

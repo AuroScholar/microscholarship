@@ -1,6 +1,6 @@
 ext {
 
-    MIN_SDK_VERSION = 19
+    MIN_SDK_VERSION = 16
     COMPILE_SDK_VERSION = 28
     TARGET_SDK_VERSION = 28
 
@@ -41,10 +41,10 @@ ext {
             dagger           :         "com.google.dagger:dagger:${dagger}",
             daggerCompiler   :         "com.google.dagger:dagger-compiler:${dagger}",
             phoneNum         :         "com.googlecode.libphonenumber:libphonenumber:${phoneNum}",
-            /* map              :         "com.google.android.gms:play-services-maps:${googleVersion}",
-            location         :         "com.google.android.gms:play-services-location:${googleVersion}",*/
-           /* places           :         "com.google.android.gms:play-services-places:${googleVersion}",
-            phoneSms         :         "com.google.android.gms:play-services-auth-api-phone:${googleVersion}",*/
+            map              :         "com.google.android.gms:play-services-maps:${googleVersion}",
+            location         :         "com.google.android.gms:play-services-location:${googleVersion}",
+            /* places           :         "com.google.android.gms:play-services-places:${googleVersion}",
+             phoneSms         :         "com.google.android.gms:play-services-auth-api-phone:${googleVersion}",*/
     ]
 
     DatabaseDependencies = [
@@ -56,12 +56,11 @@ ext {
 
 
     FirebaseDependencies = [
-            bom                  :     'com.google.firebase:firebase-bom:29.0.0',
-            msging               :     'com.google.firebase:firebase-messaging:23.0.0',
+            msging               :     'com.google.firebase:firebase-messaging:18.0.0',
             dynamicLink          :     'com.google.firebase:firebase-dynamic-links:16.1.8',
             firebaseCrash        :     'com.google.firebase:firebase-crash:16.2.1',
             core                 :     'com.google.firebase:firebase-core:16.0.8',
-            perfomance           :     'com.google.firebase:firebase-perf:20.0.3',
+            perfomance           :     'com.google.firebase:firebase-perf:16.2.5',
             analytics            :     'com.google.firebase:firebase-analytics:17.4.4',
     ]
 
