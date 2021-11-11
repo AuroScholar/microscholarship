@@ -6,8 +6,6 @@
     <uses-sdk tools:overrideLibrary="com.pierfrancescosoffritti.androidyoutubeplayer, androidx.camera.view , androidx.camera.extensions,androidx.camera.camera2, androidx.camera.lifecycle,androidx.camera.core" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
