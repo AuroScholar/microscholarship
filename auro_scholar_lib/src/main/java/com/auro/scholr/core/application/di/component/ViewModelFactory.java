@@ -22,6 +22,9 @@ import com.auro.scholr.home.presentation.viewmodel.WalletAmountViewModel;
 import com.auro.scholr.payment.domain.PaymentRemoteUseCase;
 import com.auro.scholr.payment.domain.PaymentUseCase;
 import com.auro.scholr.payment.presentation.viewmodel.SendMoneyViewModel;
+import com.auro.scholr.quiz.domain.QuizNativeRemoteUseCase;
+import com.auro.scholr.quiz.domain.QuizNativeUseCase;
+import com.auro.scholr.quiz.presentation.viewmodel.QuizTestNativeViewModel;
 import com.auro.scholr.teacher.domain.TeacherDbUseCase;
 import com.auro.scholr.teacher.domain.TeacherRemoteUseCase;
 import com.auro.scholr.teacher.domain.TeacherUseCase;
@@ -53,10 +56,16 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     TeacherRemoteUseCase teacherRemoteUseCase;
     TeacherDbUseCase teacherDbUseCase;
 
+    QuizNativeUseCase quizNativeUseCase;
+    QuizNativeRemoteUseCase quizNativeRemoteUseCase;
+
     public ViewModelFactory(Object objectOne, Object objectTwo) {
         if (objectOne instanceof PaymentUseCase && objectTwo instanceof PaymentRemoteUseCase) {
             this.paymentUseCase = (PaymentUseCase) objectOne;
             this.paymentRemoteUseCase = (PaymentRemoteUseCase) objectTwo;
+        } else if (objectOne instanceof QuizNativeUseCase && objectTwo instanceof QuizNativeRemoteUseCase) {
+            this.quizNativeUseCase = (QuizNativeUseCase) objectOne;
+            this.quizNativeRemoteUseCase = (QuizNativeRemoteUseCase) objectTwo;
         }
 
     }
@@ -71,6 +80,10 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             this.teacherUseCase = (TeacherUseCase) objectOne;
             this.teacherDbUseCase = (TeacherDbUseCase) objectTwo;
             this.teacherRemoteUseCase = (TeacherRemoteUseCase) objectThree;
+        }  if (objectOne instanceof HomeUseCase && objectTwo instanceof HomeDbUseCase && objectThree instanceof HomeRemoteUseCase) {
+            this.homeUseCase = (HomeUseCase) objectOne;
+            this.homeDbUseCase = (HomeDbUseCase) objectTwo;
+            this.homeRemoteUseCase = (HomeRemoteUseCase) objectThree;
         }
 
     }
@@ -157,6 +170,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
             return (T) new WalletAmountViewModel(homeUseCase,homeDbUseCase,homeRemoteUseCase);
         }
+
+        else if(modelClass.isAssignableFrom(QuizTestNativeViewModel.class)){
+            return (T) new QuizTestNativeViewModel(quizNativeUseCase,quizNativeRemoteUseCase);
+        }
+
 
 
 

@@ -49,6 +49,8 @@ public class SaveQuestionResModel {
 
     byte[] imageBytes;
 
+    private String examId;
+
     public byte[] getImageBytes() {
         return imageBytes;
     }
@@ -135,5 +137,13 @@ public class SaveQuestionResModel {
 
     public void setComplete_by(String complete_by) {
         this.complete_by = complete_by;
+    }
+
+    public String getExamId() {
+        return examId;
+    }
+
+    public void setExamId(String examId) {
+        this.examId = examId;
     }
 }

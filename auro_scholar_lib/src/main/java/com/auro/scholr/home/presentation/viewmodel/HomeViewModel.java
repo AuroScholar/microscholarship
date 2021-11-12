@@ -188,7 +188,7 @@ public class HomeViewModel extends ViewModel {
                         fetchStudentPreference((FetchStudentPrefReqModel) reqmodel);
                         break;
                     case DASHBOARD_API:
-                        getDashboardData((AuroScholarInputModel) reqmodel);
+                        getDashboardData((AuroScholarDataModel) reqmodel);
                         break;
                 }
 
@@ -264,27 +264,27 @@ public class HomeViewModel extends ViewModel {
                             }
                         }));
     }
-    public void getDashboardData(AuroScholarInputModel inputModel) {
-        AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
+    public void getDashboardData(AuroScholarDataModel inputModel) {
+      /*  AuroScholarDataModel auroScholarDataModel = new AuroScholarDataModel();
         auroScholarDataModel.setMobileNumber(inputModel.getMobileNumber());
         auroScholarDataModel.setStudentClass(inputModel.getStudentClass());
         auroScholarDataModel.setRegitrationSource(inputModel.getRegitrationSource());
         auroScholarDataModel.setActivity(inputModel.getActivity());
         auroScholarDataModel.setFragmentContainerUiId(inputModel.getFragmentContainerUiId());
-        auroScholarDataModel.setReferralLink(inputModel.getReferralLink());
+        auroScholarDataModel.setReferralLink(inputModel.getReferralLink());*/
 
-        if (TextUtil.isEmpty(inputModel.getPartnerSource())) {
-            auroScholarDataModel.setPartnerSource("");
+       /* if (TextUtil.isEmpty(inputModel.getPartnerSource())) {
+            inputModel.setPartnerSource("");
         } else {
-            auroScholarDataModel.setPartnerSource(inputModel.getPartnerSource());
-        }
+            inputModel.setPartnerSource(inputModel.getPartnerSource());
+        }*/
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         if (prefModel.getDeviceToken() != null && !TextUtil.isEmpty(prefModel.getDeviceToken())) {
-            auroScholarDataModel.setDevicetoken(prefModel.getDeviceToken());
+            inputModel.setDevicetoken(prefModel.getDeviceToken());
         } else {
-            auroScholarDataModel.setDevicetoken("");
+            inputModel.setDevicetoken("");
         }
-        dashBoardApi(auroScholarDataModel);
+        dashBoardApi(inputModel);
     }
 
     private void dashBoardApi(AuroScholarDataModel model) {

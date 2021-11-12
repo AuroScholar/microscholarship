@@ -26,6 +26,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.auro.scholr.core.common.Status.ASSIGNMENT_STUDENT_DATA_API;
 import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 import static com.auro.scholr.core.common.Status.GRADE_UPGRADE;
@@ -166,7 +167,47 @@ public class QuizViewModel extends ViewModel {
     }
 
 
+    public void getAssignExamData(AssignmentReqModel assignmentReqModel) {
 
+        Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
+            if (hasInternet) {
+                AppLogger.e("chhonker-","Exam api step 1");
+                getAssignmentId(assignmentReqModel);
+            } else {
+                AppLogger.e("chhonker-","Exam api step 2");
+
+                // please check your internet
+                serviceLiveData.setValue(new ResponseApi(Status.NO_INTERNET, AuroApp.getAppContext().getString(R.string.internet_check), Status.NO_INTERNET));
+            }
+
+        });
+
+        getCompositeDisposable().add(disposable);
+
+    }
+    private void getAssignmentId(AssignmentReqModel assignmentReqModel) {
+        getCompositeDisposable()
+                .add(homeRemoteUseCase.getAssignmentId(assignmentReqModel)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<ResponseApi>() {
+                                       @Override
+                                       public void accept(ResponseApi responseApi) throws Exception {
+                                           AppLogger.e("chhonker-","Exam api step 3");
+                                           serviceLiveData.setValue(responseApi);
+                                       }
+                                   },
+
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        AppLogger.e("chhonker-","Exam api step 4");
+                                        AppLogger.e("chhonker-","Exam api step 2" + throwable.getMessage());
+                                        defaultError(ASSIGNMENT_STUDENT_DATA_API);
+                                    }
+                                }));
+
+    }
 
     private void defaultError(Status status) {
         serviceLiveData.setValue(new ResponseApi(Status.FAIL, AuroApp.getAppContext().getResources().getString(R.string.default_error), status));

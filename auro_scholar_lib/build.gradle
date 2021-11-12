@@ -116,6 +116,7 @@ dependencies {
     implementation "androidx.camera:camera-extensions:1.0.0-alpha12"
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
     implementation 'com.android.support:multidex:2.0.1'
+    implementation 'com.github.dhaval2404:imagepicker-support:1.7.1'
     implementation 'io.github.chaosleung:pinview:1.4.4'
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
     implementation 'com.google.android.gms:play-services-vision:20.1.1'

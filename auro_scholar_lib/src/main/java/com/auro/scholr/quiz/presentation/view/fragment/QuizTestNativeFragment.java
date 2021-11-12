@@ -360,6 +360,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     @Override
     public void onResume() {
         super.onResume();
+        AppUtil.callBackListner = this;
         AppUtil.dashboardResModel = null;
         if (checkGooglePlayAvailability()) {
             askPermission();
@@ -843,7 +844,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         }
         int new_file_size = Integer.parseInt(String.valueOf(assignmentReqModel.getImageBytes().length / 1024));
         //AppLogger.d(TAG, "Image Path  new Size kb- " + mb + "-bytes-" + new_file_size);
-        callSendExamImageApi();
+        //callSendExamImageApi();
     }
 
     private void clickPicture() {
@@ -1164,6 +1165,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
             saveQuestionResModel.setExamAssignmentID(fetchQuizResModel.getExamAssignmentID());
             saveQuestionResModel.setQuestionID("" + quizQuestionList.get(countQuiz).getQuestionID());
             saveQuestionResModel.setQuestionSerialNo("" + (countQuiz + 1));
+            saveQuestionResModel.setExamId(assignmentResModel.getExamId());
             viewModel.saveQuizData(saveQuestionResModel);
         }
     }
@@ -1175,6 +1177,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
             SaveQuestionResModel saveQuestionResModel = new SaveQuestionResModel();
             saveQuestionResModel.setExamAssignmentID(fetchQuizResModel.getExamAssignmentID());
             saveQuestionResModel.setComplete_by(submitStatus);
+            saveQuestionResModel.setExamId(assignmentResModel.getExamId());
             viewModel.finishQuiz(saveQuestionResModel);
         }
     }

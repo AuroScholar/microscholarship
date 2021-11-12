@@ -37,6 +37,7 @@ import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.CommonDataModel;
 import com.auro.scholr.core.common.FragmentUtil;
 import com.auro.scholr.core.common.OnItemClickListener;
+import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.core.database.AppPref;
 import com.auro.scholr.core.database.PrefModel;
@@ -81,6 +82,7 @@ import javax.inject.Named;
 
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 import static com.auro.scholr.core.common.Status.FETCH_STUDENT_PREFERENCES_API;
+import static com.auro.scholr.core.common.Status.LISTNER_SUCCESS;
 import static com.auro.scholr.core.common.Status.SEND_OTP;
 
 public class StudentMainDashboardActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener, CommonCallBackListner {
@@ -117,7 +119,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
 
 
     LoginDisclaimerDialog disclaimerDialog;
-    public static  CommonCallBackListner commonCallBackListner;
+    public static CommonCallBackListner commonCallBackListner;
 
     AuroScholarDataModel auroScholarDataModel;
     ActionBarDrawerToggle mDrawerToggle;
@@ -252,6 +254,10 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
             case QUIZ_TEST_FRAGMENT:
                 alertDialogForQuitQuiz();
                 break;
+            case NATIVE_QUIZ_FRAGMENT:
+                alertDialogForQuitQuiz();
+                break;
+
             default:
                 popBackStack();
                 break;
@@ -336,14 +342,14 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
                                 }
                             }
                             AppLogger.e(TAG, "Step 2");
-                        } else {
+                        }else {
                             AppLogger.e(TAG, "Step 3");
                             if (customOtpDialog != null && customOtpDialog.isShowing()) {
                                 customOtpDialog.hideProgress();
                                 customOtpDialog.showSnackBar(verifyOtp.getMessage());
                             }
                         }
-                    }else if (responseApi.apiTypeStatus == Status.FETCH_STUDENT_PREFERENCES_API) {
+                    } else if (responseApi.apiTypeStatus == Status.FETCH_STUDENT_PREFERENCES_API) {
                         FetchStudentPrefResModel fetchStudentPrefResModel = (FetchStudentPrefResModel) responseApi.data;
                         if (TextUtil.checkListIsEmpty(fetchStudentPrefResModel.getPreference())) {
                             openSubjectPreferenceScreen();
@@ -354,20 +360,26 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
                         }
 
 
+                    } else if (responseApi.apiTypeStatus == DASHBOARD_API) {
+                        onApiSuccess(responseApi);
+                        DashboardResModel dashboardResModel = (DashboardResModel) responseApi.data;
+                        if (commonCallBackListner != null) {
+                            commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(0, LISTNER_SUCCESS, dashboardResModel));
+                        }
                     }
                     break;
 
                 case FAIL:
                 case NO_INTERNET:
-                    AppLogger.e("observeServiceResponse--",responseApi.status.toString());
-                    AppLogger.e("observeServiceResponse--","FAIL  NO_INTERNET ");
+                    AppLogger.e("observeServiceResponse--", responseApi.status.toString());
+                    AppLogger.e("observeServiceResponse--", "FAIL  NO_INTERNET ");
                     binding.progressbar.pgbar.setVisibility(View.GONE);
                     AppLogger.e("Error", (String) responseApi.data);
                     break;
 
 
                 default:
-                    AppLogger.e("observeServiceResponse--","default ");
+                    AppLogger.e("observeServiceResponse--", "default ");
                     binding.progressbar.pgbar.setVisibility(View.GONE);
                     AppLogger.e("Error", (String) responseApi.data);
                     break;
@@ -537,7 +549,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
     }
 
     public static void setListner(CommonCallBackListner listner) {
-      commonCallBackListner = listner;
+        commonCallBackListner = listner;
     }
 
     public void callFetchUserPreference() {
@@ -547,31 +559,31 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
             FetchStudentPrefReqModel fetchStudentPrefReqModel = new FetchStudentPrefReqModel();
             fetchStudentPrefReqModel.setMobileNo(AppPref.INSTANCE.getModelInstance().getUserMobile());
             viewModel.checkInternetForApi(FETCH_STUDENT_PREFERENCES_API, fetchStudentPrefReqModel);
-          //  viewModel.fetchStudentPreference((FetchStudentPrefReqModel) fetchStudentPrefReqModel);
+            //  viewModel.fetchStudentPreference((FetchStudentPrefReqModel) fetchStudentPrefReqModel);
         }
     }
 
     public void callDashboardApi() {
-        viewModel.checkInternetForApi(DASHBOARD_API, auroScholarDataModel);
+        viewModel.checkInternetForApi(DASHBOARD_API, AuroApp.getAuroScholarModel());
     }
+
     public void openDialogForQuit() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(this.getResources().getString(R.string.want_to_quit_quiz));
         // Set the alert dialog yes button click listener
-        String yes=this.getResources().getString(R.string.yes);
-        String no=this.getResources().getString(R.string.no);
+        String yes = this.getResources().getString(R.string.yes);
+        String no = this.getResources().getString(R.string.no);
 
-        builder.setPositiveButton(Html.fromHtml("<font color='#00A1DB'>"+yes+"</font>"), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(Html.fromHtml("<font color='#00A1DB'>" + yes + "</font>"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogQuit, int which) {
-                if(AppUtil.callBackListner!=null)
-                {
-                    AppUtil.callBackListner.commonEventListner(AppUtil.getCommonClickModel(0, Status.FINISH_DIALOG_CLICK,""));
+                if (AppUtil.callBackListner != null) {
+                    AppUtil.callBackListner.commonEventListner(AppUtil.getCommonClickModel(0, Status.FINISH_DIALOG_CLICK, ""));
                 }
             }
         });
         // Set the alert dialog no button click listener
-        builder.setNegativeButton(Html.fromHtml("<font color='#00A1DB'>"+no+"</font>"), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(Html.fromHtml("<font color='#00A1DB'>" + no + "</font>"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogQuit, int which) {
 
@@ -584,4 +596,11 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         dialogQuit.show();
         // Display the alert dialog on interface
     }
+
+    private void onApiSuccess(ResponseApi responseApi) {
+        dashboardResModel = (DashboardResModel) responseApi.data;
+        AppUtil.setDashboardResModelToPref(dashboardResModel);
+
+    }
+
 }

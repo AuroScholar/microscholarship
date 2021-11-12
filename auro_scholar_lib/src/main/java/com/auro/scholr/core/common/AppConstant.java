@@ -181,6 +181,8 @@ public interface AppConstant {
         String MOBILE_VERSION = "mobile_version";
         String IS_PRIVATE_TUTION = "is_private_tution";
         String PRIVATE_TUTION_TYPE = "private_tution_type";
+        String STATE_ID = "state_id";
+        String DISTRICT_ID  = "district_id";
     }
 
     interface FragmentType {
@@ -230,6 +232,7 @@ public interface AppConstant {
         String COMPLETE_BY="complete_by";
         String ANSWER_ID="AnswerID";
         String QUESTION_ID="QuestionID";
+        String EXAM_ID="exam_id";
 
     }
 

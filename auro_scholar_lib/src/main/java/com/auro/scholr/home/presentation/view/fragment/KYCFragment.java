@@ -56,11 +56,13 @@ import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 
+
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 import com.auro.scholr.util.cropper.CropImages;
 import com.auro.scholr.util.cropper.CropImageViews;
 import com.auro.scholr.util.disclaimer.DisclaimerKycDialog;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -123,7 +125,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         ViewUtil.setLanguageonUi(getActivity());
         setRetainInstance(true);
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        AppLogger.v("CheckKyc","Prefrence"+prefModel.isPreKycDisclaimer());
+        AppLogger.v("CheckKyc", "Prefrence" + prefModel.isPreKycDisclaimer());
         if (!prefModel.isPreKycDisclaimer()) {
             checkDisclaimerKYCDialog();
         }
@@ -159,7 +161,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
         }
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (!TextUtil.isEmpty(prefModel.getUserLanguage())&& prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
+        if (!TextUtil.isEmpty(prefModel.getUserLanguage()) && prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
             setLanguageText(AppConstant.HINDI);
         } else {
             setLanguageText(AppConstant.ENGLISH);
@@ -168,7 +170,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
 
     private void setLanguageText(String text) {
-       // binding.toolbarLayout.langEng.setText(text);
+        // binding.toolbarLayout.langEng.setText(text);
     }
 
 
@@ -179,7 +181,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
 
     @Override
     protected void setListener() {
-        ((StudentMainDashboardActivity)getActivity()).setListingActiveFragment(StudentMainDashboardActivity.KYC_FRAGMENT);
+        ((StudentMainDashboardActivity) getActivity()).setListingActiveFragment(StudentMainDashboardActivity.KYC_FRAGMENT);
 
         //  binding.btUploadAll.setOnClickListener(this);
         binding.walletInfo.setOnClickListener(this);
@@ -264,6 +266,12 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         AppLogger.e("chhonker", "fragment requestCode=" + requestCode);
+        if (data != null) {
+            resultUri = data.getData();
+        }
+        if (resultUri != null) {
+            AppLogger.e("chhonker", "Exception resultUri=" + resultUri.getPath());
+        }
         if (requestCode == CropImages.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImages.ActivityResult result = CropImages.getActivityResult(data);
             if (resultCode == RESULT_OK) {
@@ -291,8 +299,27 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             } else {
 
             }
-        }
+        } else if (requestCode == 2404) {
+            // CropImages.ActivityResult result = CropImages.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                try {
 
+                    try {
+                        resultUri = data.getData();
+                        updateKYCList(resultUri.getPath());
+                    } catch (Exception e) {
+                        AppLogger.e("chhonker", "Exception requestCode=" + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    AppLogger.e("StudentProfile", "fragment exception=" + e.getMessage());
+                }
+
+            } else if (resultCode == ImagePicker.RESULT_ERROR) {
+                ViewUtil.showSnackBar(binding.getRoot(), ImagePicker.Companion.getError(data));
+            } else {
+                ViewUtil.showSnackBar(binding.getRoot(), "Task Cancelled");
+            }
+        }
     }
 
     private void loadImageFromStorage(String path) {
@@ -357,7 +384,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         kycViewModel.serviceLiveData().observeForever(responseApi -> {
             switch (responseApi.status) {
                 case LOADING:
-                    if(isVisible()) {
+                    if (isVisible()) {
                         if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
                             openProgressDialog();
                         } else {
@@ -367,7 +394,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                     break;
 
                 case SUCCESS:
-                    if(isVisible()) {
+                    if (isVisible()) {
                         if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
                             closeDialog();
                             KYCResListModel kycResListModel = (KYCResListModel) responseApi.data;
@@ -390,7 +417,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 case NO_INTERNET:
                 case AUTH_FAIL:
                 case FAIL_400:
-                    if(isVisible()) {
+                    if (isVisible()) {
                         if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
                             updateDialogUi();
                         } else {
@@ -402,7 +429,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                     break;
 
                 default:
-                    if(isVisible()) {
+                    if (isVisible()) {
                         if (responseApi.apiTypeStatus == UPLOAD_PROFILE_IMAGE) {
                             updateDialogUi();
                         } else {
@@ -498,17 +525,16 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             }
         } else if (v.getId() == R.id.lang_eng) {
             reloadFragment();
-        }  else if (v.getId() == R.id.backButton) {
+        } else if (v.getId() == R.id.backButton) {
             getActivity().onBackPressed();
-            AppLogger.e("handleback","backlisner");
+            AppLogger.e("handleback", "backlisner");
 
         } else if (v.getId() == R.id.bt_transfer_money) {
             openSendMoneyFragment();
             //callNumber();
         } /*else if (v.getId() == R.id.wallet_info) {
             openTransactionFragment();
-        }*/
-        else if (v.getId() == R.id.wallet_info) {
+        }*/ else if (v.getId() == R.id.wallet_info) {
            /* firebaseEventUtil.logEvent(getContext(), getResources().getString(R.string.event_payment_info_page), new HashMap<>());
             comingFrom = "";*/
             openWalletInfoFragment();
@@ -562,9 +588,19 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         if (kycDocumentDatamodel.getDocumentId() == AppConstant.DocumentType.UPLOAD_YOUR_PHOTO) {
             openActivity();
         } else {
-            CropImages.activity()
-                    .setGuidelines(CropImageViews.Guidelines.ON)
-                    .start(getActivity());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+// perform Opertaion
+                ImagePicker.Companion.with(this)
+                        .crop()                    //Crop image(Optional), Check Customization for more option
+                        .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+            } else {
+                CropImages.activity()
+                        .setGuidelines(CropImageViews.Guidelines.ON)
+                        .start(getActivity());
+            }
+
         }
 
     }
@@ -613,7 +649,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         dashboardResModel.setIs_kyc_verified("Rejected");
         dashboardResModel.setIs_payment_lastmonth("Yes");*/
 
-        AppLogger.e("chhonker step ","kyc Step 1");
+        AppLogger.e("chhonker step ", "kyc Step 1");
         if (dashboardResModel == null) {
             return;
         }
@@ -621,24 +657,24 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         dashboardResModel.setApproved_scholarship_money("50");
 */
         if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_uploaded()) && dashboardResModel.getIs_kyc_uploaded().equalsIgnoreCase(AppConstant.DocumentType.YES)) {
-            AppLogger.e("chhonker step ","kyc Step 2");
+            AppLogger.e("chhonker step ", "kyc Step 2");
             binding.stepOne.tickSign.setVisibility(View.VISIBLE);
             binding.stepOne.textUploadDocumentMsg.setText(R.string.document_uploaded);
             binding.stepOne.textUploadDocumentMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.ufo_green));
             if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.IN_PROCESS)) {
-                AppLogger.e("chhonker step ","kyc Step 3");
+                AppLogger.e("chhonker step ", "kyc Step 3");
                 binding.stepTwo.textVerifyMsg.setText(getString(R.string.verification_is_in_process));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
             } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) &&
                     dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.APPROVE)) {
-                AppLogger.e("chhonker step ","kyc Step 4");
+                AppLogger.e("chhonker step ", "kyc Step 4");
                 binding.stepTwo.textVerifyMsg.setText(R.string.document_verified);
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
                 binding.stepTwo.tickSign.setVisibility(View.VISIBLE);
                 binding.stepTwo.textVerifyMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.ufo_green));
                 int approvedMoney = ConversionUtil.INSTANCE.convertStringToInteger(dashboardResModel.getApproved_scholarship_money());
                 if (approvedMoney < 1) {
-                    AppLogger.e("chhonker step ","kyc Step 5");
+                    AppLogger.e("chhonker step ", "kyc Step 5");
                   /*  binding.stepThree.tickSign.setVisibility(View.GONE);
                     binding.stepThree.textQuizVerifyMsg.setText(AuroApp.getAppContext().getResources().getString(R.string.scholarship_approved));
                     binding.stepFour.textTransferMsg.setText(R.string.successfully_transfered);
@@ -646,7 +682,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                     binding.stepFour.tickSign.setVisibility(View.GONE);
                     binding.stepFour.btTransferMoney.setVisibility(View.GONE);*/
                 } else {
-                    AppLogger.e("chhonker step ","kyc Step 6");
+                    AppLogger.e("chhonker step ", "kyc Step 6");
                     binding.stepThree.tickSign.setVisibility(View.VISIBLE);
                     binding.stepThree.textQuizVerifyMsg.setText(AuroApp.getAppContext().getResources().getString(R.string.scholarship_approved));
                     binding.stepFour.textTransferMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.ufo_green));
@@ -656,7 +692,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                     binding.stepFour.btTransferMoney.setOnClickListener(this);
                 }
             } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.REJECTED)) {
-                AppLogger.e("chhonker step ","kyc Step 7");
+                AppLogger.e("chhonker step ", "kyc Step 7");
                 binding.stepTwo.textVerifyMsg.setText(R.string.declined);
                 binding.stepTwo.textVerifyMsg.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_red));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
@@ -667,7 +703,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 binding.stepFour.btTransferMoney.setVisibility(View.GONE);
                 binding.stepFour.tickSign.setVisibility(View.GONE);
             } else if (!TextUtil.isEmpty(dashboardResModel.getIs_kyc_verified()) && dashboardResModel.getIs_kyc_verified().equalsIgnoreCase(AppConstant.DocumentType.PENDING)) {
-                AppLogger.e("chhonker step ","kyc Step 7");
+                AppLogger.e("chhonker step ", "kyc Step 7");
                 binding.stepTwo.textVerifyMsg.setText(getString(R.string.verification_pending));
                 binding.stepTwo.textVerifyMsg.setVisibility(View.VISIBLE);
             }
@@ -704,7 +740,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             AppPref.INSTANCE.setPref(prefModel);
         }
     }
-
 
 
     private void openProgressDialog() {
@@ -747,6 +782,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             customProgressDialog.dismiss();
         }
     }
+
     private void openWalletInfoFragment() {
         Bundle bundle = new Bundle();
         bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
@@ -761,9 +797,9 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 .commitAllowingStateLoss();
     }
 
-    private void checkDisclaimerKYCDialog( ) {
-        PrefModel prefModel=AppPref.INSTANCE.getModelInstance();
-        if(!prefModel.isPreKycDisclaimer()) {
+    private void checkDisclaimerKYCDialog() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (!prefModel.isPreKycDisclaimer()) {
             DisclaimerKycDialog askDetailCustomDialog = new DisclaimerKycDialog(getActivity());
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(askDetailCustomDialog.getWindow().getAttributes());

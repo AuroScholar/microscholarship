@@ -49,6 +49,7 @@ public class QuizRemoteDataSourceImp implements QuizRepo.QuizRemoteData {
         params.put(AppConstant.AssignmentApiParams.QUESTION_ID, reqModel.getQuestionID());
         params.put(AppConstant.AssignmentApiParams.ANSWER_ID, reqModel.getAnswerID());
         params.put(AppConstant.AssignmentApiParams.QUESTION_SERIAL_NUMBER, reqModel.getQuestionSerialNo());
+        params.put(AppConstant.AssignmentApiParams.EXAM_ID, reqModel.getExamId());
         return quizRemoteApi.saveQuizData(params);
     }
 
@@ -57,7 +58,7 @@ public class QuizRemoteDataSourceImp implements QuizRepo.QuizRemoteData {
         Map<String, String> params = new HashMap<String, String>();
         params.put(AppConstant.AssignmentApiParams.EXAM_ASSIGNMENT_ID, reqModel.getExamAssignmentID());
         params.put(AppConstant.AssignmentApiParams.COMPLETE_BY, reqModel.getComplete_by());
-
+        params.put(AppConstant.AssignmentApiParams.EXAM_ID, reqModel.getExamId());
         return quizRemoteApi.finishQuizApi(params);
     }
 

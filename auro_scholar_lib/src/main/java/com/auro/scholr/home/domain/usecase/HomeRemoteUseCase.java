@@ -311,7 +311,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
 
                 } else {
 
-                    return responseFail(null);
+                    return responseFail(ASSIGNMENT_STUDENT_DATA_API);
                 }
             }
         });

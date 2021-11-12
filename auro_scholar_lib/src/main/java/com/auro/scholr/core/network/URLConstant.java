@@ -75,7 +75,7 @@ public interface URLConstant {
 
     String PASSPORT_API=BASE_URL+"passport.php";
 
-    String UPDATE_STUDENT_PROFILE = "update_profile.php";
+    String UPDATE_STUDENT_PROFILE = "https://auroscholar.org/api/update_profile";
 
     String TERM_CONDITION = "https://auroscholar.com/terms-of-use.php";
 
