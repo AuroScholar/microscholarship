@@ -255,7 +255,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
                 alertDialogForQuitQuiz();
                 break;
             case NATIVE_QUIZ_FRAGMENT:
-                alertDialogForQuitQuiz();
+                openDialogForQuit();
                 break;
 
             default:

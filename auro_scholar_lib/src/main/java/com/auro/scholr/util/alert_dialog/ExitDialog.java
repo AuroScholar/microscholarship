@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
 import com.auro.scholr.R;
+import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.ExitSelectionLayoutBinding;
 import com.auro.scholr.util.AppUtil;
 
@@ -56,6 +57,9 @@ public class ExitDialog extends Dialog implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == R.id.btn_yes) {
             dismiss();
+            if (AppUtil.callBackListner != null) {
+                AppUtil.callBackListner.commonEventListner(AppUtil.getCommonClickModel(0, Status.EXIT_DIALOG_CLICK,""));
+            }
         }
     }
 
