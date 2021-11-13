@@ -431,6 +431,8 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
                         if (isVisible()) {
 
+                            AppLogger.v("DashBoadapi","Step 2");
+                            handleProgress(2,"");//pradeep
                             binding.swipeRefreshLayout.setRefreshing(false);
                             dashboardResModel = (DashboardResModel) responseApi.data;
                             onApiSuccess(dashboardResModel);
@@ -707,7 +709,8 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         if (!TextUtil.isEmpty(deviceToken)) {
 
         }
-
+        AppLogger.v("DashBoadapi","Step 1");
+        handleProgress(0,"");//pradeep
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
 
         /*-------------Old Code Add in the sdk */
