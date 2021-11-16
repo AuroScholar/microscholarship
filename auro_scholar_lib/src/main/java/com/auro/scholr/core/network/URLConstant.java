@@ -27,7 +27,7 @@ public interface URLConstant {
     // String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction.php ";
     String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction_multiple.php";
     String TEST_URL = "https://assessment.eklavvya.com/exam/StartExam?";
-    String PRIVACY_POLICY = "https://auroscholar.org/privacy_policy";
+    String PRIVACY_POLICY = "https://auroscholar.com/privacy_policy.php";
 
     String TEACHER_PROFILE_UPDATE_API = BASE_URL + "teacher_profile_data_api.php ";
 

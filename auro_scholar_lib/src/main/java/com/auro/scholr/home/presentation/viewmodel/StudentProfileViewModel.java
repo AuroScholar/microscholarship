@@ -18,6 +18,7 @@ import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -251,6 +252,9 @@ public class StudentProfileViewModel extends ViewModel {
 
 
     public void sendStudentProfileInternet(StudentProfileModel model) {
+        Gson gson = new Gson();
+        String jso2 = gson.toJson(model);
+        AppLogger.v("DataStudent",jso2+"");
         Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
             if (hasInternet) {
                 sendStudentProfile(model);

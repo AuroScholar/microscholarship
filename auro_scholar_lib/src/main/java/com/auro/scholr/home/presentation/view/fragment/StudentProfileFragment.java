@@ -884,6 +884,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
             handleProgress(0, "");
             StudentProfileModel studentProfileModel = new StudentProfileModel();
             studentProfileModel.setPhonenumber(dashboardResModel.getPhonenumber());
+
             viewModel.sendStudentProfileInternet(studentProfileModel);
         }
     }
