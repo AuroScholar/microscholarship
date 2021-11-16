@@ -9,12 +9,15 @@ import com.auro.scholr.core.application.AuroApp;
 import com.auro.scholr.core.common.MessgeNotifyStatus;
 import com.auro.scholr.core.common.ResponseApi;
 import com.auro.scholr.core.common.Status;
+import com.auro.scholr.core.database.AppPref;
+import com.auro.scholr.core.database.PrefModel;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalByBankAccountReqModel;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalByUPIReqModel;
 import com.auro.scholr.payment.data.model.request.PaytmWithdrawalReqModel;
 
 import com.auro.scholr.payment.domain.PaymentRemoteUseCase;
 import com.auro.scholr.payment.domain.PaymentUseCase;
+import com.auro.scholr.util.AppLogger;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -153,6 +156,10 @@ public class SendMoneyViewModel extends ViewModel {
     }
 
     public void paytmentTransfer(PaytmWithdrawalByBankAccountReqModel reqModel) {
+        PrefModel model = AppPref.INSTANCE.getModelInstance();
+        String partnerSource = model.getDashboardResModel().getPartnerSource();
+        AppLogger.v("PARTNER_SOURCE",partnerSource);
+        reqModel.setPartnerSource(partnerSource);
         Disposable disposable = paymentRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
             if (hasInternet) {
                 paytmentTransferApi(reqModel);

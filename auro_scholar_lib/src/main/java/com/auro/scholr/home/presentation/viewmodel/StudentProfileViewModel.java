@@ -252,6 +252,9 @@ public class StudentProfileViewModel extends ViewModel {
 
 
     public void sendStudentProfileInternet(StudentProfileModel model) {
+        Gson gson = new Gson();
+        String jso2 = gson.toJson(model);
+        AppLogger.v("DataStudent",jso2+"");
         Disposable disposable = homeRemoteUseCase.isAvailInternet().subscribe(hasInternet -> {
             if (hasInternet) {
                 sendStudentProfile(model);

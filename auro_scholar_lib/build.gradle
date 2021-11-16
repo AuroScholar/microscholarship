@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply from: "dependencies.gradle"
 
 
@@ -124,7 +125,16 @@ dependencies {
     implementation 'com.google.firebase:firebase-ml-vision:+'
     implementation 'com.google.android.gms:play-services-vision-image-label:18.0.5'
     implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.2'
+    /*implementation "androidx.core:core-ktx:+"*/
+    /*implementation "androidx.core:core-ktx:1.7.0"*/
+    implementation "androidx.core:core:1.6.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 
 }
 apply plugin: 'com.google.gms.google-services'
+repositories {
+    mavenCentral()
+}

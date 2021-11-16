@@ -209,6 +209,16 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private  String profilePic;
 
+    @SerializedName("is_chatbot_enabled")
+    @Expose
+    private  boolean isChatBotEnabled;
+
+    @SerializedName("partner_source")
+    @Expose
+    private  String partnerSource;
+
+
+
 
     protected DashboardResModel(Parcel in) {
         status = in.readString();
@@ -260,6 +270,8 @@ public class DashboardResModel implements Parcelable {
         inProcessScholarShipMoney = in.readString();
         disburseScholarshipMoney=in.readString();
         profilePic = in.readString();
+        isChatBotEnabled = in.readByte() != 0;
+        partnerSource = in.readString();
 
     }
 
@@ -313,6 +325,8 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(disburseScholarshipMoney);
         dest.writeByte((byte) (is_native_image_capturing ? 1 : 0));
         dest.writeString(profilePic);
+        dest.writeByte((byte) (isChatBotEnabled ? 1 : 0));
+        dest.writeString(partnerSource);
     }
 
     @Override
@@ -722,6 +736,20 @@ public class DashboardResModel implements Parcelable {
 
     public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
+    }
+    public boolean isChatBotEnabled() {
+        return isChatBotEnabled;
+    }
+
+    public void setChatBotEnabled(boolean chatBotEnabled) {
+        isChatBotEnabled = chatBotEnabled;
+    }
+
+    public void setPartnerSource(String partnerSource) {
+        this.partnerSource = partnerSource;
+    }
+    public String getPartnerSource() {
+        return partnerSource;
     }
 
 }

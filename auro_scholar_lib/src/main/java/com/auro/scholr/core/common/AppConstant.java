@@ -312,6 +312,7 @@ public interface AppConstant {
         String UPI_ADDRESS="UPIAddress";
         String AMOUNT="Amount";
         String PURPOSE="purpose";
+        String PARTNER_SOURCE = "PartnerSource";
         //purpose
     }
 

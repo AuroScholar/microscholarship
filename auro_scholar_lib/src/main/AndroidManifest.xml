@@ -17,9 +17,10 @@
         android:required="true" />
 
     <application
-        android:usesCleartextTraffic="true"
-        >
-        <activity android:name=".home.presentation.view.activity.newDashboard.StudentMainDashboardActivity"></activity>
+        android:usesCleartextTraffic="true">
+        <activity android:name=".home.presentation.view.activity.newDashboard.StudentMainDashboardActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

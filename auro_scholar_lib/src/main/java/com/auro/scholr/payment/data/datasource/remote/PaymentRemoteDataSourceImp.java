@@ -84,6 +84,7 @@ public class PaymentRemoteDataSourceImp implements PaymentRepo.PaymentRemoteData
         params.put(AppConstant.paytmApiParam.UPI_ADDRESS, reqModel.getUpiAddress());
         params.put(AppConstant.paytmApiParam.AMOUNT, reqModel.getAmount());
         params.put(AppConstant.paytmApiParam.PURPOSE, reqModel.getPurpose());
+        params.put(AppConstant.paytmApiParam.PARTNER_SOURCE,reqModel.getPartnerSource());
         return paymentRemoteApi.paytmAccountTransferApi(params);
     }
 }

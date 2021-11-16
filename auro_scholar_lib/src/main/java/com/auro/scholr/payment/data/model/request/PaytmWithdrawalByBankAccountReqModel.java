@@ -14,6 +14,16 @@ public class PaytmWithdrawalByBankAccountReqModel {
     String amount;
     String disbursement="";
     String purpose="";
+    String partnerSource="";
+
+    public String getPartnerSource() {
+        return partnerSource;
+    }
+
+    public void setPartnerSource(String partnerSource) {
+        this.partnerSource = partnerSource;
+    }
+
 
     public String getBeneficiary_name() {
         return beneficiary_name;

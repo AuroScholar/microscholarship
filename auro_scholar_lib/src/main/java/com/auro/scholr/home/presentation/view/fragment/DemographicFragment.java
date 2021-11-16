@@ -382,6 +382,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
                         if (!demographicResModel.getError()) {
                             handleProgress(1, "");
                             getActivity().getSupportFragmentManager().popBackStack();
+                            getActivity().getSupportFragmentManager().popBackStack();
                         } else {
                             showSnackbarError(getString(R.string.default_error));
                         }
@@ -450,6 +451,9 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
 
         } else if (v.getId() == R.id.backButton) {
             getActivity().getSupportFragmentManager().popBackStack();
+            getActivity().getSupportFragmentManager().popBackStack();
+
+
         }
 
 
