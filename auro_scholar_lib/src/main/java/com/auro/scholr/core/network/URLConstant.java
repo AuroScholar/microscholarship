@@ -96,7 +96,6 @@ public interface URLConstant {
 
     String SAVE_QUIZ_DATA  = BASE_URL + "save_quiz_question_rahul.php";
 
-    //String FINISH_QUIZ_DATA  = BASE_URL + "submit_final_quiz_test.php";
 
     String FINISH_QUIZ_DATA  = BASE_URL + "submit_final_quiz_rahul.php";
 

@@ -80,6 +80,7 @@ import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;

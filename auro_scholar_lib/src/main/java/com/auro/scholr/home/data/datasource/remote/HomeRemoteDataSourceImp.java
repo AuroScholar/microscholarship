@@ -24,6 +24,7 @@ import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
 import com.auro.scholr.util.ConversionUtil;
 import com.auro.scholr.util.TextUtil;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.util.HashMap;
@@ -255,6 +256,8 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         RequestBody stateCode = RequestBody.create(okhttp3.MultipartBody.FORM, model.getStateCode());
         RequestBody distcitcode = RequestBody.create(okhttp3.MultipartBody.FORM, model.getDistricts());
         MultipartBody.Part id_proof_front = ConversionUtil.INSTANCE.makeMultipartRequestProfile(model.getImageBytes());
+        String json = new Gson().toJson(model);
+        AppLogger.v("studentProfileModel", json +"----- ");
         return homeRemoteApi.studentUpdateProfile(phonenumber, firstName, getEmailId, gender, schoolType, boardType, language, mobileModel, manufacturer, mobileVersion, latitude, longitude, isPrivateTutor, privateTuterType, stateCode, distcitcode, id_proof_front);
     }
 

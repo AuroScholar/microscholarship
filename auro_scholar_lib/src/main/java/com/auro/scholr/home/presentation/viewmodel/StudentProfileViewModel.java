@@ -18,6 +18,7 @@ import com.auro.scholr.teacher.data.model.common.DistrictDataModel;
 import com.auro.scholr.teacher.data.model.common.StateDataModel;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.TextUtil;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -262,6 +263,8 @@ public class StudentProfileViewModel extends ViewModel {
     }
 
     private void sendStudentProfile(StudentProfileModel model) {
+
+        AppLogger.e("sendStudentProfile--",model.getSchool_type()+"====length===="+model.getSchool_type().length());
         getCompositeDisposable().add(homeRemoteUseCase.uploadStudentProfile(model).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(new Consumer<Disposable>() {
