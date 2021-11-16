@@ -8,6 +8,10 @@
         <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/layout/fragment_student_profile_2.xml" value="0.18" />
         <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/layout/fragment_yubo_chat_bot.xml" value="0.13125" />
         <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/layout/send_quiz_item_layout.xml" value="0.13177083333333334" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_error_outline_black_24dp.xml" value="0.1" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/layout/activity_student_main_dashboard.xml" value="0.1" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/layout/error_layout.xml" value="0.1" />
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/layout/fragment_main_quiz_home.xml" value="0.11413043478260869" />
       </map>
     </option>
   </component>

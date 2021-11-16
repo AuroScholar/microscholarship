@@ -624,6 +624,11 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         binding.walletBalText.setText(getContext().getResources().getString(R.string.rs) + " " + quizViewModel.homeUseCase.getWalletBalance(dashboardResModel));
         setSubjectAdapter(dashboardResModel);
         setNavHeaderText();
+        if (dashboardResModel != null && dashboardResModel.isChatBotEnabled()) {
+            binding.imageChat.setVisibility(View.VISIBLE);
+        } else {
+            binding.imageChat.setVisibility(View.GONE);
+        }
     }
 
 

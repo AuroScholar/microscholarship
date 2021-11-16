@@ -11,7 +11,9 @@ public interface URLConstant {
     // String DASHBOARD_API = BASE_URL + "dashboard_multiple.php";
     // String DASHBOARD_SDK_API = BASE_URL + "dashboard_sdk_multiple.php";
     String DASHBOARD_API = BASE_URL + "dashboard_partner.php";
-    String DASHBOARD_SDK_API = BASE_URL + "dashboard_sdk_partner.php";
+   // String DASHBOARD_SDK_API = BASE_URL + "dashboard_sdk_partner.php";
+    String DASHBOARD_SDK_API = BASE_URL + "dashboard_native_sdk_partner.php";
+   // https://auroscholar.com/api/dashboard_native_sdk_partner.php
 
     String DEMOGRAPHIC_API = BASE_URL + "demographics.php";
 
@@ -99,7 +101,5 @@ public interface URLConstant {
     //String FINISH_QUIZ_DATA  = BASE_URL + "submit_final_quiz_test.php";
 
     String FINISH_QUIZ_DATA  = BASE_URL + "submit_final_quiz_rahul.php";
-
-
 
 }

@@ -566,6 +566,7 @@ public class HomeRemoteUseCase extends NetworkUseCase {
             CertificateResModel certificateResModel = gson.fromJson(response.body(), CertificateResModel.class);
             return ResponseApi.success(certificateResModel, status);
         } else if (status == UPDATE_STUDENT) {
+
             GetStudentUpdateProfile getStudentUpdateProfile = gson.fromJson(response.body(), GetStudentUpdateProfile.class);
             AppLogger.v("RemoteApi",""+UPDATE_STUDENT);
             return ResponseApi.success(getStudentUpdateProfile, status);

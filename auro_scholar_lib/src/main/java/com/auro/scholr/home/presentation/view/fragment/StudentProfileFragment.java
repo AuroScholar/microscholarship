@@ -110,7 +110,8 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
     List<String> privateTutionTypeList;
     DashboardResModel dashboardResModel;
     private String comingFrom;
-    StudentProfileModel studentProfileModel;
+    StudentProfileModel studentProfileModel = new StudentProfileModel();
+
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     GetStudentUpdateProfile getStudentUpdateProfile;
     CommonCallBackListner commonCallBackListner;
@@ -580,16 +581,16 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
                     break;
                 case SUCCESS:
                     if (responseApi.apiTypeStatus == UPDATE_STUDENT) {
-                        studentProfileModel = new StudentProfileModel();
+                       // studentProfileModel = new StudentProfileModel();
                         AppLogger.v("callApi", firstTimeCome + "");
                         if (firstTimeCome) {
-                            AppLogger.v("callApi", firstTimeCome + "   main");
+                            AppLogger.v("callApi", firstTimeCome + "   main"+responseApi.data);
                             handleProgress(1, "");
                             getStudentUpdateProfile = (GetStudentUpdateProfile) responseApi.data;
                             setDataonUi();
                             AppLogger.v("apiResponse", getStudentUpdateProfile + "");
                         } else {
-                            AppLogger.v("callApi", firstTimeCome + "  second");
+                            AppLogger.v("callApi", firstTimeCome + "   main"+responseApi.data);
                             handleSubmitProgress(1, "");
                             getStudentUpdateProfile = (GetStudentUpdateProfile) responseApi.data;
                             showSnackbarError("Successfully  Save", Color.GREEN);
