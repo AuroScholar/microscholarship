@@ -379,6 +379,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         studentProfile.setArguments(bundle);
         openFragment(studentProfile);
     }
+    //pradeep
 
     public void openKYCFragment(DashboardResModel dashboardResModel) {
         Bundle bundle = new Bundle();
