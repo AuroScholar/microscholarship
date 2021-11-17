@@ -262,8 +262,8 @@ public class ImageUtil {
                         .error(R.drawable.account_circle)
                         .centerCrop()
                         .dontAnimate()
-                        .priority(Priority.IMMEDIATE)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE))
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true))
                 .into(new BitmapImageViewTarget(imageView) {
                     @Override
                     protected void setResource(Bitmap resource) {
@@ -273,6 +273,7 @@ public class ImageUtil {
                         imageView.setImageDrawable(circularBitmapDrawable);
                     }
                 });
+
     }
 
 }
