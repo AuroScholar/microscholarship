@@ -98,14 +98,12 @@
                             app:cardCornerRadius="@dimen/_5sdp">
 
 
-
-
                             <ImageView
                                 android:id="@+id/imageView6"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                app:srcCompat="@drawable/ic_profile"
-                                android:scaleType="fitXY" />
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_profile" />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 

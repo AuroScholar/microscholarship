@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setPartnerLogoUrl(""); //Mandatory
         inputModel.setSchoolName("");//optional Filed
         inputModel.setBoardType("");//optional Filed
-        inputModel.setSchoolType(" ");//optional Filed
+        inputModel.setSchoolType("");//optional Filed
         inputModel.setGender("");//optional Filed
         inputModel.setPartnerName("");//Mandatory
         inputModel.setEmail("");//optional Filed

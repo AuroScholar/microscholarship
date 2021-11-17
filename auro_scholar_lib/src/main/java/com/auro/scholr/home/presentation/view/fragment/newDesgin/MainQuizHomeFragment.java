@@ -435,6 +435,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                             handleProgress(2,"");//pradeep
                             binding.swipeRefreshLayout.setRefreshing(false);
                             dashboardResModel = (DashboardResModel) responseApi.data;
+                            AppLogger.v("ProfilePicUser",dashboardResModel.getProfilePic()+"Step 1");
                             onApiSuccess(dashboardResModel);
                         }
 
@@ -607,7 +608,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         DynamiclinkResModel model = prefModel.getDynamiclinkResModel();
         prefModel.setDynamiclinkResModel(new DynamiclinkResModel());
         AppPref.INSTANCE.setPref(prefModel);
-        ViewUtil.setProfilePic(binding.imageView6);
+        ViewUtil.setProfilePic(binding.imageView6,dashboardResModel.getProfilePic());
     }
 
     private void updateList(DashboardResModel dashboardResModel) {

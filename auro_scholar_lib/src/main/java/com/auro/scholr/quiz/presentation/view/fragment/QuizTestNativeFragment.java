@@ -73,6 +73,7 @@ import com.auro.scholr.util.alert_dialog.CustomDialog;
 import com.auro.scholr.util.alert_dialog.CustomDialogModel;
 import com.auro.scholr.util.alert_dialog.CustomProgressDialog;
 import com.auro.scholr.util.alert_dialog.ExitDialog;
+import com.auro.scholr.util.alert_dialog.InstructionDialog;
 import com.auro.scholr.util.alert_dialog.NativeQuizImageDialog;
 import com.auro.scholr.util.broadcastreceiver.NetworkChangeReceiver;
 import com.auro.scholr.util.camera.Camera2Source;
@@ -128,7 +129,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     int workingornot = 1;
     int START_TIME_IN_MILLIS = 61000;
     int COUNTDOWN_INTERVAL = 1000;
-    CustomDialog customInstructionDialog;
+    InstructionDialog customInstructionDialog;
     String TAG = "QuizTestNativeFragment";
     FetchQuizResModel fetchQuizResModel;
     List<QuestionResModel> quizQuestionList;
@@ -501,7 +502,8 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     public void onClick(View v) {
         if (v.getId() == R.id.exit_bt) {
             ((StudentMainDashboardActivity) getActivity()).openDialogForQuit();
-        } else if (v.getId() == R.id.save_next_bt) {
+        }
+        else if (v.getId() == R.id.save_next_bt) {
             AppLogger.i("Countdown", "onClick");
             if (!interDialogOpen) {
                 if (binding.saveNextBt.getText().toString().equalsIgnoreCase(getActivity().getResources().getString(R.string.save_submit))) {
@@ -523,7 +525,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         } else if (v.getId() == R.id.ques_img) {
             openImageMaxDialog(questionResModel.getImageName());
         } else if (v.getId() == R.id.finish_next_bt) {
-            callFinishQuizApi();
+            ((StudentMainDashboardActivity) getActivity()).openDialogForQuit();
         }
     }
 
@@ -1089,16 +1091,12 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         }
     }
 
+
+
+
     private void openInstructionDialog() {
-        CustomDialogModel customDialogModel = new CustomDialogModel();
-        customDialogModel.setContext(getActivity());//bug report on 06/07/2020
-        customDialogModel.setTitle(getActivity().getResources().getString(R.string.quiz_instruction));
-        customDialogModel.setContent(getActivity().getResources().getString(R.string.bullted_list));
-        customDialogModel.setTwoButtonRequired(false);
-        if (getActivity() != null) {
-            customInstructionDialog = new CustomDialog(getActivity(), customDialogModel);
-            // Window window = customDialog.getWindow();
-            // window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        if (getContext() != null) {
+            customInstructionDialog = new InstructionDialog(getContext());
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(customInstructionDialog.getWindow().getAttributes());
             lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -1110,7 +1108,6 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         }
 
     }
-
 
     private void makeOptionsList() {
         for (QuestionResModel resModel : fetchQuizResModel.getQuestionResModelList()) {
