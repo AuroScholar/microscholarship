@@ -304,6 +304,21 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/finish_next_bt"
+                            android:layout_width="@dimen/_90sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:background="@drawable/ic_quiz_retake"
+                            android:gravity="center"
+                            android:text="@string/exit_quiz"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            app:Font="Poppins-Regular.ttf"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/save_next_bt"
