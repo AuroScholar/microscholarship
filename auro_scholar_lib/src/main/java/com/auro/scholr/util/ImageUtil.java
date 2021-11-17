@@ -184,7 +184,6 @@ public class ImageUtil {
         Glide.with(view.getContext()).load(imgUrl)
                 .apply(RequestOptions.placeholderOf(R.drawable.ic_image_placeholder)
                         .error(R.drawable.ic_image_placeholder)
-
                         .dontAnimate()
                         .priority(Priority.IMMEDIATE)
                         .diskCacheStrategy(DiskCacheStrategy.ALL))

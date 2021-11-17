@@ -102,11 +102,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -406,19 +409,24 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
                 break;
 
             case LISTNER_SUCCESS:
-                AppLogger.v("SaveQuiz","Step 001"+"Assignment req Model"+quizResModel.getSubjectPos());
+                AppLogger.v("SaveQuiz", "Step 001" + "Assignment req Model" + quizResModel.getSubjectPos());
                 AppUtil.dashboardResModel = (DashboardResModel) commonDataModel.getObject();
                 //closeAllDialog();
-               // closeProgress();
+                // closeProgress();
                 customFinishProgressDialog.dismiss();
                 getActivity().getSupportFragmentManager().popBackStack();
-              /*  getActivity().getSupportFragmentManager().popBackStack();*/
+                /*  getActivity().getSupportFragmentManager().popBackStack();*/
                 break;
             case LISTNER_FAIL:
                 /*Do code here*/
                 closeProgress();
                 customFinishProgressDialog.dismiss();
                 getActivity().getSupportFragmentManager().popBackStack();
+                break;
+
+            case OPTION_IMAGE_CLICK:
+                /*Do code here*/
+                openImageMaxDialog((String) commonDataModel.getObject());
                 break;
 
         }
@@ -512,9 +520,13 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
             // initRecordingTimer();
 
         } else if (v.getId() == R.id.ques_img) {
-            NativeQuizImageDialog yesNoAlert = NativeQuizImageDialog.newInstance(questionResModel.getImageName());
-            yesNoAlert.show(getParentFragmentManager(), null);
+            openImageMaxDialog(questionResModel.getImageName());
         }
+    }
+
+    void openImageMaxDialog(String url) {
+        NativeQuizImageDialog yesNoAlert = NativeQuizImageDialog.newInstance(url);
+        yesNoAlert.show(getParentFragmentManager(), null);
     }
 
     private boolean checkGooglePlayAvailability() {
@@ -580,6 +592,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
             }
         }
     }
+
     private void createCameraSource() {
         // If there's no existing cameraSource, create one.
         if (mCamera3Source == null) {
@@ -755,7 +768,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
                             //   Toast.makeText(getActivity(), "status " + status, Toast.LENGTH_SHORT).show();
                             if (!status) {
                                 if (dialog == null) {
-                                  //  openDialog();
+                                    //  openDialog();
                                 } else {
                                     if (!dialog.isShowing() & !apiCalling && isVisible() && !interDialogOpen && !alreadyAttemptedDialog) {
                                         dialog.show();
@@ -820,18 +833,18 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         }
     };
 
-/*    private void processImage(Bitmap picBitmap) {
-        byte[] image_bytes = viewModel.encodeToBase64(picBitmap, 100);
-        long mb = viewModel.bytesIntoHumanReadable(image_bytes.length);
-        if (mb > 1.5) {
-            AppLogger.e("chhonker", "size of the image greater than 1.5 mb -" + mb);
-            callSendExamImageApi(viewModel.encodeToBase64(picBitmap, 50));
-            AppLogger.e("chhonker", "size of the image greater than 1.5 mb after conversion -" + mb);
-        } else {
-            AppLogger.e("chhonker", "size of the image less 1.5 mb -" + mb);
-            callSendExamImageApi(image_bytes);
-        }
-    }*/
+    /*    private void processImage(Bitmap picBitmap) {
+            byte[] image_bytes = viewModel.encodeToBase64(picBitmap, 100);
+            long mb = viewModel.bytesIntoHumanReadable(image_bytes.length);
+            if (mb > 1.5) {
+                AppLogger.e("chhonker", "size of the image greater than 1.5 mb -" + mb);
+                callSendExamImageApi(viewModel.encodeToBase64(picBitmap, 50));
+                AppLogger.e("chhonker", "size of the image greater than 1.5 mb after conversion -" + mb);
+            } else {
+                AppLogger.e("chhonker", "size of the image less 1.5 mb -" + mb);
+                callSendExamImageApi(image_bytes);
+            }
+        }*/
     void processImage(Bitmap picBitmap) {
         byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
         long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
@@ -1109,14 +1122,31 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
             while (myVeryOwnIterator.hasNext()) {
                 String key = (String) myVeryOwnIterator.next();
                 String value = (String) retMap.get(key);
-                if (!TextUtil.isEmpty(value)) {
-                    String option[] = value.split("_");
-                    OptionResModel optionResModel = new OptionResModel();
-                    optionResModel.setCheck(false);
-                    optionResModel.setOption(option[1]);
-                    optionResModel.setIndex(key);
-                    optionResModel.setOptionId(option[0]);
-                    list.add(optionResModel);
+
+
+                try {
+
+                    if (!TextUtil.isEmpty(value) && !containsURL(value)) {
+                        AppLogger.e("chhonker-value- ", "" + value);
+                        String option[] = value.split("_");
+                        OptionResModel optionResModel = new OptionResModel();
+                        optionResModel.setCheck(false);
+                        optionResModel.setOption(option[1]);
+                        optionResModel.setIndex(key);
+                        optionResModel.setOptionId(option[0]);
+                        list.add(optionResModel);
+                    } else {
+                        String option[] = value.split("_");
+                        OptionResModel optionResModel = new OptionResModel();
+                        optionResModel.setCheck(false);
+                        optionResModel.setOption(retrieveLinks(value));
+                        optionResModel.setIndex(key);
+                        optionResModel.setOptionId(option[0]);
+                        list.add(optionResModel);
+                    }
+                } catch (Exception e) {
+                    AppLogger.e("chhonker- after split exception- ", e.getMessage());
+
                 }
             }
             resModel.setOptionResModelList(list);
@@ -1251,13 +1281,13 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
 
             case FINISH_QUIZ_API:
                 SaveQuestionResModel resModel = (SaveQuestionResModel) responseApi.data;
-                AppLogger.v("SaveQuiz","Step 1"+resModel.getSubmitExamAPIResult().getScore());
-                AppLogger.v("SaveQuiz","Step 2"+resModel.getSubmitExamAPIResult().getSuccessFlag());
+                AppLogger.v("SaveQuiz", "Step 1" + resModel.getSubmitExamAPIResult().getScore());
+                AppLogger.v("SaveQuiz", "Step 2" + resModel.getSubmitExamAPIResult().getSuccessFlag());
                 if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
                 if (resModel.getSubmitExamAPIResult() != null && resModel.getSubmitExamAPIResult().getSuccessFlag()) {
-                    AppLogger.v("SaveQuiz","Step 002"+"Assignment req Model"+quizResModel.getSubjectPos());
+                    AppLogger.v("SaveQuiz", "Step 002" + "Assignment req Model" + quizResModel.getSubjectPos());
 
                     AppUtil.dashboardQuizScore = resModel.getSubmitExamAPIResult().getScore();
                     cancelDialogAfterSubmittingTest();
@@ -1395,11 +1425,11 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     private void cancelDialogAfterSubmittingTest() {
         if (!viewModel.quizNativeUseCase.checkDemographicStatus(dashboardResModel)) {
             closeAllDialog();
-            AppLogger.v("SaveQuiz","Step 003"+"Assignment req Model"+quizResModel.getSubjectPos());
+            AppLogger.v("SaveQuiz", "Step 003" + "Assignment req Model" + quizResModel.getSubjectPos());
             openDemographicFragment();
         } else {
             //open quiz home fragment
-            AppLogger.v("SaveQuiz","Step 004"+"Assignment req Model"+quizResModel.getSubjectPos());
+            AppLogger.v("SaveQuiz", "Step 004" + "Assignment req Model" + quizResModel.getSubjectPos());
 
             callDashboardApi();
             //  getActivity().getSupportFragmentManager().popBackStack();
@@ -1414,7 +1444,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
 
     public void openDemographicFragment() {
         Bundle bundle = new Bundle();
-        AppLogger.v("SaveQuiz","Step 4"+"DemoGraphic Fragment");
+        AppLogger.v("SaveQuiz", "Step 4" + "DemoGraphic Fragment");
         DemographicFragment demographicFragment = new DemographicFragment();
         bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
         demographicFragment.setArguments(bundle);
@@ -1440,6 +1470,41 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     private void setTimerProgress(int progress) {
         binding.timerProgressbar.setProgress(progress);
 
+    }
+
+
+    String retrieveLinks(String text) {
+        ArrayList links = new ArrayList();
+
+        String regex = "\\(?\\b(http://|www[.])[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(text);
+        while (m.find()) {
+            String urlStr = m.group();
+            char[] stringArray1 = urlStr.toCharArray();
+
+            if (urlStr.startsWith("(") && urlStr.endsWith(")")) {
+
+                char[] stringArray = urlStr.toCharArray();
+
+                char[] newArray = new char[stringArray.length - 2];
+                System.arraycopy(stringArray, 1, newArray, 0, stringArray.length - 2);
+                urlStr = new String(newArray);
+                System.out.println("Finally Url =" + newArray.toString());
+
+            }
+            System.out.println("...Url..." + urlStr);
+            AppLogger.e("chhonker- extract link--", urlStr);
+            links.add(urlStr);
+        }
+        return (String) links.get(0);
+    }
+
+    private boolean containsURL(String content) {
+        if (content.toLowerCase().contains("http://") || content.toLowerCase().contains("https://") || content.toLowerCase().contains("www.")) {
+            return true;
+        }
+        return false;
     }
 
 

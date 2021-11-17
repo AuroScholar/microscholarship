@@ -25,13 +25,25 @@
                 android:layout_height="@dimen/_20sdp"
                 android:layout_gravity="center"
                 android:src="@drawable/circle_auro_outline" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.auro.scholr.core.util.uiwidget.RPTextView
+                    android:id="@+id/msg_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:text="@string/default_message" />
 
-            <com.auro.scholr.core.util.uiwidget.RPTextView
-                android:id="@+id/msg_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:text="@string/default_message" />
+                <ImageView
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:id="@+id/option_image"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_90sdp"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
 

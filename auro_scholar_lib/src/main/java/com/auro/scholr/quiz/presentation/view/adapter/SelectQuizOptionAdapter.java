@@ -1,10 +1,13 @@
 package com.auro.scholr.quiz.presentation.view.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.text.Html;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -16,8 +19,13 @@ import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.SendQuizItemLayoutBinding;
 import com.auro.scholr.quiz.data.model.submitQuestionModel.OptionResModel;
+import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.ImageUtil;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import java.util.List;
 
 public class SelectQuizOptionAdapter extends RecyclerView.Adapter<SelectQuizOptionAdapter.ViewHolder> {
@@ -69,12 +77,27 @@ public class SelectQuizOptionAdapter extends RecyclerView.Adapter<SelectQuizOpti
 
         public void bindUser(OptionResModel model, int position, CommonCallBackListner commonCallBackListner) {
             binding.msgText.setText(Html.fromHtml(model.getOption()));
-
+            String url = "";
             if (model.isCheck()) {
                 binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_auro_check));
             } else {
                 binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getResources().getDrawable(R.drawable.circle_auro_outline));
 
+            }
+            binding.msgText.setVisibility(View.GONE);
+            binding.optionImage.setVisibility(View.VISIBLE);
+         /*   Uri myUri = Uri.parse("www.eklavvya.in/EklavvyaoptionImages/20211023095306Assett_Gr3_Ch17_Q.4_(d).jpg");
+            ImageUtil.loaWithoutCropImage(binding.optionImage,"https://"+myUri.toString());*/
+
+          AppLogger.e("loadNormalImage--",model.getOption());
+            if (containsURL(model.getOption())) {
+                binding.msgText.setVisibility(View.GONE);
+                binding.optionImage.setVisibility(View.VISIBLE);
+                ImageUtil.loaWithoutCropImage(binding.optionImage,"https://"+model.getOption());
+                AppLogger.e("loadNormalImage--",model.getOption());
+            } else {
+                binding.msgText.setVisibility(View.VISIBLE);
+                binding.optionImage.setVisibility(View.GONE);
             }
             binding.llayout1.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -93,9 +116,26 @@ public class SelectQuizOptionAdapter extends RecyclerView.Adapter<SelectQuizOpti
                     notifyDataSetChanged();
                 }
             });
-
+  binding.optionImage.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+          if (commonCallBackListner != null) {
+              commonCallBackListner.commonEventListner(AppUtil.getCommonClickModel(position, Status.OPTION_IMAGE_CLICK, "https://"+model.getOption()));
+          }
+      }
+  });
 
         }
+    }
+
+
+
+    private boolean containsURL(String content) {
+        if(content.toLowerCase().contains("http://") || content.toLowerCase().contains("https://") || content.toLowerCase().contains("www.") )
+        {
+            return  true;
+        }
+        return  false;
     }
 }
 

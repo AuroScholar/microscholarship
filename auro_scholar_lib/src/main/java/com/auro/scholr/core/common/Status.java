@@ -102,6 +102,7 @@ public enum Status {
     EXIT_DIALOG_CLICK,
     FINISH_DIALOG_CLICK,
     SUBMITQUIZ,
+    OPTION_IMAGE_CLICK
 
 
 
