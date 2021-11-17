@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.auro.scholr.R;
+import com.auro.scholr.core.application.AuroApp;
+import com.auro.scholr.core.common.AppConstant;
 import com.auro.scholr.core.common.CommonCallBackListner;
 import com.auro.scholr.core.common.Status;
 import com.auro.scholr.databinding.SelectSubjectItemLayoutBinding;
@@ -28,24 +30,22 @@ public class SubjectSelectAdapter extends RecyclerView.Adapter<SubjectSelectAdap
     // if checkedPosition = -1, there is no default selection
     // if checkedPosition = 0, 1st item is selected by default
     private int checkedPosition = 0;
-    Context mcontext;
 
-    public SubjectSelectAdapter(List<SubjectResModel> list, Context mcontext, CommonCallBackListner commonCallBackListner) {
+    public SubjectSelectAdapter(List<SubjectResModel> list, CommonCallBackListner commonCallBackListner) {
         this.list = list;
         this.commonCallBackListner = commonCallBackListner;
-        this.mcontext = mcontext;
     }
 
     @NonNull
     @Override
-    public SubjectHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public SubjectSelectAdapter.SubjectHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         SelectSubjectItemLayoutBinding languageItemLayoutBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.select_subject_item_layout, viewGroup, false);
-        return new SubjectHolder(languageItemLayoutBinding);
+        return new SubjectSelectAdapter.SubjectHolder(languageItemLayoutBinding);
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SubjectHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SubjectSelectAdapter.SubjectHolder holder, int position) {
         holder.bindUser(list.get(position), position, commonCallBackListner);
     }
 
@@ -70,17 +70,17 @@ public class SubjectSelectAdapter extends RecyclerView.Adapter<SubjectSelectAdap
 
             Drawable drawable = null;
             if (position == 0) {
-                drawable = mcontext.getResources().getDrawable(R.drawable.auro_math);
+                drawable = AuroApp.getAppContext().getResources().getDrawable(R.drawable.auro_math);
             } else if (position == 1) {
-                drawable = mcontext.getResources().getDrawable(R.drawable.auro_english);
+                drawable = AuroApp.getAppContext().getResources().getDrawable(R.drawable.auro_english);
             } else if (position == 2) {
-                drawable = mcontext.getResources().getDrawable(R.drawable.auro_hindi);
+                drawable = AuroApp.getAppContext().getResources().getDrawable(R.drawable.auro_hindi);
             } else if (position == 3) {
-                drawable = mcontext.getResources().getDrawable(R.drawable.auro_sst);
+                drawable = AuroApp.getAppContext().getResources().getDrawable(R.drawable.auro_sst);
             } else {
-                drawable = mcontext.getResources().getDrawable(R.drawable.auro_science);
+                drawable = AuroApp.getAppContext().getResources().getDrawable(R.drawable.auro_science);
             }
-            binding.icSubjctBackground.setImageDrawable(drawable);
+            binding.icSubjctBackground.setImageDrawable(getImageFromCode(model));
 
             binding.itemSubject.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -101,4 +101,46 @@ public class SubjectSelectAdapter extends RecyclerView.Adapter<SubjectSelectAdap
     }
 
 
+    private Drawable getImageFromCode(SubjectResModel subjectResModel) {
+        switch (subjectResModel.getSubjectCode()) {
+            case AppConstant.SubjectCodes.Mathematics:
+                return AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_maths_vertical);
+
+            case AppConstant.SubjectCodes.English:
+                return AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_english_vertical);
+
+            case AppConstant.SubjectCodes.Hindi:
+                return AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_hindi_vertical);
+
+
+            case AppConstant.SubjectCodes.Social_Science:
+                return AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_social_science_vertical);
+
+            case AppConstant.SubjectCodes.Science:
+                return AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_science_vertical);
+
+            case AppConstant.SubjectCodes.Physics:
+                return AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_physics_vertical);
+
+            case AppConstant.SubjectCodes.Chemistry:
+                return AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_chemistry_vertical);
+
+            case AppConstant.SubjectCodes.Biology:
+                return AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_biology_vertical);
+
+            case AppConstant.SubjectCodes.History:
+                return AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_history_vertical);
+
+            case AppConstant.SubjectCodes.Political_Science:
+                return AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_political_science_vertical);
+
+            case AppConstant.SubjectCodes.Geography:
+                return AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_geographic_vertical);
+
+            default:
+                return AuroApp.getAppContext().getResources().getDrawable(R.drawable.ic_physics_vertical);
+
+        }
+
+    }
 }

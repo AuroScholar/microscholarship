@@ -284,7 +284,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         binding.recyclerViewMenu.setLayoutManager(layoutManager);
         binding.recyclerViewMenu.setHasFixedSize(true);
-        SubjectSelectAdapter subjectadapter = new SubjectSelectAdapter(dashboardResModel.getSubjectResModelList(), getContext(), this);
+        SubjectSelectAdapter subjectadapter = new SubjectSelectAdapter(dashboardResModel.getSubjectResModelList(),  this);
         binding.recyclerViewMenu.setAdapter(subjectadapter);
     }
 
@@ -298,7 +298,6 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         AppLogger.e(TAG, "commonEventListner");
         switch (commonDataModel.getClickType()) {
             case SUBJECT_CLICKED:
-
                 setAdapterChapter((SubjectResModel) commonDataModel.getObject());
                 break;
 

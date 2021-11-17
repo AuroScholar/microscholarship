@@ -1,6 +1,7 @@
 package com.auro.scholr.home.data.model;
 
 
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -23,16 +24,22 @@ public class SubjectResModel implements Parcelable {
     @SerializedName("quiz_won")
     @Expose
     private int quizWonAmount;
-
+    @SerializedName("subject_code")
+    @Expose
+    private String subjectCode;
     @SerializedName("quizOpen")
     @Expose
     private boolean quizOpen;
+
+    private Drawable imagePath;
+
 
     protected SubjectResModel(Parcel in) {
         subject = in.readString();
         description = in.readString();
         chapter = in.createTypedArrayList(QuizResModel.CREATOR);
         quizWonAmount = in.readInt();
+        subjectCode = in.readString();
         quizOpen = in.readByte() != 0;
     }
 
@@ -42,6 +49,7 @@ public class SubjectResModel implements Parcelable {
         dest.writeString(description);
         dest.writeTypedList(chapter);
         dest.writeInt(quizWonAmount);
+        dest.writeString(subjectCode);
         dest.writeByte((byte) (quizOpen ? 1 : 0));
     }
 
@@ -100,5 +108,21 @@ public class SubjectResModel implements Parcelable {
 
     public void setQuizWonAmount(int quizWonAmount) {
         this.quizWonAmount = quizWonAmount;
+    }
+
+    public String getSubjectCode() {
+        return subjectCode;
+    }
+
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode;
+    }
+
+    public Drawable getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(Drawable imagePath) {
+        this.imagePath = imagePath;
     }
 }

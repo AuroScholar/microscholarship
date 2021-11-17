@@ -4,9 +4,20 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/drawable/class_disable_border_background.xml" value="0.16296296296296298" />
+        <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_biology_vertical.xml" value="0.16018518518518518" />
+        <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_chemistry_vertical.xml" value="0.16018518518518518" />
+        <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_english_vertical.xml" value="0.16018518518518518" />
+        <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_geographic_vertical.xml" value="0.16018518518518518" />
+        <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_hindi_vertical.xml" value="0.16018518518518518" />
+        <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_history_vertical.xml" value="0.16018518518518518" />
+        <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_maths_vertical.xml" value="0.16018518518518518" />
+        <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_physics_vertical.xml" value="0.16018518518518518" />
+        <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_political_science_vertical.xml" value="0.16018518518518518" />
+        <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_science_vertical.xml" value="0.16018518518518518" />
         <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/layout/activity_yubo_chat.xml" value="0.12135416666666667" />
         <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/layout/fragment_student_profile_2.xml" value="0.18" />
         <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/layout/fragment_yubo_chat_bot.xml" value="0.13125" />
+        <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/layout/instruction_dialog_custom.xml" value="0.22" />
         <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/layout/quiz_test_native_layout.xml" value="0.17291666666666666" />
         <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/layout/send_quiz_item_layout.xml" value="0.13177083333333334" />
       </map>

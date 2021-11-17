@@ -9,6 +9,13 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import android.os.Parcelable;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 public class DashboardResModel implements Parcelable {
 
     @SerializedName("status")
@@ -149,6 +156,15 @@ public class DashboardResModel implements Parcelable {
     @Expose
     private String approved_scholarship_money;
 
+
+    @SerializedName("inprocess_scholarship_money")
+    @Expose
+    private String inProcessScholarShipMoney;
+
+    @SerializedName("disburse_scholarship_money")
+    @Expose
+    private String disburseScholarshipMoney;
+
     @SerializedName("latitude")
     @Expose
     private String latitude;
@@ -187,37 +203,41 @@ public class DashboardResModel implements Parcelable {
     @Expose
     int feature;
 
-    @SerializedName("user_partner_id")
+    @SerializedName("classes")
     @Expose
-    String userPartnerId;
+    private List<String> classes;
+
 
     @SerializedName("is_native_image_capturing")
     @Expose
     private boolean is_native_image_capturing;
 
 
-    @SerializedName("inprocess_scholarship_money")
-    @Expose
-    private String inProcessScholarShipMoney;
 
-    @SerializedName("disburse_scholarship_money")
+    @SerializedName("build_version")
     @Expose
-    private String disburseScholarshipMoney;
+    private  String buildVersion;
 
+    @SerializedName("ip_address")
+    @Expose
+    private  String ipAddress;
 
     @SerializedName("profile_pic")
     @Expose
     private  String profilePic;
 
-    @SerializedName("is_chatbot_enabled")
+
+    @SerializedName("partner_logo")
     @Expose
-    private  boolean isChatBotEnabled;
+    private  String partnerLogo;
 
     @SerializedName("partner_source")
     @Expose
     private  String partnerSource;
 
-
+    @SerializedName("is_chatbot_enabled")
+    @Expose
+    private  boolean isChatBotEnabled;
 
 
     protected DashboardResModel(Parcel in) {
@@ -256,6 +276,8 @@ public class DashboardResModel implements Parcelable {
         unapproved_scholarship_money = in.readString();
         disapproved_scholarship_money = in.readString();
         approved_scholarship_money = in.readString();
+        inProcessScholarShipMoney = in.readString();
+        disburseScholarshipMoney = in.readString();
         latitude = in.readString();
         longitude = in.readString();
         mobileModel = in.readString();
@@ -265,14 +287,14 @@ public class DashboardResModel implements Parcelable {
         privateTutionType = in.readString();
         leadQualified = in.readString();
         feature = in.readInt();
-        userPartnerId = in.readString();
+        classes = in.createStringArrayList();
         is_native_image_capturing = in.readByte() != 0;
-        inProcessScholarShipMoney = in.readString();
-        disburseScholarshipMoney=in.readString();
+        buildVersion = in.readString();
+        ipAddress = in.readString();
         profilePic = in.readString();
-        isChatBotEnabled = in.readByte() != 0;
+        partnerLogo = in.readString();
         partnerSource = in.readString();
-
+        isChatBotEnabled = in.readByte() != 0;
     }
 
     @Override
@@ -312,6 +334,8 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(unapproved_scholarship_money);
         dest.writeString(disapproved_scholarship_money);
         dest.writeString(approved_scholarship_money);
+        dest.writeString(inProcessScholarShipMoney);
+        dest.writeString(disburseScholarshipMoney);
         dest.writeString(latitude);
         dest.writeString(longitude);
         dest.writeString(mobileModel);
@@ -321,12 +345,14 @@ public class DashboardResModel implements Parcelable {
         dest.writeString(privateTutionType);
         dest.writeString(leadQualified);
         dest.writeInt(feature);
-        dest.writeString(userPartnerId);
-        dest.writeString(disburseScholarshipMoney);
+        dest.writeStringList(classes);
         dest.writeByte((byte) (is_native_image_capturing ? 1 : 0));
+        dest.writeString(buildVersion);
+        dest.writeString(ipAddress);
         dest.writeString(profilePic);
-        dest.writeByte((byte) (isChatBotEnabled ? 1 : 0));
+        dest.writeString(partnerLogo);
         dest.writeString(partnerSource);
+        dest.writeByte((byte) (isChatBotEnabled ? 1 : 0));
     }
 
     @Override
@@ -346,12 +372,20 @@ public class DashboardResModel implements Parcelable {
         }
     };
 
-    public String getDisburseScholarshipMoney() {
-        return disburseScholarshipMoney;
+    public String getPartnerLogo() {
+        return partnerLogo;
     }
 
-    public void setDisburseScholarshipMoney(String disburseScholarshipMoney) {
-        this.disburseScholarshipMoney = disburseScholarshipMoney;
+    public void setPartnerLogo(String partnerLogo) {
+        this.partnerLogo = partnerLogo;
+    }
+
+    public String getPartnerSource() {
+        return partnerSource;
+    }
+
+    public void setPartnerSource(String partnerSource) {
+        this.partnerSource = partnerSource;
     }
 
     public String getInProcessScholarShipMoney() {
@@ -361,6 +395,15 @@ public class DashboardResModel implements Parcelable {
     public void setInProcessScholarShipMoney(String inProcessScholarShipMoney) {
         this.inProcessScholarShipMoney = inProcessScholarShipMoney;
     }
+
+    public String getDisburseScholarshipMoney() {
+        return disburseScholarshipMoney;
+    }
+
+    public void setDisburseScholarshipMoney(String disburseScholarshipMoney) {
+        this.disburseScholarshipMoney = disburseScholarshipMoney;
+    }
+
 
     public int getFeature() {
         return feature;
@@ -714,12 +757,12 @@ public class DashboardResModel implements Parcelable {
         this.longitude = longitude;
     }
 
-    public String getUserPartnerId() {
-        return userPartnerId;
+    public List<String> getClasses() {
+        return classes;
     }
 
-    public void setUserPartnerId(String userPartnerId) {
-        this.userPartnerId = userPartnerId;
+    public void setClasses(List<String> classes) {
+        this.classes = classes;
     }
 
     public boolean isIs_native_image_capturing() {
@@ -730,6 +773,14 @@ public class DashboardResModel implements Parcelable {
         this.is_native_image_capturing = is_native_image_capturing;
     }
 
+    public String getBuildVersion() {
+        return buildVersion;
+    }
+
+    public void setBuildVersion(String buildVersion) {
+        this.buildVersion = buildVersion;
+    }
+
     public String getProfilePic() {
         return profilePic;
     }
@@ -737,6 +788,15 @@ public class DashboardResModel implements Parcelable {
     public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
     }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
     public boolean isChatBotEnabled() {
         return isChatBotEnabled;
     }
@@ -744,12 +804,4 @@ public class DashboardResModel implements Parcelable {
     public void setChatBotEnabled(boolean chatBotEnabled) {
         isChatBotEnabled = chatBotEnabled;
     }
-
-    public void setPartnerSource(String partnerSource) {
-        this.partnerSource = partnerSource;
-    }
-    public String getPartnerSource() {
-        return partnerSource;
-    }
-
 }
