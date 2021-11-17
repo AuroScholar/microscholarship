@@ -362,6 +362,16 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 AppLogger.e("chhonker", "size of the image less 1.5 mb -" + mb);
                 kycDocumentDatamodelArrayList.get(pos).setImageBytes(bytes);
             }
+
+
+
+            if (!TextUtil.checkListIsEmpty(kycDocumentDatamodelArrayList)) {
+                for (int i = 0; i < kycDocumentDatamodelArrayList.size(); i++) {
+                    if (i != pos) {
+                        kycDocumentDatamodelArrayList.get(i).setImageBytes(null);
+                    }
+                }
+            }
             kyCuploadAdapter.updateList(kycDocumentDatamodelArrayList);
             uploadAllDocApi();
         } catch (Exception e) {

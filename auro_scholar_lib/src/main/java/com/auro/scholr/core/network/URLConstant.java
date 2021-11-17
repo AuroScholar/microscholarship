@@ -23,7 +23,8 @@ public interface URLConstant {
 
     String GRADE_UPGRADE = "grade_update.php";
 
-    String UPLOAD_IMAGE_URL = BASE_URL + "kyc.php";
+    String UPLOAD_IMAGE_URL = "https://auroscholar.org/api/upload_kyc_documents";
+
     // String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction.php ";
     String GET_ASSIGNMENT_ID = BASE_URL + "statrquizeaction_multiple.php";
     String TEST_URL = "https://assessment.eklavvya.com/exam/StartExam?";
