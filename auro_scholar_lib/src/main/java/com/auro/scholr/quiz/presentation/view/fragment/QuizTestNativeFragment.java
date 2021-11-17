@@ -501,8 +501,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     public void onClick(View v) {
         if (v.getId() == R.id.exit_bt) {
             ((StudentMainDashboardActivity) getActivity()).openDialogForQuit();
-        }
-        else if (v.getId() == R.id.save_next_bt) {
+        } else if (v.getId() == R.id.save_next_bt) {
             AppLogger.i("Countdown", "onClick");
             if (!interDialogOpen) {
                 if (binding.saveNextBt.getText().toString().equalsIgnoreCase(getActivity().getResources().getString(R.string.save_submit))) {
@@ -521,11 +520,9 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
 
             // initRecordingTimer();
 
-        }
-        else if (v.getId() == R.id.ques_img) {
+        } else if (v.getId() == R.id.ques_img) {
             openImageMaxDialog(questionResModel.getImageName());
-        }else if(v.getId() == R.id.finish_next_bt)
-        {
+        } else if (v.getId() == R.id.finish_next_bt) {
             callFinishQuizApi();
         }
     }
