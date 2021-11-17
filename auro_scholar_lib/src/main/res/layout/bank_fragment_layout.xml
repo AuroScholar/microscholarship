@@ -19,7 +19,7 @@
         android:background="@color/off_white"
         android:clipToPadding="false"
         android:fillViewport="true"
-        android:paddingBottom="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_200sdp"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
