@@ -169,13 +169,20 @@ public class ImageUtil {
 
     public static void loadNormalImage(ImageView view,String imgUrl)
     {
-        Glide.with(view.getContext()).load(imgUrl)
+        AppLogger.v("ProfilePicUser",imgUrl+ "Step 6");
+       /* Glide.with(view.getContext()).load(imgUrl)
                 .apply(RequestOptions.placeholderOf(R.drawable.ic_image_placeholder)
                         .error(R.drawable.ic_image_placeholder)
                         .centerCrop()
                         .dontAnimate()
-                        .priority(Priority.IMMEDIATE)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .priority(Priority.HIGH)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE))
+                .into(view);*/
+        Glide.with(view.getContext())
+                .load(imgUrl)
+                .error(R.drawable.ic_image_placeholder)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(view);
     }
 

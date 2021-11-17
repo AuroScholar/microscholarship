@@ -279,8 +279,18 @@ public class ViewUtil {
 
     public static void setProfilePic(ImageView imageView) {
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        AppLogger.v("ProfilePicUser",prefModel.getDashboardResModel().getProfilePic()+"Step 2");
         if (prefModel != null && prefModel.getDashboardResModel() != null && !TextUtil.isEmpty(prefModel.getDashboardResModel().getProfilePic())) {
+            AppLogger.v("ProfilePicUser",prefModel.getDashboardResModel().getProfilePic()+"Step 3");
             ImageUtil.loadNormalImage(imageView, prefModel.getDashboardResModel().getProfilePic());
+        }
+    }
+    public static void setProfilePic(ImageView imageView,String imageViewphoto) {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        AppLogger.v("ProfilePicUser",prefModel.getDashboardResModel().getProfilePic()+"Step 2");
+        if (!TextUtil.isEmpty(imageViewphoto)) {
+            AppLogger.v("ProfilePicUser",prefModel.getDashboardResModel().getProfilePic()+"Step 3");
+            ImageUtil.loadNormalImage(imageView, imageViewphoto);
         }
     }
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
