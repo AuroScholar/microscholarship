@@ -77,8 +77,9 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
         RequestBody quiz_attempt = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getQuiz_attempt());
         RequestBody subject = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getSubject());
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), azureReqModel.getImageBytes());
+        RequestBody examAuroId = RequestBody.create(okhttp3.MultipartBody.FORM, azureReqModel.getExamId());
         MultipartBody.Part student_photo = MultipartBody.Part.createFormData("exam_face_img", "image.jpg", requestFile);
-        return homeRemoteApi.getAzureApiData(registration_id, exam_id, exam_name, quiz_attempt, subject, student_photo);
+        return homeRemoteApi.getAzureApiData(registration_id, exam_id, exam_name, quiz_attempt, subject, examAuroId,student_photo);
 
     }
 

@@ -148,6 +148,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         } else {
             observeServiceResponse();
         }
+
         binding.backButton.setOnClickListener(this);
       //  binding.swipeRefreshLayout.setOnRefreshListener(this);
         binding.swipeRefreshLayout.setEnabled(false);
@@ -184,7 +185,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         if (prefModel != null && !TextUtil.checkListIsEmpty(prefModel.getListAzureImageList()) && prefModel.getListAzureImageList().size() > 0) {
             faceModelList = prefModel.getListAzureImageList();
             if (faceModelList.get(0) != null) {
-                kycViewModel.sendAzureImageData(faceModelList.get(0));
+               // kycViewModel.sendAzureImageData(faceModelList.get(0));
             }
         }
     }
@@ -369,7 +370,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
             faceModelList.get(faceCounter).setUploaded(true);
             faceCounter++;
             if (faceModelList.size() > faceCounter) {
-                kycViewModel.sendAzureImageData(faceModelList.get(faceCounter));
+               // kycViewModel.sendAzureImageData(faceModelList.get(faceCounter));
             } else {
                 updateFaceListInPref();
             }

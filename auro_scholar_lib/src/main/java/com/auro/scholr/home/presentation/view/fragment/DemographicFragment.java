@@ -208,7 +208,7 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
         }
 
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
-        if (prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
+        if (prefModel.getUserLanguage()!=null && prefModel.getUserLanguage().equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
             setLanguageText(AppConstant.HINDI);
         } else {
             setLanguageText(AppConstant.ENGLISH);

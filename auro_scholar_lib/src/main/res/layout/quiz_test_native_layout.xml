@@ -24,13 +24,6 @@
             android:orientation="vertical">
 
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/background"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_120sdp"
-
-                android:scaleType="fitXY"
-                android:visibility="gone" />
 
             <include
                 android:id="@+id/header_top_parent"
@@ -73,22 +66,17 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <com.auro.scholr.util.camera.CameraSourcePreview
-                            android:id="@+id/preview"
+                        <androidx.camera.view.PreviewView
+                            android:id="@+id/previewView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_alignParentStart="true"
-                            android:background="@color/black"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginBottom="8dp"
+                            android:visibility="visible"
+                            android:contentDescription="Preview Area"
+                            android:importantForAccessibility="no"
+                            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <com.auro.scholr.util.utility.GraphicOverlay
-                                android:id="@+id/faceOverlay"
-                                android:layout_width="@dimen/_50sdp"
-                                android:layout_height="@dimen/_50sdp"
-                                android:visibility="invisible" />
-                        </com.auro.scholr.util.camera.CameraSourcePreview>
+                            app:layout_constraintTop_toTopOf="parent" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -375,6 +363,14 @@
                     android:innerRadiusRatio="3"
                     android:visibility="visible" />
             </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/background"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:background="@drawable/ic_image_placeholder"
+                android:scaleType="fitXY"
+                android:visibility="gone" />
 
         </RelativeLayout>
     </LinearLayout>

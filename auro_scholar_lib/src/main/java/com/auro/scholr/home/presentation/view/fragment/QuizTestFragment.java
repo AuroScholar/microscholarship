@@ -32,9 +32,8 @@ import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageAnalysis;
+import androidx.camera.core.CameraX;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.Preview;
 import androidx.camera.extensions.HdrImageCaptureExtender;
@@ -165,6 +164,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
         }
         handler.removeCallbacksAndMessages(null);
         ViewUtil.setLanguageonUi(getActivity());
+
         super.onDestroy();
 
     }
@@ -658,8 +658,6 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
                 .requireLensFacing(CameraSelector.LENS_FACING_FRONT)
                 .build();
 
-        ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
-                .build();
 
         ImageCapture.Builder builder = new ImageCapture.Builder();
 
@@ -678,7 +676,6 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
         preview.setSurfaceProvider(binding.previewView.createSurfaceProvider());
 
-        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageAnalysis, imageCapture);
     }
 
 

@@ -750,7 +750,6 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                     azureImage(path);
                     openQuizTestFragment(dashboardResModel);
 
-                    // loadImageFromStorage(path);
                 } catch (Exception e) {
 
                 }
@@ -771,6 +770,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             assignmentReqModel = quizViewModel.homeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
             assignmentReqModel.setEklavvya_exam_id("");
             assignmentReqModel.setSubject(quizResModel.getSubjectName());
+            assignmentReqModel.setExamId(testAssignmentResModel.getExamId());
             Bitmap picBitmap = BitmapFactory.decodeFile(path);
             byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
             long mb = AppUtil.bytesIntoHumanReadable(bytes.length);

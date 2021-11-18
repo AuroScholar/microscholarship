@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.media.Image;
@@ -29,9 +30,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageAnalysis;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.Preview;
+import androidx.camera.extensions.HdrImageCaptureExtender;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -92,9 +102,11 @@ import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.FaceDetector;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.text.DecimalFormat;
@@ -108,6 +120,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -125,8 +138,6 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     QuizTestNativeViewModel viewModel;
     List<SelectResponseModel> list;
     SelectQuizOptionAdapter mcSelectQuizAdapter;
-    Hourglass hourglass;
-    int workingornot = 1;
     int START_TIME_IN_MILLIS = 61000;
     int COUNTDOWN_INTERVAL = 1000;
     InstructionDialog customInstructionDialog;
@@ -135,29 +146,8 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     List<QuestionResModel> quizQuestionList;
     /*Camera Params*/
     OptionResModel optionResModel;
-    boolean clickPictureStatus;
     CustomProgressDialog customFinishProgressDialog;
 
-
-    // CAMERA VERSION TWO DECLARATIONS
-    private Camera2Source mCamera2Source = null;
-
-    // CAMERA VERSION ONE DECLARATIONS
-    private CameraSource mCameraSource = null;
-    private Camera3Source mCamera3Source = null;
-    private CameraSourcePreview preview;
-
-
-    // COMMON TO BOTH CAMERAS
-    private CameraSourcePreview mPreview;
-    private FaceDetector previewFaceDetector = null;
-
-    // DEFAULT CAMERA BEING OPENED
-    private boolean usingFrontCamera = true;
-
-    // MUST BE CAREFUL USING THIS VARIABLE.
-    // ANY ATTEMPT TO START CAMERA2 ON API < 21 WILL CRASH.
-    private boolean useCamera2 = false;
 
     private GraphicOverlay mGraphicOverlay;
     int cameraID = 0;
@@ -187,6 +177,11 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     boolean submitQuizFromExitDialog = false;
     boolean isQuizStarted = false;
     AssignmentResModel assignmentResModel;
+
+    /*Camera x code */
+    Handler handler = new Handler();
+    /*End of cmera x code*/
+
 
     @Override
     public void onAttach(Context context) {
@@ -224,21 +219,13 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
             cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
         }
         setTimerProgress(countQuiz + 1);
-        useCamera2 = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
-        if (DeviceUtil.getManufacturer().equalsIgnoreCase(AppConstant.ManufacturerName.SAMSUNG)) {
-            useCamera2 = false;
-        }
         if (dashboardResModel != null && quizResModel != null) {
             assignmentReqModel = viewModel.quizNativeUseCase.getAssignmentRequestModel(dashboardResModel, quizResModel);
             //    quizTestViewModel.getAssignExamData(assignmentReqModel);
         }
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
         assignmentResModel = prefModel.getAssignmentResModel();
-        mGraphicOverlay = binding.faceOverlay;
-        mPreview = binding.preview;
-        stopCameraSource();
-        clickPictureStore();
-
+        checkNativeCameraEnableOrNot();
 
     }
 
@@ -275,7 +262,6 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     @Override
     public void onPause() {
         super.onPause();
-        stopCameraSource();
     }
 
     @Override
@@ -290,11 +276,6 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         }
 
         unregisterNetworkChanges();
-        stopCameraSource();
-        if (previewFaceDetector != null) {
-            previewFaceDetector.release();
-        }
-
 
         if (((StudentMainDashboardActivity) getActivity()).dialogQuit != null && ((StudentMainDashboardActivity) getActivity()).dialogQuit.isShowing()) {
             ((StudentMainDashboardActivity) getActivity()).dialogQuit.dismiss();
@@ -309,14 +290,6 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
             countDownTimerofme.cancel();
         }
         closeCameraDialog();
-        stopCameraSource();
-        if (mCamera2Source != null) {
-            mCamera2Source.release();
-        }
-        if (mCameraSource != null) {
-            mCameraSource.release();
-        }
-
         closeAllDialog();
 
     }
@@ -564,11 +537,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         Permissions.check(getActivity(), PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
             @Override
             public void onGranted() {
-                createCameraSourceFront();
 
-                createCameraSource();
-                startCamera3Source();
-                startCameraSource();
 
             }
 
@@ -580,168 +549,9 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         });
     }
 
-    private void startCamera3Source() {
-        if (mCamera3Source != null) {
-            try {
-                if (preview == null) {
-                    AppLogger.d(TAG, "resume: Preview is null");
-                }
-                if (mGraphicOverlay == null) {
-                    AppLogger.d(TAG, "resume: graphOverlay is null");
-                    preview.start(mCameraSource, mGraphicOverlay);
-                }
-
-            } catch (IOException e) {
-                mCamera3Source.release();
-                mCamera3Source = null;
-            }
-        }
-    }
-
-    private void createCameraSource() {
-        // If there's no existing cameraSource, create one.
-        if (mCamera3Source == null) {
-            //
-            mCamera3Source = new Camera3Source(getActivity(), mGraphicOverlay);
-        }
-        mCamera3Source.setMachineLearningFrameProcessor(new CloudLandmarkRecognitionProcessor());
-    }
 
 
-    private void stopCameraSource() {
-        mPreview.stop();
-    }
 
-    private void createCameraSourceFront() {
-        previewFaceDetector = new FaceDetector.Builder(getActivity())
-                .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
-                .setLandmarkType(FaceDetector.ALL_LANDMARKS)
-                .setMode(FaceDetector.FAST_MODE)
-                .setProminentFaceOnly(true)
-                .setTrackingEnabled(true)
-                .build();
-
-        if (previewFaceDetector.isOperational()) {
-            previewFaceDetector.setProcessor(new MultiProcessor.Builder<>(new GraphicFaceTrackerFactory()).build());
-        } else {
-            Toast.makeText(getActivity(), "FACE DETECTION NOT AVAILABLE", Toast.LENGTH_SHORT).show();
-        }
-
-        if (useCamera2) {
-            mCamera2Source = new Camera2Source.Builder(getActivity(), previewFaceDetector)
-                    .setFocusMode(Camera2Source.CAMERA_AF_AUTO)
-                    .setFlashMode(Camera2Source.CAMERA_FLASH_AUTO)
-                    .setFacing(Camera2Source.CAMERA_FACING_FRONT)
-                    .build();
-
-            //IF CAMERA2 HARDWARE LEVEL IS LEGACY, CAMERA2 IS NOT NATIVE.
-            //WE WILL USE CAMERA1.
-            if (mCamera2Source.isCamera2Native()) {
-                startCameraSource();
-            } else {
-                useCamera2 = false;
-                createCameraSourceFront();
-
-            }
-        } else {
-            mCameraSource = new CameraSource.Builder(getActivity(), previewFaceDetector)
-                    .setFacing(CameraSource.CAMERA_FACING_FRONT)
-                    .setRequestedFps(30.0f)
-                    .build();
-            startCameraSource();
-        }
-    }
-
-    private void startCameraSource() {
-        if (useCamera2) {
-            if (mCamera2Source != null) {
-                AppLogger.e("Camera", "camera  2.");
-                try {
-                    mPreview.start(mCamera2Source, mGraphicOverlay);
-                } catch (IOException e) {
-                    AppLogger.e("Camera", "Unable to start camera source 2." + e);
-                    mCamera2Source.release();
-                    mCamera2Source = null;
-                }
-            }
-        } else {
-            if (mCameraSource != null) {
-                AppLogger.e("Camera", "camera  1.");
-                try {
-                    mPreview.start(mCameraSource, mGraphicOverlay);
-                } catch (IOException e) {
-                    AppLogger.e("Camera", "Unable to start camera source ." + e);
-                    mCameraSource.release();
-                    mCameraSource = null;
-                }
-            }
-        }
-    }
-
-
-    private class GraphicFaceTrackerFactory implements MultiProcessor.Factory<Face> {
-        @Override
-        public Tracker<Face> create(Face face) {
-            return new GraphicFaceTracker(mGraphicOverlay);
-        }
-    }
-
-    private class GraphicFaceTracker extends Tracker<Face> {
-        private GraphicOverlay mOverlay;
-
-        GraphicFaceTracker(GraphicOverlay overlay) {
-            mOverlay = overlay;
-        }
-
-        /**
-         * Start tracking the detected face instance within the face overlay.
-         */
-        @Override
-        public void onNewItem(int faceId, Face item) {
-            // status = true;
-            AppLogger.e("chhonker", "face detetcted");
-        }
-
-
-        /**
-         * Update the position/characteristics of the face within the overlay.
-         */
-        @Override
-        public void onUpdate(FaceDetector.Detections<Face> detectionResults, Face face) {
-            //  AppLogger.e("chhonker", "--onUpdate face" + detectionResults.getDetectedItems().size());
-            if (detectionResults.getDetectedItems().size() == 1) {
-                status = true;
-                //AppLogger.e("chhonker", "--onUpdate face 1 , size" + detectionResults.getDetectedItems().size());
-            } else {
-                status = false;
-                // AppLogger.e("chhonker", "--onUpdate face 2, size" + detectionResults.getDetectedItems().size());
-
-            }
-
-        }
-
-        /**
-         * Hide the graphic when the corresponding face was not detected.  This can happen for
-         * intermediate frames temporarily (e.g., if the face was momentarily blocked from
-         * view).
-         */
-        @Override
-        public void onMissing(FaceDetector.Detections<Face> detectionResults) {
-            //detectionResultsList=detectionResults;
-
-            AppLogger.e("chhonker", "--ondetection face" + detectionResults.getDetectedItems().size());
-        }
-
-        /**
-         * Called when the face is assumed to be gone for good. Remove the graphic annotation from
-         * the overlay.
-         */
-        @Override
-        public void onDone() {
-            AppLogger.e("chhonker", "--on done face");
-            status = false;
-        }
-    }
 
     @Override
     public void onStop() {
@@ -803,79 +613,6 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         }
     };
 
-    final Camera2Source.PictureCallback camera2SourcePictureCallback = new Camera2Source.PictureCallback() {
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-        @Override
-        public void onPictureTaken(Image image) {
-            clickPictureStatus = false;
-            AppLogger.d(TAG, "Taken picture is here!");
-            ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-            byte[] bytes = new byte[buffer.capacity()];
-            buffer.get(bytes);
-            Bitmap picBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
-            processImage(picBitmap);
-            image.close();
-        }
-    };
-
-    final CameraSource.ShutterCallback cameraSourceShutterCallback = new CameraSource.ShutterCallback() {
-        @Override
-        public void onShutter() {
-            AppLogger.d(TAG, "Shutter Callback!");
-        }
-    };
-
-    final CameraSource.PictureCallback cameraSourcePictureCallback = new CameraSource.PictureCallback() {
-        @Override
-        public void onPictureTaken(Bitmap picture) {
-            clickPictureStatus = false;
-           /* AudioManager mgr = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
-            SoundPool soundPool = new SoundPool(1, AudioManager.STREAM_NOTIFICATION, 0);
-            int shutterSound = soundPool.load(this, R.raw.camera_click, 0);
-            soundPool.play(shutterSound, 1f, 1f, 0, 0, 1);*/
-            AppLogger.d(TAG, "Taken picture is here!");
-            processImage(picture);
-        }
-    };
-
-    /*    private void processImage(Bitmap picBitmap) {
-            byte[] image_bytes = viewModel.encodeToBase64(picBitmap, 100);
-            long mb = viewModel.bytesIntoHumanReadable(image_bytes.length);
-            if (mb > 1.5) {
-                AppLogger.e("chhonker", "size of the image greater than 1.5 mb -" + mb);
-                callSendExamImageApi(viewModel.encodeToBase64(picBitmap, 50));
-                AppLogger.e("chhonker", "size of the image greater than 1.5 mb after conversion -" + mb);
-            } else {
-                AppLogger.e("chhonker", "size of the image less 1.5 mb -" + mb);
-                callSendExamImageApi(image_bytes);
-            }
-        }*/
-    void processImage(Bitmap picBitmap) {
-        byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
-        long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
-        int file_size = Integer.parseInt(String.valueOf(bytes.length / 1024));
-        //  AppLogger.d(TAG, "Image Path Size mb- " + mb + "-bytes-" + file_size);
-        if (file_size >= 500) {
-            assignmentReqModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
-        } else {
-            assignmentReqModel.setImageBytes(bytes);
-        }
-        int new_file_size = Integer.parseInt(String.valueOf(assignmentReqModel.getImageBytes().length / 1024));
-        //AppLogger.d(TAG, "Image Path  new Size kb- " + mb + "-bytes-" + new_file_size);
-        callSendExamImageApi();
-    }
-
-    private void clickPicture() {
-        if (useCamera2) {
-            if (mCamera2Source != null)
-                mCamera2Source.takePicture(camera2SourceShutterCallback, camera2SourcePictureCallback);
-        } else {
-            if (mCameraSource != null)
-                mCameraSource.takePicture(cameraSourceShutterCallback, cameraSourcePictureCallback);
-        }
-    }
-
-
     private void openDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.not_showing_face);
@@ -902,28 +639,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     }
 
 
-    private void clickPictureStore() {
-        clickPictureTimer = new Timer();
-        clickPictureTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        public void run() {
-                            if (status && !clickPictureStatus) {
-                                clickPictureStatus = true;
-                                clickPicture();
-                            }
-                        }
-                    });
-                }
 
-            }
-
-        }, 0, 7000);
-
-
-    }
 
     public void setOptionAdapter(List<OptionResModel> listQuizOption) {
         binding.rvselectQuizOption.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -960,17 +676,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
             }
             if (!interDialogOpen) {
                 callSaveQuestionApi();
-              /*  if (optionResModel != null) {
-                   //
-                } else {*/
-               /* if (countQuiz == quizQuestionList.size() - 1) {
-                    callSaveQuestionApi();
-                    //callFinishQuizApi();
-                } else {
-                    //   goToNextQuiz();
-                    callSaveQuestionApi();
-                }*/
-                //}
+
             }
 
         }
@@ -1507,5 +1213,140 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         return false;
     }
 
+private Bitmap checkRotation(byte[] bytes, Bitmap picBitmap) {
+    try {
+
+        ExifInterface exifInterface = new ExifInterface(new ByteArrayInputStream(bytes));
+        int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+        int rotationDegrees = 0;
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                rotationDegrees = 90;
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                rotationDegrees = 180;
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                rotationDegrees = 270;
+                break;
+        }
+        return rotateBitmap(picBitmap, rotationDegrees);
+    } catch (Exception e) {
+
+    }
+
+    return  picBitmap;
+}
+
+
+
+    public Bitmap rotateBitmap(Bitmap bitmap, int degree) {
+        if (degree == 0 || bitmap == null) {
+            return bitmap;
+        }
+        final Matrix matrix = new Matrix();
+        matrix.setRotate(degree, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    void checkNativeCameraEnableOrNot() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        // prefModel.getDashboardResModel().setIs_native_image_capturing(true);
+        AppLogger.e("checkNativeCameraEnableOrNot--", "" + prefModel.getDashboardResModel().isIs_native_image_capturing());
+        if (prefModel.getDashboardResModel() != null && prefModel.getDashboardResModel().isIs_native_image_capturing()) {
+            if (assignmentResModel != null && !TextUtil.isEmpty(assignmentResModel.getExamAssignmentID())) {
+                if (handler != null) {
+                    handler.removeCallbacksAndMessages(null);
+                }
+                startCamera();
+                captureImage();
+                binding.previewView.setVisibility(View.VISIBLE);
+            }
+        } else {
+            binding.previewView.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    private void startCamera() {
+
+        final ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
+
+        cameraProviderFuture.addListener(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                    bindPreview(cameraProvider);
+
+                } catch (ExecutionException | InterruptedException e) {
+                    // No errors need to be handled for this Future.
+                    // This should never be reached.
+                }
+            }
+        }, ContextCompat.getMainExecutor(getActivity()));
+    }
+
+    void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
+
+        Preview preview = new Preview.Builder()
+                .build();
+
+        CameraSelector cameraSelector = new CameraSelector.Builder()
+                .requireLensFacing(CameraSelector.LENS_FACING_FRONT)
+                .build();
+
+        ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
+                .build();
+
+        ImageCapture.Builder builder = new ImageCapture.Builder();
+
+        //Vendor-Extensions (The CameraX extensions dependency in build.gradle)
+        HdrImageCaptureExtender hdrImageCaptureExtender = HdrImageCaptureExtender.create(builder);
+
+        // Query if extension is available (optional).
+        if (hdrImageCaptureExtender.isExtensionAvailable(cameraSelector)) {
+            // Enable the extension if available.
+            hdrImageCaptureExtender.enableExtension(cameraSelector);
+        }
+
+        final ImageCapture imageCapture = builder
+                .setTargetRotation(getActivity().getWindowManager().getDefaultDisplay().getRotation())
+                .build();
+
+        preview.setSurfaceProvider(binding.previewView.createSurfaceProvider());
+
+        androidx.camera.core.Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageAnalysis, imageCapture);
+    }
+
+    void captureImage() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap = binding.previewView.getBitmap();
+                if (bitmap != null) {
+                   // binding.background.setImageBitmap(bitmap);
+                    processImage(bitmap);
+                }
+                captureImage();
+            }
+        }, 10000);
+    }
+
+    void processImage(Bitmap picBitmap) {
+        byte[] bytes = AppUtil.encodeToBase64(picBitmap, 100);
+        long mb = AppUtil.bytesIntoHumanReadable(bytes.length);
+        int file_size = Integer.parseInt(String.valueOf(bytes.length / 1024));
+        AppLogger.d(TAG, "Image Path Size mb- " + mb + "-bytes-" + file_size);
+        if (file_size >= 500) {
+            assignmentReqModel.setImageBytes(AppUtil.encodeToBase64(picBitmap, 50));
+        } else {
+            assignmentReqModel.setImageBytes(bytes);
+        }
+        int new_file_size = Integer.parseInt(String.valueOf(assignmentReqModel.getImageBytes().length / 1024));
+        AppLogger.d(TAG, "Image Path  new Size kb- " + mb + "-bytes-" + new_file_size);
+        callSendExamImageApi();
+    }
 
 }

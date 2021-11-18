@@ -19,7 +19,7 @@ public interface URLConstant {
 
     // String AZURE_API = BASE_URL + "faceimg.php";
 
-    String AZURE_API = BASE_URL + "faceimg_multiple.php";
+    String AZURE_API = "https://auroscholar.org/api/save_pre_quiz_image";
 
     String GRADE_UPGRADE = "grade_update.php";
 
