@@ -178,7 +178,7 @@
                                 android:layout_width="@dimen/_120sdp"
                                 android:layout_height="@dimen/_40sdp"
                                 android:layout_gravity="center_horizontal"
-                                android:background="@drawable/ic_dialog_retake_quiz_bg"
+                                android:background="@drawable/ic_quiz_retake"
                                 android:gravity="center"
                                 android:paddingLeft="@dimen/_21sdp"
                                 android:paddingRight="@dimen/_20sdp"

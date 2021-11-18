@@ -147,6 +147,8 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         AuroApp.getAuroScholarModel().setActivity(this);
         AuroApp.context = this;
+        setTheme(R.style.AppThemeNew);
+
         // getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         init();
         setListener();

@@ -177,6 +177,7 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.send_button) {
+            StudentMainDashboardActivity.setListner(this);
             String accountnumber = binding.accountNumber.getText().toString();
             String confirmaccountnumber = binding.confirmAccountNumber.getText().toString();
             String ifscCode = binding.ifscCode.getText().toString();

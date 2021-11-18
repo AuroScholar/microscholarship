@@ -228,6 +228,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void setListener() {
+        ((StudentMainDashboardActivity)getActivity()).setListingActiveFragment(StudentMainDashboardActivity.QUIZ_TEST_FRAGMENT);
         binding.backButton.setOnClickListener(this);
         if (quizTestViewModel != null && quizTestViewModel.serviceLiveData().hasObservers()) {
             quizTestViewModel.serviceLiveData().removeObservers(this);
@@ -334,6 +335,8 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
     public void onBackPressed() {
         getActivity().getSupportFragmentManager().popBackStack();
+        AppLogger.v("AUROSCHOLAR","Auroscholar");
+
     }
 
 
