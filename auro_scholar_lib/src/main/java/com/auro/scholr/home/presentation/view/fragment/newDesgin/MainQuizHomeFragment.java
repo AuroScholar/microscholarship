@@ -747,7 +747,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                 try {
                     String path = data.getStringExtra(AppConstant.PROFILE_IMAGE_PATH);
                     openFadeOutSelectionLayout();
-                    //azureImage(path);
+                    azureImage(path);
                     openQuizTestFragment(dashboardResModel);
 
                     // loadImageFromStorage(path);

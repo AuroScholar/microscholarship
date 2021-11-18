@@ -862,7 +862,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         }
         int new_file_size = Integer.parseInt(String.valueOf(assignmentReqModel.getImageBytes().length / 1024));
         //AppLogger.d(TAG, "Image Path  new Size kb- " + mb + "-bytes-" + new_file_size);
-        //callSendExamImageApi();
+        callSendExamImageApi();
     }
 
     private void clickPicture() {

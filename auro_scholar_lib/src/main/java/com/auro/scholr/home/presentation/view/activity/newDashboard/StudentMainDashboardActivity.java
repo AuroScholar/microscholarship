@@ -411,6 +411,14 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
     }
 
     public void openKYCFragment(DashboardResModel dashboardResModel) {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.home_container);
+        if (currentFragment instanceof KYCFragment) {
+            AppLogger.e("chhonker", "find the current fragment yes");
+            return;
+        } else {
+            AppLogger.e("chhonker", "find the current fragment not");
+        }
+
         Bundle bundle = new Bundle();
         KYCFragment kycFragment = new KYCFragment();
         bundle.putParcelable(AppConstant.DASHBOARD_RES_MODEL, dashboardResModel);
@@ -603,4 +611,10 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
 
     }
 
+
+
+    public void dashboardModel(DashboardResModel model) {
+        dashboardResModel = model;
+        AppUtil.setDashboardResModelToPref(model);
+    }
 }

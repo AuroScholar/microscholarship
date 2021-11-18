@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.auro.scholr.R;
 import com.auro.scholr.core.application.AuroApp;
@@ -81,7 +82,7 @@ import static com.auro.scholr.core.common.Status.AZURE_API;
 import static com.auro.scholr.core.common.Status.UPLOAD_PROFILE_IMAGE;
 
 
-public class KYCFragment extends BaseFragment implements CommonCallBackListner, View.OnClickListener {
+public class KYCFragment extends BaseFragment implements CommonCallBackListner, View.OnClickListener , SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     @Named("KYCFragment")
@@ -146,8 +147,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         if (getArguments() != null) {
             dashboardResModel = getArguments().getParcelable(AppConstant.DASHBOARD_RES_MODEL);
         }
-
-        setDataOnUi();
+        setDataonFragment();
 
     }
 
@@ -190,7 +190,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         } else {
             observeServiceResponse();
         }
-
+        binding.swipeRefreshLayout.setOnRefreshListener(this);
         binding.backButton.setOnClickListener(this);
     }
 
@@ -205,12 +205,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
-        setToolbar();
-        setListener();
-        setAdapter();
 
-        /*Check for face image is Exist Or Not*/
-        checkForFaceImage();
     }
 
     private void checkForFaceImage() {
@@ -249,6 +244,72 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             case KYC_RESULT_PATH:
                 /*do code here*/
                 break;
+
+            case LISTNER_SUCCESS:
+                binding.swipeRefreshLayout.setRefreshing(false);
+                handleNavigationProgress(1, "");
+                dashboardResModel = (DashboardResModel) commonDataModel.getObject();
+                dashboardResModel.setModify(true);
+                ((StudentMainDashboardActivity) getActivity()).dashboardModel(dashboardResModel);
+                if (checkKycStatus(dashboardResModel)) {
+                    ((StudentMainDashboardActivity) getActivity()).openKYCViewFragment(dashboardResModel);
+                } else {
+                    ((StudentMainDashboardActivity) getActivity()).
+                            openKYCFragment(dashboardResModel);
+                }
+                setDataonFragment();
+                break;
+
+            case LISTNER_FAIL:
+                handleNavigationProgress(2, (String) commonDataModel.getObject());
+                break;
+        }
+    }
+
+
+    private void setDataonFragment() {
+        setDataOnUi();
+        setToolbar();
+        setToolbar();
+        setListener();
+        setAdapter();
+        /*Check for face image is Exist Or Not*/
+        checkForFaceImage();
+    }
+
+
+    public boolean checkKycStatus(DashboardResModel dashboardResModel) {
+        if (dashboardResModel != null && !TextUtil.isEmpty(dashboardResModel.getPhoto()) && !TextUtil.isEmpty(dashboardResModel.getSchoolid()) &&
+                !TextUtil.isEmpty(dashboardResModel.getIdback()) && !TextUtil.isEmpty(dashboardResModel.getIdfront())) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    private void handleNavigationProgress(int status, String msg) {
+        if (status == 0) {
+            binding.transparet.setVisibility(View.VISIBLE);
+            binding.kycbackground.setVisibility(View.VISIBLE);
+
+            binding.errorConstraint.setVisibility(View.GONE);
+        } else if (status == 1) {
+            binding.transparet.setVisibility(View.GONE);
+            binding.kycbackground.setVisibility(View.VISIBLE);
+
+            binding.errorConstraint.setVisibility(View.GONE);
+        } else if (status == 2) {
+            binding.transparet.setVisibility(View.GONE);
+            binding.kycbackground.setVisibility(View.GONE);
+            binding.errorConstraint.setVisibility(View.VISIBLE);
+            binding.errorLayout.textError.setText(msg);
+            binding.errorLayout.btRetry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((StudentMainDashboardActivity) getActivity()).callDashboardApi();
+                }
+            });
         }
     }
 
@@ -362,7 +423,6 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                 AppLogger.e("chhonker", "size of the image less 1.5 mb -" + mb);
                 kycDocumentDatamodelArrayList.get(pos).setImageBytes(bytes);
             }
-
 
 
             if (!TextUtil.checkListIsEmpty(kycDocumentDatamodelArrayList)) {
@@ -821,4 +881,12 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             askDetailCustomDialog.show();
         }
     }
+
+    @Override
+    public void onRefresh() {
+        AppLogger.e("chhonker--","onRefresh");
+        ((StudentMainDashboardActivity) getActivity()).setListner(this);
+        ((StudentMainDashboardActivity) getActivity()).callDashboardApi();
+    }
+
 }
