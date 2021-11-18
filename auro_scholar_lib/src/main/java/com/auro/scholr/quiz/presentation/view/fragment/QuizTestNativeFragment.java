@@ -1316,7 +1316,13 @@ private Bitmap checkRotation(byte[] bytes, Bitmap picBitmap) {
                 .build();
 
         preview.setSurfaceProvider(binding.previewView.createSurfaceProvider());
-        cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageAnalysis, imageCapture);
+        try {
+            cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageAnalysis, imageCapture);
+        }catch (Exception e)
+        {
+            AppLogger.e("bindToLifecycle exceotion",e.getMessage());
+        }
+
     }
 
     void captureImage() {
