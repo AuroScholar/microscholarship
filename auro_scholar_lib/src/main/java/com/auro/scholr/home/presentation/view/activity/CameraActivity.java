@@ -282,7 +282,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             mOverlay = overlay;
             faceOverlayGraphics = new FaceOverlayGraphics(overlay);
         }
-
+//
 
         @Override
         public void onNewItem(int faceId, Face item) {
