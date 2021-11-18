@@ -184,6 +184,7 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
             ValidationModel bankAccountvalidation = viewModel.paymentUseCase.isValidBankAccountNumber(accountnumber, ifscCode, confirmaccountnumber);
 
             if (bankAccountvalidation.isStatus()) {
+                StudentMainDashboardActivity.setListner(this);
                 ((StudentMainDashboardActivity) getActivity()).sendOtpApiReqPass();
             } else {
                 showSnackbarError(bankAccountvalidation.getMessage());

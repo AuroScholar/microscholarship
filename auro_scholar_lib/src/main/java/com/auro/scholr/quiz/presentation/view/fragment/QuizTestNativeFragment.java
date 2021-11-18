@@ -31,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.Preview;
 import androidx.camera.extensions.HdrImageCaptureExtender;
@@ -85,9 +86,15 @@ import com.auro.scholr.util.alert_dialog.ExitDialog;
 import com.auro.scholr.util.alert_dialog.InstructionDialog;
 import com.auro.scholr.util.alert_dialog.NativeQuizImageDialog;
 import com.auro.scholr.util.broadcastreceiver.NetworkChangeReceiver;
+import com.auro.scholr.util.camera.Camera2Source;
+import com.auro.scholr.util.camera.CameraSource;
+import com.auro.scholr.util.camera.CameraSourcePreview;
 import com.auro.scholr.util.permission.PermissionHandler;
 import com.auro.scholr.util.permission.PermissionUtil;
 import com.auro.scholr.util.permission.Permissions;
+import com.auro.scholr.util.timer.Hourglass;
+import com.auro.scholr.util.utility.Camera3Source;
+import com.auro.scholr.util.utility.CloudLandmarkRecognitionProcessor;
 import com.auro.scholr.util.utility.GraphicOverlay;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -597,6 +604,14 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         }, 0, 700);
     }
 
+
+    final Camera2Source.ShutterCallback camera2SourceShutterCallback = new Camera2Source.ShutterCallback() {
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public void onShutter() {
+            AppLogger.d(TAG, "Shutter Callback for CAMERA2");
+        }
+    };
 
     private void openDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -1282,6 +1297,9 @@ private Bitmap checkRotation(byte[] bytes, Bitmap picBitmap) {
                 .requireLensFacing(CameraSelector.LENS_FACING_FRONT)
                 .build();
 
+        ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
+                .build();
+
         ImageCapture.Builder builder = new ImageCapture.Builder();
 
         //Vendor-Extensions (The CameraX extensions dependency in build.gradle)
@@ -1293,8 +1311,12 @@ private Bitmap checkRotation(byte[] bytes, Bitmap picBitmap) {
             hdrImageCaptureExtender.enableExtension(cameraSelector);
         }
 
-        preview.setSurfaceProvider(binding.previewView.createSurfaceProvider());
+        final ImageCapture imageCapture = builder
+                .setTargetRotation(getActivity().getWindowManager().getDefaultDisplay().getRotation())
+                .build();
 
+        preview.setSurfaceProvider(binding.previewView.createSurfaceProvider());
+        cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageAnalysis, imageCapture);
     }
 
     void captureImage() {

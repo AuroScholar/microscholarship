@@ -102,7 +102,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
         }
         AppLogger.e("chhonker-", "init");
 
-        StudentMainDashboardActivity.setListner(this);
+
         ((StudentMainDashboardActivity) getActivity()).setDashboardApiCallingInPref(true);
     }
 
@@ -183,6 +183,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
 
             ValidationModel validation = viewModel.paymentUseCase.isVlaidPhoneNumber(phonenumber);
             if (validation.isStatus()) {
+                StudentMainDashboardActivity.setListner(this);
                 ((StudentMainDashboardActivity) getActivity()).sendOtpApiReqPass();
             } else {
                 showSnackbarError(validation.getMessage());

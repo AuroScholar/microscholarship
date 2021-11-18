@@ -197,6 +197,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
             int sepPos = upiId.indexOf(separator);
             boolean isPsp = pipstring.contains(upiId.substring(sepPos + separator.length()));
             if (isPsp) {
+                StudentMainDashboardActivity.setListner(this);
                 ((StudentMainDashboardActivity) getActivity()).sendOtpApiReqPass();
             } else {
                 ViewUtil.showSnackBar(binding.getRoot(), getActivity().getResources().getString(R.string.psp_not_register));

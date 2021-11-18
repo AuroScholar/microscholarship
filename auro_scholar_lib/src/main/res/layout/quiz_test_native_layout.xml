@@ -58,26 +58,19 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/timerProgressbar">
 
-                    <LinearLayout
+
+                    <androidx.camera.view.PreviewView
+                        android:id="@+id/previewView"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
+                        android:layout_marginBottom="8dp"
+                        android:visibility="invisible"
                         android:layout_marginRight="@dimen/_20sdp"
+                        android:contentDescription="Preview Area"
+                        android:importantForAccessibility="no"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <androidx.camera.view.PreviewView
-                            android:id="@+id/previewView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="8dp"
-                            android:visibility="visible"
-                            android:contentDescription="Preview Area"
-                            android:importantForAccessibility="no"
-                            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </LinearLayout>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <LinearLayout
                         android:id="@+id/timer_layout"

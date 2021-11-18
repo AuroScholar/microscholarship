@@ -174,7 +174,6 @@ public class PaymentRemoteUseCase extends NetworkUseCase {
                 if (response != null) {
                     return handleResponse(response, PAYMENT_TRANSFER_API);
 
-
                 } else {
 
                     return responseFail(null);
