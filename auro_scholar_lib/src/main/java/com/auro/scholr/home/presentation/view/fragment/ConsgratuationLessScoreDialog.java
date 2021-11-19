@@ -167,7 +167,7 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
         } else if (id == R.id.icClose) {
             dismiss();
         } else if (id == R.id.txtRetakeQuiz) {
-            sendClickCallBack(subjectResModel.getChapter().get(finishedTestPos - 1));
+            sendClickCallBack(quizResModel);
             dismiss();
         } else if (id == R.id.txtStartQuiz) {
             makeQuiz();
