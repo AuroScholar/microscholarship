@@ -308,7 +308,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
             case NEXT_QUIZ_CLICK:
                 quizResModel = (QuizResModel) commonDataModel.getObject();
-                askPermission();
+                checkPreQuizDisclaimer();
                 break;
 
             case START_QUIZ_BUTON:
@@ -331,8 +331,6 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             @Override
             public void onGranted() {
                 callStartQuizActionApi();
-
-
             }
 
             @Override

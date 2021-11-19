@@ -44,6 +44,7 @@ public class PrefModel implements Serializable {
     private boolean isDashboardaApiNeedToCall;
     private FetchStudentPrefResModel fetchStudentPrefResModel;
 
+
     public boolean isPreLoginDisclaimer() {
         return preLoginDisclaimer;
     }
