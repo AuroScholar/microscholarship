@@ -63,6 +63,7 @@ import com.auro.scholr.home.presentation.viewmodel.QuizViewModel;
 import com.auro.scholr.teacher.presentation.view.fragment.MyClassroomFragment;
 import com.auro.scholr.util.AppLogger;
 import com.auro.scholr.util.AppUtil;
+import com.auro.scholr.util.AuroScholar;
 import com.auro.scholr.util.TextUtil;
 import com.auro.scholr.util.ViewUtil;
 import com.auro.scholr.util.disclaimer.CustomOtpDialog;
@@ -259,8 +260,13 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
             case NATIVE_QUIZ_FRAGMENT:
                 openDialogForQuit();
                 break;
+            case KYC_VIEW_FRAGMENT:
+                AppLogger.v("newbranch","KYC_VIEW_FRAGMENT  button Step 3");
+                openFragment(new MainQuizHomeFragment());
+                break;
 
             default:
+                AppLogger.v("newbranch","Student MainActivity  button Step 3");
                 popBackStack();
                 break;
         }

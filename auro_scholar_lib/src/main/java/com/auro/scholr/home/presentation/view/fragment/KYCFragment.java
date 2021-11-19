@@ -122,7 +122,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         AuroApp.getAppContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         kycViewModel = ViewModelProviders.of(this, viewModelFactory).get(KYCViewModel.class);
         binding.setLifecycleOwner(this);
-
+        AppLogger.v("newbranch","Step 2");
         ViewUtil.setLanguageonUi(getActivity());
         setRetainInstance(true);
         PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
@@ -597,7 +597,7 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
             reloadFragment();
         } else if (v.getId() == R.id.backButton) {
             getActivity().onBackPressed();
-            AppLogger.e("handleback", "backlisner");
+            AppLogger.v("newbranch","back button Step 2");
 
         } else if (v.getId() == R.id.bt_transfer_money) {
             openSendMoneyFragment();

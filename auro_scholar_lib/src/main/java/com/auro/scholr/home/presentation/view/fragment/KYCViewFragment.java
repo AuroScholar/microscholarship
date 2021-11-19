@@ -86,6 +86,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
         kycViewModel = ViewModelProviders.of(this, viewModelFactory).get(KYCViewModel.class);
         binding.setLifecycleOwner(this);
         setRetainInstance(true);
+        AppLogger.v("newbranch","Step 1");
         ViewUtil.setLanguageonUi(getActivity());
         return binding.getRoot();
     }
@@ -204,6 +205,7 @@ public class KYCViewFragment extends BaseFragment implements View.OnClickListene
 
             reloadFragment();
         } else if (v.getId() == R.id.backButton) {
+            AppLogger.v("newbranch","back button KycViewFragment  button Step 1");
             getActivity().onBackPressed();
             AppLogger.e("handleback", "backlisner");
         } else if (v.getId() == R.id.bt_transfer_money) {
