@@ -171,9 +171,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
         inputModel.setMobileNumber(mobileNumber);//mobileNumber
         inputModel.setStudentClass(student_class);//"binding.userClass.getText().toString()"
-        inputModel.setRegitrationSource("Auroscholar");
+        inputModel.setRegitrationSource("");
         inputModel.setReferralLink("");
-        inputModel.setPartnerSource("AURO3VE4j7"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
+        inputModel.setPartnerSource(""); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setActivity(this);
         inputModel.setPartnerLogoUrl(""); //Mandatory
         inputModel.setSchoolName("");//optional Filed
