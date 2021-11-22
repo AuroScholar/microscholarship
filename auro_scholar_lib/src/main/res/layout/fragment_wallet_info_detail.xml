@@ -90,7 +90,7 @@
                         android:id="@+id/imageView6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/ic_profile"
+                        app:srcCompat="@drawable/ic_profile"
                         android:scaleType="fitXY" />
 
                 </androidx.cardview.widget.CardView>

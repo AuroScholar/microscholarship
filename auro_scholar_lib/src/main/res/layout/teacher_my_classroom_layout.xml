@@ -20,7 +20,7 @@
                 android:id="@+id/background"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_300sdp"
-                android:background="@drawable/myclassroom_bg"
+                app:srcCompat="@drawable/myclassroom_bg"
                 android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +105,7 @@
                                 android:id="@+id/facebook"
                                 android:layout_width="@dimen/_25sdp"
                                 android:layout_height="@dimen/_25sdp"
-                                android:background="@drawable/ic_auro_facebook" />
+                                app:srcCompat="@drawable/ic_auro_facebook" />
 
                             <ImageView
                                 android:id="@+id/whatsapp"
@@ -113,7 +113,7 @@
                                 android:layout_height="@dimen/_25sdp"
                                 android:layout_marginStart="@dimen/_25sdp"
                                 android:layout_marginEnd="@dimen/_25sdp"
-                                android:background="@drawable/ic_iconswhatsapps" />
+                                app:srcCompat="@drawable/ic_iconswhatsapps" />
 
                             <ImageView
                                 android:id="@+id/share"

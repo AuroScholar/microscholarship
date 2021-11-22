@@ -45,7 +45,7 @@
 
                 <ImageView
                     android:id="@+id/image"
-                    android:background="@drawable/friend_share"
+                    app:srcCompat="@drawable/friend_share"
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
