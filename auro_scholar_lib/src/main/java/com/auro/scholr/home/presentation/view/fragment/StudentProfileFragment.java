@@ -407,13 +407,13 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
             } else {
                 binding.editProfileName.setError("Enter Your Name");
             }
-        } else if (id == R.id.editPhone) {
+        } /*else if (id == R.id.editPhone) {
             if (!TextUtil.isEmpty(binding.editProfile.getText().toString())) {
                 changeTheEditText();
             } else {
                 binding.editProfileName.setError("Enter Your Name");
             }
-        } else if (id == R.id.editemail) {
+        } */else if (id == R.id.editemail) {
             if (!TextUtil.isEmpty(binding.editProfile.getText().toString())) {
                 changeTheEditText();
             } else {
@@ -1144,12 +1144,12 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
             if (!binding.editProfile.getText().toString().equalsIgnoreCase("")) {
                 binding.UserName.setText(binding.editProfile.getText().toString());
             }
-        } else if (id == R.id.editPhone) {
+        } /*else if (id == R.id.editPhone) {
             changeTheEditText();
             if (!binding.editProfile.getText().toString().equalsIgnoreCase("")) {
                 binding.UserName.setText(binding.editProfile.getText().toString());
             }
-        } else if (id == R.id.editemail) {
+        } */else if (id == R.id.editemail) {
             changeTheEditText();
             if (!binding.editProfile.getText().toString().equalsIgnoreCase("")) {
                 binding.UserName.setText(binding.editProfile.getText().toString());

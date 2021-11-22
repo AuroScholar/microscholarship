@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/off_white"
+            android:orientation="vertical"
+            tools:context=".home.presentation.view.fragment.TransactionsFragment">
+
+            <include
+                android:id="@+id/toolbar_layout"
+                layout="@layout/toolbar_header_layout"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/rltoplayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    app:srcCompat="@drawable/ic_bg_left_rangoli"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/menuBarItem"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:background="@drawable/ic_navigation_menu"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+
+
+                <ImageView
+                    android:id="@+id/imagerotate"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:rotation="90"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_bg_left_rangoli" />
+
+                <ImageView
+                    android:id="@+id/auro_scholar_logo"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:adjustViewBounds="true"
+
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/imagerotate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.487"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.222" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView2"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="0.0px"
+                    android:elevation="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    app:cardElevation="@dimen/_15sdp"
+                    app:cardPreventCornerOverlap="false"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView5">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:divider="@android:color/transparent"
+                        app:cardCornerRadius="@dimen/_5sdp"
+
+                        >
+
+
+                        <ImageView
+                            android:id="@+id/back_arrow"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:layout_marginBottom="@dimen/_4sdp"
+                            android:background="@drawable/ic_navigation_menu"
+                            android:backgroundTint="@color/white"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/ic_profile"
+                            android:scaleType="fitXY" />
+                    </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/login_back_button"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/imagerotate"
+                    app:layout_constraintStart_toStartOf="@+id/imagerotate" />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            <include
+                android:id="@+id/header_parent"
+                layout="@layout/quiz_header_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
+
+            <include
+                android:id="@+id/amount_trajection"
+                layout="@layout/amount_approved_header_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+            <com.auro.scholr.core.util.uiwidget.RPTextView
+                android:id="@+id/RPTextView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/student_passport"
+                android:textColor="@color/auro_black"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:textSize="@dimen/_22sdp"
+                app:Font="Calibre-Light.ttf" />
+
+            <com.auro.scholr.core.util.uiwidget.RPTextView
+                android:id="@+id/RPTextView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/passport_sub_title"
+                android:textColor="@color/auro_grey"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:textSize="@dimen/_8sdp"
+                app:Font="ArticulatCF-Regular.otf" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/month_parent_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.3">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_bg_dark_blue"
+                        >
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/month_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_8sdp"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10sdp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:Font="Poppins-Regular.ttf" />
+
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:layout_alignRight="@+id/month_title"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/ic_expand_more" />
+
+                    </RelativeLayout>
+
+
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/month_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:background="@drawable/button_bg_dark_blue"
+                        android:outlineSpotShadowColor="@color/dark_blue"
+                        android:popupBackground="@color/dark_blue"
+                        android:visibility="invisible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/subject_parent_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_weight="0.9">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_bg_dark_blue"
+                        >
+
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/subject_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_8sdp"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10sdp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:Font="Poppins-Regular.ttf" />
+
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:layout_alignRight="@+id/subject_title"
+                            app:layout_constraintStart_toEndOf="@+id/subject_title"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/ic_expand_more" />
+
+                    </RelativeLayout>
+
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/subject_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/button_bg_dark_blue"
+                        android:outlineSpotShadowColor="@color/dark_blue"
+                        android:popupBackground="@color/dark_blue"
+                        android:visibility="invisible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/monthly_wise_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@android:color/transparent"
+                android:visibility="visible" />
+
+
+
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/errorConstraint"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+
+                android:id="@+id/errorLayout"
+                layout="@layout/error_layout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:elevation="@dimen/_2sdp"
+            android:indeterminateDrawable="@drawable/circular_progress"
+            android:innerRadiusRatio="3"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

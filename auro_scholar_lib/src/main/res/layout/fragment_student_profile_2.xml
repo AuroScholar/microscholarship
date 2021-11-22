@@ -32,9 +32,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/toolbar_layout"
-                app:srcCompat="@drawable/ic_bg_left_rangoli"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_bg_left_rangoli" />
 
             <ImageView
                 android:id="@+id/imageView7"
