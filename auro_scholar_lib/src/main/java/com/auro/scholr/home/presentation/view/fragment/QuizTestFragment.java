@@ -350,7 +350,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
 
         @JavascriptInterface
         public void boundMethod(String html) {
-            binding.previewView.setVisibility(View.INVISIBLE);
+           // binding.previewView.setVisibility(View.INVISIBLE);
             openProgressDialog();
             AppLogger.e("chhonker bound method", html);
           /*  new Handler().postDelayed(new Runnable() {
@@ -413,7 +413,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
                 if (url.equalsIgnoreCase("https://auroscholar.com/index.php") ||
                         url.contains("demographics")
                         || url.contains("dashboard")) {
-                    binding.previewView.setVisibility(View.INVISIBLE);
+                   // binding.previewView.setVisibility(View.INVISIBLE);
                     cancelDialogAfterSubmittingTest();
                 }
             }
@@ -677,7 +677,7 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
                 .setTargetRotation(getActivity().getWindowManager().getDefaultDisplay().getRotation())
                 .build();
 
-        preview.setSurfaceProvider(binding.previewView.createSurfaceProvider());
+       // preview.setSurfaceProvider(binding.previewView.createSurfaceProvider());
 
     }
 
@@ -686,10 +686,10 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Bitmap bitmap = binding.previewView.getBitmap();
-                if (bitmap != null) {
+                Bitmap bitmap ;//= binding.previewView.getBitmap();
+               /* if (bitmap != null) {
                     processImage(bitmap);
-                }
+                }*/
                 captureImage();
             }
         }, 10000);
@@ -755,10 +755,10 @@ public class QuizTestFragment extends BaseFragment implements View.OnClickListen
                 }
                 startCamera();
                 captureImage();
-                binding.previewView.setVisibility(View.VISIBLE);
+                //binding.previewView.setVisibility(View.VISIBLE);
             }
         } else {
-            binding.previewView.setVisibility(View.INVISIBLE);
+            //binding.previewView.setVisibility(View.INVISIBLE);
         }
 
     }

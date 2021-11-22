@@ -34,13 +34,14 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <ImageView
                             android:id="@+id/imageView5"
                             android:layout_width="@dimen/_60sdp"
                             android:layout_height="@dimen/_60sdp"
+                            android:layout_alignParentLeft="true"
                             app:srcCompat="@drawable/ic_bg_left_rangoli"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +55,6 @@
                             android:layout_marginStart="@dimen/_5sdp"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:adjustViewBounds="true"
-
                             android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/imagerotate"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -73,16 +73,18 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardView2"
-                            android:layout_width="@dimen/_30sdp"
-                            android:layout_height="@dimen/_30sdp"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
                             android:clipChildren="false"
                             android:clipToPadding="false"
                             android:divider="@android:color/transparent"
+                            android:layout_alignRight="@+id/imageView5"
+                            android:layout_alignBottom="@+id/imageView5"
                             android:dividerHeight="0.0px"
-                            android:elevation="@dimen/_10sdp"
+                            android:elevation="@dimen/_4sdp"
                             app:cardCornerRadius="@dimen/_5sdp"
-                            android:layout_marginBottom="@dimen/_10sdp"
-                            app:cardElevation="@dimen/_15sdp"
+
+                            app:cardElevation="@dimen/_8sdp"
                             app:cardPreventCornerOverlap="false"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/imageView5">
@@ -100,7 +102,7 @@
                                     android:id="@+id/imageView6"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/ic_profile"
+                                    app:srcCompat="@drawable/ic_profile"
                                     android:scaleType="fitXY" />
 
                             </androidx.cardview.widget.CardView>
@@ -110,14 +112,15 @@
                             android:id="@+id/backButton"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
-                            android:layout_alignParentRight="true"
                             android:src="@drawable/login_back_button"
+                            android:layout_alignBottom="@+id/imageView7"
+                            android:layout_alignLeft="@+id/imageView7"
                             android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="parent"
 
                             app:layout_constraintStart_toStartOf="@+id/imageView7" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    </RelativeLayout>
 
 
 

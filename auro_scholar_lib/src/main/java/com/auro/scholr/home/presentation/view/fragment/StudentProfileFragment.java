@@ -492,7 +492,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
                 // Toast.makeText(getActivity(), "Task Cancelled", Toast.LENGTH_SHORT).show();
             }
         }
-       /* if (requestCode == CropImages.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+       if (requestCode == CropImages.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImages.ActivityResult result = CropImages.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 try {
@@ -522,7 +522,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
                 Exception error = result.getError();
                 AppLogger.e("StudentProfile", "fragment error=" + error.getMessage());
             }
-        }*/
+        }
     }
 
     private void loadimage(Bitmap picBitmap) {
@@ -919,6 +919,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
                             .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                             .start();
                 } else {
+                    AppLogger.v("PradeepMain","camera");
                     CropImages.activity()
                             .setGuidelines(CropImageViews.Guidelines.ON)
                             .start(getActivity());

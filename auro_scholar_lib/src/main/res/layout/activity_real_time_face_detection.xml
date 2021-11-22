@@ -79,7 +79,7 @@
                     android:layout_width="@dimen/_60sdp"
                     android:layout_height="@dimen/_60sdp"
                     android:layout_gravity="center"
-                    android:background="@drawable/cam_auro_circle_selector"
+
                     android:padding="10dp"
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/cam_auro_action_stillshot" />

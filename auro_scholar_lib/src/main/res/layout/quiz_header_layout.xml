@@ -33,7 +33,7 @@
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/ic_auro_scholar_logo"
+                    app:srcCompat="@drawable/ic_auro_scholar_logo"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +43,7 @@
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:background="@drawable/ic_scholr_blue"
+                    app:srcCompat="@drawable/ic_scholr_blue"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -55,7 +55,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:layout_marginRight="@dimen/_5sdp"
-                    android:background="@drawable/ic_cambridge_logo"
+                    app:srcCompat="@drawable/ic_cambridge_logo"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/scholar_logo"

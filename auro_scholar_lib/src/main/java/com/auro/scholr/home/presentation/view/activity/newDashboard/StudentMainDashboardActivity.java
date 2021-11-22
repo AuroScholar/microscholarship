@@ -24,6 +24,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -146,6 +147,8 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
         AuroApp.getAuroScholarModel().setActivity(this);
         AuroApp.context = this;
         setTheme(R.style.AppThemeNew);
@@ -153,6 +156,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         // getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         init();
         setListener();
+
     }
 
 

@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -21,6 +22,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -317,9 +319,25 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                 break;
 
             case ACCEPT_PARENT_BUTTON:
-                askPermission();
+
+
+                    askPermission();
+
+
                 break;
         }
+    }
+
+    private boolean hasFrontCamera() {
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        int numberOfCameras = Camera.getNumberOfCameras();
+        for (int i = 0; i < numberOfCameras; i++) {
+            Camera.getCameraInfo(i, cameraInfo);
+            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void askPermission() {
@@ -330,7 +348,12 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         Permissions.check(getActivity(), PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
             @Override
             public void onGranted() {
-                callStartQuizActionApi();
+                if(hasFrontCamera()) {
+                    callStartQuizActionApi();
+                }else{
+                    Toast.makeText(getActivity(), "Front Camera not available on your device", Toast.LENGTH_SHORT).show();
+
+                }
             }
 
             @Override

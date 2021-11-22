@@ -42,7 +42,7 @@
                     android:id="@+id/menuBarItem"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
-                    android:background="@drawable/ic_navigation_menu"
+                    app:srcCompat="@drawable/ic_navigation_menu"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                     app:layout_constraintEnd_toEndOf="@+id/imageView5"
@@ -110,7 +110,7 @@
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_4sdp"
                             android:layout_marginBottom="@dimen/_4sdp"
-                            android:background="@drawable/ic_navigation_menu"
+                            app:srcCompat="@drawable/ic_navigation_menu"
                             android:backgroundTint="@color/white"
                             android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -121,7 +121,7 @@
                             android:id="@+id/imageView6"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/ic_profile"
+                            app:srcCompat="@drawable/ic_profile"
                             android:scaleType="fitXY" />
                     </androidx.cardview.widget.CardView>
                 </androidx.cardview.widget.CardView>

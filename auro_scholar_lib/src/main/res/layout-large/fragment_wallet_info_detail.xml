@@ -24,7 +24,7 @@
             android:visibility="gone"
             android:layout_height="wrap_content" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -35,6 +35,7 @@
                 android:layout_height="@dimen/_60sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_alignParentRight="true"
                 android:rotation="90"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_bg_left_rangoli" />
@@ -43,6 +44,7 @@
                 android:id="@+id/imageView7"
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_60sdp"
+                android:layout_alignParentLeft="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -57,22 +59,23 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:visibility="visible"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
+                android:layout_alignRight="@+id/imageView7"
+                android:layout_alignBottom="@+id/imageView7"
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="0.0px"
                 android:elevation="@dimen/_10sdp"
                 app:cardCornerRadius="@dimen/_5sdp"
-                app:cardElevation="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                app:cardElevation="@dimen/_10sdp"
                 app:cardPreventCornerOverlap="false"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView7"
                 app:layout_constraintEnd_toEndOf="@+id/imageView7">
@@ -90,8 +93,8 @@
                         android:id="@+id/imageView6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/ic_profile"
-                        android:scaleType="fitXY" />
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_profile" />
 
                 </androidx.cardview.widget.CardView>
             </androidx.cardview.widget.CardView>
@@ -101,7 +104,8 @@
                 android:id="@+id/backButton"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:layout_alignParentRight="true"
+                android:layout_alignLeft="@+id/imageView5"
+                android:layout_alignBottom="@+id/imageView5"
                 android:src="@drawable/login_back_button"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView5"
@@ -109,7 +113,7 @@
                 app:layout_constraintStart_toStartOf="@+id/imageView5" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
 
 
 
