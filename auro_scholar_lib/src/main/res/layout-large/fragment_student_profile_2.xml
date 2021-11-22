@@ -26,19 +26,44 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/toolbar_layout"
-                layout="@layout/toolbar_header_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_240sdp"
+                android:id="@+id/imageView5"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
                 android:layout_below="@+id/toolbar_layout"
-                android:scaleType="fitXY"
-                android:src="@drawable/myclassroom_bg"
-                android:visibility="gone" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_bg_left_rangoli" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_alignParentRight="true"
+                android:rotation="90"
+                android:layout_below="@+id/toolbar_layout"
+                app:srcCompat="@drawable/ic_bg_left_rangoli"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/login_back_button"
+                android:visibility="visible"
+                android:layout_alignLeft="@+id/imageView7"
+                android:layout_alignBottom="@+id/imageView7"/>
+
+            <ImageView
+                android:id="@+id/auro_scholar_logo"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:visibility="visible"
+                />
 
 
             <include
@@ -47,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/toolbar_layout"
+                android:visibility="gone"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
@@ -56,7 +82,7 @@
                 android:id="@+id/parent_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/header_top_parent"
+                android:layout_below="@+id/imageView7"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fillViewport="true"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -87,19 +113,19 @@
 
                             <ImageView
                                 android:id="@+id/profileimage"
-                                android:layout_width="@dimen/_85sdp"
-                                android:layout_height="@dimen/_85sdp"
+                                android:layout_width="@dimen/_80sdp"
+                                android:layout_height="@dimen/_80sdp"
                                 android:scaleType="fitXY"
-                                app:srcCompat="@drawable/account_circle"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/number_text"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/account_circle" />
 
 
                             <RelativeLayout
                                 android:id="@+id/editImage"
-                                android:layout_width="@dimen/_25sdp"
-                                android:layout_height="@dimen/_25sdp"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
                                 android:layout_alignParentRight="true"
                                 android:layout_alignParentBottom="true">
 
@@ -109,8 +135,8 @@
                                     app:srcCompat="@drawable/circle_student_outline" />
 
                                 <ImageView
-                                    android:layout_width="@dimen/_12sdp"
-                                    android:layout_height="@dimen/_12sdp"
+                                    android:layout_width="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_15sdp"
                                     android:layout_centerInParent="true"
                                     app:srcCompat="@drawable/ic_edit_white" />
 
@@ -127,7 +153,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
-
+                        android:padding="@dimen/_5sdp"
                         android:layout_marginTop="@dimen/_15sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/profile_image">
@@ -136,7 +162,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
@@ -145,19 +170,20 @@
                                 android:id="@+id/UserName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-
+                                android:paddingRight="@dimen/_10sdp"
+                                android:layout_gravity="bottom"
                                 android:text="@string/guest"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/_15sdp" />
+                                android:textSize="@dimen/_15sdp"
+                                />
 
 
                             <ImageView
                                 android:id="@+id/editUserNameIcon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-
+                                android:padding="@dimen/_5sdp"
                                 android:layout_marginBottom="@dimen/_10sdp"
-                                android:paddingBottom="@dimen/_15sdp"
                                 app:srcCompat="@drawable/ic_edit_profile"
 
 
@@ -197,7 +223,6 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:maxLines="1"
-                                    android:textSize="@dimen/_15sdp"
                                     android:gravity="center"
                                     android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ.-"
                                     android:inputType="textPersonName"
@@ -292,8 +317,8 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/wallet"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/_45sdp"
+                            android:layout_height="@dimen/_45sdp"
                             android:layout_alignParentRight="true"
                             android:layout_marginRight="@dimen/_20sdp">
 
@@ -304,36 +329,30 @@
                                 android:layout_height="@dimen/_40sdp"
                                 android:background="@drawable/wallet_balance_icon"
                                 android:gravity="center_vertical"
-
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/_12sdp"
+                                android:textSize="@dimen/_15sdp"
                                 app:Font="Poppins-SemiBold.ttf"
-                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintHorizontal_bias="0.0"
-                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 bind:ignore="RtlCompat" />
 
                             <RelativeLayout
                                 android:id="@+id/relativeLayout"
-                                android:layout_width="@dimen/_15sdp"
-                                android:layout_height="@dimen/_15sdp"
-                                android:background="@drawable/transparent_circle_large"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:background="@drawable/transparent_circle"
+                                app:layout_constraintEnd_toEndOf="@+id/wallet_bal_text"
+                                app:layout_constraintTop_toTopOf="@+id/wallet_bal_text">
 
                                 <ImageView
-                                    android:layout_width="@dimen/_8sdp"
-                                    android:layout_height="@dimen/_8sdp"
-                                    android:layout_centerVertical="true"
+                                    android:layout_width="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_15sdp"
                                     android:layout_centerInParent="true"
-                                    android:background="@drawable/ic_cart"
+                                    app:srcCompat="@drawable/ic_cart"
                                     android:visibility="visible" />
 
                             </RelativeLayout>
-
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </RelativeLayout>
@@ -368,22 +387,19 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/_10sdp"
                                 android:layout_weight="3.5"
-                                app:hintTextAppearance="@style/TextInputLayout"
-                                app:hintTextColor="@color/color_dim_grey">
+                                android:theme="@style/MyEditText"
+                                android:hint="@string/student_phone_number">
 
-                                <com.auro.scholr.core.util.uiwidget.RPEditText
-                                    android:id="@+id/editPhone"
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editPhonenew"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:editable="false"
-                                    android:hint="@string/student_phone_number"
                                     android:inputType="none"
                                     android:maxLines="1"
                                     android:paddingRight="@dimen/_20sdp"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/_12sdp"
-                                    android:theme="@style/MyEditText"
-                                    app:Font="Poppins-Regular.ttf" />
+                                    android:textSize="@dimen/_12sdp" />
 
                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -414,22 +430,22 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/_10sdp"
                                 android:layout_weight="3.5"
-                                app:hintTextAppearance="@style/TextInputLayout"
-                                app:hintTextColor="@color/color_dim_grey">
+                                android:hint="@string/email_address"
+                                android:theme="@style/MyEditText">
 
                                 <com.auro.scholr.core.util.uiwidget.RPEditText
                                     android:id="@+id/editemail"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="@string/email_address"
+
                                     android:inputType="textPersonName"
                                     android:maxLines="1"
-                                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ.-@"
+                                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ.-@1234567890"
                                     android:paddingRight="@dimen/_20sdp"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/_12sdp"
-                                    android:theme="@style/MyEditText"
-                                    app:Font="Poppins-Regular.ttf" />
+
+                                    />
 
                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -472,7 +488,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_10sdp"
-                                android:textSize="@dimen/_20sdp"
                                 android:background="@drawable/sppiner_boader"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -659,7 +674,6 @@
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:background="@drawable/sppiner_boader"
                                 app:layout_constraintEnd_toEndOf="parent"
-
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/tvPrivateType" />
 
@@ -686,14 +700,131 @@
                             android:baselineAligned="false"
                             android:orientation="horizontal">
 
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/state_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/state"
+                                android:textColor="@color/backgroun_transparent"
+                                android:textSize="@dimen/_12sdp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/state_spinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/sppiner_boader"
+                                android:tooltipText="@string/choose_your_state"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/state_title" />
+
+                            <ImageView
+                                android:id="@+id/privatestate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/state_spinner"
+                                app:layout_constraintEnd_toEndOf="@+id/state_spinner"
+                                app:layout_constraintHorizontal_bias="0.97"
+                                app:layout_constraintStart_toStartOf="@+id/state_spinner"
+                                app:layout_constraintTop_toTopOf="@+id/state_spinner"
+                                />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp">
+
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/city_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/city"
+                                android:textColor="@color/backgroun_transparent"
+                                android:textSize="@dimen/_12sdp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/city_spinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/sppiner_boader"
+                                android:tooltipText="@string/choose_your_state"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/city_title" />
+
+                            <ImageView
+                                android:id="@+id/privatecity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/city_spinner"
+                                app:layout_constraintEnd_toEndOf="@+id/city_spinner"
+                                app:layout_constraintHorizontal_bias="0.97"
+                                app:layout_constraintStart_toStartOf="@+id/city_spinner"
+                                app:layout_constraintTop_toTopOf="@+id/city_spinner"
+                                />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+                        <LinearLayout
+                            android:id="@+id/yourSubjectsLayout"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:orientation="horizontal"
+                            android:visibility="visible"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <com.auro.scholr.core.util.uiwidget.RPTextView
+                                android:id="@+id/yourSubjects"
+                                android:layout_weight="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/your_subject_new"
+                                android:textColor="@color/backgroun_transparent"
+                                android:textSize="@dimen/_12sdp"
+                                android:layout_gravity="center_vertical"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                />
+
+                            <ImageView
+                                android:id="@+id/edit_subject_icon"
+                                android:layout_weight="0.5"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                app:srcCompat="@drawable/ic_edit_subject"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/subjects_recyclerview"
+                            android:layout_width="match_parent"
+                            android:visibility="visible"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_height="wrap_content"/>
+
                     </LinearLayout>
+
+
+
+
+
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/submit_button_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginBottom="@dimen/_10sdp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -730,6 +861,22 @@
                             app:layout_constraintStart_toStartOf="@+id/submitbutton"
                             app:layout_constraintTop_toTopOf="@+id/submitbutton"
                             />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/submit_button_layout"
+                        >
+
+                        <include
+
+                            layout="@layout/auro_logo_layout" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

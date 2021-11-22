@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -656,7 +657,14 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
         pos = commonDataModel.getSource();
         KYCDocumentDatamodel kycDocumentDatamodel = (KYCDocumentDatamodel) commonDataModel.getObject();
         if (kycDocumentDatamodel.getDocumentId() == AppConstant.DocumentType.UPLOAD_YOUR_PHOTO) {
-            openActivity();
+            if(hasFrontCamera()){
+                openActivity();
+            }
+            else{
+                Toast.makeText(getActivity(), "Front Camera not available on your device", Toast.LENGTH_SHORT).show();
+
+            }
+
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 // perform Opertaion
@@ -666,15 +674,29 @@ public class KYCFragment extends BaseFragment implements CommonCallBackListner, 
                         .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                         .start();
             } else {
-                CropImages.activity()
-                        .setGuidelines(CropImageViews.Guidelines.ON)
-                        .start(getActivity());
+
+                    CropImages.activity()
+                            .setGuidelines(CropImageViews.Guidelines.ON)
+                            .start(getActivity());
+
+
             }
 
         }
 
     }
 
+    private boolean hasFrontCamera() {
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        int numberOfCameras = Camera.getNumberOfCameras();
+        for (int i = 0; i < numberOfCameras; i++) {
+            Camera.getCameraInfo(i, cameraInfo);
+            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void uploadAllDocApi() {
         kycInputModel.setUser_phone(dashboardResModel.getPhonenumber());

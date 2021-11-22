@@ -1,5 +1,6 @@
 package com.auro.scholr.home.presentation.view.adapter.newuiadapter;
 
+import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,9 +28,11 @@ public class SubjectPrefAdapter extends RecyclerView.Adapter<SubjectPrefAdapter.
 
     List<CategorySubjectResModel> list;
     CommonCallBackListner commonCallBackListner;
+    Context contextApp;
 
-    public SubjectPrefAdapter(List<CategorySubjectResModel> list, CommonCallBackListner commonCallBackListner) {
+    public SubjectPrefAdapter(Context context,List<CategorySubjectResModel> list, CommonCallBackListner commonCallBackListner) {
         this.list = list;
+        this.contextApp = context;
         this.commonCallBackListner = commonCallBackListner;
     }
 
@@ -77,11 +81,11 @@ public class SubjectPrefAdapter extends RecyclerView.Adapter<SubjectPrefAdapter.
             binding.RPTextViewTitle.setText(model.getSubjectname());
             binding.mainParentLayout.setBackground(model.getBackgroundImage());
             if (model.isLock()) {
-                binding.lockLayout.setBackground(AuroApp.getAppContext().getDrawable(R.drawable.disable_background));
+                binding.lockLayout.setBackground(AppCompatResources.getDrawable(contextApp,R.drawable.disable_background));
                 binding.lockLayout.setVisibility(View.VISIBLE);
-                binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getDrawable(R.drawable.ic_auro_check_disable));
+                binding.checkIcon.setImageDrawable(AppCompatResources.getDrawable(contextApp,R.drawable.ic_auro_check_disable));
             } else {
-                binding.checkIcon.setImageDrawable(AuroApp.getAppContext().getDrawable(R.drawable.ic_auro_check));
+                binding.checkIcon.setImageDrawable(AppCompatResources.getDrawable(contextApp,R.drawable.ic_auro_check));
                 binding.lockLayout.setVisibility(View.GONE);
             }
             if (model.isSelected()) {

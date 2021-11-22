@@ -93,7 +93,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
-            android:background="@drawable/ic_done_icon"
+            app:srcCompat="@drawable/ic_done_icon"
             android:visibility="gone"
             android:layout_marginBottom="@dimen/_6sdp"
             app:layout_constraintStart_toEndOf="@+id/text_document_layout"

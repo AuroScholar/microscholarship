@@ -407,13 +407,13 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
             } else {
                 binding.editProfileName.setError("Enter Your Name");
             }
-        } else if (id == R.id.editPhone) {
+        } /*else if (id == R.id.editPhone) {
             if (!TextUtil.isEmpty(binding.editProfile.getText().toString())) {
                 changeTheEditText();
             } else {
                 binding.editProfileName.setError("Enter Your Name");
             }
-        } else if (id == R.id.editemail) {
+        } */else if (id == R.id.editemail) {
             if (!TextUtil.isEmpty(binding.editProfile.getText().toString())) {
                 changeTheEditText();
             } else {
@@ -492,7 +492,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
                 // Toast.makeText(getActivity(), "Task Cancelled", Toast.LENGTH_SHORT).show();
             }
         }
-       /* if (requestCode == CropImages.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+       if (requestCode == CropImages.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImages.ActivityResult result = CropImages.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 try {
@@ -522,7 +522,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
                 Exception error = result.getError();
                 AppLogger.e("StudentProfile", "fragment error=" + error.getMessage());
             }
-        }*/
+        }
     }
 
     private void loadimage(Bitmap picBitmap) {
@@ -919,6 +919,7 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
                             .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                             .start();
                 } else {
+                    AppLogger.v("PradeepMain","camera");
                     CropImages.activity()
                             .setGuidelines(CropImageViews.Guidelines.ON)
                             .start(getActivity());
@@ -1144,12 +1145,12 @@ public class StudentProfileFragment extends BaseFragment implements View.OnClick
             if (!binding.editProfile.getText().toString().equalsIgnoreCase("")) {
                 binding.UserName.setText(binding.editProfile.getText().toString());
             }
-        } else if (id == R.id.editPhone) {
+        } /*else if (id == R.id.editPhone) {
             changeTheEditText();
             if (!binding.editProfile.getText().toString().equalsIgnoreCase("")) {
                 binding.UserName.setText(binding.editProfile.getText().toString());
             }
-        } else if (id == R.id.editemail) {
+        } */else if (id == R.id.editemail) {
             changeTheEditText();
             if (!binding.editProfile.getText().toString().equalsIgnoreCase("")) {
                 binding.UserName.setText(binding.editProfile.getText().toString());

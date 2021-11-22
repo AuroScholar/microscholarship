@@ -91,7 +91,7 @@
                 layout="@layout/error_layout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.camera.view.PreviewView
+      <!--  <androidx.camera.view.PreviewView
             android:id="@+id/previewView"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"
@@ -99,9 +99,9 @@
             android:visibility="invisible"
             android:contentDescription="Preview Area"
             android:importantForAccessibility="no"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />-->
 
         <ImageView
             android:id="@+id/dummay_image"
@@ -109,7 +109,7 @@
             android:layout_height="@dimen/_100sdp"
             android:layout_marginBottom="8dp"
             android:visibility="gone"
-            android:background="@drawable/ic_profile"
+            app:srcCompat="@drawable/ic_profile"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
