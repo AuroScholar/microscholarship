@@ -155,7 +155,7 @@ public class SubjectPreferencesActivity extends BaseActivity implements CommonCa
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         binding.subjectRecyclerview.setLayoutManager(layoutManager);
         binding.subjectRecyclerview.setHasFixedSize(true);
-        SubjectPrefAdapter subjectadapter = new SubjectPrefAdapter(subjectPreferenceResModel.getSubjects(), this);
+        SubjectPrefAdapter subjectadapter = new SubjectPrefAdapter(this,subjectPreferenceResModel.getSubjects(), this);
         binding.subjectRecyclerview.setAdapter(subjectadapter);
     }
 
