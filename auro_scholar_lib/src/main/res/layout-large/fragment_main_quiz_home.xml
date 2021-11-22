@@ -375,7 +375,7 @@
 
                     android:layout_width="@dimen/_45sdp"
                     android:layout_height="@dimen/_45sdp"
-                    android:background="@drawable/ic_chat_bot_icon"
+                    app:srcCompat="@drawable/ic_baseline_chat_24"
                     android:scaleType="fitXY" />
 
             </LinearLayout>
