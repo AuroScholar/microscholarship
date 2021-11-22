@@ -54,24 +54,25 @@
                             android:text="Enter OTP!"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_18sdp"
-                            app:Font="Calibre-Light.ttf"/>
+                            app:Font="Calibre-Light.ttf" />
 
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/left_corner_image"
+                            android:layout_marginTop="@dimen/_5sdp"
                             android:text="OTP has been sent to this number"
                             android:textColor="@color/ui_color_code"
-                            android:layout_marginTop="@dimen/_5sdp"
                             android:textSize="@dimen/_11sdp" />
+
                         <com.auro.scholr.core.util.uiwidget.RPTextView
                             android:id="@+id/mobileNumberText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/left_corner_image"
+                            android:layout_marginTop="@dimen/_5sdp"
                             android:text="886******9"
                             android:textColor="@color/ui_color_code"
-                            android:layout_marginTop="@dimen/_5sdp"
                             android:textSize="@dimen/_11sdp" />
 
 
@@ -80,23 +81,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/left_corner_image"
-                            android:text=""
                             android:layout_marginTop="@dimen/_3sdp"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="@dimen/_14sdp" />
 
                         <com.chaos.view.PinView
                             android:id="@+id/otp_view"
-                            android:layout_gravity="center_horizontal"
                             style="@style/PinWidget.PinView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
                             android:cursorVisible="true"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
                             android:inputType="number"
                             android:itemBackground="@color/transparent"
                             android:padding="@dimen/_12sdp"
-                            android:focusableInTouchMode="true"
-                            android:focusable="true"
                             android:textColor="@color/blue_color"
                             android:textSize="@dimen/_14sdp"
                             android:textStyle="bold"
@@ -127,22 +128,22 @@
 
                         <RelativeLayout
 
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginBottom="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_10sdp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_marginBottom="@dimen/_10sdp">
 
                             <com.auro.scholr.core.util.uiwidget.RPTextView
                                 android:id="@+id/RPVerify"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
+                                android:layout_centerInParent="true"
                                 android:background="@drawable/button_continue"
+                                android:gravity="center"
                                 android:padding="@dimen/_11sdp"
                                 android:text="@string/resend_code"
-                                android:layout_centerInParent="true"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_11sdp"
                                 android:visibility="gone"
@@ -153,20 +154,14 @@
                                 android:id="@+id/progressBar_2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
                                 android:layout_gravity="center"
                                 android:elevation="@dimen/_2sdp"
                                 android:indeterminateDrawable="@drawable/circular_progress"
                                 android:innerRadiusRatio="3"
-                                android:visibility="gone"
-                                android:layout_centerInParent="true"
-                                />
+                                android:visibility="gone" />
 
                         </RelativeLayout>
-
-
-
-
-
 
 
                     </LinearLayout>
@@ -184,7 +179,7 @@
 
             android:layout_centerHorizontal="true"
 
-            android:src="@drawable/ic_cross_close" />
+            app:srcCompat="@drawable/ic_cross_close" />
 
 
 

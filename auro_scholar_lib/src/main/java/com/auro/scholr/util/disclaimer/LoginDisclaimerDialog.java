@@ -54,6 +54,7 @@ public class LoginDisclaimerDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 dismiss();
+                prefModel = AppPref.INSTANCE.getModelInstance();
                 prefModel.setPreLoginDisclaimer(true);
                 AppPref.INSTANCE.setPref(prefModel);
             }

@@ -179,6 +179,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.send_button) {
+            StudentMainDashboardActivity.setListner(this);
             String phonenumber = binding.numberEdittext.getText().toString();
 
             ValidationModel validation = viewModel.paymentUseCase.isVlaidPhoneNumber(phonenumber);

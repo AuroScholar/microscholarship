@@ -185,7 +185,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
     public void onClick(View v) {
 
         if (v.getId() == R.id.send_button) {
-
+            StudentMainDashboardActivity.setListner(this);
             List<Upipsp> pips = Arrays.asList(Upipsp.values());
 
             List<String> pipstring = new ArrayList<>();
