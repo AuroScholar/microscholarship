@@ -54,7 +54,7 @@
               android:layout_marginStart="@dimen/_10sdp"
               android:layout_marginTop="@dimen/_10sdp"
               android:layout_marginBottom="@dimen/_10sdp"
-              android:background="@drawable/ic_profile"
+              app:srcCompat="@drawable/ic_profile"
               android:scaleType="fitXY"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintStart_toStartOf="parent"
@@ -161,7 +161,7 @@
 
                     <ImageView
                       android:layout_marginStart="@dimen/_5sdp"
-                      android:background="@drawable/ic_auro_check"
+                      app:srcCompat="@drawable/ic_auro_check"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content" />
 
@@ -173,7 +173,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="@dimen/_35sdp"
                   android:layout_centerInParent="true"
-                  android:background="@drawable/add_friend_back"
+                  app:srcCompat="@drawable/add_friend_back"
                   android:visibility="visible"
                   app:layout_constraintBottom_toBottomOf="parent"
                   app:layout_constraintEnd_toEndOf="parent"

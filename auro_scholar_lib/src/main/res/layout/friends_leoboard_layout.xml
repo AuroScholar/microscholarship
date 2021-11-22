@@ -144,7 +144,7 @@
                       android:layout_width="@dimen/_18sdp"
                       android:layout_height="@dimen/_18sdp"
                       android:layout_marginEnd="@dimen/_5sdp"
-                      android:background="@drawable/ic_add_circle"
+                      app:srcCompat="@drawable/ic_add_circle"
                       app:layout_constraintBottom_toBottomOf="parent"
                       app:layout_constraintEnd_toEndOf="parent"
                       app:layout_constraintStart_toEndOf="@+id/invite_text"
@@ -164,7 +164,7 @@
                       android:id="@+id/tvShowFriendRequests"
                       android:layout_width="24dp"
                       android:layout_height="24dp"
-                      android:background="@drawable/icon_bell"
+                      app:srcCompat="@drawable/icon_bell"
                       android:backgroundTint="@color/grey_color" />
                     <TextView
                       android:id="@+id/tvRequestCount"

@@ -55,7 +55,7 @@
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginBottom="@dimen/_4sdp"
             android:padding="@dimen/_10sdp"
-            android:background="@drawable/ic_arrow_back_white"
+            app:srcCompat="@drawable/ic_arrow_back_white"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

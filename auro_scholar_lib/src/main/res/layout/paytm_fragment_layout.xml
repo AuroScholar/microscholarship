@@ -62,7 +62,7 @@
                 <ImageView
                     android:id="@+id/paytm_icon"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:background="@drawable/ic_paytm"
+                    app:srcCompat="@drawable/ic_paytm"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_width="@dimen/_75sdp"
@@ -124,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginBottom="@dimen/_15sdp"
-                    android:background="@drawable/send_money_arrow"
+                    app:srcCompat="@drawable/send_money_arrow"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

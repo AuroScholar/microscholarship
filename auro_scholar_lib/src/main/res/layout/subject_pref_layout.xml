@@ -43,7 +43,7 @@
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/ic_auro_scholar_logo"
+                    app:srcCompat="@drawable/ic_auro_scholar_logo"
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
