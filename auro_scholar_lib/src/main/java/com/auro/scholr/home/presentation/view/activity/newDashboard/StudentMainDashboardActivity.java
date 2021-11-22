@@ -421,6 +421,7 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         studentProfile.setArguments(bundle);
         openFragment(studentProfile);
     }
+    //pradeep
 
     public void openKYCFragment(DashboardResModel dashboardResModel) {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.home_container);

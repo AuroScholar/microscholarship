@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/drawable/class_disable_border_background.xml" value="0.16296296296296298" />
         <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_biology_vertical.xml" value="0.16018518518518518" />
         <entry key="..\:/Aurobindo Projects/sdk/auroscholar/auro_scholar_lib/src/main/res/drawable/ic_chemistry_vertical.xml" value="0.16018518518518518" />
@@ -51,6 +52,9 @@
         <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/layout/subjects_pref_item_layout.xml" value="0.1" />
         <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/layout/upload_document_step_one.xml" value="0.1" />
         <entry key="..\:/AuroscholarProject/AuroscholarSdk/bitbucketAuro/auroscholar/auro_scholar_lib/src/main/res/layout/upload_document_step_two.xml" value="0.1" />
+=======
+        <entry key="..\:/AuroscholarProject/AuroscholarSdk/gitauroscholar/gitMicroScholarShip/microscholarship/auro_scholar_lib/src/main/res/layout/activity_student_main_dashboard.xml" value="0.20416666666666666" />
+>>>>>>> a8b6b57a0dab2c582af6a13a4cd1d22b34d67364
       </map>
     </option>
   </component>
