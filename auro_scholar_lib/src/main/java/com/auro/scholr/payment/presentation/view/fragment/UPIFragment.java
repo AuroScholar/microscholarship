@@ -223,7 +223,7 @@ public class UPIFragment extends BaseFragment implements CommonCallBackListner, 
            /* reqModel.setMobileNo("9654234507");
             reqModel.setStudentId("4077466");*/
         reqModel.setPaymentMode(AppConstant.PaymenMode.UPI);
-        reqModel.setDisbursementMonth(DateUtil.getMonthName());
+        reqModel.setDisbursementMonth(DateUtil.getMonthNamePayment());
         reqModel.setBeneficiary_name("");
         reqModel.setUpiAddress(upiId);
         reqModel.setAmount(mdashboard.getApproved_scholarship_money());

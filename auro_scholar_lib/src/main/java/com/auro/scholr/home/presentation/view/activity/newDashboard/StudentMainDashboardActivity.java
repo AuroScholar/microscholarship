@@ -630,4 +630,10 @@ public class StudentMainDashboardActivity extends BaseActivity implements OnItem
         dashboardResModel = model;
         AppUtil.setDashboardResModelToPref(model);
     }
+
+
+    private void callLanguageList() {
+        viewModel.checkInternetForApi(Status.LANGUAGE_LIST, "");
+    }
+
 }

@@ -139,4 +139,16 @@ public class AppUtil {
     }
 
 
+
+    public static String getLanguageId() {
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        if (prefModel != null && prefModel.getUserLanguage() != null && prefModel.getUserLanguage().equalsIgnoreCase("hi")) {
+
+            return ""+2;
+        }
+
+        return ""+1;
+    }
+
+
 }

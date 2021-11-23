@@ -164,17 +164,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
-
-
     private void openGenricSDK(String mobileNumber, String student_class) {
         String language = binding.language.getText().toString();
         AuroScholarInputModel inputModel = new AuroScholarInputModel();
         inputModel.setMobileNumber(mobileNumber);//mobileNumber
         inputModel.setStudentClass(student_class);//"binding.userClass.getText().toString()"
-        inputModel.setRegitrationSource("");
+        inputModel.setRegitrationSource("Auroscholar");
         inputModel.setReferralLink("");
-        inputModel.setPartnerSource(""); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
+        inputModel.setPartnerSource("AURO3VE4j7"); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
         inputModel.setActivity(this);
+        inputModel.setLanguage(binding.language.getText().toString());
         inputModel.setPartnerLogoUrl(""); //Mandatory
         inputModel.setSchoolName("");//optional Filed
         inputModel.setBoardType("");//optional Filed
@@ -184,6 +183,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inputModel.setEmail("");//optional Filed
         AuroScholar.startAuroSDK(inputModel);
     }
+
+/*
+    private void openGenricSDK(String mobileNumber, String student_class) {
+        String language = binding.language.getText().toString();
+        AuroScholarInputModel inputModel = new AuroScholarInputModel();
+        inputModel.setMobileNumber(mobileNumber);//mobileNumber
+        inputModel.setStudentClass(student_class);//"binding.userClass.getText().toString()"
+        inputModel.setRegitrationSource("");
+        inputModel.setReferralLink("");
+        inputModel.setPartnerSource(""); //this id is provided by auroscholar for valid partner//Demo partner id:AUROJ1i5dA
+        inputModel.setActivity(this);
+        inputModel.setLanguage(binding.language.getText().toString());
+        inputModel.setPartnerLogoUrl(""); //Mandatory
+        inputModel.setSchoolName("");//optional Filed
+        inputModel.setBoardType("");//optional Filed
+        inputModel.setSchoolType("");//optional Filed
+        inputModel.setGender("");//optional Filed
+        inputModel.setPartnerName("");//Mandatory
+        inputModel.setEmail("");//optional Filed
+        AuroScholar.startAuroSDK(inputModel);
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

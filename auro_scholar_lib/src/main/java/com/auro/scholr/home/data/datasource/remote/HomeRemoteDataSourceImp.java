@@ -292,9 +292,9 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
     }
     @Override
     public Single<Response<JsonObject>> preferenceSubjectList() {
-
         Map<String,String>  requestMap=new HashMap<>();
         requestMap.put("student_class",""+AppPref.INSTANCE.getModelInstance().getStudentClass());
+        requestMap.put("language",AppUtil.getLanguageId());
         return homeRemoteApi.preferenceSubjectList(requestMap);
     }
 
@@ -308,4 +308,10 @@ public class HomeRemoteDataSourceImp implements HomeRepo.DashboardRemoteData {
     public Single<Response<JsonObject>> fetchStudentPreferenceApi(FetchStudentPrefReqModel reqModel) {
         return homeRemoteApi.fetchStudentPreferenceApi(reqModel);
     }
+
+    @Override
+    public Single<Response<JsonObject>> getLanguageList() {
+        return homeRemoteApi.getLanguageList();
+    }
+
 }

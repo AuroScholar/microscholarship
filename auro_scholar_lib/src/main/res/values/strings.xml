@@ -275,7 +275,7 @@
     <string name="subjects_you_teach_till">Subjects You Teach<font color='#FF0000'>*</font></string>
     <string name="school_name">School Name<font color='#FF0000'>*</font></string>
     <string name="state">State<font color='#FF0000'>*</font></string>
-    <string name="city">City<b>*</b></string>
+    <string name="city">City<font color='#FF0000'>*</font></string>
     <string name="choose_your_state">Choose Your State</string>
     <string name="choose_your_city">Choose Your City</string>
     <string name="upload_govt_id">Upload Govt Id Front side</string>
