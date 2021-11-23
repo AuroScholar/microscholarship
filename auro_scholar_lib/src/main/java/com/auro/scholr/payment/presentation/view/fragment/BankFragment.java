@@ -212,7 +212,7 @@ public class BankFragment extends BaseFragment implements CommonCallBackListner,
             /*reqModel.setMobileNo("9654234507");
             reqModel.setStudentId("4077466");*/
         reqModel.setPaymentMode(AppConstant.PaymenMode.BANK_Transfer);
-        reqModel.setDisbursementMonth(DateUtil.getMonthName());
+        reqModel.setDisbursementMonth(DateUtil.getMonthNamePayment());
         reqModel.setBeneficiary_name("");
         reqModel.setBankaccountno(accountnumber);
         reqModel.setIfsccode(ifscCode);

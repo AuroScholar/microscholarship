@@ -231,7 +231,7 @@ public class PaytmFragment extends BaseFragment implements CommonCallBackListner
             reqModel.setMobileNo(AuroApp.getAuroScholarModel().getMobileNumber());
             reqModel.setStudentId(AppPref.INSTANCE.getModelInstance().getDashboardResModel().getStudent_id());
             reqModel.setPaymentMode(AppConstant.PaymenMode.WALLET);
-            reqModel.setDisbursementMonth(DateUtil.getMonthName());
+            reqModel.setDisbursementMonth(DateUtil.getMonthNamePayment());
             reqModel.setBeneficiary_mobileNum(phonenumber);
             reqModel.setBeneficiary_name("");
             reqModel.setAmount(mdashboard.getApproved_scholarship_money());

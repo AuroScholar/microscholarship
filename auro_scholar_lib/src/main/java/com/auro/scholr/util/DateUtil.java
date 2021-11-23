@@ -290,6 +290,15 @@ public class DateUtil {
         return month_name;
     }
 
+    public static String getMonthNamePayment() {
+        String lang = ViewUtil.getLanguage();
+        // Locale locale = new Locale(lang);
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM",  new Locale("en"));
+        String month_name = month_date.format(cal.getTime());
+        return month_name;
+    }
+
 
     public static String getMonthNameForSpinner() {
         String lang = ViewUtil.getLanguage();

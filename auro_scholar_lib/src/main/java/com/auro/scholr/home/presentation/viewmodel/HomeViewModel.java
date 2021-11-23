@@ -190,6 +190,10 @@ public class HomeViewModel extends ViewModel {
                     case DASHBOARD_API:
                         getDashboardData((AuroScholarDataModel) reqmodel);
                         break;
+
+                    case LANGUAGE_LIST:
+                        languageListApiCall();
+                        break;
                 }
 
             } else {
@@ -307,5 +311,25 @@ public class HomeViewModel extends ViewModel {
                                 }));
     }
 
+    private void languageListApiCall() {
+        getCompositeDisposable()
+                .add(homeRemoteUseCase.getLanguageList()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                new Consumer<ResponseApi>() {
+                                    @Override
+                                    public void accept(ResponseApi responseApi) throws Exception {
+                                        serviceLiveData.setValue(responseApi);
+                                    }
+                                },
 
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        defaultError();
+                                    }
+                                }
+                        ));
+    }
 }

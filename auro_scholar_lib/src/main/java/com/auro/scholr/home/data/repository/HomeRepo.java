@@ -72,6 +72,8 @@ public interface HomeRepo {
         Single<Response<JsonObject>> updateStudentPreference(UpdatePrefReqModel reqModel);
 
         Single<Response<JsonObject>> fetchStudentPreferenceApi(FetchStudentPrefReqModel reqModel);
+
+        Single<Response<JsonObject>> getLanguageList();
     }
 
 

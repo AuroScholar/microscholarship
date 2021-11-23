@@ -16,6 +16,7 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -167,4 +168,7 @@ public interface HomeRemoteApi {
 
     @POST(URLConstant.STUDENT_SUBJECT_PREFERENCE_API)
     Single<Response<JsonObject>> preferenceSubjectList(@Body Map<String,String>  map );
+
+    @GET(URLConstant.LANGUAGE_LIST)
+    Single<Response<JsonObject>> getLanguageList();
 }

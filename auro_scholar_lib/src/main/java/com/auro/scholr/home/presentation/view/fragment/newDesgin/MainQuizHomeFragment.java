@@ -162,6 +162,9 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             if (!TextUtil.isEmpty(lang)) {
                 if (lang.equalsIgnoreCase(AppConstant.LANGUAGE_HI) || lang.equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
                     setLanguagefromsdk();
+                    PrefModel prefModel=AppPref.INSTANCE.getModelInstance();
+                    prefModel.setUserLanguage(lang);
+                    AppPref.INSTANCE.setPref(prefModel);
                 }
             } else {
                 AuroApp.getAuroScholarModel().setLanguage(AppConstant.LANGUAGE_EN);

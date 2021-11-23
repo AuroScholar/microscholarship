@@ -111,6 +111,13 @@ public class AuroScholar {
         } else {
             auroScholarDataModel.setPartnerSource(inputModel.getPartnerSource());
         }
+
+
+        if (TextUtil.isEmpty(inputModel.getLanguage()) && inputModel.getLanguage().trim().length() == 0) {
+            auroScholarDataModel.setLanguage("");
+        } else {
+            auroScholarDataModel.setLanguage(inputModel.getLanguage());
+        }
         AuroApp.setAuroModel(auroScholarDataModel);
         if (auroScholarDataModel != null && auroScholarDataModel.getActivity() == null) {
             return;
