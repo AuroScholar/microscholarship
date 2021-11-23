@@ -165,7 +165,7 @@
     <string name="classes">Classes You Teach</string>
     <string name="subjects_you_teach_till">Subjects You Teach Till 12th</string>
     <string name="school_name">School Name</string>
-    <string name="state">राज्य</string>
+    <string name="state">राज्य<font color='#FF0000'>*</font></string>
     <string name="city">शहर<font color='#FF0000'>*</font></string>
     <string name="choose_your_state">अपना राज्य चुनें</string>
     <string name="choose_your_city">अपना शहर चुनें</string>
