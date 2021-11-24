@@ -211,11 +211,18 @@ public class ConsgratuationLessScoreDialog extends BaseDialog implements View.On
 
     private boolean checkAllQuizAreFinishedOrNot() {
         int totalAttempt = 0;
-        for (QuizResModel quizResModel : subjectResModel.getChapter()) {
-            totalAttempt = quizResModel.getAttempt() + totalAttempt;
-        }
-        if (totalAttempt == 12) {
-            return true;
+        try {
+            if(subjectResModel != null && subjectResModel.getChapter() != null && !subjectResModel.getChapter().isEmpty()) {
+                for (QuizResModel quizResModel : subjectResModel.getChapter()) {
+                    totalAttempt = quizResModel.getAttempt() + totalAttempt;
+                }
+                if (totalAttempt == 12) {
+                    return true;
+                }
+            }
+            return false;
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return false;
     }

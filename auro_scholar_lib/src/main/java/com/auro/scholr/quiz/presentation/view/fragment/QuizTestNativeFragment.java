@@ -340,6 +340,10 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         super.onResume();
         AppUtil.callBackListner = this;
         AppUtil.dashboardResModel = null;
+        //screen short
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+
+
         if (checkGooglePlayAvailability()) {
             askPermission();
         }
@@ -556,7 +560,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     @Override
     public void onStop() {
         super.onStop();
-
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
     }
 
