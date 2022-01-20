@@ -19,7 +19,7 @@
     <application
         android:usesCleartextTraffic="true">
         <activity android:name=".home.presentation.view.activity.newDashboard.StudentMainDashboardActivity"
-
+            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan"/>
 
@@ -38,12 +38,15 @@
             android:name=".home.presentation.view.activity.CameraActivity"
             android:label="@string/title_activity_camera"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:exported="true"
             android:name=".util.permission.PermissionsActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:exported="true"
             android:name=".home.presentation.view.activity.StudentDashboardActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
@@ -51,6 +54,7 @@
         <activity
             android:name=".home.presentation.view.activity.HomeActivity"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
@@ -98,12 +102,14 @@
             android:name=".yubochat.YuboChatActivity"
             android:exported="true" />
         <activity
+            android:exported="true"
             android:name=".util.cropper.CropImagesActivity"
             android:theme="@style/Base.Theme.AppCompat" />
 
         <activity
             android:name=".home.presentation.view.activity.newDashboard.SubjectPreferencesActivity"
             android:configChanges="locale"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
