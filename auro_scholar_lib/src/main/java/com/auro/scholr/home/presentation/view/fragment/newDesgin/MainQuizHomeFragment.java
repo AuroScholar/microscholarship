@@ -107,7 +107,7 @@ import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 import static com.auro.scholr.core.common.Status.GRADE_UPGRADE;
 
 
-public class MainQuizHomeFragment extends BaseFragment implements CommonCallBackListner, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener  {
+public class MainQuizHomeFragment extends BaseFragment implements CommonCallBackListner, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     @Named("MainQuizHomeFragment")
@@ -164,7 +164,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             if (!TextUtil.isEmpty(lang)) {
                 if (lang.equalsIgnoreCase(AppConstant.LANGUAGE_HI) || lang.equalsIgnoreCase(AppConstant.LANGUAGE_EN)) {
                     setLanguagefromsdk();
-                    PrefModel prefModel=AppPref.INSTANCE.getModelInstance();
+                    PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
                     prefModel.setUserLanguage(lang);
                     AppPref.INSTANCE.setPref(prefModel);
                 }
@@ -224,6 +224,10 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
         setPrefData();
         ((StudentMainDashboardActivity) getActivity()).loadPartnerLogo(binding.partnerLogo);
+
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        String totalImageCount = "Last test image status :- \n Total Attempted Image Count - " + prefModel.getTotalImageAttemptCount() + "\n" + "Total Success Image Count -" + prefModel.getTotalImageSucessCount();
+        binding.totalImageAttempt.setText(totalImageCount);
     }
 
     @Override
@@ -289,7 +293,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         binding.recyclerViewMenu.setLayoutManager(layoutManager);
         binding.recyclerViewMenu.setHasFixedSize(true);
-        SubjectSelectAdapter subjectadapter = new SubjectSelectAdapter(dashboardResModel.getSubjectResModelList(),  this);
+        SubjectSelectAdapter subjectadapter = new SubjectSelectAdapter(dashboardResModel.getSubjectResModelList(), this);
         binding.recyclerViewMenu.setAdapter(subjectadapter);
     }
 
@@ -323,10 +327,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
             case ACCEPT_PARENT_BUTTON:
 
-
-                    askPermission();
-
-
+                askPermission();
                 break;
         }
     }
@@ -351,9 +352,9 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         Permissions.check(getActivity(), PermissionUtil.mCameraPermissions, rationale, options, new PermissionHandler() {
             @Override
             public void onGranted() {
-                if(hasFrontCamera()) {
+                if (hasFrontCamera()) {
                     callStartQuizActionApi();
-                }else{
+                } else {
                     Toast.makeText(getActivity(), "Front Camera not available on your device", Toast.LENGTH_SHORT).show();
 
                 }
@@ -420,7 +421,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         } else if (id == R.id.privacy_policy) {
             ((StudentMainDashboardActivity) getActivity()).openFragment(new PrivacyPolicyFragment());
         } else if (id == R.id.menuBarItem) {
-           // openDemographicFragment();
+            // openDemographicFragment();
             binding.drawerLayout.openDrawer(Gravity.LEFT);
         } else if (id == R.id.termsofuse) {
             Bundle bundle = new Bundle();
@@ -428,9 +429,9 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             bundle.putString(AppConstant.WEB_LINK, URLConstant.TERM_CONDITION);
             policyFragment.setArguments(bundle);
             openFragment(policyFragment);
-        }else if(id == R.id.imageChat){
+        } else if (id == R.id.imageChat) {
 
-               startActivity(new Intent(getActivity(), YuboChatActivity.class));
+            startActivity(new Intent(getActivity(), YuboChatActivity.class));
 
         }
 
@@ -454,18 +455,17 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
 
                         if (isVisible()) {
 
-                            AppLogger.v("DashBoadapi","Step 2");
-                            handleProgress(2,"");//pradeep
+                            AppLogger.v("DashBoadapi", "Step 2");
+                            handleProgress(2, "");//pradeep
                             binding.swipeRefreshLayout.setRefreshing(false);
                             dashboardResModel = (DashboardResModel) responseApi.data;
-                            AppLogger.v("ProfilePicUser",dashboardResModel.getProfilePic()+"Step 1");
+                            AppLogger.v("ProfilePicUser", dashboardResModel.getProfilePic() + "Step 1");
                             onApiSuccess(dashboardResModel);
                         }
 
 
-                    }
-                    else if (responseApi.apiTypeStatus == GRADE_UPGRADE) {
-                         handleProgress(0, "");
+                    } else if (responseApi.apiTypeStatus == GRADE_UPGRADE) {
+                        handleProgress(0, "");
                         dashboardResModel = (DashboardResModel) responseApi.data;
                         //setPrefForTesting()
                         AppLogger.v("PRADEEP_DATA", "GRADE_UPGRADE" + "");
@@ -479,24 +479,23 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                                 customDialog.updateUI(0);
                             }
                         }
-                    }
-                    else if (responseApi.apiTypeStatus == ASSIGNMENT_STUDENT_DATA_API) {
+                    } else if (responseApi.apiTypeStatus == ASSIGNMENT_STUDENT_DATA_API) {
                         try {
                             testAssignmentResModel = (AssignmentResModel) responseApi.data;
-                        }catch (Exception e){
+                        } catch (Exception e) {
                         }
 
-                        AppLogger.e("chhonker-","Step testAssignmentResModel"+testAssignmentResModel.isError());
+                        AppLogger.e("chhonker-", "Step testAssignmentResModel" + testAssignmentResModel.isError());
                         if (quizProgressDialog != null) {
-                            AppLogger.e("chhonker-","Step 1.1");
+                            AppLogger.e("chhonker-", "Step 1.1");
                             quizProgressDialog.dismiss();
                         }
-                        AppLogger.e("chhonker-","Step 1.2" +testAssignmentResModel.isError());
+                        AppLogger.e("chhonker-", "Step 1.2" + testAssignmentResModel.isError());
                         if (!testAssignmentResModel.isError()) {
-                            AppLogger.e("chhonker-","Step 1.3");
+                            AppLogger.e("chhonker-", "Step 1.3");
                             openCameraPhotoFragment();
                         } else {
-                            AppLogger.e("chhonker-","Step 2");
+                            AppLogger.e("chhonker-", "Step 2");
                             ViewUtil.showSnackBar(binding.getRoot(), testAssignmentResModel.getMessage());
                         }
 
@@ -513,7 +512,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                     break;
                 case AUTH_FAIL:
                 case FAIL_400:
-                    AppLogger.e("chhonker-","Step 4");
+                    AppLogger.e("chhonker-", "Step 4");
                     if (customDialog != null) {
                         customDialog.dismiss();
                         AppLogger.v("PRADEEP_DATA", "FAIL_400 null");
@@ -529,7 +528,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                     //handleProgress(1, (String) responseApi.data);
                     break;
                 default:
-                    AppLogger.e("chhonker-","Step 3");
+                    AppLogger.e("chhonker-", "Step 3");
                     if (customDialog != null) {
                         customDialog.dismiss();
                     }
@@ -540,12 +539,11 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                         handleProgress(1, (String) responseApi.data);
                         binding.swipeRefreshLayout.setRefreshing(false);
                     } else if (responseApi.apiTypeStatus == ASSIGNMENT_STUDENT_DATA_API) {
-                        if(quizProgressDialog!=null && quizProgressDialog.isShowing())
-                        {
+                        if (quizProgressDialog != null && quizProgressDialog.isShowing()) {
                             quizProgressDialog.dismiss();
                         }
                         ViewUtil.showSnackBar(binding.getRoot(), (String) responseApi.data);
-                } else {
+                    } else {
                         AppLogger.v("PRADEEP_DATA", "default---");
                         setImageInPref(assignmentReqModel);
                         //  openQuizTestFragment(dashboardResModel);
@@ -614,7 +612,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
                 checkScreenPreferences();
 
 
-                AppLogger.v("PRADEEP_DATA", "DASHBOARD_API"+studentClass+" "+prefModel.getStudentClass());
+                AppLogger.v("PRADEEP_DATA", "DASHBOARD_API" + studentClass + " " + prefModel.getStudentClass());
                 setDataOnUi(dashboardResModel);
             }
         } else {
@@ -631,7 +629,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         DynamiclinkResModel model = prefModel.getDynamiclinkResModel();
         prefModel.setDynamiclinkResModel(new DynamiclinkResModel());
         AppPref.INSTANCE.setPref(prefModel);
-        ViewUtil.setProfilePic(binding.imageView6,dashboardResModel.getProfilePic());
+        ViewUtil.setProfilePic(binding.imageView6, dashboardResModel.getProfilePic());
     }
 
     private void updateList(DashboardResModel dashboardResModel) {
@@ -738,8 +736,8 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         if (!TextUtil.isEmpty(deviceToken)) {
 
         }
-        AppLogger.v("DashBoadapi","Step 1");
-        handleProgress(0,"");//pradeep
+        AppLogger.v("DashBoadapi", "Step 1");
+        handleProgress(0, "");//pradeep
         quizViewModel.getDashBoardData(AuroApp.getAuroScholarModel());
 
         /*-------------Old Code Add in the sdk */
@@ -821,12 +819,13 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         prefModel.setQuizResModel(quizResModel);
         prefModel.setAssignmentResModel(testAssignmentResModel);
         AppPref.INSTANCE.setPref(prefModel);
-        AppLogger.e("chhonker--", "setPref step 3--"+AppPref.INSTANCE.getModelInstance().isDashboardaApiNeedToCall());
+        AppLogger.e("chhonker--", "setPref step 3--" + AppPref.INSTANCE.getModelInstance().isDashboardaApiNeedToCall());
 
         openQuizNativeFragment();
        /* QuizTestFragment quizTestFragment = new QuizTestFragment();
         openFragment(quizTestFragment);*/
     }
+
     void openQuizNativeFragment() {
         QuizTestNativeFragment nativeFragment = new QuizTestNativeFragment();
         Bundle bundle = new Bundle();
@@ -1131,8 +1130,8 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
             FetchStudentPrefResModel fetchStudentPrefResModel = prefModel.getFetchStudentPrefResModel();
             ((StudentMainDashboardActivity) getActivity()).setListner(this);
             ((StudentMainDashboardActivity) getActivity()).callFetchUserPreference();
-           /* if (fetchStudentPrefResModel != null && !TextUtil.checkListIsEmpty(fetchStudentPrefResModel.getPreference())) {
-                *//* Do CODE HERE*//*
+            /* if (fetchStudentPrefResModel != null && !TextUtil.checkListIsEmpty(fetchStudentPrefResModel.getPreference())) {
+             *//* Do CODE HERE*//*
             } else {
                 ((StudentMainDashboardActivity) getActivity()).setListner(this);
                 ((StudentMainDashboardActivity) getActivity()).callFetchUserPreference();
@@ -1145,6 +1144,7 @@ public class MainQuizHomeFragment extends BaseFragment implements CommonCallBack
         handleProgress(0, "");
         callDasboardApi();
     }
+
     void callStartQuizActionApi() {
         showProgress();
         if (dashboardResModel != null && quizResModel != null) {

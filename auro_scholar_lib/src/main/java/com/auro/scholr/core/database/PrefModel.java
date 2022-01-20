@@ -44,6 +44,25 @@ public class PrefModel implements Serializable {
     private boolean isDashboardaApiNeedToCall;
     private FetchStudentPrefResModel fetchStudentPrefResModel;
 
+    private int totalImageAttemptCount;
+
+    public int getTotalImageAttemptCount() {
+        return totalImageAttemptCount;
+    }
+
+    public void setTotalImageAttemptCount(int totalImageAttemptCount) {
+        this.totalImageAttemptCount = totalImageAttemptCount;
+    }
+
+    public int getTotalImageSucessCount() {
+        return totalImageSucessCount;
+    }
+
+    public void setTotalImageSucessCount(int totalImageSucessCount) {
+        this.totalImageSucessCount = totalImageSucessCount;
+    }
+
+    private int totalImageSucessCount;
 
     public boolean isPreLoginDisclaimer() {
         return preLoginDisclaimer;

@@ -147,6 +147,8 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     /*Camera Params*/
     OptionResModel optionResModel;
     CustomProgressDialog customFinishProgressDialog;
+    int successCount = 0;
+    int totalAttemptCount = 0;
 
 
     private GraphicOverlay mGraphicOverlay;
@@ -479,8 +481,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     public void onClick(View v) {
         if (v.getId() == R.id.exit_bt) {
             ((StudentMainDashboardActivity) getActivity()).openDialogForQuit();
-        }
-        else if (v.getId() == R.id.save_next_bt) {
+        } else if (v.getId() == R.id.save_next_bt) {
             AppLogger.i("Countdown", "onClick");
             if (!interDialogOpen) {
                 if (binding.saveNextBt.getText().toString().equalsIgnoreCase(getActivity().getResources().getString(R.string.save_submit))) {
@@ -554,13 +555,15 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
     }
 
 
-
-
-
     @Override
     public void onStop() {
         super.onStop();
+        AppLogger.e(TAG,"onStop-totalAttemptCount-"+totalAttemptCount+"-successCount-"+successCount);
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+        PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
+        prefModel.setTotalImageAttemptCount(totalAttemptCount);
+        prefModel.setTotalImageSucessCount(successCount);
+        AppPref.INSTANCE.setPref(prefModel);
 
     }
 
@@ -641,8 +644,6 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         dialog.setCancelable(false);
         // Display the alert dialog on interface
     }
-
-
 
 
     public void setOptionAdapter(List<OptionResModel> listQuizOption) {
@@ -800,8 +801,6 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
             customInstructionDialog.dismiss();
         }
     }
-
-
 
 
     private void openInstructionDialog() {
@@ -1037,6 +1036,10 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
                     optionResModel = null;
                 }
                 break;
+            case UPLOAD_EXAM_FACE_API:
+                AppLogger.e(TAG, "UPLOAD_EXAM_FACE_API ");
+                successCount = successCount + 1;
+                break;
         }
     }
 
@@ -1077,7 +1080,7 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
                 PrefModel prefModel = AppPref.INSTANCE.getModelInstance();
                 DashboardResModel dashboardResModel = prefModel.getDashboardResModel();
                 saveQuestionResModel.setRegistration_id(dashboardResModel.getAuroid());
-
+                totalAttemptCount = totalAttemptCount + 1;
                 viewModel.uploadExamFace(saveQuestionResModel);
             }
         }
@@ -1217,31 +1220,30 @@ public class QuizTestNativeFragment extends BaseFragment implements CommonCallBa
         return false;
     }
 
-private Bitmap checkRotation(byte[] bytes, Bitmap picBitmap) {
-    try {
+    private Bitmap checkRotation(byte[] bytes, Bitmap picBitmap) {
+        try {
 
-        ExifInterface exifInterface = new ExifInterface(new ByteArrayInputStream(bytes));
-        int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
-        int rotationDegrees = 0;
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                rotationDegrees = 90;
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                rotationDegrees = 180;
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                rotationDegrees = 270;
-                break;
+            ExifInterface exifInterface = new ExifInterface(new ByteArrayInputStream(bytes));
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+            int rotationDegrees = 0;
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotationDegrees = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotationDegrees = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotationDegrees = 270;
+                    break;
+            }
+            return rotateBitmap(picBitmap, rotationDegrees);
+        } catch (Exception e) {
+
         }
-        return rotateBitmap(picBitmap, rotationDegrees);
-    } catch (Exception e) {
 
+        return picBitmap;
     }
-
-    return  picBitmap;
-}
-
 
 
     public Bitmap rotateBitmap(Bitmap bitmap, int degree) {
@@ -1322,9 +1324,8 @@ private Bitmap checkRotation(byte[] bytes, Bitmap picBitmap) {
         preview.setSurfaceProvider(binding.previewView.createSurfaceProvider());
         try {
             cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageAnalysis, imageCapture);
-        }catch (Exception e)
-        {
-            AppLogger.e("bindToLifecycle exceotion",e.getMessage());
+        } catch (Exception e) {
+            AppLogger.e("bindToLifecycle exceotion", e.getMessage());
         }
 
     }
@@ -1335,7 +1336,7 @@ private Bitmap checkRotation(byte[] bytes, Bitmap picBitmap) {
             public void run() {
                 Bitmap bitmap = binding.previewView.getBitmap();
                 if (bitmap != null) {
-                   // binding.background.setImageBitmap(bitmap);
+                    // binding.background.setImageBitmap(bitmap);
                     processImage(bitmap);
                 }
                 captureImage();

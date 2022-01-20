@@ -2,6 +2,7 @@ package com.auro.scholr.quiz.presentation.viewmodel;
 
 import static com.auro.scholr.core.common.Status.DASHBOARD_API;
 import static com.auro.scholr.core.common.Status.FETCH_QUIZ_DATA_API;
+import static com.auro.scholr.core.common.Status.UPLOAD_EXAM_FACE_API;
 
 import android.graphics.Bitmap;
 
@@ -210,14 +211,14 @@ public class QuizTestNativeViewModel extends ViewModel {
                         .subscribe(new Consumer<ResponseApi>() {
                                        @Override
                                        public void accept(ResponseApi responseApi) throws Exception {
-                                       //   serviceLiveData.setValue(responseApi);
+                                          serviceLiveData.setValue(responseApi);
                                        }
                                    },
 
                                 new Consumer<Throwable>() {
                                     @Override
                                     public void accept(Throwable throwable) throws Exception {
-                                       // defaultError(UPLOAD_EXAM_FACE_API);
+                                        defaultError(UPLOAD_EXAM_FACE_API);
                                     }
                                 }));
 

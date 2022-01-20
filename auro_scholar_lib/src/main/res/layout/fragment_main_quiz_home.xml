@@ -303,6 +303,17 @@
 
                         </LinearLayout>
 
+                        <com.auro.scholr.core.util.uiwidget.RPTextView
+                            android:id="@+id/total_image_attempt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:text="Total Image Attempt"
+                            android:textColor="@color/auro_black"
+                            android:textSize="@dimen/_16sdp"
+                            app:Font="Calibre-Light.ttf" />
+
                     </LinearLayout>
 
 

@@ -22,6 +22,7 @@ import com.auro.scholr.home.data.model.AuroScholarDataModel;
 import com.auro.scholr.home.data.model.DashboardResModel;
 import com.auro.scholr.home.data.model.SaveImageReqModel;
 import com.auro.scholr.quiz.data.model.getQuestionModel.FetchQuizResModel;
+import com.auro.scholr.quiz.data.model.response.ExamImageResModel;
 import com.auro.scholr.quiz.data.model.response.SaveQuestionResModel;
 import com.auro.scholr.quiz.data.model.submitQuestionModel.SubmitExamResultRes;
 import com.auro.scholr.quiz.data.repository.QuizRepo;
@@ -163,11 +164,14 @@ public class QuizNativeRemoteUseCase extends NetworkUseCase {
         } else if (status == FINISH_QUIZ_API) {
             SaveQuestionResModel resModel = gson.fromJson(response.body(), SaveQuestionResModel.class);
             return ResponseApi.success(resModel, status);
-        }else if (status == SAVE_QUIZ_DATA_API) {
+        } else if (status == SAVE_QUIZ_DATA_API) {
             SaveQuestionResModel resModel = gson.fromJson(response.body(), SaveQuestionResModel.class);
             return ResponseApi.success(resModel, status);
-        }else if (status == DASHBOARD_API) {
+        } else if (status == DASHBOARD_API) {
             DashboardResModel resModel = gson.fromJson(response.body(), DashboardResModel.class);
+            return ResponseApi.success(resModel, status);
+        } else if (status == UPLOAD_EXAM_FACE_API) {
+            ExamImageResModel resModel = gson.fromJson(response.body(), ExamImageResModel.class);
             return ResponseApi.success(resModel, status);
         }
 
