@@ -19,6 +19,7 @@
     <application
         android:usesCleartextTraffic="true">
         <activity android:name=".home.presentation.view.activity.newDashboard.StudentMainDashboardActivity"
+
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan"/>
 
@@ -37,7 +38,6 @@
             android:name=".home.presentation.view.activity.CameraActivity"
             android:label="@string/title_activity_camera"
             android:screenOrientation="portrait"
-            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
@@ -51,7 +51,6 @@
         <activity
             android:name=".home.presentation.view.activity.HomeActivity"
             android:screenOrientation="portrait"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
@@ -100,13 +99,11 @@
             android:exported="true" />
         <activity
             android:name=".util.cropper.CropImagesActivity"
-            android:exported="true"
             android:theme="@style/Base.Theme.AppCompat" />
 
         <activity
             android:name=".home.presentation.view.activity.newDashboard.SubjectPreferencesActivity"
             android:configChanges="locale"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
