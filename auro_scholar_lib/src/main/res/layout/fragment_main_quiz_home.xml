@@ -310,6 +310,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:text="Total Image Attempt"
+                            android:visibility="gone"
                             android:textColor="@color/auro_black"
                             android:textSize="@dimen/_16sdp"
                             app:Font="Calibre-Light.ttf" />

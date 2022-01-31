@@ -112,9 +112,9 @@ public class DemographicFragment extends BaseFragment implements CommonCallBackL
     protected void init() {
         binding.toolbarLayout.backArrow.setVisibility(View.GONE);
         setKeyListner();
-        if (TextUtil.isEmpty(dashboardResModel.getLatitude()) && TextUtil.isEmpty(dashboardResModel.getLongitude())) {
-            askPermission();
-        }
+//        if (TextUtil.isEmpty(dashboardResModel.getLatitude()) && TextUtil.isEmpty(dashboardResModel.getLongitude())) {
+//            askPermission();
+//        }
 
         if (!TextUtil.isEmpty(dashboardResModel.getIsPrivateTution())) {
             demographicResModel.setIsPrivateTution(dashboardResModel.getIsPrivateTution());
